@@ -25,14 +25,20 @@ zx-spectrum/
 Make sure you have `sjasmplus` installed:
 
 ```bash
-# Download and install the latest SjASMPlus release (Linux x64)
+# Download, build, and install the latest SjASMPlus from source (Linux)
+sudo apt-get update
+sudo apt-get install -y build-essential cmake git jq wget
 curl -s https://api.github.com/repos/z00m128/sjasmplus/releases/latest \
-  | grep browser_download_url \
-  | grep linux64.tar.gz \
-  | cut -d '"' -f 4 \
+  | jq -r '.assets[] | select(.name | test("src.tar.xz$")) | .browser_download_url' \
   | wget -i -
-tar -xzf sjasmplus-*-linux64.tar.gz
-sudo mv sjasmplus /usr/local/bin/
+tar -xf sjasmplus-*-src.tar.xz
+cd sjasmplus-*-src
+git submodule update --init --recursive
+mkdir build && cd build
+cmake ..
+make
+sudo cp sjasmplus /usr/local/bin/
+cd ../..
 ```
 
 Then, from the `zx-spectrum/` directory:
