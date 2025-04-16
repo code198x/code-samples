@@ -3,8 +3,7 @@ name: Build ZX Spectrum TAP and BIN
 on:
   push:
     paths:
-      - 'zx-spectrum/src/**.asm'
-      - 'zx-spectrum/Makefile'
+      - 'zx-spectrum/**'
 
 jobs:
   build-zx-spectrum:
