@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'zx-spectrum/**'
+  workflow_dispatch:
 
 jobs:
   build-zx-spectrum:
