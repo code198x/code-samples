@@ -28,7 +28,7 @@ jobs:
             | jq -r '.assets[] | select(.name | test("src.tar.xz$")) | .browser_download_url' \
             | wget -i -
           tar -xf sjasmplus-*-src.tar.xz
-          cd sjasmplus-*-src
+          cd sjasmplus-*
           git submodule update --init --recursive
           mkdir build && cd build
           cmake ..
