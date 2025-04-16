@@ -1,10 +1,10 @@
 all: hello.tap hello.bin
 
-hello.tap: hello.asm
-	pasmo --tapbas hello.asm hello.tap
+hello.tap: src/hello.asm
+	sjasmplus src/hello.asm
 
-hello.bin: hello.asm
-	z80asm -o hello.bin hello.asm
+hello.bin: src/hello.asm
+	sjasmplus --raw=hello.bin src/hello.asm
 
 clean:
 	rm -f hello.tap hello.bin

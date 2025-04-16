@@ -17,15 +17,16 @@ zx-spectrum/
 
 - **[pasmo](https://pasmo.speccy.org/)** – Generates `.tap` files from `.asm` source
 - **[z80asm](https://manpages.debian.org/testing/z80asm/z80asm.1.en.html)** – Produces raw binary `.bin` files
+- **[SjASMPlus](https://github.com/z00m128/sjasmplus)** – Assembles Z80 source and generates `.tap` and `.bin` files
 - **[Fuse Emulator](http://fuse-emulator.sourceforge.net/)** – Used for running and debugging builds
 
 ## ⚙️ Build Instructions
 
-Make sure you have `pasmo` and `z80asm` installed:
+Make sure you have `sjasmplus` installed:
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y pasmo z80asm
+sudo apt-get install -y sjasmplus
 ```
 
 Then, from the `zx-spectrum/` directory:

@@ -19,10 +19,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install pasmo and z80asm
+      - name: Install sjasmplus
         run: |
           sudo apt-get update
-          sudo apt-get install -y pasmo z80asm
+          sudo apt-get install -y sjasmplus
 
       - name: Build artifacts
         run: |

@@ -1,4 +1,4 @@
-# Retro Development Projects
+# Code Like It's 198X
 
 Welcome to my all-in-one repository for retro system development. This repo contains code, tools, and workflows for a range of vintage systems including the ZX Spectrum, Commodore 64, Amiga, and more.
 
@@ -14,7 +14,7 @@ Welcome to my all-in-one repository for retro system development. This repo cont
 Each system has its own directory:
 
 ```
-retro-dev/
+code-like-its-198x/
 ├── zx-spectrum/
 │   ├── src/         # Z80 assembly source code
 │   ├── build/       # Compiled TAP and BIN files
