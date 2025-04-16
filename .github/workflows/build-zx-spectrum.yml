@@ -1,0 +1,37 @@
+name: Build ZX Spectrum TAP and BIN
+
+on:
+  push:
+    paths:
+      - 'zx-spectrum/src/**.asm'
+      - 'zx-spectrum/Makefile'
+
+jobs:
+  build-zx-spectrum:
+    runs-on: ubuntu-latest
+    name: Assemble ZX Spectrum files
+
+    defaults:
+      run:
+        working-directory: zx-spectrum
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pasmo and z80asm
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pasmo z80asm
+
+      - name: Build artifacts
+        run: |
+          make
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zx-spectrum-builds
+          path: |
+            zx-spectrum/hello.tap
+            zx-spectrum/hello.bin
