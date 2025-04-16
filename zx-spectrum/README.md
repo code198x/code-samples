@@ -32,7 +32,7 @@ curl -s https://api.github.com/repos/z00m128/sjasmplus/releases/latest \
   | jq -r '.assets[] | select(.name | test("src.tar.xz$")) | .browser_download_url' \
   | wget -i -
 tar -xf sjasmplus-*-src.tar.xz
-cd sjasmplus-*
+cd "$(find . -maxdepth 1 -type d -name 'sjasmplus-*' | head -n 1)"
 git submodule update --init --recursive
 mkdir build && cd build
 cmake ..
