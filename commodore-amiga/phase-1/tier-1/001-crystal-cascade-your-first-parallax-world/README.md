@@ -19,10 +19,10 @@ curl -O http://sun.hasenbraten.de/vasm/release/vasm.tar.gz
 tar xzf vasm.tar.gz
 cd vasm
 make CPU=m68k SYNTAX=mot
-sudo cp vasm68k_mot /usr/local/bin/
+sudo cp vasmm68k_mot /usr/local/bin/
 
 # Assemble any example
-vasm68k_mot -Fhunkexe -o crystal1 complete.s
+vasmm68k_mot -Fhunkexe -o crystal1 complete.s
 
 # Install FS-UAE Amiga emulator
 # Option 1: Homebrew (if available)
@@ -31,8 +31,41 @@ brew install --cask fs-uae-launcher
 # Option 2: Direct download
 # Visit https://fs-uae.net/download
 
+# Note: You'll need Kickstart ROMs and Workbench disks
+# Legal options:
+# - Transfer from your own Amiga
+# - Purchase from https://www.amigaforever.com/
+# - Use AROS (open-source alternative)
+
 # Run assembled program in FS-UAE
-# Copy crystal1 to virtual Amiga and run from Shell
+
+# Option 1: Configure shared folder in FS-UAE
+# - In FS-UAE Launcher: Settings → Hard Drives
+# - Add your code-samples folder as a hard drive
+# - Access from Workbench as DH1: or DH2:
+
+# Option 2: Create an ADF disk image with ADFlib
+# Build ADFlib from source:
+git clone https://github.com/lclevy/ADFlib.git
+cd ADFlib
+./autogen.sh
+./configure
+make
+sudo make install
+
+# Use ADFlib tools:
+adfcreate crystal.adf       # Create blank ADF
+adfcopy crystal.adf crystal1 /  # Copy file to ADF
+adflist crystal.adf         # Verify contents
+# Mount crystal.adf in FS-UAE as DF1:
+
+# Option 3: Drag and drop (if supported)
+# - Start FS-UAE with Workbench
+# - Drag executable file onto FS-UAE window
+
+# Once file is on Amiga, run from Shell:
+# 1> cd df1:  (or dh1:)
+# 1> crystal1
 ```
 
 ## Features Demonstrated
