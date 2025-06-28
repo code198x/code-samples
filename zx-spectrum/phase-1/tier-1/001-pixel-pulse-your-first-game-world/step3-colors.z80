@@ -1,0 +1,313 @@
+; Pixel Pulse - Lesson 1 Step 3
+; Color attribute system demonstration
+
+        ORG $8000       ; Start at 32768
+
+start:
+        ; Clear screen 
+        CALL clear_screen
+        
+        ; Set border color to magenta
+        LD A, 3         ; Magenta
+        OUT (254), A    ; Set border
+        
+        ; Demonstrate color attributes
+        CALL demo_colors
+        
+        ; Wait for key press
+        CALL wait_key
+        
+        ; Return to BASIC
+        RET
+
+clear_screen:
+        ; Clear display memory ($4000-$57FF)
+        LD HL, $4000    ; Start of screen
+        LD DE, $4001    ; Destination
+        LD BC, $17FF    ; 6144 bytes
+        LD (HL), 0      ; Clear first byte
+        LDIR            ; Copy zeros to rest
+        
+        ; Clear attributes to white on black
+        LD HL, $5800    ; Start of attributes
+        LD DE, $5801    ; Destination  
+        LD BC, $2FF     ; 768 bytes
+        LD (HL), $07    ; White on black
+        LDIR            ; Fill attributes
+        
+        RET
+
+demo_colors:
+        ; Create color palette demonstration
+        
+        ; Row 5 - Normal colors
+        LD B, 5         ; Row 5
+        LD C, 2         ; Start column 2
+        
+normal_colors:
+        LD A, C         ; Use column as color
+        AND 7           ; Keep in range 0-7
+        LD D, A         ; INK color
+        CALL set_attribute
+        CALL draw_block
+        
+        INC C
+        LD A, C
+        CP 10           ; End at column 10
+        JR NZ, normal_colors
+        
+        ; Row 7 - Bright colors
+        LD B, 7         ; Row 7
+        LD C, 2         ; Start column 2
+        
+bright_colors:
+        LD A, C         ; Use column as color
+        AND 7
+        OR $40          ; Add BRIGHT bit
+        LD D, A
+        CALL set_attribute
+        CALL draw_block
+        
+        INC C
+        LD A, C
+        CP 10
+        JR NZ, bright_colors
+        
+        ; Row 9 - Paper colors
+        LD B, 9         ; Row 9
+        LD C, 2         ; Start column 2
+        
+paper_colors:
+        LD A, C         ; Use column as paper color
+        AND 7
+        RLCA            ; Shift to paper bits (3-5)
+        RLCA
+        RLCA
+        OR 7            ; White ink
+        OR $40          ; Bright
+        LD D, A
+        CALL set_attribute
+        CALL draw_block
+        
+        INC C
+        LD A, C
+        CP 10
+        JR NZ, paper_colors
+        
+        ; Row 11 - Flashing colors
+        LD B, 11        ; Row 11
+        LD C, 2         ; Start column 2
+        
+flash_colors:
+        LD A, C
+        AND 7
+        OR $40          ; Bright
+        OR $80          ; Flash
+        LD D, A
+        CALL set_attribute
+        CALL draw_block
+        
+        INC C
+        LD A, C
+        CP 10
+        JR NZ, flash_colors
+        
+        ; Draw labels
+        CALL draw_labels
+        
+        RET
+
+set_attribute:
+        ; Set color at character position B=row, C=column
+        ; D = color value
+        
+        PUSH BC
+        PUSH DE
+        
+        ; Calculate attribute address: $5800 + row*32 + column
+        LD A, B         ; Row
+        RLCA            ; * 2
+        RLCA            ; * 4  
+        RLCA            ; * 8
+        RLCA            ; * 16
+        RLCA            ; * 32
+        LD L, A         ; Low byte = row * 32
+        LD A, C         ; Column
+        ADD A, L        ; Add column offset
+        LD L, A
+        LD H, $58       ; Attribute base ($5800)
+        
+        ; Set the color
+        LD (HL), D      ; Write attribute
+        
+        POP DE
+        POP BC
+        RET
+
+draw_block:
+        ; Draw a solid block at position B,C
+        PUSH BC
+        PUSH DE
+        
+        ; Calculate screen address
+        LD A, B         ; Row
+        AND $18         ; Get character row section
+        OR $40          ; Add screen base
+        LD H, A
+        
+        LD A, B         ; Row again
+        RLCA
+        RLCA
+        AND $E0         ; Get fine row position
+        LD L, A
+        
+        LD A, C         ; Column
+        AND $1F
+        OR L
+        LD L, A
+        
+        ; Draw 8 rows of solid pixels
+        LD D, 8         ; 8 pixel rows
+        LD A, $FF       ; Solid pattern
+        
+block_loop:
+        LD (HL), A      ; Draw row
+        INC H           ; Next pixel row
+        DEC D
+        JR NZ, block_loop
+        
+        POP DE
+        POP BC
+        RET
+
+draw_labels:
+        ; Draw text labels for color rows
+        
+        ; "NORMAL" at row 5, column 12
+        LD B, 5
+        LD C, 12
+        LD HL, label_normal
+        CALL draw_text
+        
+        ; "BRIGHT" at row 7, column 12
+        LD B, 7
+        LD C, 12
+        LD HL, label_bright
+        CALL draw_text
+        
+        ; "PAPER" at row 9, column 12
+        LD B, 9
+        LD C, 12
+        LD HL, label_paper
+        CALL draw_text
+        
+        ; "FLASH" at row 11, column 12
+        LD B, 11
+        LD C, 12
+        LD HL, label_flash
+        CALL draw_text
+        
+        RET
+
+draw_text:
+        ; Draw text at position B,C from string at HL
+        ; Simple character drawing using ROM font
+        
+        PUSH BC
+        PUSH DE
+        PUSH HL
+        
+text_loop:
+        LD A, (HL)      ; Get character
+        OR A            ; Check for zero terminator
+        JR Z, text_done
+        
+        ; Simple character display (just put ASCII value)
+        PUSH HL
+        PUSH BC
+        
+        ; Calculate screen position and draw simple pattern
+        LD L, A         ; Character code
+        LD H, 0
+        ; For demo, just draw a simple pattern
+        LD A, %10101010
+        CALL draw_char_pattern
+        
+        POP BC
+        POP HL
+        
+        INC HL          ; Next character
+        INC C           ; Next column
+        JR text_loop
+        
+text_done:
+        POP HL
+        POP DE
+        POP BC
+        RET
+
+draw_char_pattern:
+        ; Draw simple character pattern at B,C
+        ; A = pattern to draw
+        
+        PUSH BC
+        PUSH DE
+        
+        ; Calculate screen address like in draw_block
+        LD D, B         ; Row
+        LD E, C         ; Column
+        
+        LD A, D
+        AND $18
+        OR $40
+        LD H, A
+        
+        LD A, D
+        RLCA
+        RLCA
+        AND $E0
+        LD L, A
+        
+        LD A, E
+        AND $1F
+        OR L
+        LD L, A
+        
+        ; Draw simple 8-row pattern
+        LD B, 8
+        LD A, %11110000  ; Simple pattern
+        
+char_loop:
+        LD (HL), A
+        INC H
+        DJNZ char_loop
+        
+        POP DE
+        POP BC
+        RET
+
+wait_key:
+        ; Wait for any key press and release
+        LD A, $7F       ; Scan all rows
+        IN A, (254)     ; Read keyboard
+        AND $1F         ; Mask key bits
+        CP $1F          ; All keys up?
+        JR Z, wait_key  ; Keep waiting
+        
+        ; Key pressed, wait for release
+wait_release:
+        LD A, $7F
+        IN A, (254)
+        AND $1F
+        CP $1F
+        JR NZ, wait_release
+        
+        RET
+
+; Text labels
+label_normal:   DB "NORMAL", 0
+label_bright:   DB "BRIGHT", 0
+label_paper:    DB "PAPER", 0
+label_flash:    DB "FLASH", 0
+
+        END start

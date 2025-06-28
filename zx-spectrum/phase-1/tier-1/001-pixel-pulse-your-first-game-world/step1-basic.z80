@@ -1,0 +1,111 @@
+; Pixel Pulse - Lesson 1 Step 1
+; Basic ZX Spectrum Z80 Assembly
+
+        ORG $8000       ; Start at 32768
+
+start:
+        ; Clear screen to black
+        CALL clear_screen
+        
+        ; Set border color to cyan
+        LD A, 5         ; Cyan
+        OUT (254), A    ; Set border
+        
+        ; Create simple title
+        CALL draw_simple_title
+        
+        ; Wait for key press
+        CALL wait_key
+        
+        ; Return to BASIC
+        RET
+
+clear_screen:
+        ; Clear display memory ($4000-$57FF)
+        LD HL, $4000    ; Start of screen
+        LD DE, $4001    ; Destination
+        LD BC, $17FF    ; 6144 bytes
+        LD (HL), 0      ; Clear first byte
+        LDIR            ; Copy zeros to rest
+        
+        ; Clear attributes ($5800-$5AFF) 
+        LD HL, $5800    ; Start of attributes
+        LD DE, $5801    ; Destination  
+        LD BC, $2FF     ; 768 bytes
+        LD (HL), $07    ; Black on white
+        LDIR            ; Fill attributes
+        
+        RET
+
+draw_simple_title:
+        ; Position for "PIXEL" at row 10, column 13
+        LD HL, $4000    ; Screen base
+        LD BC, 10 * 32  ; Row 10 (32 bytes per row)
+        ADD HL, BC      ; Point to row 10
+        LD BC, 13       ; Column 13 (centered)
+        ADD HL, BC
+        
+        ; Draw simple block letters
+        LD A, $FF       ; Solid block
+        LD (HL), A      ; P
+        INC HL
+        LD A, $00       ; Space
+        LD (HL), A
+        INC HL
+        LD A, $FF       ; I
+        LD (HL), A
+        INC HL
+        LD A, $00       ; Space
+        LD (HL), A
+        INC HL
+        LD A, $FF       ; X
+        LD (HL), A
+        INC HL
+        LD A, $00       ; Space
+        LD (HL), A
+        INC HL
+        LD A, $FF       ; E
+        LD (HL), A
+        INC HL
+        LD A, $00       ; Space
+        LD (HL), A
+        INC HL
+        LD A, $FF       ; L
+        LD (HL), A
+
+        ; Set colors for title
+        LD HL, $5800    ; Attribute base
+        LD BC, 10 * 32  ; Row 10
+        ADD HL, BC
+        LD BC, 13       ; Column 13
+        ADD HL, BC
+        
+        LD A, $47       ; White on red + bright
+        LD B, 9         ; 9 characters
+        
+title_color_loop:
+        LD (HL), A      ; Set color
+        INC HL
+        DJNZ title_color_loop
+        
+        RET
+
+wait_key:
+        ; Simple key wait - any key press
+        LD A, $7F       ; Scan all rows
+        IN A, (254)     ; Read keyboard
+        AND $1F         ; Mask key bits
+        CP $1F          ; All keys up?
+        JR Z, wait_key  ; Keep waiting if no keys pressed
+        
+        ; Key was pressed, now wait for release
+wait_release:
+        LD A, $7F
+        IN A, (254)
+        AND $1F
+        CP $1F
+        JR NZ, wait_release
+        
+        RET
+
+        END start
