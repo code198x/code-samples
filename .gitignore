@@ -1,0 +1,26 @@
+# Build outputs
+build/
+*.prg
+*.o
+*.bin
+*.d64
+*.t64
+
+# Emulator files
+*.vsf
+*.vfl
+vice.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*~
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
