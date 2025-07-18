@@ -1,35 +1,49 @@
-# Makefile for Cosmic Harvester Lesson 1
-# Build and run the starfield demo
+# Makefile for Pixel Patrol Lesson 1
+# C64 Assembly Development
 
-# Program name
-PROGRAM = cosmic-harvester-01
+# Project settings
+PROJECT = pixel-patrol-01
+TARGET = $(PROJECT).prg
+SOURCE = $(PROJECT).asm
 
-# Source files
-SOURCES = $(PROGRAM).asm
+# Assembler settings (using ACME)
+ACME = acme
+ACME_FLAGS = -f cbm -o $(TARGET)
 
-# Build directory
-BUILD_DIR = build
-
-# Create build directory if it doesn't exist
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+# Emulator settings
+VICE = x64sc
+VICE_FLAGS = -autostartprgmode 1
 
 # Default target
-all: $(BUILD_DIR) $(BUILD_DIR)/$(PROGRAM).prg
+all: $(TARGET)
 
-# Build the program
-$(BUILD_DIR)/$(PROGRAM).prg: $(SOURCES) | $(BUILD_DIR)
-	acme -f cbm -o $(BUILD_DIR)/$(PROGRAM).prg $(PROGRAM).asm
+# Build the PRG file
+$(TARGET): $(SOURCE)
+	$(ACME) $(ACME_FLAGS) $(SOURCE)
 
 # Run in VICE emulator
-run: $(BUILD_DIR)/$(PROGRAM).prg
-	x64sc $(BUILD_DIR)/$(PROGRAM).prg
+run: $(TARGET)
+	$(VICE) $(VICE_FLAGS) $(TARGET)
 
-# Clean build files
+# Clean build artifacts
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -f $(TARGET)
 
-# Test build (same as all)
-test: all
+# Development targets
+test: run
 
-.PHONY: all run clean test
+# Show assembler output
+verbose: 
+	$(ACME) $(ACME_FLAGS) -v $(SOURCE)
+
+# Help target
+help:
+	@echo "Available targets:"
+	@echo "  all     - Build the PRG file (default)"
+	@echo "  run     - Build and run in VICE emulator"
+	@echo "  test    - Same as run"
+	@echo "  clean   - Remove build artifacts"
+	@echo "  verbose - Build with verbose output"
+	@echo "  help    - Show this help"
+
+.PHONY: all run test clean verbose help

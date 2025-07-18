@@ -1,101 +1,84 @@
-# Lesson 4: Collision Detection
+# Pixel Patrol - Lesson 4: Basic Sprite Movement
 
-## Cosmic Harvester - C64 Assembly Programming
-
-In this lesson, we add collision detection to create interactive gameplay. When bullets hit asteroids, both objects are destroyed and an explosion animation plays.
+This lesson implements basic sprite movement with joystick control. Your sprite now responds to player input and moves smoothly across the screen in any direction.
 
 ### What You'll Learn
 
-- Implementing efficient collision detection algorithms
-- Managing interactions between multiple game objects
-- Creating visual feedback with explosion animations
-- Understanding game state management
-- Working with object arrays and relationships
+- Reading joystick input and mapping to movement
+- Direct pixel-based sprite positioning
+- Continuous movement while input is held
+- Basic sprite position updates
+- Foundation for more complex movement systems
 
 ### New Concepts Introduced
 
-#### Collision Detection Algorithm
+#### Direct Movement
 ```assembly
-check_object_collision:
-    ; Check X collision
-    lda object1_x
-    sec
-    sbc object2_x
-    ; ... check if within range
-    
-    ; Check Y collision
-    lda object1_y
-    sec
-    sbc object2_y
-    ; ... check if within range
+; Move sprite based on joystick
+lda sprite_y
+sec
+sbc #2                 ; Move 2 pixels up
+sta sprite_y
 ```
 
-The collision system uses simple bounding box detection, checking if objects are within 2 characters of each other.
+The sprite moves directly in response to joystick input, changing position by 2 pixels per frame in the pressed direction.
 
-#### Object Management
-- **Asteroids**: 8 moving obstacles that scroll from right to left
-- **Collision Response**: Deactivate both bullet and asteroid on hit
-- **Visual Feedback**: Explosion animation at collision point
-- **Object Recycling**: Asteroids respawn on the right side
-
-#### Explosion Animation
-```assembly
-explosion_colors:
-    !byte COLOR_YELLOW, COLOR_ORANGE, COLOR_PURPLE, COLOR_WHITE
-```
-
-Simple frame-based animation cycles through colors to create an explosion effect.
+#### Joystick Reading
+- **Port 2**: Standard game port on C64
+- **Bit Pattern**: Each bit represents a direction
+- **Active Low**: Bit clear (0) means pressed
+- **Continuous**: Movement while held
 
 ### Technical Details
 
-#### Memory Layout
-- **Zero Page**: Extended usage for collision detection variables ($f0-$f7)
-- **Object Arrays**: Parallel arrays for asteroids (active, x, y)
-- **Animation State**: Explosion position and frame counter
+#### Movement System
+- **Pixel-Based**: Direct X/Y coordinate tracking
+- **Speed**: 2 pixels per frame (smooth movement)
+- **Free Movement**: No constraints or boundaries yet
+- **Immediate Response**: No delays or state machines
 
-#### Game Loop Additions
-1. Update asteroids (movement and wrapping)
-2. Check all bullet-asteroid pairs for collisions
-3. Handle collision responses (deactivation, explosions)
-4. Update explosion animations
-
-#### Performance Considerations
-- Nested loops for collision checking (bullets × asteroids)
-- Early exit when collision found
-- Only check active objects
-- Simple distance calculation without multiplication
+#### Input Mapping
+- Bit 0: Up
+- Bit 1: Down  
+- Bit 2: Left
+- Bit 3: Right
+- Bit 4: Fire (not used yet)
 
 ### Building and Running
 
 ```bash
 make        # Build the program
 make run    # Build and run in VICE emulator
+make clean  # Clean build files
 ```
 
 ### Controls
-- **Q**: Move ship up
-- **A**: Move ship down
-- **SPACE**: Fire bullets
+- **Joystick Port 2**: Move sprite in any direction
+- **Q/A/O/P Keys**: Alternative keyboard controls
+- **Movement**: Continuous while pressed
 
-### Gameplay Elements
-- Ship fires bullets that travel right
-- Asteroids move from right to left
-- Bullets destroy asteroids on contact
-- Explosion animation plays at impact point
-- Asteroids respawn after leaving screen
+### What You'll Experience
 
-### Next Steps
-In the next lesson, we'll add:
-- Score tracking for destroyed asteroids
-- Different asteroid types
-- Power-ups and special weapons
-- More complex collision interactions
+When you run this program, you'll see:
+- **Responsive Sprite**: Moves immediately on input
+- **Smooth Motion**: 2 pixels per frame movement
+- **Free Movement**: Can go anywhere on screen
+- **Diagonal Movement**: Combine directions for 8-way movement
+
+### Foundation for Future Lessons
+
+This basic movement system will be enhanced in upcoming lessons:
+- **Lesson 5**: Grid position system for structured movement
+- **Lesson 6**: Sprite-to-grid position mapping
+- **Lesson 7**: Movement constraints and boundaries
+- **Lesson 8**: Proper game loop structure
 
 ### Code Architecture
-The collision system demonstrates:
-- **Separation of Concerns**: Collision detection separate from response
-- **Object Pooling**: Reusing asteroid and bullet objects
-- **State Management**: Tracking active/inactive states
-- **Visual Feedback**: Immediate response to player actions
 
-This lesson establishes the foundation for interactive gameplay, where player actions have consequences and the game world responds dynamically.
+The program demonstrates:
+- **Clean Input Handling**: Separate joystick reading
+- **Simple Movement Logic**: Direct position updates
+- **Modular Functions**: Clear separation of concerns
+- **Expandable Design**: Easy to add features
+
+This lesson provides the foundation for all sprite movement in your C64 games, establishing responsive controls that feel good to players.

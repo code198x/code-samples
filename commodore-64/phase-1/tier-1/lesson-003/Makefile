@@ -1,8 +1,8 @@
-# Makefile for Cosmic Harvester - Lesson 3
+# Makefile for Pixel Patrol - Lesson 3
 # C64 Assembly game build system
 
 # Project settings
-PROJECT_NAME = cosmic-harvester-03
+PROJECT_NAME = pixel-patrol-03
 SOURCE_FILE = $(PROJECT_NAME).asm
 BUILD_DIR = build
 PRG_FILE = $(BUILD_DIR)/$(PROJECT_NAME).prg
@@ -28,7 +28,7 @@ $(BUILD_DIR):
 disk: $(D64_FILE)
 
 $(D64_FILE): $(PRG_FILE)
-	$(C1541) -format "cosmic harvest,03" d64 $(D64_FILE)
+	$(C1541) -format "pixel patrol,03" d64 $(D64_FILE)
 	$(C1541) -attach $(D64_FILE) -write $(PRG_FILE) $(PROJECT_NAME)
 
 # Run in VICE emulator

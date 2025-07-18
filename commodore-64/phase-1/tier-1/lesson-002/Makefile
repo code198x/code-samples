@@ -1,5 +1,5 @@
-# Makefile for Cosmic Harvester Lesson 2
-# Adds player ship to starfield
+# Makefile for Pixel Patrol Lesson 2
+# First Hardware Sprite
 
 # ACME cross-assembler
 ASM = acme
@@ -11,8 +11,8 @@ EMU = x64sc
 BUILDDIR = build
 
 # Source and target files
-SRC = cosmic-harvester-02.asm
-PRG = $(BUILDDIR)/cosmic-harvester-02.prg
+SRC = pixel-patrol-02.asm
+PRG = $(BUILDDIR)/pixel-patrol-02.prg
 
 # Default target
 all: $(PRG)

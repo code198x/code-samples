@@ -1,14 +1,15 @@
-# Cosmic Harvester - Lesson 2: Adding the Player Ship
+# Pixel Patrol - Lesson 2: First Hardware Sprite
 
-This lesson adds a controllable player ship to the animated starfield from Lesson 1.
+This lesson introduces the legendary C64 sprite system by creating your first hardware sprite that moves automatically across the screen.
 
 ## What You'll Learn
 
-- C64 sprite system and hardware sprites
-- Keyboard input handling using the CIA chip
-- Q/A/O/P control scheme (authentic C64-era layout)
-- Combining animations (starfield + ship movement)
-- Game loop structure
+- C64 hardware sprite system fundamentals
+- Sprite data format (24x21 pixels)
+- VIC-II sprite registers and controls
+- Sprite positioning and color
+- Smooth animation with raster synchronization
+- Sprite coordinate wraparound handling
 
 ## Building
 
@@ -20,31 +21,29 @@ make clean  # Clean build files
 
 Or manually:
 ```bash
-acme -f cbm -o build/cosmic-harvester-02.prg cosmic-harvester-02.asm
-x64sc build/cosmic-harvester-02.prg
+acme -f cbm -o build/pixel-patrol-02.prg pixel-patrol-02.asm
+x64sc build/pixel-patrol-02.prg
 ```
 
-## Controls
+## What You'll See
 
-```
-    Q (Up)
-      |
-O (Left) -- P (Right)
-      |
-   A (Down)
-```
+- Blue background with white border (from Lesson 1)
+- "PIXEL PATROL - LESSON 2" text display
+- A yellow smiley face sprite moving smoothly across the screen
+- Sprite wraps around from right to left automatically
 
 ## Features
 
-- Animated twinkling starfield background
-- Cyan retro-style ship with twin engines
-- Smooth movement with boundary detection
-- Vertical sync timing for smooth animation
-- Classic Q/A/O/P keyboard controls
+- Your first hardware sprite (24x21 pixels)
+- Automatic sprite movement animation
+- Smooth raster-synchronized movement
+- Sprite coordinate wraparound
+- Yellow sprite color
+- Combined with previous lesson's screen setup
 
 ## Files
 
-- `cosmic-harvester-02.asm` - Main assembly source code
+- `pixel-patrol-02.asm` - Main assembly source code
 - `Makefile` - Build automation
 - `build/` - Compiled PRG files (generated)
 

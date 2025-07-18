@@ -1,5 +1,5 @@
-# Makefile for Pixel Patrol Lesson 4
-# Grid-Based Movement System
+# Makefile for Pixel Patrol Lesson 6
+# Sprite Grid Movement
 
 # Tools
 ACME = acme
@@ -9,8 +9,8 @@ X64SC = x64sc
 BUILDDIR = build
 
 # Files
-SOURCE = pixel-patrol-04.asm
-TARGET = $(BUILDDIR)/pixel-patrol-04.prg
+SOURCE = pixel-patrol-06.asm
+TARGET = $(BUILDDIR)/pixel-patrol-06.prg
 
 # Build rules
 all: $(TARGET)
