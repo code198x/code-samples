@@ -551,7 +551,6 @@ msb_done:
 
 read_joystick:
         jsr read_joystick_only
-        jsr check_keyboard_input
         rts
 
 read_joystick_only:

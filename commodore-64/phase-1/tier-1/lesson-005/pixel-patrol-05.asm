@@ -263,9 +263,6 @@ read_joystick:
         lda $dc00              ; Read CIA1 Port A
         sta joystick_state     ; Store current state
         
-        ; Check for keyboard input (QAOP)
-        jsr check_keyboard_input
-        
         rts
 
 ;===============================================================================

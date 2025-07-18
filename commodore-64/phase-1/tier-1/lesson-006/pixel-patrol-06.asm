@@ -319,9 +319,6 @@ show_tens:
 read_joystick:
         jsr read_joystick_only
         
-        ; Check for keyboard input (QAOP)
-        jsr check_keyboard_input
-        
         rts
 
 read_joystick_only:
