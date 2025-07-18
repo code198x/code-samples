@@ -384,44 +384,44 @@ copy_sprite:
 ;===============================================================================
 
 check_keyboard_input:
-        ; Check Q key (Up) - Row 1, Column 5
-        lda #%11111101         ; Write $FD to $DC00
+        ; Check Q key (Up) - Column 1, Row 6
+        lda #%11111101         ; Select column 1
         sta $dc00
         lda $dc01
-        and #%00100000         ; Check bit 5
+        and #%01000000         ; Check bit 6 (row 6)
         bne not_q
         lda joystick_state
         and #%11111110         ; Clear joystick up bit
         sta joystick_state
 not_q:
         
-        ; Check A key (Down) - Row 1, Column 2
-        lda #%11111101         ; Write $FD to $DC00
+        ; Check A key (Down) - Column 1, Row 2
+        lda #%11111101         ; Select column 1
         sta $dc00
         lda $dc01
-        and #%00000100         ; Check bit 2
+        and #%00000100         ; Check bit 2 (row 2)
         bne not_a
         lda joystick_state
         and #%11111101         ; Clear joystick down bit
         sta joystick_state
 not_a:
         
-        ; Check O key (Left) - Row 2, Column 4
-        lda #%11111011         ; Write $FB to $DC00
+        ; Check O key (Left) - Column 2, Row 6
+        lda #%11111011         ; Select column 2
         sta $dc00
         lda $dc01
-        and #%00010000         ; Check bit 4
+        and #%01000000         ; Check bit 6 (row 6)
         bne not_o
         lda joystick_state
         and #%11111011         ; Clear joystick left bit
         sta joystick_state
 not_o:
         
-        ; Check P key (Right) - Row 2, Column 5
-        lda #%11111011         ; Write $FB to $DC00
+        ; Check P key (Right) - Column 2, Row 1
+        lda #%11111011         ; Select column 2
         sta $dc00
         lda $dc01
-        and #%00100000         ; Check bit 5
+        and #%00000010         ; Check bit 1 (row 1)
         bne not_p
         lda joystick_state
         and #%11110111         ; Clear joystick right bit
