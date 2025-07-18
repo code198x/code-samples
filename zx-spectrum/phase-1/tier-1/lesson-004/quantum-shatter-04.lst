@@ -1,0 +1,923 @@
+# file opened: quantum-shatter-04.asm
+  1   0000              ; quantum-shatter-04.asm
+  2   0000              ; Lesson 4: Collision Detection
+  3   0000              ; Add enemy ships and collision detection
+  4   0000
+  5   0000                              device  zxspectrum48
+  6   0000
+  7   0000                              org     32768           ; Start at 32768
+  8   8000
+  9   8000              ; -----------------------------------------------------------------------------
+ 10   8000              ; System Constants
+ 11   8000              ; -----------------------------------------------------------------------------
+ 12   8000              SCREEN_START    equ     16384          ; Screen memory start
+ 13   8000              ATTR_START      equ     22528          ; Attribute memory start
+ 14   8000              SCREEN_WIDTH    equ     32             ; Screen width in characters
+ 15   8000              SCREEN_HEIGHT   equ     24             ; Screen height in characters
+ 16   8000
+ 17   8000              ; Colors (PAPER * 8 + INK)
+ 18   8000              BLACK           equ     0
+ 19   8000              BLUE            equ     1
+ 20   8000              RED             equ     2
+ 21   8000              MAGENTA         equ     3
+ 22   8000              GREEN           equ     4
+ 23   8000              CYAN            equ     5
+ 24   8000              YELLOW          equ     6
+ 25   8000              WHITE           equ     7
+ 26   8000              BRIGHT_BIT      equ     64             ; Add for bright colors
+ 27   8000
+ 28   8000              ; Characters
+ 29   8000              CHAR_SPACE      equ     0              ; Space character
+ 30   8000              CHAR_STAR       equ     42             ; '*' for stars
+ 31   8000              CHAR_PLAYER     equ     62             ; '>' for player ship
+ 32   8000              CHAR_BULLET     equ     45             ; '-' for bullets
+ 33   8000              CHAR_ENEMY      equ     60             ; '<' for enemy ships
+ 34   8000              CHAR_EXPLOSION  equ     79             ; 'O' for explosions
+ 35   8000
+ 36   8000              ; Game constants
+ 37   8000              MAX_BULLETS     equ     6
+ 38   8000              MAX_ENEMIES     equ     5
+ 39   8000              FIRE_COOLDOWN   equ     12
+ 40   8000              BULLET_SPEED    equ     2
+ 41   8000              ENEMY_SPEED     equ     1
+ 42   8000              EXPLOSION_TIME  equ     8
+ 43   8000
+ 44   8000              ; -----------------------------------------------------------------------------
+ 45   8000              ; Entry Point
+ 46   8000              ; -----------------------------------------------------------------------------
+ 47   8000              start:
+ 48   8000 CD 2D 80                     call    clear_screen
+ 49   8003 CD 48 80                     call    init_starfield
+ 50   8006 CD 64 80                     call    init_player
+ 51   8009 CD 73 80                     call    init_bullets
+ 52   800C CD 82 80                     call    init_enemies
+ 53   800F CD 9E 80                     call    init_explosions
+ 54   8012 CD AC 80                     call    draw_starfield
+ 55   8015
+ 56   8015              game_loop:
+ 57   8015 76                           halt                    ; Wait for interrupt (50Hz)
+ 58   8016
+ 59   8016 CD C0 80                     call    update_starfield
+ 60   8019 CD E4 80                     call    read_keyboard
+ 61   801C CD 4D 81                     call    update_player
+ 62   801F CD 72 81                     call    update_bullets
+ 63   8022 CD A6 81                     call    update_enemies
+ 64   8025 CD E4 81                     call    check_collisions
+ 65   8028 CD 5D 82                     call    update_explosions
+ 66   802B
+ 67   802B 18 E8                        jr      game_loop
+ 68   802D
+ 69   802D              ; -----------------------------------------------------------------------------
+ 70   802D              ; Clear Screen
+ 71   802D              ; -----------------------------------------------------------------------------
+ 72   802D              clear_screen:
+ 73   802D 21 00 40                     ld      hl, SCREEN_START
+ 74   8030 11 01 40                     ld      de, SCREEN_START + 1
+ 75   8033 01 FF 17                     ld      bc, 6144 - 1    ; Screen size - 1
+ 76   8036 36 00                        ld      (hl), 0
+ 77   8038 ED B0                        ldir                    ; Clear screen
+ 78   803A
+ 79   803A                              ; Clear attributes
+ 80   803A 21 00 58                     ld      hl, ATTR_START
+ 81   803D 11 01 58                     ld      de, ATTR_START + 1
+ 82   8040 01 FF 02                     ld      bc, 768 - 1     ; Attribute size - 1
+ 83   8043 36 07                        ld      (hl), 7         ; Black paper, white ink
+ 84   8045 ED B0                        ldir
+ 85   8047 C9                           ret
+ 86   8048
+ 87   8048              ; -----------------------------------------------------------------------------
+ 88   8048              ; Initialize Starfield
+ 89   8048              ; -----------------------------------------------------------------------------
+ 90   8048              init_starfield:
+ 91   8048 21 09 83                     ld      hl, star_positions
+ 92   804B 06 14                        ld      b, 20           ; Number of stars
+ 93   804D
+ 94   804D              init_star_loop:
+ 95   804D                              ; Random Y position (0-23)
+ 96   804D CD EF 82                     call    random
+ 97   8050 E6 1F                        and     31              ; 0-31
+ 98   8052 FE 18                        cp      24              ; Check if >= 24
+ 99   8054 38 02                        jr      c, star_y_ok
+100   8056 E6 0F                        and     15              ; Limit to 0-15 if too high
+101   8058              star_y_ok:
+102   8058 77                           ld      (hl), a
+103   8059 23                           inc     hl
+104   805A
+105   805A                              ; Random X position (0-31)
+106   805A CD EF 82                     call    random
+107   805D E6 1F                        and     31
+108   805F 77                           ld      (hl), a
+109   8060 23                           inc     hl
+110   8061
+111   8061 10 EA                        djnz    init_star_loop
+112   8063 C9                           ret
+113   8064
+114   8064              ; -----------------------------------------------------------------------------
+115   8064              ; Initialize Player
+116   8064              ; -----------------------------------------------------------------------------
+117   8064              init_player:
+118   8064 3E 0C                        ld      a, 12           ; Middle of screen
+119   8066 32 05 83                     ld      (player_y), a
+120   8069 3E 02                        ld      a, 2            ; Left side
+121   806B 32 04 83                     ld      (player_x), a
+122   806E AF                           xor     a
+123   806F 32 08 83                     ld      (fire_cooldown), a
+124   8072 C9                           ret
+125   8073
+126   8073              ; -----------------------------------------------------------------------------
+127   8073              ; Initialize Bullets
+128   8073              ; -----------------------------------------------------------------------------
+129   8073              init_bullets:
+130   8073 21 31 83                     ld      hl, bullet_active
+131   8076 06 06                        ld      b, MAX_BULLETS
+132   8078 AF                           xor     a
+133   8079              init_bullet_loop:
+134   8079 77                           ld      (hl), a         ; Set inactive
+135   807A 23                           inc     hl
+136   807B 77                           ld      (hl), a         ; Clear X
+137   807C 23                           inc     hl
+138   807D 77                           ld      (hl), a         ; Clear Y
+139   807E 23                           inc     hl
+140   807F 10 F8                        djnz    init_bullet_loop
+141   8081 C9                           ret
+142   8082
+143   8082              ; -----------------------------------------------------------------------------
+144   8082              ; Initialize Enemies
+145   8082              ; -----------------------------------------------------------------------------
+146   8082              init_enemies:
+147   8082 21 43 83                     ld      hl, enemy_active
+148   8085 06 05                        ld      b, MAX_ENEMIES
+149   8087 0E 00                        ld      c, 0            ; Enemy index
+150   8089
+151   8089              init_enemy_loop:
+152   8089 3E 01                        ld      a, 1
+153   808B 77                           ld      (hl), a         ; Set active
+154   808C 23                           inc     hl
+155   808D
+156   808D                              ; X position - start from right
+157   808D 3E 1E                        ld      a, 30
+158   808F 91                           sub     c               ; Stagger positions
+159   8090 91                           sub     c
+160   8091 77                           ld      (hl), a
+161   8092 23                           inc     hl
+162   8093
+163   8093                              ; Y position - spread vertically
+164   8093 79                           ld      a, c
+165   8094 87                           add     a, a            ; * 2
+166   8095 87                           add     a, a            ; * 4
+167   8096 C6 04                        add     a, 4            ; Offset from top
+168   8098 77                           ld      (hl), a
+169   8099 23                           inc     hl
+170   809A
+171   809A 0C                           inc     c
+172   809B 10 EC                        djnz    init_enemy_loop
+173   809D C9                           ret
+174   809E
+175   809E              ; -----------------------------------------------------------------------------
+176   809E              ; Initialize Explosions
+177   809E              ; -----------------------------------------------------------------------------
+178   809E              init_explosions:
+179   809E 21 52 83                     ld      hl, explosion_active
+180   80A1 06 05                        ld      b, MAX_ENEMIES  ; One explosion per enemy
+181   80A3 AF                           xor     a
+182   80A4              init_expl_loop:
+183   80A4 77                           ld      (hl), a         ; Set inactive
+184   80A5 23                           inc     hl
+185   80A6 23                           inc     hl              ; Skip X
+186   80A7 23                           inc     hl              ; Skip Y
+187   80A8 23                           inc     hl              ; Skip timer
+188   80A9 10 F9                        djnz    init_expl_loop
+189   80AB C9                           ret
+190   80AC
+191   80AC              ; -----------------------------------------------------------------------------
+192   80AC              ; Draw Initial Starfield
+193   80AC              ; -----------------------------------------------------------------------------
+194   80AC              draw_starfield:
+195   80AC 21 09 83                     ld      hl, star_positions
+196   80AF 06 14                        ld      b, 20
+197   80B1
+198   80B1              draw_star_loop:
+199   80B1 C5                           push    bc
+200   80B2 E5                           push    hl
+201   80B3
+202   80B3 7E                           ld      a, (hl)         ; Get Y
+203   80B4 23                           inc     hl
+204   80B5 4E                           ld      c, (hl)         ; Get X
+205   80B6
+206   80B6 CD B9 82                     call    draw_star
+207   80B9
+208   80B9 E1                           pop     hl
+209   80BA 23                           inc     hl
+210   80BB 23                           inc     hl
+211   80BC C1                           pop     bc
+212   80BD 10 F2                        djnz    draw_star_loop
+213   80BF C9                           ret
+214   80C0
+215   80C0              ; -----------------------------------------------------------------------------
+216   80C0              ; Update Scrolling Starfield
+217   80C0              ; -----------------------------------------------------------------------------
+218   80C0              update_starfield:
+219   80C0 21 09 83                     ld      hl, star_positions
+220   80C3 06 14                        ld      b, 20
+221   80C5
+222   80C5              update_star_loop:
+223   80C5 C5                           push    bc
+224   80C6 E5                           push    hl
+225   80C7
+226   80C7                              ; Clear old position
+227   80C7 7E                           ld      a, (hl)         ; Y
+228   80C8 23                           inc     hl
+229   80C9 4E                           ld      c, (hl)         ; X
+230   80CA E5                           push    hl
+231   80CB CD AD 82                     call    clear_char
+232   80CE E1                           pop     hl
+233   80CF
+234   80CF                              ; Move star left
+235   80CF 7E                           ld      a, (hl)
+236   80D0 3D                           dec     a
+237   80D1 F2 D6 80                     jp      p, star_x_ok    ; If positive, still on screen
+238   80D4 3E 1F                        ld      a, 31           ; Wrap to right
+239   80D6              star_x_ok:
+240   80D6 77                           ld      (hl), a
+241   80D7 4F                           ld      c, a
+242   80D8 2B                           dec     hl
+243   80D9 7E                           ld      a, (hl)         ; Get Y
+244   80DA
+245   80DA                              ; Draw at new position
+246   80DA CD B9 82                     call    draw_star
+247   80DD
+248   80DD E1                           pop     hl
+249   80DE 23                           inc     hl
+250   80DF 23                           inc     hl
+251   80E0 C1                           pop     bc
+252   80E1 10 E2                        djnz    update_star_loop
+253   80E3 C9                           ret
+254   80E4
+255   80E4              ; -----------------------------------------------------------------------------
+256   80E4              ; Read Keyboard
+257   80E4              ; -----------------------------------------------------------------------------
+258   80E4              read_keyboard:
+259   80E4                              ; Check Q (up)
+260   80E4 01 FE FB                     ld      bc, 0xfbfe      ; Q-T row
+261   80E7 ED 78                        in      a, (c)
+262   80E9 CB 47                        bit     0, a            ; Q key
+263   80EB CC 0C 81                     call    z, move_up
+264   80EE
+265   80EE                              ; Check A (down)
+266   80EE 01 FE FD                     ld      bc, 0xfdfe      ; A-G row
+267   80F1 ED 78                        in      a, (c)
+268   80F3 CB 47                        bit     0, a            ; A key
+269   80F5 CC 16 81                     call    z, move_down
+270   80F8
+271   80F8                              ; Check SPACE (fire)
+272   80F8 01 FE 7F                     ld      bc, 0x7ffe      ; SPACE-B row
+273   80FB ED 78                        in      a, (c)
+274   80FD CB 47                        bit     0, a            ; SPACE key
+275   80FF CC 21 81                     call    z, fire_bullet
+276   8102
+277   8102                              ; Update cooldown
+278   8102 3A 08 83                     ld      a, (fire_cooldown)
+279   8105 B7                           or      a
+280   8106 C8                           ret     z
+281   8107 3D                           dec     a
+282   8108 32 08 83                     ld      (fire_cooldown), a
+283   810B C9                           ret
+284   810C
+285   810C              ; -----------------------------------------------------------------------------
+286   810C              ; Movement Subroutines
+287   810C              ; -----------------------------------------------------------------------------
+288   810C              move_up:
+289   810C 3A 05 83                     ld      a, (player_y)
+290   810F B7                           or      a
+291   8110 C8                           ret     z               ; At top
+292   8111 3D                           dec     a
+293   8112 32 05 83                     ld      (player_y), a
+294   8115 C9                           ret
+295   8116
+296   8116              move_down:
+297   8116 3A 05 83                     ld      a, (player_y)
+298   8119 FE 17                        cp      23              ; Bottom row
+299   811B C8                           ret     z               ; At bottom
+300   811C 3C                           inc     a
+301   811D 32 05 83                     ld      (player_y), a
+302   8120 C9                           ret
+303   8121
+304   8121              fire_bullet:
+305   8121 3A 08 83                     ld      a, (fire_cooldown)
+306   8124 B7                           or      a
+307   8125 C0                           ret     nz              ; Still cooling down
+308   8126
+309   8126                              ; Find inactive bullet
+310   8126 21 31 83                     ld      hl, bullet_active
+311   8129 06 06                        ld      b, MAX_BULLETS
+312   812B 0E 00                        ld      c, 0            ; Bullet index
+313   812D
+314   812D              find_bullet:
+315   812D 7E                           ld      a, (hl)
+316   812E B7                           or      a
+317   812F 28 07                        jr      z, found_bullet
+318   8131 23                           inc     hl
+319   8132 23                           inc     hl
+320   8133 23                           inc     hl
+321   8134 0C                           inc     c
+322   8135 10 F6                        djnz    find_bullet
+323   8137 C9                           ret                     ; No free bullets
+324   8138
+325   8138              found_bullet:
+326   8138 3E 01                        ld      a, 1
+327   813A 77                           ld      (hl), a         ; Activate bullet
+328   813B 23                           inc     hl
+329   813C
+330   813C                              ; Set position
+331   813C 3A 04 83                     ld      a, (player_x)
+332   813F C6 01                        add     a, 1            ; Start in front of ship
+333   8141 77                           ld      (hl), a         ; X
+334   8142 23                           inc     hl
+335   8143 3A 05 83                     ld      a, (player_y)
+336   8146 77                           ld      (hl), a         ; Y
+337   8147
+338   8147                              ; Set cooldown
+339   8147 3E 0C                        ld      a, FIRE_COOLDOWN
+340   8149 32 08 83                     ld      (fire_cooldown), a
+341   814C C9                           ret
+342   814D
+343   814D              ; -----------------------------------------------------------------------------
+344   814D              ; Update Player
+345   814D              ; -----------------------------------------------------------------------------
+346   814D              update_player:
+347   814D                              ; Clear old position
+348   814D 3A 07 83                     ld      a, (old_player_y)
+349   8150 21 06 83                     ld      hl, old_player_x
+350   8153 4E                           ld      c, (hl)
+351   8154 CD AD 82                     call    clear_char
+352   8157
+353   8157                              ; Draw at new position
+354   8157 3A 05 83                     ld      a, (player_y)
+355   815A 21 04 83                     ld      hl, player_x
+356   815D 4E                           ld      c, (hl)
+357   815E 06 3E                        ld      b, CHAR_PLAYER
+358   8160 16 45                        ld      d, CYAN + BRIGHT_BIT
+359   8162 CD 98 82                     call    draw_char
+360   8165
+361   8165                              ; Update old position
+362   8165 3A 04 83                     ld      a, (player_x)
+363   8168 32 06 83                     ld      (old_player_x), a
+364   816B 3A 05 83                     ld      a, (player_y)
+365   816E 32 07 83                     ld      (old_player_y), a
+366   8171 C9                           ret
+367   8172
+368   8172              ; -----------------------------------------------------------------------------
+369   8172              ; Update Bullets
+370   8172              ; -----------------------------------------------------------------------------
+371   8172              update_bullets:
+372   8172 21 31 83                     ld      hl, bullet_active
+373   8175 06 06                        ld      b, MAX_BULLETS
+374   8177
+375   8177              update_bullet_loop:
+376   8177 C5                           push    bc
+377   8178 E5                           push    hl
+378   8179
+379   8179 7E                           ld      a, (hl)         ; Check if active
+380   817A B7                           or      a
+381   817B 28 21                        jr      z, next_bullet
+382   817D
+383   817D 23                           inc     hl
+384   817E 4E                           ld      c, (hl)         ; Get X
+385   817F 23                           inc     hl
+386   8180 7E                           ld      a, (hl)         ; Get Y
+387   8181
+388   8181                              ; Clear old position
+389   8181 E5                           push    hl
+390   8182 CD AD 82                     call    clear_char
+391   8185 E1                           pop     hl
+392   8186
+393   8186                              ; Move bullet right
+394   8186 2B                           dec     hl
+395   8187 7E                           ld      a, (hl)         ; Get X
+396   8188 C6 02                        add     a, BULLET_SPEED
+397   818A FE 20                        cp      32              ; Check right edge
+398   818C 38 05                        jr      c, bullet_on_screen
+399   818E
+400   818E                              ; Deactivate bullet
+401   818E 2B                           dec     hl
+402   818F AF                           xor     a
+403   8190 77                           ld      (hl), a
+404   8191 18 0B                        jr      next_bullet
+405   8193
+406   8193              bullet_on_screen:
+407   8193 77                           ld      (hl), a         ; Store new X
+408   8194 4F                           ld      c, a
+409   8195 23                           inc     hl
+410   8196 7E                           ld      a, (hl)         ; Get Y
+411   8197
+412   8197                              ; Draw bullet
+413   8197 06 2D                        ld      b, CHAR_BULLET
+414   8199 16 46                        ld      d, YELLOW + BRIGHT_BIT
+415   819B CD 98 82                     call    draw_char
+416   819E
+417   819E              next_bullet:
+418   819E E1                           pop     hl
+419   819F 23                           inc     hl
+420   81A0 23                           inc     hl
+421   81A1 23                           inc     hl
+422   81A2 C1                           pop     bc
+423   81A3 10 D2                        djnz    update_bullet_loop
+424   81A5 C9                           ret
+425   81A6
+426   81A6              ; -----------------------------------------------------------------------------
+427   81A6              ; Update Enemies
+428   81A6              ; -----------------------------------------------------------------------------
+429   81A6              update_enemies:
+430   81A6 21 43 83                     ld      hl, enemy_active
+431   81A9 06 05                        ld      b, MAX_ENEMIES
+432   81AB
+433   81AB              update_enemy_loop:
+434   81AB C5                           push    bc
+435   81AC E5                           push    hl
+436   81AD
+437   81AD 7E                           ld      a, (hl)         ; Check if active
+438   81AE B7                           or      a
+439   81AF 28 2B                        jr      z, next_enemy
+440   81B1
+441   81B1 23                           inc     hl
+442   81B2 4E                           ld      c, (hl)         ; Get X
+443   81B3 23                           inc     hl
+444   81B4 7E                           ld      a, (hl)         ; Get Y
+445   81B5
+446   81B5                              ; Clear old position
+447   81B5 E5                           push    hl
+448   81B6 CD AD 82                     call    clear_char
+449   81B9 E1                           pop     hl
+450   81BA
+451   81BA                              ; Move enemy left
+452   81BA 2B                           dec     hl
+453   81BB 7E                           ld      a, (hl)         ; Get X
+454   81BC D6 01                        sub     ENEMY_SPEED
+455   81BE FA CE 81                     jp      m, enemy_off_screen ; If negative, off screen
+456   81C1
+457   81C1 77                           ld      (hl), a         ; Store new X
+458   81C2 4F                           ld      c, a
+459   81C3 23                           inc     hl
+460   81C4 7E                           ld      a, (hl)         ; Get Y
+461   81C5
+462   81C5                              ; Draw enemy
+463   81C5 06 3C                        ld      b, CHAR_ENEMY
+464   81C7 16 42                        ld      d, RED + BRIGHT_BIT
+465   81C9 CD 98 82                     call    draw_char
+466   81CC 18 0E                        jr      next_enemy
+467   81CE
+468   81CE              enemy_off_screen:
+469   81CE                              ; Respawn on right
+470   81CE 3E 1F                        ld      a, 31
+471   81D0 77                           ld      (hl), a         ; New X
+472   81D1
+473   81D1                              ; Random Y position
+474   81D1 E5                           push    hl
+475   81D2 CD EF 82                     call    random
+476   81D5 E6 0F                        and     15              ; 0-15
+477   81D7 C6 04                        add     a, 4            ; 4-19
+478   81D9 E1                           pop     hl
+479   81DA 23                           inc     hl
+480   81DB 77                           ld      (hl), a         ; New Y
+481   81DC
+482   81DC              next_enemy:
+483   81DC E1                           pop     hl
+484   81DD 23                           inc     hl
+485   81DE 23                           inc     hl
+486   81DF 23                           inc     hl
+487   81E0 C1                           pop     bc
+488   81E1 10 C8                        djnz    update_enemy_loop
+489   81E3 C9                           ret
+490   81E4
+491   81E4              ; -----------------------------------------------------------------------------
+492   81E4              ; Check Collisions
+493   81E4              ; -----------------------------------------------------------------------------
+494   81E4              check_collisions:
+495   81E4                              ; Check each bullet against each enemy
+496   81E4 DD 21 31 83                  ld      ix, bullet_active
+497   81E8 06 06                        ld      b, MAX_BULLETS
+498   81EA
+499   81EA              check_bullet_loop:
+500   81EA C5                           push    bc
+501   81EB
+502   81EB DD 7E 00                     ld      a, (ix+0)       ; Check if bullet active
+503   81EE B7                           or      a
+504   81EF 28 41                        jr      z, check_next_bullet
+505   81F1
+506   81F1                              ; Get bullet position
+507   81F1 DD 56 01                     ld      d, (ix+1)       ; Bullet X
+508   81F4 DD 5E 02                     ld      e, (ix+2)       ; Bullet Y
+509   81F7
+510   81F7                              ; Check against enemies
+511   81F7 FD 21 43 83                  ld      iy, enemy_active
+512   81FB 0E 05                        ld      c, MAX_ENEMIES
+513   81FD
+514   81FD              check_enemy_loop:
+515   81FD FD 7E 00                     ld      a, (iy+0)       ; Check if enemy active
+516   8200 B7                           or      a
+517   8201 28 27                        jr      z, check_next_enemy
+518   8203
+519   8203                              ; Check X collision
+520   8203 FD 7E 01                     ld      a, (iy+1)       ; Enemy X
+521   8206 92                           sub     d               ; Enemy X - Bullet X
+522   8207 38 21                        jr      c, no_x_collision
+523   8209 FE 02                        cp      2               ; Within 2 chars?
+524   820B 30 1D                        jr      nc, no_x_collision
+525   820D
+526   820D                              ; Check Y collision
+527   820D FD 7E 02                     ld      a, (iy+2)       ; Enemy Y
+528   8210 93                           sub     e               ; Enemy Y - Bullet Y
+529   8211 38 17                        jr      c, no_y_collision
+530   8213 FE 02                        cp      2               ; Within 2 chars?
+531   8215 30 13                        jr      nc, no_y_collision
+532   8217
+533   8217                              ; Collision detected!
+534   8217 AF                           xor     a
+535   8218 DD 77 00                     ld      (ix+0), a       ; Deactivate bullet
+536   821B FD 77 00                     ld      (iy+0), a       ; Deactivate enemy
+537   821E
+538   821E                              ; Start explosion
+539   821E FD 7E 01                     ld      a, (iy+1)       ; Enemy X
+540   8221 47                           ld      b, a
+541   8222 FD 7E 02                     ld      a, (iy+2)       ; Enemy Y
+542   8225 CD 3B 82                     call    start_explosion
+543   8228
+544   8228 18 08                        jr      check_next_bullet ; This bullet is done
+545   822A
+546   822A              no_x_collision:
+547   822A              no_y_collision:
+548   822A              check_next_enemy:
+549   822A 11 03 00                     ld      de, 3
+550   822D FD 19                        add     iy, de          ; Next enemy
+551   822F 0D                           dec     c
+552   8230 20 CB                        jr      nz, check_enemy_loop
+553   8232
+554   8232              check_next_bullet:
+555   8232 11 03 00                     ld      de, 3
+556   8235 DD 19                        add     ix, de          ; Next bullet
+557   8237 C1                           pop     bc
+558   8238 10 B0                        djnz    check_bullet_loop
+559   823A C9                           ret
+560   823B
+561   823B              ; -----------------------------------------------------------------------------
+562   823B              ; Start Explosion
+563   823B              ; Input: B = X, A = Y
+564   823B              ; -----------------------------------------------------------------------------
+565   823B              start_explosion:
+566   823B E5                           push    hl
+567   823C C5                           push    bc
+568   823D F5                           push    af
+569   823E
+570   823E                              ; Find inactive explosion slot
+571   823E 21 52 83                     ld      hl, explosion_active
+572   8241 0E 05                        ld      c, MAX_ENEMIES
+573   8243
+574   8243              find_explosion:
+575   8243 7E                           ld      a, (hl)
+576   8244 B7                           or      a
+577   8245 28 0B                        jr      z, found_explosion
+578   8247 23                           inc     hl
+579   8248 23                           inc     hl
+580   8249 23                           inc     hl
+581   824A 23                           inc     hl
+582   824B 0D                           dec     c
+583   824C 20 F5                        jr      nz, find_explosion
+584   824E
+585   824E                              ; No free slot
+586   824E F1                           pop     af
+587   824F C1                           pop     bc
+588   8250 E1                           pop     hl
+589   8251 C9                           ret
+590   8252
+591   8252              found_explosion:
+592   8252 3E 08                        ld      a, EXPLOSION_TIME
+593   8254 77                           ld      (hl), a         ; Set timer
+594   8255 23                           inc     hl
+595   8256 70                           ld      (hl), b         ; Set X
+596   8257 23                           inc     hl
+597   8258 F1                           pop     af              ; Get Y
+598   8259 77                           ld      (hl), a         ; Set Y
+599   825A
+600   825A C1                           pop     bc
+601   825B E1                           pop     hl
+602   825C C9                           ret
+603   825D
+604   825D              ; -----------------------------------------------------------------------------
+605   825D              ; Update Explosions
+606   825D              ; -----------------------------------------------------------------------------
+607   825D              update_explosions:
+608   825D 21 52 83                     ld      hl, explosion_active
+609   8260 06 05                        ld      b, MAX_ENEMIES
+610   8262
+611   8262              update_expl_loop:
+612   8262 C5                           push    bc
+613   8263 E5                           push    hl
+614   8264
+615   8264 7E                           ld      a, (hl)         ; Get timer
+616   8265 B7                           or      a
+617   8266 28 27                        jr      z, next_explosion
+618   8268
+619   8268                              ; Get position
+620   8268 23                           inc     hl
+621   8269 4E                           ld      c, (hl)         ; X
+622   826A 23                           inc     hl
+623   826B 7E                           ld      a, (hl)         ; Y
+624   826C
+625   826C                              ; Clear old explosion
+626   826C E5                           push    hl
+627   826D CD AD 82                     call    clear_char
+628   8270 E1                           pop     hl
+629   8271
+630   8271                              ; Decrement timer
+631   8271 2B                           dec     hl
+632   8272 2B                           dec     hl
+633   8273 7E                           ld      a, (hl)
+634   8274 3D                           dec     a
+635   8275 77                           ld      (hl), a
+636   8276 28 17                        jr      z, next_explosion ; Explosion finished
+637   8278
+638   8278                              ; Draw explosion frame
+639   8278 23                           inc     hl
+640   8279 4E                           ld      c, (hl)         ; X
+641   827A 23                           inc     hl
+642   827B 7E                           ld      a, (hl)         ; Y
+643   827C 06 4F                        ld      b, CHAR_EXPLOSION
+644   827E
+645   827E                              ; Cycle colors based on timer
+646   827E 2B                           dec     hl
+647   827F 2B                           dec     hl
+648   8280 7E                           ld      a, (hl)         ; Timer
+649   8281 E6 03                        and     3
+650   8283 C6 06                        add     a, YELLOW
+651   8285 F6 40                        or      BRIGHT_BIT
+652   8287 57                           ld      d, a
+653   8288
+654   8288 23                           inc     hl
+655   8289 4E                           ld      c, (hl)         ; X
+656   828A 23                           inc     hl
+657   828B 7E                           ld      a, (hl)         ; Y
+658   828C CD 98 82                     call    draw_char
+659   828F
+660   828F              next_explosion:
+661   828F E1                           pop     hl
+662   8290 23                           inc     hl
+663   8291 23                           inc     hl
+664   8292 23                           inc     hl
+665   8293 23                           inc     hl
+666   8294 C1                           pop     bc
+667   8295 10 CB                        djnz    update_expl_loop
+668   8297 C9                           ret
+669   8298
+670   8298              ; -----------------------------------------------------------------------------
+671   8298              ; Character Drawing Routines
+672   8298              ; -----------------------------------------------------------------------------
+673   8298
+674   8298              ; Draw character at position
+675   8298              ; Input: A = Y, C = X, B = char, D = attr
+676   8298              draw_char:
+677   8298 F5                           push    af
+678   8299 C5                           push    bc
+679   829A D5                           push    de
+680   829B E5                           push    hl
+681   829C
+682   829C                              ; Calculate screen address
+683   829C CD C3 82                     call    calc_screen_addr
+684   829F 70                           ld      (hl), b         ; Draw character
+685   82A0
+686   82A0                              ; Calculate attribute address
+687   82A0 E1                           pop     hl
+688   82A1 D1                           pop     de
+689   82A2 D5                           push    de
+690   82A3 E5                           push    hl
+691   82A4 CD D9 82                     call    calc_attr_addr
+692   82A7 72                           ld      (hl), d         ; Set attribute
+693   82A8
+694   82A8 E1                           pop     hl
+695   82A9 D1                           pop     de
+696   82AA C1                           pop     bc
+697   82AB F1                           pop     af
+698   82AC C9                           ret
+699   82AD
+700   82AD              ; Clear character at position
+701   82AD              ; Input: A = Y, C = X
+702   82AD              clear_char:
+703   82AD F5                           push    af
+704   82AE C5                           push    bc
+705   82AF E5                           push    hl
+706   82B0
+707   82B0 CD C3 82                     call    calc_screen_addr
+708   82B3 36 00                        ld      (hl), CHAR_SPACE
+709   82B5
+710   82B5 E1                           pop     hl
+711   82B6 C1                           pop     bc
+712   82B7 F1                           pop     af
+713   82B8 C9                           ret
+714   82B9
+715   82B9              ; Draw star at position
+716   82B9              ; Input: A = Y, C = X
+717   82B9              draw_star:
+718   82B9 D5                           push    de
+719   82BA 06 2A                        ld      b, CHAR_STAR
+720   82BC 16 07                        ld      d, WHITE        ; Dim white star
+721   82BE CD 98 82                     call    draw_char
+722   82C1 D1                           pop     de
+723   82C2 C9                           ret
+724   82C3
+725   82C3              ; Calculate screen address
+726   82C3              ; Input: A = Y, C = X
+727   82C3              ; Output: HL = screen address
+728   82C3              calc_screen_addr:
+729   82C3 F5                           push    af
+730   82C4 C5                           push    bc
+731   82C5 D5                           push    de
+732   82C6
+733   82C6 6F                           ld      l, a            ; Y to L
+734   82C7 26 00                        ld      h, 0
+735   82C9 29                           add     hl, hl          ; Y * 2
+736   82CA 29                           add     hl, hl          ; Y * 4
+737   82CB 29                           add     hl, hl          ; Y * 8
+738   82CC 29                           add     hl, hl          ; Y * 16
+739   82CD 29                           add     hl, hl          ; Y * 32
+740   82CE
+741   82CE 06 00                        ld      b, 0
+742   82D0 09                           add     hl, bc          ; Add X
+743   82D1
+744   82D1 01 00 40                     ld      bc, SCREEN_START
+745   82D4 09                           add     hl, bc
+746   82D5
+747   82D5 D1                           pop     de
+748   82D6 C1                           pop     bc
+749   82D7 F1                           pop     af
+750   82D8 C9                           ret
+751   82D9
+752   82D9              ; Calculate attribute address
+753   82D9              ; Input: A = Y, C = X
+754   82D9              ; Output: HL = attribute address
+755   82D9              calc_attr_addr:
+756   82D9 F5                           push    af
+757   82DA C5                           push    bc
+758   82DB D5                           push    de
+759   82DC
+760   82DC 6F                           ld      l, a            ; Y to L
+761   82DD 26 00                        ld      h, 0
+762   82DF 29                           add     hl, hl          ; Y * 2
+763   82E0 29                           add     hl, hl          ; Y * 4
+764   82E1 29                           add     hl, hl          ; Y * 8
+765   82E2 29                           add     hl, hl          ; Y * 16
+766   82E3 29                           add     hl, hl          ; Y * 32
+767   82E4
+768   82E4 06 00                        ld      b, 0
+769   82E6 09                           add     hl, bc          ; Add X
+770   82E7
+771   82E7 01 00 58                     ld      bc, ATTR_START
+772   82EA 09                           add     hl, bc
+773   82EB
+774   82EB D1                           pop     de
+775   82EC C1                           pop     bc
+776   82ED F1                           pop     af
+777   82EE C9                           ret
+778   82EF
+779   82EF              ; -----------------------------------------------------------------------------
+780   82EF              ; Random Number Generator
+781   82EF              ; -----------------------------------------------------------------------------
+782   82EF              random:
+783   82EF E5                           push    hl
+784   82F0 2A 66 83                     ld      hl, (random_seed)
+785   82F3 7C                           ld      a, h
+786   82F4 0F                           rrca
+787   82F5 0F                           rrca
+788   82F6 0F                           rrca
+789   82F7 EE 1F                        xor     $1f
+790   82F9 85                           add     a, l
+791   82FA 6F                           ld      l, a
+792   82FB 7C                           ld      a, h
+793   82FC 0F                           rrca
+794   82FD AD                           xor     l
+795   82FE 67                           ld      h, a
+796   82FF 22 66 83                     ld      (random_seed), hl
+797   8302 E1                           pop     hl
+798   8303 C9                           ret
+799   8304
+800   8304              ; -----------------------------------------------------------------------------
+801   8304              ; Data Section
+802   8304              ; -----------------------------------------------------------------------------
+803   8304
+804   8304              ; Player data
+805   8304 02           player_x:       db      2
+806   8305 0C           player_y:       db      12
+807   8306 02           old_player_x:   db      2
+808   8307 0C           old_player_y:   db      12
+809   8308 00           fire_cooldown:  db      0
+810   8309
+811   8309              ; Star data (Y, X pairs)
+812   8309              star_positions:
+813   8309 00 00 00...                  ds      40              ; 20 stars * 2 bytes
+814   8331
+815   8331              ; Bullet data (active, x, y)
+816   8331 00 00 00...  bullet_active:  ds      MAX_BULLETS * 3
+817   8343
+818   8343              ; Enemy data (active, x, y)
+819   8343 00 00 00...  enemy_active:   ds      MAX_ENEMIES * 3
+820   8352
+821   8352              ; Explosion data (timer, x, y, unused)
+822   8352 00 00 00...  explosion_active: ds    MAX_ENEMIES * 4
+823   8366
+824   8366              ; Random seed
+825   8366 39 30        random_seed:    dw      12345
+826   8368
+827   8368              ; TAP file creation
+quantum-shatter-04.asm(828): warning: [SAVETAP] Tape file will not contain data from 0x5B00 to 0x5E00
+828   8368                              savetap "quantum-shatter-04.tap", start
+829   8368
+830   8368                              end     start
+# file closed: quantum-shatter-04.asm
+
+Value    Label
+------ - -----------------------------------------------------------
+0x8366   random_seed
+0x82D9   calc_attr_addr
+0x82C3   calc_screen_addr
+0x828F   next_explosion
+0x8262   update_expl_loop
+0x8252   found_explosion
+0x8243   find_explosion
+0x823B   start_explosion
+0x822A   no_y_collision
+0x822A   no_x_collision
+0x822A   check_next_enemy
+0x81FD   check_enemy_loop
+0x8232   check_next_bullet
+0x81EA   check_bullet_loop
+0x81CE   enemy_off_screen
+0x81DC   next_enemy
+0x81AB   update_enemy_loop
+0x8193   bullet_on_screen
+0x819E   next_bullet
+0x8177   update_bullet_loop
+0x8298   draw_char
+0x8306   old_player_x
+0x8307   old_player_y
+0x8138   found_bullet
+0x812D   find_bullet
+0x8121   fire_bullet
+0x8116   move_down
+0x810C   move_up
+0x80D6   star_x_ok
+0x82AD   clear_char
+0x80C5   update_star_loop
+0x82B9   draw_star
+0x80B1   draw_star_loop
+0x80A4   init_expl_loop
+0x8352   explosion_active
+0x8089   init_enemy_loop
+0x8343   enemy_active
+0x8079   init_bullet_loop
+0x8331   bullet_active
+0x8308   fire_cooldown
+0x8304   player_x
+0x8305   player_y
+0x8058   star_y_ok
+0x82EF   random
+0x804D   init_star_loop
+0x8309   star_positions
+0x825D   update_explosions
+0x81E4   check_collisions
+0x81A6   update_enemies
+0x8172   update_bullets
+0x814D   update_player
+0x80E4   read_keyboard
+0x80C0   update_starfield
+0x8015   game_loop
+0x80AC   draw_starfield
+0x809E   init_explosions
+0x8082   init_enemies
+0x8073   init_bullets
+0x8064   init_player
+0x8048   init_starfield
+0x802D   clear_screen
+0x8000   start
+0x0008   EXPLOSION_TIME
+0x0001   ENEMY_SPEED
+0x0002   BULLET_SPEED
+0x000C   FIRE_COOLDOWN
+0x0005   MAX_ENEMIES
+0x0006   MAX_BULLETS
+0x004F   CHAR_EXPLOSION
+0x003C   CHAR_ENEMY
+0x002D   CHAR_BULLET
+0x003E   CHAR_PLAYER
+0x002A   CHAR_STAR
+0x0000   CHAR_SPACE
+0x0040   BRIGHT_BIT
+0x0007   WHITE
+0x0006   YELLOW
+0x0005   CYAN
+0x0004 X GREEN
+0x0003 X MAGENTA
+0x0002   RED
+0x0001 X BLUE
+0x0000 X BLACK
+0x0018 X SCREEN_HEIGHT
+0x0020 X SCREEN_WIDTH
+0x5800   ATTR_START
+0x4000   SCREEN_START
