@@ -448,44 +448,44 @@ copy_sprite:
 ;===============================================================================
 
 check_keyboard_input:
-        ; Q key (Up)
+        ; Q key (Up) - Row 7, Bit 1
         lda #%01111111
         sta $dc00
         lda $dc01
-        and #%01000000
+        and #%00000010
         bne not_q
         lda joystick_state
         and #%11111110
         sta joystick_state
 not_q:
         
-        ; A key (Down)
+        ; A key (Down) - Row 1, Bit 5
         lda #%11111101
         sta $dc00
         lda $dc01
-        and #%00000100
+        and #%00100000
         bne not_a
         lda joystick_state
         and #%11111101
         sta joystick_state
 not_a:
         
-        ; O key (Left)
-        lda #%11110111
+        ; O key (Left) - Row 4, Bit 1
+        lda #%11101111
         sta $dc00
         lda $dc01
-        and #%01000000
+        and #%00000010
         bne not_o
         lda joystick_state
         and #%11111011
         sta joystick_state
 not_o:
         
-        ; P key (Right)
-        lda #%11111101
+        ; P key (Right) - Row 5, Bit 6
+        lda #%11011111
         sta $dc00
         lda $dc01
-        and #%00100000
+        and #%01000000
         bne not_p
         lda joystick_state
         and #%11110111
