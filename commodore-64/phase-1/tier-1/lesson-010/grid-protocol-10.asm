@@ -109,7 +109,7 @@ initialize_system:
 ;===============================================================================
 deploy_entity:
         ; Set initial sprite pointer to frame 0
-        lda #$0d               ; $0340 / 64 = $0D
+        lda #$80               ; $2000 / 64 = $80
         sta $07f8
         
         ; Enable entity
@@ -340,22 +340,22 @@ update_animation:
         
 frame_ok:
         ; Update sprite pointer based on frame AND direction
-        ; Right-facing frames (0-3): $0340-$0400 (blocks $0D-$10)
-        ; Left-facing frames (4-7): $0440-$0500 (blocks $11-$14)
+        ; Right-facing frames (0-3): $2000-$20C0 (blocks $80-$83)
+        ; Left-facing frames (4-7): $2100-$21C0 (blocks $84-$87)
         lda facing_direction
         beq use_right_frames
         
         ; Use left-facing frames (add 4 to frame number)
         lda anim_frame
         clc
-        adc #$11               ; Base for left frames
+        adc #$84               ; Base for left frames
         sta $07f8
         jmp animation_done
         
 use_right_frames:
         lda anim_frame
         clc
-        adc #$0d               ; Base for right frames
+        adc #$80               ; Base for right frames
         sta $07f8
         
 animation_done:
@@ -531,7 +531,7 @@ status_msg:
         !byte 0
 
 ; Sprite frames - Simple walking animation
-*=$0340
+*=$2000
 ; Frame 0 - Idle (standing)
 sprite_frame_0:
         !byte %00000000,%00011000,%00000000
@@ -556,7 +556,7 @@ sprite_frame_0:
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%11111111,%00000000
 
-*=$0380
+*=$2040
 ; Frame 1 - Walk cycle 1 (left leg forward)
 sprite_frame_1:
         !byte %00000000,%00011000,%00000000
@@ -581,7 +581,7 @@ sprite_frame_1:
         !byte %00000110,%00000000,%11000000
         !byte %00001100,%00000000,%01100000
 
-*=$03C0
+*=$2080
 ; Frame 2 - Walk cycle 2 (both legs together)
 sprite_frame_2:
         !byte %00000000,%00011000,%00000000
@@ -606,7 +606,7 @@ sprite_frame_2:
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%01100110,%00000000
 
-*=$0400
+*=$20C0
 ; Frame 3 - Walk cycle 3 (right leg forward)
 sprite_frame_3:
         !byte %00000000,%00011000,%00000000
@@ -637,7 +637,7 @@ sprite_frame_3:
 ; These are horizontally flipped versions of the right-facing sprites
 ; This demonstrates solution #1 to C64's lack of hardware flipping
 
-*=$0440
+*=$2100
 ; Frame 4 - Idle (left-facing)
 sprite_frame_4:
         !byte %00000000,%00011000,%00000000
@@ -662,7 +662,7 @@ sprite_frame_4:
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%01100110,%00000000
 
-*=$0480
+*=$2140
 ; Frame 5 - Walk cycle 1 (left-facing, right leg forward)
 sprite_frame_5:
         !byte %00000000,%00011000,%00000000
@@ -687,7 +687,7 @@ sprite_frame_5:
         !byte %00000000,%01100011,%00000000
         !byte %00000000,%00110001,%10000000
 
-*=$04C0
+*=$2180
 ; Frame 6 - Walk cycle 2 (left-facing)
 sprite_frame_6:
         !byte %00000000,%00011000,%00000000
@@ -712,7 +712,7 @@ sprite_frame_6:
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%01100110,%00000000
 
-*=$0500
+*=$21C0
 ; Frame 7 - Walk cycle 3 (left-facing, left leg forward)
 sprite_frame_7:
         !byte %00000000,%00011000,%00000000
