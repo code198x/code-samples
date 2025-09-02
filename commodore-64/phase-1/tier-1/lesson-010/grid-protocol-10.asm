@@ -25,7 +25,8 @@ STATE_MOVING = 1
 
 ; Animation settings
 ANIM_SPEED = 4                 ; Frames between animation changes
-ANIM_FRAMES = 4                ; Number of animation frames
+ANIM_FRAMES = 4                ; Number of animation frames per direction
+TOTAL_FRAMES = 8               ; 4 right-facing + 4 left-facing
 
 ;===============================================================================
 ; GATEWAY PROTOCOL
@@ -357,15 +358,26 @@ update_animation:
         sta anim_frame
         
 frame_ok:
-        ; Update sprite pointer based on current frame
-        ; Frame 0: $0340 / 64 = $0D
-        ; Frame 1: $0380 / 64 = $0E
-        ; Frame 2: $03C0 / 64 = $0F
-        ; Frame 3: $0400 / 64 = $10
+        ; Update sprite pointer based on frame AND direction
+        ; Right-facing frames (0-3): $0340-$0400 (blocks $0D-$10)
+        ; Left-facing frames (4-7): $0440-$0500 (blocks $11-$14)
+        lda facing_direction
+        beq use_right_frames
+        
+        ; Use left-facing frames (add 4 to frame number)
         lda anim_frame
         clc
-        adc #$0d
+        adc #$11               ; Base for left frames
         sta $07f8
+        jmp animation_done
+        
+use_right_frames:
+        lda anim_frame
+        clc
+        adc #$0d               ; Base for right frames
+        sta $07f8
+        
+animation_done:
         
 no_animation:
         rts
@@ -404,14 +416,8 @@ update_sprite:
         lda current_x_msb
         sta $d010
         
-        ; No hardware sprite flipping on C64!
-        ; This is a common misconception - we need different sprite data
-        ; For this lesson, we'll keep all sprites facing right
-        ; In a real game, you'd have separate left-facing frames
-        
-        ; Future enhancement: Could add frames 4-7 as left-facing versions
-        ; Or implement a software flip routine (complex and slow)
-        ; The $d01d register is for X-expansion, not flipping!
+        ; Direction-based sprites are handled in update_animation
+        ; We're using pre-stored mirrored frames (solution #1)
         rts
 
 ;===============================================================================
@@ -641,19 +647,127 @@ sprite_frame_3:
         !byte %00000110,%00000000,%01100000
 
 ;===============================================================================
+; LEFT-FACING SPRITE FRAMES (Mirrored versions)
+;===============================================================================
+; These are horizontally flipped versions of the right-facing sprites
+; This demonstrates solution #1 to C64's lack of hardware flipping
+
+*=$0440
+; Frame 4 - Idle (left-facing)
+sprite_frame_4:
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%01100110,%00000000
+        !byte %00000000,%01100110,%00000000
+        !byte %00000000,%01100110,%00000000
+
+*=$0480
+; Frame 5 - Walk cycle 1 (left-facing, right leg forward)
+sprite_frame_5:
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000001,%10000011,%00000000
+        !byte %00000000,%11000110,%00000000
+        !byte %00000000,%01100011,%00000000
+        !byte %00000000,%00110001,%10000000
+
+*=$04C0
+; Frame 6 - Walk cycle 2 (left-facing)
+sprite_frame_6:
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000000,%01100110,%00000000
+        !byte %00000000,%01100110,%00000000
+        !byte %00000000,%01100110,%00000000
+        !byte %00000000,%01100110,%00000000
+
+*=$0500
+; Frame 7 - Walk cycle 3 (left-facing, left leg forward)
+sprite_frame_7:
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%00011000,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000011,%11111111,%11000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%00111100,%00000000
+        !byte %00000000,%01111110,%00000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000001,%11111111,%10000000
+        !byte %00000000,%11111111,%00000000
+        !byte %00000001,%10000011,%00000000
+        !byte %00000000,%11000001,%10000000
+        !byte %00000011,%00000000,%11000000
+        !byte %00000110,%00000000,%01100000
+
+;===============================================================================
 ; TECHNICAL NOTES
 ;===============================================================================
 ; Lesson 10 improvements:
-; - 4 animation frames (idle + 3 walk cycles)
-; - Animation cycles while moving
+; - 8 total animation frames (4 right-facing + 4 left-facing)
+; - Animation cycles while moving (3 walk frames per direction)
 ; - Frame timing control (ANIM_SPEED)
 ; - Returns to idle frame when stopped
-; - Stores facing direction for future use
+; - Sprite faces correct direction based on movement
 ;
 ; IMPORTANT C64 LIMITATION:
 ; The C64 has NO hardware sprite flipping! Common solutions:
-; 1. Store mirrored sprite data (doubles memory usage)
+; 1. Store mirrored sprite data (doubles memory usage) - OUR SOLUTION
 ; 2. Software flip routine (CPU intensive)
-; 3. Use same sprite for both directions (our choice)
-; Games like Impossible Mission used solution #1
-; Most action games pre-stored flipped sprites
+; 3. Use same sprite for both directions (simplest but unrealistic)
+;
+; We're using solution #1 - storing both left and right versions
+; This is what most professional C64 games did!
+; Memory usage: 64 bytes × 8 frames = 512 bytes total
