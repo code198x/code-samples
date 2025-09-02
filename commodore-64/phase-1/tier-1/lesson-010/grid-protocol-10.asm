@@ -550,6 +550,7 @@ status_msg:
         !byte 0
 
 ; Sprite frames - Simple walking animation
+*=$0340
 ; Frame 0 - Idle (standing)
 sprite_frame_0:
         !byte %00000000,%00011000,%00000000
@@ -574,6 +575,7 @@ sprite_frame_0:
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%11111111,%00000000
 
+*=$0380
 ; Frame 1 - Walk cycle 1 (left leg forward)
 sprite_frame_1:
         !byte %00000000,%00011000,%00000000
@@ -598,6 +600,7 @@ sprite_frame_1:
         !byte %00000110,%00000000,%11000000
         !byte %00001100,%00000000,%01100000
 
+*=$03C0
 ; Frame 2 - Walk cycle 2 (both legs together)
 sprite_frame_2:
         !byte %00000000,%00011000,%00000000
@@ -622,6 +625,7 @@ sprite_frame_2:
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%01100110,%00000000
 
+*=$0400
 ; Frame 3 - Walk cycle 3 (right leg forward)
 sprite_frame_3:
         !byte %00000000,%00011000,%00000000
