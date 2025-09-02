@@ -577,9 +577,9 @@ sprite_frame_1:
         !byte %00000001,%11111111,%10000000
         !byte %00000000,%11111111,%00000000
         
-        ; Extended right arm to show facing direction clearly
-        !byte %00000001,%10000011,%11000000  ; Right arm extended
-        !byte %00000011,%00000001,%11110000  ; Hand/weapon detail
+        ; Profile with nose showing right-facing direction
+        !byte %00000001,%10000011,%00000000  ; Standard legs
+        !byte %00000011,%00100001,%10000000  ; Nose pointing right
         !byte %00000110,%00000000,%11000000
         !byte %00001100,%00000000,%01100000
 
@@ -603,8 +603,8 @@ sprite_frame_2:
         !byte %00000001,%11111111,%10000000
         !byte %00000001,%11111111,%10000000
         !byte %00000000,%11111111,%00000000
-        !byte %00000000,%01100110,%11000000  ; Right arm showing
-        !byte %00000000,%01100110,%11100000  ; Extended arm detail
+        !byte %00000000,%01100110,%00000000  ; Standard legs
+        !byte %00000000,%01101110,%00000000  ; Nose pointing right
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%01100110,%00000000
 
@@ -628,8 +628,8 @@ sprite_frame_3:
         !byte %00000001,%11111111,%10000000
         !byte %00000001,%11111111,%10000000
         !byte %00000000,%11111111,%00000000
-        !byte %00000000,%11000001,%11000000  ; Right arm extended
-        !byte %00000001,%10000011,%11110000  ; Hand/weapon detail
+        !byte %00000000,%11000001,%10000000  ; Standard legs  
+        !byte %00000001,%10001011,%00000000  ; Nose pointing right
         !byte %00000011,%00000000,%11000000
         !byte %00000110,%00000000,%01100000
 
@@ -684,8 +684,8 @@ sprite_frame_5:
         !byte %00000001,%11111111,%10000000
         !byte %00000001,%11111111,%10000000
         !byte %00000000,%11111111,%00000000
-        !byte %00000011,%10000011,%00000000  ; Left arm extended (mirrored)
-        !byte %00001111,%11000110,%00000000  ; Hand/weapon detail (mirrored)
+        !byte %00000001,%10000011,%00000000  ; Standard legs
+        !byte %00000001,%10000100,%11000000  ; Nose pointing left (mirrored)
         !byte %00000000,%01100011,%00000000
         !byte %00000000,%00110001,%10000000
 
@@ -709,8 +709,8 @@ sprite_frame_6:
         !byte %00000001,%11111111,%10000000
         !byte %00000001,%11111111,%10000000
         !byte %00000000,%11111111,%00000000
-        !byte %00000011,%01100110,%00000000  ; Left arm showing (mirrored)
-        !byte %00000111,%01100110,%00000000  ; Extended arm detail (mirrored)
+        !byte %00000000,%01100110,%00000000  ; Standard legs
+        !byte %00000000,%01110110,%00000000  ; Nose pointing left (mirrored)
         !byte %00000000,%01100110,%00000000
         !byte %00000000,%01100110,%00000000
 
@@ -734,8 +734,8 @@ sprite_frame_7:
         !byte %00000001,%11111111,%10000000
         !byte %00000001,%11111111,%10000000
         !byte %00000000,%11111111,%00000000
-        !byte %00000011,%10000011,%00000000  ; Left arm extended (mirrored)
-        !byte %00001111,%11000001,%10000000  ; Hand/weapon detail (mirrored)
+        !byte %00000001,%10000011,%00000000  ; Standard legs
+        !byte %00000001,%10100001,%10000000  ; Nose pointing left (mirrored)
         !byte %00000011,%00000000,%11000000
         !byte %00000110,%00000000,%01100000
 
