@@ -1,36 +1,49 @@
 # Makefile for Pixel Patrol Lesson 2
-# First Hardware Sprite
+# C64 Assembly Development
 
-# ACME cross-assembler
-ASM = acme
+# Project settings
+PROJECT = pixel-patrol-02
+TARGET = $(PROJECT).prg
+SOURCE = $(PROJECT).asm
 
-# VICE C64 emulator
-EMU = x64sc
+# Assembler settings (using ACME)
+ACME = acme
+ACME_FLAGS = -f cbm -o $(TARGET)
 
-# Build directory
-BUILDDIR = build
-
-# Source and target files
-SRC = pixel-patrol-02.asm
-PRG = $(BUILDDIR)/pixel-patrol-02.prg
+# Emulator settings
+VICE = x64sc
+VICE_FLAGS = -autostartprgmode 1
 
 # Default target
-all: $(PRG)
+all: $(TARGET)
 
-# Create build directory
-$(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+# Build the PRG file
+$(TARGET): $(SOURCE)
+	$(ACME) $(ACME_FLAGS) $(SOURCE)
 
-# Assemble the program
-$(PRG): $(SRC) | $(BUILDDIR)
-	$(ASM) -f cbm -o $(PRG) $(SRC)
+# Run in VICE emulator
+run: $(TARGET)
+	$(VICE) $(VICE_FLAGS) $(TARGET)
 
-# Run in emulator
-run: $(PRG)
-	$(EMU) $(PRG)
-
-# Clean build files
+# Clean build artifacts
 clean:
-	rm -rf $(BUILDDIR)
+	rm -f $(TARGET)
 
-.PHONY: all run clean
+# Development targets
+test: run
+
+# Show assembler output
+verbose: 
+	$(ACME) $(ACME_FLAGS) -v $(SOURCE)
+
+# Help target
+help:
+	@echo "Available targets:"
+	@echo "  all     - Build the PRG file (default)"
+	@echo "  run     - Build and run in VICE emulator"
+	@echo "  test    - Same as run"
+	@echo "  clean   - Remove build artifacts"
+	@echo "  verbose - Build with verbose output"
+	@echo "  help    - Show this help"
+
+.PHONY: all run test clean verbose help

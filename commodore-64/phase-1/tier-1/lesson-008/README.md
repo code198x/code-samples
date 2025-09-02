@@ -1,52 +1,104 @@
-# Pixel Patrol - Lesson 8: Basic Game Loop
+# Grid Protocol - Lesson 8: Complete Patrol System
 
-This lesson creates a proper game loop structure with initialization, update cycle, and frame-based timing.
+This lesson implements a complete patrol system with timing, state management, and real-time statistics - demonstrating professional game loop architecture and authentic C64 development patterns.
 
 ### What You'll Learn
 
-- Implementing game initialization phases
-- Creating a main update loop
-- Adding frame-based timing system
-- Tracking game statistics
-- Professional code organization
+- Complete game loop architecture
+- Real-time timing systems with frame synchronization  
+- Professional initialization and state management
+- Statistics tracking and display systems
+- Authentic 1980s game development patterns
 
 ### New Concepts Introduced
 
-#### Game States
+#### Game State Management
 ```assembly
-; Game states
-STATE_INIT = 0                 ; Initialization
-STATE_PLAYING = 1              ; Main game
-STATE_PAUSED = 2               ; Paused (future)
+; System states
+STATE_INIT = 0                 ; Initialization phase
+STATE_PATROL = 1               ; Active patrol operations
+STATE_ALERT = 2                ; Alert/emergency mode (future)
+
+; Main game structure
+main:
+        jsr initialize_grid
+        lda #STATE_PATROL
+        sta system_state
+        
+main_loop:
+        jsr update_timing
+        jsr update_game
+        jsr update_display
+        jsr wait_frame
+        jmp main_loop
 ```
 
-Define clear states to control game flow and enable features like pause/resume.
+Professional game architecture with clear phases and responsibilities.
 
-#### Frame Synchronization
+#### Real-Time Timing System
 ```assembly
-wait_frame_start:
-        lda $d012              ; Current raster line
-        cmp #251               ; Wait for line 251
-        bne wait_top
+; Timing constants
+FRAMES_PER_SECOND = 50         ; PAL C64 refresh rate
+FRAME_COUNTER_RESET = 50       ; Frames per second
+
+update_timing:
+        inc frame_counter
+        lda frame_counter
+        cmp #FRAME_COUNTER_RESET
+        bne timing_done
+        
+        ; One second elapsed
+        lda #0
+        sta frame_counter
+        inc seconds_counter
+        
+timing_done:
+        rts
 ```
 
-Synchronize game updates with display refresh for smooth, consistent gameplay.
+Precise timing using the C64's 50Hz PAL refresh rate for accurate time tracking.
+
+#### Statistics Display System  
+```assembly
+update_display:
+        lda seconds_counter
+        
+        ; Convert binary to decimal for display
+        ldx #0                 ; Tens digit
+        sec
+div10:  sbc #10
+        bcc done_div
+        inx
+        jmp div10
+done_div:
+        adc #10               ; A = ones digit, X = tens digit
+        
+        ; Display both digits on screen
+        ; Shows elapsed patrol time in real-time
+```
+
+Professional binary-to-decimal conversion for real-time statistics display.
 
 ### Technical Details
 
-#### Game Structure
-- **Initialization**: One-time setup of hardware and variables
-- **Main Loop**: Continuous update cycle
-- **State Management**: Control flow with game states
-- **Timing System**: Frame counting and statistics
+#### Complete Game Loop
+- **Initialization Phase**: One-time hardware and system setup
+- **Main Loop**: Continuous 50Hz update cycle
+- **Timing Management**: Frame-perfect synchronization with display
+- **State Processing**: Conditional logic based on current system state
+- **Display Updates**: Real-time information presentation
 
-#### Update Cycle
-1. Wait for frame start (vsync)
-2. Update timing counters
-3. Read player input
-4. Update game logic
-5. Update display
-6. Repeat
+#### Frame Synchronization
+- **50Hz Operation**: Matches PAL C64 display refresh rate
+- **Precise Timing**: Frame counter ensures accurate second tracking
+- **No Drift**: Timing locked to hardware refresh, prevents accumulation errors
+- **Performance**: Minimal CPU overhead for timing operations
+
+#### Professional Architecture
+- **Modular Design**: Clear separation between initialization and operation
+- **State-Driven**: Easy to add new states (pause, menu, game over)
+- **Extensible**: Framework ready for additional features
+- **Maintainable**: Clean code structure for long-term development
 
 ### Building and Running
 
@@ -54,75 +106,116 @@ Synchronize game updates with display refresh for smooth, consistent gameplay.
 make        # Build the program
 make run    # Build and run in VICE emulator
 make clean  # Clean build files
+make help   # Show all available targets
 ```
 
 ### Controls
-- **Joystick Port 2**: Move sprite in grid
-- **Q/A/O/P Keys**: Alternative keyboard controls
-- **Movement**: Grid-based with constraints
+- **Joystick Port 2**: Navigate patrol sectors
+- **Up/Down/Left/Right**: Move one sector at a time
+- **Real-time Operation**: No pause - continuous patrol simulation
 
 ### What You'll Experience
 
 When you run this program, you'll see:
-- **Smooth Updates**: Consistent 50Hz frame rate
-- **Time Display**: Elapsed seconds counter
-- **Move Counter**: Total moves made
-- **Professional Feel**: Proper game structure
+- **Complete Patrol System**: Professional game feel and operation
+- **Real-Time Timer**: Accurate seconds counter showing patrol duration
+- **Status Display**: "GRID PATROL SYSTEM ACTIVE" header message
+- **Time Tracking**: "TIME ELAPSED: XX" display (bottom left)
+- **Smooth Operation**: 50Hz frame-perfect timing
+- **Border Feedback**: Red alerts when hitting patrol boundaries
 
-### Frame Timing Details
+### System Architecture
 
-The C64 PAL system runs at 50Hz (50 frames per second):
-- Each frame = 20 milliseconds
-- Raster beam takes 1 frame to draw screen
-- Synchronizing ensures consistent timing
-
-### Statistics System
-
-The game tracks:
-- **Frame Counter**: 0-49, resets each second
-- **Seconds Counter**: Total elapsed time
-- **Move Counter**: Player moves made
-
-### Foundation for Future Features
-
-This structure enables:
-- **Pause/Resume**: Using STATE_PAUSED
-- **Game Over**: Using STATE_GAME_OVER
-- **Menus**: Additional states
-- **Difficulty Levels**: Speed adjustments
-- **High Scores**: Time/move tracking
-
-### Code Architecture
-
+#### Initialization Phase
 ```
-game_init()
-    ├── init_screen()
-    ├── init_sprites()
-    ├── init_game_vars()
-    └── display_game_ui()
-
-game_loop()
-    ├── wait_frame_start()
-    ├── update_timing()
-    └── [if STATE_PLAYING]
-        ├── read_input()
-        ├── update_game()
-        └── update_display()
+initialize_grid()
+├── Hardware Setup
+│   ├── Set border/background colors
+│   ├── Clear screen memory
+│   └── Configure sprites
+├── Display Setup
+│   ├── Show system header
+│   ├── Show time label
+│   └── Position UI elements
+├── Variable Initialization
+│   ├── Set center grid position (6,4)
+│   ├── Reset timing counters
+│   └── Clear state flags
+└── Entity Deployment
+    ├── Load sprite pattern
+    ├── Set initial position
+    └── Enable sprite display
 ```
 
-### Professional Patterns
+#### Main Game Loop
+```
+main_loop (50Hz)
+├── update_timing()
+│   ├── Increment frame counter
+│   ├── Check for second rollover
+│   └── Update seconds counter
+├── update_game() [if STATE_PATROL]
+│   ├── Read joystick input
+│   ├── Process movement with constraints
+│   ├── Update entity position
+│   └── Handle boundary feedback
+├── update_display()
+│   ├── Convert seconds to decimal
+│   ├── Display tens digit
+│   └── Display ones digit
+└── wait_frame()
+    └── Synchronize to raster line 251
+```
 
-1. **Separation of Concerns**: Init vs Loop
-2. **Modular Functions**: Single responsibility
-3. **State Management**: Flexible control flow
-4. **Consistent Timing**: Frame-based updates
+### Professional Game Patterns
 
-### Exercise: Add Pause Feature
+#### Frame-Perfect Timing
+- **Hardware Sync**: Timing locked to display refresh
+- **Consistent Performance**: Same speed on all PAL C64 systems
+- **No Frame Skipping**: Every frame processed and displayed
+- **Predictable Behavior**: Exact timing enables precise game mechanics
 
-Add pause functionality:
-1. Check for SPACE key in input routine
-2. Toggle between STATE_PLAYING and STATE_PAUSED
-3. Skip game updates when paused
-4. Display "PAUSED" on screen
+#### Modular Architecture
+- **Single Responsibility**: Each function has one clear purpose
+- **Clean Interfaces**: Functions communicate through well-defined variables
+- **Easy Testing**: Individual components can be tested separately
+- **Scalable Design**: Framework supports additional features without restructuring
 
-This completes the Foundation phase - you now have all the basics for C64 game development!
+#### Professional UI Design
+- **Persistent Information**: Status always visible during operation
+- **Real-Time Updates**: Information refreshes every frame
+- **Clear Hierarchy**: Important information prominently positioned
+- **Consistent Layout**: UI elements positioned for easy reading
+
+### Grid Protocol Statistics
+
+#### Patrol Coverage Analysis
+- **Total Sectors**: 96 positions (12×8 grid)  
+- **Patrol Area**: 288×154 pixel coverage (X: 28-316, Y: 55-209)
+- **MSB Demonstration**: 3 rightmost columns use VIC-II MSB positioning
+- **Edge Coverage**: 100% screen boundary coverage with proper margins
+
+#### Timing Specifications
+- **Frame Rate**: 50 FPS (PAL standard)
+- **Timer Resolution**: 1 second accuracy
+- **Update Frequency**: 50Hz continuous operation
+- **Display Refresh**: Real-time counter updates
+
+### Foundation for Advanced Systems
+
+This complete patrol system enables:
+- **Mission Systems**: Timed objectives and goals
+- **Performance Metrics**: Movement analysis and efficiency tracking
+- **Alert Systems**: Emergency state transitions
+- **Save/Load**: Game state persistence
+- **Multiplayer**: Synchronized timing for network play
+
+### Code Excellence
+
+1. **Professional Structure**: Industry-standard game loop architecture
+2. **Hardware Optimization**: Uses C64-specific timing and display features
+3. **Maintainable Code**: Clear organization enables long-term development
+4. **Performance Focus**: Minimal overhead, maximum responsiveness
+5. **Authentic Approach**: Real 1980s development patterns and techniques
+
+This lesson completes the Grid Protocol foundation, providing a robust platform for advanced C64 game development with professional timing, state management, and user interface systems.

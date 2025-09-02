@@ -1,49 +1,71 @@
 # Makefile for Pixel Patrol Lesson 4
-# Grid-Based Movement System + Keyboard Matrix Testing
+# C64 Assembly Development
 
-# Tools
-ACME = acme
-X64SC = x64sc
+# Project settings
+PROJECT = pixel-patrol-04
+TARGET = $(PROJECT).prg
+SOURCE = $(PROJECT).asm
 
-# Build directory
-BUILDDIR = build
-
-# Files
-SOURCE = pixel-patrol-04.asm
-TARGET = $(BUILDDIR)/pixel-patrol-04.prg
-
+# Test programs
 MATRIX_TEST_SOURCE = keyboard-matrix-test.asm
-MATRIX_TEST_TARGET = $(BUILDDIR)/keyboard-matrix-test.prg
-
+MATRIX_TEST_TARGET = keyboard-matrix-test.prg
 SIMPLE_TEST_SOURCE = simple-key-test.asm
-SIMPLE_TEST_TARGET = $(BUILDDIR)/simple-key-test.prg
+SIMPLE_TEST_TARGET = simple-key-test.prg
 
-# Build rules
+# Assembler settings (using ACME)
+ACME = acme
+ACME_FLAGS = -f cbm
+
+# Emulator settings
+VICE = x64sc
+VICE_FLAGS = -autostartprgmode 1
+
+# Default target
 all: $(TARGET) $(MATRIX_TEST_TARGET) $(SIMPLE_TEST_TARGET)
 
-# Create build directory
-$(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+# Build the main PRG file
+$(TARGET): $(SOURCE)
+	$(ACME) $(ACME_FLAGS) -o $(TARGET) $(SOURCE)
 
-$(TARGET): $(SOURCE) | $(BUILDDIR)
-	$(ACME) -f cbm -o $(TARGET) $(SOURCE)
+# Build test programs
+$(MATRIX_TEST_TARGET): $(MATRIX_TEST_SOURCE)
+	$(ACME) $(ACME_FLAGS) -o $(MATRIX_TEST_TARGET) $(MATRIX_TEST_SOURCE)
 
-$(MATRIX_TEST_TARGET): $(MATRIX_TEST_SOURCE) | $(BUILDDIR)
-	$(ACME) -f cbm -o $(MATRIX_TEST_TARGET) $(MATRIX_TEST_SOURCE)
+$(SIMPLE_TEST_TARGET): $(SIMPLE_TEST_SOURCE)
+	$(ACME) $(ACME_FLAGS) -o $(SIMPLE_TEST_TARGET) $(SIMPLE_TEST_SOURCE)
 
-$(SIMPLE_TEST_TARGET): $(SIMPLE_TEST_SOURCE) | $(BUILDDIR)
-	$(ACME) -f cbm -o $(SIMPLE_TEST_TARGET) $(SIMPLE_TEST_SOURCE)
-
+# Run main program in VICE emulator
 run: $(TARGET)
-	$(X64SC) $(TARGET)
+	$(VICE) $(VICE_FLAGS) $(TARGET)
 
+# Run test programs
 test-matrix: $(MATRIX_TEST_TARGET)
-	$(X64SC) $(MATRIX_TEST_TARGET)
+	$(VICE) $(VICE_FLAGS) $(MATRIX_TEST_TARGET)
 
 test-simple: $(SIMPLE_TEST_TARGET)
-	$(X64SC) $(SIMPLE_TEST_TARGET)
+	$(VICE) $(VICE_FLAGS) $(SIMPLE_TEST_TARGET)
 
+# Clean build artifacts
 clean:
-	rm -rf $(BUILDDIR)
+	rm -f $(TARGET) $(MATRIX_TEST_TARGET) $(SIMPLE_TEST_TARGET)
 
-.PHONY: all run test-matrix test-simple clean
+# Development targets
+test: run
+
+# Show assembler output
+verbose: 
+	$(ACME) $(ACME_FLAGS) -v -o $(TARGET) $(SOURCE)
+
+# Help target
+help:
+	@echo "Available targets:"
+	@echo "  all         - Build all programs (default)"
+	@echo "  run         - Build and run main program"
+	@echo "  test-matrix - Build and run keyboard matrix test"
+	@echo "  test-simple - Build and run simple key test"
+	@echo "  test        - Same as run"
+	@echo "  clean       - Remove build artifacts"
+	@echo "  verbose     - Build with verbose output"
+	@echo "  help        - Show this help"
+
+.PHONY: all run test-matrix test-simple test clean verbose help
