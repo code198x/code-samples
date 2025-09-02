@@ -40,7 +40,6 @@ TOTAL_FRAMES = 8               ; 4 right-facing + 4 left-facing
 *=$080d
 main:
         jsr initialize_system
-        jsr load_sprite_frames
         jsr display_status
         jsr deploy_entity
         
@@ -100,28 +99,10 @@ initialize_system:
         rts
 
 ;===============================================================================
-; SPRITE FRAME LOADING
+; SPRITE FRAMES IN MEMORY
 ;===============================================================================
-load_sprite_frames:
-        ; Load 4 animation frames at $0340, $0380, $03C0, $0400
-        ldx #0
-load_frame_loop:
-        ; Frame 0 (idle)
-        lda sprite_frame_0,x
-        sta $0340,x
-        ; Frame 1 (walk 1)
-        lda sprite_frame_1,x
-        sta $0380,x
-        ; Frame 2 (walk 2)
-        lda sprite_frame_2,x
-        sta $03C0,x
-        ; Frame 3 (walk 3)
-        lda sprite_frame_3,x
-        sta $0400,x
-        inx
-        cpx #63
-        bne load_frame_loop
-        rts
+; Sprite frames are positioned directly at their final memory locations
+; using the *=address directives. No copying needed!
 
 ;===============================================================================
 ; ENTITY DEPLOYMENT
