@@ -1,8 +1,8 @@
-# Makefile for Pixel Patrol Lesson 4
+# Makefile for Grid Protocol Lesson 4
 # C64 Assembly Development
 
 # Project settings
-PROJECT = pixel-patrol-04
+PROJECT = grid-protocol-04
 TARGET = $(PROJECT).prg
 SOURCE = $(PROJECT).asm
 
@@ -21,7 +21,7 @@ VICE = x64sc
 VICE_FLAGS = -autostartprgmode 1
 
 # Default target
-all: $(TARGET) $(MATRIX_TEST_TARGET) $(SIMPLE_TEST_TARGET)
+all: $(TARGET)
 
 # Build the main PRG file
 $(TARGET): $(SOURCE)

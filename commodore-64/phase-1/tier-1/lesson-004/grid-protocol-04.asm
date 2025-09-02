@@ -1,9 +1,9 @@
-; GRID PROTOCOL: Enhanced Entity Control
-; Lesson 4 - Refined movement with boundary awareness
+; GRID PROTOCOL: Basic Sprite Movement
+; Lesson 4 - Smooth, responsive sprite movement with variables
 ; Year: 2085 - Post-Collapse Era
 ;
-; Objective: Improve entity control with smooth movement and boundaries
-; Output: Black screen, cyan border, refined entity control
+; Objective: Enhanced entity control with position tracking
+; Output: Smooth sprite movement with position variables
 
 ;===============================================================================
 ; DIRECTIVES
@@ -26,7 +26,7 @@
 ;===============================================================================
 *=$080d
 grid_init:
-        ; Activate terminal
+        ; Activate terminal visuals
         lda #$00               ; Black void
         sta $d021
         lda #$03               ; Cyan signature
@@ -39,43 +39,43 @@ grid_init:
         ldx #0
 show_status:
         lda status_msg,x
-        beq init_entity
-        sta $0400+1*40+7,x     ; Top line, centered
+        beq show_position_label
+        sta $0400+22*40+11,x   ; Row 22, centered (17 chars)
         inx
         jmp show_status
+        
+show_position_label:
+        ; Display position label
+        ldx #0
+pos_label_loop:
+        lda position_label,x
+        beq deploy_start
+        sta $0400+24*40+12,x   ; Row 24, bottom
+        inx
+        jmp pos_label_loop
 
 ;===============================================================================
-; ENTITY INITIALIZATION
+; ENTITY DEPLOYMENT
 ;===============================================================================
-init_entity:
-        ; Initialize position
+deploy_start:
+        ; Initialize sprite position variables
         lda #160
-        sta entity_x
-        lda #120
-        sta entity_y
+        sta sprite_x
+        lda #0
+        sta sprite_x_msb
+        lda #150
+        sta sprite_y
         
-        ; Deploy entity
         jsr deploy_entity
+        jsr update_sprite_position
         
-        ; Update position
-        jsr update_entity_position
-        
-        ; Enable entity
-        lda #$01
-        sta $d015
-        
-        ; Set signature color
-        lda #$03               ; Cyan
-        sta $d027
-
-;===============================================================================
-; MAIN CONTROL LOOP
-;===============================================================================
+        ; Main control loop
 control_loop:
-        jsr read_interface
-        jsr control_entity
-        jsr update_entity_position
         jsr wait_frame
+        jsr read_joystick      ; Read operator input
+        jsr move_sprite        ; Apply movement with variables
+        jsr update_sprite_position ; Update hardware from variables
+        jsr display_position   ; Show current position
         jmp control_loop
 
 ;===============================================================================
@@ -84,8 +84,8 @@ control_loop:
 
 ; Deploy entity
 deploy_entity:
-        ; Set data pointer
-        lda #$0d
+        ; Set entity data pointer
+        lda #$0d               ; $0340
         sta $07f8
         
         ; Load pattern
@@ -96,121 +96,169 @@ load_pattern:
         inx
         cpx #63
         bne load_pattern
+        
+        ; Enable entity
+        lda #$01
+        sta $d015
+        
+        ; Set signature color
+        lda #$03               ; Cyan
+        sta $d027
+        
         rts
 
-; Read control interface
-read_interface:
-        lda $dc00
-        sta control_state
+; Read joystick input (port 2)
+read_joystick:
+        lda $dc00              ; CIA1 Port A (joystick 2)
+        sta joystick_state
         rts
 
-; Enhanced entity control with boundaries
-control_entity:
-        ; Check up
-        lda control_state
+; Move sprite based on input
+move_sprite:
+        ; Check up (bit 0)
+        lda joystick_state
         and #$01
         bne check_down
         
-        ; Move up with boundary
-        lda entity_y
-        cmp #50                ; Top boundary
-        bcc check_down
+        ; Move up
+        lda sprite_y
         sec
-        sbc #2
-        sta entity_y
-
+        sbc #2                 ; Move 2 pixels for smooth movement
+        cmp #50                ; Top boundary
+        bcc check_down         ; Skip if too high
+        sta sprite_y
+        
 check_down:
-        lda control_state
+        ; Check down (bit 1)
+        lda joystick_state
         and #$02
         bne check_left
         
-        ; Move down with boundary
-        lda entity_y
-        cmp #230               ; Bottom boundary
-        bcs check_left
+        ; Move down
+        lda sprite_y
         clc
-        adc #2
-        sta entity_y
-
+        adc #2                 ; Move 2 pixels for smooth movement
+        cmp #230               ; Bottom boundary
+        bcs check_left         ; Skip if too low
+        sta sprite_y
+        
 check_left:
-        lda control_state
+        ; Check left (bit 2)
+        lda joystick_state
         and #$04
         bne check_right
         
-        ; Move left with boundary check
-        lda entity_x_msb
-        bne skip_left          ; Already at X=0, can't go further left
-        lda entity_x
-        cmp #24                ; Left boundary
-        bcc check_right
+        ; Move left with MSB handling
+        lda sprite_x
         sec
-        sbc #2
-        sta entity_x
-        jmp check_right
-skip_left:
-        ; We're in MSB territory, move left
-        lda entity_x
-        sec
-        sbc #2
-        sta entity_x
-        bcs check_right        ; No underflow
-        ; Handle underflow - crossed from 256+ to <256
-        lda #0
-        sta entity_x_msb
-
+        sbc #2                 ; Move 2 pixels for smooth movement
+        sta sprite_x
+        bcs check_right        ; No underflow, continue
+        
+        ; Handle X underflow - toggle MSB
+        lda sprite_x_msb
+        eor #$01
+        sta sprite_x_msb
+        
 check_right:
-        lda control_state
+        ; Check right (bit 3)
+        lda joystick_state
         and #$08
-        bne control_done
+        bne move_done
         
-        ; Move right with proper MSB handling
-        lda entity_x_msb
-        bne move_right_msb     ; Already using MSB
-        
-        ; Check if we'll cross into MSB territory
-        lda entity_x
+        ; Move right with MSB handling
+        lda sprite_x
         clc
-        adc #2
-        bcc no_msb_needed      ; No overflow, normal move
-        ; We overflowed - need to set MSB
-        sta entity_x
-        lda #1
-        sta entity_x_msb
-        jmp control_done
+        adc #2                 ; Move 2 pixels for smooth movement
+        sta sprite_x
+        bcc move_done          ; No overflow, done
         
-no_msb_needed:
-        sta entity_x
-        jmp control_done
+        ; Handle X overflow - toggle MSB
+        lda sprite_x_msb
+        eor #$01
+        sta sprite_x_msb
         
-move_right_msb:
-        ; Already in MSB territory, check screen limit
-        lda entity_x
-        cmp #64                ; 320-256=64 (screen width 344 minus sprite width 24)
-        bcs control_done
-        clc
-        adc #2
-        sta entity_x
-
-control_done:
+move_done:
         rts
 
-; Update entity position in hardware
-update_entity_position:
-        lda entity_x
-        sta $d000
+; Update sprite position from variables
+update_sprite_position:
+        ; Set X position
+        lda sprite_x
+        sta $d000              ; Sprite 0 X position
         
-        ; Handle X MSB for sprite 0
-        lda entity_x_msb
-        beq clear_msb
-        lda #$01               ; Set bit 0 for sprite 0
-        sta $d010
-        jmp update_y
-clear_msb:
-        lda #$00
-        sta $d010
-update_y:
-        lda entity_y
-        sta $d001
+        ; Set Y position
+        lda sprite_y
+        sta $d001              ; Sprite 0 Y position
+        
+        ; Set X MSB
+        lda sprite_x_msb
+        sta $d010              ; Sprite X MSB register
+        
+        rts
+
+; Display current position
+display_position:
+        ; Convert X to decimal and display
+        lda sprite_x
+        jsr byte_to_decimal
+        
+        ; Display X position
+        lda decimal_hundreds
+        ora #$30               ; Convert to PETSCII
+        sta $0400+24*40+22     ; Row 24, after "COORDS: X="
+        lda decimal_tens
+        ora #$30
+        sta $0400+24*40+23
+        lda decimal_ones
+        ora #$30
+        sta $0400+24*40+24
+        
+        ; Display Y position
+        lda sprite_y
+        jsr byte_to_decimal
+        
+        lda decimal_hundreds
+        ora #$30
+        sta $0400+24*40+29     ; After " Y="
+        lda decimal_tens
+        ora #$30
+        sta $0400+24*40+30
+        lda decimal_ones
+        ora #$30
+        sta $0400+24*40+31
+        
+        rts
+
+; Convert byte to decimal
+byte_to_decimal:
+        ldx #0
+        stx decimal_hundreds
+        stx decimal_tens
+        stx decimal_ones
+        
+        ; Hundreds
+hundreds_loop:
+        cmp #100
+        bcc tens_start
+        sec
+        sbc #100
+        inc decimal_hundreds
+        jmp hundreds_loop
+        
+tens_start:
+        ; Tens
+tens_loop:
+        cmp #10
+        bcc ones_start
+        sec
+        sbc #10
+        inc decimal_tens
+        jmp tens_loop
+        
+ones_start:
+        ; Ones
+        sta decimal_ones
         rts
 
 ; Clear screen
@@ -243,19 +291,36 @@ wait_raster:
 ; DATA SECTION
 ;===============================================================================
 
-; Entity position
-entity_x:       !byte 160
-entity_y:       !byte 120
-entity_x_msb:   !byte 0        ; X position MSB (9th bit)
+; Position variables
+sprite_x:
+        !byte 0
+        
+sprite_y:
+        !byte 0
+        
+sprite_x_msb:
+        !byte 0
 
 ; Control state
-control_state:  !byte 0
+joystick_state:
+        !byte $ff
 
-; Status message (screen codes)
+; Decimal conversion
+decimal_hundreds:
+        !byte 0
+decimal_tens:
+        !byte 0
+decimal_ones:
+        !byte 0
+
+; Messages (screen codes)
 status_msg:
-        !byte 2,15,21,14,4,1,18,25,32  ; "BOUNDARY "
-        !byte 3,15,14,20,18,15,12,32   ; "CONTROL "
-        !byte 1,3,20,9,22,5             ; "ACTIVE"
+        !byte 5,14,8,1,14,3,5,4,32,20,18,1,3,11,9,14,7  ; "ENHANCED TRACKING"
+        !byte 0
+
+position_label:
+        !byte 3,15,15,18,4,19,58,32,24,61             ; "COORDS: X="
+        !byte 32,32,32,32,25,61,32,32,32              ; "    Y=   "
         !byte 0
 
 ; Entity pattern (diamond)
@@ -285,13 +350,9 @@ entity_pattern:
 ;===============================================================================
 ; TECHNICAL NOTES
 ;===============================================================================
-; Boundary System:
-; - Top: Y = 50
-; - Bottom: Y = 230
-; - Left: X = 24
-; - Right: X = 320 (64 with MSB set, accounts for 24-pixel sprite width)
-; 
-; The VIC-II uses 9-bit X coordinates for sprites:
-; - Bits 0-7: stored in $D000/$D002/$D004/etc
-; - Bit 8 (MSB): stored in $D010 (one bit per sprite)
-; Sprite boundaries account for sprite width to prevent off-screen rendering
+; Lesson 4 improvements over Lesson 3:
+; - Position stored in variables (sprite_x, sprite_y, sprite_x_msb)
+; - Cleaner code organization with separate move and update routines
+; - Real-time position display showing exact coordinates
+; - Smooth 2-pixel movement for better responsiveness
+; - Better visual feedback with position tracking
