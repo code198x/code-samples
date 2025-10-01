@@ -23,6 +23,16 @@ code-samples/
 
 ## Current Content
 
+### Commodore 64 - BASIC Week 1
+
+The complete "Number Hunter" game from Lesson 8:
+- Number guessing game with score tracking
+- Input validation and hints
+- Color-coded visual feedback
+- Replay functionality
+
+Files provided as `.bas` text - see `commodore-64/basic/README.md` for usage instructions (type in, paste, or convert to `.prg`).
+
 ### Commodore 64 - Assembly Week 1
 
 Complete code samples for all 8 lessons of the Skyfall game tutorial:
