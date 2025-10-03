@@ -1,0 +1,4 @@
+REM *** LESSON 1: FIRST PRINT ***
+REM Your First Command
+
+PRINT "HELLO COMMODORE 64"
