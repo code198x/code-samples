@@ -23,15 +23,24 @@ code-samples/
 
 ## Current Content
 
-### Commodore 64 - BASIC Week 1
+### Commodore 64 - BASIC (Weeks 1-3)
 
-The complete "Number Hunter" game from Lesson 8:
-- Number guessing game with score tracking
-- Input validation and hints
-- Color-coded visual feedback
-- Replay functionality
+**Week 1: BASIC Fundamentals** (Lessons 1-8)
+- Variables, loops, and conditions
+- Complete "Number Hunter" game
 
-Files provided as `.bas` text - see `commodore-64/basic/README.md` for usage instructions (type in, paste, or convert to `.prg`).
+**Week 2: Arrays & Data** (Lessons 9-16)
+- FOR loops and arrays
+- DATA statements and game mechanics
+- Pattern generators and simple games
+
+**Week 3: Graphics & Sound** (Lessons 17-24)
+- Screen memory and color control
+- Hardware sprites
+- SID chip sound generation
+- Collision detection
+
+All files provided as `.bas` text - see `commodore-64/basic/README.md` for usage instructions.
 
 ### Commodore 64 - Assembly Week 1
 
