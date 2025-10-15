@@ -1,0 +1,9 @@
+2000 REM --- GAMEPLAY STATE ---
+2010 GOSUB 4000            : REM load room data
+2020 GOSUB 4100            : REM draw map + HUD
+2030 GOSUB 4200            : REM play room music (stub)
+2040 STEP=0
+2050 GOSUB 4300            : REM main loop
+2060 IF LIVES<=0 THEN STATE=3 ELSE STATE=2
+2070 ROOM=ROOM+1:IF ROOM>3 THEN ROOM=1
+2080 GOTO 100

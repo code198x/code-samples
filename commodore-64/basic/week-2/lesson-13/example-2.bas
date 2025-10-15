@@ -1,6 +1,5 @@
-NEW
-10 INPUT "ENTER AGE";AG
-20 INPUT "HAVE TICKET (1=YES)";TK
-30 IF AG>=18 AND TK=1 THEN PRINT "WELCOME!"
-40 IF AG<18 THEN PRINT "TOO YOUNG"
-50 IF TK=0 THEN PRINT "NEED A TICKET"
+IF X<MIN OR X>MAX THEN RETURN        : REM guard prowling off-screen
+CELL=MAP(NY,NX)                      : REM peek destination tile
+IF CELL=1 THEN RETURN                : REM block walls
+IF CELL=3 THEN LIVES=LIVES-1         : REM hazard effect
+IF (SCORE>=200 AND LIVES>0) OR KEY=1 THEN ...

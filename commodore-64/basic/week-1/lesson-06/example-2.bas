@@ -1,5 +1,6 @@
-REM LESSON 06 - CHECKING FOR KEY
-10 PRINT "PRESS A KEY"
-20 GET K$
-30 PRINT "KEY: "; K$; "END"
-40 GOTO 20
+REM Screen animation essentials
+PRINT CHR$(147)        : REM clear screen
+PRINT CHR$(19);        : REM home cursor
+PRINT SPC(X); "*"      : REM draw at column X
+FOR T=1 TO 120: NEXT T : REM frame delay
+IF X=0 OR X=38 THEN D=-D

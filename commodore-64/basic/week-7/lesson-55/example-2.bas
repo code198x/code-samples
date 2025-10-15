@@ -1,0 +1,5 @@
+REM Precompute
+FOR I=0 TO 7:SPRITEADR(I)=53248+I*2:NEXT
+
+REM Use inside loop
+POKE SPRITEADR(I),X

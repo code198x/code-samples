@@ -1,0 +1,3 @@
+FOR I=0 TO 4:READ DIALOG$(I):NEXT I
+READ MUSIC$(ROOM)
+PRINT TITLE$ : REM display room name

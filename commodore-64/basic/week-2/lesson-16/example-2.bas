@@ -1,15 +1,5 @@
-NEW
-10 PRINT CHR$(147)
-20 PRINT "1) START GAME"
-30 PRINT "2) HIGH SCORES"
-40 PRINT "3) INSTRUCTIONS"
-50 PRINT "4) QUIT"
-60 PRINT
-70 GET K$:IF K$="" THEN 70
-80 N=VAL(K$)
-90 ON N GOTO 1000,2000,3000,4000
-100 GOTO 10
-1000 PRINT "STARTING GAME...":END
-2000 PRINT "HIGH SCORES...":END
-3000 PRINT "INSTRUCTIONS...":END
-4000 PRINT "GOODBYE!":END
+STATE = 1 : ON STATE GOTO 1000,2000,3000   : REM title/play/game over
+LOC = SCREEN + ROW*40 + COL                : REM screen address
+READ MAP(R,C) : RESTORE 9000               : REM DATA-driven map load
+DEF FNBONUS(L)=L*80                        : REM level-based bonuses
+DEF FNPEN(S)=S-25                          : REM damage penalty helper

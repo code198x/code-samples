@@ -1,8 +1,5 @@
-NEW
-10 INPUT "ENTER COMMAND";CM$
-20 SP=1
-30 FOR I=1 TO LEN(CM$)
-40 IF MID$(CM$,I,1)=" " THEN SP=I:I=LEN(CM$)
-50 NEXT I
-60 WD$=LEFT$(CM$,SP-1)
-70 PRINT "FIRST WORD: ";WD$
+LEN(S$)               : REM length of string
+LEFT$(S$,N)           : REM first N characters
+RIGHT$(S$,N)          : REM last N characters
+MID$(S$,P,L)          : REM L chars starting at position P
+CHR$(ASC(CH$)-32)     : REM uppercase conversion for letters

@@ -1,0 +1,8 @@
+REM Detection radius using Manhattan distance
+DIST=ABS(EX-PX)+ABS(EY-PY)
+IF DIST<ALERT THEN MODE=CHASE
+IF DIST>CALM THEN MODE=PATROL
+
+REM Patrol direction flip
+EX=EX+DIR
+IF EX<LEFT OR EX>RIGHT THEN DIR=-DIR

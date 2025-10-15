@@ -1,0 +1,9 @@
+REM Toggle trace
+TRACE=1-TRACE
+
+REM Pause/step
+IF PAUSE THEN IF KEY$=" " THEN RUN_FRAME
+
+REM HUD redraw
+PRINT CHR$(19);TAB(0);
+PRINT "VX:";VX

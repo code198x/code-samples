@@ -1,4 +1,4 @@
-REM LESSON 02 - HOME COMMAND DEMO
-PRINT "HELLO"
-PRINT CHR$(19)
-PRINT "WORLD"
+REM Loop essentials
+FOR var=start TO end [STEP value]
+  <statements>
+NEXT var

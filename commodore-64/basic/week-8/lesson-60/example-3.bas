@@ -1,0 +1,3 @@
+TXTTAB = PEEK(43)+256*PEEK(44)
+SCREEN = 1024 (default)
+COLOR  = 55296 (mirror of $D800)

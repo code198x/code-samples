@@ -1,6 +1,0 @@
-REM *** LESSON 1: PRINTING NUMBERS ***
-REM Numbers and Maths
-
-PRINT 42
-PRINT 10 + 5
-PRINT 100 - 25

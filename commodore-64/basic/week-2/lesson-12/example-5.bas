@@ -1,10 +1,4 @@
-NEW
-10 PRINT CHR$(147)
-20 REM *** READ LEVEL 1 ***
-30 FOR I=1 TO 5
-40 READ EX,EY
-50 POKE 1024+EY*40+EX,81
-60 NEXT I
-70 END
-1000 REM *** LEVEL 1: ENEMY POSITIONS ***
-1010 DATA 10,5,20,8,15,12,25,15,30,10
+DATA 1,2,3         : REM store a list
+READ A             : REM fetch next item
+RESTORE            : REM rewind the pointer
+READ A$,B$         : REM strings and mixed types allowed
