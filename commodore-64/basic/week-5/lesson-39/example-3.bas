@@ -1,8 +1,0 @@
-REM Reset timer
-TI$="000000"
-
-REM Schedule next tick
-IF TI>=NEXTT THEN NEXTT=NEXTT+STEP:GOSUB 4000
-
-REM Catch-up guard
-IF NEXTT<TI THEN NEXTT=TI+STEP

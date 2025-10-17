@@ -1,0 +1,5 @@
+10 PRINT CHR$(147)
+20 SCORE=0
+30 TIMER=600        : REM 10 seconds (600 jiffies / 60 = 10s)
+40 TI$="000000"
+50 PRINT CHR$(19);"SCORE:000  TIME:10"

@@ -1,6 +1,0 @@
-REM Variable essentials
-SCORE = 0
-LIVES = 3
-NAME$ = "ARTHUR"
-SCORE = SCORE + 10
-IF LIVES <= 0 THEN PRINT "GAME OVER"
