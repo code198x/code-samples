@@ -1,9 +1,12 @@
-10 SCREEN=1024 : COLOR=55296
-20 FOR R=0 TO 7
-30 FOR C=0 TO 7
-40 LOC=SCREEN+(R+8)*40+(C+16)
-50 COL=(R+C) AND 1
-60 POKE LOC,32
-70 POKE COLOR+(R+8)*40+(C+16),COL
-80 NEXT C
-90 NEXT R
+10 rem score and win condition
+20 print chr$(147)
+30 sc=0:wi=10
+40 print "collect 10 items!"
+50 print:print "score:";sc
+60 print "press space to collect"
+70 get a$:if a$="" then 70
+80 if a$=" " then sc=sc+1
+90 print chr$(147)
+100 print "score:";sc
+110 if sc>=wi then print:print "you win!":end
+120 goto 60

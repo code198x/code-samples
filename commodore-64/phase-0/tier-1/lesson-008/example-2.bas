@@ -1,7 +1,9 @@
-RND(-TI)               : REM seed randomness once per run
-TARGET$ = CHR$(INT(RND(1)*26)+65)
-TI$ = "000000"         : REM reset system clock
-GET K$: IF K$="" THEN ...
-IF K$=TARGET$ THEN SCORE = SCORE + 10 : GOSUB 400 : GOTO 60
-LIVES = LIVES - 1
-GOSUB 500
+10 print chr$(147)
+20 for r=0 to 24
+30 for c=0 to 39
+40 sc=1024+(r*40)+c
+50 poke sc,160
+60 poke 55296+(r*40)+c,1+(r and 7)
+70 next c
+80 next r
+90 end

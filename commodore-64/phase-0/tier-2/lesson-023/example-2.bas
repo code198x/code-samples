@@ -1,1 +1,0 @@
-32 DIM DIALOG$(4),MUSIC$(2)
