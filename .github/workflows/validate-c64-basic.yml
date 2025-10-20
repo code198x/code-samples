@@ -1,0 +1,90 @@
+name: Validate C64 BASIC Code
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'commodore-64/**/*.bas'
+      - 'scripts/validate-c64-basic.py'
+      - 'scripts/validate-bas.sh'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'commodore-64/**/*.bas'
+      - 'scripts/validate-c64-basic.py'
+      - 'scripts/validate-bas.sh'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install VICE (includes petcat)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y vice
+
+    - name: Find and validate C64 BASIC files
+      run: |
+        echo "🔍 Finding C64 BASIC .bas files..."
+        BASFILES=$(find commodore-64 -name "*.bas" -type f)
+
+        if [ -z "$BASFILES" ]; then
+          echo "✅ No .bas files found to validate"
+          exit 0
+        fi
+
+        echo "Found $(echo "$BASFILES" | wc -l) .bas files to validate"
+        echo ""
+
+        FAILED=0
+        PASSED=0
+
+        for BASFILE in $BASFILES; do
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Validating: $BASFILE"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+          if ./scripts/validate-bas.sh "$BASFILE"; then
+            PASSED=$((PASSED + 1))
+          else
+            FAILED=$((FAILED + 1))
+            echo "❌ FAILED: $BASFILE"
+          fi
+
+          echo ""
+        done
+
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "VALIDATION SUMMARY"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "✅ Passed: $PASSED"
+        echo "❌ Failed: $FAILED"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+        if [ $FAILED -gt 0 ]; then
+          echo ""
+          echo "❌ Validation failed for $FAILED file(s)"
+          echo "Please fix the errors above and commit again"
+          exit 1
+        fi
+
+        echo ""
+        echo "✅ All C64 BASIC files validated successfully!"
+
+    - name: Upload validation report
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: validation-failures
+        path: |
+          **/*.bas
+        retention-days: 7
