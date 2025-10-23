@@ -1,12 +1,19 @@
-10 rem reading the jiffy clock
+10 rem countdown timer
 20 print chr$(147)
-30 print "ti clock in jiffies:"
+30 print "countdown timer demo"
 40 print
-50 print "ti = ";ti
-60 print
-70 print "seconds = ";int(ti/60)
-80 print "minutes = ";int(ti/3600)
-90 print
-100 print "press space to read again"
-110 get a$:if a$<>" " then 110
-120 goto 20
+50 tl=30
+60 t1=ti
+70 rem main loop
+80 e=int((ti-t1)/60)
+90 r=tl-e
+100 poke 1024,32
+110 print chr$(19);
+120 print "time left:";r;" seconds"
+130 if r<=0 then 200
+140 if r<=10 then poke 53280,2
+150 goto 80
+200 rem time up
+210 print chr$(147)
+220 print "time's up!"
+230 end

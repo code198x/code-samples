@@ -1,16 +1,20 @@
-10 rem waveform comparison
-20 poke 54296,15
-30 rem triangle wave
-40 poke 54277,9:poke 54278,0
-50 poke 54273,25:poke 54272,177
-60 poke 54276,17
-70 for i=1 to 1000:next i
-80 poke 54276,16
-90 rem sawtooth wave
-100 poke 54276,33
-110 for i=1 to 1000:next i
-120 poke 54276,32
-130 rem pulse wave
-140 poke 54276,65
-150 for i=1 to 1000:next i
-160 poke 54276,64
+10 rem laser sweep
+20 print chr$(147)
+30 print "laser sound effect"
+40 print
+50 print "frequency sweep demo"
+60 print
+70 print "press any key"
+80 get k$:if k$="" then 80
+90 gosub 1000
+100 goto 70
+1000 rem laser
+1010 poke 54296,15
+1015 poke 54277,0:poke 54278,240
+1020 for f=255 to 50 step -5
+1030 poke 54272,f:poke 54273,20
+1040 poke 54276,33
+1050 for d=1 to 10:next d
+1060 next f
+1070 poke 54276,32
+1080 return
