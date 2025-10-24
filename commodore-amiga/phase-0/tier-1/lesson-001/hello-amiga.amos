@@ -1,0 +1,15 @@
+Rem ** Hello, Amiga World **
+Rem ** Display text with colors **
+
+' Set screen mode and colors
+Screen Open 0,320,256,16,Lowres
+Curs Off
+Cls 0
+
+' Set ink color and display text
+Ink 14
+Locate 10,12
+Centre "HELLO, AMIGA!"
+
+' Wait for mouse click
+Wait Key
