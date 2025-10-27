@@ -1,0 +1,15 @@
+10 REM Colour Clash Demo
+20 PAPER 0: INK 7: CLS
+30 REM Draw overlapping shapes in different blocks
+40 FOR X=0 TO 7
+50 FOR Y=0 TO 7
+60 PLOT X*8+20,Y*8+50
+70 NEXT Y
+80 NEXT X
+90 INK 2
+100 FOR X=4 TO 11
+110 FOR Y=4 TO 11
+120 PLOT X*8+20,Y*8+50
+130 NEXT Y
+140 NEXT X
+150 PAUSE 0

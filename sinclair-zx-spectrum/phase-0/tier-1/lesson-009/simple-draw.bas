@@ -1,0 +1,14 @@
+10 REM Simple Drawing Tool
+20 LET X=128: LET Y=88
+30 LET C=2
+40 PAPER 0: INK C: CLS
+50 PRINT AT 0,0;"Use Q/A/O/P to move, SPACE to draw, C to change colour"
+60 LET K$=INKEY$
+70 IF K$="q" THEN LET Y=Y+1
+80 IF K$="a" THEN LET Y=Y-1
+90 IF K$="o" THEN LET X=X-1
+100 IF K$="p" THEN LET X=X+1
+110 IF K$=" " THEN PLOT X,Y
+120 IF K$="c" THEN LET C=C+1: IF C>7 THEN LET C=1
+130 IF K$="c" THEN INK C
+140 GO TO 60
