@@ -1,0 +1,166 @@
+' Lesson 009: Sprite Gallery
+' Interactive sprite viewer with multiple BOBs and Bob command
+
+' Open screen
+Screen Open 0,320,256,32,Lowres
+Curs Off
+Flash Off
+Cls 0
+
+' Set up colour palette
+Colour 1,$F00      ' Red
+Colour 2,$0F0      ' Green
+Colour 3,$00F      ' Blue
+Colour 4,$FF0      ' Yellow
+Colour 5,$F0F      ' Magenta
+Colour 6,$0FF      ' Cyan
+Colour 7,$FFF      ' White
+
+' Title
+Locate 2,10
+Ink 14
+Print "=== SPRITE GALLERY ==="
+Locate 4,5
+Ink 7
+Print "Creating sprite library..."
+Wait 100
+
+' Create sprite 1: Square
+Ink 1
+Bar 0,0 To 15,15
+Ink 7
+Box 2,2 To 13,13
+Get Bob 1,0,0 To 16,16
+Cls 0
+
+' Create sprite 2: Circle
+Ink 2
+Circle 8,8,7
+Ink 7
+Circle 8,8,5
+Get Bob 2,0,0 To 16,16
+Cls 0
+
+' Create sprite 3: Triangle
+Ink 3
+Draw 8,0 To 15,15
+Draw 15,15 To 0,15
+Draw 0,15 To 8,0
+Get Bob 3,0,0 To 16,16
+Cls 0
+
+' Create sprite 4: Diamond
+Ink 4
+Draw 8,0 To 15,8
+Draw 15,8 To 8,15
+Draw 8,15 To 0,8
+Draw 0,8 To 8,0
+Get Bob 4,0,0 To 16,16
+Cls 0
+
+' Create sprite 5: Cross
+Ink 5
+Bar 6,0 To 9,15
+Bar 0,6 To 15,9
+Get Bob 5,0,0 To 16,16
+Cls 0
+
+' Create sprite 6: Star (simplified)
+Ink 6
+' Outer points
+Draw 8,0 To 10,6
+Draw 10,6 To 15,6
+Draw 15,6 To 11,10
+Draw 11,10 To 13,15
+Draw 13,15 To 8,12
+Draw 8,12 To 3,15
+Draw 3,15 To 5,10
+Draw 5,10 To 0,6
+Draw 0,6 To 6,6
+Draw 6,6 To 8,0
+Get Bob 6,0,0 To 16,16
+Cls 0
+
+Locate 4,5
+Print "Library created - 6 sprites loaded"
+Wait 100
+
+' Interactive gallery mode
+current=1
+x=152      ' Center X
+y=120      ' Center Y
+
+Do
+  Cls 0
+
+  ' Title
+  Locate 2,10
+  Ink 14
+  Print "=== SPRITE GALLERY ==="
+
+  ' Instructions
+  Locate 5,2
+  Ink 7
+  Print "Use cursor keys to change sprite"
+  Locate 6,2
+  Print "Press SPACE to cycle, Q to quit"
+
+  ' Show current sprite info
+  Locate 9,2
+  Ink 14
+  Print "Current sprite: ";current;"/6"
+
+  ' Display names
+  Locate 11,2
+  Ink 7
+  If current=1 Then Print "Name: SQUARE"
+  If current=2 Then Print "Name: CIRCLE"
+  If current=3 Then Print "Name: TRIANGLE"
+  If current=4 Then Print "Name: DIAMOND"
+  If current=5 Then Print "Name: CROSS"
+  If current=6 Then Print "Name: STAR"
+
+  ' Display current sprite large (using Bob command)
+  Bob 1,x,y,current
+
+  ' Show all sprites in gallery at bottom
+  Locate 19,2
+  Ink 7
+  Print "Gallery:"
+  For i=1 To 6
+    Bob i+1,20+(i-1)*40,210,i
+  Next i
+
+  ' Update all BOBs
+  Bob Update
+
+  ' Wait for input
+  k$=Inkey$
+
+  If k$=Chr$(28) Then  ' Cursor right
+    Add current,1
+    If current>6 Then current=1
+  End If
+
+  If k$=Chr$(29) Then  ' Cursor left
+    Add current,-1
+    If current<1 Then current=6
+  End If
+
+  If k$=" " Then       ' Space - cycle
+    Add current,1
+    If current>6 Then current=1
+  End If
+
+  If k$="q" or k$="Q" Then Exit
+
+  Wait Vbl           ' Wait for vertical blank (50Hz)
+
+Loop
+
+' Cleanup
+Cls 0
+Locate 12,10
+Ink 2
+Print "Thanks for viewing!"
+Wait 100

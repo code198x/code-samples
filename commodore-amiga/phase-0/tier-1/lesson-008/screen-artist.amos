@@ -1,0 +1,124 @@
+' Lesson 008: Screen Artist
+' Drawing commands and colour palette programming
+
+' Open screen
+Screen Open 0,320,256,32,Lowres
+Flash Off
+Curs Off
+Cls 0
+
+' Set up custom colour palette
+Colour 1,$F00      ' Bright red (R=15, G=0, B=0)
+Colour 2,$0F0      ' Bright green
+Colour 3,$00F      ' Bright blue
+Colour 4,$FF0      ' Yellow (red + green)
+Colour 5,$F0F      ' Magenta (red + blue)
+Colour 6,$0FF      ' Cyan (green + blue)
+Colour 7,$FFF      ' White
+Colour 8,$800      ' Dark red
+Colour 9,$080      ' Dark green
+
+' Title
+Locate 2,10
+Ink 14
+Print "=== SCREEN ARTIST ==="
+Locate 4,5
+Ink 1
+Print "Drawing with hardware-accelerated commands"
+Wait 150
+
+' Demonstrate Plot
+Locate 6,2
+Ink 2
+Print "Plot - individual pixels:"
+For x=10 To 100 Step 2
+  Ink Rnd(8)+1
+  Plot x,60
+Next x
+Wait 100
+
+' Demonstrate Draw (lines)
+Locate 9,2
+Ink 3
+Print "Draw - lines:"
+Ink 4
+Plot 10,90          ' Start position
+For x=10 To 100 Step 10
+  Draw x,80+Rnd(20)
+Next x
+Wait 100
+
+' Demonstrate Circle
+Locate 12,2
+Ink 4
+Print "Circle - rings and filled:"
+For r=5 To 25 Step 5
+  Ink Rnd(8)+1
+  Circle 60,150,r
+Next r
+Wait 100
+
+' Demonstrate Bar (filled rectangles)
+Locate 15,2
+Ink 5
+Print "Bar - filled rectangles:"
+Ink 1: Bar 10,180 To 40,210
+Ink 2: Bar 45,180 To 75,210
+Ink 3: Bar 80,180 To 110,210
+Wait 100
+
+' Demonstrate Box (outlines)
+Locate 18,2
+Ink 6
+Print "Box - rectangle outlines:"
+Ink 8: Box 15,220 To 45,245
+Ink 9: Box 50,220 To 80,245
+Ink 1: Box 85,220 To 115,245
+Wait 100
+
+' Right side - complex graphics
+' Create a simple sprite design
+Ink 7
+Locate 6,20
+Print "Creating sprite:"
+
+' Robot face
+Ink 8: Bar 200,60 To 280,140      ' Head
+Ink 3: Bar 210,70 To 230,90       ' Left eye
+Ink 3: Bar 250,70 To 270,90       ' Right eye
+Ink 1: Bar 220,110 To 260,120     ' Mouth
+Ink 9: Circle 190,100,5            ' Left ear
+Ink 9: Circle 290,100,5            ' Right ear
+
+' Capture as BOB
+Get Bob 1,190,55 To 295,145
+
+' Display information
+Ink 7
+Locate 20,17
+Print "Graphics captured as BOB"
+Locate 21,17
+Print "Press SPACE to display"
+
+Wait Key
+
+' Clear and show BOB pattern
+Cls 0
+Locate 2,10
+Ink 14
+Print "=== BOB DISPLAY ==="
+
+' Create pattern
+For x=20 To 280 Step 60
+  For y=40 To 200 Step 60
+    Paste Bob x,y,1
+  Next y
+Next x
+
+Locate 22,2
+Ink 7
+Print "Hardware blitter makes this instant!"
+Locate 24,2
+Print "Press any key to exit"
+
+Wait Key
