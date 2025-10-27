@@ -1,0 +1,122 @@
+' Enemy AI
+' Simple chase AI with multiple enemies
+
+Screen Open 0,320,256,32,Lowres
+Curs Off: Flash Off: Cls 0
+
+' Create player sprite (blue square)
+Ink 2
+Bar 0,0 To 15,15
+Ink 14
+Circle 8,8,5
+Get Bob 1,0,0 To 16,16
+Cls 0
+
+' Create enemy sprite (red square)
+Ink 1
+Box 0,0 To 15,15
+Bar 2,2 To 13,13
+Get Bob 2,0,0 To 16,16
+Cls 0
+
+' Enemy data arrays
+' ex = X position, ey = Y position, ea = active status
+Dim ex(5),ey(5),ea(5)
+
+' Create 5 enemies at random positions
+For i=1 To 5
+  ex(i)=Rnd(280)+20
+  ey(i)=Rnd(220)+20
+  ea(i)=1  ' 1 = active, 0 = inactive
+  Bob i+1,ex(i),ey(i),2
+Next i
+
+' Player starting position
+px=150
+py=120
+Bob 1,px,py,1
+
+' Instructions
+Locate 2,20: Print "Enemies chase you!"
+Locate 2,21: Print "Touch to destroy them"
+Locate 2,22: Print "Press SPACE to quit"
+
+' Game variables
+score=0
+
+' Main game loop
+Do
+  ' Player movement
+  If Jleft(1) Then Dec px,2
+  If Jright(1) Then Add px,2
+  If Jup(1) Then Dec py,2
+  If Jdown(1) Then Add py,2
+
+  ' Boundary checking
+  If px<0 Then px=0
+  If px>304 Then px=304
+  If py<0 Then py=0
+  If py>240 Then py=240
+
+  ' Update player position
+  Bob 1,px,py,1
+
+  ' Update all enemies
+  For i=1 To 5
+    If ea(i)=1 Then
+      ' Simple chase AI: move towards player
+      If ex(i)<px Then Add ex(i),1     ' Player is right
+      If ex(i)>px Then Dec ex(i),1     ' Player is left
+      If ey(i)<py Then Add ey(i),1     ' Player is below
+      If ey(i)>py Then Dec ey(i),1     ' Player is above
+
+      ' Update enemy BOB position
+      Bob i+1,ex(i),ey(i),2
+    End If
+  Next i
+
+  ' Check collision with enemies
+  hit=Col(1)
+  If hit>1 Then
+    ' Calculate which enemy was hit
+    enemyNum=hit-1
+
+    ' Verify it's a valid enemy and destroy it
+    If enemyNum>=1 and enemyNum<=5 Then
+      If ea(enemyNum)=1 Then
+        ea(enemyNum)=0      ' Mark as inactive
+        Bob Off hit         ' Hide the BOB
+        Add score,10
+        Sam Play 0,1        ' Play hit sound
+      End If
+    End If
+  End If
+
+  ' Display score and enemies remaining
+  activeCount=0
+  For i=1 To 5
+    If ea(i)=1 Then Add activeCount,1
+  Next i
+
+  Locate 2,1
+  Print "Score: ";score;" "
+  Locate 2,2
+  Print "Enemies: ";activeCount;" "
+
+  ' Win condition (all enemies destroyed)
+  If activeCount=0 Then
+    Locate 10,12
+    Print "ALL ENEMIES DESTROYED!"
+    Wait Key
+    Exit
+  End If
+
+  ' Synchronize and refresh
+  Wait Vbl
+  Bob Update
+Loop Until Inkey$=" "
+
+' Cleanup
+For i=1 To 6
+  Bob Off i
+Next i
