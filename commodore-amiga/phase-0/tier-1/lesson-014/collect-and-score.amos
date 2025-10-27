@@ -1,0 +1,126 @@
+' Collect & Score
+' Complete game with timer, win/lose conditions
+
+Screen Open 0,320,256,32,Lowres
+Curs Off: Flash Off
+
+' Main game procedure (allows restart)
+Procedure PlayGame
+  Cls 0
+
+  ' Create player sprite (blue square with face)
+  Ink 2
+  Bar 0,0 To 15,15
+  Ink 14
+  Circle 8,8,5
+  Ink 0
+  Circle 5,6,1    ' Left eye
+  Circle 11,6,1   ' Right eye
+  Get Bob 1,0,0 To 16,16
+  Cls 0
+
+  ' Create collectible sprite (yellow star)
+  Ink 3
+  For a=0 To 360 Step 72
+    x=8+Sin(a)*7
+    y=8-Cos(a)*7
+    Plot x,y
+    Draw x,y
+  Next a
+  Get Bob 2,0,0 To 16,16
+  Cls 0
+
+  ' Player starting position
+  px=150
+  py=120
+  Bob 1,px,py,1
+
+  ' Create 10 collectibles at random positions
+  For i=2 To 11
+    x=Rnd(280)+20
+    y=Rnd(220)+20
+    Bob i,x,y,2
+  Next i
+
+  ' Game variables
+  score=0
+  target=100           ' Need 100 points to win
+  Timer=30*50          ' 30 seconds (50 ticks per second)
+
+  ' Instructions
+  Locate 2,22: Print "Collect 100 points in 30 seconds!"
+
+  ' Main game loop
+  Do
+    ' Player movement
+    If Jleft(1) Then Dec px,2
+    If Jright(1) Then Add px,2
+    If Jup(1) Then Dec py,2
+    If Jdown(1) Then Add py,2
+
+    ' Boundary checking
+    If px<0 Then px=0
+    If px>304 Then px=304
+    If py<0 Then py=0
+    If py>240 Then py=240
+
+    ' Update player position
+    Bob 1,px,py,1
+
+    ' Collision detection
+    hit=Col(1)
+    If hit>1 Then
+      Bob Off hit
+      Add score,10
+      Sam Play 0,1    ' Collection sound
+    End If
+
+    ' Display game status
+    Locate 2,1
+    Print "Score: ";score;" / ";target;" "
+    Locate 2,2
+    Print "Time: ";Timer/50;" sec "
+
+    ' Win condition (reached target)
+    If score>=target Then Exit
+
+    ' Lose condition (time ran out)
+    If Timer<=0 Then Exit
+
+    ' Synchronize and refresh
+    Wait Vbl
+    Bob Update
+  Loop
+
+  ' Game over screen
+  Cls 0
+
+  ' Hide all BOBs
+  For i=1 To 11
+    Bob Off i
+  Next i
+
+  Locate 10,12
+  If score>=target Then
+    Ink 2
+    Print "=== YOU WIN! ==="
+    Sam Play 0,5
+  Else
+    Ink 1
+    Print "=== TIME'S UP! ==="
+    Sam Play 0,10
+  End If
+
+  Locate 9,14
+  Print "Final Score: ";score
+
+  Locate 8,16
+  Print "Press any key..."
+
+  Wait Key
+End Proc
+
+' Start game
+PlayGame
+
+' Can call PlayGame again for restart

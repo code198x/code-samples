@@ -1,0 +1,53 @@
+' BOB Movement
+' Move sprites with joystick/keyboard input
+
+Screen Open 0,320,256,32,Lowres
+Curs Off: Flash Off: Cls 0
+
+' Create player sprite (16x16 square)
+Ink 2
+Bar 0,0 To 15,15
+Ink 14
+Circle 8,8,5
+Get Bob 1,0,0 To 16,16
+Cls 0
+
+' Starting position (center of screen)
+x=152
+y=120
+speed=2
+
+' Instructions
+Locate 2,1: Print "Use joystick or arrow keys"
+Locate 2,2: Print "Press SPACE to quit"
+
+' Main game loop
+Do
+  ' Read joystick on port 1
+  ' (Keyboard arrow keys also work via Jleft/Jright/etc)
+  If Jleft(1) Then Dec x,speed
+  If Jright(1) Then Add x,speed
+  If Jup(1) Then Dec y,speed
+  If Jdown(1) Then Add y,speed
+
+  ' Boundary checking (prevent moving off screen)
+  ' Screen is 320x256, BOB is 16x16
+  If x<0 Then x=0
+  If x>304 Then x=304     ' 320 - 16
+  If y<0 Then y=0
+  If y>240 Then y=240     ' 256 - 16
+
+  ' Display current position
+  Locate 2,4
+  Print "Position: ";x;",";y;"  "
+
+  ' Update BOB position
+  Bob 1,x,y,1
+
+  ' Synchronize and refresh
+  Wait Vbl
+  Bob Update
+Loop Until Inkey$=" "
+
+' Cleanup
+Bob Off
