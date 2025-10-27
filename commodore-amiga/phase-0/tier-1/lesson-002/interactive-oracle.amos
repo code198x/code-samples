@@ -1,0 +1,39 @@
+' Lesson 002: Interactive Oracle
+' User input and conditional branching
+
+Cls 0
+
+' Get user's name
+Locate 5,5
+Print "What is your name?"
+Locate 7,5
+Input name$
+
+' Respond based on name
+If name$="Alice" Then
+  Locate 10,5
+  Print "Hello Alice, welcome back!"
+Else
+  Locate 10,5
+  Print "Nice to meet you, "+name$
+End If
+
+' Number guessing
+Locate 13,5
+Print "Pick a number 1-10:"
+Locate 15,5
+Input guess
+
+If guess=7 Then
+  Locate 18,5
+  Ink 2
+  Print "Lucky number! You win!"
+Else
+  Locate 18,5
+  Ink 3
+  Print "Try again! The answer was 7."
+End If
+
+Locate 22,5
+Print "Press any key to exit"
+Wait Key

@@ -1,15 +1,12 @@
-Rem ** Hello, Amiga World **
-Rem ** Display text with colors **
+' Lesson 001: Hello, Amiga
+' Infinite counter demonstrating structured AMOS programming
 
-' Set screen mode and colors
-Screen Open 0,320,256,16,Lowres
-Curs Off
-Cls 0
+' Initialize counter variable
+count=0
 
-' Set ink color and display text
-Ink 14
-Locate 10,12
-Centre "HELLO, AMIGA!"
-
-' Wait for mouse click
-Wait Key
+' Infinite loop - runs until Ctrl+C pressed
+Repeat
+  count=count+1
+  Locate 10,15
+  Print count
+Until False

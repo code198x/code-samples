@@ -1,34 +1,41 @@
-# Commodore Amiga Lesson 001 - Hello, Amiga World
+# Lesson 001: Hello, Amiga
+
+Your first AMOS Professional program - an infinite counter.
 
 ## Files
 
-- `hello-amiga.amos` - Main example program demonstrating Screen Open, Curs Off, Cls, Ink, Centre, and Locate
+- `hello-amiga.amos` - Infinite counter with Locate positioning
 
-## Running the Code
+## Concepts
 
-### On Real Hardware
-1. Boot your Amiga into Workbench
-2. Load AMOS Professional from disk
-3. Type in the program or load the .amos file
-4. Press F1 to run
+- **Structured programming**: No line numbers, modern syntax
+- **Variables**: Store and update values (`count`)
+- **Locate**: Position text at row/column coordinates
+- **Repeat...Until**: Loop structure (infinite with `Until False`)
+- **Comments**: Use single quote `'` (not REM)
 
-### On Emulator (FS-UAE, WinUAE, etc.)
-1. Start the emulator with AMOS Professional disk loaded
-2. Boot AMOS Professional
-3. Type in the program or load the .amos file
-4. Press F1 to run
+## Key Points
 
-## What It Does
+AMOS Professional is fundamentally different from traditional BASIC:
+- No line numbers required
+- Compiled internally for fast execution
+- Modern structured syntax (procedures, labels)
+- `Locate row,column` for text positioning (0-based)
 
-Opens a 320×256 pixel lowres screen with 16 colours, hides the cursor, clears to black, sets ink colour to 14 (yellow in default palette), and displays "HELLO, AMIGA!" centered at row 12.
+## Running
 
-## Expected Output
+1. Load AMOS Professional on Amiga
+2. Load `hello-amiga.amos`
+3. Press F1 to run
+4. Press Ctrl+C to stop the infinite loop
 
-A black screen with yellow text "HELLO, AMIGA!" centered horizontally near the middle. Press any key to return to AMOS.
+## Extensions
 
-## Notes
-
-- Screen 0 is the default screen
-- Lowres mode is 320×256 pixels (PAL) with up to 32 colours
-- Colour 14 is yellow in the default AMOS palette
-- Centre calculates horizontal centering based on proportional font widths
+Try modifying:
+- Starting number: `count=100`
+- Increment: `count=count+10` (count by tens)
+- Count backwards: `count=count-1`
+- Position: `Locate 5,20` (different location)
+- Add `Wait Vbl` after Print to slow down
+- Add `Cls 0` at start to clear screen to black
+- Use `Ink 2 : Print count` to change text colour
