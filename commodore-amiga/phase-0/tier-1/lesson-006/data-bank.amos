@@ -1,0 +1,208 @@
+' Lesson 006: Data Bank
+' Arrays with Dim for flexible quiz system
+
+' Declare arrays for questions and answers
+Dim question$(20)
+Dim answer$(20)
+count=0
+
+' Load questions into arrays
+Cls 0
+Locate 5,10
+Print "Loading question bank..."
+For i=0 To 19
+  Read q$,a$
+  If q$="END" Then Exit
+  question$(i)=q$
+  answer$(i)=a$
+  Add count,1
+Next i
+
+Locate 7,10
+Print "Loaded ";count;" questions"
+Wait 100
+
+' Main menu
+Do
+  Cls 0
+  Locate 3,10
+  Ink 14
+  Print "=== DATA BANK ==="
+
+  Locate 6,10
+  Ink 1
+  Print "1. Take Full Quiz"
+  Locate 8,10
+  Print "2. Search Questions"
+  Locate 10,10
+  Print "3. Browse All Questions"
+  Locate 12,10
+  Print "4. Quit"
+
+  Locate 16,10
+  Input "Your choice (1-4): ";choice
+
+  If choice=1 Then FullQuiz
+  If choice=2 Then SearchQuestions
+  If choice=3 Then BrowseAll
+  If choice=4 Then Exit
+Loop
+
+End
+
+' Full quiz procedure
+Procedure FullQuiz
+  score=0
+
+  Cls 0
+  Locate 3,10
+  Ink 14
+  Print "=== FULL QUIZ ==="
+  Locate 5,10
+  Ink 1
+  Print "Answering all ";count;" questions"
+  Wait 100
+
+  ' Ask all questions
+  For i=0 To count-1
+    Cls 0
+    Locate 5,5
+    Print "Q";i+1;" of ";count;": ";question$(i)
+    Locate 7,5
+    Input response$
+
+    If response$=answer$(i) Then
+      Locate 10,5
+      Ink 2
+      Print "Correct!"
+      Add score,1
+    Else
+      Locate 10,5
+      Ink 3
+      Print "Wrong! Answer: ";answer$(i)
+    End If
+    Wait 150
+  Next i
+
+  ' Show results
+  Cls 0
+  Locate 10,10
+  Ink 1
+  Print "Final score: ";score;"/";count
+  Locate 12,10
+  If score=count Then
+    Ink 2
+    Print "Perfect score!"
+  Else If score>=count/2 Then
+    Ink 2
+    Print "Well done!"
+  Else
+    Ink 3
+    Print "Keep practising!"
+  End If
+
+  Locate 16,10
+  Print "Press any key..."
+  Wait Key
+End Proc
+
+' Search questions procedure
+Procedure SearchQuestions
+  Cls 0
+  Locate 3,10
+  Ink 14
+  Print "=== SEARCH ==="
+
+  Locate 6,10
+  Ink 1
+  Input "Search for: ";search$
+
+  found=0
+  Locate 8,10
+  Print "Searching..."
+  Wait 50
+
+  Cls 0
+  Locate 3,10
+  Ink 14
+  Print "=== RESULTS ==="
+
+  row=5
+  For i=0 To count-1
+    ' Simple substring search (case-sensitive)
+    If Instr(question$(i),search$)>0 Then
+      Locate row,5
+      Print "Q";i+1;": ";question$(i)
+      Add row,1
+      Add found,1
+    End If
+  Next i
+
+  If found=0 Then
+    Locate 5,5
+    Ink 3
+    Print "No questions found matching '";search$;"'"
+  Else
+    Locate row+1,5
+    Ink 2
+    Print "Found ";found;" question";
+    If found>1 Then Print "s" Else Print ""
+  End If
+
+  Locate row+3,5
+  Ink 1
+  Print "Press any key..."
+  Wait Key
+End Proc
+
+' Browse all questions procedure
+Procedure BrowseAll
+  Cls 0
+  Locate 3,10
+  Ink 14
+  Print "=== ALL QUESTIONS ==="
+
+  row=5
+  For i=0 To count-1
+    Locate row,5
+    Ink 1
+    Print "Q";i+1;": ";question$(i)
+    Add row,1
+
+    ' Page break every 15 questions
+    If row>20 Then
+      Locate 22,5
+      Ink 3
+      Print "Press any key for more..."
+      Wait Key
+      Cls 0
+      Locate 3,10
+      Ink 14
+      Print "=== ALL QUESTIONS ==="
+      row=5
+    End If
+  Next i
+
+  Locate row+2,5
+  Ink 1
+  Print "Press any key..."
+  Wait Key
+End Proc
+
+' Question data - mix of different topics
+Data "What is 5 + 3?","8"
+Data "Capital of France?","Paris"
+Data "Year moon landing?","1969"
+Data "Planets in solar system?","8"
+Data "What is 10 - 4?","6"
+Data "Boiling point water (°C)?","100"
+Data "Continents on Earth?","7"
+Data "What is 7 * 2?","14"
+Data "Speed of light (100k km/s)?","3"
+Data "US states?","50"
+Data "What is 15 / 3?","5"
+Data "Oceans on Earth?","5"
+Data "Days in a year?","365"
+Data "What is 12 + 8?","20"
+Data "WWII end year?","1945"
+Data "END","END"

@@ -1,75 +1,80 @@
-# Lesson 006: Data-Driven Quiz
+# Lesson 006: Data Bank
 
-Expandable quiz engine with categories using Restore and labels.
+Arrays with Dim for flexible question storage, search, and browsing.
 
 ## Files
 
-- `data-driven-quiz.amos` - Multi-category quiz with menu system
+- `data-bank.amos` - Quiz system using arrays for random access and search
 
 ## Concepts
 
-- **Restore command**: Reset data pointer to specific label
-- **Data labels**: Named locations in data (`MathQuestions:`)
-- **Menu system**: Loop with choices
-- **Reusable procedures**: RunQuiz works for any category
-- **Multiple data sections**: Separate question banks
-- **End statement**: Terminate programme
+- **Dim statement**: Declare arrays (`Dim question$(20)`)
+- **Zero-based indexing**: Arrays start at 0 (question$(0) is first element)
+- **Loading arrays**: Read Data into arrays for flexible access
+- **Array search**: Loop through array checking each element
+- **Count tracking**: Variable to track how many items loaded
+- **Instr function**: Find substring within string
+- **Random access**: Access any question by index
 
-## Data Organization
+## Array Structure
 
-**Labeled data sections:**
+**Two parallel arrays:**
 ```amos
-MathQuestions:
-Data "question",answer
-Data "question",answer
-
-ScienceQuestions:
-Data "question",answer
-Data "question",answer
+Dim question$(20)    ' 20 question strings
+Dim answer$(20)      ' 20 corresponding answers
+count=0              ' Track how many actually loaded
 ```
 
-**Restore resets pointer:**
-```amos
-Restore MathQuestions    ' Next Read gets math data
-Restore ScienceQuestions  ' Next Read gets science data
-```
+**Relationship:** question$(3) and answer$(3) belong to the same Q&A pair.
 
 ## Programme Flow
 
-1. Display category menu
-2. User chooses category
-3. Restore data pointer to that category's label
-4. Call RunQuiz procedure
-5. Procedure reads 5 questions from current data section
-6. Return to menu
-7. Repeat until user quits
+1. Load questions from Data into arrays
+2. Count how many questions loaded (stops at "END" marker)
+3. Display menu with options
+4. User chooses:
+   - Full quiz (iterate all questions)
+   - Search questions (find matching substring)
+   - Browse all questions (paginated display)
+5. Return to menu
+6. Repeat until user quits
 
 ## Key Points
 
-Advanced data handling:
-- Labels (name followed by colon) mark data locations
-- Restore sets where next Read will retrieve from
-- Same procedure works with different data sources
-- Easy to add new categories (new label + 5 Data lines)
-- Menu system with Do...Loop and Exit
+**AMOS array features:**
+- Declared with Dim (dimension)
+- Indices start at 0 (not 1 like C64 BASIC)
+- String arrays use $ suffix
+- Access elements with subscript: array$(index)
+- Can use variables as index: array$(i)
+
+**Data structure:**
+- Fixed-size arrays (20 elements max)
+- "END" sentinel value marks end of data
+- Count variable tracks actual number of questions
+- Same data used for all operations (quiz, search, browse)
 
 ## Running
 
 1. Load AMOS Professional
-2. Load `data-driven-quiz.amos`
+2. Load `data-bank.amos`
 3. Press F1 to run
-4. Choose a category from menu
-5. Answer 5 questions
-6. Return to menu or quit
+4. Watch questions load into arrays
+5. Choose from menu:
+   - Take full quiz (all 15 questions)
+   - Search for questions containing text
+   - Browse all questions
+6. Quit when done
 
 ## Extensions
 
 Try adding:
-- More categories (history, literature)
-- 10 questions per category instead of 5
-- Random question selection
-- Overall high score across all categories
-- Timer for each question
-- Different point values for different categories
-- "Challenge mode" with mixed categories
-- Question difficulty levels
+- Increase array size (50+ questions)
+- Random question order for quiz
+- Multiple choice answers (arrays of arrays)
+- Case-insensitive search (convert to uppercase first)
+- Edit/add questions during runtime
+- Save/load question bank to disk
+- Categories stored in third array
+- Filter by category in search
+- Sort questions alphabetically
