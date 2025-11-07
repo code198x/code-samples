@@ -4,7 +4,7 @@
         * = $0801       ; BASIC start address
 
         ; BASIC stub: 10 SYS 2064
-        .byte $0c,$08,$0a,$00,$9e,$20,$32,$30,$36,$34,$00,$00,$00
+!byte $0c,$08,$0a,$00,$9e,$20,$32,$30,$36,$34,$00,$00,$00
 
         * = $0810       ; Machine code start (2064 decimal)
 
