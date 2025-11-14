@@ -23,29 +23,26 @@ freq_hi: !byte $11, $13, $15, $17, $1a, $1d, $20, $22
 ; Bit=0 means pressed, bit=1 means not pressed (inverted logic).
 
 ; Mapping: A/S/D/F/G/H/J/K keys to C/D/E/F/G/A/B/C notes
-; Key A: Row 1 (Bit 1), Col 1 ($FD)
-; Key S: Row 1 (Bit 1), Col 5 ($DF)
-; Key D: Row 2 (Bit 2), Col 2 ($FB)
-; Key F: Row 2 (Bit 2), Col 5 ($DF)
-; Key G: Row 3 (Bit 3), Col 3 ($F7)
-; Key H: Row 3 (Bit 3), Col 5 ($DF)
-; Key J: Row 4 (Bit 4), Col 4 ($EF)
-; Key K: Row 4 (Bit 4), Col 5 ($DF)
+; Key A: Row 1, Col 6  →  Write $FD to $DC00, check bit 6 in $DC01
+; Key S: Row 1, Col 5  →  Write $FD to $DC00, check bit 5 in $DC01
+; Key D: Row 2, Col 6  →  Write $FB to $DC00, check bit 6 in $DC01
+; Key F: Row 2, Col 5  →  Write $FB to $DC00, check bit 5 in $DC01
+; Key G: Row 3, Col 6  →  Write $F7 to $DC00, check bit 6 in $DC01
+; Key H: Row 3, Col 5  →  Write $F7 to $DC00, check bit 5 in $DC01
+; Key J: Row 4, Col 6  →  Write $EF to $DC00, check bit 6 in $DC01
+; Key K: Row 4, Col 5  →  Write $EF to $DC00, check bit 5 in $DC01
 
-; Column masks (bit=0 selects that column)
-key_col: !byte $fd, $df, $fb, $df, $f7, $df, $ef, $df
-; $FD = %11111101 = column 1 (A)
-; $DF = %11011111 = column 5 (S, F, H, K)
-; $FB = %11111011 = column 2 (D)
-; $F7 = %11110111 = column 3 (G)
-; $EF = %11101111 = column 4 (J)
+; Row select masks (write to $DC00 - bit=0 selects that row)
+key_row_sel: !byte $fd, $fd, $fb, $fb, $f7, $f7, $ef, $ef
+; $FD = %11111101 = row 1 (A, S)
+; $FB = %11111011 = row 2 (D, F)
+; $F7 = %11110111 = row 3 (G, H)
+; $EF = %11101111 = row 4 (J, K)
 
-; Row masks (bit to check after reading $DC01)
-key_row: !byte $02, $02, $04, $04, $08, $08, $10, $10
-; $02 = %00000010 = row 1
-; $04 = %00000100 = row 2
-; $08 = %00001000 = row 3
-; $10 = %00010000 = row 4
+; Column check masks (read from $DC01 - bit=0 means key pressed)
+key_col_chk: !byte $40, $20, $40, $20, $40, $20, $40, $20
+; $40 = %01000000 = column 6 (A, D, G, J)
+; $20 = %00100000 = column 5 (S, F, H, K)
 
 num_keys = 8
 
@@ -68,13 +65,13 @@ main:
         ldx #$00                ; Start with key 0
 
 scan_loop:
-        ; Select column for this key
-        lda key_col,x
-        sta $dc00               ; Write column mask
+        ; Select row for this key
+        lda key_row_sel,x
+        sta $dc00               ; Write row select mask to Port A
 
-        ; Read row data
-        lda $dc01               ; Read all rows
-        and key_row,x           ; Isolate the row we care about
+        ; Read column data
+        lda $dc01               ; Read columns from Port B
+        and key_col_chk,x       ; Isolate the column we care about
         bne next_key            ; If bit=1, key not pressed, skip to next
 
         ; Key IS pressed (bit=0) - play the note!
