@@ -9,13 +9,13 @@
 
         jmp init        ; Skip over data tables
 
-; Frequency table for C major scale (C4-C5)
-freq_lo: !byte $11, $27, $61, $6f, $f9, $b8, $23, $22, $bc
-freq_hi: !byte $11, $13, $15, $16, $18, $1b, $1e, $22, $22
-; C4=$1111, D4=$1327, E4=$1561, F4=$166F, G4=$18F9
-; A4=$1BB8, B4=$1E23, C5=$2222, C5=$22BC (extended)
+; Frequency table for C major scale (C4-C5) - A440 PAL tuning
+freq_lo: !byte $67, $89, $ed, $3b, $13, $45, $da, $ce
+freq_hi: !byte $11, $13, $15, $17, $1a, $1d, $20, $22
+; C4=$1167, D4=$1389, E4=$15ED, F4=$173B, G4=$1A13
+; A4=$1D45, B4=$20DA, C5=$22CE
 
-note_count = 9
+note_count = 8
 
 init:   jsr clear_sid
         ldx #$00
