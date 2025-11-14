@@ -23,19 +23,22 @@ freq_hi: !byte $11, $13, $15, $17, $1a, $1d, $20, $22
 ; Bit=0 means pressed, bit=1 means not pressed (inverted logic).
 
 ; Mapping: A/S/D/F/G/H/J/K keys to C/D/E/F/G/A/B/C notes
-; Key A: Row 1, Col 2
-; Key S: Row 1, Col 5
-; Key D: Row 2, Col 2
-; Key F: Row 2, Col 5
-; Key G: Row 3, Col 2
-; Key H: Row 3, Col 5
-; Key J: Row 4, Col 2
-; Key K: Row 4, Col 5
+; Key A: Row 1 (Bit 1), Col 1 ($FD)
+; Key S: Row 1 (Bit 1), Col 5 ($DF)
+; Key D: Row 2 (Bit 2), Col 2 ($FB)
+; Key F: Row 2 (Bit 2), Col 5 ($DF)
+; Key G: Row 3 (Bit 3), Col 3 ($F7)
+; Key H: Row 3 (Bit 3), Col 5 ($DF)
+; Key J: Row 4 (Bit 4), Col 4 ($EF)
+; Key K: Row 4 (Bit 4), Col 5 ($DF)
 
 ; Column masks (bit=0 selects that column)
-key_col: !byte $fb, $df, $fb, $df, $fb, $df, $fb, $df
-; $FB = %11111011 = column 2
-; $DF = %11011111 = column 5
+key_col: !byte $fd, $df, $fb, $df, $f7, $df, $ef, $df
+; $FD = %11111101 = column 1 (A)
+; $DF = %11011111 = column 5 (S, F, H, K)
+; $FB = %11111011 = column 2 (D)
+; $F7 = %11110111 = column 3 (G)
+; $EF = %11101111 = column 4 (J)
 
 ; Row masks (bit to check after reading $DC01)
 key_row: !byte $02, $02, $04, $04, $08, $08, $10, $10
