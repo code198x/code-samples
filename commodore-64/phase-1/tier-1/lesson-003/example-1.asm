@@ -23,13 +23,13 @@ freq_hi: !byte $11, $13, $15, $17, $1a, $1d, $20, $22
 ; Bit=0 means pressed, bit=1 means not pressed (inverted logic).
 
 ; Mapping: A/S/D/F/G/H/J/K keys to C/D/E/F/G/A/B/C notes
-; Key A: Row 1, Col 6  →  Write $FD to $DC00, check bit 6 in $DC01
+; Key A: Row 1, Col 2  →  Write $FD to $DC00, check bit 2 in $DC01
 ; Key S: Row 1, Col 5  →  Write $FD to $DC00, check bit 5 in $DC01
-; Key D: Row 2, Col 6  →  Write $FB to $DC00, check bit 6 in $DC01
+; Key D: Row 2, Col 2  →  Write $FB to $DC00, check bit 2 in $DC01
 ; Key F: Row 2, Col 5  →  Write $FB to $DC00, check bit 5 in $DC01
-; Key G: Row 3, Col 6  →  Write $F7 to $DC00, check bit 6 in $DC01
+; Key G: Row 3, Col 2  →  Write $F7 to $DC00, check bit 2 in $DC01
 ; Key H: Row 3, Col 5  →  Write $F7 to $DC00, check bit 5 in $DC01
-; Key J: Row 4, Col 6  →  Write $EF to $DC00, check bit 6 in $DC01
+; Key J: Row 4, Col 2  →  Write $EF to $DC00, check bit 2 in $DC01
 ; Key K: Row 4, Col 5  →  Write $EF to $DC00, check bit 5 in $DC01
 
 ; Row select masks (write to $DC00 - bit=0 selects that row)
@@ -40,8 +40,8 @@ key_row_sel: !byte $fd, $fd, $fb, $fb, $f7, $f7, $ef, $ef
 ; $EF = %11101111 = row 4 (J, K)
 
 ; Column check masks (read from $DC01 - bit=0 means key pressed)
-key_col_chk: !byte $40, $20, $40, $20, $40, $20, $40, $20
-; $40 = %01000000 = column 6 (A, D, G, J)
+key_col_chk: !byte $04, $20, $04, $20, $04, $20, $04, $20
+; $04 = %00000100 = column 2 (A, D, G, J)
 ; $20 = %00100000 = column 5 (S, F, H, K)
 
 num_keys = 8
