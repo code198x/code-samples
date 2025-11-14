@@ -61,6 +61,10 @@ init:
 ; MAIN LOOP - Scan keyboard continuously
 ; ============================================================================
 main:
+        ; Assume no keys pressed - turn gate off
+        lda #$10                ; Triangle waveform + gate OFF
+        sta $d404               ; Voice 1 control register
+
         ldx #$00                ; Start with key 0
 
 scan_loop:
@@ -71,16 +75,10 @@ scan_loop:
         ; Read row data
         lda $dc01               ; Read all rows
         and key_row,x           ; Isolate the row we care about
-        bne key_not_pressed     ; If bit=1, key not pressed
+        bne next_key            ; If bit=1, key not pressed, skip to next
 
         ; Key IS pressed (bit=0) - play the note!
         jsr play_note
-        jmp next_key
-
-key_not_pressed:
-        ; Turn off gate (stop sound)
-        lda #$10                ; Triangle waveform + gate OFF
-        sta $d404               ; Voice 1 control register
 
 next_key:
         inx                     ; Next key
