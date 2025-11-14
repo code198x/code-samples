@@ -6,6 +6,7 @@
         !byte $0c,$08,$0a,$00,$9e,$20,$32,$30,$36,$34,$00,$00,$00
 
         * = $0810       ; Machine code start ($0810 = 2064 decimal)
+        jmp init        ; Jump over data tables to initialization
 
 ; ============================================================================
 ; FREQUENCY TABLE - C-major scale (C4-C5) A440 PAL tuning
@@ -67,10 +68,16 @@ scan_loop:
         ; Read row data
         lda $dc01               ; Read all rows
         and key_row,x           ; Isolate the row we care about
-        bne next_key            ; If bit=1, key not pressed
+        bne key_not_pressed     ; If bit=1, key not pressed
 
-        ; Key is pressed (bit=0) - play the note!
+        ; Key IS pressed (bit=0) - play the note!
         jsr play_note
+        jmp next_key
+
+key_not_pressed:
+        ; Turn off gate (stop sound)
+        lda #$10                ; Triangle waveform + gate OFF
+        sta $d404               ; Voice 1 control register
 
 next_key:
         inx                     ; Next key
