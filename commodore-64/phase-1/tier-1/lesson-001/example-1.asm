@@ -16,9 +16,9 @@ clear:  sta $d400,x
         cpx #$1d        ; 29 SID registers ($00-$1C)
         bne clear
 
-        ; Set frequency for middle C (261.63 Hz)
-        ; Frequency value: $1111 (4369 decimal)
-        lda #$11        ; Low byte
+        ; Set frequency for middle C (261.63 Hz) - A440 PAL tuning
+        ; Frequency value: $1167 (4455 decimal)
+        lda #$67        ; Low byte
         sta $d400       ; Voice 1 frequency low
         lda #$11        ; High byte
         sta $d401       ; Voice 1 frequency high

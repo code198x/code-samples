@@ -147,3 +147,18 @@ Per plan, Task 3 does not include a git commit step. The code fix has been appli
 ## Summary
 
 Task 3 has been successfully implemented. The assembly code compiles cleanly with ACME, produces a valid 62-byte .prg file, and executes without errors in VICE. The automated verification confirms the program loads, runs, and completes the cycle limit without crashes. Manual audio verification is recommended for complete validation of sound output.
+
+---
+
+## Update (2025-11-14): Frequency Correction
+
+**Issue:** Original frequency values were incorrect (systematic flat tuning).
+
+**Correction applied:**
+- Middle C changed from $1111 to $1167 (proper A440 PAL tuning)
+- Both example-1.asm and example-2.asm updated
+- Both PRG files recompiled (same size: 62 bytes)
+- Audio files recaptured with correct tuning
+- Documentation frequency table corrected
+
+**Result:** Examples now produce properly tuned Middle C at 261.63 Hz.

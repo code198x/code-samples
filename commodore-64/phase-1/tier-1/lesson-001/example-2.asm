@@ -15,8 +15,9 @@ clear:  sta $d400,x
         cpx #$1d
         bne clear
 
-        ; Set frequency for middle C
-        lda #$11
+        ; Set frequency for middle C (261.63 Hz) - A440 PAL tuning
+        ; Frequency value: $1167
+        lda #$67
         sta $d400
         lda #$11
         sta $d401
