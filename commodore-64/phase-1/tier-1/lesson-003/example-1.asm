@@ -47,6 +47,11 @@ key_col_chk: !byte $04, $20, $04, $20, $04, $20, $04, $20
 num_keys = 8
 
 ; ============================================================================
+; VARIABLES
+; ============================================================================
+current_note: !byte $ff         ; Currently playing note ($ff = none)
+
+; ============================================================================
 ; INITIALIZATION
 ; ============================================================================
 init:
@@ -58,11 +63,8 @@ init:
 ; MAIN LOOP - Scan keyboard continuously
 ; ============================================================================
 main:
-        ; Assume no keys pressed - turn gate off
-        lda #$10                ; Triangle waveform + gate OFF
-        sta $d404               ; Voice 1 control register
-
         ldx #$00                ; Start with key 0
+        ldy #$00                ; Y = flag: 0 = no key pressed yet
 
 scan_loop:
         ; Select row for this key
@@ -74,7 +76,12 @@ scan_loop:
         and key_col_chk,x       ; Isolate the column we care about
         bne next_key            ; If bit=1, key not pressed, skip to next
 
-        ; Key IS pressed (bit=0) - play the note!
+        ; Key IS pressed (bit=0) - check if it's a new note
+        ldy #$01                ; Flag: a key was pressed this scan
+        cpx current_note        ; Same note as last time?
+        beq next_key            ; Yes - skip (already playing)
+
+        ; New note - play it
         jsr play_note
 
 next_key:
@@ -82,12 +89,25 @@ next_key:
         cpx #num_keys           ; All 8 keys scanned?
         bne scan_loop           ; No - continue scanning
 
-        jmp main                ; Yes - restart scan from key 0
+        ; After scanning all keys, check if any were pressed
+        cpy #$00                ; Was any key pressed this cycle?
+        bne main                ; Yes - keep gate on, restart scan
+
+        ; No keys pressed - turn gate off and reset note tracker
+        lda #$10                ; Triangle waveform + gate OFF
+        sta $d404               ; Voice 1 control register
+        lda #$ff                ; Reset current note
+        sta current_note
+
+        jmp main                ; Restart scan from key 0
 
 ; ============================================================================
 ; PLAY NOTE - X register contains note index
 ; ============================================================================
 play_note:
+        ; Save current note
+        stx current_note
+
         ; Load frequency for this note
         lda freq_lo,x
         sta $d400               ; Voice 1 frequency low
@@ -112,10 +132,10 @@ clear_loop:
         cpx #$1d                ; 29 SID registers
         bne clear_loop
 
-        ; Set ADSR for fast, responsive sound
-        lda #$09                ; Attack=0 (instant), Decay=9 (fast)
+        ; Set ADSR for sustained sound
+        lda #$00                ; Attack=0 (instant), Decay=0 (no decay)
         sta $d405               ; Voice 1 Attack/Decay
-        lda #$00                ; Sustain=0, Release=0 (immediate cutoff)
+        lda #$f0                ; Sustain=15 (full volume), Release=0 (instant off)
         sta $d406               ; Voice 1 Sustain/Release
 
         ; Set volume
