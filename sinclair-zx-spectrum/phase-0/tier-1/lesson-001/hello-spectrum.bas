@@ -1,8 +1,0 @@
-10 REM Hello, Spectrum World
-20 REM Display text with color
-30 BORDER 5
-40 PAPER 5
-50 INK 7
-60 CLS
-70 PRINT AT 10,8;"HELLO, SPECTRUM!"
-80 PAUSE 0
