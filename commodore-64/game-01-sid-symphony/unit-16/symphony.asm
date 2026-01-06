@@ -986,12 +986,7 @@ draw_track_note:
             lda #NOTE_CHAR
             sta (temp_ptr),y
 
-            ; Set colour based on track
-            ldx current_track
-            lda track_colours,x
-            sta (temp_ptr+256),y  ; Assuming colour RAM follows
-
-            ; Actually need proper colour address
+            ; Set colour based on track - calculate colour RAM address
             clc
             lda temp_ptr
             adc #<(COLOUR-SCREEN)
