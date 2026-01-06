@@ -774,12 +774,12 @@ swap_player:
 update_ui_colours:
         ld a, (current_player)
         cp 1
-        jr nz, .player_2
+        jr nz, .uuc_player_2
         ld a, 2                 ; Red
-        jr .set_border
-.player_2:
+        jr .uuc_set_border
+.uuc_player_2:
         ld a, 5                 ; Cyan
-.set_border:
+.uuc_set_border:
         out (254), a
         ret
 
