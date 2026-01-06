@@ -5,8 +5,7 @@
 ; Adds: home slots, goal detection, level completion
 ;=============================================================================
 
-            include "hardware/custom.i"
-            include "hardware/dmabits.i"
+; All hardware constants defined below - no external includes needed
 
 ;=============================================================================
 ; Constants
@@ -211,17 +210,17 @@ init_sprites:
             swap    d0
             move.w  d0,SPR0PTH(a5)
 
+            ; Disable other sprites (1-7)
             lea     null_sprite,a0
             move.l  a0,d0
-            move.w  #1,d1
+            lea     SPR0PTH+8(a5),a1      ; Start at sprite 1 (skip sprite 0)
+            moveq   #6,d1                  ; 7 sprites to disable (1-7)
 .disable:
-            move.w  d0,SPR0PTL+4(a5,d1.w)
+            move.w  d0,(a1)+               ; SPRxPTH
             swap    d0
-            move.w  d0,SPR0PTH+4(a5,d1.w)
+            move.w  d0,(a1)+               ; SPRxPTL
             swap    d0
-            addq.w  #4,d1
-            cmp.w   #32,d1
-            blt.s   .disable
+            dbf     d1,.disable
             rts
 
 init_objects:
