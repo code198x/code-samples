@@ -3,10 +3,81 @@
 ; Unit 15: Time Limit
 ;------------------------------------------------------------------------------
 
-            include "hardware/custom.i"
-            include "hardware/cia.i"
-            include "hardware/dmabits.i"
-            include "hardware/intbits.i"
+;------------------------------------------------------------------------------
+; Hardware Constants (NDK not available in build environment)
+;------------------------------------------------------------------------------
+
+; Custom chip register offsets
+DMACONR         equ     $002
+VPOSR           equ     $004
+JOY1DAT         equ     $00c
+DMACON          equ     $096
+INTENA          equ     $09a
+INTREQ          equ     $09c
+BLTCON0         equ     $040
+BLTDPTH         equ     $054
+BLTDMOD         equ     $066
+BLTSIZE         equ     $058
+DIWSTRT         equ     $08e
+DIWSTOP         equ     $090
+DDFSTRT         equ     $092
+DDFSTOP         equ     $094
+BPLCON0         equ     $100
+BPLCON1         equ     $102
+BPLCON2         equ     $104
+BPL1MOD         equ     $108
+BPL2MOD         equ     $10a
+BPL1PTH         equ     $0e0
+BPL1PTL         equ     $0e2
+BPL2PTH         equ     $0e4
+BPL2PTL         equ     $0e6
+BPL3PTH         equ     $0e8
+BPL3PTL         equ     $0ea
+SPR0PTH         equ     $120
+SPR0PTL         equ     $122
+SPR1PTH         equ     $124
+SPR1PTL         equ     $126
+SPR2PTH         equ     $128
+SPR2PTL         equ     $12a
+SPR3PTH         equ     $12c
+SPR3PTL         equ     $12e
+SPR4PTH         equ     $130
+SPR4PTL         equ     $132
+SPR5PTH         equ     $134
+SPR5PTL         equ     $136
+SPR6PTH         equ     $138
+SPR6PTL         equ     $13a
+SPR7PTH         equ     $13c
+SPR7PTL         equ     $13e
+COLOR00         equ     $180
+COLOR01         equ     $182
+COLOR02         equ     $184
+COLOR03         equ     $186
+COLOR04         equ     $188
+COLOR05         equ     $18a
+COLOR06         equ     $18c
+COLOR07         equ     $18e
+COLOR17         equ     $1a2
+COLOR18         equ     $1a4
+COLOR19         equ     $1a6
+COP1LCH         equ     $080
+AUD0LCH         equ     $0a0
+AUD0LCL         equ     $0a2
+AUD0LEN         equ     $0a4
+AUD0PER         equ     $0a8
+AUD0VOL         equ     $0a6
+
+; DMA control flags
+DMAF_SETCLR     equ     $8000
+DMAF_MASTER     equ     $0200
+DMAF_COPPER     equ     $0080
+DMAF_RASTER     equ     $0100
+DMAF_BLITTER    equ     $0040
+DMAF_SPRITE     equ     $0020
+DMAF_AUD0       equ     $0001
+
+; CIA-A registers
+CIAAPRA         equ     $bfe001
 
 ;------------------------------------------------------------------------------
 ; Constants
@@ -1198,7 +1269,7 @@ draw_hud:
             blt.s   .no_lives
 .draw_life:
             bsr     draw_life_icon
-            subq.w  #12,d0
+            sub.w   #12,d0          ; subq only supports 1-8
             dbf     d2,.draw_life
 .no_lives:
 
