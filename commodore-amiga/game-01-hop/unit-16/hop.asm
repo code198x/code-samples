@@ -399,7 +399,7 @@ draw_gameover:
 update_entry:
             addq.w  #1,entry_delay
             cmpi.w  #8,entry_delay
-            blt.s   .check_fire
+            blt     .check_fire         ; far branch (label > 128 bytes away)
             clr.w   entry_delay
 
             ; Read joystick for letter selection
@@ -978,9 +978,9 @@ check_water:
             ; Only check if in water zone
             move.w  frog_y,d0
             cmpi.w  #WATER_TOP,d0
-            blt.s   .not_water
+            blt     .not_water          ; far branch (label > 128 bytes away)
             cmpi.w  #WATER_BOTTOM,d0
-            bgt.s   .not_water
+            bgt     .not_water          ; far branch (label > 128 bytes away)
 
             ; Check for log collision
             lea     objects,a0
