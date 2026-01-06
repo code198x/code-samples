@@ -150,8 +150,8 @@ GRADE_LATE      = 2
 GRADE_FLASH_TIME = 20
 
 ; Combo system constants
-COMBO_THRESHOLD = 10
-MAX_MULTIPLIER  = 4
+COMBO_THRESHOLD = 10            ; Hits needed per multiplier level
+MAX_MULTIPLIER  = 4             ; Maximum multiplier (4x)
 
 ; Visual juice constants
 BORDER_FLASH_TIME = 8           ; Frames for multiplier border flash
@@ -192,9 +192,9 @@ high_score_lo:  !byte 0
 high_score_hi:  !byte 0
 
 ; Combo system variables
-combo_count:    !byte 0
-multiplier:     !byte 1
-cg_base_points: !byte 0
+combo_count:    !byte 0         ; Consecutive hits (0-9)
+multiplier:     !byte 1         ; Current multiplier (1-4)
+cg_base_points: !byte 0         ; Temp storage for multiplication
 
 crowd_level:    !byte 0
 
@@ -2198,6 +2198,7 @@ dsr14_10_done:
 ; SID INITIALISATION
 ; ========================================================
 init_sid:
+            ; Clear all SID registers
             ldx #24
 is_clear:
             lda #0
@@ -2205,35 +2206,41 @@ is_clear:
             dex
             bpl is_clear
 
+            ; Set up voice 1 - Pulse wave
             lda #$00
             sta SID_V1_PW_LO
             lda #$08
-            sta SID_V1_PW_HI
+            sta SID_V1_PW_HI        ; 50% pulse width
             lda #$09
-            sta SID_V1_AD
+            sta SID_V1_AD           ; Attack=0, Decay=9
             lda #$52
-            sta SID_V1_SR
+            sta SID_V1_SR           ; Sustain=5, Release=2
 
+            ; Set up voice 2 - Sawtooth
             lda #$0a
             sta SID_V2_AD
             lda #$41
             sta SID_V2_SR
 
+            ; Set up voice 3 - Triangle
             lda #$18
             sta SID_V3_AD
             lda #$84
             sta SID_V3_SR
 
+            ; Set up filter - low pass with moderate resonance
             lda #0
             sta SID_FC_LO
             lda #FILTER_CUTOFF_MIN
             sta SID_FC_HI
             sta filter_cutoff
 
-            lda #$17
+            ; Route all voices through filter
+            lda #$17                ; Resonance=1, filter voices 1,2,3
             sta SID_RES_FILT
 
-            lda #$1f
+            ; Low-pass filter, volume 15
+            lda #$1f                ; Low-pass + max volume
             sta SID_MODE_VOL
 
             rts
@@ -2269,28 +2276,32 @@ cs_loop:
 ; ========================================================
 ; SONG DATA
 ; ========================================================
+; Format: delta time, track (0-2)
+; Delta time is frames since last note
+; $ff,$ff marks end of song
+
 song_data:
-            !byte 0, 0
-            !byte 15, 1
-            !byte 15, 2
-            !byte 15, 0
-            !byte 15, 1
-            !byte 15, 2
-            !byte 20, 0
-            !byte 10, 0
-            !byte 10, 1
-            !byte 10, 1
-            !byte 10, 2
-            !byte 10, 2
-            !byte 20, 0
-            !byte 0, 1
-            !byte 0, 2
-            !byte 30, 1
-            !byte 15, 0
-            !byte 15, 2
-            !byte 15, 1
-            !byte 15, 0
-            !byte 30, 2
-            !byte 15, 1
-            !byte 15, 0
-            !byte $ff, $ff
+            !byte 0, 0              ; Frame 0: Track 1
+            !byte 15, 1             ; Frame 15: Track 2
+            !byte 15, 2             ; Frame 30: Track 3
+            !byte 15, 0             ; Frame 45: Track 1
+            !byte 15, 1             ; Frame 60: Track 2
+            !byte 15, 2             ; Frame 75: Track 3
+            !byte 20, 0             ; Frame 95: Track 1
+            !byte 10, 0             ; Frame 105: Track 1
+            !byte 10, 1             ; Frame 115: Track 2
+            !byte 10, 1             ; Frame 125: Track 2
+            !byte 10, 2             ; Frame 135: Track 3
+            !byte 10, 2             ; Frame 145: Track 3
+            !byte 20, 0             ; Frame 165: Track 1
+            !byte 0, 1              ; Same time: Track 2
+            !byte 0, 2              ; Same time: Track 3 (chord!)
+            !byte 30, 1             ; Frame 195: Track 2
+            !byte 15, 0             ; Frame 210: Track 1
+            !byte 15, 2             ; Frame 225: Track 3
+            !byte 15, 1             ; Frame 240: Track 2
+            !byte 15, 0             ; Frame 255: Track 1
+            !byte 30, 2             ; Frame 285: Track 3
+            !byte 15, 1             ; Frame 300: Track 2
+            !byte 15, 0             ; Frame 315: Track 1
+            !byte $ff, $ff          ; End of song
