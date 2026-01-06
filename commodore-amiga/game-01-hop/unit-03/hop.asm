@@ -57,7 +57,7 @@ start:
             ; --- Initialise frog position ---
             move.w  #160,frog_x
             move.w  #180,frog_y
-            bsr.s   update_sprite
+            bsr     update_sprite       ; far branch (label > 128 bytes away)
 
             ; === Main Loop ===
 mainloop:
