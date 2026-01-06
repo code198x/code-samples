@@ -3,14 +3,8 @@ name: Build Verification
 on:
   push:
     branches: [main, master]
-    paths:
-      - '**/*.asm'
-      - '**/*.cfg'
   pull_request:
     branches: [main, master]
-    paths:
-      - '**/*.asm'
-      - '**/*.cfg'
   workflow_dispatch:
 
 jobs:
