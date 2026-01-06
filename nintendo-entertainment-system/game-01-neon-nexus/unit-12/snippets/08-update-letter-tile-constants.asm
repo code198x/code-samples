@@ -1,0 +1,16 @@
+TILE_A = 14
+TILE_E = 15
+TILE_G = 16
+TILE_H = 27      ; new
+TILE_I = 28      ; new
+TILE_M = 17
+TILE_N = 18
+TILE_O = 19
+TILE_P = 20
+TILE_R = 21
+TILE_S = 22
+TILE_T = 23
+TILE_U = 24
+TILE_V = 25
+TILE_W = 29      ; new
+TILE_X = 26

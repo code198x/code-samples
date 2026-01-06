@@ -1,566 +1,1676 @@
-;──────────────────────────────────────────────────────────────
-; HOP - Unit 14 sample (SFX pass)
-; Builds on Unit 13 title/start flow. Expands Paula SFX: separate channel
-; for hop, hit, splash, and respawn so effects don't stomp each other,
-; plus tuned volumes/pitches.
-;──────────────────────────────────────────────────────────────
+;------------------------------------------------------------------------------
+; HOP - A Frogger Clone for Amiga
+; Unit 14: Level Progression
+;------------------------------------------------------------------------------
 
-CUSTOM          equ $dff000
-ExecBase        equ 4
-OldOpenLibrary  equ -408
-CloseLibrary    equ -414
-LoadView        equ -222
-WaitTOF         equ -270
+            include "hardware/custom.i"
+            include "hardware/cia.i"
+            include "hardware/dmabits.i"
+            include "hardware/intbits.i"
 
-AUD0LCH         equ $a0
-AUD0LCL         equ $a2
-AUD0LEN         equ $a4
-AUD0PER         equ $a6
-AUD0VOL         equ $a8
-AUD1LCH         equ $b0
-AUD1LCL         equ $b2
-AUD1LEN         equ $b4
-AUD1PER         equ $b6
-AUD1VOL         equ $b8
-BLTCON0         equ $040
-BLTCON1         equ $042
-BLTAFWM         equ $044
-BLTALWM         equ $046
-BLTAPTH         equ $050
-BLTAPTL         equ $052
-BLTBPTH         equ $054
-BLTBPTL         equ $056
-BLTCPTH         equ $058
-BLTCPTL         equ $05a
-BLTDPTH         equ $05c
-BLTDPTL         equ $05e
-BLTSIZE         equ $058
-BLTAMOD         equ $064
-BLTBMOD         equ $062
-BLTCMOD         equ $060
-BLTDMOD         equ $060
+;------------------------------------------------------------------------------
+; Constants
+;------------------------------------------------------------------------------
 
-LIVES_INIT      equ 3
-STATE_TITLE     equ 0
-STATE_PLAY      equ 1
-STATE_GAMEOVER  equ 2
+SCREEN_WIDTH    equ     320
+SCREEN_HEIGHT   equ     256
+SCREEN_DEPTH    equ     3
+BITPLANE_SIZE   equ     (SCREEN_WIDTH/8)*SCREEN_HEIGHT
+TOTAL_BPL_SIZE  equ     BITPLANE_SIZE*SCREEN_DEPTH
+
+SPRITE_HEIGHT   equ     16
+
+OBJ_X           equ     0
+OBJ_Y           equ     2
+OBJ_SPEED       equ     4
+OBJ_TYPE        equ     6
+OBJ_SIZE        equ     8
+
+TYPE_NONE       equ     0
+TYPE_CAR        equ     1
+TYPE_LOG        equ     2
+
+STATE_ALIVE     equ     0
+STATE_DYING     equ     1
+STATE_DEAD      equ     2
+
+MODE_TITLE      equ     0
+MODE_PLAYING    equ     1
+MODE_GAMEOVER   equ     2
+MODE_ENTRY      equ     3
+
+HS_SCORE        equ     0
+HS_NAME         equ     4
+HS_SIZE         equ     8
+NUM_SCORES      equ     5
+
+FROG_WIDTH      equ     12
+FROG_HEIGHT     equ     12
+CAR_WIDTH       equ     24
+CAR_HEIGHT      equ     12
+LOG_WIDTH       equ     32
+LOG_HEIGHT      equ     12
+
+ROAD_TOP        equ     160
+ROAD_BOTTOM     equ     224
+RIVER_TOP       equ     64
+RIVER_BOTTOM    equ     128
+HOME_Y          equ     48
+
+NUM_HOMES       equ     5
+HOME_SPACING    equ     56
+HOME_FIRST_X    equ     36
+HOME_WIDTH      equ     24
+
+SCORE_X         equ     8
+SCORE_Y         equ     4
+LIVES_X         equ     280
+LIVES_Y         equ     4
+
+; Difficulty constants
+MAX_OBJECTS     equ     12
+SPEED_INCREASE  equ     2           ; Per level (16 = 1.0x)
+MAX_SPEED_MULT  equ     32          ; 2.0x max
+
+CUSTOM          equ     $dff000
+
+;------------------------------------------------------------------------------
+; Entry Point
+;------------------------------------------------------------------------------
 
             section code,code
-start:
-            move.l  ExecBase,a6
-            lea     gfxname,a1
-            jsr     OldOpenLibrary(a6)
-            move.l  d0,gfxbase
-            beq     exit
 
-            move.l  d0,a6
-            move.l  34(a6),oldview
-            move.l  38(a6),oldcopper
-
-            sub.l   a1,a1
-            jsr     LoadView(a6)
-            jsr     WaitTOF(a6)
-            jsr     WaitTOF(a6)
+Start:
+            move.w  #$7fff,INTENA+CUSTOM
+            move.w  #$7fff,INTREQ+CUSTOM
+            move.w  #$7fff,DMACON+CUSTOM
 
             lea     CUSTOM,a5
-            move.w  #$7fff,$9a(a5)
-            move.w  #$7fff,$9c(a5)
+            lea     copper_list,a0
+            move.l  a0,COP1LCH(a5)
 
-            lea     bitplane,a0
-            move.l  a0,$e0(a5)
-            move.w  #0,$e4(a5)
-            move.w  #0,$e8(a5)
-            move.w  #0,$ec(a5)
-            move.w  #0,$f0(a5)
-            move.w  #0,$f4(a5)
+            bsr     init_copper_bpl_ptrs
+            bsr     init_sprite_ptrs
+            bsr     clear_screen
+            bsr     init_game
 
-            lea     copperlist,a0
-            move.l  a0,$80(a5)
-            move.w  d0,$88(a5)
+            move.w  #DMAF_SETCLR|DMAF_MASTER|DMAF_COPPER|DMAF_RASTER|DMAF_BLITTER|DMAF_SPRITE|DMAF_AUD0,DMACON(a5)
 
-            move.w  #$83a0,$96(a5)
+;------------------------------------------------------------------------------
+; Main Loop
+;------------------------------------------------------------------------------
 
-            bsr     clear_bpl
-            bsr     init_sound
-            bsr     init_state_title
+main_loop:
+            bsr     wait_vblank
 
-mainloop:
-            bsr     wait_vb
-            move.b  game_state,d0
-            cmpi.b  #STATE_TITLE,d0
-            beq.s   title_loop
-            cmpi.b  #STATE_PLAY,d0
-            beq.s   play_loop
-            cmpi.b  #STATE_GAMEOVER,d0
-            beq.s   game_over_loop
-            bra.s   mainloop
+            move.w  game_mode,d0
+            cmpi.w  #MODE_TITLE,d0
+            beq     .do_title
+            cmpi.w  #MODE_GAMEOVER,d0
+            beq     .do_gameover
+            cmpi.w  #MODE_ENTRY,d0
+            beq     .do_entry
 
-title_loop:
-            bsr     draw_title_screen
-            ; wait for mouse click
-            btst    #6,$bfe001
-            bne.s   mainloop
-            bsr     init_state_play
-            bra.s   mainloop
+            bsr     update_game
+            bra     main_loop
 
-play_loop:
-            bsr     update_traffic
-            bsr     update_logs
-            bsr     ride_logs
-            bsr     check_collisions
-            bsr     update_death
-            bsr     draw_scene
-            bsr     check_game_over
-            bra.s   mainloop
+.do_title:
+            bsr     update_title
+            bra     main_loop
 
-game_over_loop:
-            bsr     draw_game_over
-            btst    #6,$bfe001
-            bne.s   mainloop
-            bsr     init_state_title
-            bra.s   mainloop
+.do_gameover:
+            bsr     update_gameover
+            bra     main_loop
 
-exit:      rts
+.do_entry:
+            bsr     update_name_entry
+            bra     main_loop
 
-wait_vb:
-            move.l  #$1ff00,d1
-.vbwait:
-            move.l  4(a5),d0
-            and.l   d1,d0
-            cmp.l   #$00000,d0
-            bne.s   .vbwait
+;------------------------------------------------------------------------------
+; Get Speed Multiplier
+;------------------------------------------------------------------------------
+
+get_speed_multiplier:
+; Returns d0 = multiplier (16 = 1.0x)
+            move.w  level,d0
+            subq.w  #1,d0
+            mulu    #SPEED_INCREASE,d0
+            addi.w  #16,d0
+            cmpi.w  #MAX_SPEED_MULT,d0
+            ble.s   .no_cap
+            move.w  #MAX_SPEED_MULT,d0
+.no_cap:
             rts
 
-clear_bpl:
-            lea     bitplane,a0
-            move.l  #((320*256)/8),d0
-            moveq   #0,d1
-.clr_lp:
-            move.b  d1,(a0)+
-            subq.l  #1,d0
-            bne.s   .clr_lp
+;------------------------------------------------------------------------------
+; Random Number Generator
+;------------------------------------------------------------------------------
+
+random:
+            move.l  random_seed,d0
+            mulu    #$41C6,d0
+            addi.l  #$3039,d0
+            move.l  d0,random_seed
+            swap    d0
             rts
 
-init_state_title:
-            move.b  #STATE_TITLE,game_state
-            bsr     clear_bpl
-            move.w  #160,frog_x
-            move.w  #220,frog_y
-            move.b  #LIVES_INIT,lives
-            clr.b   death_state
-            clr.b   death_timer
-            rts
+;------------------------------------------------------------------------------
+; Title Screen
+;------------------------------------------------------------------------------
 
-init_state_play:
-            move.b  #STATE_PLAY,game_state
-            move.b  #LIVES_INIT,lives
-            clr.b   death_state
-            clr.b   death_timer
-            move.w  #160,frog_x
-            move.w  #220,frog_y
-            lea     sprite0,a0
-            move.l  a0,$120(a5)
-            bsr     sfx_hop
-            rts
+update_title:
+            bsr     update_blink
+            bsr     clear_playfield
 
-init_sound:
-            move.w  #0,AUD0VOL+CUSTOM
-            move.w  #0,AUD1VOL+CUSTOM
-            move.w  #$0028,AUD0PER+CUSTOM
-            move.w  #$0040,AUD1PER+CUSTOM
-            rts
+            move.w  #60,d1
+            move.w  #144,d0
+            lea     title_text,a0
+            bsr     draw_text
 
-; (rest of code reused from Unit 12: traffic/logs/death/collisions/SFX/draw)
+            bsr     draw_high_scores
 
-update_traffic:
-            lea     traffic_x,a0
-            lea     traffic_speed,a1
-            moveq   #0,d7
-            move.b  traffic_count,d7
-            subq.b  #1,d7
-.loop:
-            move.w  (a0),d0
-            add.w   (a1),d0
-            move.w  d0,(a0)
-            cmp.w   #320,d0
-            blt.s   .chk_left
-            move.w  #-32,(a0)
-            bra.s   .next
-.chk_left:
-            cmp.w   #-48,d0
-            bgt.s   .next
-            move.w  #320,(a0)
-.next:
-            addq.l  #2,a0
-            addq.l  #2,a1
-            dbra    d7,.loop
-            rts
+            tst.w   blink_visible
+            beq.s   .skip_prompt
+            move.w  #200,d1
+            move.w  #104,d0
+            lea     press_fire_text,a0
+            bsr     draw_text
+.skip_prompt:
 
-update_logs:
-            lea     log_active,a0
-            lea     log_x,a1
-            lea     log_y,a2
-            lea     log_speed,a3
-            lea     log_spawn,a4
-            moveq   #0,d7
-            move.b  log_count,d7
-            subq.b  #1,d7
-.loop:
-            move.b  (a0),d0
-            tst.b   d0
-            bne.s   .move_active
-            move.b  (a4),d1
-            subq.b  #1,d1
-            move.b  d1,(a4)
-            bne.s   .next
-            move.b  #1,(a0)
-            move.b  #40,(a4)
-            move.w  (a3),d2
-            tst.w   d2
-            bpl.s   .spawn_left
-            move.w  #400,(a1)
-            bra.s   .next
-.spawn_left:
-            move.w  #-64,(a1)
-            bra.s   .next
-.move_active:
-            move.w  (a1),d2
-            add.w   (a3),d2
-            move.w  d2,(a1)
-            cmp.w   #400,d2
-            blt.s   .chk_left
-            move.b  #0,(a0)
-            move.b  #40,(a4)
-            bra.s   .next
-.chk_left:
-            cmp.w   #-80,d2
-            bgt.s   .next
-            move.b  #0,(a0)
-            move.b  #40,(a4)
-.next:
-            addq.l  #1,a0
-            addq.l  #2,a1
-            addq.l  #2,a2
-            addq.l  #2,a3
-            addq.l  #1,a4
-            dbra    d7,.loop
-            rts
+            tst.w   fire_delay
+            beq.s   .check_fire
+            subq.w  #1,fire_delay
+            bra.s   .done
 
-ride_logs:
-            clr.b   on_log
-            clr.w   log_vel_x
-            move.w  frog_x,d4
-            move.w  frog_y,d5
-
-            lea     log_active,a0
-            lea     log_x,a1
-            lea     log_y,a2
-            lea     log_speed,a3
-            moveq   #0,d7
-            move.b  log_count,d7
-            subq.b  #1,d7
-.rloop:
-            move.b  (a0),d0
-            tst.b   d0
-            beq.s   .rnext
-            move.w  (a1),d1
-            move.w  (a2),d2
-            move.w  #48,d3
-            move.w  #8,d6
-            cmp.w   d2,d5
-            bcs.s   .rnext
-            move.w  d2,d0
-            add.w   d6,d0
-            cmp.w   d0,d5
-            bcc.s   .rnext
-            cmp.w   d1,d4
-            bcs.s   .rnext
-            move.w  d1,d0
-            add.w   d3,d0
-            cmp.w   d0,d4
-            bcc.s   .rnext
-            move.b  #1,on_log
-            move.w  (a3),log_vel_x
-.rnext:
-            addq.l  #1,a0
-            addq.l  #2,a1
-            addq.l  #2,a2
-            addq.l  #2,a3
-            dbra    d7,.rloop
-
-            tst.b   on_log
-            beq.s   .no_ride
-            move.w  frog_x,d0
-            add.w   log_vel_x,d0
-            move.w  d0,frog_x
-.no_ride:
-            rts
-
-check_collisions:
-            move.w  frog_y,d0
-            cmpi.w  #112,d0
-            blt.s   .road_check
-            cmpi.w  #168,d0
-            blt.s   .water_check
-            clr.b   death_cause
-            rts
-.road_check:
-            move.w  frog_x,d0
-            cmpi.w  #40,d0
-            blt.s   .safe
-            cmpi.w  #80,d0
-            bgt.s   .safe
-            move.b  #0,death_cause
-            move.b  #1,death_state
-            move.b  #30,death_timer
-            bsr     sfx_hit
-.safe:      rts
-.water_check:
-            tst.b   on_log
-            bne.s   .ok
-            move.b  #1,death_cause
-            move.b  #1,death_state
-            move.b  #30,death_timer
-            bsr     sfx_splash
-.ok:        rts
-
-update_death:
-            tst.b   death_state
-            beq.s   .done
-            lea     CUSTOM,a5
-            move.b  death_timer,d0
-            andi.b  #$03,d0
-            beq.s   .flash1
-            move.w  #$0000,$0180(a5)
-            bra.s   .dec
-.flash1:
-            move.w  #$0f00,$0180(a5)
-.dec:
-            subq.b  #1,death_timer
+.check_fire:
+            btst    #7,CIAAPRA
             bne.s   .done
-            move.b  #0,death_state
-            move.b  #0,on_log
-            move.w  #160,frog_x
-            move.w  #220,frog_y
-            bsr     sfx_respawn
-            bsr     sfx_hop
-            bsr     dec_life
-.done:      rts
+            bsr     start_new_game
+            move.w  #MODE_PLAYING,game_mode
 
-check_game_over:
-            move.b  game_state,d0
-            cmpi.b  #STATE_PLAY,d0
-            bne.s   .exit
-            move.b  lives,d0
-            bne.s   .exit
-            move.b  #STATE_GAMEOVER,game_state
-            rts
-.exit:      rts
-
-blit_traffic:
-            move.w  #$09f0,BLTCON0(a5)
-            move.w  #$0000,BLTCON1(a5)
-            move.w  #$ffff,BLTAFWM(a5)
-            move.w  #$ffff,BLTALWM(a5)
-            move.l  a2,BLTAPTH(a5)
-            move.l  a1,BLTBPTH(a5)
-            move.l  a0,BLTCPTH(a5)
-            move.l  a0,BLTDPTH(a5)
-            move.w  #0,BLTBMOD(a5)
-            move.w  #0,BLTAMOD(a5)
-            move.w  #0,BLTCMOD(a5)
-            move.w  #0,BLTDMOD(a5)
-            move.w  #(8<<6)|1,BLTSIZE(a5)
+.done:
             rts
 
-draw_scene:
-            bsr     clear_bpl
-            bsr     draw_frog_sprite
-            lea     traffic_x,a0
-            lea     traffic_y,a1
-            moveq   #0,d7
-            move.b  traffic_count,d7
-            subq.b  #1,d7
-.loop:
-            move.w  (a0),d0
-            move.w  (a1),d1
+;------------------------------------------------------------------------------
+; Game Over Screen
+;------------------------------------------------------------------------------
+
+update_gameover:
+            bsr     update_blink
+            bsr     clear_playfield
+
+            move.w  #30,d1
+            move.w  #112,d0
+            lea     gameover_text,a0
+            bsr     draw_text
+
+            move.w  #50,d1
+            move.w  #104,d0
+            lea     your_score_text,a0
+            bsr     draw_text
+
+            move.w  #50,d1
+            move.w  #192,d0
+            move.l  score,d2
+            bsr     draw_number
+
+            bsr     draw_high_scores
+
+            tst.w   blink_visible
+            beq.s   .skip_prompt
+            move.w  #220,d1
+            move.w  #104,d0
+            lea     press_fire_text,a0
+            bsr     draw_text
+.skip_prompt:
+
+            tst.w   fire_delay
+            beq.s   .check_fire
+            subq.w  #1,fire_delay
+            bra.s   .done
+
+.check_fire:
+            btst    #7,CIAAPRA
+            bne.s   .done
+            move.w  #MODE_TITLE,game_mode
+            move.w  #15,fire_delay
+
+.done:
+            rts
+
+;------------------------------------------------------------------------------
+; Name Entry
+;------------------------------------------------------------------------------
+
+update_name_entry:
+            bsr     read_joystick
+
+            tst.b   joy_up
+            beq.s   .check_down
+            tst.b   joy_up_prev
+            bne.s   .check_down
+            move.w  entry_position,d0
+            lea     entry_chars,a0
+            move.b  (a0,d0.w),d1
+            addq.b  #1,d1
+            cmpi.b  #'Z'+1,d1
+            bne.s   .store_up
+            move.b  #'A',d1
+.store_up:
+            move.b  d1,(a0,d0.w)
+            bsr     play_hop_sound
+
+.check_down:
+            tst.b   joy_down
+            beq.s   .check_fire
+            tst.b   joy_down_prev
+            bne.s   .check_fire
+            move.w  entry_position,d0
+            lea     entry_chars,a0
+            move.b  (a0,d0.w),d1
+            subq.b  #1,d1
+            cmpi.b  #'A'-1,d1
+            bne.s   .store_down
+            move.b  #'Z',d1
+.store_down:
+            move.b  d1,(a0,d0.w)
+            bsr     play_hop_sound
+
+.check_fire:
+            tst.w   fire_delay
+            beq.s   .do_fire
+            subq.w  #1,fire_delay
+            bra.s   .draw
+
+.do_fire:
+            btst    #7,CIAAPRA
+            bne.s   .draw
+
+            bsr     play_score_sound
+            addq.w  #1,entry_position
+            cmpi.w  #3,entry_position
+            blt.s   .not_done
+
+            bsr     save_entry_name
+            move.w  #MODE_GAMEOVER,game_mode
+            move.w  #30,fire_delay
+            bra.s   .done
+
+.not_done:
+            move.w  #10,fire_delay
+
+.draw:
+            bsr     clear_playfield
+
+            move.w  #80,d1
+            move.w  #80,d0
+            lea     new_hs_text,a0
+            bsr     draw_text
+
+            move.w  #120,d1
+            move.w  #144,d0
+            lea     entry_chars,a0
+            bsr     draw_text
+
+            move.w  entry_position,d0
+            lsl.w   #3,d0
+            addi.w  #144,d0
+            move.w  #130,d1
+            bsr     draw_underscore
+
+.done:
+            rts
+
+save_entry_name:
+            move.w  hs_position,d0
+            mulu    #HS_SIZE,d0
+            lea     high_scores,a0
+            lea     (a0,d0.w),a0
+
+            lea     entry_chars,a1
+            move.b  (a1)+,HS_NAME(a0)
+            move.b  (a1)+,HS_NAME+1(a0)
+            move.b  (a1)+,HS_NAME+2(a0)
+            rts
+
+draw_underscore:
+            movem.l d0-d3/a0,-(sp)
             move.w  d1,d2
             mulu    #40,d2
             move.w  d0,d3
-            asr.w   #3,d3
+            lsr.w   #3,d3
             add.w   d3,d2
-            lea     bitplane,a2
-            adda.w  d2,a2
-            lea     traffic_mask,a3
-            lea     traffic_img,a4
-            move.l  a2,a0
-            move.l  a4,a1
-            move.l  a3,a2
-            bsr     blit_traffic
-
-            addq.l  #2,a0
-            addq.l  #2,a1
-            dbra    d7,.loop
+            lea     screen,a0
+            lea     (a0,d2.w),a0
+            move.b  #$FF,(a0)
+            movem.l (sp)+,d0-d3/a0
             rts
 
-draw_title_screen:
-            bsr     clear_bpl
-            ; simple text via copper color bands only (placeholder)
+;------------------------------------------------------------------------------
+; High Score Functions
+;------------------------------------------------------------------------------
+
+check_high_score:
+            move.l  score,d0
+            lea     high_scores,a0
+            moveq   #0,d1
+
+.check_loop:
+            cmp.l   HS_SCORE(a0),d0
+            bgt.s   .found
+            lea     HS_SIZE(a0),a0
+            addq.w  #1,d1
+            cmpi.w  #NUM_SCORES,d1
+            blt.s   .check_loop
+            moveq   #-1,d0
             rts
 
-draw_game_over:
-            bsr     clear_bpl
-            ; placeholder: reuse scene but you could add text here
+.found:
+            move.w  d1,d0
             rts
 
-draw_frog_sprite:
-            lea     CUSTOM,a5
+insert_high_score:
+            movem.l d0-d2/a0-a2,-(sp)
+            lea     high_scores,a0
+            move.w  d0,d1
+            mulu    #HS_SIZE,d1
+            lea     (a0,d1.w),a1
+
+            lea     high_scores+(HS_SIZE*4),a0
+            lea     high_scores+(HS_SIZE*3),a2
+            move.w  #NUM_SCORES-1,d2
+            sub.w   d0,d2
+            subq.w  #1,d2
+            blt.s   .no_shift
+
+.shift_loop:
+            move.l  HS_SCORE(a2),HS_SCORE(a0)
+            move.l  HS_NAME(a2),HS_NAME(a0)
+            lea     -HS_SIZE(a0),a0
+            lea     -HS_SIZE(a2),a2
+            dbf     d2,.shift_loop
+
+.no_shift:
+            move.l  score,HS_SCORE(a1)
+            move.b  #'?',HS_NAME(a1)
+            move.b  #'?',HS_NAME+1(a1)
+            move.b  #'?',HS_NAME+2(a1)
+            movem.l (sp)+,d0-d2/a0-a2
+            rts
+
+init_name_entry:
+            clr.w   entry_position
+            move.b  #'A',entry_chars
+            move.b  #'A',entry_chars+1
+            move.b  #'A',entry_chars+2
+            clr.b   entry_chars+3
+            move.w  #MODE_ENTRY,game_mode
+            move.w  #15,fire_delay
+            rts
+
+draw_high_scores:
+            movem.l d0-d4/a0-a2,-(sp)
+
+            move.w  #80,d1
+            move.w  #96,d0
+            lea     high_score_text,a0
+            bsr     draw_text
+
+            lea     high_scores,a2
+            move.w  #104,d4
+            moveq   #4,d3
+
+.draw_loop:
+            move.w  #72,d0
+            move.w  d4,d1
+            moveq   #5,d2
+            sub.w   d3,d2
+            bsr     draw_digit
+
+            move.w  #96,d0
+            move.w  d4,d1
+            lea     HS_NAME(a2),a0
+            bsr     draw_name
+
+            move.w  #144,d0
+            move.w  d4,d1
+            move.l  HS_SCORE(a2),d2
+            bsr     draw_number
+
+            lea     HS_SIZE(a2),a2
+            addi.w  #12,d4
+            dbf     d3,.draw_loop
+
+            movem.l (sp)+,d0-d4/a0-a2
+            rts
+
+draw_name:
+            movem.l d0-d4/a0-a2,-(sp)
+            move.w  d0,d3
+            move.w  d1,d4
+            moveq   #2,d7
+
+.char_loop:
+            move.b  (a0)+,d0
+            beq.s   .done
+            cmpi.b  #'A',d0
+            blt.s   .skip
+            cmpi.b  #'Z',d0
+            bgt.s   .skip
+
+            subi.b  #'A',d0
+            ext.w   d0
+            lea     font_alpha,a1
+            lsl.w   #3,d0
+            lea     (a1,d0.w),a1
+
+            move.w  d4,d0
+            mulu    #40,d0
+            move.w  d3,d1
+            lsr.w   #3,d1
+            add.w   d1,d0
+            lea     screen,a2
+            lea     (a2,d0.w),a2
+            moveq   #7,d6
+.row_loop:
+            move.b  (a1)+,(a2)
+            lea     40(a2),a2
+            dbf     d6,.row_loop
+
+.skip:
+            addq.w  #8,d3
+            dbf     d7,.char_loop
+
+.done:
+            movem.l (sp)+,d0-d4/a0-a2
+            rts
+
+enter_game_over:
+            bsr     check_high_score
+            tst.w   d0
+            bmi.s   .not_high
+            move.w  d0,hs_position
+            bsr     insert_high_score
+            bsr     init_name_entry
+            rts
+
+.not_high:
+            move.w  #MODE_GAMEOVER,game_mode
+            move.w  #30,fire_delay
+            rts
+
+;------------------------------------------------------------------------------
+; Blink Timer
+;------------------------------------------------------------------------------
+
+update_blink:
+            addq.w  #1,blink_timer
+            cmpi.w  #25,blink_timer
+            blt.s   .no_toggle
+            clr.w   blink_timer
+            tst.w   blink_visible
+            beq.s   .make_visible
+            clr.w   blink_visible
+            bra.s   .done
+.make_visible:
+            move.w  #1,blink_visible
+.done:
+            rts
+
+;------------------------------------------------------------------------------
+; Start New Game
+;------------------------------------------------------------------------------
+
+start_new_game:
+            clr.l   score
+            move.w  #3,lives
+            lea     home_slots,a0
+            moveq   #4,d0
+.clear_slots:
+            clr.w   (a0)+
+            dbf     d0,.clear_slots
+            move.w  #1,level
+            bsr     init_objects
+            bsr     reset_frog
+            move.w  #STATE_ALIVE,game_state
+            move.w  #15,fire_delay
+            bsr     draw_playfield
+            rts
+
+;------------------------------------------------------------------------------
+; Game Update
+;------------------------------------------------------------------------------
+
+update_game:
+            bsr     read_joystick
+
+            move.w  game_state,d0
+            cmpi.w  #STATE_DYING,d0
+            beq     .update_dying
+            cmpi.w  #STATE_DEAD,d0
+            beq     .update_dead
+
+            bsr     update_frog
+            bsr     update_objects
+            bsr     check_collisions
+            bsr     check_home
+            bsr     update_sprite
+            bsr     draw_hud
+            rts
+
+.update_dying:
+            subq.w  #1,death_timer
+            bne.s   .flash_sprite
+            subq.w  #1,lives
+            bne.s   .respawn
+            lea     sprite_frog,a0
+            clr.l   (a0)
+            bsr     enter_game_over
+            rts
+
+.respawn:
+            bsr     reset_frog
+            move.w  #STATE_ALIVE,game_state
+            rts
+
+.flash_sprite:
+            move.w  death_timer,d0
+            andi.w  #4,d0
+            beq.s   .hide_sprite
+            bsr     update_sprite
+            rts
+.hide_sprite:
+            lea     sprite_frog,a0
+            clr.l   (a0)
+            rts
+
+.update_dead:
+            subq.w  #1,death_timer
+            bne.s   .wait_respawn
+            bsr     reset_frog
+            move.w  #STATE_ALIVE,game_state
+.wait_respawn:
+            rts
+
+;------------------------------------------------------------------------------
+; Frog Reset
+;------------------------------------------------------------------------------
+
+reset_frog:
+            move.w  #152,frog_x
+            move.w  #232,frog_y
+            clr.w   frog_vx
+            clr.w   frog_vy
+            move.w  #232,frog_best_y
+            move.w  #STATE_ALIVE,game_state
+            rts
+
+;------------------------------------------------------------------------------
+; Frog Update
+;------------------------------------------------------------------------------
+
+update_frog:
+            tst.w   fire_delay
+            beq.s   .check_input
+            subq.w  #1,fire_delay
+            bra     .no_move
+
+.check_input:
+            tst.b   joy_up
+            bne.s   .move_up
+            tst.b   joy_down
+            bne.s   .move_down
+            tst.b   joy_left
+            bne.s   .move_left
+            tst.b   joy_right
+            bne.s   .move_right
+            bra     .no_move
+
+.move_up:
+            tst.b   joy_up_prev
+            bne     .no_move
+            subi.w  #16,frog_y
+            bsr     play_hop_sound
+            move.w  frog_y,d0
+            cmp.w   frog_best_y,d0
+            bge.s   .no_score
+            move.w  d0,frog_best_y
+            addi.l  #10,score
+.no_score:
+            bra.s   .bound_check
+
+.move_down:
+            tst.b   joy_down_prev
+            bne.s   .no_move
+            addi.w  #16,frog_y
+            bsr     play_hop_sound
+            bra.s   .bound_check
+
+.move_left:
+            tst.b   joy_left_prev
+            bne.s   .no_move
+            subi.w  #16,frog_x
+            bsr     play_hop_sound
+            bra.s   .bound_check
+
+.move_right:
+            tst.b   joy_right_prev
+            bne.s   .no_move
+            addi.w  #16,frog_x
+            bsr     play_hop_sound
+
+.bound_check:
+            tst.w   frog_x
+            bge.s   .check_max_x
+            clr.w   frog_x
+.check_max_x:
+            cmpi.w  #304,frog_x
+            ble.s   .check_y
+            move.w  #304,frog_x
+.check_y:
+            cmpi.w  #232,frog_y
+            ble.s   .check_min_y
+            move.w  #232,frog_y
+.check_min_y:
+            cmpi.w  #32,frog_y
+            bge.s   .no_move
+            move.w  #32,frog_y
+
+.no_move:
+            tst.w   on_log
+            beq.s   .not_on_log
+            ; Scale log speed by level
+            bsr     get_speed_multiplier
+            move.w  d0,d1
+            move.w  log_speed,d0
+            tst.w   d0
+            bmi.s   .neg_log
+            mulu    d1,d0
+            lsr.w   #4,d0
+            bra.s   .apply_log
+.neg_log:
+            neg.w   d0
+            mulu    d1,d0
+            lsr.w   #4,d0
+            neg.w   d0
+.apply_log:
+            add.w   d0,frog_x
+            tst.w   frog_x
+            blt.s   .water_death
+            cmpi.w  #304,frog_x
+            bgt.s   .water_death
+.not_on_log:
+            rts
+
+.water_death:
+            move.w  #STATE_DYING,game_state
+            move.w  #30,death_timer
+            bsr     play_death_sound
+            rts
+
+;------------------------------------------------------------------------------
+; Object Update (with level scaling)
+;------------------------------------------------------------------------------
+
+update_objects:
+            bsr     get_speed_multiplier
+            move.w  d0,d6
+
+            lea     objects,a0
+            moveq   #MAX_OBJECTS-1,d7
+
+.obj_loop:
+            move.w  OBJ_TYPE(a0),d0
+            beq.s   .next_obj
+
+            ; Scale speed
+            move.w  OBJ_SPEED(a0),d1
+            tst.w   d1
+            bmi.s   .neg_speed
+            mulu    d6,d1
+            lsr.w   #4,d1
+            bra.s   .apply_speed
+
+.neg_speed:
+            neg.w   d1
+            mulu    d6,d1
+            lsr.w   #4,d1
+            neg.w   d1
+
+.apply_speed:
+            add.w   d1,OBJ_X(a0)
+
+            move.w  OBJ_X(a0),d0
+            cmpi.w  #-32,d0
+            bge.s   .check_right
+            move.w  #320,OBJ_X(a0)
+            bra.s   .next_obj
+.check_right:
+            cmpi.w  #320,d0
+            ble.s   .next_obj
+            move.w  #-32,OBJ_X(a0)
+
+.next_obj:
+            lea     OBJ_SIZE(a0),a0
+            dbf     d7,.obj_loop
+            rts
+
+;------------------------------------------------------------------------------
+; Collision Detection
+;------------------------------------------------------------------------------
+
+check_collisions:
+            clr.w   on_log
+            move.w  frog_y,d0
+
+            cmpi.w  #ROAD_TOP,d0
+            blt.s   .check_river
+            cmpi.w  #ROAD_BOTTOM,d0
+            bgt.s   .safe_zone
+            bsr     check_car_collision
+            rts
+
+.check_river:
+            cmpi.w  #RIVER_TOP,d0
+            blt.s   .safe_zone
+            cmpi.w  #RIVER_BOTTOM,d0
+            bgt.s   .safe_zone
+            bsr     check_log_collision
+            rts
+
+.safe_zone:
+            rts
+
+check_car_collision:
+            lea     objects,a0
+            moveq   #MAX_OBJECTS-1,d7
+
+.check_loop:
+            cmpi.w  #TYPE_CAR,OBJ_TYPE(a0)
+            bne.s   .next_car
+
+            move.w  frog_x,d0
+            move.w  OBJ_X(a0),d1
+            add.w   #CAR_WIDTH,d1
+            cmp.w   d1,d0
+            bge.s   .next_car
+
+            move.w  frog_x,d0
+            add.w   #FROG_WIDTH,d0
+            move.w  OBJ_X(a0),d1
+            cmp.w   d1,d0
+            ble.s   .next_car
+
+            move.w  frog_y,d0
+            move.w  OBJ_Y(a0),d1
+            add.w   #CAR_HEIGHT,d1
+            cmp.w   d1,d0
+            bge.s   .next_car
+
+            move.w  frog_y,d0
+            add.w   #FROG_HEIGHT,d0
+            move.w  OBJ_Y(a0),d1
+            cmp.w   d1,d0
+            ble.s   .next_car
+
+            move.w  #STATE_DYING,game_state
+            move.w  #30,death_timer
+            bsr     play_death_sound
+            rts
+
+.next_car:
+            lea     OBJ_SIZE(a0),a0
+            dbf     d7,.check_loop
+            rts
+
+check_log_collision:
+            lea     objects,a0
+            moveq   #MAX_OBJECTS-1,d7
+
+.check_loop:
+            cmpi.w  #TYPE_LOG,OBJ_TYPE(a0)
+            bne.s   .next_log
+
+            move.w  frog_x,d0
+            move.w  OBJ_X(a0),d1
+            add.w   #LOG_WIDTH,d1
+            cmp.w   d1,d0
+            bge.s   .next_log
+
+            move.w  frog_x,d0
+            add.w   #FROG_WIDTH,d0
+            move.w  OBJ_X(a0),d1
+            cmp.w   d1,d0
+            ble.s   .next_log
+
+            move.w  frog_y,d0
+            move.w  OBJ_Y(a0),d1
+            add.w   #LOG_HEIGHT,d1
+            cmp.w   d1,d0
+            bge.s   .next_log
+
+            move.w  frog_y,d0
+            add.w   #FROG_HEIGHT,d0
+            move.w  OBJ_Y(a0),d1
+            cmp.w   d1,d0
+            ble.s   .next_log
+
+            move.w  #1,on_log
+            move.w  OBJ_SPEED(a0),log_speed
+            rts
+
+.next_log:
+            lea     OBJ_SIZE(a0),a0
+            dbf     d7,.check_loop
+
+            move.w  #STATE_DYING,game_state
+            move.w  #30,death_timer
+            bsr     play_death_sound
+            rts
+
+;------------------------------------------------------------------------------
+; Home Zone Check
+;------------------------------------------------------------------------------
+
+check_home:
+            cmpi.w  #HOME_Y+8,frog_y
+            bgt.s   .not_home
+
+            move.w  frog_x,d0
+            subi.w  #HOME_FIRST_X,d0
+            blt.s   .miss_home
+
+            divu    #HOME_SPACING,d0
+            cmpi.w  #NUM_HOMES,d0
+            bge.s   .miss_home
+
+            lea     home_slots,a0
+            move.w  d0,d1
+            add.w   d1,d1
+            tst.w   (a0,d1.w)
+            bne.s   .miss_home
+
+            move.w  d0,d2
+            mulu    #HOME_SPACING,d2
+            addi.w  #HOME_FIRST_X,d2
+            move.w  frog_x,d3
+            sub.w   d2,d3
+            blt.s   .miss_home
+            cmpi.w  #HOME_WIDTH,d3
+            bgt.s   .miss_home
+
+            move.w  #1,(a0,d1.w)
+            addi.l  #100,score
+            bsr     play_score_sound
+            bsr     check_level_complete
+            bsr     reset_frog
+
+.not_home:
+            rts
+
+.miss_home:
+            move.w  #STATE_DYING,game_state
+            move.w  #30,death_timer
+            bsr     play_death_sound
+            rts
+
+check_level_complete:
+            lea     home_slots,a0
+            moveq   #4,d0
+.check_loop:
+            tst.w   (a0)+
+            beq.s   .not_complete
+            dbf     d0,.check_loop
+
+            ; Level complete!
+            addi.l  #1000,score
+            addq.w  #1,level
+
+            lea     home_slots,a0
+            moveq   #4,d0
+.clear_loop:
+            clr.w   (a0)+
+            dbf     d0,.clear_loop
+
+            move.w  #232,frog_best_y
+            bsr     play_score_sound
+
+.not_complete:
+            rts
+
+;------------------------------------------------------------------------------
+; Read Joystick
+;------------------------------------------------------------------------------
+
+read_joystick:
+            move.b  joy_up,joy_up_prev
+            move.b  joy_down,joy_down_prev
+            move.b  joy_left,joy_left_prev
+            move.b  joy_right,joy_right_prev
+
+            clr.b   joy_up
+            clr.b   joy_down
+            clr.b   joy_left
+            clr.b   joy_right
+
+            move.w  JOY1DAT+CUSTOM,d0
+
+            move.w  d0,d1
+            lsr.w   #1,d1
+            eor.w   d0,d1
+            btst    #0,d1
+            beq.s   .no_right
+            move.b  #1,joy_right
+.no_right:
+            move.w  d0,d1
+            lsr.w   #1,d1
+            eor.w   d0,d1
+            btst    #8,d1
+            beq.s   .no_left
+            move.b  #1,joy_left
+.no_left:
+            move.w  d0,d1
+            lsr.w   #8,d1
+            eor.w   d0,d1
+            btst    #1,d1
+            beq.s   .no_down
+            move.b  #1,joy_down
+.no_down:
+            move.w  d0,d1
+            lsr.w   #8,d1
+            eor.w   d0,d1
+            btst    #0,d1
+            beq.s   .no_up
+            move.b  #1,joy_up
+.no_up:
+            rts
+
+;------------------------------------------------------------------------------
+; Sprite Update
+;------------------------------------------------------------------------------
+
+update_sprite:
+            lea     sprite_frog,a0
             move.w  frog_x,d0
             move.w  frog_y,d1
-            andi.w  #$00ff,d0
-            andi.w  #$00ff,d1
+
+            addi.w  #128,d0
+            move.w  d0,d2
+            lsr.w   #1,d2
+            andi.w  #$00ff,d2
+
+            addi.w  #44,d1
+            move.w  d1,d3
+            lsl.w   #8,d3
+            or.w    d2,d3
+            move.w  d3,(a0)
+
+            move.w  d1,d3
+            addi.w  #SPRITE_HEIGHT,d3
+            lsl.w   #8,d3
+
+            btst    #0,d0
+            beq.s   .no_h_low
+            bset    #0,d3
+.no_h_low:
+            btst    #8,d1
+            beq.s   .no_vs_high
+            bset    #2,d3
+.no_vs_high:
+            move.w  d1,d4
+            addi.w  #SPRITE_HEIGHT,d4
+            btst    #8,d4
+            beq.s   .no_ve_high
+            bset    #1,d3
+.no_ve_high:
+            move.w  d3,2(a0)
+            rts
+
+;------------------------------------------------------------------------------
+; Draw HUD
+;------------------------------------------------------------------------------
+
+draw_hud:
+            ; Score
+            move.w  #SCORE_X,d0
+            move.w  #SCORE_Y,d1
+            move.l  score,d2
+            bsr     draw_number
+
+            ; Level
+            move.w  #160,d0
+            move.w  #SCORE_Y,d1
+            lea     level_text,a0
+            bsr     draw_text
+
+            move.w  #176,d0
+            move.w  #SCORE_Y,d1
+            move.w  level,d2
+            ext.l   d2
+            bsr     draw_number_2digit
+
+            ; Lives
+            move.w  #LIVES_X,d0
+            move.w  #LIVES_Y,d1
+            move.w  lives,d2
+            subq.w  #1,d2
+            blt.s   .no_lives
+.draw_life:
+            bsr     draw_life_icon
+            subq.w  #12,d0
+            dbf     d2,.draw_life
+.no_lives:
+            rts
+
+;------------------------------------------------------------------------------
+; Draw Number (6 digits)
+;------------------------------------------------------------------------------
+
+draw_number:
+            movem.l d0-d5/a0-a2,-(sp)
+            move.w  d0,d3
+            move.w  d1,d4
+            move.l  d2,d5
+
+            lea     powers_of_10,a1
+            moveq   #5,d7
+
+.digit_loop:
+            move.l  (a1)+,d1
+            move.l  d5,d0
+            divu    d1,d0
+            andi.l  #$ffff,d0
+            move.w  d0,d2
+            mulu    d1,d2
+            sub.l   d2,d5
+
+            exg     d0,d3
+            exg     d1,d4
+            move.w  d3,d2
+            move.w  d0,d3
+            move.w  d1,d4
+
+            movem.l d3-d5/d7/a1,-(sp)
+            bsr     draw_digit
+            movem.l (sp)+,d3-d5/d7/a1
+
+            addq.w  #8,d3
+            dbf     d7,.digit_loop
+
+            movem.l (sp)+,d0-d5/a0-a2
+            rts
+
+;------------------------------------------------------------------------------
+; Draw Number (2 digits)
+;------------------------------------------------------------------------------
+
+draw_number_2digit:
+            movem.l d0-d5/a0-a2,-(sp)
+            move.w  d0,d3
+            move.w  d1,d4
+            move.l  d2,d5
+
+            divu    #10,d5
+            move.w  d5,d2
+            movem.l d3-d5,-(sp)
+            bsr     draw_digit
+            movem.l (sp)+,d3-d5
+
+            swap    d5
+            move.w  d5,d2
+            addq.w  #8,d3
+            move.w  d3,d0
+            move.w  d4,d1
+            bsr     draw_digit
+
+            movem.l (sp)+,d0-d5/a0-a2
+            rts
+
+powers_of_10:
+            dc.l    100000,10000,1000,100,10,1
+
+;------------------------------------------------------------------------------
+; Draw Digit
+;------------------------------------------------------------------------------
+
+draw_digit:
+            movem.l d0-d4/a0-a2,-(sp)
+            andi.w  #$f,d2
+            lsl.w   #3,d2
+            lea     font_digits,a0
+            lea     (a0,d2.w),a0
+
+            move.w  d1,d3
+            mulu    #40,d3
+            move.w  d0,d4
+            lsr.w   #3,d4
+            add.w   d4,d3
+
+            lea     screen,a1
+            lea     (a1,d3.w),a1
+
+            moveq   #7,d7
+.row_loop:
+            move.b  (a0)+,(a1)
+            lea     40(a1),a1
+            dbf     d7,.row_loop
+
+            movem.l (sp)+,d0-d4/a0-a2
+            rts
+
+;------------------------------------------------------------------------------
+; Draw Text
+;------------------------------------------------------------------------------
+
+draw_text:
+            movem.l d0-d4/a0-a2,-(sp)
+            move.w  d0,d3
+            move.w  d1,d4
+
+.next_char:
+            move.b  (a0)+,d0
+            beq.s   .done
+            cmpi.b  #' ',d0
+            beq.s   .space
+
+            cmpi.b  #'A',d0
+            blt.s   .try_digit
+            cmpi.b  #'Z',d0
+            bgt.s   .try_digit
+            subi.b  #'A',d0
+            ext.w   d0
+            lea     font_alpha,a1
+            bra.s   .draw_char
+
+.try_digit:
+            cmpi.b  #'0',d0
+            blt.s   .space
+            cmpi.b  #'9',d0
+            bgt.s   .space
+            subi.b  #'0',d0
+            ext.w   d0
+            lea     font_digits,a1
+
+.draw_char:
+            lsl.w   #3,d0
+            lea     (a1,d0.w),a1
+            move.w  d4,d0
+            mulu    #40,d0
+            move.w  d3,d1
+            lsr.w   #3,d1
+            add.w   d1,d0
+            lea     screen,a2
+            lea     (a2,d0.w),a2
+            moveq   #7,d7
+.row_loop:
+            move.b  (a1)+,(a2)
+            lea     40(a2),a2
+            dbf     d7,.row_loop
+
+.space:
+            addq.w  #8,d3
+            bra.s   .next_char
+
+.done:
+            movem.l (sp)+,d0-d4/a0-a2
+            rts
+
+;------------------------------------------------------------------------------
+; Draw Life Icon
+;------------------------------------------------------------------------------
+
+draw_life_icon:
+            movem.l d0-d4/a0-a1,-(sp)
             move.w  d1,d2
-            lsl.w   #8,d2
-            or.w    d0,d2
-            move.w  d2,$140(a5)
-            move.w  #0,$142(a5)
+            mulu    #40,d2
+            move.w  d0,d3
+            lsr.w   #3,d3
+            add.w   d3,d2
+            lea     screen,a0
+            lea     (a0,d2.w),a0
+            lea     life_icon,a1
+            moveq   #7,d7
+.row_loop:
+            move.b  (a1)+,(a0)
+            lea     40(a0),a0
+            dbf     d7,.row_loop
+            movem.l (sp)+,d0-d4/a0-a1
             rts
 
-dec_life:
-            move.b  lives,d0
-            beq.s   .out
-            subq.b  #1,lives
-.out:       rts
+;------------------------------------------------------------------------------
+; Sound Effects
+;------------------------------------------------------------------------------
 
-sfx_hit:
-            lea     sample_hit,a0
-            move.l  a0,AUD0LCH+CUSTOM
-            move.w  #sample_hit_len/2,AUD0LEN+CUSTOM
-            move.w  #$0022,AUD0PER+CUSTOM
-            move.w  #$0040,AUD0VOL+CUSTOM
+play_hop_sound:
+            lea     sfx_hop,a0
+            move.w  #8,d0
+            move.w  #300,d1
+            move.w  #48,d2
+            bsr     play_sfx
             rts
 
-sfx_splash:
-            lea     sample_splash,a0
-            move.l  a0,AUD0LCH+CUSTOM
-            move.w  #sample_splash_len/2,AUD0LEN+CUSTOM
-            move.w  #$0030,AUD0PER+CUSTOM
-            move.w  #$0030,AUD0VOL+CUSTOM
+play_death_sound:
+            lea     sfx_death,a0
+            move.w  #16,d0
+            move.w  #500,d1
+            move.w  #64,d2
+            bsr     play_sfx
             rts
 
-sfx_respawn:
-            lea     sample_respawn,a0
-            move.l  a0,AUD1LCH+CUSTOM
-            move.w  #sample_respawn_len/2,AUD1LEN+CUSTOM
-            move.w  #$0050,AUD1PER+CUSTOM
-            move.w  #$0020,AUD1VOL+CUSTOM
+play_score_sound:
+            lea     sfx_score,a0
+            move.w  #8,d0
+            move.w  #200,d1
+            move.w  #56,d2
+            bsr     play_sfx
             rts
+
+play_sfx:
+            lea     CUSTOM,a5
+            move.l  a0,d3
+            move.w  d3,AUD0LCL(a5)
+            swap    d3
+            move.w  d3,AUD0LCH(a5)
+            move.w  d0,AUD0LEN(a5)
+            move.w  d1,AUD0PER(a5)
+            move.w  d2,AUD0VOL(a5)
+            move.w  #DMAF_SETCLR|DMAF_AUD0,DMACON(a5)
+            rts
+
+;------------------------------------------------------------------------------
+; Initialisation
+;------------------------------------------------------------------------------
+
+init_game:
+            move.w  #MODE_TITLE,game_mode
+            clr.w   fire_delay
+            move.w  #1,blink_visible
+            clr.w   blink_timer
+            bsr     init_objects
+            rts
+
+init_objects:
+            ; Clear all objects first
+            lea     objects,a0
+            moveq   #MAX_OBJECTS-1,d0
+.clear_all:
+            clr.l   (a0)+
+            clr.l   (a0)+
+            dbf     d0,.clear_all
+
+            ; Set up initial 8 objects
+            lea     objects,a0
+
+            move.w  #32,OBJ_X(a0)
+            move.w  #176,OBJ_Y(a0)
+            move.w  #2,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            lea     OBJ_SIZE(a0),a0
+
+            move.w  #160,OBJ_X(a0)
+            move.w  #176,OBJ_Y(a0)
+            move.w  #2,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            lea     OBJ_SIZE(a0),a0
+
+            move.w  #64,OBJ_X(a0)
+            move.w  #192,OBJ_Y(a0)
+            move.w  #-3,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            lea     OBJ_SIZE(a0),a0
+
+            move.w  #200,OBJ_X(a0)
+            move.w  #208,OBJ_Y(a0)
+            move.w  #1,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            lea     OBJ_SIZE(a0),a0
+
+            move.w  #48,OBJ_X(a0)
+            move.w  #80,OBJ_Y(a0)
+            move.w  #1,OBJ_SPEED(a0)
+            move.w  #TYPE_LOG,OBJ_TYPE(a0)
+            lea     OBJ_SIZE(a0),a0
+
+            move.w  #192,OBJ_X(a0)
+            move.w  #80,OBJ_Y(a0)
+            move.w  #1,OBJ_SPEED(a0)
+            move.w  #TYPE_LOG,OBJ_TYPE(a0)
+            lea     OBJ_SIZE(a0),a0
+
+            move.w  #96,OBJ_X(a0)
+            move.w  #96,OBJ_Y(a0)
+            move.w  #-2,OBJ_SPEED(a0)
+            move.w  #TYPE_LOG,OBJ_TYPE(a0)
+            lea     OBJ_SIZE(a0),a0
+
+            move.w  #128,OBJ_X(a0)
+            move.w  #112,OBJ_Y(a0)
+            move.w  #2,OBJ_SPEED(a0)
+            move.w  #TYPE_LOG,OBJ_TYPE(a0)
+
+            rts
+
+;------------------------------------------------------------------------------
+; Screen Clear
+;------------------------------------------------------------------------------
+
+clear_screen:
+            lea     CUSTOM,a5
+            bsr     wait_blit
+            move.l  #screen,BLTDPTH(a5)
+            clr.w   BLTDMOD(a5)
+            move.l  #$01000000,BLTCON0(a5)
+            move.w  #(SCREEN_HEIGHT*SCREEN_DEPTH)<<6|(SCREEN_WIDTH/16),BLTSIZE(a5)
+            rts
+
+clear_playfield:
+            lea     CUSTOM,a5
+            bsr     wait_blit
+            lea     screen,a0
+            adda.w  #40*16,a0
+            move.l  a0,BLTDPTH(a5)
+            clr.w   BLTDMOD(a5)
+            move.l  #$01000000,BLTCON0(a5)
+            move.w  #(SCREEN_HEIGHT-16)<<6|(SCREEN_WIDTH/16),BLTSIZE(a5)
+            rts
+
+draw_playfield:
+            bsr     clear_playfield
+            rts
+
+wait_blit:
+            tst.w   DMACONR(a5)
+.wait:      btst    #6,DMACONR(a5)
+            bne.s   .wait
+            rts
+
+wait_vblank:
+            lea     CUSTOM,a5
+.wait:      move.l  VPOSR(a5),d0
+            andi.l  #$1ff00,d0
+            cmpi.l  #$12c00,d0
+            bne.s   .wait
+.wait2:     move.l  VPOSR(a5),d0
+            andi.l  #$1ff00,d0
+            cmpi.l  #$12c00,d0
+            beq.s   .wait2
+            rts
+
+;------------------------------------------------------------------------------
+; Copper Init
+;------------------------------------------------------------------------------
+
+init_copper_bpl_ptrs:
+            lea     copper_bpl,a0
+            lea     screen,a1
+            moveq   #SCREEN_DEPTH-1,d0
+.bpl_loop:
+            move.l  a1,d1
+            swap    d1
+            move.w  d1,2(a0)
+            swap    d1
+            move.w  d1,6(a0)
+            lea     8(a0),a0
+            lea     BITPLANE_SIZE(a1),a1
+            dbf     d0,.bpl_loop
+            rts
+
+init_sprite_ptrs:
+            lea     copper_spr,a0
+            lea     sprite_frog,a1
+            move.l  a1,d0
+            swap    d0
+            move.w  d0,2(a0)
+            swap    d0
+            move.w  d0,6(a0)
+            lea     8(a0),a0
+
+            lea     sprite_null,a1
+            moveq   #6,d1
+.spr_loop:
+            move.l  a1,d0
+            swap    d0
+            move.w  d0,2(a0)
+            swap    d0
+            move.w  d0,6(a0)
+            lea     8(a0),a0
+            dbf     d1,.spr_loop
+            rts
+
+;------------------------------------------------------------------------------
+; Data Section
+;------------------------------------------------------------------------------
+
+            section data,data_c
+
+copper_list:
+copper_bpl:
+            dc.w    BPL1PTH,$0000
+            dc.w    BPL1PTL,$0000
+            dc.w    BPL2PTH,$0000
+            dc.w    BPL2PTL,$0000
+            dc.w    BPL3PTH,$0000
+            dc.w    BPL3PTL,$0000
+
+copper_spr:
+            dc.w    SPR0PTH,$0000
+            dc.w    SPR0PTL,$0000
+            dc.w    SPR1PTH,$0000
+            dc.w    SPR1PTL,$0000
+            dc.w    SPR2PTH,$0000
+            dc.w    SPR2PTL,$0000
+            dc.w    SPR3PTH,$0000
+            dc.w    SPR3PTL,$0000
+            dc.w    SPR4PTH,$0000
+            dc.w    SPR4PTL,$0000
+            dc.w    SPR5PTH,$0000
+            dc.w    SPR5PTL,$0000
+            dc.w    SPR6PTH,$0000
+            dc.w    SPR6PTL,$0000
+            dc.w    SPR7PTH,$0000
+            dc.w    SPR7PTL,$0000
+
+            dc.w    DIWSTRT,$2c81
+            dc.w    DIWSTOP,$2cc1
+            dc.w    DDFSTRT,$0038
+            dc.w    DDFSTOP,$00d0
+            dc.w    BPLCON0,$3200
+            dc.w    BPLCON1,$0000
+            dc.w    BPLCON2,$0024
+            dc.w    BPL1MOD,$0000
+            dc.w    BPL2MOD,$0000
+
+            dc.w    COLOR00,$0000
+            dc.w    COLOR01,$0fff
+            dc.w    COLOR02,$00f0
+            dc.w    COLOR03,$000f
+            dc.w    COLOR04,$0f00
+            dc.w    COLOR05,$0840
+            dc.w    COLOR06,$0ff0
+            dc.w    COLOR07,$0f0f
+
+            dc.w    COLOR17,$00f0
+            dc.w    COLOR18,$0f00
+            dc.w    COLOR19,$0ff0
+
+            dc.w    $ffff,$fffe
+
+sprite_frog:
+            dc.w    $6044,$7000
+            dc.w    %0000011001100000,%0000000000000000
+            dc.w    %0001111111111000,%0000000000000000
+            dc.w    %0011111111111100,%0000011001100000
+            dc.w    %0111111111111110,%0000111111110000
+            dc.w    %0110111111110110,%0000011001100000
+            dc.w    %1111111111111111,%0000000000000000
+            dc.w    %1111011001101111,%0000000000000000
+            dc.w    %1111111111111111,%0000011001100000
+            dc.w    %1111111111111111,%0000011001100000
+            dc.w    %1111011001101111,%0000000000000000
+            dc.w    %1111111111111111,%0000000000000000
+            dc.w    %0110111111110110,%0000011001100000
+            dc.w    %0111111111111110,%0000111111110000
+            dc.w    %0011111111111100,%0000011001100000
+            dc.w    %0001111111111000,%0000000000000000
+            dc.w    %0000011001100000,%0000000000000000
+            dc.w    $0000,$0000
+
+sprite_null:
+            dc.w    $0000,$0000
+            dc.w    $0000,$0000
+
+font_digits:
+            dc.b    $3C,$66,$6E,$76,$66,$66,$3C,$00
+            dc.b    $18,$38,$18,$18,$18,$18,$7E,$00
+            dc.b    $3C,$66,$06,$1C,$30,$60,$7E,$00
+            dc.b    $3C,$66,$06,$1C,$06,$66,$3C,$00
+            dc.b    $0C,$1C,$3C,$6C,$7E,$0C,$0C,$00
+            dc.b    $7E,$60,$7C,$06,$06,$66,$3C,$00
+            dc.b    $1C,$30,$60,$7C,$66,$66,$3C,$00
+            dc.b    $7E,$06,$0C,$18,$30,$30,$30,$00
+            dc.b    $3C,$66,$66,$3C,$66,$66,$3C,$00
+            dc.b    $3C,$66,$66,$3E,$06,$0C,$38,$00
+
+font_alpha:
+            dc.b    $3C,$66,$66,$7E,$66,$66,$66,$00
+            dc.b    $7C,$66,$66,$7C,$66,$66,$7C,$00
+            dc.b    $3C,$66,$60,$60,$60,$66,$3C,$00
+            dc.b    $78,$6C,$66,$66,$66,$6C,$78,$00
+            dc.b    $7E,$60,$60,$7C,$60,$60,$7E,$00
+            dc.b    $7E,$60,$60,$7C,$60,$60,$60,$00
+            dc.b    $3C,$66,$60,$6E,$66,$66,$3C,$00
+            dc.b    $66,$66,$66,$7E,$66,$66,$66,$00
+            dc.b    $3C,$18,$18,$18,$18,$18,$3C,$00
+            dc.b    $0E,$06,$06,$06,$66,$66,$3C,$00
+            dc.b    $66,$6C,$78,$70,$78,$6C,$66,$00
+            dc.b    $60,$60,$60,$60,$60,$60,$7E,$00
+            dc.b    $63,$77,$7F,$6B,$63,$63,$63,$00
+            dc.b    $66,$76,$7E,$7E,$6E,$66,$66,$00
+            dc.b    $3C,$66,$66,$66,$66,$66,$3C,$00
+            dc.b    $7C,$66,$66,$7C,$60,$60,$60,$00
+            dc.b    $3C,$66,$66,$66,$6A,$6C,$36,$00
+            dc.b    $7C,$66,$66,$7C,$6C,$66,$66,$00
+            dc.b    $3C,$66,$60,$3C,$06,$66,$3C,$00
+            dc.b    $7E,$18,$18,$18,$18,$18,$18,$00
+            dc.b    $66,$66,$66,$66,$66,$66,$3C,$00
+            dc.b    $66,$66,$66,$66,$66,$3C,$18,$00
+            dc.b    $63,$63,$63,$6B,$7F,$77,$63,$00
+            dc.b    $66,$66,$3C,$18,$3C,$66,$66,$00
+            dc.b    $66,$66,$66,$3C,$18,$18,$18,$00
+            dc.b    $7E,$06,$0C,$18,$30,$60,$7E,$00
+
+life_icon:
+            dc.b    $66,$FF,$FF,$FF,$FF,$FF,$FF,$66
 
 sfx_hop:
-            lea     sample_hop,a0
-            move.l  a0,AUD1LCH+CUSTOM
-            move.w  #sample_hop_len/2,AUD1LEN+CUSTOM
-            move.w  #$0040,AUD1PER+CUSTOM
-            move.w  #$0028,AUD1VOL+CUSTOM
-            rts
+            dc.b    0,49,90,117,127,117,90,49
+            dc.b    0,-49,-90,-117,-127,-117,-90,-49
+            even
 
-            section chipdata,data_c
-copperlist:
-            dc.w $0180,$0000
-            dc.w $2c07,$fffe
-            dc.w $0180,$0070
-            dc.w $4007,$fffe
-            dc.w $0180,$0080
-            dc.w $5007,$fffe
-            dc.w $0180,$0444
-            dc.w $5c07,$fffe
-            dc.w $0180,$0666
-            dc.w $6007,$fffe
-            dc.w $0180,$0444
-            dc.w $6c07,$fffe
-            dc.w $0180,$0666
-            dc.w $7007,$fffe
-            dc.w $0180,$0444
-            dc.w $7807,$fffe
-            dc.w $0180,$0080
-            dc.w $8007,$fffe
-            dc.w $0180,$0444
-            dc.w $8c07,$fffe
-            dc.w $0180,$0666
-            dc.w $9007,$fffe
-            dc.w $0180,$0444
-            dc.w $9c07,$fffe
-            dc.w $0180,$0666
-            dc.w $a007,$fffe
-            dc.w $0180,$0444
-            dc.w $a807,$fffe
-            dc.w $0180,$0048
-            dc.w $b007,$fffe
-            dc.w $0180,$006b
-            dc.w $b807,$fffe
-            dc.w $0180,$0048
-            dc.w $c007,$fffe
-            dc.w $0180,$006b
-            dc.w $c807,$fffe
-            dc.w $0180,$0048
-            dc.w $d007,$fffe
-            dc.w $0180,$006b
-            dc.w $d807,$fffe
-            dc.w $0180,$0080
-            dc.w $e807,$fffe
-            dc.w $0180,$0070
-            dc.w $f007,$fffe
-            dc.w $0180,$0000
-            dc.w $ffff,$fffe
+sfx_death:
+            dc.b    127,100,70,40,10,-20,-50,-80
+            dc.b    -100,-80,-50,-20,10,40,70,100
+            dc.b    80,50,20,-10,-40,-70,-100,-80
+            dc.b    -50,-20,10,40,70,100,127,0
+            even
 
-            section data,data
-frog_x:         dc.w 0
-frog_y:         dc.w 0
-on_log:         dc.b 0
-log_vel_x:      dc.w 0
-death_state:    dc.b 0
-death_timer:    dc.b 0
-death_cause:    dc.b 0
-lives:          dc.b 0
-game_state:     dc.b 0
+sfx_score:
+            dc.b    0,90,127,90,0,-90,-127,-90
+            dc.b    0,90,127,90,0,-90,-127,-90
+            even
 
-traffic_count:  dc.b 0
-traffic_x:      ds.w 3
-traffic_y:      ds.w 3
-traffic_speed:  ds.w 3
-log_count:      dc.b 0
-log_active:     ds.b 6
-log_spawn:      ds.b 6
-log_x:          ds.w 6
-log_y:          ds.w 6
-log_speed:      ds.w 6
+high_scores:
+            dc.l    5000
+            dc.b    "AAA",0
+            dc.l    4000
+            dc.b    "BBB",0
+            dc.l    3000
+            dc.b    "CCC",0
+            dc.l    2000
+            dc.b    "DDD",0
+            dc.l    1000
+            dc.b    "EEE",0
 
-bitplane:       ds.b 10240
-sprite0:
-            dc.w $0000,$0000,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$0000,$0000
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$0000,$0000
-            dc.w 0,0
-traffic_img:
-            dc.w $7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0
-traffic_mask:
-            dc.w $fff0,$fff0,$fff0,$fff0,$fff0,$fff0,$fff0,$fff0
+random_seed:
+            dc.l    12345
 
-sample_hop:
-    dc.b $10,$20,$30,$40,$50,$40,$30,$20,$18,$10,$08,$00,$08,$10,$18,$20
-sample_hop_len equ *-sample_hop
-sample_hit:
-    dc.b $60,$20,$60,$20,$60,$20,$60,$20,$10,$60,$10,$60,$10,$60,$10,$60
-sample_hit_len equ *-sample_hit
-sample_splash:
-    dc.b $18,$28,$38,$48,$58,$48,$38,$28,$18,$10,$08,$00,$08,$10,$18,$20
-sample_splash_len equ *-sample_splash
-sample_respawn:
-    dc.b $08,$10,$18,$20,$28,$30,$28,$20,$18,$10,$08,$04,$08,$10,$18,$20
-sample_respawn_len equ *-sample_respawn
+title_text:
+            dc.b    "HOP",0
+            even
 
-gfxname:        dc.b "graphics.library",0
-oldview:        dc.l 0
-oldcopper:      dc.l 0
-gfxbase:        dc.l 0
+press_fire_text:
+            dc.b    "PRESS FIRE",0
+            even
+
+gameover_text:
+            dc.b    "GAME OVER",0
+            even
+
+your_score_text:
+            dc.b    "YOUR SCORE",0
+            even
+
+high_score_text:
+            dc.b    "HIGH SCORES",0
+            even
+
+new_hs_text:
+            dc.b    "NEW HIGH SCORE",0
+            even
+
+level_text:
+            dc.b    "LV",0
+            even
+
+;------------------------------------------------------------------------------
+; BSS Section (Chip RAM)
+;------------------------------------------------------------------------------
+
+            section bss,bss_c
+
+screen:     ds.b    TOTAL_BPL_SIZE
+
+;------------------------------------------------------------------------------
+; BSS Section (Any RAM)
+;------------------------------------------------------------------------------
+
+            section bss_fast,bss
+
+frog_x:         ds.w    1
+frog_y:         ds.w    1
+frog_vx:        ds.w    1
+frog_vy:        ds.w    1
+frog_best_y:    ds.w    1
+
+game_mode:      ds.w    1
+game_state:     ds.w    1
+death_timer:    ds.w    1
+fire_delay:     ds.w    1
+score:          ds.l    1
+lives:          ds.w    1
+level:          ds.w    1
+
+home_slots:     ds.w    NUM_HOMES
+
+on_log:         ds.w    1
+log_speed:      ds.w    1
+
+blink_timer:    ds.w    1
+blink_visible:  ds.w    1
+
+entry_position: ds.w    1
+entry_chars:    ds.b    4
+hs_position:    ds.w    1
+
+joy_up:         ds.b    1
+joy_down:       ds.b    1
+joy_left:       ds.b    1
+joy_right:      ds.b    1
+joy_up_prev:    ds.b    1
+joy_down_prev:  ds.b    1
+joy_left_prev:  ds.b    1
+joy_right_prev: ds.b    1
+
+objects:        ds.b    OBJ_SIZE*MAX_OBJECTS
+
+            end

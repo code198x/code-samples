@@ -1,0 +1,6 @@
+init_game:
+    ; ... existing code ...
+    lda #0
+    sta flash_timer
+    sta gameover_delay
+    ; ... rest of init ...

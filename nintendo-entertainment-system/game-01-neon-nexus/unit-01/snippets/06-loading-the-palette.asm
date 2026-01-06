@@ -1,0 +1,1 @@
+jsr load_palette

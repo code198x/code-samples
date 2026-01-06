@@ -1,26 +1,40 @@
 ;──────────────────────────────────────────────────────────────
-; NEON NEXUS - Unit 6 sample (Collision stub)
-; Adds collision detection between player and enemies/items.
-; On enemy hit: player is knocked back and flagged. On item pickup: item is removed.
+; NEON NEXUS
+; A fixed-screen action game for the Nintendo Entertainment System
+; Unit 6: Collision
 ;──────────────────────────────────────────────────────────────
 
 .segment "HEADER"
-    .byte "NES", $1a, 2, 1, $01, $00, 0,0,0,0,0,0,0,0
+    .byte "NES", $1a        ; iNES magic number
+    .byte 2                 ; 2 x 16KB PRG ROM = 32KB
+    .byte 1                 ; 1 x 8KB CHR ROM
+    .byte $01               ; Mapper 0, vertical mirroring
+    .byte $00               ; Mapper 0 continued
+    .byte 0,0,0,0,0,0,0,0   ; Padding
+
+;──────────────────────────────────────────────────────────────
+; Variables
+;──────────────────────────────────────────────────────────────
 
 .segment "ZEROPAGE"
 frame_counter: .res 1
+buttons:       .res 1
 player_x:      .res 1
 player_y:      .res 1
-controller1:   .res 1
-enemy_x:       .res 3
-enemy_y:       .res 3
-item_x:        .res 2
-item_y:        .res 2
-hit_flag:      .res 1
-pickup_flag:   .res 1
-items_left:    .res 1
+enemy_x:       .res 4       ; X positions for 4 enemies
+enemy_y:       .res 4       ; Y positions for 4 enemies
+item_x:        .res 1       ; Item X position
+item_y:        .res 1       ; Item Y position
+score:         .res 1       ; Items collected
+game_state:    .res 1       ; 0 = playing, 1 = game over
+
+;──────────────────────────────────────────────────────────────
+; Constants
+;──────────────────────────────────────────────────────────────
 
 .segment "CODE"
+
+; PPU registers
 PPUCTRL   = $2000
 PPUMASK   = $2001
 PPUSTATUS = $2002
@@ -28,33 +42,59 @@ OAMADDR   = $2003
 PPUSCROLL = $2005
 PPUADDR   = $2006
 PPUDATA   = $2007
-OAMDMA    = $4014
-JOY1      = $4016
 
-BTN_LEFT  = %00000010
-BTN_RIGHT = %00000001
-BTN_UP    = %00001000
-BTN_DOWN  = %00000100
+; OAM DMA register
+OAMDMA    = $4014
+
+; Controller
+JOYPAD1   = $4016
+
+; Button bit positions
+BTN_A      = %00000001
+BTN_B      = %00000010
+BTN_SELECT = %00000100
+BTN_START  = %00001000
+BTN_UP     = %00010000
+BTN_DOWN   = %00100000
+BTN_LEFT   = %01000000
+BTN_RIGHT  = %10000000
+
+; Game constants
+NUM_ENEMIES = 4
+
+; Game states
+STATE_PLAYING  = 0
+STATE_GAMEOVER = 1
+
+;──────────────────────────────────────────────────────────────
+; Reset handler
+;──────────────────────────────────────────────────────────────
 
 .proc reset
-    sei
-    cld
+    sei                     ; Disable IRQs
+    cld                     ; Disable decimal mode
+
     ldx #$40
-    stx $4017
+    stx $4017               ; Disable APU frame IRQ
+
     ldx #$ff
-    txs
-    inx
-    stx PPUCTRL
-    stx PPUMASK
-    stx $4010
+    txs                     ; Set up stack
 
-    bit PPUSTATUS
-@v1:
-    bit PPUSTATUS
-    bpl @v1
+    inx                     ; X = 0
+    stx PPUCTRL             ; Disable NMI
+    stx PPUMASK             ; Disable rendering
+    stx $4010               ; Disable DMC IRQs
 
+    ; Wait for first vblank
+    bit PPUSTATUS
+@vblank1:
+    bit PPUSTATUS
+    bpl @vblank1
+
+    ; Clear RAM ($0000-$07FF)
     lda #$00
-@clr:
+    ldx #0
+@clear_ram:
     sta $0000, x
     sta $0100, x
     sta $0200, x
@@ -64,314 +104,526 @@ BTN_DOWN  = %00000100
     sta $0600, x
     sta $0700, x
     inx
-    bne @clr
+    bne @clear_ram
 
-@v2:
+    ; Clear shadow OAM to $FF (sprites off-screen)
+    lda #$ff
+    ldx #0
+@clear_oam:
+    sta $0200, x
+    inx
+    bne @clear_oam
+
+    ; Wait for second vblank
+@vblank2:
     bit PPUSTATUS
-    bpl @v2
+    bpl @vblank2
 
-    lda #0
-    sta frame_counter
-    sta hit_flag
-    sta pickup_flag
-    lda #120
+    ; Load palette
+    jsr load_palette
+
+    ; Fill background
+    jsr fill_background
+
+    ; Initialise game state
+    lda #STATE_PLAYING
+    sta game_state
+
+    ; Initialise player position
+    lda #128                ; X position (centre)
     sta player_x
-    lda #180
+    lda #200                ; Y position (near bottom)
     sta player_y
 
-    lda #40
-    sta enemy_x
-    lda #80
-    sta enemy_y
-    lda #200
-    sta enemy_x+1
-    lda #120
-    sta enemy_y+1
-    lda #140
-    sta enemy_x+2
-    lda #60
-    sta enemy_y+2
+    ; Initialise player sprite (Sprite 0)
+    lda player_y
+    sta $0200               ; Y position
+    lda #1                  ; Tile index 1 (player ship)
+    sta $0201
+    lda #%00000000          ; Attributes: palette 0, no flip
+    sta $0202
+    lda player_x
+    sta $0203               ; X position
 
-    lda #60
-    sta item_x
-    lda #140
-    sta item_y
-    lda #220
-    sta item_x+1
-    lda #140
-    sta item_y+1
+    ; Initialise enemies
+    jsr init_enemies
 
-    lda #2
-    sta items_left
+    ; Initialise item
+    jsr init_item
 
-    jsr load_palette
-    jsr fill_background
-    jsr build_oam
-    jsr upload_oam
+    ; Initialise score
+    lda #0
+    sta score
 
-    lda #%10000000
+    ; Enable rendering
+    lda #%10000000          ; Enable NMI
     sta PPUCTRL
-    lda #%00011110
+    lda #%00011110          ; Enable sprites and background
     sta PPUMASK
 
-    lda #0
+    ; Reset scroll
+    lda #$00
     sta PPUSCROLL
     sta PPUSCROLL
 
-main:
-    jmp main
-.endproc
+    ; Main loop
+forever:
+    lda frame_counter
+@wait:
+    cmp frame_counter       ; Has NMI fired?
+    beq @wait               ; No - keep waiting
 
-.proc nmi
-    inc frame_counter
+    ; Check game state
+    lda game_state
+    cmp #STATE_GAMEOVER
+    beq @handle_gameover
+
+    ; STATE_PLAYING: normal gameplay
     jsr read_controller
     jsr update_player
     jsr move_enemies
-    jsr pulse_items
-    jsr check_collisions
-    jsr build_oam
-    jsr upload_oam
-    lda #0
+    jsr update_enemy_sprites
+    jsr update_item_sprite
+    jsr check_item_collision
+    jsr check_enemy_collision
+    jmp forever
+
+@handle_gameover:
+    ; Check for restart (Start button)
+    jsr read_controller
+    lda buttons
+    and #BTN_START
+    beq forever             ; No Start pressed, keep waiting
+    jsr reset_game
+    jmp forever
+.endproc
+
+;──────────────────────────────────────────────────────────────
+; NMI handler (called every vblank)
+;──────────────────────────────────────────────────────────────
+
+.proc nmi
+    ; Preserve registers
+    pha
+    txa
+    pha
+    tya
+    pha
+
+    inc frame_counter
+
+    ; OAM DMA transfer
+    lda #$00
+    sta OAMADDR             ; Set OAM address to 0
+    lda #$02                ; High byte of $0200
+    sta OAMDMA              ; Trigger DMA copy
+
+    ; Reset scroll position
+    lda #$00
     sta PPUSCROLL
     sta PPUSCROLL
+
+    ; Restore registers
+    pla
+    tay
+    pla
+    tax
+    pla
+
     rti
 .endproc
+
+;──────────────────────────────────────────────────────────────
+; IRQ handler (unused)
+;──────────────────────────────────────────────────────────────
 
 .proc irq
     rti
 .endproc
 
-;------------------------------------------------------------
+;──────────────────────────────────────────────────────────────
+; Read controller
+;──────────────────────────────────────────────────────────────
+
 .proc read_controller
-    lda #1
-    sta JOY1
-    lda #0
-    sta JOY1
+    ; Strobe controller
+    lda #$01
+    sta JOYPAD1             ; Strobe on
+    lda #$00
+    sta JOYPAD1             ; Strobe off
+
+    ; Read 8 buttons
     ldx #8
-    lda #0
-    sta controller1
 @loop:
-    lda JOY1
-    lsr
-    rol controller1
+    lda JOYPAD1             ; Read next button (bit 0)
+    lsr a                   ; Shift bit 0 into carry
+    rol buttons             ; Roll carry into buttons byte
     dex
     bne @loop
     rts
 .endproc
 
+;──────────────────────────────────────────────────────────────
+; Update player position
+;──────────────────────────────────────────────────────────────
+
 .proc update_player
-    lda controller1
-    and #BTN_LEFT
-    beq :+
-    dec player_x
-:
-    lda controller1
-    and #BTN_RIGHT
-    beq :+
-    inc player_x
-:
-    lda controller1
+    ; Check Up
+    lda buttons
     and #BTN_UP
-    beq :+
+    beq @check_down
+    lda player_y
+    cmp #8                  ; Top boundary
+    bcc @check_down
     dec player_y
-:
-    lda controller1
+
+@check_down:
+    lda buttons
     and #BTN_DOWN
-    beq :+
+    beq @check_left
+    lda player_y
+    cmp #224                ; Bottom boundary
+    bcs @check_left
     inc player_y
-:
+
+@check_left:
+    lda buttons
+    and #BTN_LEFT
+    beq @check_right
+    lda player_x
+    cmp #8                  ; Left boundary
+    bcc @check_right
+    dec player_x
+
+@check_right:
+    lda buttons
+    and #BTN_RIGHT
+    beq @done
+    lda player_x
+    cmp #240                ; Right boundary
+    bcs @done
+    inc player_x
+
+@done:
+    ; Copy position to shadow OAM
+    lda player_y
+    sta $0200               ; Sprite 0 Y position
+    lda player_x
+    sta $0203               ; Sprite 0 X position
     rts
 .endproc
 
+;──────────────────────────────────────────────────────────────
+; Initialise enemies
+;──────────────────────────────────────────────────────────────
+
+.proc init_enemies
+    ; Enemy 0: left side
+    lda #50
+    sta enemy_x
+    lda #32
+    sta enemy_y
+
+    ; Enemy 1: left-centre
+    lda #100
+    sta enemy_x + 1
+    lda #48
+    sta enemy_y + 1
+
+    ; Enemy 2: right-centre
+    lda #156
+    sta enemy_x + 2
+    lda #24
+    sta enemy_y + 2
+
+    ; Enemy 3: right side
+    lda #206
+    sta enemy_x + 3
+    lda #40
+    sta enemy_y + 3
+
+    rts
+.endproc
+
+;──────────────────────────────────────────────────────────────
+; Move enemies
+;──────────────────────────────────────────────────────────────
+
 .proc move_enemies
-    ldx #0
+    ldx #0                  ; Start with enemy 0
 @loop:
-    lda frame_counter
-    and #%00000001
-    beq :+
-    inc enemy_x, x
-    jmp :++
-:   dec enemy_x, x
-:
+    ; Move enemy down (increment Y)
+    inc enemy_y, x
+
+    ; Check if off bottom of screen
+    lda enemy_y, x
+    cmp #232                ; Past visible area?
+    bcc @next               ; No - continue
+
+    ; Wrap to top
+    lda #0
+    sta enemy_y, x
+
+@next:
+    inx                     ; Next enemy
+    cpx #NUM_ENEMIES        ; All done?
+    bne @loop               ; No - loop
+    rts
+.endproc
+
+;──────────────────────────────────────────────────────────────
+; Update enemy sprites
+;──────────────────────────────────────────────────────────────
+
+.proc update_enemy_sprites
+    ldx #0                  ; Enemy index
+    ldy #4                  ; OAM offset (skip sprite 0)
+@loop:
+    ; Y position
+    lda enemy_y, x
+    sta $0200, y
+    iny
+
+    ; Tile index (enemy graphic)
+    lda #2                  ; Tile 2 = enemy ship
+    sta $0200, y
+    iny
+
+    ; Attributes (palette 1, no flip)
+    lda #%00000001          ; Sprite palette 1
+    sta $0200, y
+    iny
+
+    ; X position
+    lda enemy_x, x
+    sta $0200, y
+    iny
+
+    ; Next enemy
     inx
-    cpx #3
+    cpx #NUM_ENEMIES
     bne @loop
     rts
 .endproc
 
-.proc pulse_items
-    lda frame_counter
-    and #%00000010
-    beq :down
-    inc item_y
-    inc item_y+1
-    rts
-:down
-    dec item_y
-    dec item_y+1
-    rts
-.endproc
+;──────────────────────────────────────────────────────────────
+; Initialise item
+;──────────────────────────────────────────────────────────────
 
-;------------------------------------------------------------
-; Simple AABB overlap (8x8 vs 8x8)
-;------------------------------------------------------------
-.proc check_collisions
-    lda #0
-    sta hit_flag
-    sta pickup_flag
-
-    ; player vs enemies
-    ldx #0
-@e:
-    lda player_x
-    sec
-    sbc enemy_x, x
-    cmp #8
-    bcs :next_e
-    lda player_y
-    sec
-    sbc enemy_y, x
-    cmp #8
-    bcs :next_e
-    lda #1
-    sta hit_flag
-:    lda player_x         ; simple knockback on hit
-    sec
-    sbc #8
-    sta player_x
-:next_e
-    inx
-    cpx #3
-    bne @e
-
-    ; player vs items
-    ldx #0
-@i:
-    lda items_left
-    beq :next_i
-    lda player_x
-    sec
-    sbc item_x, x
-    cmp #8
-    bcs :next_i
-    lda player_y
-    sec
-    sbc item_y, x
-    cmp #8
-    bcs :next_i
-    lda #1
-    sta pickup_flag
-    ; remove item
-    lda #0
-    sta item_x, x
-    sta item_y, x
-    dec items_left
-:next_i
-    inx
-    cpx #2
-    bne @i
+.proc init_item
+    lda #180                ; X position
+    sta item_x
+    lda #100                ; Y position
+    sta item_y
     rts
 .endproc
 
-.proc build_oam
-    lda #$00
-    sta OAMADDR
+;──────────────────────────────────────────────────────────────
+; Update item sprite
+;──────────────────────────────────────────────────────────────
 
-    ; player
-    lda player_y
-    sta player_oam
-    lda #$00
-    sta player_oam+1
-    lda #%00000000
-    sta player_oam+2
-    lda player_x
-    sta player_oam+3
-
-    ; enemies
-    ldx #0
-@e:
-    lda enemy_y, x
-    sta player_oam+4 + (4*x)
-    lda #$02
-    sta player_oam+5 + (4*x)
-    lda #%00000001
-    sta player_oam+6 + (4*x)
-    lda enemy_x, x
-    sta player_oam+7 + (4*x)
-    inx
-    cpx #3
-    bne @e
-
-    ; items
+.proc update_item_sprite
+    ; Sprite 5 is at OAM offset 20 ($0214)
     lda item_y
-    sta player_oam+16
-    lda #$04
-    sta player_oam+17
-    lda #%00000010
-    sta player_oam+18
+    sta $0200 + 20          ; Y position
+    lda #3                  ; Tile 3 (item graphic)
+    sta $0200 + 21          ; Tile
+    lda #%00000010          ; Palette 2 (magentas)
+    sta $0200 + 22          ; Attributes
     lda item_x
-    sta player_oam+19
-
-    lda item_y+1
-    sta player_oam+20
-    lda #$04
-    sta player_oam+21
-    lda #%00000010
-    sta player_oam+22
-    lda item_x+1
-    sta player_oam+23
-
-    ; change sprite attribute if hit/pickup
-    lda hit_flag
-    beq :nohit
-    lda #%00000011
-    sta player_oam+2
-:nohit
-    lda pickup_flag
-    beq :nopick
-    lda #%00000100
-    sta player_oam+18
-    sta player_oam+22
-:nopick
+    sta $0200 + 23          ; X position
     rts
 .endproc
 
-.proc upload_oam
-    lda #$00
-    sta OAMADDR
-    lda #$02
-    sta OAMDMA
+;──────────────────────────────────────────────────────────────
+; Check item collision
+;──────────────────────────────────────────────────────────────
+
+.proc check_item_collision
+    ; Check: player_x < item_x + 8
+    lda item_x
+    clc
+    adc #8
+    cmp player_x
+    bcc @no_hit
+
+    ; Check: item_x < player_x + 8
+    lda player_x
+    clc
+    adc #8
+    cmp item_x
+    bcc @no_hit
+
+    ; Check: player_y < item_y + 8
+    lda item_y
+    clc
+    adc #8
+    cmp player_y
+    bcc @no_hit
+
+    ; Check: item_y < player_y + 8
+    lda player_y
+    clc
+    adc #8
+    cmp item_y
+    bcc @no_hit
+
+    ; Collision!
+    jsr collect_item
+
+@no_hit:
     rts
 .endproc
 
-.segment "OAM"
-.org $0200
-player_oam:
-    .res 4*6
+;──────────────────────────────────────────────────────────────
+; Collect item
+;──────────────────────────────────────────────────────────────
 
-.segment "CODE"
+.proc collect_item
+    ; Increase score
+    inc score
+
+    ; Respawn item at new position
+    lda score
+    asl a
+    asl a
+    asl a
+    asl a
+    clc
+    adc #32
+    cmp #224
+    bcc @x_ok
+    lda #48
+@x_ok:
+    sta item_x
+
+    ; Y position: alternate high and low
+    lda score
+    and #%00000001
+    beq @high
+    lda #160
+    jmp @set_y
+@high:
+    lda #60
+@set_y:
+    sta item_y
+
+    rts
+.endproc
+
+;──────────────────────────────────────────────────────────────
+; Check enemy collision
+;──────────────────────────────────────────────────────────────
+
+.proc check_enemy_collision
+    ldx #0                  ; Enemy index
+@loop:
+    ; Check X overlap: enemy_x < player_x + 8
+    lda player_x
+    clc
+    adc #8                  ; Player right edge
+    cmp enemy_x, x          ; Compare with enemy left edge
+    bcc @next               ; Player right < enemy left = no overlap
+
+    ; Check X overlap: player_x < enemy_x + 8
+    lda enemy_x, x
+    clc
+    adc #8                  ; Enemy right edge
+    cmp player_x            ; Compare with player left edge
+    bcc @next               ; Enemy right < player left = no overlap
+
+    ; Check Y overlap: enemy_y < player_y + 8
+    lda player_y
+    clc
+    adc #8                  ; Player bottom edge
+    cmp enemy_y, x          ; Compare with enemy top edge
+    bcc @next               ; Player bottom < enemy top = no overlap
+
+    ; Check Y overlap: player_y < enemy_y + 8
+    lda enemy_y, x
+    clc
+    adc #8                  ; Enemy bottom edge
+    cmp player_y            ; Compare with player top edge
+    bcc @next               ; Enemy bottom < player top = no overlap
+
+    ; All checks passed - collision!
+    lda #STATE_GAMEOVER
+    sta game_state
+    rts                     ; Exit immediately
+
+@next:
+    inx
+    cpx #NUM_ENEMIES
+    bne @loop
+    rts
+.endproc
+
+;──────────────────────────────────────────────────────────────
+; Reset game
+;──────────────────────────────────────────────────────────────
+
+.proc reset_game
+    ; Reset game state
+    lda #STATE_PLAYING
+    sta game_state
+
+    ; Reset score
+    lda #0
+    sta score
+
+    ; Reset player position
+    lda #128
+    sta player_x
+    lda #200
+    sta player_y
+
+    ; Update player sprite position
+    lda player_y
+    sta $0200
+    lda player_x
+    sta $0203
+
+    ; Reset enemies
+    jsr init_enemies
+
+    ; Reset item
+    jsr init_item
+
+    rts
+.endproc
+
+;──────────────────────────────────────────────────────────────
+; Subroutines
+;──────────────────────────────────────────────────────────────
+
 .proc load_palette
-    bit PPUSTATUS
+    ; Set PPU address to palette ($3F00)
+    bit PPUSTATUS           ; Reset address latch
     lda #$3f
     sta PPUADDR
     lda #$00
     sta PPUADDR
+
+    ; Load 32 palette bytes
     ldx #0
-@lp:
+@loop:
     lda palette_data, x
     sta PPUDATA
     inx
     cpx #32
-    bne @lp
+    bne @loop
     rts
 .endproc
 
 .proc fill_background
+    ; Set PPU address to nametable 0 ($2000)
     bit PPUSTATUS
     lda #$20
     sta PPUADDR
     lda #$00
     sta PPUADDR
+
+    ; Fill with tile 0 (960 + 64 = 1024 bytes)
     lda #$00
     ldx #0
     ldy #4
@@ -382,47 +634,107 @@ player_oam:
     bne @inner
     dey
     bne @outer
+
+    ; Set PPU address to attribute table ($23C0)
     bit PPUSTATUS
     lda #$23
     sta PPUADDR
     lda #$c0
     sta PPUADDR
+
+    ; Fill with colour zone pattern
     ldx #0
-@attr:
+@attr_loop:
     lda attribute_data, x
     sta PPUDATA
     inx
     cpx #64
-    bne @attr
+    bne @attr_loop
+
     rts
 .endproc
 
+;──────────────────────────────────────────────────────────────
+; Data
+;──────────────────────────────────────────────────────────────
+
 palette_data:
-    .byte $0f, $11, $21, $31
-    .byte $0f, $19, $29, $39
-    .byte $0f, $15, $25, $35
-    .byte $0f, $00, $10, $30
-    .byte $0f, $11, $21, $31
-    .byte $0f, $19, $29, $39
-    .byte $0f, $15, $25, $35
-    .byte $0f, $00, $10, $30
+    ; Background palettes
+    .byte $0f, $11, $21, $31    ; Palette 0: Blues
+    .byte $0f, $19, $29, $39    ; Palette 1: Greens
+    .byte $0f, $15, $25, $35    ; Palette 2: Magentas
+    .byte $0f, $00, $10, $30    ; Palette 3: Greys
+
+    ; Sprite palettes
+    .byte $0f, $30, $21, $11    ; Palette 0: White/Blue (player)
+    .byte $0f, $2a, $1a, $0a    ; Palette 1: Greens (enemies)
+    .byte $0f, $25, $15, $05    ; Palette 2: Magentas (items)
+    .byte $0f, $17, $27, $37    ; Palette 3: Oranges
 
 attribute_data:
-    .byte $00,$00,$00,$00,$00,$00,$00,$00
-    .byte $00,$00,$00,$00,$00,$00,$00,$00
-    .byte $55,$55,$55,$55,$55,$55,$55,$55
-    .byte $55,$55,$55,$55,$55,$55,$55,$55
-    .byte $aa,$aa,$aa,$aa,$aa,$aa,$aa,$aa
-    .byte $aa,$aa,$aa,$aa,$aa,$aa,$aa,$aa
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+    ; 8 rows of 8 bytes = 64 bytes
+    .byte $00, $00, $00, $00, $00, $00, $00, $00  ; Palette 0
+    .byte $00, $00, $00, $00, $00, $00, $00, $00
+    .byte $55, $55, $55, $55, $55, $55, $55, $55  ; Palette 1
+    .byte $55, $55, $55, $55, $55, $55, $55, $55
+    .byte $aa, $aa, $aa, $aa, $aa, $aa, $aa, $aa  ; Palette 2
+    .byte $aa, $aa, $aa, $aa, $aa, $aa, $aa, $aa
+    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff  ; Palette 3
+    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+
+;──────────────────────────────────────────────────────────────
+; Vectors
+;──────────────────────────────────────────────────────────────
 
 .segment "VECTORS"
-    .word nmi
-    .word reset
-    .word irq
+    .word nmi               ; $FFFA-$FFFB: NMI vector
+    .word reset             ; $FFFC-$FFFD: Reset vector
+    .word irq               ; $FFFE-$FFFF: IRQ vector
+
+;──────────────────────────────────────────────────────────────
+; CHR ROM (graphics)
+;──────────────────────────────────────────────────────────────
 
 .segment "CHARS"
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .res 8192-16
+    ; Tile 0: Solid block (background fill)
+    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff  ; Plane 0
+    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff  ; Plane 1
+
+    ; Tile 1: Player ship (pointing up)
+    .byte %00011000         ; ...XX...
+    .byte %00111100         ; ..XXXX..
+    .byte %01111110         ; .XXXXXX.
+    .byte %11111111         ; XXXXXXXX
+    .byte %11111111         ; XXXXXXXX
+    .byte %00100100         ; ..X..X..
+    .byte %00100100         ; ..X..X..
+    .byte %01100110         ; .XX..XX.
+    ; Plane 1 (all zeros = colour 1 only)
+    .byte $00, $00, $00, $00, $00, $00, $00, $00
+
+    ; Tile 2: Enemy ship (pointing down)
+    .byte %01100110         ; .XX..XX.
+    .byte %11111111         ; XXXXXXXX
+    .byte %11011011         ; XX.XX.XX
+    .byte %01111110         ; .XXXXXX.
+    .byte %00111100         ; ..XXXX..
+    .byte %00111100         ; ..XXXX..
+    .byte %00011000         ; ...XX...
+    .byte %00011000         ; ...XX...
+    ; Plane 1 (all zeros = colour 1 only)
+    .byte $00, $00, $00, $00, $00, $00, $00, $00
+
+    ; Tile 3: Collectible item (diamond)
+    .byte %00011000         ; ...XX...
+    .byte %00111100         ; ..XXXX..
+    .byte %01111110         ; .XXXXXX.
+    .byte %11111111         ; XXXXXXXX
+    .byte %11111111         ; XXXXXXXX
+    .byte %01111110         ; .XXXXXX.
+    .byte %00111100         ; ..XXXX..
+    .byte %00011000         ; ...XX...
+    ; Plane 1 (all zeros = colour 1 only)
+    .byte $00, $00, $00, $00, $00, $00, $00, $00
+
+    ; Fill rest of 8KB CHR ROM
+    .res 8192 - 64

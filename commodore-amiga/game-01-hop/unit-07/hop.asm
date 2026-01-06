@@ -1,282 +1,446 @@
 ;──────────────────────────────────────────────────────────────
-; HOP - Integrated sample through Unit 7 (logs moving)
-; Includes: display lanes (Unit1), frog sprite (Unit2), movement (Unit3),
-; traffic BOBs (Unit4), traffic animation (Unit5), river lanes (Unit6),
-; plus log spawning/movement (Unit7).
-; Note: Death/collision/lives/polish handled in later units.
+; HOP - A Frogger-style game for the Commodore Amiga
+; Unit 7: Riding the Logs
 ;──────────────────────────────────────────────────────────────
 
-CUSTOM          equ $dff000
-ExecBase        equ 4
-OldOpenLibrary  equ -408
-CloseLibrary    equ -414
-LoadView        equ -222
-WaitTOF         equ -270
+CUSTOM      equ $dff000
 
-;----------------------------------------------------------------
+DMACONR     equ $002
+VPOSR       equ $004
+JOY1DAT     equ $00c
+BLTCON0     equ $040
+BLTCON1     equ $042
+BLTAFWM     equ $044
+BLTALWM     equ $046
+BLTAPTH     equ $050
+BLTDPTH     equ $054
+BLTSIZE     equ $058
+BLTAMOD     equ $064
+BLTDMOD     equ $066
+COP1LC      equ $080
+COPJMP1     equ $088
+DMACON      equ $096
+INTENA      equ $09a
+INTREQ      equ $09c
+COLOR00     equ $180
+
+SCREEN_W    equ 40
+SCREEN_H    equ 256
+PLANE_SIZE  equ SCREEN_W*SCREEN_H
+
+HOP_SIZE    equ 16
+FROG_WIDTH  equ 16
+FROG_HEIGHT equ 16
+MIN_X       equ 32
+MAX_X       equ 288
+MIN_Y       equ 44
+MAX_Y       equ 196
+
+WATER_TOP   equ 64
+WATER_BOT   equ 108
+ROAD_TOP    equ 120
+ROAD_BOT    equ 180
+
+OBJ_X       equ 0
+OBJ_Y       equ 2
+OBJ_SPEED   equ 4
+OBJ_TYPE    equ 6
+OBJ_SIZE    equ 8
+
+TYPE_CAR    equ 0
+TYPE_LOG    equ 1
+
+CAR_WIDTH   equ 1
+CAR_HEIGHT  equ 8
+LOG_WIDTH   equ 2
+LOG_HEIGHT  equ 8
+LOG_PIXELS  equ 32
+
+NUM_OBJECTS equ 7
+
+;──────────────────────────────────────────────────────────────
             section code,code
+
 start:
-            move.l  ExecBase,a6
-            lea     gfxname,a1
-            jsr     OldOpenLibrary(a6)
-            move.l  d0,gfxbase
-            beq     .exit
-
-            move.l  d0,a6
-            move.l  34(a6),oldview
-            move.l  38(a6),oldcopper
-
-            sub.l   a1,a1
-            jsr     LoadView(a6)
-            jsr     WaitTOF(a6)
-            jsr     WaitTOF(a6)
-
             lea     CUSTOM,a5
-            move.w  #$7fff,$9a(a5)     ; INTENA off
-            move.w  #$7fff,$9c(a5)     ; INTREQ clear
+            move.w  #$7fff,INTENA(a5)
+            move.w  #$7fff,INTREQ(a5)
+            move.w  #$7fff,DMACON(a5)
 
-            ; copper list
+            bsr     clear_screen
+            bsr     setup_copper_pointers
+
             lea     copperlist,a0
-            move.l  a0,$80(a5)
-            move.w  d0,$88(a5)
+            move.l  a0,COP1LC(a5)
+            move.w  d0,COPJMP1(a5)
 
-            ; enable DMA: bit15=1, bit7=copper, bit10=blitter
-            move.w  #$83a0,$96(a5)
+            move.w  #$83e0,DMACON(a5)
 
-            bsr     init_state
-
-.mainloop:
-            bsr     wait_vb
-            bsr     handle_input
-            bsr     update_traffic
-            bsr     update_logs
-            bsr     draw_frog
-            bra     .mainloop
-
-.exit:
-            rts
-
-;----------------------------------------------------------------
-wait_vb:
-            move.l  #$1ff00,d1
-.vbwait:
-            move.l  4(a5),d0
-            and.l   d1,d0
-            cmp.l   #$00000,d0
-            bne.s   .vbwait
-            rts
-
-;----------------------------------------------------------------
-init_state:
-            ; frog start
             move.w  #160,frog_x
-            move.w  #220,frog_y
-            clr.w   on_log
+            move.w  #180,frog_y
+            bsr     update_sprite
 
-            ; traffic init (placeholder positions)
-            moveq   #0,d0
-            move.b  #3,traffic_count
-            lea     traffic_x,a0
-            move.w  #40,(a0)+
-            move.w  #140,(a0)+
-            move.w  #260,(a0)+
-            lea     traffic_speed,a0
-            move.w  #2,(a0)+
-            move.w  #-3,(a0)+
-            move.w  #2,(a0)+
+mainloop:
+            bsr     wait_vblank
+            bsr     read_joystick
+            bsr     update_frog
+            bsr     handle_platform
+            bsr     update_sprite
+            bsr     update_objects
+            bra     mainloop
 
-            ; log init
-            moveq   #0,d0
-            move.b  #6,log_count
-            lea     log_active,a0
-            moveq   #0,d1
-            moveq   #6-1,d2
-.init_log_loop:
-            move.b  d1,(a0)+           ; active=0
-            dbra    d2,.init_log_loop
-
-            lea     log_spawn,a0
-            move.b  #30,(a0)+
-            move.b  #50,(a0)+
-            move.b  #70,(a0)+
-            move.b  #40,(a0)+
-            move.b  #60,(a0)+
-            move.b  #80,(a0)+
-
-            lea     log_speed,a0
-            move.w  #2,(a0)+
-            move.w  #-2,(a0)+
-            move.w  #2,(a0)+
-            move.w  #-2,(a0)+
-            move.w  #2,(a0)+
-            move.w  #-2,(a0)+
-
-            ; log Y per lane (top water lane at y=120, spaced by 16)
-            lea     log_y,a0
-            move.w  #120,(a0)+
-            move.w  #120,(a0)+
-            move.w  #136,(a0)+
-            move.w  #136,(a0)+
-            move.w  #152,(a0)+
-            move.w  #152,(a0)+
-
-            ; log X start off-screen
-            lea     log_x,a0
-            move.w  #-64,(a0)+
-            move.w  #400,(a0)+
-            move.w  #-64,(a0)+
-            move.w  #400,(a0)+
-            move.w  #-64,(a0)+
-            move.w  #400,(a0)+
-
+;──────────────────────────────────────────────────────────────
+wait_vblank:
+            move.l  #$1ff00,d1
+.wait:      move.l  VPOSR(a5),d0
+            and.l   d1,d0
+            bne.s   .wait
             rts
 
-;----------------------------------------------------------------
-handle_input:
-            ; simple: check joystick on CIAA (not fully implemented here)
-            ; placeholder: no movement for brevity
+wait_blit:
+            btst    #6,DMACONR(a5)
+            bne.s   wait_blit
             rts
 
-;----------------------------------------------------------------
-update_traffic:
-            ; move cars and wrap (placeholder)
+;──────────────────────────────────────────────────────────────
+clear_screen:
+            bsr.s   wait_blit
+            move.l  #screen_plane1,BLTDPTH(a5)
+            move.w  #0,BLTDMOD(a5)
+            move.w  #$0100,BLTCON0(a5)
+            move.w  #0,BLTCON1(a5)
+            move.w  #(SCREEN_H<<6)|SCREEN_W/2,BLTSIZE(a5)
+            bsr.s   wait_blit
+            move.l  #screen_plane2,BLTDPTH(a5)
+            move.w  #(SCREEN_H<<6)|SCREEN_W/2,BLTSIZE(a5)
             rts
 
-;----------------------------------------------------------------
-update_logs:
-            lea     log_active,a0
-            lea     log_x,a1
-            lea     log_y,a2
-            lea     log_speed,a3
-            lea     log_spawn,a4
-            moveq   #0,d7
-            move.b  log_count,d7
-            subq.b  #1,d7
+;──────────────────────────────────────────────────────────────
+setup_copper_pointers:
+            lea     screen_plane1,a0
+            lea     bplpt+2,a1
+            move.l  a0,d0
+            swap    d0
+            move.w  d0,(a1)
+            swap    d0
+            move.w  d0,4(a1)
+            lea     screen_plane2,a0
+            move.l  a0,d0
+            swap    d0
+            move.w  d0,8(a1)
+            swap    d0
+            move.w  d0,12(a1)
+            lea     frog_data,a0
+            lea     sprpt+2,a1
+            move.l  a0,d0
+            swap    d0
+            move.w  d0,(a1)
+            swap    d0
+            move.w  d0,4(a1)
+            rts
 
+;──────────────────────────────────────────────────────────────
+read_joystick:
+            move.w  JOY1DAT(a5),d0
+            move.w  d0,d1
+            lsr.w   #1,d1
+            eor.w   d1,d0
+            move.w  joy_prev,d1
+            not.w   d1
+            and.w   d0,d1
+            move.w  d0,joy_prev
+            move.w  d1,d0
+            rts
+
+;──────────────────────────────────────────────────────────────
+update_frog:
+            btst    #8,d0
+            beq.s   .no_up
+            move.w  frog_y,d1
+            sub.w   #HOP_SIZE,d1
+            cmp.w   #MIN_Y,d1
+            blt.s   .no_up
+            move.w  d1,frog_y
+.no_up:     btst    #0,d0
+            beq.s   .no_down
+            move.w  frog_y,d1
+            add.w   #HOP_SIZE,d1
+            cmp.w   #MAX_Y,d1
+            bgt.s   .no_down
+            move.w  d1,frog_y
+.no_down:   btst    #9,d0
+            beq.s   .no_left
+            move.w  frog_x,d1
+            sub.w   #HOP_SIZE,d1
+            cmp.w   #MIN_X,d1
+            blt.s   .no_left
+            move.w  d1,frog_x
+.no_left:   btst    #1,d0
+            beq.s   .no_right
+            move.w  frog_x,d1
+            add.w   #HOP_SIZE,d1
+            cmp.w   #MAX_X,d1
+            bgt.s   .no_right
+            move.w  d1,frog_x
+.no_right:  rts
+
+;──────────────────────────────────────────────────────────────
+handle_platform:
+            move.w  frog_y,d0
+            cmp.w   #WATER_TOP,d0
+            blt.s   .done
+            cmp.w   #WATER_BOT,d0
+            bge.s   .done
+
+            bsr.s   check_on_log
+            tst.w   d0
+            beq.s   .done
+
+            add.w   d0,frog_x
+
+            tst.w   frog_x
+            bpl.s   .check_right
+            clr.w   frog_x
+            bra.s   .done
+.check_right:
+            cmp.w   #MAX_X,frog_x
+            ble.s   .done
+            move.w  #MAX_X,frog_x
+.done:      rts
+
+;──────────────────────────────────────────────────────────────
+check_on_log:
+            lea     objects,a2
+            move.w  #NUM_OBJECTS-1,d7
 .loop:
-            move.b  (a0),d0          ; active?
-            tst.b   d0
-            bne.s   .move_active
-            ; inactive: countdown spawn
-            move.b  (a4),d1
-            subq.b  #1,d1
-            move.b  d1,(a4)
+            cmp.w   #TYPE_LOG,OBJ_TYPE(a2)
             bne.s   .next
-            ; spawn
-            move.b  #1,(a0)
-            move.b  #60,(a4)        ; reset spawn timer
-            move.w  (a3),d2
-            tst.w   d2
-            bpl.s   .spawn_left
-            move.w  #400,(a1)
-            bra.s   .next
-.spawn_left:
-            move.w  #-64,(a1)
-            bra.s   .next
 
-.move_active:
-            move.w  (a1),d2
-            add.w   (a3),d2
-            move.w  d2,(a1)
-            ; wrap
-            cmp.w   #400,d2
-            blt.s   .chk_offleft
-            move.b  #0,(a0)
-            move.b  #40,(a4)
-            bra.s   .next
-.chk_offleft:
-            cmp.w   #-80,d2
-            bgt.s   .next
-            move.b  #0,(a0)
-            move.b  #40,(a4)
+            move.w  frog_y,d1
+            move.w  OBJ_Y(a2),d2
+            sub.w   d2,d1
+            bmi.s   .next
+            cmp.w   #LOG_HEIGHT,d1
+            bge.s   .next
 
-.next:
-            addq.l  #2,a1
-            addq.l  #2,a2
-            addq.l  #2,a3
-            addq.l  #1,a0
-            addq.l  #1,a4
-            dbra    d7,.loop
+            move.w  frog_x,d1
+            move.w  OBJ_X(a2),d2
+            sub.w   d2,d1
+            cmp.w   #-FROG_WIDTH,d1
+            blt.s   .next
+            cmp.w   #LOG_PIXELS,d1
+            bge.s   .next
 
-            ; draw logs (placeholder blits)
+            move.w  OBJ_SPEED(a2),d0
             rts
 
-;----------------------------------------------------------------
-draw_frog:
-            ; placeholder: would write sprite position to hardware
+.next:      lea     OBJ_SIZE(a2),a2
+            dbf     d7,.loop
+            moveq   #0,d0
             rts
 
-;----------------------------------------------------------------
-; Copper list and minimal colors (reuse Unit1 bands)
-;----------------------------------------------------------------
+;──────────────────────────────────────────────────────────────
+update_sprite:
+            lea     frog_data,a0
+            move.w  frog_y,d0
+            move.w  frog_x,d1
+            move.w  d0,d2
+            lsl.w   #8,d2
+            lsr.w   #1,d1
+            or.b    d1,d2
+            move.w  d2,(a0)
+            add.w   #FROG_HEIGHT,d0
+            lsl.w   #8,d0
+            move.w  d0,2(a0)
+            rts
+
+;──────────────────────────────────────────────────────────────
+update_objects:
+            lea     objects,a2
+            move.w  #NUM_OBJECTS-1,d7
+.loop:
+            move.w  OBJ_X(a2),d0
+            move.w  OBJ_Y(a2),d1
+            bsr     clear_object
+
+            move.w  OBJ_SPEED(a2),d0
+            add.w   d0,OBJ_X(a2)
+
+            move.w  OBJ_X(a2),d0
+            cmp.w   #320,d0
+            blt.s   .check_left
+            sub.w   #352,d0
+            move.w  d0,OBJ_X(a2)
+            bra.s   .draw
+.check_left:
+            cmp.w   #-32,d0
+            bge.s   .draw
+            add.w   #352,d0
+            move.w  d0,OBJ_X(a2)
+.draw:
+            move.w  OBJ_X(a2),d0
+            move.w  OBJ_Y(a2),d1
+            bsr     draw_object
+
+            lea     OBJ_SIZE(a2),a2
+            dbf     d7,.loop
+            rts
+
+;──────────────────────────────────────────────────────────────
+clear_object:
+            tst.w   d0
+            bmi.s   .done
+            cmp.w   #320,d0
+            bge.s   .done
+            bsr     wait_blit
+            lea     screen_plane1,a0
+            mulu    #SCREEN_W,d1
+            add.l   d1,a0
+            move.w  d0,d2
+            lsr.w   #3,d2
+            ext.l   d2
+            add.l   d2,a0
+            move.w  OBJ_TYPE(a2),d3
+            beq.s   .car_clear
+            move.w  #SCREEN_W-LOG_WIDTH*2,BLTDMOD(a5)
+            move.w  #(LOG_HEIGHT<<6)|LOG_WIDTH,d4
+            bra.s   .do_clear
+.car_clear: move.w  #SCREEN_W-CAR_WIDTH*2,BLTDMOD(a5)
+            move.w  #(CAR_HEIGHT<<6)|CAR_WIDTH,d4
+.do_clear:  move.l  a0,BLTDPTH(a5)
+            move.w  #$0100,BLTCON0(a5)
+            move.w  #0,BLTCON1(a5)
+            move.w  d4,BLTSIZE(a5)
+.done:      rts
+
+;──────────────────────────────────────────────────────────────
+draw_object:
+            tst.w   d0
+            bmi.s   .done
+            cmp.w   #320,d0
+            bge.s   .done
+            bsr     wait_blit
+            lea     screen_plane1,a0
+            mulu    #SCREEN_W,d1
+            add.l   d1,a0
+            move.w  d0,d2
+            lsr.w   #3,d2
+            ext.l   d2
+            add.l   d2,a0
+            move.w  OBJ_TYPE(a2),d3
+            beq.s   .car_draw
+            move.l  #log_gfx,BLTAPTH(a5)
+            move.w  #SCREEN_W-LOG_WIDTH*2,BLTDMOD(a5)
+            move.w  #(LOG_HEIGHT<<6)|LOG_WIDTH,d4
+            bra.s   .do_draw
+.car_draw:  move.l  #car_gfx,BLTAPTH(a5)
+            move.w  #SCREEN_W-CAR_WIDTH*2,BLTDMOD(a5)
+            move.w  #(CAR_HEIGHT<<6)|CAR_WIDTH,d4
+.do_draw:   move.l  a0,BLTDPTH(a5)
+            move.w  #$09f0,BLTCON0(a5)
+            move.w  #0,BLTCON1(a5)
+            move.w  #$ffff,BLTAFWM(a5)
+            move.w  #$ffff,BLTALWM(a5)
+            move.w  #0,BLTAMOD(a5)
+            move.w  d4,BLTSIZE(a5)
+.done:      rts
+
+;──────────────────────────────────────────────────────────────
+frog_x:     dc.w    160
+frog_y:     dc.w    180
+joy_prev:   dc.w    0
+
+objects:
+            dc.w    0,122,2,TYPE_CAR
+            dc.w    300,138,-3,TYPE_CAR
+            dc.w    100,154,1,TYPE_CAR
+            dc.w    200,170,-2,TYPE_CAR
+            dc.w    0,66,1,TYPE_LOG
+            dc.w    200,82,-1,TYPE_LOG
+            dc.w    100,98,2,TYPE_LOG
+
+;──────────────────────────────────────────────────────────────
             section chipdata,data_c
+
 copperlist:
-            dc.w    $0180,$0000
+            dc.w    COLOR00,$0000
+            dc.w    $0100,$2200
+            dc.w    $0102,$0000
+            dc.w    $0104,$0000
+            dc.w    $0108,$0000
+            dc.w    $010a,$0000
+
+bplpt:      dc.w    $00e0,$0000,$00e2,$0000
+            dc.w    $00e4,$0000,$00e6,$0000
+
+            dc.w    $0180,$0000,$0182,$0f00
+            dc.w    $0184,$0ff0,$0186,$0fff
+            dc.w    $01a2,$00f0,$01a4,$0ff0,$01a6,$0000
+
+sprpt:      dc.w    $0120,$0000,$0122,$0000
+
             dc.w    $2c07,$fffe
-            dc.w    $0180,$0070
+            dc.w    COLOR00,$0080
+
             dc.w    $4007,$fffe
-            dc.w    $0180,$0080
-            dc.w    $5007,$fffe
-            dc.w    $0180,$0444
+            dc.w    COLOR00,$0048
+            dc.w    $0182,$0840
+
+            dc.w    $4c07,$fffe
+            dc.w    COLOR00,$006b
+            dc.w    $5407,$fffe
+            dc.w    COLOR00,$0048
             dc.w    $5c07,$fffe
-            dc.w    $0180,$0666
-            dc.w    $6007,$fffe
-            dc.w    $0180,$0444
+            dc.w    COLOR00,$006b
+            dc.w    $6407,$fffe
+            dc.w    COLOR00,$0048
+
             dc.w    $6c07,$fffe
-            dc.w    $0180,$0666
-            dc.w    $7007,$fffe
-            dc.w    $0180,$0444
+            dc.w    COLOR00,$0080
+
             dc.w    $7807,$fffe
-            dc.w    $0180,$0080
-            dc.w    $8007,$fffe
-            dc.w    $0180,$0444
-            dc.w    $8c07,$fffe
-            dc.w    $0180,$0666
-            dc.w    $9007,$fffe
-            dc.w    $0180,$0444
-            dc.w    $9c07,$fffe
-            dc.w    $0180,$0666
-            dc.w    $a007,$fffe
-            dc.w    $0180,$0444
+            dc.w    COLOR00,$0444
+            dc.w    $0182,$0f00
+
+            dc.w    $8407,$fffe
+            dc.w    COLOR00,$0666
+            dc.w    $8807,$fffe
+            dc.w    COLOR00,$0444
+            dc.w    $9407,$fffe
+            dc.w    COLOR00,$0666
+            dc.w    $9807,$fffe
+            dc.w    COLOR00,$0444
+            dc.w    $a407,$fffe
+            dc.w    COLOR00,$0666
             dc.w    $a807,$fffe
-            dc.w    $0180,$0048
-            dc.w    $b007,$fffe
-            dc.w    $0180,$006b
-            dc.w    $b807,$fffe
-            dc.w    $0180,$0048
+            dc.w    COLOR00,$0444
+
+            dc.w    $b407,$fffe
+            dc.w    COLOR00,$0080
             dc.w    $c007,$fffe
-            dc.w    $0180,$006b
-            dc.w    $c807,$fffe
-            dc.w    $0180,$0048
-            dc.w    $d007,$fffe
-            dc.w    $0180,$006b
-            dc.w    $d807,$fffe
-            dc.w    $0180,$0080
-            dc.w    $e807,$fffe
-            dc.w    $0180,$0070
+            dc.w    COLOR00,$0070
+
             dc.w    $f007,$fffe
-            dc.w    $0180,$0000
+            dc.w    COLOR00,$0000
+
             dc.w    $ffff,$fffe
 
-;----------------------------------------------------------------
-            section data,data
+            even
+car_gfx:    dc.w    $ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff
+            even
+log_gfx:    dc.w    $ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff
+            dc.w    $ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff
+            even
+frog_data:  dc.w    $b460,$c400
+            dc.w    $0000,$0000,$07e0,$0000,$1ff8,$0420,$3ffc,$0a50
+            dc.w    $7ffe,$1248,$7ffe,$1008,$ffff,$2004,$ffff,$0000
+            dc.w    $ffff,$0000,$7ffe,$2004,$7ffe,$1008,$3ffc,$0810
+            dc.w    $1ff8,$0420,$07e0,$0000,$0000,$0000,$0000,$0000
+            dc.w    $0000,$0000
 
-frog_x:         dc.w 0
-frog_y:         dc.w 0
-on_log:         dc.w 0
-
-traffic_count:  dc.b 0
-traffic_x:      ds.w 3
-traffic_speed:  ds.w 3
-
-log_count:      dc.b 0
-log_active:     ds.b 6
-log_spawn:      ds.b 6
-log_x:          ds.w 6
-log_y:          ds.w 6
-log_speed:      ds.w 6
-
-gfxname:        dc.b "graphics.library",0
-oldview:        dc.l 0
-oldcopper:      dc.l 0
-gfxbase:        dc.l 0
+            even
+screen_plane1:
+            ds.b    PLANE_SIZE
+            even
+screen_plane2:
+            ds.b    PLANE_SIZE

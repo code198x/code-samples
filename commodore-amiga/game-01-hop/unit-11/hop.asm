@@ -1,528 +1,966 @@
-;──────────────────────────────────────────────────────────────
-; HOP - Unit 11 sample (SFX)
-; Builds on Unit 10 death/respawn: adds Paula-triggered SFX for hit/splash/hop.
-; Uses simple DMA setup on channels 0/1 with tiny sample placeholders.
-;──────────────────────────────────────────────────────────────
+;=============================================================================
+; HOP - Unit 11: Sound Effects
+;=============================================================================
+; Complete takeover Amiga game - no OS, direct hardware access
+; Adds: Paula audio for hop, death, and score sounds
+;=============================================================================
+
+            include "hardware/custom.i"
+            include "hardware/dmabits.i"
+
+;=============================================================================
+; Constants
+;=============================================================================
 
 CUSTOM          equ $dff000
-ExecBase        equ 4
-OldOpenLibrary  equ -408
-CloseLibrary    equ -414
-LoadView        equ -222
-WaitTOF         equ -270
 
-; Paula audio registers (channel 0 used for SFX)
-AUD0LCH         equ $a0
-AUD0LCL         equ $a2
-AUD0LEN         equ $a4
-AUD0PER         equ $a6
-AUD0VOL         equ $a8
+; Display
+SCREEN_WIDTH    equ 320
+SCREEN_HEIGHT   equ 256
+BITPLANE_SIZE   equ (SCREEN_WIDTH/8)*SCREEN_HEIGHT
+HUD_HEIGHT      equ 16
+
+; DMA
+DMAF_SETCLR     equ $8000
+DMAF_COPPER     equ $0080
+DMAF_RASTER     equ $0100
+DMAF_BLITTER    equ $0040
+DMAF_SPRITE     equ $0020
+DMAF_AUD0       equ $0001
+
+; Custom chip registers
+DMACONR         equ $002
+VPOSR           equ $004
+DMACON          equ $096
+INTENA          equ $09a
+INTREQ          equ $09c
+BPLCON0         equ $100
+BPLCON1         equ $102
+BPLCON2         equ $104
+BPL1PTH         equ $0e0
+BPL1PTL         equ $0e2
+DIWSTRT         equ $08e
+DIWSTOP         equ $090
+DDFSTRT         equ $092
+DDFSTOP         equ $094
 BLTCON0         equ $040
 BLTCON1         equ $042
 BLTAFWM         equ $044
 BLTALWM         equ $046
-BLTAPTH         equ $050
-BLTAPTL         equ $052
-BLTBPTH         equ $054
-BLTBPTL         equ $056
-BLTCPTH         equ $058
-BLTCPTL         equ $05a
-BLTDPTH         equ $05c
-BLTDPTL         equ $05e
-BLTSIZE         equ $058
 BLTAMOD         equ $064
-BLTBMOD         equ $062
-BLTCMOD         equ $060
-BLTDMOD         equ $060
+BLTDMOD         equ $066
+BLTAPTH         equ $050
+BLTDPTH         equ $054
+BLTSIZE         equ $058
+SPR0PTH         equ $120
+SPR0PTL         equ $122
+COLOR00         equ $180
+COP1LCH         equ $080
+COPJMP1         equ $088
+
+; Paula audio
+AUD0LCH         equ $0a0
+AUD0LCL         equ $0a2
+AUD0LEN         equ $0a4
+AUD0PER         equ $0a6
+AUD0VOL         equ $0a8
+
+; CIA
+CIAA_PRA        equ $bfe001
+JOY1DAT         equ $00c
+
+; Frog
+FROG_START_X    equ 152
+FROG_START_Y    equ 236
+FROG_WIDTH      equ 16
+FROG_HEIGHT     equ 16
+HOP_DISTANCE    equ 16
+
+; Scoring
+SCORE_HOP       equ 10
+SCORE_HOME      equ 100
+SCORE_LEVEL     equ 1000
+SCORE_X         equ 8
+SCORE_Y         equ 4
+LIVES_X         equ 280
+LIVES_Y         equ 4
+STARTING_LIVES  equ 3
+
+; Sound
+SFX_HOP_LEN     equ 16
+SFX_DEATH_LEN   equ 16
+SFX_SCORE_LEN   equ 16
+SFX_PERIOD_HOP  equ 300
+SFX_PERIOD_DEATH equ 500
+SFX_PERIOD_SCORE equ 250
+SFX_VOLUME      equ 64
+
+; Home zone
+HOME_TOP        equ 48
+HOME_BOT        equ 64
+SLOT_WIDTH      equ 32
+SLOT_HEIGHT     equ 16
+SLOT_X          equ 0
+SLOT_FILLED     equ 2
+SLOT_SIZE       equ 4
+NUM_SLOTS       equ 5
+
+; Objects
+OBJ_X           equ 0
+OBJ_Y           equ 2
+OBJ_SPEED       equ 4
+OBJ_TYPE        equ 6
+OBJ_SIZE        equ 8
+NUM_OBJECTS     equ 8
+TYPE_NONE       equ 0
+TYPE_CAR        equ 1
+TYPE_LOG        equ 2
+
+; Zones
+WATER_TOP       equ 80
+WATER_BOT       equ 124
+OBJ_WIDTH       equ 32
+OBJ_HEIGHT      equ 16
+
+; States
+STATE_ALIVE     equ 0
+STATE_DYING     equ 1
+STATE_DEAD      equ 2
+STATE_GAMEOVER  equ 3
+DEATH_FRAMES    equ 30
+
+;=============================================================================
+; Entry Point
+;=============================================================================
 
             section code,code
+
 start:
-            move.l  ExecBase,a6
-            lea     gfxname,a1
-            jsr     OldOpenLibrary(a6)
-            move.l  d0,gfxbase
-            beq     .exit
-
-            move.l  d0,a6
-            move.l  34(a6),oldview
-            move.l  38(a6),oldcopper
-
-            sub.l   a1,a1
-            jsr     LoadView(a6)
-            jsr     WaitTOF(a6)
-            jsr     WaitTOF(a6)
-
             lea     CUSTOM,a5
-            move.w  #$7fff,$9a(a5)
-            move.w  #$7fff,$9c(a5)
+            move.w  #$7fff,INTENA(a5)
+            move.w  #$7fff,DMACON(a5)
+            move.w  #$7fff,INTREQ(a5)
 
-            lea     bitplane,a0
-            move.l  a0,$e0(a5)
-            move.w  #0,$e4(a5)
-            move.w  #0,$e8(a5)
-            move.w  #0,$ec(a5)
-            move.w  #0,$f0(a5)
-            move.w  #0,$f4(a5)
+            bsr     init_display
+            bsr     init_sprites
+            bsr     init_objects
+            bsr     init_home
+            bsr     init_frog
 
-            lea     copperlist,a0
-            move.l  a0,$80(a5)
-            move.w  d0,$88(a5)
+            ; Enable DMA including audio
+            move.w  #DMAF_SETCLR|DMAF_COPPER|DMAF_RASTER|DMAF_SPRITE|DMAF_BLITTER|DMAF_AUD0,DMACON(a5)
 
-            move.w  #$83a0,$96(a5)
+main_loop:
+            bsr     wait_vblank
 
-            bsr     clear_bpl
-            bsr     init_state
-            bsr     init_sound
+            cmp.w   #STATE_GAMEOVER,frog_state
+            beq     .game_over_loop
 
-.mainloop:
-            bsr     wait_vb
-            bsr     update_traffic
-            bsr     update_logs
-            bsr     ride_logs
-            bsr     check_collisions
+            bsr     update_objects
+
+            cmp.w   #STATE_ALIVE,frog_state
+            bne.s   .skip_input
+
+            bsr     read_joystick
+            bsr     handle_movement
+            bsr     check_home_zone
+            bsr     handle_platform
+            bsr     check_bounds_death
+            bsr     check_car_death
+            bsr     check_water_death
+            bra.s   .draw
+
+.skip_input:
             bsr     update_death
-            bsr     draw_scene
-            bra     .mainloop
 
-.exit:      rts
+.draw:
+            bsr     update_frog_sprite
+            bsr     draw_objects
+            bsr     draw_home_zone
+            bsr     draw_hud
 
-wait_vb:
-            move.l  #$1ff00,d1
-.vbwait:
-            move.l  4(a5),d0
-            and.l   d1,d0
-            cmp.l   #$00000,d0
-            bne.s   .vbwait
+            btst    #6,CIAA_PRA
+            bne     main_loop
+            bra.s   exit
+
+.game_over_loop:
+            bsr     draw_hud
+            btst    #6,CIAA_PRA
+            bne.s   .game_over_loop
+
+exit:
+            lea     CUSTOM,a5
+            move.w  #$7fff,DMACON(a5)
+            move.w  #$7fff,INTENA(a5)
+            moveq   #0,d0
             rts
 
-clear_bpl:
+;=============================================================================
+; Sound
+;=============================================================================
+
+play_sfx:
+            ; a0 = sample, d0 = len, d1 = period, d2 = volume
+            lea     CUSTOM,a5
+            move.l  a0,d3
+            move.w  d3,AUD0LCL(a5)
+            swap    d3
+            move.w  d3,AUD0LCH(a5)
+            move.w  d0,AUD0LEN(a5)
+            move.w  d1,AUD0PER(a5)
+            move.w  d2,AUD0VOL(a5)
+            move.w  #DMAF_SETCLR|DMAF_AUD0,DMACON(a5)
+            rts
+
+play_hop_sound:
+            lea     sfx_hop,a0
+            move.w  #SFX_HOP_LEN,d0
+            move.w  #SFX_PERIOD_HOP,d1
+            move.w  #SFX_VOLUME,d2
+            bsr     play_sfx
+            rts
+
+play_death_sound:
+            lea     sfx_death,a0
+            move.w  #SFX_DEATH_LEN,d0
+            move.w  #SFX_PERIOD_DEATH,d1
+            move.w  #SFX_VOLUME,d2
+            bsr     play_sfx
+            rts
+
+play_score_sound:
+            lea     sfx_score,a0
+            move.w  #SFX_SCORE_LEN,d0
+            move.w  #SFX_PERIOD_SCORE,d1
+            move.w  #SFX_VOLUME,d2
+            bsr     play_sfx
+            rts
+
+;=============================================================================
+; Initialisation
+;=============================================================================
+
+init_display:
+            lea     CUSTOM,a5
             lea     bitplane,a0
-            move.l  #((320*256)/8),d0
+            move.l  a0,d0
+            lea     copperlist,a1
+            move.w  d0,bitplane_ptr_lo-copperlist+2(a1)
+            swap    d0
+            move.w  d0,bitplane_ptr_hi-copperlist+2(a1)
+            lea     copperlist,a0
+            move.l  a0,COP1LCH(a5)
+            move.w  COPJMP1(a5),d0
+            rts
+
+init_sprites:
+            lea     CUSTOM,a5
+            lea     frog_sprite,a0
+            move.l  a0,d0
+            move.w  d0,SPR0PTL(a5)
+            swap    d0
+            move.w  d0,SPR0PTH(a5)
+            lea     null_sprite,a0
+            move.l  a0,d0
+            move.w  #1,d1
+.disable:
+            move.w  d0,SPR0PTL+4(a5,d1.w)
+            swap    d0
+            move.w  d0,SPR0PTH+4(a5,d1.w)
+            swap    d0
+            addq.w  #4,d1
+            cmp.w   #32,d1
+            blt.s   .disable
+            rts
+
+init_objects:
+            lea     objects,a0
+            move.w  #0,OBJ_X(a0)
+            move.w  #156,OBJ_Y(a0)
+            move.w  #2,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            add.w   #OBJ_SIZE,a0
+            move.w  #160,OBJ_X(a0)
+            move.w  #156,OBJ_Y(a0)
+            move.w  #2,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            add.w   #OBJ_SIZE,a0
+            move.w  #280,OBJ_X(a0)
+            move.w  #176,OBJ_Y(a0)
+            move.w  #-3,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            add.w   #OBJ_SIZE,a0
+            move.w  #120,OBJ_X(a0)
+            move.w  #176,OBJ_Y(a0)
+            move.w  #-3,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            add.w   #OBJ_SIZE,a0
+            move.w  #60,OBJ_X(a0)
+            move.w  #196,OBJ_Y(a0)
+            move.w  #1,OBJ_SPEED(a0)
+            move.w  #TYPE_CAR,OBJ_TYPE(a0)
+            add.w   #OBJ_SIZE,a0
+            move.w  #20,OBJ_X(a0)
+            move.w  #92,OBJ_Y(a0)
+            move.w  #1,OBJ_SPEED(a0)
+            move.w  #TYPE_LOG,OBJ_TYPE(a0)
+            add.w   #OBJ_SIZE,a0
+            move.w  #180,OBJ_X(a0)
+            move.w  #92,OBJ_Y(a0)
+            move.w  #1,OBJ_SPEED(a0)
+            move.w  #TYPE_LOG,OBJ_TYPE(a0)
+            add.w   #OBJ_SIZE,a0
+            move.w  #100,OBJ_X(a0)
+            move.w  #108,OBJ_Y(a0)
+            move.w  #-2,OBJ_SPEED(a0)
+            move.w  #TYPE_LOG,OBJ_TYPE(a0)
+            rts
+
+init_home:
+            lea     home_slots,a0
+            move.w  #NUM_SLOTS-1,d7
+.loop:      clr.w   SLOT_FILLED(a0)
+            add.w   #SLOT_SIZE,a0
+            dbf     d7,.loop
+            rts
+
+init_frog:
+            move.w  #FROG_START_X,frog_x
+            move.w  #FROG_START_Y,frog_y
+            move.w  #STATE_ALIVE,frog_state
+            clr.w   on_log
+            clr.w   death_timer
+            clr.w   joy_last
+            move.w  #STARTING_LIVES,lives
+            clr.l   score
+            rts
+
+;=============================================================================
+; Input
+;=============================================================================
+
+read_joystick:
+            lea     CUSTOM,a5
+            move.w  JOY1DAT(a5),d0
             moveq   #0,d1
-.clr_lp:
-            move.b  d1,(a0)+
-            subq.l  #1,d0
-            bne.s   .clr_lp
+            move.w  d0,d2
+            lsr.w   #1,d2
+            eor.w   d0,d2
+            btst    #0,d2
+            beq.s   .no_right
+            or.w    #1,d1
+.no_right:
+            move.w  d0,d2
+            lsr.w   #1,d2
+            eor.w   d0,d2
+            btst    #8,d2
+            beq.s   .no_left
+            or.w    #2,d1
+.no_left:
+            btst    #1,d0
+            beq.s   .no_down
+            or.w    #4,d1
+.no_down:
+            btst    #9,d0
+            beq.s   .no_up
+            or.w    #8,d1
+.no_up:
+            move.w  d1,joy_current
             rts
 
-init_state:
-            move.w  #160,frog_x
-            move.w  #220,frog_y
-            lea     sprite0,a0
-            move.l  a0,$120(a5)
-            clr.b   death_state
-            clr.b   death_timer
+handle_movement:
+            move.w  joy_current,d0
+            move.w  joy_last,d1
+            not.w   d1
+            and.w   d0,d1
+            move.w  d0,joy_last
 
-            move.b  #3,traffic_count
-            lea     traffic_x,a0
-            move.w  #40,(a0)+
-            move.w  #140,(a0)+
-            move.w  #260,(a0)+
-            lea     traffic_y,a0
-            move.w  #120,(a0)+
-            move.w  #136,(a0)+
-            move.w  #152,(a0)+
-            lea     traffic_speed,a0
-            move.w  #2,(a0)+
-            move.w  #-3,(a0)+
-            move.w  #2,(a0)+
-
-            move.b  #6,log_count
-            lea     log_active,a0
-            moveq   #0,d1
-            moveq   #5,d2
-.clract:
-            move.b  d1,(a0)+
-            dbra    d2,.clract
-            lea     log_spawn,a0
-            move.b  #30,(a0)+
-            move.b  #50,(a0)+
-            move.b  #70,(a0)+
-            move.b  #40,(a0)+
-            move.b  #60,(a0)+
-            move.b  #80,(a0)+
-            lea     log_speed,a0
-            move.w  #2,(a0)+
-            move.w  #-2,(a0)+
-            move.w  #2,(a0)+
-            move.w  #-2,(a0)+
-            move.w  #2,(a0)+
-            move.w  #-2,(a0)+
-            lea     log_y,a0
-            move.w  #120,(a0)+
-            move.w  #120,(a0)+
-            move.w  #136,(a0)+
-            move.w  #136,(a0)+
-            move.w  #152,(a0)+
-            move.w  #152,(a0)+
-            lea     log_x,a0
-            move.w  #-64,(a0)+
-            move.w  #400,(a0)+
-            move.w  #-64,(a0)+
-            move.w  #400,(a0)+
-            move.w  #-64,(a0)+
-            move.w  #400,(a0)+
-            rts
-
-init_sound:
-            ; enable audio DMA on channel 0
-            move.w  #$8001,AUD0VOL+CUSTOM   ; vol=1, DMA on
-            move.w  #$0028,AUD0PER+CUSTOM   ; period
-            rts
-
-update_traffic:
-            lea     traffic_x,a0
-            lea     traffic_speed,a1
-            moveq   #0,d7
-            move.b  traffic_count,d7
-            subq.b  #1,d7
-.loop:
-            move.w  (a0),d0
-            add.w   (a1),d0
-            move.w  d0,(a0)
-            cmp.w   #320,d0
-            blt.s   .chk_left
-            move.w  #-32,(a0)
-            bra.s   .next
-.chk_left:
-            cmp.w   #-48,d0
-            bgt.s   .next
-            move.w  #320,(a0)
-.next:
-            addq.l  #2,a0
-            addq.l  #2,a1
-            dbra    d7,.loop
-            rts
-
-update_logs:
-            lea     log_active,a0
-            lea     log_x,a1
-            lea     log_y,a2
-            lea     log_speed,a3
-            lea     log_spawn,a4
-            moveq   #0,d7
-            move.b  log_count,d7
-            subq.b  #1,d7
-.loop:
-            move.b  (a0),d0
-            tst.b   d0
-            bne.s   .move_active
-            move.b  (a4),d1
-            subq.b  #1,d1
-            move.b  d1,(a4)
-            bne.s   .next
-            move.b  #1,(a0)
-            move.b  #40,(a4)
-            move.w  (a3),d2
-            tst.w   d2
-            bpl.s   .spawn_left
-            move.w  #400,(a1)
-            bra.s   .next
-.spawn_left:
-            move.w  #-64,(a1)
-            bra.s   .next
-.move_active:
-            move.w  (a1),d2
-            add.w   (a3),d2
-            move.w  d2,(a1)
-            cmp.w   #400,d2
-            blt.s   .chk_left
-            move.b  #0,(a0)
-            move.b  #40,(a4)
-            bra.s   .next
-.chk_left:
-            cmp.w   #-80,d2
-            bgt.s   .next
-            move.b  #0,(a0)
-            move.b  #40,(a4)
-.next:
-            addq.l  #1,a0
-            addq.l  #2,a1
-            addq.l  #2,a2
-            addq.l  #2,a3
-            addq.l  #1,a4
-            dbra    d7,.loop
-            rts
-
-ride_logs:
-            clr.b   on_log
-            clr.w   log_vel_x
-            move.w  frog_x,d4
-            move.w  frog_y,d5
-
-            lea     log_active,a0
-            lea     log_x,a1
-            lea     log_y,a2
-            lea     log_speed,a3
-            moveq   #0,d7
-            move.b  log_count,d7
-            subq.b  #1,d7
-.rloop:
-            move.b  (a0),d0
-            tst.b   d0
-            beq.s   .rnext
-            move.w  (a1),d1
-            move.w  (a2),d2
-            move.w  #48,d3
-            move.w  #8,d6
-            cmp.w   d2,d5
-            bcs.s   .rnext
-            move.w  d2,d0
-            add.w   d6,d0
-            cmp.w   d0,d5
-            bcc.s   .rnext
-            cmp.w   d1,d4
-            bcs.s   .rnext
-            move.w  d1,d0
-            add.w   d3,d0
-            cmp.w   d0,d4
-            bcc.s   .rnext
-            move.b  #1,on_log
-            move.w  (a3),log_vel_x
-.rnext:
-            addq.l  #1,a0
-            addq.l  #2,a1
-            addq.l  #2,a2
-            addq.l  #2,a3
-            dbra    d7,.rloop
-
-            tst.b   on_log
-            beq.s   .no_ride
-            move.w  frog_x,d0
-            add.w   log_vel_x,d0
-            move.w  d0,frog_x
-.no_ride:
-            rts
-
-check_collisions:
+            btst    #3,d1
+            beq.s   .no_up
             move.w  frog_y,d0
-            cmpi.w  #112,d0
-            blt.s   .road_check
-            cmpi.w  #168,d0
-            blt.s   .water_check
-            clr.b   death_cause
-            rts
-.road_check:
+            sub.w   #HOP_DISTANCE,d0
+            cmp.w   #HOME_TOP,d0
+            blt.s   .no_up
+            move.w  d0,frog_y
+            clr.w   on_log
+            add.l   #SCORE_HOP,score
+            bsr     play_hop_sound
+.no_up:
+            btst    #2,d1
+            beq.s   .no_down
+            move.w  frog_y,d0
+            add.w   #HOP_DISTANCE,d0
+            cmp.w   #FROG_START_Y,d0
+            bgt.s   .no_down
+            move.w  d0,frog_y
+            clr.w   on_log
+            bsr     play_hop_sound
+.no_down:
+            btst    #0,d1
+            beq.s   .no_right
             move.w  frog_x,d0
-            cmpi.w  #40,d0
-            blt.s   .safe
-            cmpi.w  #80,d0
-            bgt.s   .safe
-            move.b  #0,death_cause
-            move.b  #1,death_state
-            move.b  #30,death_timer
-            bsr     sfx_hit
-.safe:      rts
-.water_check:
-            tst.b   on_log
-            bne.s   .ok
-            move.b  #1,death_cause
-            move.b  #1,death_state
-            move.b  #30,death_timer
-            bsr     sfx_splash
-.ok:        rts
+            add.w   #HOP_DISTANCE,d0
+            cmp.w   #304,d0
+            bgt.s   .no_right
+            move.w  d0,frog_x
+            bsr     play_hop_sound
+.no_right:
+            btst    #1,d1
+            beq.s   .no_left
+            move.w  frog_x,d0
+            sub.w   #HOP_DISTANCE,d0
+            bmi.s   .no_left
+            move.w  d0,frog_x
+            bsr     play_hop_sound
+.no_left:
+            rts
+
+;=============================================================================
+; Home Zone
+;=============================================================================
+
+check_home_zone:
+            move.w  frog_y,d0
+            cmp.w   #HOME_TOP,d0
+            blt.s   .done
+            cmp.w   #HOME_BOT,d0
+            bge.s   .done
+            bsr     find_home_slot
+            tst.w   d0
+            bmi.s   .in_gap
+            bsr     fill_home_slot
+            bra.s   .done
+.in_gap:
+            bsr     kill_frog
+.done:
+            rts
+
+find_home_slot:
+            lea     home_slots,a0
+            move.w  #NUM_SLOTS-1,d7
+            moveq   #0,d1
+.loop:
+            move.w  SLOT_X(a0),d2
+            move.w  frog_x,d0
+            cmp.w   d2,d0
+            blt.s   .next
+            add.w   #SLOT_WIDTH,d2
+            cmp.w   d2,d0
+            bge.s   .next
+            move.w  d1,d0
+            rts
+.next:
+            add.w   #SLOT_SIZE,a0
+            addq.w  #1,d1
+            dbf     d7,.loop
+            moveq   #-1,d0
+            rts
+
+fill_home_slot:
+            lea     home_slots,a0
+            move.w  d0,d1
+            lsl.w   #2,d1
+            add.w   d1,a0
+            tst.w   SLOT_FILLED(a0)
+            bne.s   .already_filled
+            move.w  #1,SLOT_FILLED(a0)
+            add.l   #SCORE_HOME,score
+            bsr     play_score_sound
+            move.w  #FROG_START_X,frog_x
+            move.w  #FROG_START_Y,frog_y
+            clr.w   on_log
+            bsr     check_level_complete
+            rts
+.already_filled:
+            bsr     kill_frog
+            rts
+
+check_level_complete:
+            lea     home_slots,a0
+            move.w  #NUM_SLOTS-1,d7
+.loop:
+            tst.w   SLOT_FILLED(a0)
+            beq.s   .not_done
+            add.w   #SLOT_SIZE,a0
+            dbf     d7,.loop
+            add.l   #SCORE_LEVEL,score
+            bsr     reset_level
+            rts
+.not_done:
+            rts
+
+reset_level:
+            lea     home_slots,a0
+            move.w  #NUM_SLOTS-1,d7
+.loop:
+            clr.w   SLOT_FILLED(a0)
+            add.w   #SLOT_SIZE,a0
+            dbf     d7,.loop
+            rts
+
+;=============================================================================
+; Platform and Collision
+;=============================================================================
+
+handle_platform:
+            clr.w   on_log
+            move.w  frog_y,d0
+            cmp.w   #WATER_TOP,d0
+            blt.s   .done
+            cmp.w   #WATER_BOT,d0
+            bge.s   .done
+            lea     objects,a0
+            move.w  #NUM_OBJECTS-1,d7
+.loop:
+            cmp.w   #TYPE_LOG,OBJ_TYPE(a0)
+            bne.s   .next
+            move.w  frog_y,d0
+            move.w  OBJ_Y(a0),d1
+            sub.w   d1,d0
+            bmi.s   .next
+            cmp.w   #OBJ_HEIGHT,d0
+            bge.s   .next
+            move.w  frog_x,d0
+            move.w  OBJ_X(a0),d1
+            sub.w   d1,d0
+            add.w   #FROG_WIDTH,d0
+            bmi.s   .next
+            cmp.w   #OBJ_WIDTH+FROG_WIDTH,d0
+            bge.s   .next
+            move.w  #1,on_log
+            move.w  OBJ_SPEED(a0),d0
+            add.w   d0,frog_x
+            bra.s   .done
+.next:
+            add.w   #OBJ_SIZE,a0
+            dbf     d7,.loop
+.done:
+            rts
+
+check_car_death:
+            tst.w   frog_state
+            bne.s   .done
+            lea     objects,a0
+            move.w  #NUM_OBJECTS-1,d7
+.loop:
+            cmp.w   #TYPE_CAR,OBJ_TYPE(a0)
+            bne.s   .next
+            move.w  frog_y,d0
+            move.w  OBJ_Y(a0),d1
+            sub.w   d1,d0
+            bmi.s   .next
+            cmp.w   #OBJ_HEIGHT,d0
+            bge.s   .next
+            move.w  frog_x,d0
+            move.w  OBJ_X(a0),d1
+            sub.w   d1,d0
+            add.w   #FROG_WIDTH,d0
+            bmi.s   .next
+            cmp.w   #OBJ_WIDTH+FROG_WIDTH,d0
+            bge.s   .next
+            bsr     kill_frog
+            bra.s   .done
+.next:
+            add.w   #OBJ_SIZE,a0
+            dbf     d7,.loop
+.done:
+            rts
+
+check_water_death:
+            tst.w   frog_state
+            bne.s   .done
+            move.w  frog_y,d0
+            cmp.w   #WATER_TOP,d0
+            blt.s   .done
+            cmp.w   #WATER_BOT,d0
+            bge.s   .done
+            tst.w   on_log
+            bne.s   .done
+            bsr     kill_frog
+.done:
+            rts
+
+check_bounds_death:
+            tst.w   frog_state
+            bne.s   .done
+            move.w  frog_x,d0
+            bmi.s   .kill
+            cmp.w   #SCREEN_WIDTH-FROG_WIDTH,d0
+            bgt.s   .kill
+.done:
+            rts
+.kill:
+            bsr     kill_frog
+            rts
+
+kill_frog:
+            tst.w   frog_state
+            bne.s   .done
+            move.w  #STATE_DYING,frog_state
+            move.w  #DEATH_FRAMES,death_timer
+            subq.w  #1,lives
+            bsr     play_death_sound
+.done:
+            rts
 
 update_death:
-            tst.b   death_state
-            beq.s   .done
-            lea     CUSTOM,a5
-            move.b  death_timer,d0
-            andi.b  #$03,d0
-            beq.s   .flash1
-            move.w  #$0000,$0180(a5)
-            bra.s   .dec
-.flash1:
-            move.w  #$0f00,$0180(a5)
-.dec:
-            subq.b  #1,death_timer
+            cmp.w   #STATE_DYING,frog_state
+            bne.s   .check_dead
+            subq.w  #1,death_timer
             bne.s   .done
-            move.b  #0,death_state
-            move.w  #160,frog_x
-            move.w  #220,frog_y
-            bsr     sfx_respawn
-.done:      rts
+            move.w  #STATE_DEAD,frog_state
+            bra.s   .respawn
+.check_dead:
+            cmp.w   #STATE_DEAD,frog_state
+            bne.s   .done
+.respawn:
+            tst.w   lives
+            beq.s   .game_over
+            move.w  #FROG_START_X,frog_x
+            move.w  #FROG_START_Y,frog_y
+            move.w  #STATE_ALIVE,frog_state
+            clr.w   on_log
+            bra.s   .done
+.game_over:
+            move.w  #STATE_GAMEOVER,frog_state
+.done:
+            rts
 
-blit_traffic:
-            move.w  #$09f0,BLTCON0(a5)
-            move.w  #$0000,BLTCON1(a5)
+;=============================================================================
+; Object Update
+;=============================================================================
+
+update_objects:
+            lea     objects,a0
+            move.w  #NUM_OBJECTS-1,d7
+.loop:
+            tst.w   OBJ_TYPE(a0)
+            beq.s   .next
+            move.w  OBJ_SPEED(a0),d0
+            add.w   d0,OBJ_X(a0)
+            move.w  OBJ_X(a0),d0
+            cmp.w   #SCREEN_WIDTH,d0
+            blt.s   .check_left
+            move.w  #-OBJ_WIDTH,OBJ_X(a0)
+            bra.s   .next
+.check_left:
+            cmp.w   #-OBJ_WIDTH,d0
+            bgt.s   .next
+            move.w  #SCREEN_WIDTH,OBJ_X(a0)
+.next:
+            add.w   #OBJ_SIZE,a0
+            dbf     d7,.loop
+            rts
+
+;=============================================================================
+; Drawing
+;=============================================================================
+
+update_frog_sprite:
+            cmp.w   #STATE_DYING,frog_state
+            bne.s   .visible
+            move.w  death_timer,d0
+            and.w   #1,d0
+            bne.s   .hide
+.visible:
+            cmp.w   #STATE_GAMEOVER,frog_state
+            beq.s   .hide
+            move.w  frog_x,d0
+            add.w   #128,d0
+            move.w  d0,d2
+            lsr.w   #1,d0
+            move.w  frog_y,d1
+            add.w   #44,d1
+            move.w  d1,d3
+            lsl.w   #8,d3
+            or.w    d0,d3
+            move.w  d3,frog_sprite
+            move.w  d1,d3
+            add.w   #FROG_HEIGHT,d3
+            lsl.w   #8,d3
+            and.w   #1,d2
+            or.w    d2,d3
+            move.w  d3,frog_sprite+2
+            bra.s   .done
+.hide:
+            clr.l   frog_sprite
+.done:
+            rts
+
+draw_objects:
+            lea     CUSTOM,a5
+            lea     objects,a0
+            lea     bitplane,a1
+            move.w  #NUM_OBJECTS-1,d7
+.loop:
+            tst.w   OBJ_TYPE(a0)
+            beq.s   .next
+.wait:
+            btst    #14,DMACONR(a5)
+            bne.s   .wait
+            move.w  OBJ_Y(a0),d0
+            mulu.w  #SCREEN_WIDTH/8,d0
+            move.w  OBJ_X(a0),d1
+            bmi.s   .next
+            lsr.w   #3,d1
+            add.w   d1,d0
+            lea     (a1,d0.w),a2
             move.w  #$ffff,BLTAFWM(a5)
             move.w  #$ffff,BLTALWM(a5)
-            move.l  a2,BLTAPTH(a5)
-            move.l  a1,BLTBPTH(a5)
-            move.l  a0,BLTCPTH(a5)
-            move.l  a0,BLTDPTH(a5)
-            move.w  #0,BLTBMOD(a5)
-            move.w  #0,BLTAMOD(a5)
-            move.w  #0,BLTCMOD(a5)
-            move.w  #0,BLTDMOD(a5)
-            move.w  #(8<<6)|1,BLTSIZE(a5)
+            move.l  #$01f00000,BLTCON0(a5)
+            move.l  a2,BLTDPTH(a5)
+            move.w  #(SCREEN_WIDTH/8)-4,BLTDMOD(a5)
+            move.w  #(OBJ_HEIGHT<<6)|2,BLTSIZE(a5)
+.next:
+            add.w   #OBJ_SIZE,a0
+            dbf     d7,.loop
             rts
 
-draw_scene:
-            bsr     clear_bpl
-            bsr     draw_frog_sprite
-            lea     traffic_x,a0
-            lea     traffic_y,a1
-            moveq   #0,d7
-            move.b  traffic_count,d7
-            subq.b  #1,d7
-.loop:
-            move.w  (a0),d0
-            move.w  (a1),d1
-            move.w  d1,d2
-            mulu    #40,d2
-            move.w  d0,d3
-            asr.w   #3,d3
-            add.w   d3,d2
-            lea     bitplane,a2
-            adda.w  d2,a2
-            lea     traffic_mask,a3
-            lea     traffic_img,a4
-            move.l  a2,a0
-            move.l  a4,a1
-            move.l  a3,a2
-            bsr     blit_traffic
-
-            addq.l  #2,a0
-            addq.l  #2,a1
-            dbra    d7,.loop
-            rts
-
-draw_frog_sprite:
+draw_home_zone:
+            lea     home_slots,a0
             lea     CUSTOM,a5
-            move.w  frog_x,d0
-            move.w  frog_y,d1
-            andi.w  #$00ff,d0
-            andi.w  #$00ff,d1
-            move.w  d1,d2
-            lsl.w   #8,d2
-            or.w    d0,d2
-            move.w  d2,$140(a5)
-            move.w  #0,$142(a5)
+            move.w  #NUM_SLOTS-1,d7
+.loop:
+            movem.l d7/a0,-(sp)
+            move.w  SLOT_X(a0),d1
+            move.w  #HOME_TOP,d2
+            tst.w   SLOT_FILLED(a0)
+            bne.s   .draw_filled
+            bsr     draw_empty_slot
+            bra.s   .next
+.draw_filled:
+            bsr     draw_filled_slot
+.next:
+            movem.l (sp)+,d7/a0
+            add.w   #SLOT_SIZE,a0
+            dbf     d7,.loop
             rts
 
-;------------------------------------------------------------
-; SFX routines (Paula channel 0)
-;------------------------------------------------------------
-; Each sample is 8-bit mono, small placeholder beeps
-sfx_hit:
-            lea     sample_hit,a0
-            move.l  a0,AUD0LCH+CUSTOM
-            move.w  #sample_hit_len/2,AUD0LEN+CUSTOM
-            move.w  #$0028,AUD0PER+CUSTOM
-            move.w  #$0040,AUD0VOL+CUSTOM
+draw_empty_slot:
+            lea     CUSTOM,a5
+.wait:      btst    #14,DMACONR(a5)
+            bne.s   .wait
+            lea     bitplane,a1
+            move.w  d2,d0
+            mulu.w  #SCREEN_WIDTH/8,d0
+            move.w  d1,d3
+            lsr.w   #3,d3
+            add.w   d3,d0
+            add.w   d0,a1
+            move.w  #$ffff,BLTAFWM(a5)
+            move.w  #$ffff,BLTALWM(a5)
+            move.l  #$01f00000,BLTCON0(a5)
+            move.l  a1,BLTDPTH(a5)
+            move.w  #(SCREEN_WIDTH/8)-4,BLTDMOD(a5)
+            move.w  #(2<<6)|2,BLTSIZE(a5)
             rts
 
-sfx_splash:
-            lea     sample_splash,a0
-            move.l  a0,AUD0LCH+CUSTOM
-            move.w  #sample_splash_len/2,AUD0LEN+CUSTOM
-            move.w  #$0024,AUD0PER+CUSTOM
-            move.w  #$0030,AUD0VOL+CUSTOM
+draw_filled_slot:
+            lea     CUSTOM,a5
+.wait:      btst    #14,DMACONR(a5)
+            bne.s   .wait
+            lea     bitplane,a1
+            move.w  d2,d0
+            mulu.w  #SCREEN_WIDTH/8,d0
+            move.w  d1,d3
+            lsr.w   #3,d3
+            add.w   d3,d0
+            add.w   d0,a1
+            move.w  #$ffff,BLTAFWM(a5)
+            move.w  #$ffff,BLTALWM(a5)
+            move.l  #$01f00000,BLTCON0(a5)
+            move.l  a1,BLTDPTH(a5)
+            move.w  #(SCREEN_WIDTH/8)-4,BLTDMOD(a5)
+            move.w  #(SLOT_HEIGHT<<6)|2,BLTSIZE(a5)
             rts
 
-sfx_respawn:
-            lea     sample_respawn,a0
-            move.l  a0,AUD0LCH+CUSTOM
-            move.w  #sample_respawn_len/2,AUD0LEN+CUSTOM
-            move.w  #$0030,AUD0PER+CUSTOM
-            move.w  #$0020,AUD0VOL+CUSTOM
+draw_hud:
+            bsr     draw_score
+            bsr     draw_lives_count
             rts
 
-;------------------------------------------------------------
-            section chipdata,data_c
+draw_score:
+            move.l  score,d0
+            move.w  #SCORE_X,d4
+            move.w  #SCORE_Y,d5
+            lea     powers_of_10,a2
+            move.w  #5,d7
+.digit_loop:
+            move.l  (a2)+,d2
+            moveq   #0,d1
+.div_loop:
+            cmp.l   d2,d0
+            blt.s   .div_done
+            sub.l   d2,d0
+            addq.w  #1,d1
+            bra.s   .div_loop
+.div_done:
+            movem.l d0/d4-d7/a2,-(sp)
+            move.w  d1,d0
+            move.w  d4,d1
+            move.w  d5,d2
+            bsr     draw_digit
+            movem.l (sp)+,d0/d4-d7/a2
+            addq.w  #8,d4
+            dbf     d7,.digit_loop
+            rts
+
+draw_lives_count:
+            move.w  lives,d0
+            move.w  #LIVES_X,d1
+            move.w  #LIVES_Y,d2
+            bsr     draw_digit
+            rts
+
+draw_digit:
+            lea     CUSTOM,a5
+            movem.l d0-d2,-(sp)
+.wait:      btst    #14,DMACONR(a5)
+            bne.s   .wait
+            lea     font_digits,a0
+            and.w   #$f,d0
+            lsl.w   #3,d0
+            add.w   d0,a0
+            lea     bitplane,a1
+            move.w  d2,d3
+            mulu.w  #SCREEN_WIDTH/8,d3
+            lsr.w   #3,d1
+            add.w   d1,d3
+            add.w   d3,a1
+            move.w  #$ffff,BLTAFWM(a5)
+            move.w  #$ffff,BLTALWM(a5)
+            move.l  #$09f00000,BLTCON0(a5)
+            move.w  #0,BLTAMOD(a5)
+            move.w  #(SCREEN_WIDTH/8)-1,BLTDMOD(a5)
+            move.l  a0,BLTAPTH(a5)
+            move.l  a1,BLTDPTH(a5)
+            move.w  #(8<<6)|1,BLTSIZE(a5)
+            movem.l (sp)+,d0-d2
+            rts
+
+wait_vblank:
+            lea     CUSTOM,a5
+.wait:      move.l  VPOSR(a5),d0
+            and.l   #$1ff00,d0
+            cmp.l   #$12c00,d0
+            bne.s   .wait
+.wait2:     move.l  VPOSR(a5),d0
+            and.l   #$1ff00,d0
+            cmp.l   #$12c00,d0
+            beq.s   .wait2
+            rts
+
+;=============================================================================
+; Data - Chip RAM
+;=============================================================================
+
+            section data,data_c
+
 copperlist:
-            dc.w $0180,$0000
-            dc.w $2c07,$fffe
-            dc.w $0180,$0070
-            dc.w $4007,$fffe
-            dc.w $0180,$0080
-            dc.w $5007,$fffe
-            dc.w $0180,$0444
-            dc.w $5c07,$fffe
-            dc.w $0180,$0666
-            dc.w $6007,$fffe
-            dc.w $0180,$0444
-            dc.w $6c07,$fffe
-            dc.w $0180,$0666
-            dc.w $7007,$fffe
-            dc.w $0180,$0444
-            dc.w $7807,$fffe
-            dc.w $0180,$0080
-            dc.w $8007,$fffe
-            dc.w $0180,$0444
-            dc.w $8c07,$fffe
-            dc.w $0180,$0666
-            dc.w $9007,$fffe
-            dc.w $0180,$0444
-            dc.w $9c07,$fffe
-            dc.w $0180,$0666
-            dc.w $a007,$fffe
-            dc.w $0180,$0444
-            dc.w $a807,$fffe
-            dc.w $0180,$0048
-            dc.w $b007,$fffe
-            dc.w $0180,$006b
-            dc.w $b807,$fffe
-            dc.w $0180,$0048
-            dc.w $c007,$fffe
-            dc.w $0180,$006b
-            dc.w $c807,$fffe
-            dc.w $0180,$0048
-            dc.w $d007,$fffe
-            dc.w $0180,$006b
-            dc.w $d807,$fffe
-            dc.w $0180,$0080
-            dc.w $e807,$fffe
-            dc.w $0180,$0070
-            dc.w $f007,$fffe
-            dc.w $0180,$0000
-            dc.w $ffff,$fffe
+            dc.w    DIWSTRT,$2c81
+            dc.w    DIWSTOP,$2cc1
+            dc.w    DDFSTRT,$0038
+            dc.w    DDFSTOP,$00d0
+            dc.w    BPLCON0,$1200
+            dc.w    BPLCON1,$0000
+            dc.w    BPLCON2,$0000
+            dc.w    BPL1PTH
+bitplane_ptr_hi:
+            dc.w    0
+            dc.w    BPL1PTL
+bitplane_ptr_lo:
+            dc.w    0
+            dc.w    COLOR00,$0008
+            dc.w    COLOR00+2,$0fff
+            dc.w    COLOR00+34,$00f0
+            dc.w    COLOR00+36,$0080
+            dc.w    COLOR00+38,$00c0
+            dc.w    $ffff,$fffe
 
-            section data,data
-frog_x:         dc.w 0
-frog_y:         dc.w 0
-on_log:         dc.b 0
-log_vel_x:      dc.w 0
-death_state:    dc.b 0
-death_timer:    dc.b 0
-death_cause:    dc.b 0
+powers_of_10:
+            dc.l    100000,10000,1000,100,10,1
 
-traffic_count:  dc.b 0
-traffic_x:      ds.w 3
-traffic_y:      ds.w 3
-traffic_speed:  ds.w 3
-log_count:      dc.b 0
-log_active:     ds.b 6
-log_spawn:      ds.b 6
-log_x:          ds.w 6
-log_y:          ds.w 6
-log_speed:      ds.w 6
+home_slots:
+            dc.w    24,0,88,0,152,0,216,0,280,0
 
-bitplane:       ds.b 10240
-sprite0:
-            dc.w $0000,$0000,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$0000,$0000
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$0000,$0000
-            dc.w 0,0
-traffic_img:
-            dc.w $7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0
-traffic_mask:
-            dc.w $fff0,$fff0,$fff0,$fff0,$fff0,$fff0,$fff0,$fff0
+; Sound effects - must be in chip RAM
+            even
+sfx_hop:
+            dc.b    0,20,40,60,80,100,100,80
+            dc.b    60,40,20,0,-20,-40,-60,-80
+            dc.b    -80,-60,-40,-20,0,20,40,60
+            dc.b    80,100,100,80,60,40,20,0
 
-; tiny placeholder samples (even length words)
-sample_hit:
-    dc.b $40,$80,$40,$80,$40,$80,$40,$80
-sample_hit_len equ *-sample_hit
-sample_splash:
-    dc.b $20,$60,$20,$60,$20,$60,$20,$60
-sample_splash_len equ *-sample_splash
-sample_respawn:
-    dc.b $10,$30,$10,$30,$10,$30,$10,$30
-sample_respawn_len equ *-sample_respawn
+sfx_death:
+            dc.b    127,-127,127,-127,100,-100,80,-80
+            dc.b    60,-60,40,-40,20,-20,10,-10
+            dc.b    5,-5,2,-2,1,-1,0,0
+            dc.b    0,0,0,0,0,0,0,0
 
-gfxname:        dc.b "graphics.library",0
-oldview:        dc.l 0
-oldcopper:      dc.l 0
-gfxbase:        dc.l 0
+sfx_score:
+            dc.b    0,50,90,120,127,120,90,50
+            dc.b    0,-50,-90,-120,-127,-120,-90,-50
+            dc.b    0,40,70,90,100,90,70,40
+            dc.b    0,-40,-70,-90,-100,-90,-70,-40
+
+font_digits:
+            dc.b    %00111100,%01100110,%01101110,%01110110,%01100110,%01100110,%00111100,%00000000
+            dc.b    %00011000,%00111000,%00011000,%00011000,%00011000,%00011000,%01111110,%00000000
+            dc.b    %00111100,%01100110,%00000110,%00011100,%00110000,%01100000,%01111110,%00000000
+            dc.b    %00111100,%01100110,%00000110,%00011100,%00000110,%01100110,%00111100,%00000000
+            dc.b    %00001100,%00011100,%00101100,%01001100,%01111110,%00001100,%00001100,%00000000
+            dc.b    %01111110,%01100000,%01111100,%00000110,%00000110,%01100110,%00111100,%00000000
+            dc.b    %00011100,%00110000,%01100000,%01111100,%01100110,%01100110,%00111100,%00000000
+            dc.b    %01111110,%00000110,%00001100,%00011000,%00110000,%00110000,%00110000,%00000000
+            dc.b    %00111100,%01100110,%01100110,%00111100,%01100110,%01100110,%00111100,%00000000
+            dc.b    %00111100,%01100110,%01100110,%00111110,%00000110,%00001100,%00111000,%00000000
+
+frog_sprite:
+            dc.w    $6050,$7800
+            dc.w    %0000011111100000,%0000000000000000
+            dc.w    %0001111111111000,%0000011111100000
+            dc.w    %0011111111111100,%0001111111111000
+            dc.w    %0111111111111110,%0011111111111100
+            dc.w    %0111111111111110,%0111111111111110
+            dc.w    %1111111111111111,%0111111111111110
+            dc.w    %1111111111111111,%1111111111111111
+            dc.w    %1111111111111111,%1111111111111111
+            dc.w    %1111111111111111,%1111111111111111
+            dc.w    %1111111111111111,%1111111111111111
+            dc.w    %0111111111111110,%1111111111111111
+            dc.w    %0111111111111110,%0111111111111110
+            dc.w    %0011111111111100,%0111111111111110
+            dc.w    %0001111111111000,%0011111111111100
+            dc.w    %0000011111100000,%0001111111111000
+            dc.w    %0000000000000000,%0000011111100000
+            dc.w    $0000,$0000
+
+null_sprite:
+            dc.w    $0000,$0000,$0000,$0000
+
+;=============================================================================
+; Variables - Chip RAM
+;=============================================================================
+
+            section bss,bss_c
+
+bitplane:   ds.b    BITPLANE_SIZE
+objects:    ds.b    OBJ_SIZE*NUM_OBJECTS
+
+;=============================================================================
+; Variables - Any RAM
+;=============================================================================
+
+            section bss,bss
+
+frog_x:         ds.w    1
+frog_y:         ds.w    1
+frog_state:     ds.w    1
+death_timer:    ds.w    1
+on_log:         ds.w    1
+joy_current:    ds.w    1
+joy_last:       ds.w    1
+lives:          ds.w    1
+score:          ds.l    1
+
+            end

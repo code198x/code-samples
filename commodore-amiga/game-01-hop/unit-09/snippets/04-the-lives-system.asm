@@ -1,0 +1,4 @@
+STATE_ALIVE     equ 0
+STATE_DYING     equ 1
+STATE_DEAD      equ 2
+STATE_GAMEOVER  equ 3

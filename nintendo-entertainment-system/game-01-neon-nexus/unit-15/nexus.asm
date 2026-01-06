@@ -1,99 +1,123 @@
-;──────────────────────────────────────────────────────────────
-; NEON NEXUS - Unit 15 sample (Pause)
-; Builds on Unit 14 high score/title/music/SFX. Adds a pause toggle on
-; START, freezes movement/timers while paused, and shows a HUD indicator.
-;──────────────────────────────────────────────────────────────
+;
+; Neon Nexus - Unit 15: Game Over Polish
+; Screen flash and input delay for polish
+;
 
 .segment "HEADER"
-    .byte "NES", $1a, 2, 1, $01, $00, 0,0,0,0,0,0,0,0
+    .byte "NES", $1A
+    .byte 2
+    .byte 1
+    .byte $01
+    .byte $00
 
-.segment "ZEROPAGE"
-frame_counter: .res 1
-player_x:      .res 1
-player_y:      .res 1
-hud_dirty:     .res 1
-score0:        .res 1
-score1:        .res 1
-score2:        .res 1
-controller1:   .res 1
-prev_controller:.res 1
-lives:         .res 1
-respawn_timer: .res 1
-player_alive:  .res 1
-game_state:    .res 1
-sfx_active:    .res 1
-sfx_type:      .res 1
-sfx_timer:     .res 1
-music_pos:     .res 1
-high0:         .res 1
-high1:         .res 1
-high2:         .res 1
-title_dirty:   .res 1
-go_drawn:      .res 1
-pause_flag:    .res 1
-pause_dirty:   .res 1
-
-.segment "CODE"
 PPUCTRL   = $2000
 PPUMASK   = $2001
 PPUSTATUS = $2002
-OAMADDR   = $2003
-PPUSCROLL = $2005
 PPUADDR   = $2006
 PPUDATA   = $2007
+PPUSCROLL = $2005
 OAMDMA    = $4014
-JOY1      = $4016
-APU_PULSE1    = $4000
-APU_PULSE1_SW = $4001
-APU_PULSE1_LO = $4002
-APU_PULSE1_HI = $4003
-APU_TRI_CTRL  = $4008
-APU_TRI_LO    = $400a
-APU_TRI_HI    = $400b
-APU_NOISE_VOL = $400C
-APU_NOISE_LO  = $400E
-APU_NOISE_LEN = $400F
-APU_STATUS    = $4015
+JOYPAD1   = $4016
 
-BTN_A     = %10000000
-BTN_B     = %01000000
-BTN_START = %00010000
-BTN_UP    = %00001000
-BTN_DOWN  = %00000100
-BTN_LEFT  = %00000010
-BTN_RIGHT = %00000001
+APU_PULSE1_CTRL = $4000
+APU_PULSE1_SWEEP = $4001
+APU_PULSE1_TIMER_LO = $4002
+APU_PULSE1_TIMER_HI = $4003
+APU_STATUS = $4015
 
-STATE_TITLE    = $00
-STATE_PLAY     = $01
-STATE_GAMEOVER = $02
+BTN_RIGHT  = %00000001
+BTN_LEFT   = %00000010
+BTN_DOWN   = %00000100
+BTN_UP     = %00001000
+BTN_START  = %00010000
 
-HUD_ROW       = 0
-HUD_COL       = 2
-HUD_SCORE_COL = HUD_COL + 6
-HUD_LIVES_COL = HUD_SCORE_COL + 8
-HUD_PAUSE_COL = HUD_LIVES_COL + 4
-TILE_ZERO     = $30
-TILE_L        = $20
+PLAYER_SPEED  = 2
+NUM_ENEMIES   = 4
+SPAWN_X       = 120
+SPAWN_Y       = 120
+INVULN_TIME   = 60
+HITBOX_SIZE   = 6
+MAX_DIFFICULTY = 5
+FLASH_TIME    = 8
+GAMEOVER_DELAY = 60
 
-.proc reset
+STATE_TITLE    = 0
+STATE_PLAYING  = 1
+STATE_GAMEOVER = 2
+
+SFX_NONE    = 0
+SFX_COLLECT = 1
+SFX_DEATH   = 2
+
+TILE_A = 14
+TILE_D = 30
+TILE_E = 15
+TILE_G = 16
+TILE_H = 27
+TILE_I = 28
+TILE_M = 17
+TILE_N = 18
+TILE_O = 19
+TILE_P = 20
+TILE_R = 21
+TILE_S = 22
+TILE_T = 23
+TILE_U = 24
+TILE_V = 25
+TILE_W = 29
+TILE_X = 26
+
+.segment "ZEROPAGE"
+nmi_ready:      .res 1
+buttons:        .res 1
+buttons_prev:   .res 1
+player_x:       .res 1
+player_y:       .res 1
+enemy_x:        .res 4
+enemy_y:        .res 4
+enemy_dir:      .res 4
+item_x:         .res 1
+item_y:         .res 1
+score:          .res 2
+high_score:     .res 2
+game_state:     .res 1
+lives:          .res 1
+invuln_timer:   .res 1
+screen_drawn:   .res 1
+temp:           .res 1
+sfx_timer:      .res 1
+sfx_pitch:      .res 1
+sfx_type:       .res 1
+difficulty:     .res 1
+new_high:       .res 1
+frame_counter:  .res 1
+pause_flag:     .res 1
+flash_timer:    .res 1      ; death flash countdown
+gameover_delay: .res 1      ; delay before restart allowed
+
+.segment "OAM"
+oam: .res 256
+
+.segment "CODE"
+
+reset:
     sei
     cld
     ldx #$40
     stx $4017
-    ldx #$ff
+    ldx #$FF
     txs
     inx
     stx PPUCTRL
     stx PPUMASK
     stx $4010
 
+@vblank1:
     bit PPUSTATUS
-@v1:
-    bit PPUSTATUS
-    bpl @v1
+    bpl @vblank1
 
-    lda #$00
-@clr:
+    lda #0
+@clear_ram:
     sta $0000, x
     sta $0100, x
     sta $0200, x
@@ -103,804 +127,976 @@ TILE_L        = $20
     sta $0600, x
     sta $0700, x
     inx
-    bne @clr
+    bne @clear_ram
 
-@v2:
+@vblank2:
     bit PPUSTATUS
-    bpl @v2
+    bpl @vblank2
 
-    jsr reset_run_state
+    ldx #0
+    lda #$FF
+@hide_sprites:
+    sta oam, x
+    inx
+    bne @hide_sprites
+
+    lda #0
+    sta high_score
+    sta high_score+1
+
+    jsr init_apu
+    jsr load_palette
+
     lda #STATE_TITLE
     sta game_state
-    lda #1
-    sta title_dirty
+    lda #0
+    sta screen_drawn
 
-    jsr load_palette
-    jsr draw_title_screen
-    jsr build_oam
-    jsr upload_oam
-    jsr apu_init
-
-    lda #%10000000
+    lda #%10010000
     sta PPUCTRL
     lda #%00011110
     sta PPUMASK
 
+game_loop:
+    lda nmi_ready
+    beq game_loop
     lda #0
-    sta PPUSCROLL
-    sta PPUSCROLL
-
-main:
-    jmp main
-.endproc
-
-.proc nmi
-    inc frame_counter
-    lda controller1
-    sta prev_controller
-    jsr read_controller
+    sta nmi_ready
 
     lda game_state
-    beq title_loop
-    cmp #STATE_PLAY
-    beq play_loop
-    cmp #STATE_GAMEOVER
-    bne @fall
-    jmp game_over_loop
-@fall:
-    rti
-.endproc
+    cmp #STATE_TITLE
+    beq title_state
+    cmp #STATE_PLAYING
+    beq playing_state
+    jmp gameover_state
 
-.proc title_loop
-    lda title_dirty
-    beq @input
+title_state:
+    lda screen_drawn
+    bne @check_input
     jsr draw_title_screen
-    lda #0
-    sta title_dirty
-    jsr hide_player
-@input:
-    ; wait for START/A
-    lda controller1
-    and #(BTN_START|BTN_A)
-    beq @done
-    jsr reset_run_state
-    jsr draw_playfield
-    lda #STATE_PLAY
+    lda #1
+    sta screen_drawn
+
+@check_input:
+    jsr read_controller
+    lda buttons
+    and #BTN_START
+    beq game_loop
+
+    jsr clear_playfield
+    jsr init_game
+    lda #STATE_PLAYING
     sta game_state
     lda #0
-    sta go_drawn
-@done:
-    jsr apu_step_music
-    rti
-.endproc
+    sta screen_drawn
+    jmp game_loop
 
-.proc play_loop
-    ; Pause toggle on START (edge-triggered)
-    lda controller1
-    and #BTN_START
-    beq @chk_pause
-    lda prev_controller
-    and #BTN_START
-    bne @chk_pause
-    jsr toggle_pause
-@chk_pause:
+playing_state:
+    jsr read_controller
+    jsr check_pause
+
     lda pause_flag
-    beq @active
-    jsr sync_pause_label
-    jsr apu_step_music
-    jsr apu_step_sfx
-    lda #0
-    sta PPUSCROLL
-    sta PPUSCROLL
-    rti
+    bne @skip_gameplay
 
-@active:
-    jsr sync_pause_label
-    lda controller1
-    and #BTN_B
-    beq @skip_hit
-    jsr lose_life
-    jsr trigger_sfx_hit
-@skip_hit:
-    lda controller1
-    and #BTN_A
-    beq @skip_pick
-    jsr add_score_10
-    jsr trigger_sfx_pickup
-@skip_pick:
+    inc frame_counter
+
+    lda invuln_timer
+    beq @no_invuln
+    dec invuln_timer
+@no_invuln:
 
     jsr update_player
-    jsr build_oam
-    jsr upload_oam
+    jsr move_enemies
+    jsr check_item_collision
+    jsr check_enemy_collision
+    jsr update_sound
 
-    jsr apu_step_music
-    jsr apu_step_sfx
+@skip_gameplay:
+    jsr update_player_sprite
+    jsr update_enemy_sprites
+    jsr update_item_sprite
 
-    lda hud_dirty
-    beq @hud_ok
-    jsr draw_hud
-    lda #0
-    sta hud_dirty
-@hud_ok:
-    lda #0
-    sta PPUSCROLL
-    sta PPUSCROLL
+    jmp game_loop
 
-    lda lives
-    bne @alive
-    lda #STATE_GAMEOVER
-    sta game_state
-    lda #0
-    sta go_drawn
-    sta pause_flag
-    lda #1
-    sta pause_dirty
-@alive:
-    rti
-.endproc
+gameover_state:
+    jsr update_flash
 
-.proc game_over_loop
-    lda go_drawn
-    bne @wait
-    jsr maybe_update_high
+    lda screen_drawn
+    bne @check_delay
+
+    ; Don't draw until flash is done
+    lda flash_timer
+    bne game_loop
+
     jsr draw_game_over
     lda #1
-    sta go_drawn
-@wait:
-    lda controller1
-    and #(BTN_START|BTN_A)
-    beq @hold
-    lda #STATE_TITLE
+    sta screen_drawn
+
+@check_delay:
+    lda gameover_delay
+    beq @check_restart
+    dec gameover_delay
+    jmp game_loop
+
+@check_restart:
+    jsr read_controller
+    lda buttons
+    and #BTN_START
+    beq game_loop
+
+    jsr clear_playfield
+    jsr init_game
+    lda #STATE_PLAYING
     sta game_state
-    lda #1
-    sta title_dirty
-@hold:
-    jsr apu_step_music
-    rti
-.endproc
-
-.proc irq
-    rti
-.endproc
-
-;------------------------------------------------------------
-; Controller
-;------------------------------------------------------------
-.proc read_controller
-    lda #1
-    sta JOY1
     lda #0
-    sta JOY1
-    ldx #8
-    lda #0
-    sta controller1
-@loop:
-    lda JOY1
-    lsr
-    rol controller1
-    dex
-    bne @loop
-    rts
-.endproc
+    sta screen_drawn
+    jmp game_loop
 
-;------------------------------------------------------------
-; Player movement
-;------------------------------------------------------------
-.proc update_player
-    lda respawn_timer
-    beq @move
-    dec respawn_timer
-    rts
-@move:
-    lda controller1
-    and #BTN_LEFT
-    beq @skip_left
-    dec player_x
-@skip_left:
-    lda controller1
-    and #BTN_RIGHT
-    beq @skip_right
-    inc player_x
-@skip_right:
-    lda controller1
-    and #BTN_UP
-    beq @skip_up
-    dec player_y
-@skip_up:
-    lda controller1
-    and #BTN_DOWN
-    beq @skip_down
-    inc player_y
-@skip_down:
-    rts
-.endproc
+nmi:
+    pha
+    txa
+    pha
+    tya
+    pha
 
-;------------------------------------------------------------
-; OAM handling
-;------------------------------------------------------------
-player_oam = $0200
-
-.proc build_oam
-    lda player_y
-    sta player_oam
     lda #$00
-    sta player_oam+1
-    lda #%00000000
-    sta player_oam+2
-    lda player_x
-    sta player_oam+3
-    rts
-.endproc
-
-.proc upload_oam
-    lda #$00
-    sta OAMADDR
+    sta $2003
     lda #$02
     sta OAMDMA
-    rts
-.endproc
 
-.proc hide_player
-    lda #$f8
-    sta player_oam
-    lda #$00
-    sta player_oam+1
-    sta player_oam+2
-    sta player_oam+3
-    jsr upload_oam
-    rts
-.endproc
+    lda game_state
+    cmp #STATE_PLAYING
+    bne @skip_hud
+    jsr draw_hud
+@skip_hud:
 
-;------------------------------------------------------------
-; HUD Score + Lives
-;------------------------------------------------------------
-.proc add_score_10
-    clc
-    lda score0
-    adc #$10
-    jsr fix_bcd
-    lda score1
-    adc #$00
-    jsr fix_bcd
-    lda score2
-    adc #$00
-    jsr fix_bcd
     lda #1
-    sta hud_dirty
-    rts
-.endproc
+    sta nmi_ready
 
-.proc fix_bcd
-    cmp #$a0
-    bcc @ok
-    sbc #$a0
-    adc #$10
-@ok:
-    rts
-.endproc
+    pla
+    tay
+    pla
+    tax
+    pla
+    rti
 
-.proc lose_life
-    lda lives
-    beq @game_over
-    dec lives
-    lda #1
-    sta hud_dirty
-    lda #30
-    sta respawn_timer
-    jsr reset_position
-    rts
-@game_over:
-    lda #0
-    sta player_alive
-    rts
-.endproc
+irq:
+    rti
 
-.proc toggle_pause
+update_flash:
+    lda flash_timer
+    beq @done
+    dec flash_timer
+    bne @done
+
+    ; Flash ended - restore normal PPUMASK
+    lda #%00011110
+    sta PPUMASK
+
+    ; Start game over delay
+    lda #GAMEOVER_DELAY
+    sta gameover_delay
+@done:
+    rts
+
+check_pause:
+    lda buttons_prev
+    eor #$FF
+    and buttons
+    sta temp
+
+    lda buttons
+    sta buttons_prev
+
+    lda temp
+    and #BTN_START
+    beq @done
+
     lda pause_flag
     eor #1
     sta pause_flag
-    lda #1
-    sta pause_dirty
-    rts
-.endproc
 
-.proc sync_pause_label
-    lda pause_dirty
-    bne @draw
+    beq @unpause
+    jsr draw_pause_text
     rts
-@draw:
-    bit PPUSTATUS
-    lda #$20 + HUD_ROW
+@unpause:
+    jsr clear_pause_text
+@done:
+    rts
+
+draw_pause_text:
+    lda PPUSTATUS
+    lda #$21
     sta PPUADDR
-    lda #HUD_PAUSE_COL
+    lda #$CD
     sta PPUADDR
-    lda pause_flag
-    beq @clear
-    ldx #0
-@p:
-    lda pause_text, x
+
+    lda #TILE_P
+    sta PPUDATA
+    lda #TILE_A
+    sta PPUDATA
+    lda #TILE_U
+    sta PPUDATA
+    lda #TILE_S
+    sta PPUDATA
+    lda #TILE_E
+    sta PPUDATA
+    lda #TILE_D
+    sta PPUDATA
+
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
+    rts
+
+clear_pause_text:
+    lda PPUSTATUS
+    lda #$21
+    sta PPUADDR
+    lda #$CD
+    sta PPUADDR
+
+    lda #0
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
+    rts
+
+init_apu:
+    lda #%00000001
+    sta APU_STATUS
+    lda #%00110000
+    sta APU_PULSE1_CTRL
+    lda #0
+    sta APU_PULSE1_SWEEP
+    sta sfx_timer
+    sta sfx_type
+    sta sfx_pitch
+    rts
+
+play_collect_sound:
+    lda #SFX_COLLECT
+    sta sfx_type
+    lda #15
+    sta sfx_timer
+    lda #0
+    sta sfx_pitch
+    lda #%10111111
+    sta APU_PULSE1_CTRL
+    lda #0
+    sta APU_PULSE1_SWEEP
+    lda collect_pitches
+    sta APU_PULSE1_TIMER_LO
+    lda #%00001000
+    sta APU_PULSE1_TIMER_HI
+    rts
+
+play_death_sound:
+    lda #SFX_DEATH
+    sta sfx_type
+    lda #20
+    sta sfx_timer
+    lda #0
+    sta sfx_pitch
+    lda #%11111111
+    sta APU_PULSE1_CTRL
+    lda #0
+    sta APU_PULSE1_SWEEP
+    lda death_pitches
+    sta APU_PULSE1_TIMER_LO
+    lda #%00001000
+    sta APU_PULSE1_TIMER_HI
+    rts
+
+update_sound:
+    lda sfx_timer
     beq @done
-    sta PPUDATA
-    inx
-    bne @p
+    dec sfx_timer
+    beq @end_sound
+    lda sfx_type
+    cmp #SFX_COLLECT
+    beq @update_collect
+    cmp #SFX_DEATH
+    beq @update_death
+    rts
+@update_collect:
+    lda sfx_timer
+    and #%00000011
     bne @done
-@clear:
-    ldx #0
-@c:
-    lda #' '
-    sta PPUDATA
-    inx
-    cpx #6
-    bne @c
-@done:
-    lda #0
-    sta pause_dirty
+    inc sfx_pitch
+    ldx sfx_pitch
+    cpx #5
+    bcs @done
+    lda collect_pitches, x
+    sta APU_PULSE1_TIMER_LO
     rts
-.endproc
-
-.proc maybe_update_high
-    ; compare score2:score1:score0 vs high
-    lda score2
-    cmp high2
-    bcc @done
-    bne @higher
-    lda score1
-    cmp high1
-    bcc @done
-    bne @higher
-    lda score0
-    cmp high0
-    bcc @done
-@higher:
-    lda score0
-    sta high0
-    lda score1
-    sta high1
-    lda score2
-    sta high2
-    lda #1
-    sta title_dirty
+@update_death:
+    lda sfx_timer
+    and #%00000011
+    bne @done
+    inc sfx_pitch
+    ldx sfx_pitch
+    cpx #5
+    bcs @done
+    lda death_pitches, x
+    sta APU_PULSE1_TIMER_LO
+    rts
+@end_sound:
+    lda #%00110000
+    sta APU_PULSE1_CTRL
+    lda #SFX_NONE
+    sta sfx_type
 @done:
     rts
-.endproc
 
-.proc reset_position
-    lda #120
+collect_pitches:
+    .byte 200, 150, 100, 75, 50
+death_pitches:
+    .byte 100, 150, 200, 230, 254
+
+init_game:
+    lda #SPAWN_X
     sta player_x
-    lda #180
+    lda #SPAWN_Y
     sta player_y
-    rts
-.endproc
-
-.proc draw_hud
-    bit PPUSTATUS
-    lda #$20 + HUD_ROW
-    sta PPUADDR
-    lda #HUD_COL
-    sta PPUADDR
-
-    ldx #0
-@text:
-    lda hud_label, x
-    beq @digits
-    sta PPUDATA
-    inx
-    bne @text
-@digits:
-    lda score2
-    jsr bcd_to_tiles
-    lda score1
-    jsr bcd_to_tiles
-    lda score0
-    jsr bcd_to_tiles
-
-    lda #$20 + HUD_ROW
-    sta PPUADDR
-    lda #HUD_LIVES_COL
-    sta PPUADDR
-    lda lives_label
-    sta PPUDATA
-    lda lives_label+1
-    sta PPUDATA
-    lda lives
-    ora #TILE_ZERO
-    sta PPUDATA
-    rts
-.endproc
-
-.proc bcd_to_tiles
-    pha
-    lsr
-    lsr
-    lsr
-    lsr
-    ora #TILE_ZERO
-    sta PPUDATA
-    pla
-    and #$0f
-    ora #TILE_ZERO
-    sta PPUDATA
-    rts
-.endproc
-
-hud_label:
-    .byte "SCORE ", 0
-lives_label:
-    .byte "L", "I"
-pause_text:
-    .byte "PAUSED",0
-
-;------------------------------------------------------------
-; State resets and screens
-;------------------------------------------------------------
-.proc reset_run_state
-    lda #0
-    sta frame_counter
-    sta hud_dirty
-    sta score0
-    sta score1
-    sta score2
     lda #3
     sta lives
     lda #0
-    sta respawn_timer
-    lda #1
-    sta player_alive
-    lda #0
-    sta sfx_active
+    sta score
+    sta score+1
+    sta invuln_timer
     sta sfx_timer
-    sta music_pos
+    sta sfx_type
+    sta difficulty
+    sta new_high
+    sta frame_counter
     sta pause_flag
-    sta pause_dirty
-    jsr reset_position
+    sta buttons_prev
+    sta flash_timer
+    sta gameover_delay
+    jsr init_enemies
+    jsr respawn_item
     rts
-.endproc
 
-.proc draw_title
-    ; not used, we draw title screen via draw_title_screen
+init_enemies:
+    lda #30
+    sta enemy_x
+    lda #50
+    sta enemy_y
+    lda #0
+    sta enemy_dir
+
+    lda #200
+    sta enemy_x+1
+    lda #80
+    sta enemy_y+1
+    lda #1
+    sta enemy_dir+1
+
+    lda #30
+    sta enemy_x+2
+    lda #140
+    sta enemy_y+2
+    lda #0
+    sta enemy_dir+2
+
+    lda #200
+    sta enemy_x+3
+    lda #200
+    sta enemy_y+3
+    lda #0
+    sta enemy_dir+3
+
     rts
-.endproc
 
-.proc draw_game_over
-    bit PPUSTATUS
+respawn_item:
+    lda item_x
+    clc
+    adc #67
+    and #%01111111
+    clc
+    adc #60
+    sta item_x
+    lda item_y
+    clc
+    adc #53
+    and #%01111111
+    clc
+    adc #40
+    sta item_y
+    rts
+
+check_high_score:
+    lda #0
+    sta new_high
+    lda score+1
+    cmp high_score+1
+    bcc @not_new
+    bne @new_record
+    lda score
+    cmp high_score
+    bcc @not_new
+    beq @not_new
+@new_record:
+    lda score
+    sta high_score
+    lda score+1
+    sta high_score+1
+    lda #1
+    sta new_high
+@not_new:
+    rts
+
+update_difficulty:
+    lda difficulty
+    cmp #MAX_DIFFICULTY
+    bcs @done
+    ldx difficulty
+    inx
+    lda score
+    cmp difficulty_thresholds, x
+    bcc @done
+    inc difficulty
+@done:
+    rts
+
+difficulty_thresholds:
+    .byte 0, 50, 100, 150, 200, 250
+enemy_speeds:
+    .byte 1, 1, 2, 2, 3, 3
+
+draw_title_screen:
+    ldx #0
+    lda #$FF
+@hide:
+    sta oam, x
+    inx
+    bne @hide
+
+    lda PPUSTATUS
     lda #$21
     sta PPUADDR
-    lda #$04
+    lda #$4B
     sta PPUADDR
     ldx #0
-@g:
-    lda go_text, x
+@title_loop:
+    lda title_text, x
+    beq @draw_press
+    sta PPUDATA
+    inx
+    bne @title_loop
+@draw_press:
+    lda #$21
+    sta PPUADDR
+    lda #$CA
+    sta PPUADDR
+    ldx #0
+@press_loop:
+    lda press_text, x
     beq @done
     sta PPUDATA
     inx
-    bne @g
-
+    bne @press_loop
 @done:
-    ; show current score
-    bit PPUSTATUS
-    lda #$21
-    sta PPUADDR
-    lda #$04
-    sta PPUADDR
-    ldx #0
-@s:
-    lda score_label, x
-    beq @digits
-    sta PPUDATA
-    inx
-    bne @s
-@digits:
-    lda score2
-    jsr bcd_to_tiles
-    lda score1
-    jsr bcd_to_tiles
-    lda score0
-    jsr bcd_to_tiles
-
-    ; high score
-    bit PPUSTATUS
-    lda #$21
-    sta PPUADDR
-    lda #$18
-    sta PPUADDR
-    ldx #0
-@h:
-    lda hi_label, x
-    beq @hdone
-    sta PPUDATA
-    inx
-    bne @h
-@hdone:
-    lda high2
-    jsr bcd_to_tiles
-    lda high1
-    jsr bcd_to_tiles
-    lda high0
-    jsr bcd_to_tiles
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
     rts
-.endproc
 
-.proc draw_playfield
-    jsr fill_background
+title_text:
+    .byte TILE_N, TILE_E, TILE_O, TILE_N, 0
+    .byte TILE_N, TILE_E, TILE_X, TILE_U, TILE_S, 0
+press_text:
+    .byte TILE_P, TILE_R, TILE_E, TILE_S, TILE_S, 0
+    .byte TILE_S, TILE_T, TILE_A, TILE_R, TILE_T, 0
+
+draw_game_over:
+    ldx #0
+    lda #$FF
+@hide:
+    sta oam, x
+    inx
+    bne @hide
+
+    lda PPUSTATUS
+    lda #$21
+    sta PPUADDR
+    lda #$4B
+    sta PPUADDR
+    ldx #0
+@go_loop:
+    lda gameover_text, x
+    beq @draw_hi
+    sta PPUDATA
+    inx
+    bne @go_loop
+@draw_hi:
+    lda #$21
+    sta PPUADDR
+    lda #$AB
+    sta PPUADDR
+    lda #TILE_H
+    sta PPUDATA
+    lda #TILE_I
+    sta PPUDATA
+    lda #0
+    sta PPUDATA
+    lda high_score+1
+    jsr div10
+    clc
+    adc #4
+    sta PPUDATA
+    lda temp
+    jsr div10
+    clc
+    adc #4
+    sta PPUDATA
+    lda temp
+    clc
+    adc #4
+    sta PPUDATA
+
+    lda new_high
+    beq @done
+    lda #$21
+    sta PPUADDR
+    lda #$EC
+    sta PPUADDR
+    lda #TILE_N
+    sta PPUDATA
+    lda #TILE_E
+    sta PPUDATA
+    lda #TILE_W
+    sta PPUDATA
+@done:
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
+    rts
+
+gameover_text:
+    .byte TILE_G, TILE_A, TILE_M, TILE_E, 0
+    .byte TILE_O, TILE_V, TILE_E, TILE_R, 0
+
+clear_playfield:
+    lda PPUSTATUS
+    lda #$21
+    sta PPUADDR
+    lda #$00
+    sta PPUADDR
+    lda #0
+    ldx #0
+@loop:
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    inx
+    cpx #80
+    bne @loop
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
+    rts
+
+read_controller:
     lda #1
-    sta hud_dirty
-    jsr draw_hud
+    sta JOYPAD1
+    lda #0
+    sta JOYPAD1
+    ldx #8
+@loop:
+    lda JOYPAD1
+    lsr a
+    rol buttons
+    dex
+    bne @loop
     rts
-.endproc
 
-title_text: .byte "NEON NEXUS",0
-prompt_text:.byte "PRESS START OR A",0
-go_text:    .byte "GAME OVER - START/A TO RESTART",0
-score_label:.byte "YOUR SCORE ",0
-hi_label:   .byte "HI ",0
+update_player:
+    lda buttons
+    and #BTN_RIGHT
+    beq @check_left
+    lda player_x
+    clc
+    adc #PLAYER_SPEED
+    cmp #248
+    bcs @check_left
+    sta player_x
+@check_left:
+    lda buttons
+    and #BTN_LEFT
+    beq @check_down
+    lda player_x
+    sec
+    sbc #PLAYER_SPEED
+    bcc @check_down
+    sta player_x
+@check_down:
+    lda buttons
+    and #BTN_DOWN
+    beq @check_up
+    lda player_y
+    clc
+    adc #PLAYER_SPEED
+    cmp #224
+    bcs @check_up
+    sta player_y
+@check_up:
+    lda buttons
+    and #BTN_UP
+    beq @done
+    lda player_y
+    sec
+    sbc #PLAYER_SPEED
+    cmp #16
+    bcc @done
+    sta player_y
+@done:
+    rts
 
-;------------------------------------------------------------
-; Title screen drawing
-;------------------------------------------------------------
-.proc draw_title_screen
-    bit PPUSTATUS
-    lda #$20
-    sta PPUADDR
-    lda #$00
-    sta PPUADDR
-    ; fill nametable with blank
-    lda #$00
+move_enemies:
+    ldx difficulty
+    lda enemy_speeds, x
+    sta temp
+
+    ldx #0
+
+@loop:
+    lda enemy_x, x
+    sec
+    sbc temp
+    sta enemy_x, x
+    cmp #250
+    bcc @check_vertical
+    lda #248
+    sta enemy_x, x
+
+@check_vertical:
+    cpx #2
+    bcs @next
+
+    lda frame_counter
+    and #%00000001
+    bne @next
+
+    lda enemy_dir, x
+    beq @move_down
+
+    lda enemy_y, x
+    sec
+    sbc #1
+    cmp #24
+    bcs @store_y
+    lda #0
+    sta enemy_dir, x
+    lda #24
+    jmp @store_y
+
+@move_down:
+    lda enemy_y, x
+    clc
+    adc #1
+    cmp #216
+    bcc @store_y
+    lda #1
+    sta enemy_dir, x
+    lda #215
+
+@store_y:
+    sta enemy_y, x
+
+@next:
+    inx
+    cpx #NUM_ENEMIES
+    bne @loop
+    rts
+
+check_item_collision:
+    lda player_x
+    sec
+    sbc item_x
+    bcs @check_x_pos
+    eor #$FF
+    clc
+    adc #1
+@check_x_pos:
+    cmp #HITBOX_SIZE
+    bcs @no_collision
+    lda player_y
+    sec
+    sbc item_y
+    bcs @check_y_pos
+    eor #$FF
+    clc
+    adc #1
+@check_y_pos:
+    cmp #HITBOX_SIZE
+    bcs @no_collision
+    jsr collect_item
+@no_collision:
+    rts
+
+collect_item:
+    lda score
+    clc
+    adc #10
+    sta score
+    lda score+1
+    adc #0
+    sta score+1
+    jsr update_difficulty
+    jsr play_collect_sound
+    jsr respawn_item
+    rts
+
+check_enemy_collision:
+    lda invuln_timer
+    bne @done
+    ldx #0
+@loop:
+    lda player_x
+    sec
+    sbc enemy_x, x
+    bcs @check_x
+    eor #$FF
+    clc
+    adc #1
+@check_x:
+    cmp #HITBOX_SIZE
+    bcs @next
+    lda player_y
+    sec
+    sbc enemy_y, x
+    bcs @check_y
+    eor #$FF
+    clc
+    adc #1
+@check_y:
+    cmp #HITBOX_SIZE
+    bcs @next
+    jsr lose_life
+    rts
+@next:
+    inx
+    cpx #NUM_ENEMIES
+    bne @loop
+@done:
+    rts
+
+lose_life:
+    dec lives
+    jsr play_death_sound
+    lda lives
+    beq @game_over
+    jsr respawn_player
+    rts
+@game_over:
+    jsr check_high_score
+    lda #FLASH_TIME
+    sta flash_timer
+    lda #STATE_GAMEOVER
+    sta game_state
+    lda #0
+    sta screen_drawn
+    sta pause_flag
+
+    ; Start flash - enable emphasis bits
+    lda #%11111110          ; RGB emphasis + display on
+    sta PPUMASK
+    rts
+
+respawn_player:
+    lda #SPAWN_X
+    sta player_x
+    lda #SPAWN_Y
+    sta player_y
+    lda #INVULN_TIME
+    sta invuln_timer
+    rts
+
+update_player_sprite:
+    lda invuln_timer
+    beq @visible
+    and #%00000100
+    beq @hidden
+@visible:
+    lda player_y
+    sta oam
+    lda #1
+    sta oam+1
+    lda #0
+    sta oam+2
+    lda player_x
+    sta oam+3
+    rts
+@hidden:
+    lda #$FF
+    sta oam
+    rts
+
+update_enemy_sprites:
     ldx #0
     ldy #4
-@outer:
-@inner:
-    sta PPUDATA
+@loop:
+    lda enemy_y, x
+    sta oam, y
+    iny
+    lda #2
+    sta oam, y
+    iny
+    lda #1
+    sta oam, y
+    iny
+    lda enemy_x, x
+    sta oam, y
+    iny
     inx
-    bne @inner
-    dey
-    bne @outer
-
-    ; attributes remain as set by fill_background (reuse palette)
-    ; Draw title at row 8, col 10
-    bit PPUSTATUS
-    lda #$20 + 8
-    sta PPUADDR
-    lda #10
-    sta PPUADDR
-    ldx #0
-@t:
-    lda title_text, x
-    beq @prompt
-    sta PPUDATA
-    inx
-    bne @t
-@prompt:
-    ; prompt at row 12, col 6
-    bit PPUSTATUS
-    lda #$20 + 12
-    sta PPUADDR
-    lda #6
-    sta PPUADDR
-    ldx #0
-@p:
-    lda prompt_text, x
-    beq @done
-    sta PPUDATA
-    inx
-    bne @p
-
-    ; High score at row 16, col 10
-    bit PPUSTATUS
-    lda #$20 + 16
-    sta PPUADDR
-    lda #10
-    sta PPUADDR
-    ldx #0
-@ht:
-    lda hi_label, x
-    beq @hdigits
-    sta PPUDATA
-    inx
-    bne @ht
-@hdigits:
-    lda high2
-    jsr bcd_to_tiles
-    lda high1
-    jsr bcd_to_tiles
-    lda high0
-    jsr bcd_to_tiles
-@done:
+    cpx #NUM_ENEMIES
+    bne @loop
     rts
-.endproc
 
-;------------------------------------------------------------
-; Palette / background (reuse from earlier units)
-;------------------------------------------------------------
-.proc load_palette
-    bit PPUSTATUS
-    lda #$3f
+update_item_sprite:
+    lda item_y
+    sta oam+20
+    lda #3
+    sta oam+21
+    lda #2
+    sta oam+22
+    lda item_x
+    sta oam+23
+    rts
+
+draw_hud:
+    lda #$20
+    sta PPUADDR
+    lda #$02
+    sta PPUADDR
+    lda score+1
+    jsr div10
+    clc
+    adc #4
+    sta PPUDATA
+    lda temp
+    jsr div10
+    clc
+    adc #4
+    sta PPUDATA
+    lda temp
+    clc
+    adc #4
+    sta PPUDATA
+    lda #$20
+    sta PPUADDR
+    lda #$1C
+    sta PPUADDR
+    lda lives
+    clc
+    adc #4
+    sta PPUDATA
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
+    rts
+
+div10:
+    ldx #0
+@loop:
+    cmp #10
+    bcc @done
+    sec
+    sbc #10
+    inx
+    bne @loop
+@done:
+    sta temp
+    txa
+    rts
+
+load_palette:
+    lda PPUSTATUS
+    lda #$3F
     sta PPUADDR
     lda #$00
     sta PPUADDR
     ldx #0
-@lp:
+@loop:
     lda palette_data, x
     sta PPUDATA
     inx
     cpx #32
-    bne @lp
+    bne @loop
     rts
-.endproc
-
-.proc fill_background
-    bit PPUSTATUS
-    lda #$20
-    sta PPUADDR
-    lda #$00
-    sta PPUADDR
-
-    lda #$00
-    ldx #0
-    ldy #4
-@outer:
-@inner:
-    sta PPUDATA
-    inx
-    bne @inner
-    dey
-    bne @outer
-
-    bit PPUSTATUS
-    lda #$23
-    sta PPUADDR
-    lda #$c0
-    sta PPUADDR
-
-    ldx #0
-@attr:
-    lda attribute_data, x
-    sta PPUDATA
-    inx
-    cpx #64
-    bne @attr
-    rts
-.endproc
 
 palette_data:
-    .byte $0f, $11, $21, $31
-    .byte $0f, $19, $29, $39
-    .byte $0f, $15, $25, $35
-    .byte $0f, $00, $10, $30
-    .byte $0f, $11, $21, $31
-    .byte $0f, $19, $29, $39
-    .byte $0f, $15, $25, $35
-    .byte $0f, $00, $10, $30
+    .byte $0F, $20, $10, $00
+    .byte $0F, $20, $10, $00
+    .byte $0F, $20, $10, $00
+    .byte $0F, $20, $10, $00
+    .byte $0F, $20, $16, $28
+    .byte $0F, $20, $12, $22
+    .byte $0F, $20, $1A, $2A
+    .byte $0F, $20, $10, $00
 
-attribute_data:
-    .byte $00,$00,$00,$00,$00,$00,$00,$00
-    .byte $00,$00,$00,$00,$00,$00,$00,$00
-    .byte $55,$55,$55,$55,$55,$55,$55,$55
-    .byte $55,$55,$55,$55,$55,$55,$55,$55
-    .byte $aa,$aa,$aa,$aa,$aa,$aa,$aa,$aa
-    .byte $aa,$aa,$aa,$aa,$aa,$aa,$aa,$aa
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-
-;------------------------------------------------------------
-; APU Sound: music + SFX (same as Unit 12)
-;------------------------------------------------------------
-.proc apu_init
-    lda #%00010111
-    sta APU_STATUS
-    lda #%00111111
-    sta APU_PULSE1
-    lda #%00000000
-    sta APU_PULSE1_SW
-    lda #$00
-    sta APU_PULSE1_LO
-    lda #$00
-    sta APU_PULSE1_HI
-    lda #%10000000
-    sta APU_TRI_CTRL
-    lda #$00
-    sta APU_TRI_LO
-    lda #$00
-    sta APU_TRI_HI
-    lda #%00001111
-    sta APU_NOISE_VOL
-    lda #$0f
-    sta APU_NOISE_LO
-    lda #$00
-    sta APU_NOISE_LEN
-    rts
-.endproc
-
-music_table:
-    .byte $30,$02
-    .byte $40,$04
-    .byte $00,$00
-
-.proc apu_step_music
-    lda music_pos
-    tay
-    lda music_table,y
-    beq @reset
-    sta APU_PULSE1_LO
-    lda music_table+1,y
-    sta APU_TRI_LO
-    iny
-    iny
-    sty music_pos
-    rts
-@reset:
-    lda #0
-    sta music_pos
-    rts
-.endproc
-
-SFX_HIT    = 1
-SFX_PICKUP = 2
-
-.proc trigger_sfx_hit
-    lda #SFX_HIT
-    sta sfx_type
-    lda #6
-    sta sfx_timer
-    lda #1
-    sta sfx_active
-    rts
-.endproc
-
-.proc trigger_sfx_pickup
-    lda #SFX_PICKUP
-    sta sfx_type
-    lda #6
-    sta sfx_timer
-    lda #1
-    sta sfx_active
-    rts
-.endproc
-
-.proc apu_step_sfx
-    lda sfx_active
-    bne @do
-    rts
-@do:
-    lda sfx_type
-    cmp #SFX_HIT
-    beq @hit
-    cmp #SFX_PICKUP
-    beq @pickup
-    rts
-@hit:
-    lda #%00001111
-    sta APU_NOISE_VOL
-    lda #$04
-    sta APU_NOISE_LO
-    lda #$00
-    sta APU_NOISE_LEN
-    jmp @dec
-@pickup:
-    lda #%00111111
-    sta APU_PULSE1
-    lda #$30
-    sta APU_PULSE1_LO
-    lda #%00000000
-    sta APU_PULSE1_HI
-@dec:
-    dec sfx_timer
-    bne @done
-    lda #0
-    sta APU_NOISE_VOL
-    sta APU_PULSE1
-    lda #0
-    sta sfx_active
-@done:
-    rts
-.endproc
-
-;------------------------------------------------------------
 .segment "VECTORS"
     .word nmi
     .word reset
     .word irq
 
 .segment "CHARS"
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .res 8192-16
+.byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $18,$3C,$7E,$FF,$FF,$7E,$3C,$18,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $42,$24,$7E,$5A,$FF,$81,$42,$24,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $18,$3C,$7E,$FF,$7E,$3C,$18,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $3C,$66,$6E,$7E,$76,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $18,$38,$18,$18,$18,$18,$7E,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $3C,$66,$06,$1C,$30,$60,$7E,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $3C,$66,$06,$1C,$06,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $0E,$1E,$36,$66,$7F,$06,$06,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $7E,$60,$7C,$06,$06,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $1C,$30,$60,$7C,$66,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $7E,$06,$0C,$18,$30,$30,$30,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $3C,$66,$66,$3C,$66,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.byte $3C,$66,$66,$3E,$06,$0C,$38,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 14: A
+.byte $18,$3C,$66,$66,$7E,$66,$66,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 15: E
+.byte $7E,$60,$60,$7C,$60,$60,$7E,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 16: G
+.byte $3C,$66,$60,$6E,$66,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 17: M
+.byte $63,$77,$7F,$6B,$63,$63,$63,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 18: N
+.byte $66,$76,$7E,$7E,$6E,$66,$66,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 19: O
+.byte $3C,$66,$66,$66,$66,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 20: P
+.byte $7C,$66,$66,$7C,$60,$60,$60,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 21: R
+.byte $7C,$66,$66,$7C,$6C,$66,$66,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 22: S
+.byte $3C,$66,$60,$3C,$06,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 23: T
+.byte $7E,$18,$18,$18,$18,$18,$18,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 24: U
+.byte $66,$66,$66,$66,$66,$66,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 25: V
+.byte $66,$66,$66,$66,$66,$3C,$18,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 26: X
+.byte $66,$66,$3C,$18,$3C,$66,$66,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 27: H
+.byte $66,$66,$66,$7E,$66,$66,$66,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 28: I
+.byte $7E,$18,$18,$18,$18,$18,$7E,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 29: W
+.byte $63,$63,$63,$6B,$7F,$77,$63,$00,$00,$00,$00,$00,$00,$00,$00,$00
+; Tile 30: D
+.byte $7C,$66,$66,$66,$66,$66,$7C,$00,$00,$00,$00,$00,$00,$00,$00,$00
+.res 7920, $00

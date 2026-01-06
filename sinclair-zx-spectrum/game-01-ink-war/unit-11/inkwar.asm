@@ -1,567 +1,1502 @@
-;──────────────────────────────────────────────────────────────
-; INK WAR - Unit 11 sample (Sound Effects)
-; Builds on Unit 10: scoring/win/restart. Adds simple beeper SFX
-; for move, claim, and win. Uses ROM beeper routine at 949.
-;──────────────────────────────────────────────────────────────
+;══════════════════════════════════════════════════════════════
+; INK WAR
+; A territory control game for the ZX Spectrum
+; Unit 11: Sound Effects
+;══════════════════════════════════════════════════════════════
 
-            org 32768
+        org $8000
 
-BEEP        equ 949
-BOARD_ATTR  equ 22528 + (4 * 32) + 8
+;───────────────────────────────────────
+; Constants
+;───────────────────────────────────────
+ATTR_BASE       equ 22528
+BOARD_ATTR      equ 22664
+BOARD_SIZE      equ 8
 
+; Colours (paper * 8 + ink)
+WHITE_ON_WHITE  equ %00111111
+RED_ON_RED      equ %00010010
+CYAN_ON_CYAN    equ %00101101
+
+; Keyboard half-rows
+KEY_ROW_Q       equ $FB
+KEY_ROW_A       equ $FD
+KEY_ROW_P       equ $DF
+KEY_ROW_SPACE   equ $7F
+
+; Movement delay
+MOVE_DELAY      equ 8
+
+; ROM routines
+OPEN_CHANNEL    equ $1601
+
+;───────────────────────────────────────
+; Entry point
+;───────────────────────────────────────
 start:
-            ld a,0
-            out (254),a
-            call 3435
-            ld a,7
-            ld (23693),a
+        call clear_screen
+        call draw_board
+        call init_starting_cells
 
-            call init_owner_map
-            call draw_board
-            call highlight_cursor
-            ld a,0
-            ld (turn_flag),a
+        ; Position cursor
+        ld a, 1
+        ld (cursor_x), a
+        xor a
+        ld (cursor_y), a
+
+        ; Highlight cursor
+        ld b, 0
+        ld c, 1
+        call get_cell_addr
+        call highlight_cursor
+
+        call update_ui_colours
+
+        im 1
+        ei
 
 main_loop:
-            halt
-            ld a,(turn_flag)
-            or a
-            jr nz, ai_turn
-            call read_input
-            call maybe_claim
-            jr main_loop
+        halt
 
-ai_turn:
-            call ai_pick_move
-            call ai_claim
-            jr main_loop
+        ; Increment frame counter
+        ld a, (frame_counter)
+        inc a
+        ld (frame_counter), a
 
-;------------------------------------------------------------
-; Owner/board
-;------------------------------------------------------------
-init_owner_map:
-            ld hl, owner_map
-            ld b,64
-            ld a,0
-.clr:
-            ld (hl),a
-            inc hl
-            djnz .clr
-            ld hl, owner_map
-            ld (hl),1
-            ld hl, owner_map+63
-            ld (hl),2
-            ret
+        call check_keyboard
 
+        jr main_loop
+
+;───────────────────────────────────────
+; Clear screen to black
+;───────────────────────────────────────
+clear_screen:
+        ld hl, 16384
+        ld de, 16385
+        ld bc, 6143
+        ld (hl), 0
+        ldir
+
+        ld hl, ATTR_BASE
+        ld de, ATTR_BASE + 1
+        ld bc, 767
+        ld (hl), 0
+        ldir
+        ret
+
+;───────────────────────────────────────
+; Draw the 8x8 game board
+;───────────────────────────────────────
 draw_board:
-            ld hl, BOARD_ATTR
-            ld b,0
-.row:
-            push bc
-            ld c,0
-.col:
-            push bc
-            push hl
-            call owner_addr
-            ld a,(hl)
-            pop hl
-            call owner_to_attr
-            ld (hl),a
-            inc hl
-            ld (hl),a
-            ld de,31
-            add hl,de
-            ld (hl),a
-            inc hl
-            ld (hl),a
-            ld de,-63
-            add hl,de
-            pop bc
-            inc c
-            ld a,c
-            cp 8
-            jr nz,.col
-            ld de,64
-            add hl,de
-            pop bc
-            inc b
-            ld a,b
-            cp 8
-            jr nz,.row
-            ret
+        ld hl, BOARD_ATTR
+        ld b, BOARD_SIZE
 
-owner_addr:
-            ld hl, owner_map
-            ld d,0
-            ld a,b
-            rlca
-            rlca
-            rlca
-            ld d,a
-            ld a,c
-            add a,d
-            ld e,a
-            add hl,de
-            ret
+.row_loop:
+        push bc
+        ld b, BOARD_SIZE
 
-owner_to_attr:
-            cp 1
-            jr z,.own_p1
-            cp 2
-            jr z,.own_ai
-            ld a,7*8+0
-            ret
-.own_p1:
-            ld a,2*8+7
-            ret
-.own_ai:
-            ld a,5*8+7
-            ret
+.cell_loop:
+        push bc
+        push hl
 
-;------------------------------------------------------------
-; Cursor/input/claim
-;------------------------------------------------------------
-cursor_x: defb 0
-cursor_y: defb 0
-move_dir: defb 0
-space_pressed: defb 0
-turn_flag: defb 0
+        ld a, WHITE_ON_WHITE
+        ld (hl), a
+        inc hl
+        ld (hl), a
+        ld de, 31
+        add hl, de
+        ld (hl), a
+        inc hl
+        ld (hl), a
 
-read_input:
-            ld a,0
-            ld (move_dir),a
-            ld (space_pressed),a
+        pop hl
+        inc hl
+        inc hl
 
-            ld bc,$dffe
-            in a,(c)
-            bit 0,a
-            jr nz,.check_left
-            ld a,1
-            ld (move_dir),a
-.check_left:
-            ld bc,$dffe
-            in a,(c)
-            bit 1,a
-            jr nz,.check_up
-            ld a,2
-            ld (move_dir),a
-.check_up:
-            ld bc,$fbfe
-            in a,(c)
-            bit 0,a
-            jr nz,.check_down
-            ld a,3
-            ld (move_dir),a
-.check_down:
-            ld bc,$fdfe
-            in a,(c)
-            bit 0,a
-            jr nz,.check_space
-            ld a,4
-            ld (move_dir),a
-.check_space:
-            ld bc,$f7fe
-            in a,(c)
-            bit 0,a
-            jr nz,.done
-            ld a,1
-            ld (space_pressed),a
-.done:      call move_cursor
-            ret
+        pop bc
+        djnz .cell_loop
 
-move_cursor:
-            ld a,(move_dir)
-            or a
-            ret z
-            call clear_cursor
-            cp 1
-            jr nz,.nr
-            ld a,(cursor_x)
-            cp 7
-            jr z,.nr
-            inc a
-            ld (cursor_x),a
-.nr:
-            ld a,(move_dir)
-            cp 2
-            jr nz,.nl
-            ld a,(cursor_x)
-            or a
-            jr z,.nl
-            dec a
-            ld (cursor_x),a
-.nl:
-            ld a,(move_dir)
-            cp 3
-            jr nz,.nu
-            ld a,(cursor_y)
-            or a
-            jr z,.nu
-            dec a
-            ld (cursor_y),a
-.nu:
-            ld a,(move_dir)
-            cp 4
-            jr nz,.done_move
-            ld a,(cursor_y)
-            cp 7
-            jr z,.done_move
-            inc a
-            ld (cursor_y),a
-.done_move:
-            call highlight_cursor
-            call sfx_move
-            ret
+        pop bc
+        push bc
+        ld a, BOARD_SIZE
+        sub b
+        inc a
 
-maybe_claim:
-            ld a,(space_pressed)
-            or a
-            ret z
-            ld a,(cursor_y)
-            ld b,a
-            ld a,(cursor_x)
-            ld c,a
-            call owner_addr
-            ld a,(hl)
-            or a
-            ret nz
-            ld a,1
-            ld (hl),a
-            call draw_board
-            call highlight_cursor
-            call sfx_claim
-            ld a,1
-            ld (turn_flag),a
-            call dec_moves
-            call maybe_win
-            ret
+        ld h, 0
+        ld l, a
+        add hl, hl
+        add hl, hl
+        add hl, hl
+        add hl, hl
+        add hl, hl
+        add hl, hl
+        ld de, BOARD_ATTR
+        add hl, de
 
-dec_moves:
-            ld a,(moves_remaining)
-            dec a
-            ld (moves_remaining),a
-            ret
+        pop bc
+        djnz .row_loop
 
-;------------------------------------------------------------
-; AI pick/claim
-;------------------------------------------------------------
-best_score: defb 0
-best_x:     defb 0
-best_y:     defb 0
-moves_remaining: defb 64
+        ret
 
-ai_pick_move:
-            ld a,0
-            ld (best_score),a
-            ld (best_x),a
-            ld (best_y),a
+;───────────────────────────────────────
+; Set up starting cells
+;───────────────────────────────────────
+init_starting_cells:
+        ld hl, board_state
+        ld (hl), 1
 
-            ld b,0
-.ai_row:
-            ld c,0
-.ai_col:
-            push bc
-            call owner_addr
-            ld a,(hl)
-            or a
-            jr nz,.skip
-            call score_cell_ai
-            ld e,a
-            ld a,(best_score)
-            cp e
-            jr nc,.skip_pop
-            ld a,e
-            ld (best_score),a
-            ld a,c
-            ld (best_x),a
-            ld a,b
-            ld (best_y),a
-.skip_pop:  pop bc
-            jr .after
-.skip:      pop bc
-.after:
-            inc c
-            ld a,c
-            cp 8
-            jr nz,.ai_col
-            inc b
-            ld a,b
-            cp 8
-            jr nz,.ai_row
-            ret
+        ld b, 0
+        ld c, 0
+        call get_cell_addr
+        ld a, RED_ON_RED
+        ld b, a
+        call set_cell_direct
 
-score_cell_ai:
-            ld a,0
-            ld (tmp_score),a
-            call sc_up
-            call sc_down
-            call sc_left
-            call sc_right
-            ld a,(tmp_score)
-            ret
+        ld hl, board_state + 63
+        ld (hl), 2
 
-sc_up:
-            ld a,b
-            or a
-            ret z
-            dec b
-            call owner_addr
-            ld a,(hl)
-            call apply_neighbor
-            inc b
-            ret
-sc_down:
-            ld a,b
-            cp 7
-            ret z
-            inc b
-            call owner_addr
-            ld a,(hl)
-            call apply_neighbor
-            dec b
-            ret
-sc_left:
-            ld a,c
-            or a
-            ret z
-            dec c
-            call owner_addr
-            ld a,(hl)
-            call apply_neighbor
-            inc c
-            ret
-sc_right:
-            ld a,c
-            cp 7
-            ret z
-            inc c
-            call owner_addr
-            ld a,(hl)
-            call apply_neighbor
-            dec c
-            ret
+        ld b, 7
+        ld c, 7
+        call get_cell_addr
+        ld a, CYAN_ON_CYAN
+        ld b, a
+        call set_cell_direct
 
-apply_neighbor:
-            cp 1
-            jr z,.an_player
-            cp 2
-            jr z,.an_ai
-            ld a,(tmp_score)
-            inc a
-            ld (tmp_score),a
-            ret
-.an_player:
-            ld a,(tmp_score)
-            sub 2
-            ld (tmp_score),a
-            ret
-.an_ai:
-            ld a,(tmp_score)
-            add a,2
-            ld (tmp_score),a
-            ret
+        ret
 
-tmp_score:  defb 0
+;───────────────────────────────────────
+; Get attribute address for a game cell
+;───────────────────────────────────────
+get_cell_addr:
+        ld hl, BOARD_ATTR
 
-ai_claim:
-            ld a,(best_y)
-            ld b,a
-            ld a,(best_x)
-            ld c,a
-            call owner_addr
-            ld a,2
-            ld (hl),a
-            call draw_board
-            call highlight_cursor
-            ld a,0
-            ld (turn_flag),a
-            call dec_moves
-            call maybe_win
-            ret
+        ld a, b
+        rlca
+        rlca
+        rlca
+        rlca
+        rlca
+        rlca
+        ld e, a
+        ld d, 0
+        add hl, de
 
-maybe_win:
-            ld a,(moves_remaining)
-            or a
-            ret nz
-            call check_winner
-            call show_results
-wait_restart:
-            halt
-            ld bc,$f7fe
-            in a,(c)
-            bit 0,a
-            jr nz,wait_restart
-            jp start
+        ld a, c
+        add a, a
+        ld e, a
+        ld d, 0
+        add hl, de
 
-check_winner:
-            ld hl,0
-            ld (p1_count),hl
-            ld (ai_count),hl
-            ld b,0
-.cw_row:
-            ld c,0
-.cw_col:
-            push bc
-            call owner_addr
-            ld a,(hl)
-            cp 1
-            jr nz,.not_p1
-            ld hl,(p1_count)
-            inc hl
-            ld (p1_count),hl
-            jr .next_cell
-.not_p1:
-            cp 2
-            jr nz,.next_cell
-            ld hl,(ai_count)
-            inc hl
-            ld (ai_count),hl
-.next_cell:
-            pop bc
-            inc c
-            ld a,c
-            cp 8
-            jr nz,.cw_col
-            inc b
-            ld a,b
-            cp 8
-            jr nz,.cw_row
-            ret
+        ret
 
-show_results:
-            ld hl,(p1_count)
-            ld de,(ai_count)
-            or a
-            sbc hl,de
-            jr z,.draw
-            jr c,.ai_wins
-            jr .p1_wins
-.draw:
-            ld hl, draw_text
-            jr .announce
-.ai_wins:
-            ld hl, ai_text
-            jr .announce
-.p1_wins:
-            ld hl, p1_text
-.announce:
-            ld a,22
-            rst 16
-            ld a,12
-            rst 16
-            ld a,10
-            rst 16
-            call print_string
-            call sfx_win
-            ld hl, restart_text
-            ld a,22
-            rst 16
-            ld a,14
-            rst 16
-            ld a,8
-            rst 16
-            call print_string
-            ret
-
-print_string:
-            ld a,(hl)
-            or a
-            ret z
-            rst 16
-            inc hl
-            jr print_string
-
-get_attr_addr:
-            ld hl, BOARD_ATTR
-            ld a,(cursor_y)
-            rlca
-            rlca
-            rlca
-            rlca
-            rlca
-            rlca
-            ld e,a
-            ld d,0
-            add hl,de
-            ld a,(cursor_x)
-            add a,a
-            ld e,a
-            add hl,de
-            ret
-
+;───────────────────────────────────────
+; Highlight a cell (set FLASH)
+;───────────────────────────────────────
 highlight_cursor:
-            call get_attr_addr
-            call set_flash_block
-            ret
+        ld a, (hl)
+        set 7, a
+        ld (hl), a
 
+        inc hl
+        ld a, (hl)
+        set 7, a
+        ld (hl), a
+
+        ld de, 31
+        add hl, de
+
+        ld a, (hl)
+        set 7, a
+        ld (hl), a
+
+        inc hl
+        ld a, (hl)
+        set 7, a
+        ld (hl), a
+
+        ret
+
+;───────────────────────────────────────
+; Clear cursor (remove FLASH)
+;───────────────────────────────────────
 clear_cursor:
-            call get_attr_addr
-            call clear_flash_block
-            ret
+        ld a, (hl)
+        res 7, a
+        ld (hl), a
 
-set_flash_block:
-            ld a,(hl)
-            set 7,a
-            ld (hl),a
-            inc hl
-            ld a,(hl)
-            set 7,a
-            ld (hl),a
-            ld de,31
-            add hl,de
-            ld a,(hl)
-            set 7,a
-            ld (hl),a
-            inc hl
-            ld a,(hl)
-            set 7,a
-            ld (hl),a
-            ret
+        inc hl
+        ld a, (hl)
+        res 7, a
+        ld (hl), a
 
-clear_flash_block:
-            ld a,(hl)
-            res 7,a
-            ld (hl),a
-            inc hl
-            ld a,(hl)
-            res 7,a
-            ld (hl),a
-            ld de,31
-            add hl,de
-            ld a,(hl)
-            res 7,a
-            ld (hl),a
-            inc hl
-            ld a,(hl)
-            res 7,a
-            ld (hl),a
-            ret
+        ld de, 31
+        add hl, de
 
-;------------------------------------------------------------
-; Beeper SFX (uses ROM BEEP routine at 949)
-;------------------------------------------------------------
-sfx_move:
-            ld bc,20
-            call BEEP
-            ret
+        ld a, (hl)
+        res 7, a
+        ld (hl), a
 
-sfx_claim:
-            ld bc,40
-            call BEEP
-            ret
+        inc hl
+        ld a, (hl)
+        res 7, a
+        ld (hl), a
 
-sfx_win:
-            ld bc,80
-            call BEEP
-            ret
+        ret
 
-owner_map:   defs 64
-p1_count:    defw 0
-ai_count:    defw 0
+;───────────────────────────────────────
+; Get cursor's attribute address
+;───────────────────────────────────────
+get_cursor_addr:
+        ld a, (cursor_y)
+        ld b, a
+        ld a, (cursor_x)
+        ld c, a
+        call get_cell_addr
+        ret
 
-p1_text:     defb "PLAYER WINS!",0
-ai_text:     defb "AI WINS!",0
-draw_text:   defb "DRAW!",0
-restart_text:defb "PRESS SPACE TO RESTART",0
+;───────────────────────────────────────
+; Check keyboard
+;───────────────────────────────────────
+check_keyboard:
+        ; Check SPACE
+        ld a, $7F
+        in a, ($FE)
+        bit 0, a
+        jr nz, .space_not_pressed
 
-            end start
+        ld a, (space_held)
+        or a
+        jr nz, .check_movement
+
+        ld a, 1
+        ld (space_held), a
+        call claim_cell
+        jr .check_movement
+
+.space_not_pressed:
+        xor a
+        ld (space_held), a
+
+.check_movement:
+        ld a, (move_delay)
+        or a
+        jr z, .can_move
+
+        dec a
+        ld (move_delay), a
+        ret
+
+.can_move:
+        ld a, $FB
+        in a, ($FE)
+        bit 0, a
+        jr nz, .not_up
+        call move_up
+        ret
+
+.not_up:
+        ld a, $FD
+        in a, ($FE)
+        bit 0, a
+        jr nz, .not_down
+        call move_down
+        ret
+
+.not_down:
+        ld a, $DF
+        in a, ($FE)
+        bit 1, a
+        jr nz, .not_left
+        call move_left
+        ret
+
+.not_left:
+        ld a, $DF
+        in a, ($FE)
+        bit 0, a
+        jr nz, .not_right
+        call move_right
+        ret
+
+.not_right:
+        ret
+
+;───────────────────────────────────────
+; Movement routines
+;───────────────────────────────────────
+move_up:
+        ld a, (cursor_y)
+        or a
+        ret z
+
+        call get_cursor_addr
+        call clear_cursor
+
+        ld a, (cursor_y)
+        dec a
+        ld (cursor_y), a
+
+        call get_cursor_addr
+        call highlight_cursor
+
+        ld a, MOVE_DELAY
+        ld (move_delay), a
+        call beep_move
+        ret
+
+move_down:
+        ld a, (cursor_y)
+        cp 7
+        ret z
+
+        call get_cursor_addr
+        call clear_cursor
+
+        ld a, (cursor_y)
+        inc a
+        ld (cursor_y), a
+
+        call get_cursor_addr
+        call highlight_cursor
+
+        ld a, MOVE_DELAY
+        ld (move_delay), a
+        call beep_move
+        ret
+
+move_left:
+        ld a, (cursor_x)
+        or a
+        ret z
+
+        call get_cursor_addr
+        call clear_cursor
+
+        ld a, (cursor_x)
+        dec a
+        ld (cursor_x), a
+
+        call get_cursor_addr
+        call highlight_cursor
+
+        ld a, MOVE_DELAY
+        ld (move_delay), a
+        call beep_move
+        ret
+
+move_right:
+        ld a, (cursor_x)
+        cp 7
+        ret z
+
+        call get_cursor_addr
+        call clear_cursor
+
+        ld a, (cursor_x)
+        inc a
+        ld (cursor_x), a
+
+        call get_cursor_addr
+        call highlight_cursor
+
+        ld a, MOVE_DELAY
+        ld (move_delay), a
+        call beep_move
+        ret
+
+;───────────────────────────────────────
+; Get board state address
+;───────────────────────────────────────
+get_board_addr:
+        ld hl, board_state
+
+        ld a, b
+        rlca
+        rlca
+        rlca
+        add a, c
+        ld e, a
+        ld d, 0
+        add hl, de
+
+        ret
+
+;───────────────────────────────────────
+; Get owner of a cell
+;───────────────────────────────────────
+get_owner:
+        call get_board_addr
+        ld a, (hl)
+        ret
+
+;───────────────────────────────────────
+; Check cursor adjacency
+;───────────────────────────────────────
+check_adjacency:
+        ld a, (cursor_y)
+        or a
+        jr z, .skip_up
+
+        dec a
+        ld b, a
+        ld a, (cursor_x)
+        ld c, a
+        call get_owner
+        ld b, a
+        ld a, (current_player)
+        cp b
+        ret z
+
+.skip_up:
+        ld a, (cursor_y)
+        cp 7
+        jr z, .skip_down
+
+        inc a
+        ld b, a
+        ld a, (cursor_x)
+        ld c, a
+        call get_owner
+        ld b, a
+        ld a, (current_player)
+        cp b
+        ret z
+
+.skip_down:
+        ld a, (cursor_x)
+        or a
+        jr z, .skip_left
+
+        dec a
+        ld c, a
+        ld a, (cursor_y)
+        ld b, a
+        call get_owner
+        ld b, a
+        ld a, (current_player)
+        cp b
+        ret z
+
+.skip_left:
+        ld a, (cursor_x)
+        cp 7
+        jr z, .skip_right
+
+        inc a
+        ld c, a
+        ld a, (cursor_y)
+        ld b, a
+        call get_owner
+        ld b, a
+        ld a, (current_player)
+        cp b
+        ret z
+
+.skip_right:
+        or 1
+        ret
+
+;───────────────────────────────────────
+; Check adjacency at (B,C)
+;───────────────────────────────────────
+check_adjacency_at:
+        push bc
+
+        ld a, b
+        or a
+        jr z, .skip_up
+
+        dec a
+        ld b, a
+        call get_owner
+        ld e, a
+        ld a, (current_player)
+        cp e
+        jr z, .found
+
+.skip_up:
+        pop bc
+        push bc
+
+        ld a, b
+        cp 7
+        jr z, .skip_down
+
+        inc a
+        ld b, a
+        call get_owner
+        ld e, a
+        ld a, (current_player)
+        cp e
+        jr z, .found
+
+.skip_down:
+        pop bc
+        push bc
+
+        ld a, c
+        or a
+        jr z, .skip_left
+
+        dec a
+        ld c, a
+        call get_owner
+        ld e, a
+        ld a, (current_player)
+        cp e
+        jr z, .found
+
+.skip_left:
+        pop bc
+        push bc
+
+        ld a, c
+        cp 7
+        jr z, .skip_right
+
+        inc a
+        ld c, a
+        call get_owner
+        ld e, a
+        ld a, (current_player)
+        cp e
+        jr z, .found
+
+.skip_right:
+        pop bc
+        or 1
+        ret
+
+.found:
+        pop bc
+        xor a
+        ret
+
+;───────────────────────────────────────
+; Claim current cell
+;───────────────────────────────────────
+claim_cell:
+        ld a, (cursor_x)
+        ld c, a
+        ld a, (cursor_y)
+        ld b, a
+
+        call get_board_addr
+        ld a, (hl)
+        or a
+        ret nz
+
+        call check_adjacency
+        ret nz
+
+        ; Claim it
+        ld a, (cursor_x)
+        ld c, a
+        ld a, (cursor_y)
+        ld b, a
+        call get_board_addr
+        ld a, (current_player)
+        ld (hl), a
+
+        ; Update display
+        ld a, (cursor_x)
+        ld c, a
+        ld a, (cursor_y)
+        ld b, a
+        call get_cell_addr
+        call set_cell_colour
+
+        call beep_claim
+
+        ; Decrement moves and check for game over
+        ld a, (moves_remaining)
+        dec a
+        ld (moves_remaining), a
+        or a
+        jp z, check_game_over
+
+        ; AI's turn
+        call ai_think_delay
+        call ai_pick_move
+        call ai_make_move
+
+        ret
+
+;───────────────────────────────────────
+; Set cell colour based on current player
+;───────────────────────────────────────
+set_cell_colour:
+        ld a, (current_player)
+        cp 1
+        jr nz, .player_2
+        ld a, RED_ON_RED
+        jr .set_colour
+.player_2:
+        ld a, CYAN_ON_CYAN
+
+.set_colour:
+        ld b, a
+
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        inc hl
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        ld de, 31
+        add hl, de
+
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        inc hl
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        ret
+
+;───────────────────────────────────────
+; Set cell colour directly
+;───────────────────────────────────────
+set_cell_direct:
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        inc hl
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        ld de, 31
+        add hl, de
+
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        inc hl
+        ld a, (hl)
+        and %10000000
+        or b
+        ld (hl), a
+
+        ret
+
+;───────────────────────────────────────
+; Update border colour
+;───────────────────────────────────────
+update_ui_colours:
+        ld a, (current_player)
+        cp 1
+        jr nz, .player_2
+        ld a, 2
+        jr .set_border
+.player_2:
+        ld a, 5
+.set_border:
+        ld (border_colour), a
+        out (254), a
+        ret
+
+;───────────────────────────────────────
+; AI: Think delay
+;───────────────────────────────────────
+ai_think_delay:
+        ld b, 25
+.delay_loop:
+        halt
+        djnz .delay_loop
+        ret
+
+;───────────────────────────────────────
+; AI: Find best move
+;───────────────────────────────────────
+ai_pick_move:
+        xor a
+        ld (best_score), a
+
+        ld a, 2
+        ld (current_player), a
+
+        ld b, 0
+.y_loop:
+        ld c, 0
+.x_loop:
+        push bc
+
+        call get_owner
+        or a
+        jr nz, .skip
+
+        pop bc
+        push bc
+        call check_adjacency_at
+        jr nz, .skip
+
+        pop bc
+        push bc
+        call score_cell
+
+        ld e, a
+        ld a, (best_score)
+        cp e
+        jr nc, .skip
+
+        ld a, e
+        ld (best_score), a
+        pop bc
+        push bc
+        ld a, c
+        ld (best_x), a
+        ld a, b
+        ld (best_y), a
+
+.skip:
+        pop bc
+        inc c
+        ld a, c
+        cp 8
+        jr nz, .x_loop
+
+        inc b
+        ld a, b
+        cp 8
+        jr nz, .y_loop
+
+        ld a, 1
+        ld (current_player), a
+
+        ret
+
+;───────────────────────────────────────
+; AI: Score a cell
+;───────────────────────────────────────
+score_cell:
+        xor a
+        ld (tmp_score), a
+
+        push bc
+
+        call score_neighbour_up
+        pop bc
+        push bc
+        call score_neighbour_down
+        pop bc
+        push bc
+        call score_neighbour_left
+        pop bc
+        push bc
+        call score_neighbour_right
+
+        pop bc
+        push bc
+        call count_enemy_neighbours
+        cp 2
+        jr c, .no_block
+
+        ld a, (tmp_score)
+        add a, 4
+        ld (tmp_score), a
+
+.no_block:
+        ld a, (frame_counter)
+        and %00000001
+        ld b, a
+        ld a, (tmp_score)
+        add a, b
+        ld (tmp_score), a
+
+        pop bc
+        ld a, (tmp_score)
+        ret
+
+;───────────────────────────────────────
+; AI: Score neighbour routines
+;───────────────────────────────────────
+score_neighbour_up:
+        ld a, b
+        or a
+        ret z
+        dec a
+        ld b, a
+        call get_owner
+        or a
+        jr z, .neutral
+        cp 2
+        jr z, .friendly
+        ld a, (tmp_score)
+        sub 2
+        ld (tmp_score), a
+        ret
+.friendly:
+        ld a, (tmp_score)
+        add a, 3
+        ld (tmp_score), a
+        ret
+.neutral:
+        ld a, (tmp_score)
+        inc a
+        ld (tmp_score), a
+        ret
+
+score_neighbour_down:
+        ld a, b
+        cp 7
+        ret z
+        inc a
+        ld b, a
+        call get_owner
+        or a
+        jr z, .neutral
+        cp 2
+        jr z, .friendly
+        ld a, (tmp_score)
+        sub 2
+        ld (tmp_score), a
+        ret
+.friendly:
+        ld a, (tmp_score)
+        add a, 3
+        ld (tmp_score), a
+        ret
+.neutral:
+        ld a, (tmp_score)
+        inc a
+        ld (tmp_score), a
+        ret
+
+score_neighbour_left:
+        ld a, c
+        or a
+        ret z
+        dec a
+        ld c, a
+        call get_owner
+        or a
+        jr z, .neutral
+        cp 2
+        jr z, .friendly
+        ld a, (tmp_score)
+        sub 2
+        ld (tmp_score), a
+        ret
+.friendly:
+        ld a, (tmp_score)
+        add a, 3
+        ld (tmp_score), a
+        ret
+.neutral:
+        ld a, (tmp_score)
+        inc a
+        ld (tmp_score), a
+        ret
+
+score_neighbour_right:
+        ld a, c
+        cp 7
+        ret z
+        inc a
+        ld c, a
+        call get_owner
+        or a
+        jr z, .neutral
+        cp 2
+        jr z, .friendly
+        ld a, (tmp_score)
+        sub 2
+        ld (tmp_score), a
+        ret
+.friendly:
+        ld a, (tmp_score)
+        add a, 3
+        ld (tmp_score), a
+        ret
+.neutral:
+        ld a, (tmp_score)
+        inc a
+        ld (tmp_score), a
+        ret
+
+;───────────────────────────────────────
+; AI: Count enemy neighbours
+;───────────────────────────────────────
+count_enemy_neighbours:
+        xor a
+        ld (enemy_count), a
+        push bc
+
+        ld a, b
+        or a
+        jr z, .skip_up
+        dec a
+        ld b, a
+        call get_owner
+        cp 1
+        jr nz, .skip_up
+        ld a, (enemy_count)
+        inc a
+        ld (enemy_count), a
+.skip_up:
+        pop bc
+        push bc
+
+        ld a, b
+        cp 7
+        jr z, .skip_down
+        inc a
+        ld b, a
+        call get_owner
+        cp 1
+        jr nz, .skip_down
+        ld a, (enemy_count)
+        inc a
+        ld (enemy_count), a
+.skip_down:
+        pop bc
+        push bc
+
+        ld a, c
+        or a
+        jr z, .skip_left
+        dec a
+        ld c, a
+        call get_owner
+        cp 1
+        jr nz, .skip_left
+        ld a, (enemy_count)
+        inc a
+        ld (enemy_count), a
+.skip_left:
+        pop bc
+        push bc
+
+        ld a, c
+        cp 7
+        jr z, .skip_right
+        inc a
+        ld c, a
+        call get_owner
+        cp 1
+        jr nz, .skip_right
+        ld a, (enemy_count)
+        inc a
+        ld (enemy_count), a
+.skip_right:
+        pop bc
+
+        ld a, (enemy_count)
+        ret
+
+;───────────────────────────────────────
+; AI: Execute move
+;───────────────────────────────────────
+ai_make_move:
+        ld a, (best_score)
+        or a
+        ret z
+
+        ld a, 2
+        ld (current_player), a
+
+        ld a, (best_y)
+        ld b, a
+        ld a, (best_x)
+        ld c, a
+        call get_board_addr
+        ld a, 2
+        ld (hl), a
+
+        ld a, (best_y)
+        ld b, a
+        ld a, (best_x)
+        ld c, a
+        call get_cell_addr
+        call set_cell_colour
+
+        ; Decrement moves and check for game over
+        ld a, (moves_remaining)
+        dec a
+        ld (moves_remaining), a
+        or a
+        jp z, check_game_over
+
+        ld a, 1
+        ld (current_player), a
+        call update_ui_colours
+
+        ret
+
+;───────────────────────────────────────
+; Count territories for each player
+;───────────────────────────────────────
+count_territories:
+        xor a
+        ld (p1_count), a
+        ld (p2_count), a
+
+        ld hl, board_state
+        ld b, 64
+
+.count_loop:
+        ld a, (hl)
+        cp 1
+        jr nz, .not_p1
+        ld a, (p1_count)
+        inc a
+        ld (p1_count), a
+        jr .next
+
+.not_p1:
+        cp 2
+        jr nz, .next
+        ld a, (p2_count)
+        inc a
+        ld (p2_count), a
+
+.next:
+        inc hl
+        djnz .count_loop
+        ret
+
+;───────────────────────────────────────
+; Check game over and declare winner
+;───────────────────────────────────────
+check_game_over:
+        call count_territories
+
+        ld a, (p1_count)
+        ld b, a
+        ld a, (p2_count)
+        cp b
+        jr z, .draw
+        jr c, .p1_wins
+
+        ; P2 wins
+        ld a, 2
+        jr .store_winner
+
+.p1_wins:
+        ld a, 1
+        jr .store_winner
+
+.draw:
+        xor a
+
+.store_winner:
+        ld (winner), a
+        call show_results
+        call set_winner_border
+        call play_result_sound
+        call wait_for_restart
+        jp restart_game
+
+;───────────────────────────────────────
+; Show results screen
+;───────────────────────────────────────
+show_results:
+        ; Clear screen
+        call clear_screen
+
+        ; Set white on black for text
+        ld a, %00000111
+        ld (23693), a           ; ATTR_P
+
+        ; Open channel 2
+        ld a, 2
+        call OPEN_CHANNEL
+
+        ; Print "GAME OVER" at row 6
+        ld a, 22
+        rst $10
+        ld a, 6
+        rst $10
+        ld a, 11
+        rst $10
+        ld hl, msg_gameover
+        call print_string
+
+        ; Print "PLAYER: " and score at row 10
+        ld a, 22
+        rst $10
+        ld a, 10
+        rst $10
+        ld a, 10
+        rst $10
+        ld hl, msg_player
+        call print_string
+        ld a, (p1_count)
+        call print_number
+
+        ; Print "CPU: " and score at row 12
+        ld a, 22
+        rst $10
+        ld a, 12
+        rst $10
+        ld a, 10
+        rst $10
+        ld hl, msg_cpu
+        call print_string
+        ld a, (p2_count)
+        call print_number
+
+        ; Print winner message at row 16
+        ld a, 22
+        rst $10
+        ld a, 16
+        rst $10
+        ld a, 9
+        rst $10
+
+        ld a, (winner)
+        or a
+        jr z, .draw
+        cp 1
+        jr z, .p1_wins
+
+        ; P2/CPU wins
+        ld hl, msg_cpu_wins
+        jr .print_winner
+
+.p1_wins:
+        ld hl, msg_player_wins
+        jr .print_winner
+
+.draw:
+        ld hl, msg_draw
+
+.print_winner:
+        call print_string
+
+        ; Print "PRESS SPACE" at row 20
+        ld a, 22
+        rst $10
+        ld a, 20
+        rst $10
+        ld a, 10
+        rst $10
+        ld hl, msg_space
+        call print_string
+
+        ret
+
+;───────────────────────────────────────
+; Set border to winner colour
+;───────────────────────────────────────
+set_winner_border:
+        ld a, (winner)
+        cp 1
+        jr nz, .not_p1
+        ld a, 2                 ; Red
+        jr .set
+.not_p1:
+        cp 2
+        jr nz, .is_draw
+        ld a, 5                 ; Cyan
+        jr .set
+.is_draw:
+        ld a, 6                 ; Yellow
+.set:
+        ld (border_colour), a
+        out (254), a
+        ret
+
+;───────────────────────────────────────
+; Print null-terminated string
+;───────────────────────────────────────
+print_string:
+        ld a, (hl)
+        or a
+        ret z
+        rst $10
+        inc hl
+        jr print_string
+
+;───────────────────────────────────────
+; Print a number (0-99)
+;───────────────────────────────────────
+print_number:
+        ld c, a
+        ld b, 0
+
+.count_tens:
+        cp 10
+        jr c, .print_digits
+        sub 10
+        inc b
+        jr .count_tens
+
+.print_digits:
+        ld c, a
+
+        ld a, b
+        or a
+        jr z, .print_units
+        add a, '0'
+        rst $10
+
+.print_units:
+        ld a, c
+        add a, '0'
+        rst $10
+        ret
+
+;───────────────────────────────────────
+; Play a beep
+; Input: DE = pitch (higher = lower tone)
+;        BC = duration (cycles)
+;───────────────────────────────────────
+play_beep:
+        ld a, (border_colour)
+        ld h, a
+
+.beep_loop:
+        ; Speaker ON
+        ld a, h
+        or %00010000
+        out ($FE), a
+
+        ; Pitch delay
+        push de
+.delay1:
+        dec de
+        ld a, d
+        or e
+        jr nz, .delay1
+        pop de
+
+        ; Speaker OFF
+        ld a, h
+        out ($FE), a
+
+        ; Pitch delay
+        push de
+.delay2:
+        dec de
+        ld a, d
+        or e
+        jr nz, .delay2
+        pop de
+
+        ; Duration loop
+        dec bc
+        ld a, b
+        or c
+        jr nz, .beep_loop
+
+        ret
+
+;───────────────────────────────────────
+; Beep for cursor movement
+;───────────────────────────────────────
+beep_move:
+        ld de, 50
+        ld bc, 20
+        call play_beep
+        ret
+
+;───────────────────────────────────────
+; Beep for claiming a cell
+;───────────────────────────────────────
+beep_claim:
+        ld de, 150
+        ld bc, 80
+        call play_beep
+        ret
+
+;───────────────────────────────────────
+; Victory jingle (ascending)
+;───────────────────────────────────────
+beep_victory:
+        ld de, 200
+        ld bc, 100
+        call play_beep
+
+        ld de, 150
+        ld bc, 100
+        call play_beep
+
+        ld de, 100
+        ld bc, 150
+        call play_beep
+
+        ld de, 75
+        ld bc, 200
+        call play_beep
+
+        ret
+
+;───────────────────────────────────────
+; Defeat sound (descending)
+;───────────────────────────────────────
+beep_defeat:
+        ld de, 100
+        ld bc, 100
+        call play_beep
+
+        ld de, 150
+        ld bc, 100
+        call play_beep
+
+        ld de, 200
+        ld bc, 150
+        call play_beep
+
+        ld de, 300
+        ld bc, 200
+        call play_beep
+
+        ret
+
+;───────────────────────────────────────
+; Draw sound (neutral)
+;───────────────────────────────────────
+beep_draw:
+        ld de, 120
+        ld bc, 100
+        call play_beep
+
+        ld de, 120
+        ld bc, 100
+        call play_beep
+
+        ret
+
+;───────────────────────────────────────
+; Play appropriate end-game sound
+;───────────────────────────────────────
+play_result_sound:
+        ld a, (winner)
+        or a
+        jr z, .draw
+        cp 1
+        jr z, .p1_wins
+
+        ; CPU wins
+        call beep_defeat
+        ret
+
+.p1_wins:
+        call beep_victory
+        ret
+
+.draw:
+        call beep_draw
+        ret
+
+;───────────────────────────────────────
+; Wait for SPACE to restart
+;───────────────────────────────────────
+wait_for_restart:
+.wait_release:
+        ld a, $7F
+        in a, ($FE)
+        bit 0, a
+        jr z, .wait_release
+
+.wait_press:
+        halt
+        ld a, $7F
+        in a, ($FE)
+        bit 0, a
+        jr nz, .wait_press
+
+        ret
+
+;───────────────────────────────────────
+; Reset and restart the game
+;───────────────────────────────────────
+restart_game:
+        ; Clear board state
+        ld hl, board_state
+        ld b, 64
+.clear_board:
+        ld (hl), 0
+        inc hl
+        djnz .clear_board
+
+        ; Reset move counter
+        ld a, 62
+        ld (moves_remaining), a
+
+        ; Reset cursor
+        ld a, 1
+        ld (cursor_x), a
+        xor a
+        ld (cursor_y), a
+
+        ; Reset player
+        ld a, 1
+        ld (current_player), a
+
+        ; Redraw
+        call clear_screen
+        call draw_board
+        call init_starting_cells
+
+        ld b, 0
+        ld c, 1
+        call get_cell_addr
+        call highlight_cursor
+
+        call update_ui_colours
+
+        jp main_loop
+
+;───────────────────────────────────────
+; Variables
+;───────────────────────────────────────
+cursor_x:        defb 0
+cursor_y:        defb 0
+move_delay:      defb 0
+space_held:      defb 0
+current_player:  defb 1
+frame_counter:   defb 0
+moves_remaining: defb 62
+border_colour:   defb 2
+
+;───────────────────────────────────────
+; AI variables
+;───────────────────────────────────────
+best_score:      defb 0
+best_x:          defb 0
+best_y:          defb 0
+tmp_score:       defb 0
+enemy_count:     defb 0
+
+;───────────────────────────────────────
+; Win detection variables
+;───────────────────────────────────────
+p1_count:        defb 0
+p2_count:        defb 0
+winner:          defb 0
+
+;───────────────────────────────────────
+; Message strings
+;───────────────────────────────────────
+msg_gameover:    defb "GAME OVER", 0
+msg_player:      defb "PLAYER:  ", 0
+msg_cpu:         defb "CPU:     ", 0
+msg_player_wins: defb "PLAYER WINS!", 0
+msg_cpu_wins:    defb "CPU WINS!", 0
+msg_draw:        defb "IT'S A DRAW!", 0
+msg_space:       defb "PRESS SPACE", 0
+
+;───────────────────────────────────────
+; Board state
+;───────────────────────────────────────
+board_state:     defs 64, 0
+
+        end start

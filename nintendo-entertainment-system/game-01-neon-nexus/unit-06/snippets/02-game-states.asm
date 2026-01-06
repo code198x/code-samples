@@ -1,0 +1,3 @@
+.segment "ZEROPAGE"
+; ... existing variables ...
+game_state: .res 1

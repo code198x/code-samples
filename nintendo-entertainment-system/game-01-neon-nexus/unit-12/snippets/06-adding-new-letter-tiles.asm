@@ -1,0 +1,3 @@
+TILE_H = 27
+TILE_I = 28
+TILE_W = 29

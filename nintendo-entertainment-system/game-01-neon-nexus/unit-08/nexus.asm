@@ -1,76 +1,113 @@
-;──────────────────────────────────────────────────────────────
-; NEON NEXUS - Unit 8 sample (Score + Lives + Respawn)
-; Includes: PPU init, grid, player sprite/movement, HUD score and lives,
-; fake collisions via B (lose life) and A (add score), respawn with timer.
-; Game over flag when lives reach zero (no title screen yet).
-;──────────────────────────────────────────────────────────────
+;
+; Neon Nexus - Unit 8: Lives
+; A complete NES game with player, enemies, items, collision, score, and lives
+;
+
+; ============================================================================
+; iNES Header
+; ============================================================================
 
 .segment "HEADER"
-    .byte "NES", $1a
-    .byte 2
-    .byte 1
-    .byte $01
-    .byte $00
-    .byte 0,0,0,0,0,0,0,0
+    .byte "NES", $1A    ; iNES identifier
+    .byte 2             ; 2x 16KB PRG-ROM
+    .byte 1             ; 1x 8KB CHR-ROM
+    .byte $01           ; Mapper 0, vertical mirroring
+    .byte $00           ; Mapper 0
 
-.segment "ZEROPAGE"
-frame_counter: .res 1
-player_x:      .res 1
-player_y:      .res 1
-hud_dirty:     .res 1
-score0:        .res 1
-score1:        .res 1
-score2:        .res 1
-controller1:   .res 1
-lives:         .res 1
-respawn_timer: .res 1
-player_alive:  .res 1
+; ============================================================================
+; Hardware Constants
+; ============================================================================
 
-.segment "CODE"
 PPUCTRL   = $2000
 PPUMASK   = $2001
 PPUSTATUS = $2002
-OAMADDR   = $2003
-PPUSCROLL = $2005
 PPUADDR   = $2006
 PPUDATA   = $2007
+PPUSCROLL = $2005
 OAMDMA    = $4014
-JOY1      = $4016
+JOYPAD1   = $4016
 
-BTN_A     = %10000000
-BTN_B     = %01000000
-BTN_START = %00010000
-BTN_UP    = %00001000
-BTN_DOWN  = %00000100
-BTN_LEFT  = %00000010
-BTN_RIGHT = %00000001
+; Controller button masks
+BTN_RIGHT  = %00000001
+BTN_LEFT   = %00000010
+BTN_DOWN   = %00000100
+BTN_UP     = %00001000
+BTN_START  = %00010000
+BTN_SELECT = %00100000
+BTN_B      = %01000000
+BTN_A      = %10000000
 
-HUD_ROW       = 0
-HUD_COL       = 2
-HUD_SCORE_COL = HUD_COL + 6
-HUD_LIVES_COL = HUD_SCORE_COL + 8
-TILE_ZERO     = $30
-TILE_L        = $20   ; adjust if needed for letters
+; Game constants
+PLAYER_SPEED  = 2
+ENEMY_SPEED   = 1
+NUM_ENEMIES   = 4
+SPAWN_X       = 120
+SPAWN_Y       = 120
+INVULN_TIME   = 60
 
-.proc reset
-    sei
-    cld
+; Collision box sizes (approximate sprite size)
+HITBOX_SIZE = 6
+
+; Game state constants
+STATE_PLAYING  = 0
+STATE_GAMEOVER = 1
+
+; ============================================================================
+; Zero Page Variables
+; ============================================================================
+
+.segment "ZEROPAGE"
+nmi_ready:      .res 1      ; flag set by NMI
+buttons:        .res 1      ; controller state
+player_x:       .res 1      ; player X position
+player_y:       .res 1      ; player Y position
+enemy_x:        .res 4      ; enemy X positions
+enemy_y:        .res 4      ; enemy Y positions
+item_x:         .res 1      ; item X position
+item_y:         .res 1      ; item Y position
+score:          .res 2      ; 16-bit score (low, high)
+game_state:     .res 1      ; current game state
+lives:          .res 1      ; remaining lives
+invuln_timer:   .res 1      ; invulnerability countdown
+temp:           .res 1      ; temporary for division
+
+; ============================================================================
+; OAM Buffer
+; ============================================================================
+
+.segment "OAM"
+oam: .res 256               ; shadow OAM at $0200
+
+; ============================================================================
+; Main Code
+; ============================================================================
+
+.segment "CODE"
+
+; ----------------------------------------------------------------------------
+; reset - Entry point, called on power-on and reset
+; ----------------------------------------------------------------------------
+reset:
+    sei                     ; disable interrupts
+    cld                     ; clear decimal mode
+
     ldx #$40
-    stx $4017
-    ldx #$ff
-    txs
-    inx
-    stx PPUCTRL
-    stx PPUMASK
-    stx $4010
+    stx $4017               ; disable APU frame IRQ
+    ldx #$FF
+    txs                     ; setup stack
+    inx                     ; X = 0
+    stx PPUCTRL             ; disable NMI
+    stx PPUMASK             ; disable rendering
+    stx $4010               ; disable DMC IRQs
 
+    ; Wait for PPU to stabilise (first vblank)
+@vblank1:
     bit PPUSTATUS
-@v1:
-    bit PPUSTATUS
-    bpl @v1
+    bpl @vblank1
 
-    lda #$00
-@clr:
+    ; Clear RAM
+    lda #0
+@clear_ram:
     sta $0000, x
     sta $0100, x
     sta $0200, x
@@ -80,355 +117,665 @@ TILE_L        = $20   ; adjust if needed for letters
     sta $0600, x
     sta $0700, x
     inx
-    bne @clr
+    bne @clear_ram
 
-@v2:
+    ; Wait for PPU (second vblank)
+@vblank2:
     bit PPUSTATUS
-    bpl @v2
+    bpl @vblank2
 
-    lda #0
-    sta frame_counter
-    sta hud_dirty
-    sta score0
-    sta score1
-    sta score2
-    lda #3
-    sta lives
-    lda #0
-    sta respawn_timer
-    lda #1
-    sta player_alive
-
-    lda #120
+    ; Initialise game variables
+    lda #SPAWN_X
     sta player_x
-    lda #180
+    lda #SPAWN_Y
     sta player_y
 
-    jsr load_palette
-    jsr fill_background
-    jsr build_oam
-    jsr upload_oam
+    lda #3
+    sta lives               ; start with 3 lives
 
-    lda #%10000000
+    lda #0
+    sta score
+    sta score+1
+    sta game_state          ; STATE_PLAYING
+    sta invuln_timer        ; not invulnerable at start
+
+    jsr init_enemies
+    jsr respawn_item
+
+    ; Load palette
+    jsr load_palette
+
+    ; Enable rendering
+    lda #%10010000          ; enable NMI, sprites from table 0
     sta PPUCTRL
-    lda #%00011110
+    lda #%00011110          ; enable sprites and background
     sta PPUMASK
 
+    ; Main loop
+game_loop:
+    lda nmi_ready
+    beq game_loop           ; wait for vblank
     lda #0
-    sta PPUSCROLL
-    sta PPUSCROLL
+    sta nmi_ready
 
-main:
-    jmp main
-.endproc
+    ; Check game state
+    lda game_state
+    bne @check_start        ; if not playing, check for restart
 
-.proc nmi
-    inc frame_counter
+    ; --- Playing state ---
+
+    ; Decrement invulnerability timer
+    lda invuln_timer
+    beq @no_invuln
+    dec invuln_timer
+@no_invuln:
+
     jsr read_controller
-
-    ; Fake collision: B loses a life, A adds score
-    lda controller1
-    and #BTN_B
-    beq :+
-    jsr lose_life
-:
-    lda controller1
-    and #BTN_A
-    beq :+
-    jsr add_score_10
-:
-
     jsr update_player
-    jsr build_oam
-    jsr upload_oam
+    jsr move_enemies
+    jsr check_item_collision
+    jsr check_enemy_collision
+    jsr update_player_sprite
+    jsr update_enemy_sprites
+    jsr update_item_sprite
 
-    lda hud_dirty
-    beq :+
+    jmp game_loop
+
+@check_start:
+    ; Game over - check for Start button to restart
+    jsr read_controller
+    lda buttons
+    and #BTN_START
+    beq game_loop
+
+    jsr reset_game
+    jmp game_loop
+
+; ----------------------------------------------------------------------------
+; nmi - Called every vblank (60 times per second)
+; ----------------------------------------------------------------------------
+nmi:
+    pha
+    txa
+    pha
+    tya
+    pha
+
+    ; DMA copy shadow OAM to PPU
+    lda #$00
+    sta $2003               ; OAM address = 0
+    lda #$02                ; page $0200
+    sta OAMDMA              ; start DMA
+
+    ; Draw HUD
     jsr draw_hud
-    lda #0
-    sta hud_dirty
-:
-    lda #0
-    sta PPUSCROLL
-    sta PPUSCROLL
-    rti
-.endproc
 
-.proc irq
-    rti
-.endproc
-
-;------------------------------------------------------------
-; Controller
-;------------------------------------------------------------
-.proc read_controller
     lda #1
-    sta JOY1
+    sta nmi_ready
+
+    pla
+    tay
+    pla
+    tax
+    pla
+    rti
+
+; ----------------------------------------------------------------------------
+; irq - Not used
+; ----------------------------------------------------------------------------
+irq:
+    rti
+
+; ----------------------------------------------------------------------------
+; init_enemies - Set initial enemy positions
+; ----------------------------------------------------------------------------
+init_enemies:
+    ; Enemy 0: top-left area
+    lda #30
+    sta enemy_x
+    lda #50
+    sta enemy_y
+
+    ; Enemy 1: top-right area
+    lda #200
+    sta enemy_x+1
+    lda #50
+    sta enemy_y+1
+
+    ; Enemy 2: bottom-left area
+    lda #30
+    sta enemy_x+2
+    lda #180
+    sta enemy_y+2
+
+    ; Enemy 3: bottom-right area
+    lda #200
+    sta enemy_x+3
+    lda #180
+    sta enemy_y+3
+
+    rts
+
+; ----------------------------------------------------------------------------
+; respawn_item - Place item at random position
+; ----------------------------------------------------------------------------
+respawn_item:
+    ; Simple position cycling based on current position
+    lda item_x
+    clc
+    adc #67                 ; prime number for variation
+    and #%01111111          ; keep in 0-127 range
+    clc
+    adc #60                 ; offset to 60-187
+    sta item_x
+
+    lda item_y
+    clc
+    adc #53
+    and #%01111111
+    clc
+    adc #40                 ; offset to 40-167
+    sta item_y
+
+    rts
+
+; ----------------------------------------------------------------------------
+; read_controller - Read joypad state into buttons variable
+; ----------------------------------------------------------------------------
+read_controller:
+    ; Strobe the controller
+    lda #1
+    sta JOYPAD1
     lda #0
-    sta JOY1
+    sta JOYPAD1
+
+    ; Read 8 buttons
     ldx #8
-    lda #0
-    sta controller1
 @loop:
-    lda JOY1
-    lsr
-    rol controller1
+    lda JOYPAD1
+    lsr a                   ; bit 0 -> carry
+    rol buttons             ; carry -> buttons
     dex
     bne @loop
-    rts
-.endproc
 
-;------------------------------------------------------------
-; Player movement (disabled during respawn timer)
-;------------------------------------------------------------
-.proc update_player
-    lda respawn_timer
-    beq @move
-    dec respawn_timer
     rts
-@move:
-    lda controller1
-    and #BTN_LEFT
-    beq @skip_left
-    dec player_x
-@skip_left:
-    lda controller1
+
+; ----------------------------------------------------------------------------
+; update_player - Move player based on controller input
+; ----------------------------------------------------------------------------
+update_player:
+    ; Check Right
+    lda buttons
     and #BTN_RIGHT
-    beq @skip_right
-    inc player_x
-@skip_right:
-    lda controller1
-    and #BTN_UP
-    beq @skip_up
-    dec player_y
-@skip_up:
-    lda controller1
-    and #BTN_DOWN
-    beq @skip_down
-    inc player_y
-@skip_down:
-    rts
-.endproc
-
-;------------------------------------------------------------
-; OAM handling: single sprite
-;------------------------------------------------------------
-.proc build_oam
-    lda player_y
-    sta player_oam
-    lda #$00
-    sta player_oam+1
-    lda #%00000000
-    sta player_oam+2
+    beq @check_left
     lda player_x
-    sta player_oam+3
-    rts
-.endproc
-
-.proc upload_oam
-    lda #$00
-    sta OAMADDR
-    lda #$02
-    sta OAMDMA
-    rts
-.endproc
-
-player_oam = $0200
-;------------------------------------------------------------
-; HUD Score + Lives
-;------------------------------------------------------------
-.proc add_score_10
     clc
-    lda score0
-    adc #$10
-    jsr fix_bcd
-    lda score1
-    adc #$00
-    jsr fix_bcd
-    lda score2
-    adc #$00
-    jsr fix_bcd
-    lda #1
-    sta hud_dirty
-    rts
-.endproc
+    adc #PLAYER_SPEED
+    cmp #248                ; right boundary
+    bcs @check_left
+    sta player_x
 
-.proc fix_bcd
-    cmp #$a0
-    bcc @ok
-    sbc #$a0
-    adc #$10
-@ok:
-    rts
-.endproc
+@check_left:
+    lda buttons
+    and #BTN_LEFT
+    beq @check_down
+    lda player_x
+    sec
+    sbc #PLAYER_SPEED
+    bcc @check_down         ; would go negative
+    sta player_x
 
-.proc lose_life
-    lda player_alive
-    beq @done           ; already dead/game over
-    lda lives
-    beq @game_over
-    dec lives
-    lda #1
-    sta hud_dirty
-    lda #30            ; respawn delay frames
-    sta respawn_timer
-    lda #1
-    sta player_alive
-    jsr reset_position
-    rts
-@game_over:
-    lda #0
-    sta player_alive
-    rts
+@check_down:
+    lda buttons
+    and #BTN_DOWN
+    beq @check_up
+    lda player_y
+    clc
+    adc #PLAYER_SPEED
+    cmp #224                ; bottom boundary
+    bcs @check_up
+    sta player_y
+
+@check_up:
+    lda buttons
+    and #BTN_UP
+    beq @done
+    lda player_y
+    sec
+    sbc #PLAYER_SPEED
+    cmp #16                 ; top boundary (below score row)
+    bcc @done
+    sta player_y
+
 @done:
     rts
-.endproc
 
-.proc reset_position
-    lda #120
-    sta player_x
-    lda #180
-    sta player_y
-    rts
-.endproc
-
-.proc draw_hud
-    bit PPUSTATUS
-    lda #$20 + HUD_ROW
-    sta PPUADDR
-    lda #HUD_COL
-    sta PPUADDR
-
+; ----------------------------------------------------------------------------
+; move_enemies - Update enemy positions
+; ----------------------------------------------------------------------------
+move_enemies:
     ldx #0
-@text:
-    lda hud_label, x
-    beq @digits
-    sta PPUDATA
+
+@loop:
+    ; Move enemy left
+    lda enemy_x, x
+    sec
+    sbc #ENEMY_SPEED
+    sta enemy_x, x
+
+    ; Check for wrap (when position goes below 0, it wraps to 255)
+    cmp #250                ; if > 250, it wrapped
+    bcc @next
+
+    ; Respawn on right side
+    lda #248
+    sta enemy_x, x
+
+@next:
     inx
-    bne @text
-@digits:
-    lda score2
-    jsr bcd_to_tiles
-    lda score1
-    jsr bcd_to_tiles
-    lda score0
-    jsr bcd_to_tiles
+    cpx #NUM_ENEMIES
+    bne @loop
 
-    ; lives label
-    lda #$20 + HUD_ROW
-    sta PPUADDR
-    lda #HUD_LIVES_COL
-    sta PPUADDR
-    lda lives_label
-    sta PPUDATA
-    lda lives_label+1
-    sta PPUDATA
+    rts
+
+; ----------------------------------------------------------------------------
+; check_item_collision - Test player/item overlap
+; ----------------------------------------------------------------------------
+check_item_collision:
+    ; Check X overlap
+    lda player_x
+    sec
+    sbc item_x
+    bcs @check_x_pos
+    ; Negative result - take absolute value
+    eor #$FF
+    clc
+    adc #1
+@check_x_pos:
+    cmp #HITBOX_SIZE
+    bcs @no_collision       ; too far apart in X
+
+    ; Check Y overlap
+    lda player_y
+    sec
+    sbc item_y
+    bcs @check_y_pos
+    eor #$FF
+    clc
+    adc #1
+@check_y_pos:
+    cmp #HITBOX_SIZE
+    bcs @no_collision       ; too far apart in Y
+
+    ; Collision! Collect item
+    jsr collect_item
+
+@no_collision:
+    rts
+
+; ----------------------------------------------------------------------------
+; collect_item - Handle item pickup
+; ----------------------------------------------------------------------------
+collect_item:
+    ; Add 10 to score
+    lda score
+    clc
+    adc #10
+    sta score
+    lda score+1
+    adc #0                  ; add carry
+    sta score+1
+
+    ; Respawn item elsewhere
+    jsr respawn_item
+
+    rts
+
+; ----------------------------------------------------------------------------
+; check_enemy_collision - Test player/enemy overlap
+; ----------------------------------------------------------------------------
+check_enemy_collision:
+    ; Skip if invulnerable
+    lda invuln_timer
+    bne @done               ; timer > 0 means invulnerable
+
+    ldx #0                  ; enemy index
+
+@loop:
+    ; Check X distance
+    lda player_x
+    sec
+    sbc enemy_x, x
+    bcs @check_x
+    eor #$FF
+    clc
+    adc #1
+@check_x:
+    cmp #HITBOX_SIZE
+    bcs @next               ; no X overlap
+
+    ; Check Y distance
+    lda player_y
+    sec
+    sbc enemy_y, x
+    bcs @check_y
+    eor #$FF
+    clc
+    adc #1
+@check_y:
+    cmp #HITBOX_SIZE
+    bcs @next               ; no Y overlap
+
+    ; Collision detected - lose a life
+    jsr lose_life
+    rts                     ; exit after collision
+
+@next:
+    inx
+    cpx #NUM_ENEMIES
+    bne @loop
+
+@done:
+    rts
+
+; ----------------------------------------------------------------------------
+; lose_life - Handle player death
+; ----------------------------------------------------------------------------
+lose_life:
+    dec lives               ; one fewer life
+
     lda lives
-    ora #TILE_ZERO
-    sta PPUDATA
+    beq @game_over          ; no lives left?
+
+    ; Still have lives - respawn
+    jsr respawn_player
     rts
-.endproc
 
-.proc bcd_to_tiles
-    pha
-    lsr
-    lsr
-    lsr
-    lsr
-    ora #TILE_ZERO
-    sta PPUDATA
-    pla
-    and #$0f
-    ora #TILE_ZERO
-    sta PPUDATA
+@game_over:
+    lda #STATE_GAMEOVER
+    sta game_state
     rts
-.endproc
 
-hud_label:
-    .byte "SCORE ", 0
-lives_label:
-    .byte "L", "I"
+; ----------------------------------------------------------------------------
+; respawn_player - Reset player to spawn point with invulnerability
+; ----------------------------------------------------------------------------
+respawn_player:
+    lda #SPAWN_X
+    sta player_x
+    lda #SPAWN_Y
+    sta player_y
 
-;------------------------------------------------------------
-; Palette / background
-;------------------------------------------------------------
-.proc load_palette
-    bit PPUSTATUS
-    lda #$3f
+    lda #INVULN_TIME
+    sta invuln_timer
+
+    rts
+
+; ----------------------------------------------------------------------------
+; reset_game - Full game restart
+; ----------------------------------------------------------------------------
+reset_game:
+    lda #3
+    sta lives
+
+    lda #0
+    sta score
+    sta score+1
+    sta invuln_timer
+
+    lda #SPAWN_X
+    sta player_x
+    lda #SPAWN_Y
+    sta player_y
+
+    jsr init_enemies
+    jsr respawn_item
+
+    lda #STATE_PLAYING
+    sta game_state
+
+    rts
+
+; ----------------------------------------------------------------------------
+; update_player_sprite - Write player to shadow OAM with flicker effect
+; ----------------------------------------------------------------------------
+update_player_sprite:
+    ; Check if invulnerable and should hide (flicker)
+    lda invuln_timer
+    beq @visible            ; not invulnerable, always visible
+
+    and #%00000100          ; check bit 2 (changes every 4 frames)
+    beq @hidden             ; if clear, hide sprite this frame
+
+@visible:
+    lda player_y
+    sta oam                 ; sprite 0 Y
+    lda #1                  ; tile 1 = player
+    sta oam+1               ; tile index
+    lda #0
+    sta oam+2               ; attributes
+    lda player_x
+    sta oam+3               ; sprite 0 X
+    rts
+
+@hidden:
+    lda #$FF
+    sta oam                 ; Y = 255 (off screen)
+    rts
+
+; ----------------------------------------------------------------------------
+; update_enemy_sprites - Write enemies to shadow OAM
+; ----------------------------------------------------------------------------
+update_enemy_sprites:
+    ldx #0                  ; enemy index
+    ldy #4                  ; OAM offset (after player sprite)
+
+@loop:
+    lda enemy_y, x
+    sta oam, y              ; Y position
+    iny
+
+    lda #2                  ; tile 2 = enemy
+    sta oam, y              ; tile index
+    iny
+
+    lda #1                  ; palette 1
+    sta oam, y              ; attributes
+    iny
+
+    lda enemy_x, x
+    sta oam, y              ; X position
+    iny
+
+    inx
+    cpx #NUM_ENEMIES
+    bne @loop
+
+    rts
+
+; ----------------------------------------------------------------------------
+; update_item_sprite - Write item to shadow OAM
+; ----------------------------------------------------------------------------
+update_item_sprite:
+    lda item_y
+    sta oam+20              ; sprite 5, Y
+    lda #3                  ; tile 3 = item
+    sta oam+21              ; tile index
+    lda #2                  ; palette 2
+    sta oam+22              ; attributes
+    lda item_x
+    sta oam+23              ; X position
+    rts
+
+; ----------------------------------------------------------------------------
+; draw_hud - Update score and lives display during vblank
+; ----------------------------------------------------------------------------
+draw_hud:
+    ; Set PPU address for score (row 0, column 2)
+    lda #$20
+    sta PPUADDR
+    lda #$02
+    sta PPUADDR
+
+    ; Convert and display hundreds
+    lda score+1             ; high byte (0-2 for 0-255 range)
+    jsr div10
+    clc
+    adc #4                  ; tile 4 = '0'
+    sta PPUDATA
+
+    ; Display tens
+    lda temp
+    jsr div10
+    clc
+    adc #4
+    sta PPUDATA
+
+    ; Display ones
+    lda temp
+    clc
+    adc #4
+    sta PPUDATA
+
+    ; --- Draw Lives on right side ---
+    lda #$20                ; nametable 0, row 0
+    sta PPUADDR
+    lda #$1C                ; column 28
+    sta PPUADDR
+
+    lda lives
+    clc
+    adc #4                  ; convert to digit tile
+    sta PPUDATA
+
+    ; Reset scroll position
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
+
+    rts
+
+; ----------------------------------------------------------------------------
+; div10 - Divide A by 10, quotient in A, remainder in temp
+; ----------------------------------------------------------------------------
+div10:
+    ldx #0
+@loop:
+    cmp #10
+    bcc @done
+    sec
+    sbc #10
+    inx
+    bne @loop               ; always branches (X won't be 0 if we subtracted)
+@done:
+    sta temp                ; remainder
+    txa                     ; quotient to A
+    rts
+
+; ----------------------------------------------------------------------------
+; load_palette - Load colour palette into PPU
+; ----------------------------------------------------------------------------
+load_palette:
+    lda PPUSTATUS           ; reset address latch
+    lda #$3F
     sta PPUADDR
     lda #$00
     sta PPUADDR
+
     ldx #0
-@lp:
+@loop:
     lda palette_data, x
     sta PPUDATA
     inx
     cpx #32
-    bne @lp
+    bne @loop
+
     rts
-.endproc
 
-.proc fill_background
-    bit PPUSTATUS
-    lda #$20
-    sta PPUADDR
-    lda #$00
-    sta PPUADDR
-
-    lda #$00
-    ldx #0
-    ldy #4
-@outer:
-@inner:
-    sta PPUDATA
-    inx
-    bne @inner
-    dey
-    bne @outer
-
-    bit PPUSTATUS
-    lda #$23
-    sta PPUADDR
-    lda #$c0
-    sta PPUADDR
-
-    ldx #0
-@attr:
-    lda attribute_data, x
-    sta PPUDATA
-    inx
-    cpx #64
-    bne @attr
-    rts
-.endproc
-
+; ----------------------------------------------------------------------------
+; Palette Data
+; ----------------------------------------------------------------------------
 palette_data:
-    .byte $0f, $11, $21, $31
-    .byte $0f, $19, $29, $39
-    .byte $0f, $15, $25, $35
-    .byte $0f, $00, $10, $30
-    .byte $0f, $11, $21, $31
-    .byte $0f, $19, $29, $39
-    .byte $0f, $15, $25, $35
-    .byte $0f, $00, $10, $30
+    ; Background palettes
+    .byte $0F, $20, $10, $00    ; palette 0: black, white, grey
+    .byte $0F, $20, $10, $00    ; palette 1
+    .byte $0F, $20, $10, $00    ; palette 2
+    .byte $0F, $20, $10, $00    ; palette 3
+    ; Sprite palettes
+    .byte $0F, $20, $16, $28    ; palette 0: player (white, red, yellow)
+    .byte $0F, $20, $12, $22    ; palette 1: enemy (blue)
+    .byte $0F, $20, $1A, $2A    ; palette 2: item (green)
+    .byte $0F, $20, $10, $00    ; palette 3
 
-attribute_data:
-    .byte $00,$00,$00,$00,$00,$00,$00,$00
-    .byte $00,$00,$00,$00,$00,$00,$00,$00
-    .byte $55,$55,$55,$55,$55,$55,$55,$55
-    .byte $55,$55,$55,$55,$55,$55,$55,$55
-    .byte $aa,$aa,$aa,$aa,$aa,$aa,$aa,$aa
-    .byte $aa,$aa,$aa,$aa,$aa,$aa,$aa,$aa
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+; ============================================================================
+; Vectors
+; ============================================================================
 
-;------------------------------------------------------------
 .segment "VECTORS"
     .word nmi
     .word reset
     .word irq
 
+; ============================================================================
+; CHR-ROM Pattern Data
+; ============================================================================
+
 .segment "CHARS"
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .res 8192-16
+
+; Tile 0: Empty/blank (required)
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 1: Player sprite (ship shape)
+.byte $18,$3C,$7E,$FF,$FF,$7E,$3C,$18
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 2: Enemy sprite (invader shape)
+.byte $42,$24,$7E,$5A,$FF,$81,$42,$24
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 3: Item sprite (diamond/collectible)
+.byte $18,$3C,$7E,$FF,$7E,$3C,$18,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 4: Digit '0'
+.byte $3C,$66,$6E,$7E,$76,$66,$3C,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 5: Digit '1'
+.byte $18,$38,$18,$18,$18,$18,$7E,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 6: Digit '2'
+.byte $3C,$66,$06,$1C,$30,$60,$7E,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 7: Digit '3'
+.byte $3C,$66,$06,$1C,$06,$66,$3C,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 8: Digit '4'
+.byte $0E,$1E,$36,$66,$7F,$06,$06,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 9: Digit '5'
+.byte $7E,$60,$7C,$06,$06,$66,$3C,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 10: Digit '6'
+.byte $1C,$30,$60,$7C,$66,$66,$3C,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 11: Digit '7'
+.byte $7E,$06,$0C,$18,$30,$30,$30,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 12: Digit '8'
+.byte $3C,$66,$66,$3C,$66,$66,$3C,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Tile 13: Digit '9'
+.byte $3C,$66,$66,$3E,$06,$0C,$38,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+
+; Remaining tiles filled with zeros
+.res 8176, $00

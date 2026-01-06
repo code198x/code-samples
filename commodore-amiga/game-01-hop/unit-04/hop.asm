@@ -1,277 +1,450 @@
 ;──────────────────────────────────────────────────────────────
-; HOP - Unit 4 sample (Traffic BOBs)
-; Single-playfield + sprite frog, plus blitter-drawn traffic blocks
-; moving horizontally with wrap. No collision yet.
+; HOP - A Frogger-style game for the Commodore Amiga
+; Unit 4: The Traffic
 ;──────────────────────────────────────────────────────────────
 
-CUSTOM          equ $dff000
-ExecBase        equ 4
-OldOpenLibrary  equ -408
-CloseLibrary    equ -414
-LoadView        equ -222
-WaitTOF         equ -270
+CUSTOM      equ $dff000
 
-BLTCON0         equ $040
-BLTCON1         equ $042
-BLTAFWM         equ $044
-BLTALWM         equ $046
-BLTAPTH         equ $050
-BLTAPTL         equ $052
-BLTBPTH         equ $054
-BLTBPTL         equ $056
-BLTCPTH         equ $058
-BLTCPTL         equ $05a
-BLTDPTH         equ $05c
-BLTDPTL         equ $05e
-BLTSIZE         equ $058
-BLTAMOD         equ $064
-BLTBMOD         equ $062
-BLTCMOD         equ $060
-BLTDMOD         equ $060
+; Custom chip register offsets
+DMACONR     equ $002
+VPOSR       equ $004
+JOY1DAT     equ $00c
+BLTCON0     equ $040
+BLTCON1     equ $042
+BLTAFWM     equ $044
+BLTALWM     equ $046
+BLTCPTH     equ $048
+BLTBPTH     equ $04c
+BLTAPTH     equ $050
+BLTDPTH     equ $054
+BLTSIZE     equ $058
+BLTCMOD     equ $060
+BLTBMOD     equ $062
+BLTAMOD     equ $064
+BLTDMOD     equ $066
+COP1LC      equ $080
+COPJMP1     equ $088
+DMACON      equ $096
+INTENA      equ $09a
+INTREQ      equ $09c
+COLOR00     equ $180
 
+; Screen constants
+SCREEN_W    equ 40                  ; Bytes per line (320/8)
+SCREEN_H    equ 256                 ; Lines
+PLANE_SIZE  equ SCREEN_W*SCREEN_H   ; 10240 bytes
+
+; Movement constants
+HOP_SIZE    equ 16
+FROG_HEIGHT equ 16
+MIN_X       equ 32
+MAX_X       equ 288
+MIN_Y       equ 44
+MAX_Y       equ 196
+
+; Car constants
+CAR_WIDTH   equ 1                   ; Words
+CAR_HEIGHT  equ 8                   ; Lines
+CAR_Y       equ 130                 ; Fixed Y for now
+
+;──────────────────────────────────────────────────────────────
+; Code Section
+;──────────────────────────────────────────────────────────────
             section code,code
+
 start:
-            move.l  ExecBase,a6
-            lea     gfxname,a1
-            jsr     OldOpenLibrary(a6)
-            move.l  d0,gfxbase
-            beq     .exit
-
-            move.l  d0,a6
-            move.l  34(a6),oldview
-            move.l  38(a6),oldcopper
-
-            sub.l   a1,a1
-            jsr     LoadView(a6)
-            jsr     WaitTOF(a6)
-            jsr     WaitTOF(a6)
-
             lea     CUSTOM,a5
-            move.w  #$7fff,$9a(a5)
-            move.w  #$7fff,$9c(a5)
 
-            lea     bitplane,a0
-            move.l  a0,$e0(a5)
-            move.w  #0,$e4(a5)
-            move.w  #0,$e8(a5)
-            move.w  #0,$ec(a5)
-            move.w  #0,$f0(a5)
-            move.w  #0,$f4(a5)
+            ; --- Take over the machine ---
+            move.w  #$7fff,INTENA(a5)
+            move.w  #$7fff,INTREQ(a5)
+            move.w  #$7fff,DMACON(a5)
 
+            ; --- Clear screen memory ---
+            bsr     clear_screen
+
+            ; --- Set up bitplane pointers in copper list ---
+            lea     screen_plane1,a0
+            lea     bplpt+2,a1
+            move.l  a0,d0
+            swap    d0
+            move.w  d0,(a1)             ; BPL1PTH
+            swap    d0
+            move.w  d0,4(a1)            ; BPL1PTL
+
+            lea     screen_plane2,a0
+            move.l  a0,d0
+            swap    d0
+            move.w  d0,8(a1)            ; BPL2PTH
+            swap    d0
+            move.w  d0,12(a1)           ; BPL2PTL
+
+            ; --- Set sprite pointer in copper list ---
+            lea     frog_data,a0
+            lea     sprpt+2,a1
+            move.l  a0,d0
+            swap    d0
+            move.w  d0,(a1)
+            swap    d0
+            move.w  d0,4(a1)
+
+            ; --- Install copper list ---
             lea     copperlist,a0
-            move.l  a0,$80(a5)
-            move.w  d0,$88(a5)
+            move.l  a0,COP1LC(a5)
+            move.w  d0,COPJMP1(a5)
 
-            move.w  #$83a0,$96(a5)
+            ; --- Enable DMA ---
+            move.w  #$83e0,DMACON(a5)   ; Master + copper + bitplane + sprite + blitter
 
-            bsr     clear_bpl
-            bsr     init_state
-
-.mainloop:
-            bsr     wait_vb
-            bsr     update_traffic
-            bsr     draw_scene
-            bra     .mainloop
-
-.exit:      rts
-
-wait_vb:
-            move.l  #$1ff00,d1
-.vbwait:
-            move.l  4(a5),d0
-            and.l   d1,d0
-            cmp.l   #$00000,d0
-            bne.s   .vbwait
-            rts
-
-clear_bpl:
-            lea     bitplane,a0
-            move.l  #((320*256)/8),d0
-            moveq   #0,d1
-.clr_lp:
-            move.b  d1,(a0)+
-            subq.l  #1,d0
-            bne.s   .clr_lp
-            rts
-
-init_state:
+            ; --- Initialise game state ---
             move.w  #160,frog_x
-            move.w  #220,frog_y
-            lea     sprite0,a0
-            move.l  a0,$120(a5)
+            move.w  #180,frog_y
+            move.w  #0,car_x
+            bsr     update_sprite
 
-            move.b  #3,traffic_count
-            lea     traffic_x,a0
-            move.w  #40,(a0)+
-            move.w  #140,(a0)+
-            move.w  #260,(a0)+
-            lea     traffic_y,a0
-            move.w  #120,(a0)+
-            move.w  #136,(a0)+
-            move.w  #152,(a0)+
-            lea     traffic_speed,a0
-            move.w  #2,(a0)+
-            move.w  #-3,(a0)+
-            move.w  #2,(a0)+
+            ; === Main Loop ===
+mainloop:
+            bsr     wait_vblank
+            bsr     read_joystick
+
+            ; --- Update frog ---
+            btst    #8,d0
+            beq.s   .no_up
+            move.w  frog_y,d1
+            sub.w   #HOP_SIZE,d1
+            cmp.w   #MIN_Y,d1
+            blt.s   .no_up
+            move.w  d1,frog_y
+.no_up:
+            btst    #0,d0
+            beq.s   .no_down
+            move.w  frog_y,d1
+            add.w   #HOP_SIZE,d1
+            cmp.w   #MAX_Y,d1
+            bgt.s   .no_down
+            move.w  d1,frog_y
+.no_down:
+            btst    #9,d0
+            beq.s   .no_left
+            move.w  frog_x,d1
+            sub.w   #HOP_SIZE,d1
+            cmp.w   #MIN_X,d1
+            blt.s   .no_left
+            move.w  d1,frog_x
+.no_left:
+            btst    #1,d0
+            beq.s   .no_right
+            move.w  frog_x,d1
+            add.w   #HOP_SIZE,d1
+            cmp.w   #MAX_X,d1
+            bgt.s   .no_right
+            move.w  d1,frog_x
+.no_right:
+
+            bsr     update_sprite
+
+            ; --- Update car ---
+            bsr     clear_car
+            addq.w  #2,car_x            ; Move right
+            cmp.w   #320,car_x
+            blt.s   .no_wrap
+            clr.w   car_x
+.no_wrap:
+            bsr     draw_car
+
+            bra     mainloop
+
+;──────────────────────────────────────────────────────────────
+; Wait for vertical blank
+;──────────────────────────────────────────────────────────────
+wait_vblank:
+            move.l  #$1ff00,d1
+.wait:
+            move.l  VPOSR(a5),d0
+            and.l   d1,d0
+            bne.s   .wait
             rts
 
-update_traffic:
-            lea     traffic_x,a0
-            lea     traffic_speed,a1
-            moveq   #0,d7
-            move.b  traffic_count,d7
-            subq.b  #1,d7
-.loop:
-            move.w  (a0),d0
-            add.w   (a1),d0
-            move.w  d0,(a0)
-            cmp.w   #320,d0
-            blt.s   .chk_left
-            move.w  #-32,(a0)
-            bra.s   .next
-.chk_left:
-            cmp.w   #-48,d0
-            bgt.s   .next
-            move.w  #320,(a0)
-.next:
-            addq.l  #2,a0
-            addq.l  #2,a1
-            dbra    d7,.loop
+;──────────────────────────────────────────────────────────────
+; Wait for blitter
+;──────────────────────────────────────────────────────────────
+wait_blit:
+            btst    #6,DMACONR(a5)
+            bne.s   wait_blit
             rts
 
-;--------------------------------------------------
-; Blit routines for traffic blocks (16x8, 1bpp)
-;--------------------------------------------------
-blit_traffic:
-            ; a0 = dest ptr, a1 = image ptr, a2 = mask ptr
-            move.w  #$09f0,BLTCON0(a5)   ; A=mask, B=image, D=dest, minterm copy with mask
-            move.w  #$0000,BLTCON1(a5)
+;──────────────────────────────────────────────────────────────
+; Clear entire screen (both planes)
+;──────────────────────────────────────────────────────────────
+clear_screen:
+            bsr.s   wait_blit
+
+            move.l  #screen_plane1,BLTDPTH(a5)
+            move.w  #0,BLTDMOD(a5)
+            move.w  #$0100,BLTCON0(a5)  ; D only, clear
+            move.w  #0,BLTCON1(a5)
+            move.w  #(SCREEN_H<<6)|SCREEN_W/2,BLTSIZE(a5)
+
+            bsr.s   wait_blit
+
+            move.l  #screen_plane2,BLTDPTH(a5)
+            move.w  #(SCREEN_H<<6)|SCREEN_W/2,BLTSIZE(a5)
+
+            rts
+
+;──────────────────────────────────────────────────────────────
+; Clear car at old position
+;──────────────────────────────────────────────────────────────
+clear_car:
+            bsr.s   wait_blit
+
+            ; Calculate old position
+            move.w  car_x,d0
+            move.w  #CAR_Y,d1
+
+            ; Calculate destination address
+            lea     screen_plane1,a0
+            mulu    #SCREEN_W,d1
+            add.l   d1,a0
+            move.w  d0,d2
+            lsr.w   #3,d2
+            ext.l   d2
+            add.l   d2,a0
+
+            ; Clear blit (D only, minterm 0)
+            move.l  a0,BLTDPTH(a5)
+            move.w  #SCREEN_W-CAR_WIDTH*2,BLTDMOD(a5)
+            move.w  #$0100,BLTCON0(a5)
+            move.w  #0,BLTCON1(a5)
+            move.w  #(CAR_HEIGHT<<6)|CAR_WIDTH,BLTSIZE(a5)
+
+            rts
+
+;──────────────────────────────────────────────────────────────
+; Draw car at current position
+;──────────────────────────────────────────────────────────────
+draw_car:
+            bsr.s   wait_blit
+
+            ; Calculate position
+            move.w  car_x,d0
+            move.w  #CAR_Y,d1
+
+            ; Calculate destination address
+            lea     screen_plane1,a0
+            mulu    #SCREEN_W,d1
+            add.l   d1,a0
+            move.w  d0,d2
+            lsr.w   #3,d2
+            ext.l   d2
+            add.l   d2,a0
+
+            ; A->D copy blit
+            move.l  #car_gfx,BLTAPTH(a5)
+            move.l  a0,BLTDPTH(a5)
+
+            move.w  #$09f0,BLTCON0(a5)  ; Use A, D=A
+            move.w  #0,BLTCON1(a5)
             move.w  #$ffff,BLTAFWM(a5)
             move.w  #$ffff,BLTALWM(a5)
-            move.l  a2,BLTAPTH(a5)
-            move.l  a1,BLTBPTH(a5)
-            move.l  a0,BLTCPTH(a5)
-            move.l  a0,BLTDPTH(a5)
-            move.w  #0,BLTBMOD(a5)
             move.w  #0,BLTAMOD(a5)
-            move.w  #0,BLTCMOD(a5)
-            move.w  #0,BLTDMOD(a5)
-            move.w  #(8<<6)|1,BLTSIZE(a5)  ; height=8, width=2 words (16px)
+            move.w  #SCREEN_W-CAR_WIDTH*2,BLTDMOD(a5)
+
+            move.w  #(CAR_HEIGHT<<6)|CAR_WIDTH,BLTSIZE(a5)
+
             rts
 
-draw_scene:
-            bsr     clear_bpl
-            bsr     draw_frog_sprite
-            ; draw traffic BOBs
-            lea     traffic_x,a0
-            lea     traffic_y,a1
-            moveq   #0,d7
-            move.b  traffic_count,d7
-            subq.b  #1,d7
-.loop:
-            move.w  (a0),d0      ; x
-            move.w  (a1),d1      ; y
-            ; compute bitplane address: row*40 + x/8
-            move.w  d1,d2
-            mulu    #40,d2
-            move.w  d0,d3
-            asr.w   #3,d3
-            add.w   d3,d2
-            lea     bitplane,a2
-            adda.w  d2,a2
-            lea     traffic_mask,a3
-            lea     traffic_img,a4
-            move.l  a2,a0
-            move.l  a4,a1
-            move.l  a3,a2
-            bsr     blit_traffic
+;──────────────────────────────────────────────────────────────
+; Read joystick with edge detection
+;──────────────────────────────────────────────────────────────
+read_joystick:
+            move.w  JOY1DAT(a5),d0
+            move.w  d0,d1
+            lsr.w   #1,d1
+            eor.w   d1,d0
 
-            addq.l  #2,a0
-            addq.l  #2,a1
-            dbra    d7,.loop
+            move.w  joy_prev,d1
+            not.w   d1
+            and.w   d0,d1
+            move.w  d0,joy_prev
+
+            move.w  d1,d0
             rts
 
-draw_frog_sprite:
-            lea     CUSTOM,a5
-            move.w  frog_x,d0
-            move.w  frog_y,d1
-            andi.w  #$00ff,d0
-            andi.w  #$00ff,d1
-            move.w  d1,d2
+;──────────────────────────────────────────────────────────────
+; Update sprite control words
+;──────────────────────────────────────────────────────────────
+update_sprite:
+            lea     frog_data,a0
+            move.w  frog_y,d0
+            move.w  frog_x,d1
+
+            move.w  d0,d2
             lsl.w   #8,d2
-            or.w    d0,d2
-            move.w  d2,$140(a5)
-            move.w  #0,$142(a5)
+            lsr.w   #1,d1
+            or.b    d1,d2
+            move.w  d2,(a0)
+
+            add.w   #FROG_HEIGHT,d0
+            lsl.w   #8,d0
+            move.w  d0,2(a0)
+
             rts
 
-            section chipdata,data_c
-copperlist:
-            dc.w $0180,$0000
-            dc.w $2c07,$fffe
-            dc.w $0180,$0070
-            dc.w $4007,$fffe
-            dc.w $0180,$0080
-            dc.w $5007,$fffe
-            dc.w $0180,$0444
-            dc.w $5c07,$fffe
-            dc.w $0180,$0666
-            dc.w $6007,$fffe
-            dc.w $0180,$0444
-            dc.w $6c07,$fffe
-            dc.w $0180,$0666
-            dc.w $7007,$fffe
-            dc.w $0180,$0444
-            dc.w $7807,$fffe
-            dc.w $0180,$0080
-            dc.w $8007,$fffe
-            dc.w $0180,$0444
-            dc.w $8c07,$fffe
-            dc.w $0180,$0666
-            dc.w $9007,$fffe
-            dc.w $0180,$0444
-            dc.w $9c07,$fffe
-            dc.w $0180,$0666
-            dc.w $a007,$fffe
-            dc.w $0180,$0444
-            dc.w $a807,$fffe
-            dc.w $0180,$0048
-            dc.w $b007,$fffe
-            dc.w $0180,$006b
-            dc.w $b807,$fffe
-            dc.w $0180,$0048
-            dc.w $c007,$fffe
-            dc.w $0180,$006b
-            dc.w $c807,$fffe
-            dc.w $0180,$0048
-            dc.w $d007,$fffe
-            dc.w $0180,$006b
-            dc.w $d807,$fffe
-            dc.w $0180,$0080
-            dc.w $e807,$fffe
-            dc.w $0180,$0070
-            dc.w $f007,$fffe
-            dc.w $0180,$0000
-            dc.w $ffff,$fffe
+;──────────────────────────────────────────────────────────────
+; Variables
+;──────────────────────────────────────────────────────────────
+frog_x:     dc.w    160
+frog_y:     dc.w    180
+joy_prev:   dc.w    0
+car_x:      dc.w    0
 
-            section data,data
-frog_x:         dc.w 0
-frog_y:         dc.w 0
-traffic_count:  dc.b 0
-traffic_x:      ds.w 3
-traffic_y:      ds.w 3
-traffic_speed:  ds.w 3
-bitplane:       ds.b 10240
-sprite0:
-            dc.w $0000,$0000,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$0000,$0000
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe
-            dc.w $7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$7ffe,$0000,$0000
-            dc.w 0,0
-traffic_img:
-            dc.w $7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0,$7ff0
-traffic_mask:
-            dc.w $fff0,$fff0,$fff0,$fff0,$fff0,$fff0,$fff0,$fff0
-gfxname:        dc.b "graphics.library",0
-oldview:        dc.l 0
-oldcopper:      dc.l 0
-gfxbase:        dc.l 0
+;──────────────────────────────────────────────────────────────
+; Chip RAM Data
+;──────────────────────────────────────────────────────────────
+            section chipdata,data_c
+
+copperlist:
+            dc.w    COLOR00,$0000       ; Black border
+
+            ; --- Bitplane control ---
+            dc.w    $0100,$2200         ; BPLCON0: 2 planes, colour on
+            dc.w    $0102,$0000         ; BPLCON1: no scroll
+            dc.w    $0104,$0000         ; BPLCON2: default priority
+            dc.w    $0108,$0000         ; BPL1MOD
+            dc.w    $010a,$0000         ; BPL2MOD
+
+            ; --- Bitplane pointers (filled by CPU) ---
+bplpt:
+            dc.w    $00e0,$0000         ; BPL1PTH
+            dc.w    $00e2,$0000         ; BPL1PTL
+            dc.w    $00e4,$0000         ; BPL2PTH
+            dc.w    $00e6,$0000         ; BPL2PTL
+
+            ; --- Playfield colours ---
+            dc.w    $0180,$0000         ; Colour 0: Transparent (shows copper bg)
+            dc.w    $0182,$0f00         ; Colour 1: Red (car)
+            dc.w    $0184,$0ff0         ; Colour 2: Yellow
+            dc.w    $0186,$0fff         ; Colour 3: White
+
+            ; --- Sprite 0 palette ---
+            dc.w    $01a2,$00f0         ; Colour 17: Green (frog)
+            dc.w    $01a4,$0ff0         ; Colour 18: Yellow
+            dc.w    $01a6,$0000         ; Colour 19: Black
+
+            ; --- Sprite 0 pointer ---
+sprpt:
+            dc.w    $0120,$0000
+            dc.w    $0122,$0000
+
+            ; === ZONE COLOURS (via copper) ===
+
+            ; HOME ZONE
+            dc.w    $2c07,$fffe
+            dc.w    COLOR00,$0080
+
+            ; WATER ZONE
+            dc.w    $4007,$fffe
+            dc.w    COLOR00,$0048
+
+            dc.w    $4c07,$fffe
+            dc.w    COLOR00,$006b
+
+            dc.w    $5407,$fffe
+            dc.w    COLOR00,$0048
+
+            dc.w    $5c07,$fffe
+            dc.w    COLOR00,$006b
+
+            dc.w    $6407,$fffe
+            dc.w    COLOR00,$0048
+
+            ; MEDIAN
+            dc.w    $6c07,$fffe
+            dc.w    COLOR00,$0080
+
+            ; ROAD ZONE
+            dc.w    $7807,$fffe
+            dc.w    COLOR00,$0444
+
+            dc.w    $8407,$fffe
+            dc.w    COLOR00,$0666
+
+            dc.w    $8807,$fffe
+            dc.w    COLOR00,$0444
+
+            dc.w    $9407,$fffe
+            dc.w    COLOR00,$0666
+
+            dc.w    $9807,$fffe
+            dc.w    COLOR00,$0444
+
+            dc.w    $a407,$fffe
+            dc.w    COLOR00,$0666
+
+            dc.w    $a807,$fffe
+            dc.w    COLOR00,$0444
+
+            ; START ZONE
+            dc.w    $b407,$fffe
+            dc.w    COLOR00,$0080
+
+            dc.w    $c007,$fffe
+            dc.w    COLOR00,$0070
+
+            ; BOTTOM BORDER
+            dc.w    $f007,$fffe
+            dc.w    COLOR00,$0000
+
+            dc.w    $ffff,$fffe
+
+;──────────────────────────────────────────────────────────────
+; Car Graphics (16x8 solid block)
+;──────────────────────────────────────────────────────────────
+            even
+car_gfx:
+            dc.w    $ffff
+            dc.w    $ffff
+            dc.w    $ffff
+            dc.w    $ffff
+            dc.w    $ffff
+            dc.w    $ffff
+            dc.w    $ffff
+            dc.w    $ffff
+
+;──────────────────────────────────────────────────────────────
+; Sprite Data
+;──────────────────────────────────────────────────────────────
+            even
+frog_data:
+            dc.w    $b460,$c400
+
+            dc.w    $0000,$0000
+            dc.w    $07e0,$0000
+            dc.w    $1ff8,$0420
+            dc.w    $3ffc,$0a50
+            dc.w    $7ffe,$1248
+            dc.w    $7ffe,$1008
+            dc.w    $ffff,$2004
+            dc.w    $ffff,$0000
+            dc.w    $ffff,$0000
+            dc.w    $7ffe,$2004
+            dc.w    $7ffe,$1008
+            dc.w    $3ffc,$0810
+            dc.w    $1ff8,$0420
+            dc.w    $07e0,$0000
+            dc.w    $0000,$0000
+            dc.w    $0000,$0000
+
+            dc.w    $0000,$0000
+
+;──────────────────────────────────────────────────────────────
+; Screen Memory (must be in chip RAM)
+;──────────────────────────────────────────────────────────────
+            even
+screen_plane1:
+            ds.b    PLANE_SIZE
+
+            even
+screen_plane2:
+            ds.b    PLANE_SIZE
