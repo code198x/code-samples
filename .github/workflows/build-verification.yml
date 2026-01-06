@@ -213,3 +213,17 @@ jobs:
 
           echo ""
           echo "All builds successful!"
+
+  trigger-website-rebuild:
+    name: Trigger Website Rebuild
+    needs: [build-c64, build-zx-spectrum, build-amiga, build-nes]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Trigger website deploy
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.WEBSITE_DEPLOY_TOKEN }}
+          repository: code198x/website
+          event-type: code-samples-updated
+          client-payload: '{"ref": "${{ github.sha }}", "triggered_by": "code-samples"}'
