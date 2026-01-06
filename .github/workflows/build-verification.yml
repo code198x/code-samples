@@ -1,0 +1,211 @@
+name: Build Verification
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - '**/*.asm'
+      - '**/*.cfg'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - '**/*.asm'
+      - '**/*.cfg'
+  workflow_dispatch:
+
+jobs:
+  build-c64:
+    name: Build C64 Assembly
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/code198x/commodore-64:latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build C64 assembly files
+        run: |
+          echo "Building C64 assembly files..."
+          FAILED=0
+          PASSED=0
+
+          for ASM in $(find commodore-64 -name "*.asm" -type f ! -path "*/snippets/*"); do
+            DIR=$(dirname "$ASM")
+            BASENAME=$(basename "$ASM" .asm)
+            echo "Building: $ASM"
+
+            cd "$DIR"
+            if acme -f cbm -o "${BASENAME}.prg" "$(basename "$ASM")" 2>&1; then
+              echo "  OK"
+              PASSED=$((PASSED + 1))
+            else
+              echo "  FAILED"
+              FAILED=$((FAILED + 1))
+            fi
+            cd - > /dev/null
+          done
+
+          echo ""
+          echo "C64 Build Summary: $PASSED passed, $FAILED failed"
+
+          if [ $FAILED -gt 0 ]; then
+            exit 1
+          fi
+
+  build-zx-spectrum:
+    name: Build ZX Spectrum Assembly
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/code198x/sinclair-zx-spectrum:latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build ZX Spectrum assembly files
+        run: |
+          echo "Building ZX Spectrum assembly files..."
+          FAILED=0
+          PASSED=0
+
+          for ASM in $(find sinclair-zx-spectrum -name "*.asm" -type f ! -path "*/snippets/*"); do
+            DIR=$(dirname "$ASM")
+            BASENAME=$(basename "$ASM" .asm)
+            echo "Building: $ASM"
+
+            cd "$DIR"
+            if pasmonext --tapbas "$(basename "$ASM")" "${BASENAME}.tap" 2>&1; then
+              echo "  OK"
+              PASSED=$((PASSED + 1))
+            else
+              echo "  FAILED"
+              FAILED=$((FAILED + 1))
+            fi
+            cd - > /dev/null
+          done
+
+          echo ""
+          echo "ZX Spectrum Build Summary: $PASSED passed, $FAILED failed"
+
+          if [ $FAILED -gt 0 ]; then
+            exit 1
+          fi
+
+  build-amiga:
+    name: Build Amiga Assembly
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/code198x/commodore-amiga:latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Amiga assembly files
+        run: |
+          echo "Building Amiga assembly files..."
+          FAILED=0
+          PASSED=0
+
+          for ASM in $(find commodore-amiga -name "*.asm" -type f ! -path "*/snippets/*"); do
+            DIR=$(dirname "$ASM")
+            BASENAME=$(basename "$ASM" .asm)
+            echo "Building: $ASM"
+
+            cd "$DIR"
+            if vasmm68k_mot -Fhunkexe -o "$BASENAME" "$(basename "$ASM")" 2>&1; then
+              echo "  OK"
+              PASSED=$((PASSED + 1))
+            else
+              echo "  FAILED"
+              FAILED=$((FAILED + 1))
+            fi
+            cd - > /dev/null
+          done
+
+          echo ""
+          echo "Amiga Build Summary: $PASSED passed, $FAILED failed"
+
+          if [ $FAILED -gt 0 ]; then
+            exit 1
+          fi
+
+  build-nes:
+    name: Build NES Assembly
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/code198x/nintendo-nes:latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build NES assembly files
+        run: |
+          echo "Building NES assembly files..."
+          FAILED=0
+          PASSED=0
+
+          for ASM in $(find nintendo-entertainment-system -name "*.asm" -type f ! -path "*/snippets/*"); do
+            DIR=$(dirname "$ASM")
+            BASENAME=$(basename "$ASM" .asm)
+            echo "Building: $ASM"
+
+            cd "$DIR"
+
+            # Check for linker config
+            if [ -f "nes.cfg" ]; then
+              CFG="nes.cfg"
+            else
+              echo "  WARNING: No nes.cfg found, skipping"
+              cd - > /dev/null
+              continue
+            fi
+
+            # Two-step build: assemble then link
+            if ca65 "$(basename "$ASM")" -o "${BASENAME}.o" 2>&1 && \
+               ld65 -C "$CFG" "${BASENAME}.o" -o "${BASENAME}.nes" 2>&1; then
+              echo "  OK"
+              PASSED=$((PASSED + 1))
+            else
+              echo "  FAILED"
+              FAILED=$((FAILED + 1))
+            fi
+            cd - > /dev/null
+          done
+
+          echo ""
+          echo "NES Build Summary: $PASSED passed, $FAILED failed"
+
+          if [ $FAILED -gt 0 ]; then
+            exit 1
+          fi
+
+  summary:
+    name: Build Summary
+    needs: [build-c64, build-zx-spectrum, build-amiga, build-nes]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check results
+        env:
+          C64_RESULT: ${{ needs.build-c64.result }}
+          ZX_RESULT: ${{ needs.build-zx-spectrum.result }}
+          AMIGA_RESULT: ${{ needs.build-amiga.result }}
+          NES_RESULT: ${{ needs.build-nes.result }}
+        run: |
+          echo "Build Verification Complete"
+          echo ""
+          echo "C64:         $C64_RESULT"
+          echo "ZX Spectrum: $ZX_RESULT"
+          echo "Amiga:       $AMIGA_RESULT"
+          echo "NES:         $NES_RESULT"
+
+          if [ "$C64_RESULT" != "success" ] || \
+             [ "$ZX_RESULT" != "success" ] || \
+             [ "$AMIGA_RESULT" != "success" ] || \
+             [ "$NES_RESULT" != "success" ]; then
+            echo ""
+            echo "One or more builds failed!"
+            exit 1
+          fi
+
+          echo ""
+          echo "All builds successful!"
