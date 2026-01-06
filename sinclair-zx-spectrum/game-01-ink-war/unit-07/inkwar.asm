@@ -484,7 +484,7 @@ check_adjacency:
         ; Check Up (y-1)
         ld a, (cursor_y)
         or a
-        jr z, .skip_up
+        jr z, .ca_skip_up
 
         dec a
         ld b, a
@@ -496,11 +496,11 @@ check_adjacency:
         cp b
         ret z
 
-.skip_up:
+.ca_skip_up:
         ; Check Down (y+1)
         ld a, (cursor_y)
         cp 7
-        jr z, .skip_down
+        jr z, .ca_skip_down
 
         inc a
         ld b, a
@@ -512,11 +512,11 @@ check_adjacency:
         cp b
         ret z
 
-.skip_down:
+.ca_skip_down:
         ; Check Left (x-1)
         ld a, (cursor_x)
         or a
-        jr z, .skip_left
+        jr z, .ca_skip_left
 
         dec a
         ld c, a
@@ -528,11 +528,11 @@ check_adjacency:
         cp b
         ret z
 
-.skip_left:
+.ca_skip_left:
         ; Check Right (x+1)
         ld a, (cursor_x)
         cp 7
-        jr z, .skip_right
+        jr z, .ca_skip_right
 
         inc a
         ld c, a
@@ -544,7 +544,7 @@ check_adjacency:
         cp b
         ret z
 
-.skip_right:
+.ca_skip_right:
         or 1                    ; Clear Z flag
         ret
 
@@ -559,7 +559,7 @@ check_adjacency_at:
         ; Check Up (y-1)
         ld a, b
         or a
-        jr z, .skip_up
+        jr z, .caa_skip_up
 
         dec a
         ld b, a
@@ -567,16 +567,16 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_up:
+.caa_skip_up:
         pop bc
         push bc
 
         ; Check Down (y+1)
         ld a, b
         cp 7
-        jr z, .skip_down
+        jr z, .caa_skip_down
 
         inc a
         ld b, a
@@ -584,16 +584,16 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_down:
+.caa_skip_down:
         pop bc
         push bc
 
         ; Check Left (x-1)
         ld a, c
         or a
-        jr z, .skip_left
+        jr z, .caa_skip_left
 
         dec a
         ld c, a
@@ -601,16 +601,16 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_left:
+.caa_skip_left:
         pop bc
         push bc
 
         ; Check Right (x+1)
         ld a, c
         cp 7
-        jr z, .skip_right
+        jr z, .caa_skip_right
 
         inc a
         ld c, a
@@ -618,14 +618,14 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_right:
+.caa_skip_right:
         pop bc
         or 1                    ; Clear Z flag
         ret
 
-.found:
+.caa_found:
         pop bc
         xor a                   ; Set Z flag
         ret

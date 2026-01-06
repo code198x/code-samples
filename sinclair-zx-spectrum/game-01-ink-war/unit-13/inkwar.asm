@@ -575,7 +575,7 @@ get_owner:
 check_adjacency:
         ld a, (cursor_y)
         or a
-        jr z, .skip_up
+        jr z, .ca_skip_up
 
         dec a
         ld b, a
@@ -587,10 +587,10 @@ check_adjacency:
         cp b
         ret z
 
-.skip_up:
+.ca_skip_up:
         ld a, (cursor_y)
         cp 7
-        jr z, .skip_down
+        jr z, .ca_skip_down
 
         inc a
         ld b, a
@@ -602,10 +602,10 @@ check_adjacency:
         cp b
         ret z
 
-.skip_down:
+.ca_skip_down:
         ld a, (cursor_x)
         or a
-        jr z, .skip_left
+        jr z, .ca_skip_left
 
         dec a
         ld c, a
@@ -617,10 +617,10 @@ check_adjacency:
         cp b
         ret z
 
-.skip_left:
+.ca_skip_left:
         ld a, (cursor_x)
         cp 7
-        jr z, .skip_right
+        jr z, .ca_skip_right
 
         inc a
         ld c, a
@@ -632,7 +632,7 @@ check_adjacency:
         cp b
         ret z
 
-.skip_right:
+.ca_skip_right:
         or 1
         ret
 
@@ -644,7 +644,7 @@ check_adjacency_at:
 
         ld a, b
         or a
-        jr z, .skip_up
+        jr z, .caa_skip_up
 
         dec a
         ld b, a
@@ -652,15 +652,15 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_up:
+.caa_skip_up:
         pop bc
         push bc
 
         ld a, b
         cp 7
-        jr z, .skip_down
+        jr z, .caa_skip_down
 
         inc a
         ld b, a
@@ -668,15 +668,15 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_down:
+.caa_skip_down:
         pop bc
         push bc
 
         ld a, c
         or a
-        jr z, .skip_left
+        jr z, .caa_skip_left
 
         dec a
         ld c, a
@@ -684,15 +684,15 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_left:
+.caa_skip_left:
         pop bc
         push bc
 
         ld a, c
         cp 7
-        jr z, .skip_right
+        jr z, .caa_skip_right
 
         inc a
         ld c, a
@@ -700,14 +700,14 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_right:
+.caa_skip_right:
         pop bc
         or 1
         ret
 
-.found:
+.caa_found:
         pop bc
         xor a
         ret
@@ -1092,61 +1092,61 @@ count_enemy_neighbours:
 
         ld a, b
         or a
-        jr z, .skip_up
+        jr z, .cen_skip_up
         dec a
         ld b, a
         call get_owner
         cp 1
-        jr nz, .skip_up
+        jr nz, .cen_skip_up
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_up:
+.cen_skip_up:
         pop bc
         push bc
 
         ld a, b
         cp 7
-        jr z, .skip_down
+        jr z, .cen_skip_down
         inc a
         ld b, a
         call get_owner
         cp 1
-        jr nz, .skip_down
+        jr nz, .cen_skip_down
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_down:
+.cen_skip_down:
         pop bc
         push bc
 
         ld a, c
         or a
-        jr z, .skip_left
+        jr z, .cen_skip_left
         dec a
         ld c, a
         call get_owner
         cp 1
-        jr nz, .skip_left
+        jr nz, .cen_skip_left
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_left:
+.cen_skip_left:
         pop bc
         push bc
 
         ld a, c
         cp 7
-        jr z, .skip_right
+        jr z, .cen_skip_right
         inc a
         ld c, a
         call get_owner
         cp 1
-        jr nz, .skip_right
+        jr nz, .cen_skip_right
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_right:
+.cen_skip_right:
         pop bc
 
         ld a, (enemy_count)

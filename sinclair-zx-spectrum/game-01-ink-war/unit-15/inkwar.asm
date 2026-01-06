@@ -131,13 +131,13 @@ show_title:
 ; Wait for mode selection (1 or 2)
 ;───────────────────────────────────────
 wait_for_mode:
-.wait_release:
+.wfm_wait_release:
         ld a, $7F
         in a, ($FE)
         bit 0, a
-        jr z, .wait_release
+        jr z, .wfm_wait_release
 
-.wait_key:
+.wfm_wait_key:
         halt
 
         ; Check for "1" key (row $F7, bit 0)
@@ -152,7 +152,7 @@ wait_for_mode:
         bit 1, a
         jr z, .mode_2
 
-        jr .wait_key
+        jr .wfm_wait_key
 
 .mode_1:
         ld a, 1
@@ -229,13 +229,13 @@ show_difficulty:
 ; Wait for difficulty selection (1, 2, or 3)
 ;───────────────────────────────────────
 wait_for_difficulty:
-.wait_release:
+.wfd_wait_release:
         ld a, $7F
         in a, ($FE)
         bit 0, a
-        jr z, .wait_release
+        jr z, .wfd_wait_release
 
-.wait_key:
+.wfd_wait_key:
         halt
 
         ; Check for "1" key (row $F7, bit 0)
@@ -256,7 +256,7 @@ wait_for_difficulty:
         bit 2, a
         jr z, .hard
 
-        jr .wait_key
+        jr .wfd_wait_key
 
 .easy:
         ld a, 1
@@ -791,7 +791,7 @@ get_owner:
 check_adjacency:
         ld a, (cursor_y)
         or a
-        jr z, .skip_up
+        jr z, .ca_skip_up
 
         dec a
         ld b, a
@@ -803,10 +803,10 @@ check_adjacency:
         cp b
         ret z
 
-.skip_up:
+.ca_skip_up:
         ld a, (cursor_y)
         cp 7
-        jr z, .skip_down
+        jr z, .ca_skip_down
 
         inc a
         ld b, a
@@ -818,10 +818,10 @@ check_adjacency:
         cp b
         ret z
 
-.skip_down:
+.ca_skip_down:
         ld a, (cursor_x)
         or a
-        jr z, .skip_left
+        jr z, .ca_skip_left
 
         dec a
         ld c, a
@@ -833,10 +833,10 @@ check_adjacency:
         cp b
         ret z
 
-.skip_left:
+.ca_skip_left:
         ld a, (cursor_x)
         cp 7
-        jr z, .skip_right
+        jr z, .ca_skip_right
 
         inc a
         ld c, a
@@ -848,7 +848,7 @@ check_adjacency:
         cp b
         ret z
 
-.skip_right:
+.ca_skip_right:
         or 1
         ret
 
@@ -860,7 +860,7 @@ check_adjacency_at:
 
         ld a, b
         or a
-        jr z, .skip_up
+        jr z, .caa_skip_up
 
         dec a
         ld b, a
@@ -868,15 +868,15 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_up:
+.caa_skip_up:
         pop bc
         push bc
 
         ld a, b
         cp 7
-        jr z, .skip_down
+        jr z, .caa_skip_down
 
         inc a
         ld b, a
@@ -884,15 +884,15 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_down:
+.caa_skip_down:
         pop bc
         push bc
 
         ld a, c
         or a
-        jr z, .skip_left
+        jr z, .caa_skip_left
 
         dec a
         ld c, a
@@ -900,15 +900,15 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_left:
+.caa_skip_left:
         pop bc
         push bc
 
         ld a, c
         cp 7
-        jr z, .skip_right
+        jr z, .caa_skip_right
 
         inc a
         ld c, a
@@ -916,14 +916,14 @@ check_adjacency_at:
         ld e, a
         ld a, (current_player)
         cp e
-        jr z, .found
+        jr z, .caa_found
 
-.skip_right:
+.caa_skip_right:
         pop bc
         or 1
         ret
 
-.found:
+.caa_found:
         pop bc
         xor a
         ret
@@ -1451,61 +1451,61 @@ count_enemy_neighbours:
 
         ld a, b
         or a
-        jr z, .skip_up
+        jr z, .cen_skip_up
         dec a
         ld b, a
         call get_owner
         cp 1
-        jr nz, .skip_up
+        jr nz, .cen_skip_up
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_up:
+.cen_skip_up:
         pop bc
         push bc
 
         ld a, b
         cp 7
-        jr z, .skip_down
+        jr z, .cen_skip_down
         inc a
         ld b, a
         call get_owner
         cp 1
-        jr nz, .skip_down
+        jr nz, .cen_skip_down
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_down:
+.cen_skip_down:
         pop bc
         push bc
 
         ld a, c
         or a
-        jr z, .skip_left
+        jr z, .cen_skip_left
         dec a
         ld c, a
         call get_owner
         cp 1
-        jr nz, .skip_left
+        jr nz, .cen_skip_left
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_left:
+.cen_skip_left:
         pop bc
         push bc
 
         ld a, c
         cp 7
-        jr z, .skip_right
+        jr z, .cen_skip_right
         inc a
         ld c, a
         call get_owner
         cp 1
-        jr nz, .skip_right
+        jr nz, .cen_skip_right
         ld a, (enemy_count)
         inc a
         ld (enemy_count), a
-.skip_right:
+.cen_skip_right:
         pop bc
 
         ld a, (enemy_count)
@@ -1806,18 +1806,18 @@ print_number:
 ; Wait for SPACE
 ;───────────────────────────────────────
 wait_for_start:
-.wait_release:
+.wfs_wait_release:
         ld a, $7F
         in a, ($FE)
         bit 0, a
-        jr z, .wait_release
+        jr z, .wfs_wait_release
 
-.wait_press:
+.wfs_wait_press:
         halt
         ld a, $7F
         in a, ($FE)
         bit 0, a
-        jr nz, .wait_press
+        jr nz, .wfs_wait_press
 
         ret
 
