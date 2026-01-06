@@ -950,7 +950,7 @@ objects:    ds.b    OBJ_SIZE*NUM_OBJECTS
 ; Variables - Any RAM
 ;=============================================================================
 
-            section bss,bss
+            section bss_fast,bss
 
 frog_x:         ds.w    1
 frog_y:         ds.w    1

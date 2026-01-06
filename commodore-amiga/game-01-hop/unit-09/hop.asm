@@ -912,7 +912,7 @@ objects:
 ; Variables - Any RAM
 ;=============================================================================
 
-            section bss,bss
+            section bss_fast,bss
 
 frog_x:         ds.w    1
 frog_y:         ds.w    1
