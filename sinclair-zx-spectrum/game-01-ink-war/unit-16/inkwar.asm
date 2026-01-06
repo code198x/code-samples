@@ -261,33 +261,33 @@ wait_for_difficulty:
         ld a, $F7
         in a, ($FE)
         bit 0, a
-        jr z, .easy
+        jr z, .wfd_easy
 
         ; Check for "2" key (row $F7, bit 1)
         ld a, $F7
         in a, ($FE)
         bit 1, a
-        jr z, .normal
+        jr z, .wfd_normal
 
         ; Check for "3" key (row $F7, bit 2)
         ld a, $F7
         in a, ($FE)
         bit 2, a
-        jr z, .hard
+        jr z, .wfd_hard
 
         jr .wfd_wait_key
 
-.easy:
+.wfd_easy:
         ld a, 1
         ld (difficulty), a
         ret
 
-.normal:
+.wfd_normal:
         ld a, 2
         ld (difficulty), a
         ret
 
-.hard:
+.wfd_hard:
         ld a, 3
         ld (difficulty), a
         ret
@@ -1164,24 +1164,24 @@ update_ui_colours:
 ai_think_delay:
         ld a, (difficulty)
         cp 1
-        jr z, .easy
+        jr z, .atd_easy
         cp 3
-        jr z, .hard
+        jr z, .atd_hard
 
         ; Normal
         ld b, 25
-        jr .delay_loop
+        jr .atd_delay_loop
 
-.easy:
+.atd_easy:
         ld b, 40
-        jr .delay_loop
+        jr .atd_delay_loop
 
-.hard:
+.atd_hard:
         ld b, 10
 
-.delay_loop:
+.atd_delay_loop:
         halt
-        djnz .delay_loop
+        djnz .atd_delay_loop
         ret
 
 ;───────────────────────────────────────
@@ -1364,19 +1364,19 @@ score_neighbour_up:
         ld b, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snu_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snu_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snu_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snu_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -1390,19 +1390,19 @@ score_neighbour_down:
         ld b, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snd_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snd_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snd_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snd_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -1416,19 +1416,19 @@ score_neighbour_left:
         ld c, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snl_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snl_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snl_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snl_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -1442,19 +1442,19 @@ score_neighbour_right:
         ld c, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snr_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snr_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snr_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snr_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -1581,25 +1581,25 @@ count_territories:
         ld hl, board_state
         ld b, 64
 
-.count_loop:
+.ct_count_loop:
         ld a, (hl)
         cp 1
-        jr nz, .not_p1
+        jr nz, .ct_not_p1
         ld a, (p1_count)
         inc a
         ld (p1_count), a
-        jr .next
+        jr .ct_next
 
-.not_p1:
+.ct_not_p1:
         cp 2
-        jr nz, .next
+        jr nz, .ct_next
         ld a, (p2_count)
         inc a
         ld (p2_count), a
 
-.next:
+.ct_next:
         inc hl
-        djnz .count_loop
+        djnz .ct_count_loop
         ret
 
 ;───────────────────────────────────────
@@ -1612,21 +1612,21 @@ check_game_over:
         ld b, a
         ld a, (p2_count)
         cp b
-        jr z, .draw
-        jr c, .p1_wins
+        jr z, .cgo_draw
+        jr c, .cgo_p1_wins
 
         ; P2 wins
         ld a, 2
-        jr .store_winner
+        jr .cgo_store_winner
 
-.p1_wins:
+.cgo_p1_wins:
         ld a, 1
-        jr .store_winner
+        jr .cgo_store_winner
 
-.draw:
+.cgo_draw:
         xor a
 
-.store_winner:
+.cgo_store_winner:
         ld (winner), a
         call show_results
         call set_winner_border
@@ -1766,17 +1766,17 @@ show_results:
 set_winner_border:
         ld a, (winner)
         cp 1
-        jr nz, .not_p1
+        jr nz, .swb_not_p1
         ld a, 2
-        jr .set
-.not_p1:
+        jr .swb_set
+.swb_not_p1:
         cp 2
-        jr nz, .is_draw
+        jr nz, .swb_is_draw
         ld a, 5
-        jr .set
-.is_draw:
+        jr .swb_set
+.swb_is_draw:
         ld a, 6
-.set:
+.swb_set:
         ld (border_colour), a
         out (254), a
         ret
@@ -1938,25 +1938,25 @@ beep_draw:
 play_result_sound:
         ld a, (winner)
         or a
-        jr z, .draw
+        jr z, .prs_draw
         cp 1
-        jr z, .p1_wins
+        jr z, .prs_p1_wins
 
         ; P2/CPU wins
         ld a, (game_mode)
         cp 1
-        jr nz, .p2_wins_2p
+        jr nz, .prs_p2_wins_2p
         call beep_defeat        ; CPU beat human
         ret
-.p2_wins_2p:
+.prs_p2_wins_2p:
         call beep_victory       ; P2 beat P1
         ret
 
-.p1_wins:
+.prs_p1_wins:
         call beep_victory
         ret
 
-.draw:
+.prs_draw:
         call beep_draw
         ret
 

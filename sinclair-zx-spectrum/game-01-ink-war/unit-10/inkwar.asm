@@ -827,19 +827,19 @@ score_neighbour_up:
         ld b, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snu_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snu_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snu_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snu_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -853,19 +853,19 @@ score_neighbour_down:
         ld b, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snd_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snd_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snd_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snd_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -879,19 +879,19 @@ score_neighbour_left:
         ld c, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snl_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snl_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snl_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snl_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -905,19 +905,19 @@ score_neighbour_right:
         ld c, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snr_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snr_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snr_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snr_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -1043,25 +1043,25 @@ count_territories:
         ld hl, board_state
         ld b, 64
 
-.count_loop:
+.ct_count_loop:
         ld a, (hl)
         cp 1
-        jr nz, .not_p1
+        jr nz, .ct_not_p1
         ld a, (p1_count)
         inc a
         ld (p1_count), a
-        jr .next
+        jr .ct_next
 
-.not_p1:
+.ct_not_p1:
         cp 2
-        jr nz, .next
+        jr nz, .ct_next
         ld a, (p2_count)
         inc a
         ld (p2_count), a
 
-.next:
+.ct_next:
         inc hl
-        djnz .count_loop
+        djnz .ct_count_loop
         ret
 
 ;───────────────────────────────────────
@@ -1074,21 +1074,21 @@ check_game_over:
         ld b, a
         ld a, (p2_count)
         cp b
-        jr z, .draw
-        jr c, .p1_wins
+        jr z, .cgo_draw
+        jr c, .cgo_p1_wins
 
         ; P2 wins
         ld a, 2
-        jr .store_winner
+        jr .cgo_store_winner
 
-.p1_wins:
+.cgo_p1_wins:
         ld a, 1
-        jr .store_winner
+        jr .cgo_store_winner
 
-.draw:
+.cgo_draw:
         xor a
 
-.store_winner:
+.cgo_store_winner:
         ld (winner), a
         call show_results
         call set_winner_border
@@ -1154,22 +1154,22 @@ show_results:
 
         ld a, (winner)
         or a
-        jr z, .draw
+        jr z, .sr_draw
         cp 1
-        jr z, .p1_wins
+        jr z, .sr_p1_wins
 
         ; P2/CPU wins
         ld hl, msg_cpu_wins
-        jr .print_winner
+        jr .sr_print_winner
 
-.p1_wins:
+.sr_p1_wins:
         ld hl, msg_player_wins
-        jr .print_winner
+        jr .sr_print_winner
 
-.draw:
+.sr_draw:
         ld hl, msg_draw
 
-.print_winner:
+.sr_print_winner:
         call print_string
 
         ; Print "PRESS SPACE" at row 20
@@ -1190,17 +1190,17 @@ show_results:
 set_winner_border:
         ld a, (winner)
         cp 1
-        jr nz, .not_p1
+        jr nz, .swb_not_p1
         ld a, 2                 ; Red
-        jr .set
-.not_p1:
+        jr .swb_set
+.swb_not_p1:
         cp 2
-        jr nz, .is_draw
+        jr nz, .swb_is_draw
         ld a, 5                 ; Cyan
-        jr .set
-.is_draw:
+        jr .swb_set
+.swb_is_draw:
         ld a, 6                 ; Yellow
-.set:
+.swb_set:
         out (254), a
         ret
 

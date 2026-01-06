@@ -824,19 +824,19 @@ score_neighbour_up:
         ld b, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snu_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snu_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snu_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snu_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -850,19 +850,19 @@ score_neighbour_down:
         ld b, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snd_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snd_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snd_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snd_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -876,19 +876,19 @@ score_neighbour_left:
         ld c, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snl_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snl_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snl_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snl_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
@@ -902,19 +902,19 @@ score_neighbour_right:
         ld c, a
         call get_owner
         or a
-        jr z, .neutral
+        jr z, .snr_neutral
         cp 2
-        jr z, .friendly
+        jr z, .snr_friendly
         ld a, (tmp_score)
         sub 2
         ld (tmp_score), a
         ret
-.friendly:
+.snr_friendly:
         ld a, (tmp_score)
         add a, 3
         ld (tmp_score), a
         ret
-.neutral:
+.snr_neutral:
         ld a, (tmp_score)
         inc a
         ld (tmp_score), a
