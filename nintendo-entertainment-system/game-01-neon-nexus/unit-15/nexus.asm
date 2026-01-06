@@ -242,8 +242,9 @@ gameover_state:
     jsr read_controller
     lda buttons
     and #BTN_START
-    beq game_loop
-
+    bne @do_restart         ; Branch range exceeded for beq game_loop
+    jmp game_loop
+@do_restart:
     jsr clear_playfield
     jsr init_game
     lda #STATE_PLAYING
