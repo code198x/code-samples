@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/code198x/commodore-64:latest
+      options: --entrypoint /bin/bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -57,6 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/code198x/sinclair-zx-spectrum:latest
+      options: --entrypoint /bin/bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -95,6 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/code198x/commodore-amiga:latest
+      options: --entrypoint /bin/bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -133,6 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/code198x/nintendo-nes:latest
+      options: --entrypoint /bin/bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
