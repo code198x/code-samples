@@ -5,6 +5,12 @@ build/
 *.bin
 *.d64
 *.t64
+*.tap
+*.out
+
+# Amiga executables (no extension) - ignore by path
+commodore-amiga/**/hop
+commodore-amiga/**/unit-*/[a-z]*[!.]*
 
 # Emulator files
 *.vsf

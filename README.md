@@ -1,66 +1,100 @@
 # Code Like It's 198x - Code Samples
 
-This repository contains all downloadable code samples for the Code Like It's 198x educational platform.
+Complete, working code samples for learning retro game development across classic platforms.
+
+## Platforms
+
+| Platform | Game | Units | Description |
+|----------|------|-------|-------------|
+| [Commodore 64](commodore-64/game-01-sid-symphony/) | SID Symphony | 16 | Rhythm game with SID audio |
+| [ZX Spectrum](sinclair-zx-spectrum/game-01-ink-war/) | Ink War | 16 | Territory control strategy |
+| [Commodore Amiga](commodore-amiga/game-01-hop/) | Hop | 16 | Frogger-style arcade game |
+| [NES](nintendo-entertainment-system/game-01-neon-nexus/) | Neon Nexus | 16 | Fixed-screen action game |
 
 ## Structure
 
-Code samples are organized by platform and game project:
-
 ```
 code-samples/
-  ├── commodore-64/
-  │   └── game-NN-[title]/
-  │       └── unit-NN/
-  │           ├── [project].asm
-  │           └── [project].prg
-  ├── sinclair-zx-spectrum/
-  ├── nintendo-entertainment-system/
-  ├── commodore-amiga/
-  └── [other systems]/
+├── commodore-64/
+│   └── game-01-sid-symphony/
+│       ├── README.md           # Game overview
+│       └── unit-01..16/
+│           ├── README.md       # Unit documentation
+│           ├── symphony.asm    # Assembly source
+│           └── symphony.prg    # Compiled executable
+├── sinclair-zx-spectrum/
+│   └── game-01-ink-war/
+├── commodore-amiga/
+│   └── game-01-hop/
+└── nintendo-entertainment-system/
+    └── game-01-neon-nexus/
 ```
 
-## Current Content
+## Building
 
-### Commodore 64 - Game 1: SID Symphony
+### Using Docker (Recommended)
 
-Complete assembly code samples for all 16 units of the rhythm game tutorial:
-
-- **Units 01-04**: Screen layout, character graphics, and top/bottom panels.
-- **Units 05-08**: SID chip fundamentals, voices, ADSR, and waveforms.
-- **Units 09-12**: Keyboard input and rhythm mechanics.
-- **Units 13-16**: Game loop integration, scoring, and polish.
-
-All code has been tested and verified working in VICE emulator.
-
-### Nintendo Entertainment System - Game 1: Neon Nexus
-- **Units 01-16**: Movement, collision, HUD, SFX/music, title, high score, pause, and final polish. Build with ca65/ld65 (see unit `nexus.asm` for the config path).
-
-### Sinclair ZX Spectrum - Game 1: Ink War
-- **Units 01-16**: Board setup, cursor/input, AI vs hotseat, scoring/SFX, title, difficulty selection, visual polish, and final release TAPs (`pasmo --tapbas inkwar.asm inkwar.tap`).
-
-### Commodore Amiga - Game 1: Hop
-- **Units 01-16**: Bitplane/sprite setup, traffic/logs, collisions, lives, SFX, title screen blocks, and final polish. Build with `vasmm68k_mot -Fhunkexe -kick1hunks -o hop -nosym hop.asm` (package into ADF as needed).
-
-## Building the Code
-
-### Commodore 64 Assembly
-
-Requirements:
-- ACME assembler
-- VICE emulator (x64sc)
+Each platform has a Docker container with all required tools:
 
 ```bash
-# Assemble
-acme -f cbm -o output.prg input.asm
+# Commodore 64 (ACME assembler)
+docker run --rm -v "$(pwd):/workspace" -w /workspace \
+  ghcr.io/code198x/commodore-64:latest \
+  acme -f cbm -o symphony.prg symphony.asm
 
-# Run in VICE
-x64sc output.prg
+# ZX Spectrum (pasmonext assembler)
+docker run --rm -v "$(pwd):/workspace" -w /workspace \
+  ghcr.io/code198x/sinclair-zx-spectrum:latest \
+  pasmonext --tapbas inkwar.asm inkwar.tap
+
+# Commodore Amiga (vasm assembler)
+docker run --rm -v "$(pwd):/workspace" -w /workspace \
+  ghcr.io/code198x/commodore-amiga:latest \
+  vasmm68k_mot -Fhunkexe -o hop hop.asm
+
+# NES (cc65 toolchain)
+docker run --rm -v "$(pwd):/workspace" -w /workspace \
+  ghcr.io/code198x/nintendo-nes:latest \
+  sh -c "ca65 nexus.asm -o nexus.o && ld65 -C nes.cfg nexus.o -o nexus.nes"
 ```
 
-## License
+### Native Installation
 
-Educational use - see main website repository for full license information.
+| Platform | Assembler | Install |
+|----------|-----------|---------|
+| C64 | [ACME](https://sourceforge.net/projects/acme-crossass/) | `brew install acme` |
+| ZX Spectrum | [pasmo](https://pasmo.speccy.org/) | `brew install pasmo` |
+| Amiga | [vasm](http://sun.hasenbraten.de/vasm/) | Build from source |
+| NES | [cc65](https://cc65.github.io/) | `brew install cc65` |
+
+## Running
+
+| Platform | Emulator | Command |
+|----------|----------|---------|
+| C64 | [VICE](https://vice-emu.sourceforge.io/) | `x64sc symphony.prg` |
+| ZX Spectrum | [Fuse](http://fuse-emulator.sourceforge.net/) | `fuse inkwar.tap` |
+| Amiga | [FS-UAE](https://fs-uae.net/) | Load via Workbench |
+| NES | [Mesen](https://www.mesen.ca/) | Open `nexus.nes` |
+
+## Learning Path
+
+Each game progresses through 16 units, building features incrementally:
+
+1. **Units 1-4**: Display setup, basic graphics, input handling
+2. **Units 5-8**: Game objects, movement, core mechanics
+3. **Units 9-12**: Scoring, sound, game states
+4. **Units 13-16**: Polish, difficulty, high scores, final release
+
+See each game's README for detailed unit breakdowns and learning objectives.
+
+## CI/CD
+
+All code is automatically built and verified on every push via GitHub Actions. Build status reflects whether all assembly files compile successfully across all platforms.
 
 ## Website
 
 https://code198x.stevehill.xyz
+
+## Licence
+
+Educational use - see main website repository for full licence information.
