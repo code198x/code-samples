@@ -1,745 +1,348 @@
-;──────────────────────────────────────────────────────────────
-; SID SYMPHONY
-; A rhythm game for the Commodore 64
-; Unit 5: The Crowd
-;
-; Current features:
-; - Three-lane track display
-; - Notes spawning and scrolling
-; - Hit detection with timing feedback
-; - Score and streak tracking
-; - Crowd meter with game over
-;
-; Controls:
-;   X - Hit notes on the track
-;──────────────────────────────────────────────────────────────
+; ============================================================================
+; SID Symphony - Unit 5: Screen Layout
+; ============================================================================
+; A prettier game screen with:
+; - Decorative title
+; - Key labels on each track (X, C, V)
+; - Coloured hit zones
+; - Score and streak display
+; ============================================================================
 
-; ============================================================
-; CONSTANTS
-; ============================================================
+* = $0801
+                !byte $0c, $08, $0a, $00, $9e
+                !text "2064"
+                !byte $00, $00, $00
 
-; Memory-mapped I/O
-SCREEN          = $0400         ; Screen RAM (1000 bytes)
-COLOUR          = $d800         ; Colour RAM (1000 bytes)
-BORDER          = $d020         ; Border colour register
-BACKGROUND      = $d021         ; Background colour register
-RASTER          = $d012         ; Current raster line
+* = $0810
 
-; SID registers
-SID             = $d400         ; SID base address
-SID_FREQ_LO     = SID + $00     ; Voice 1 frequency low byte
-SID_FREQ_HI     = SID + $01     ; Voice 1 frequency high byte
-SID_PW_LO       = SID + $02     ; Voice 1 pulse width low
-SID_PW_HI       = SID + $03     ; Voice 1 pulse width high
-SID_CTRL        = SID + $04     ; Voice 1 control register
-SID_AD          = SID + $05     ; Voice 1 attack/decay
-SID_SR          = SID + $06     ; Voice 1 sustain/release
-SID_VOLUME      = SID + $18     ; Main volume (low nybble)
+; ----------------------------------------------------------------------------
+; Screen memory
+; ----------------------------------------------------------------------------
+SCREEN          = $0400
+COLOUR          = $d800
+BORDER_COLOUR   = $d020
+BACKGROUND      = $d021
 
-; CIA1 keyboard
-CIA1_PORTA      = $dc00         ; Keyboard column select
-CIA1_PORTB      = $dc01         ; Keyboard row read
+SCREEN_WIDTH    = 40
 
-; Screen layout
-ROW_SCORE       = 1             ; Score display row
-ROW_STREAK      = 2             ; Streak display row
-ROW_CROWD       = 3             ; Crowd meter row
-ROW_TRACK       = 12            ; Track row
-HIT_ZONE_COL    = 5             ; Column where notes are hit
+; Track positions (rows)
+TRACK1_ROW      = 9
+TRACK2_ROW      = 13
+TRACK3_ROW      = 17
+
+; Layout
+KEY_COL         = 1                 ; Column for key label
+HIT_START       = 3                 ; Hit zone starts here
+HIT_END         = 7                 ; Hit zone ends here (exclusive)
+TRACK_START     = 7                 ; Track line starts here
+
+; Characters (screen codes, not PETSCII!)
+BLOCK_CHAR      = $a0               ; Solid block (reverse space)
+TRACK_CHAR      = $43               ; Horizontal line (screen code)
+KEY_BRACKET_L   = $1b               ; [ in screen code
+KEY_BRACKET_R   = $1d               ; ] in screen code
 
 ; Colours
-COL_BLACK       = $00
-COL_WHITE       = $01
-COL_RED         = $02
-COL_CYAN        = $03
-COL_GREEN       = $05
-COL_BLUE        = $06
-COL_YELLOW      = $07
-COL_GREY        = $0c
+COL_BLACK       = 0
+COL_WHITE       = 1
+COL_RED         = 2
+COL_CYAN        = 3
+COL_GREEN       = 5
+COL_YELLOW      = 7
+COL_LIGHT_BLUE  = 14
+COL_GREY        = 11
+COL_DARK_GREY   = 12
 
-; Game constants
-MAX_NOTES       = 8             ; Maximum simultaneous notes
-NOTE_INACTIVE   = $ff           ; Marker for empty note slot
-NOTE_SPEED      = 4             ; Frames between note movements
-SPAWN_INTERVAL  = 40            ; Frames between note spawns
-FLASH_TIME      = 4             ; Duration of visual feedback
-HIT_ZONE_W      = 3             ; Hit zone width (columns)
-POINTS_PER_HIT  = 10            ; Points awarded per hit
+; Zero page
+screen_ptr      = $fb
+colour_ptr      = $fd
 
-; Crowd constants
-CROWD_MAX       = 20            ; Maximum crowd level
-CROWD_START     = 10            ; Starting crowd level
-
-; SID note frequencies (C4 = middle C)
-FREQ_C4         = 4291          ; 262 Hz
-
-; ============================================================
-; BASIC STUB
-; ============================================================
-*= $0801
-            !byte $0c, $08      ; Pointer to next line
-            !byte $0a, $00      ; Line number 10
-            !byte $9e           ; SYS token
-            !text "2064"        ; Address in decimal
-            !byte $00           ; End of line
-            !byte $00, $00      ; End of program
-
-; ============================================================
-; MAIN PROGRAM
-; ============================================================
-*= $0810
+; ============================================================================
+; Program entry
+; ============================================================================
 start:
-            jsr init_screen
-            jsr init_sid
-            jsr init_game
-
-main_loop:
-            jsr wait_frame
-
-            ; Check if game is running
-            lda game_running
-            beq main_loop       ; Frozen - just wait
-
-            jsr read_input
-            jsr check_hit
-            jsr update_notes
-            jsr update_flash
-            jsr update_display
-            jmp main_loop
-
-; ============================================================
-; INITIALISATION
-; ============================================================
-
-init_screen:
-            ; Set border and background to black
-            lda #COL_BLACK
-            sta BORDER
-            sta BACKGROUND
-
-            ; Clear screen with spaces
-            ldx #$00
-            lda #$20            ; Space character
--           sta SCREEN,x
-            sta SCREEN + $100,x
-            sta SCREEN + $200,x
-            sta SCREEN + $2e8,x
-            lda #COL_GREY
-            sta COLOUR,x
-            sta COLOUR + $100,x
-            sta COLOUR + $200,x
-            sta COLOUR + $2e8,x
-            inx
-            bne -
-
-            ; Draw title
-            ldx #$00
--           lda title_text,x
-            beq +
-            sta SCREEN + 4,x
-            lda #COL_CYAN
-            sta COLOUR + 4,x
-            inx
-            bne -
-+
-            ; Draw "SCORE:" label
-            ldx #$00
--           lda score_label,x
-            beq +
-            sta SCREEN + (ROW_SCORE * 40),x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_SCORE * 40),x
-            inx
-            bne -
-+
-            ; Draw "STREAK:" label
-            ldx #$00
--           lda streak_label,x
-            beq +
-            sta SCREEN + (ROW_STREAK * 40),x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_STREAK * 40),x
-            inx
-            bne -
-+
-            ; Draw "CROWD:" label
-            ldx #$00
--           lda crowd_label,x
-            beq +
-            sta SCREEN + (ROW_CROWD * 40),x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_CROWD * 40),x
-            inx
-            bne -
-+
-            ; Draw track line
-            ldx #39
-            lda #$43            ; Horizontal line character
--           sta SCREEN + (ROW_TRACK * 40),x
-            lda #COL_BLUE
-            sta COLOUR + (ROW_TRACK * 40),x
-            dex
-            bpl -
-
-            ; Draw hit zone marker
-            lda #$5b            ; Left bracket
-            sta SCREEN + (ROW_TRACK * 40) + HIT_ZONE_COL - 1
-            lda #$5d            ; Right bracket
-            sta SCREEN + (ROW_TRACK * 40) + HIT_ZONE_COL + HIT_ZONE_W
-            lda #COL_WHITE
-            sta COLOUR + (ROW_TRACK * 40) + HIT_ZONE_COL - 1
-            sta COLOUR + (ROW_TRACK * 40) + HIT_ZONE_COL + HIT_ZONE_W
-
-            rts
-
-init_sid:
-            ; Clear all SID registers
-            ldx #$18
-            lda #$00
--           sta SID,x
-            dex
-            bpl -
-
-            ; Set volume to maximum
-            lda #$0f
-            sta SID_VOLUME
-
-            ; Set up voice 1: pulse wave with medium attack
-            lda #<FREQ_C4
-            sta SID_FREQ_LO
-            lda #>FREQ_C4
-            sta SID_FREQ_HI
-            lda #$08            ; Pulse width mid-point (low)
-            sta SID_PW_LO
-            lda #$08            ; Pulse width mid-point (high)
-            sta SID_PW_HI
-            lda #$22            ; Attack=2, Decay=2
-            sta SID_AD
-            lda #$a8            ; Sustain=10, Release=8
-            sta SID_SR
-
-            rts
-
-init_game:
-            ; Game is running
-            lda #$01
-            sta game_running
-
-            ; Clear score
-            lda #$00
-            sta score_lo
-            sta score_hi
-            sta streak
-            sta best_streak
-
-            ; Initialise crowd
-            lda #CROWD_START
-            sta crowd_meter
-
-            ; Clear all note slots
-            ldx #MAX_NOTES - 1
-            lda #NOTE_INACTIVE
--           sta note_x,x
-            dex
-            bpl -
-
-            ; Reset timers
-            lda #SPAWN_INTERVAL
-            sta spawn_timer
-            lda #NOTE_SPEED
-            sta move_timer
-
-            ; Clear input state
-            lda #$00
-            sta key_current
-            sta key_previous
-
-            ; Clear flash timers
-            sta hit_flash
-            sta miss_flash
-
-            rts
-
-; ============================================================
-; FRAME SYNCHRONISATION
-; ============================================================
-
-wait_frame:
-            ; Wait for raster to reach line 255 (bottom of screen)
--           lda RASTER
-            cmp #255
-            bne -
-            ; Wait for raster to leave line 255
--           lda RASTER
-            cmp #255
-            beq -
-            rts
-
-; ============================================================
-; INPUT HANDLING
-; ============================================================
-
-read_input:
-            ; Save previous state
-            lda key_current
-            sta key_previous
-
-            ; Read X key (row 2, column 7)
-            lda #%01111111      ; Select column 7
-            sta CIA1_PORTA
-            lda CIA1_PORTB      ; Read rows
-            and #%00000100      ; Check row 2 (X key)
-            beq +               ; Branch if pressed (active low)
-            lda #$00            ; Not pressed
-            jmp ++
-+           lda #$01            ; Pressed
-++          sta key_current
-            rts
-
-; ============================================================
-; HIT DETECTION
-; ============================================================
-
-check_hit:
-            ; Check for key-down transition (not pressed -> pressed)
-            lda key_previous
-            bne ch_done         ; Was already pressed, skip
-            lda key_current
-            beq ch_done         ; Not pressed now, skip
-
-            ; Key just pressed - check for note in hit zone
-            ldx #MAX_NOTES - 1
--           lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq +               ; Skip inactive slots
-            ; Check if note is in hit zone
-            cmp #HIT_ZONE_COL
-            bcc +               ; Before hit zone
-            cmp #HIT_ZONE_COL + HIT_ZONE_W
-            bcs +               ; After hit zone
-
-            ; HIT! Remove note and award points
-            jsr erase_note      ; Erase from screen
-            lda #NOTE_INACTIVE
-            sta note_x,x        ; Mark slot as free
-
-            ; Add to score
-            jsr add_score
-
-            ; Update crowd (happier)
-            jsr update_crowd_hit
-
-            ; Update streak
-            inc streak
-            lda streak
-            cmp best_streak
-            bcc ++
-            sta best_streak     ; New best!
-++
-            ; Play hit sound
-            jsr play_note
-
-            ; Trigger hit flash
-            lda #FLASH_TIME
-            sta hit_flash
-
-            jmp ch_done         ; Only hit one note per press
-
-+           dex
-            bpl -
-
-ch_done:
-            rts
-
-; ============================================================
-; SCORING
-; ============================================================
-
-add_score:
-            clc
-            lda score_lo
-            adc #POINTS_PER_HIT
-            sta score_lo
-            bcc +
-            inc score_hi
-+           rts
-
-; ============================================================
-; CROWD MANAGEMENT
-; ============================================================
-
-update_crowd_hit:
-            lda crowd_meter
-            cmp #CROWD_MAX
-            bcs +               ; Already at max
-            inc crowd_meter
-+           rts
-
-update_crowd_miss:
-            lda crowd_meter
-            sec
-            sbc #$02            ; Subtract 2
-            bcs +               ; No underflow
-            lda #$00            ; Floor at 0
-+           sta crowd_meter
-            bne +               ; Not zero? Continue
-            jsr trigger_game_over
-+           rts
-
-trigger_game_over:
-            lda #$00
-            sta game_running
-
-            ; Draw "GAME OVER" text
-            ldx #$00
--           lda gameover_text,x
-            beq +
-            sta SCREEN + (14 * 40) + 15,x
-            lda #COL_RED
-            sta COLOUR + (14 * 40) + 15,x
-            inx
-            bne -
-+           rts
-
-; ============================================================
-; NOTE MOVEMENT
-; ============================================================
-
-update_notes:
-            ; Handle spawn timer
-            dec spawn_timer
-            bne +
-            jsr spawn_note
-            lda #SPAWN_INTERVAL
-            sta spawn_timer
-+
-            ; Handle move timer
-            dec move_timer
-            bne un_done
-            lda #NOTE_SPEED
-            sta move_timer
-
-            ; Move all active notes
-            ldx #MAX_NOTES - 1
--           lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq +               ; Skip inactive
-
-            ; Erase at old position
-            jsr erase_note
-
-            ; Move left
-            dec note_x,x
-            bmi ++              ; Despawned off left edge
-
-            ; Draw at new position
-            jsr draw_note
-            jmp +
-
-++          ; Note despawned - missed!
-            lda #NOTE_INACTIVE
-            sta note_x,x
-
-            ; Update crowd (unhappier - may trigger game over)
-            jsr update_crowd_miss
-
-            ; Reset streak
-            lda #$00
-            sta streak
-
-            ; Trigger miss flash
-            lda #FLASH_TIME
-            sta miss_flash
-
-+           dex
-            bpl -
-
-un_done:
-            rts
-
-spawn_note:
-            ; Find empty slot
-            ldx #MAX_NOTES - 1
--           lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq +
-            dex
-            bpl -
-            rts                 ; No empty slots
-
-+           ; Spawn at right edge
-            lda #38
-            sta note_x,x
-            jsr draw_note
-            rts
-
-; ============================================================
-; NOTE DRAWING
-; ============================================================
-
-draw_note:
-            ; X = note index, note_x[X] = column
-            lda note_x,x
-            tay                 ; Y = column
-            lda #$51            ; Filled circle character
-            sta SCREEN + (ROW_TRACK * 40),y
-            lda #COL_YELLOW
-            sta COLOUR + (ROW_TRACK * 40),y
-            rts
-
-erase_note:
-            ; X = note index, note_x[X] = column
-            lda note_x,x
-            tay                 ; Y = column
-            lda #$43            ; Horizontal line (restore track)
-            sta SCREEN + (ROW_TRACK * 40),y
-            lda #COL_BLUE
-            sta COLOUR + (ROW_TRACK * 40),y
-            rts
-
-; ============================================================
-; VISUAL FEEDBACK
-; ============================================================
-
-update_flash:
-            ; Handle hit flash (green border)
-            lda hit_flash
-            beq +
-            dec hit_flash
-            lda #COL_GREEN
-            sta BORDER
-            rts
-+
-            ; Handle miss flash (red border)
-            lda miss_flash
-            beq +
-            dec miss_flash
-            lda #COL_RED
-            sta BORDER
-            rts
-+
-            ; No flash - black border
-            lda #COL_BLACK
-            sta BORDER
-            rts
-
-; ============================================================
-; AUDIO
-; ============================================================
-
-play_note:
-            ; Gate on (start note)
-            lda #$41            ; Pulse wave + gate
-            sta SID_CTRL
-            ; Note will release naturally via ADSR
-            rts
-
-; ============================================================
-; DISPLAY UPDATE
-; ============================================================
-
-update_display:
-            jsr convert_score
-            jsr draw_score
-            jsr convert_streak
-            jsr draw_streak
-            jsr draw_crowd
-            rts
-
-convert_score:
-            ; Copy score to work area
-            lda score_lo
-            sta work_lo
-            lda score_hi
-            sta work_hi
-
-            ; 10000s digit
-            ldx #$00
--           lda work_hi
-            cmp #>10000
-            bcc +
-            bne ++
-            lda work_lo
-            cmp #<10000
-            bcc +
-++          lda work_lo
-            sec
-            sbc #<10000
-            sta work_lo
-            lda work_hi
-            sbc #>10000
-            sta work_hi
-            inx
-            jmp -
-+           stx score_digits + 0
-
-            ; 1000s digit
-            ldx #$00
--           lda work_hi
-            cmp #>1000
-            bcc +
-            bne ++
-            lda work_lo
-            cmp #<1000
-            bcc +
-++          lda work_lo
-            sec
-            sbc #<1000
-            sta work_lo
-            lda work_hi
-            sbc #>1000
-            sta work_hi
-            inx
-            jmp -
-+           stx score_digits + 1
-
-            ; 100s digit
-            ldx #$00
--           lda work_lo
-            cmp #100
-            bcc +
-            sec
-            sbc #100
-            sta work_lo
-            inx
-            jmp -
-+           stx score_digits + 2
-
-            ; 10s digit
-            ldx #$00
--           lda work_lo
-            cmp #10
-            bcc +
-            sec
-            sbc #10
-            sta work_lo
-            inx
-            jmp -
-+           stx score_digits + 3
-
-            ; 1s digit
-            lda work_lo
-            sta score_digits + 4
-            rts
-
-draw_score:
-            ldx #$00
--           lda score_digits,x
-            ora #$30            ; Convert to screen code
-            sta SCREEN + (ROW_SCORE * 40) + 8,x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_SCORE * 40) + 8,x
-            inx
-            cpx #$05
-            bne -
-            rts
-
-convert_streak:
-            lda streak
-            ldx #$00
--           cmp #10
-            bcc +
-            sec
-            sbc #10
-            inx
-            jmp -
-+           stx streak_tens
-            sta streak_ones
-            rts
-
-draw_streak:
-            lda streak_tens
-            ora #$30
-            sta SCREEN + (ROW_STREAK * 40) + 8
-            lda streak_ones
-            ora #$30
-            sta SCREEN + (ROW_STREAK * 40) + 9
-            lda #COL_WHITE
-            sta COLOUR + (ROW_STREAK * 40) + 8
-            sta COLOUR + (ROW_STREAK * 40) + 9
-            rts
-
-draw_crowd:
-            ; Determine colour based on level
-            jsr get_crowd_colour
-            sta crowd_colour
-
-            ; Draw meter
-            ldx #$00            ; Position counter
-            ldy crowd_meter     ; Blocks to draw
--           cpx #CROWD_MAX
-            bcs +               ; Done when X >= MAX
-
-            cpy #$00
-            beq ++
-            lda #$a0            ; Solid block
-            dey                 ; One less to draw
-            jmp +++
-++          lda #$20            ; Space (empty slot)
-+++         sta SCREEN + (ROW_CROWD * 40) + 8,x
-            lda crowd_colour
-            sta COLOUR + (ROW_CROWD * 40) + 8,x
-            inx
-            jmp -
-+           rts
-
-get_crowd_colour:
-            lda crowd_meter
-            cmp #$05            ; Below 5?
-            bcc +
-            cmp #$0f            ; Below 15?
-            bcc ++
-            lda #COL_GREEN      ; 15+ = happy
-            rts
-++          lda #COL_YELLOW     ; 5-14 = okay
-            rts
-+           lda #COL_RED        ; 0-4 = danger
-            rts
-
-; ============================================================
-; DATA
-; ============================================================
-
-title_text:
-            !scr "sid symphony"
-            !byte 0
-
-score_label:
-            !scr "score:  "
-            !byte 0
-
-streak_label:
-            !scr "streak: "
-            !byte 0
-
-crowd_label:
-            !scr "crowd:  "
-            !byte 0
-
-gameover_text:
-            !scr "game over"
-            !byte 0
-
-; ============================================================
-; VARIABLES (uninitialised)
-; ============================================================
-
-note_x:         !fill MAX_NOTES, 0  ; Note X positions
-spawn_timer:    !byte 0             ; Frames until next spawn
-move_timer:     !byte 0             ; Frames until next movement
-key_current:    !byte 0             ; Current key state
-key_previous:   !byte 0             ; Previous key state
-hit_flash:      !byte 0             ; Hit flash countdown
-miss_flash:     !byte 0             ; Miss flash countdown
-score_lo:       !byte 0             ; Score low byte
-score_hi:       !byte 0             ; Score high byte
-streak:         !byte 0             ; Current streak
-best_streak:    !byte 0             ; Best streak this game
-work_lo:        !byte 0             ; Working area for conversion
-work_hi:        !byte 0
-score_digits:   !fill 5, 0          ; 5 decimal digits
-streak_tens:    !byte 0             ; Streak tens digit
-streak_ones:    !byte 0             ; Streak ones digit
-crowd_meter:    !byte 0             ; Current crowd level (0-20)
-crowd_colour:   !byte 0             ; Current crowd colour
-game_running:   !byte 0             ; 1 = playing, 0 = game over
+                jsr clear_screen
+                jsr draw_header
+                jsr draw_tracks
+                jsr draw_footer
+
+forever:        jmp forever
+
+; ----------------------------------------------------------------------------
+; Clear screen
+; ----------------------------------------------------------------------------
+clear_screen:
+                lda #COL_BLACK
+                sta BORDER_COLOUR
+                sta BACKGROUND
+
+                ldx #0
+-               lda #$20
+                sta SCREEN,x
+                sta SCREEN+$100,x
+                sta SCREEN+$200,x
+                sta SCREEN+$2e8,x
+                lda #COL_BLACK
+                sta COLOUR,x
+                sta COLOUR+$100,x
+                sta COLOUR+$200,x
+                sta COLOUR+$2e8,x
+                inx
+                bne -
+                rts
+
+; ----------------------------------------------------------------------------
+; Draw decorative header
+; ----------------------------------------------------------------------------
+draw_header:
+                ; Top line decoration (row 0)
+                ldx #0
+-               lda #$43            ; Horizontal line (screen code)
+                sta SCREEN,x
+                lda #COL_DARK_GREY
+                sta COLOUR,x
+                inx
+                cpx #40
+                bne -
+
+                ; Title "SID SYMPHONY" centred (row 2)
+                ldx #0
+-               lda title_text,x
+                beq +
+                sta SCREEN + 2*40 + 13,x
+                lda #COL_CYAN
+                sta COLOUR + 2*40 + 13,x
+                inx
+                bne -
+
+                ; Subtitle (row 4)
++               ldx #0
+-               lda subtitle_text,x
+                beq +
+                sta SCREEN + 4*40 + 12,x
+                lda #COL_GREY
+                sta COLOUR + 4*40 + 12,x
+                inx
+                bne -
+
+                ; Score label and value (row 6)
++               ldx #0
+-               lda score_text,x
+                beq +
+                sta SCREEN + 6*40 + 2,x
+                lda #COL_WHITE
+                sta COLOUR + 6*40 + 2,x
+                inx
+                bne -
+
+                ; Initial score "000000"
++               ldx #0
+-               lda #$30
+                sta SCREEN + 6*40 + 9,x
+                lda #COL_YELLOW
+                sta COLOUR + 6*40 + 9,x
+                inx
+                cpx #6
+                bne -
+
+                ; Streak label (row 6, right side)
+                ldx #0
+-               lda streak_text,x
+                beq +
+                sta SCREEN + 6*40 + 26,x
+                lda #COL_WHITE
+                sta COLOUR + 6*40 + 26,x
+                inx
+                bne -
+
+                ; Initial streak "00"
++               lda #$30
+                sta SCREEN + 6*40 + 34
+                sta SCREEN + 6*40 + 35
+                lda #COL_YELLOW
+                sta COLOUR + 6*40 + 34
+                sta COLOUR + 6*40 + 35
+                rts
+
+title_text:     !scr "sid symphony"
+                !byte 0
+subtitle_text:  !scr "press the keys!"
+                !byte 0
+score_text:     !scr "score:"
+                !byte 0
+streak_text:    !scr "streak:"
+                !byte 0
+
+; ----------------------------------------------------------------------------
+; Draw the three tracks with key labels
+; ----------------------------------------------------------------------------
+draw_tracks:
+                ; Track 1: X key, cyan
+                lda #TRACK1_ROW
+                ldx #$18            ; X in screen code
+                ldy #COL_CYAN
+                jsr draw_single_track
+
+                ; Track 2: C key, green
+                lda #TRACK2_ROW
+                ldx #$03            ; C in screen code
+                ldy #COL_GREEN
+                jsr draw_single_track
+
+                ; Track 3: V key, yellow
+                lda #TRACK3_ROW
+                ldx #$16            ; V in screen code
+                ldy #COL_YELLOW
+                jsr draw_single_track
+
+                rts
+
+; Draw one track. A=row, X=key char, Y=colour
+draw_single_track:
+                sta temp_row
+                stx temp_key
+                sty temp_colour
+
+                ; Calculate screen address for this row
+                lda temp_row
+                jsr calc_row_addr
+
+                ; Draw key label "[X]"
+                ldy #KEY_COL
+                lda #KEY_BRACKET_L
+                sta (screen_ptr),y
+                lda #COL_WHITE
+                sta (colour_ptr),y
+
+                iny
+                lda temp_key
+                sta (screen_ptr),y
+                lda temp_colour
+                sta (colour_ptr),y
+
+                iny
+                lda #KEY_BRACKET_R
+                sta (screen_ptr),y
+                lda #COL_WHITE
+                sta (colour_ptr),y
+
+                ; Draw hit zone (solid blocks)
+                ldy #HIT_START
+-               lda #BLOCK_CHAR
+                sta (screen_ptr),y
+                lda temp_colour
+                sta (colour_ptr),y
+                iny
+                cpy #HIT_END
+                bne -
+
+                ; Draw track line
+                ldy #TRACK_START
+-               lda #TRACK_CHAR
+                sta (screen_ptr),y
+                lda #COL_DARK_GREY
+                sta (colour_ptr),y
+                iny
+                cpy #SCREEN_WIDTH
+                bne -
+
+                rts
+
+; Calculate row address into screen_ptr and colour_ptr
+; A = row number (0-24)
+calc_row_addr:
+                ; Multiply row by 40 = row * 8 + row * 32
+                ; Must use 16-bit arithmetic (row 17 * 40 = 680)
+                sta temp_row
+
+                ; Start with row in 16-bit temp
+                sta temp_lo
+                lda #0
+                sta temp_hi
+
+                ; Shift left 3 times: row * 8
+                asl temp_lo
+                rol temp_hi
+                asl temp_lo
+                rol temp_hi
+                asl temp_lo
+                rol temp_hi         ; temp = row * 8
+
+                ; Save row * 8
+                lda temp_lo
+                sta save_lo
+                lda temp_hi
+                sta save_hi
+
+                ; Shift left 2 more times: row * 32
+                asl temp_lo
+                rol temp_hi
+                asl temp_lo
+                rol temp_hi         ; temp = row * 32
+
+                ; Add row * 8 to get row * 40
+                clc
+                lda save_lo
+                adc temp_lo
+                sta temp_lo
+                lda save_hi
+                adc temp_hi
+                sta temp_hi         ; temp = row * 40
+
+                ; Add screen base ($0400)
+                clc
+                lda temp_lo
+                adc #<SCREEN
+                sta screen_ptr
+                lda temp_hi
+                adc #>SCREEN
+                sta screen_ptr+1
+
+                ; Add colour base ($D800)
+                clc
+                lda temp_lo
+                adc #<COLOUR
+                sta colour_ptr
+                lda temp_hi
+                adc #>COLOUR
+                sta colour_ptr+1
+
+                rts
+
+temp_row:       !byte 0
+temp_key:       !byte 0
+temp_colour:    !byte 0
+temp_lo:        !byte 0
+temp_hi:        !byte 0
+save_lo:        !byte 0
+save_hi:        !byte 0
+
+; ----------------------------------------------------------------------------
+; Draw footer with instructions
+; ----------------------------------------------------------------------------
+draw_footer:
+                ; Bottom decoration line (row 22)
+                ldx #0
+-               lda #$43            ; Horizontal line (screen code)
+                sta SCREEN + 22*40,x
+                lda #COL_DARK_GREY
+                sta COLOUR + 22*40,x
+                inx
+                cpx #40
+                bne -
+
+                ; Instructions (row 24)
+                ldx #0
+-               lda footer_text,x
+                beq +
+                sta SCREEN + 24*40 + 6,x
+                lda #COL_GREY
+                sta COLOUR + 24*40 + 6,x
+                inx
+                bne -
++               rts
+
+footer_text:    !scr "hit notes as they reach ["
+                !byte $a0
+                !scr "]"
+                !byte 0

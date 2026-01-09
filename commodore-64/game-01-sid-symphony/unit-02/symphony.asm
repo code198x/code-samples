@@ -1,499 +1,149 @@
-;═══════════════════════════════════════════════════════════════════════════════
-; SID SYMPHONY - Unit 2: Notes in Motion
-; A rhythm game for the Commodore 64
+; ============================================================================
+; SID Symphony - Unit 2: The Three Voices
+; ============================================================================
+; The SID has three independent voices. This program plays a C major chord
+; using all three, each with a different waveform.
 ;
-; Build: acme -f cbm -o symphony.prg symphony.asm
-; Run:   x64sc symphony.prg
-;═══════════════════════════════════════════════════════════════════════════════
+; Voice 1: Triangle wave  - C4 (middle C)
+; Voice 2: Sawtooth wave  - E4 (major third)
+; Voice 3: Pulse wave     - G4 (perfect fifth)
+; ============================================================================
 
-;───────────────────────────────────────────────────────────────────────────────
-; BASIC stub
-;───────────────────────────────────────────────────────────────────────────────
-            * = $0801
+* = $0801
+                !byte $0c, $08, $0a, $00, $9e
+                !text "2064"
+                !byte $00, $00, $00
 
-            !byte $0c, $08
-            !byte $0a, $00
-            !byte $9e
-            !byte $32, $30, $36, $34
-            !byte $00
-            !byte $00, $00
+* = $0810
 
-;───────────────────────────────────────────────────────────────────────────────
-; Constants
-;───────────────────────────────────────────────────────────────────────────────
-SCREEN      = $0400
-COLOUR      = $d800
-
-; Zero page
-screen_ptr  = $fb               ; 2 bytes for indirect addressing
-
-; Screen layout
-ROW_SCORE   = 1
-ROW_TRACK1  = 8
-ROW_TRACK2  = 12
-ROW_TRACK3  = 16
-ROW_CROWD   = 23
-
-; Colours
-COL_BLACK   = $00
-COL_WHITE   = $01
-COL_CYAN    = $03
-COL_GREEN   = $05
-COL_GREY    = $0b
-
-; Track dimensions
-HIT_ZONE_W  = 4
-
-; Note system
-MAX_NOTES       = 4
-NOTE_INACTIVE   = $ff
-NOTE_CHAR       = $51           ; Ball character
-TRACK_CHAR      = $2d           ; Dash for track
-
-; Timing
-NOTE_SPEED      = 4             ; Frames between moves
-SPAWN_INTERVAL  = 50            ; Frames between spawns
-
+; ----------------------------------------------------------------------------
 ; SID registers
-SID         = $d400
-SID_FREQ_LO = SID + 0
-SID_FREQ_HI = SID + 1
-SID_PW_LO   = SID + 2
-SID_PW_HI   = SID + 3
-SID_CTRL    = SID + 4
-SID_AD      = SID + 5
-SID_SR      = SID + 6
-SID_VOLUME  = SID + 24
+; ----------------------------------------------------------------------------
+SID_BASE        = $d400
 
-; CIA
-CIA1_PRA    = $dc00
-CIA1_PRB    = $dc01
+; Voice 1 (offset +0)
+SID_V1_FREQ_LO  = SID_BASE + 0
+SID_V1_FREQ_HI  = SID_BASE + 1
+SID_V1_PW_LO    = SID_BASE + 2
+SID_V1_PW_HI    = SID_BASE + 3
+SID_V1_CTRL     = SID_BASE + 4
+SID_V1_AD       = SID_BASE + 5
+SID_V1_SR       = SID_BASE + 6
 
-;───────────────────────────────────────────────────────────────────────────────
-; Entry Point
-;───────────────────────────────────────────────────────────────────────────────
-            * = $0810
+; Voice 2 (offset +7)
+SID_V2_FREQ_LO  = SID_BASE + 7
+SID_V2_FREQ_HI  = SID_BASE + 8
+SID_V2_PW_LO    = SID_BASE + 9
+SID_V2_PW_HI    = SID_BASE + 10
+SID_V2_CTRL     = SID_BASE + 11
+SID_V2_AD       = SID_BASE + 12
+SID_V2_SR       = SID_BASE + 13
 
-!zone main
-main:
-            jsr setup_screen
-            jsr draw_top_panel
-            jsr draw_tracks
-            jsr draw_bottom_panel
-            jsr init_sid
-            jsr init_notes
-            jmp main_loop
+; Voice 3 (offset +14)
+SID_V3_FREQ_LO  = SID_BASE + 14
+SID_V3_FREQ_HI  = SID_BASE + 15
+SID_V3_PW_LO    = SID_BASE + 16
+SID_V3_PW_HI    = SID_BASE + 17
+SID_V3_CTRL     = SID_BASE + 18
+SID_V3_AD       = SID_BASE + 19
+SID_V3_SR       = SID_BASE + 20
 
-;───────────────────────────────────────────────────────────────────────────────
-; Setup Screen
-;───────────────────────────────────────────────────────────────────────────────
-!zone setup_screen
-setup_screen:
-            lda #COL_BLACK
-            sta $d020
-            sta $d021
+; Global
+SID_VOLUME      = SID_BASE + 24
 
-            ldx #$00
-.clear_loop:
-            lda #$20
-            sta SCREEN,x
-            sta SCREEN + $100,x
-            sta SCREEN + $200,x
-            sta SCREEN + $2e8,x
-            lda #COL_BLACK
-            sta COLOUR,x
-            sta COLOUR + $100,x
-            sta COLOUR + $200,x
-            sta COLOUR + $2e8,x
-            inx
-            bne .clear_loop
-            rts
+; ----------------------------------------------------------------------------
+; Waveform bits (combine with GATE_ON)
+; ----------------------------------------------------------------------------
+GATE_ON         = %00000001
+WAVE_TRI        = %00010000         ; Triangle - soft, flute-like
+WAVE_SAW        = %00100000         ; Sawtooth - bright, brassy
+WAVE_PULSE      = %01000000         ; Pulse - hollow, organ-like
+WAVE_NOISE      = %10000000         ; Noise - no pitch, percussive
 
-;───────────────────────────────────────────────────────────────────────────────
-; Draw Top Panel
-;───────────────────────────────────────────────────────────────────────────────
-!zone draw_top_panel
-draw_top_panel:
-            ldx #$00
-.loop:
-            lda score_text,x
-            beq .done
-            sta SCREEN + (ROW_SCORE * 40),x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_SCORE * 40),x
-            inx
-            bne .loop
-.done:
-            rts
+; ----------------------------------------------------------------------------
+; Note frequencies (PAL)
+; ----------------------------------------------------------------------------
+FREQ_C4_LO      = $68               ; Middle C (261.63 Hz)
+FREQ_C4_HI      = $11
+FREQ_E4_LO      = $b5               ; E4 (329.63 Hz)
+FREQ_E4_HI      = $15
+FREQ_G4_LO      = $43               ; G4 (392.00 Hz)
+FREQ_G4_HI      = $1a
 
-;───────────────────────────────────────────────────────────────────────────────
-; Draw Tracks
-;───────────────────────────────────────────────────────────────────────────────
-!zone draw_tracks
-draw_tracks:
-            ; Track 1
-            ldx #$00
-.t1_loop:
-            cpx #HIT_ZONE_W
-            bcs .t1_lane
-            lda #$a0
-            jmp .t1_store
-.t1_lane:
-            lda #TRACK_CHAR
-.t1_store:
-            sta SCREEN + (ROW_TRACK1 * 40),x
-            lda #COL_GREY
-            sta COLOUR + (ROW_TRACK1 * 40),x
-            inx
-            cpx #40
-            bne .t1_loop
+; ----------------------------------------------------------------------------
+; Screen registers
+; ----------------------------------------------------------------------------
+BORDER_COLOUR   = $d020
+BACKGROUND      = $d021
 
-            ; Track 2
-            ldx #$00
-.t2_loop:
-            cpx #HIT_ZONE_W
-            bcs .t2_lane
-            lda #$a0
-            jmp .t2_store
-.t2_lane:
-            lda #TRACK_CHAR
-.t2_store:
-            sta SCREEN + (ROW_TRACK2 * 40),x
-            lda #COL_CYAN
-            sta COLOUR + (ROW_TRACK2 * 40),x
-            inx
-            cpx #40
-            bne .t2_loop
+; ============================================================================
+; Program entry
+; ============================================================================
+start:
+                ; Black screen
+                lda #0
+                sta BORDER_COLOUR
+                sta BACKGROUND
+                ldx #0
+.clear:         lda #$20
+                sta $0400,x
+                sta $0500,x
+                sta $0600,x
+                sta $06e8,x
+                inx
+                bne .clear
 
-            ; Track 3
-            ldx #$00
-.t3_loop:
-            cpx #HIT_ZONE_W
-            bcs .t3_lane
-            lda #$a0
-            jmp .t3_store
-.t3_lane:
-            lda #TRACK_CHAR
-.t3_store:
-            sta SCREEN + (ROW_TRACK3 * 40),x
-            lda #COL_GREY
-            sta COLOUR + (ROW_TRACK3 * 40),x
-            inx
-            cpx #40
-            bne .t3_loop
+                ; Set master volume
+                lda #15
+                sta SID_VOLUME
 
-            rts
+                ; --------------------------------------------------------
+                ; Voice 1: Triangle wave, C4
+                ; --------------------------------------------------------
+                lda #FREQ_C4_LO
+                sta SID_V1_FREQ_LO
+                lda #FREQ_C4_HI
+                sta SID_V1_FREQ_HI
+                lda #$00
+                sta SID_V1_AD
+                lda #$f0
+                sta SID_V1_SR
+                lda #WAVE_TRI | GATE_ON
+                sta SID_V1_CTRL
 
-;───────────────────────────────────────────────────────────────────────────────
-; Draw Bottom Panel
-;───────────────────────────────────────────────────────────────────────────────
-!zone draw_bottom_panel
-draw_bottom_panel:
-            ldx #$00
-.loop:
-            lda crowd_text,x
-            beq .done
-            sta SCREEN + (ROW_CROWD * 40),x
-            lda #COL_GREEN
-            sta COLOUR + (ROW_CROWD * 40),x
-            inx
-            bne .loop
-.done:
-            rts
+                ; --------------------------------------------------------
+                ; Voice 2: Sawtooth wave, E4
+                ; --------------------------------------------------------
+                lda #FREQ_E4_LO
+                sta SID_V2_FREQ_LO
+                lda #FREQ_E4_HI
+                sta SID_V2_FREQ_HI
+                lda #$00
+                sta SID_V2_AD
+                lda #$f0
+                sta SID_V2_SR
+                lda #WAVE_SAW | GATE_ON
+                sta SID_V2_CTRL
 
-;───────────────────────────────────────────────────────────────────────────────
-; Init SID
-;───────────────────────────────────────────────────────────────────────────────
-!zone init_sid
-init_sid:
-            lda #$0f
-            sta SID_VOLUME
+                ; --------------------------------------------------------
+                ; Voice 3: Pulse wave, G4 (with pulse width)
+                ; --------------------------------------------------------
+                lda #FREQ_G4_LO
+                sta SID_V3_FREQ_LO
+                lda #FREQ_G4_HI
+                sta SID_V3_FREQ_HI
+                ; Pulse width 50%
+                lda #$00
+                sta SID_V3_PW_LO
+                lda #$08
+                sta SID_V3_PW_HI
+                lda #$00
+                sta SID_V3_AD
+                lda #$f0
+                sta SID_V3_SR
+                lda #WAVE_PULSE | GATE_ON
+                sta SID_V3_CTRL
 
-            lda #$00
-            sta SID_AD
-            lda #$f9
-            sta SID_SR
-
-            lda #$00
-            sta SID_PW_LO
-            lda #$08
-            sta SID_PW_HI
-
-            lda #$12
-            sta SID_FREQ_LO
-            lda #$11
-            sta SID_FREQ_HI
-
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Init Notes
-;───────────────────────────────────────────────────────────────────────────────
-!zone init_notes
-init_notes:
-            ldx #MAX_NOTES - 1
-.loop:
-            lda #NOTE_INACTIVE
-            sta note_x,x
-            dex
-            bpl .loop
-
-            lda #NOTE_SPEED
-            sta move_timer
-            lda #$01            ; Spawn first note quickly
-            sta spawn_timer
-
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Wait Frame - Sync to raster line 0
-;───────────────────────────────────────────────────────────────────────────────
-!zone wait_frame
-wait_frame:
-.wait_not_0:
-            lda $d012
-            beq .wait_not_0
-.wait_0:
-            lda $d012
-            bne .wait_0
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Spawn Note - Create new note at right edge
-;───────────────────────────────────────────────────────────────────────────────
-!zone spawn_note
-spawn_note:
-            ldx #$00
-.find_slot:
-            lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq .found
-            inx
-            cpx #MAX_NOTES
-            bne .find_slot
-            rts                 ; No free slot
-
-.found:
-            lda #39             ; Right edge of screen
-            sta note_x,x
-            jsr draw_note
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Move Notes - Shift all active notes left
-;───────────────────────────────────────────────────────────────────────────────
-!zone move_notes
-move_notes:
-            ldx #$00
-.loop:
-            lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq .next
-
-            ; Erase at old position
-            jsr erase_note
-
-            ; Move left
-            dec note_x,x
-
-            ; Check if despawned (wrapped to $FF)
-            lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq .next
-
-            ; Draw at new position
-            jsr draw_note
-
-.next:
-            inx
-            cpx #MAX_NOTES
-            bne .loop
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Draw Note - Display note at current position
-; X = note index (preserved)
-;───────────────────────────────────────────────────────────────────────────────
-!zone draw_note
-draw_note:
-            stx temp_x
-
-            lda note_x,x
-            cmp #HIT_ZONE_W     ; Don't draw in hit zone
-            bcc .done
-
-            ; Calculate screen address
-            clc
-            adc #<(SCREEN + ROW_TRACK2 * 40)
-            sta screen_ptr
-            lda #>(SCREEN + ROW_TRACK2 * 40)
-            adc #$00
-            sta screen_ptr + 1
-
-            ; Draw note character
-            ldy #$00
-            lda #NOTE_CHAR
-            sta (screen_ptr),y
-
-            ; Calculate colour address
-            lda note_x,x
-            clc
-            adc #<(COLOUR + ROW_TRACK2 * 40)
-            sta screen_ptr
-            lda #>(COLOUR + ROW_TRACK2 * 40)
-            adc #$00
-            sta screen_ptr + 1
-
-            ; Set colour
-            lda #COL_WHITE
-            sta (screen_ptr),y
-
-.done:
-            ldx temp_x
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Erase Note - Remove note from screen
-; X = note index (preserved)
-;───────────────────────────────────────────────────────────────────────────────
-!zone erase_note
-erase_note:
-            stx temp_x
-
-            lda note_x,x
-            cmp #HIT_ZONE_W
-            bcc .done
-
-            ; Calculate screen address
-            clc
-            adc #<(SCREEN + ROW_TRACK2 * 40)
-            sta screen_ptr
-            lda #>(SCREEN + ROW_TRACK2 * 40)
-            adc #$00
-            sta screen_ptr + 1
-
-            ; Restore track character
-            ldy #$00
-            lda #TRACK_CHAR
-            sta (screen_ptr),y
-
-            ; Calculate colour address
-            lda note_x,x
-            clc
-            adc #<(COLOUR + ROW_TRACK2 * 40)
-            sta screen_ptr
-            lda #>(COLOUR + ROW_TRACK2 * 40)
-            adc #$00
-            sta screen_ptr + 1
-
-            ; Restore track colour
-            lda #COL_CYAN
-            sta (screen_ptr),y
-
-.done:
-            ldx temp_x
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Play/Stop Note
-;───────────────────────────────────────────────────────────────────────────────
-!zone play_note
-play_note:
-            lda #$41
-            sta SID_CTRL
-            rts
-
-!zone stop_note
-stop_note:
-            lda #$40
-            sta SID_CTRL
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Check X Key
-;───────────────────────────────────────────────────────────────────────────────
-!zone check_x_key
-check_x_key:
-            lda #%11111011
-            sta CIA1_PRA
-            lda CIA1_PRB
-            and #%10000000
-            bne .not_pressed
-            lda #$01
-            rts
-.not_pressed:
-            lda #$00
-            rts
-
-;───────────────────────────────────────────────────────────────────────────────
-; Main Loop
-;───────────────────────────────────────────────────────────────────────────────
-!zone main_loop
-main_loop:
-            jsr wait_frame
-
-            ; Handle input (same as Unit 1)
-            jsr check_x_key
-            cmp #$01
-            beq .x_pressed
-
-            lda key_state
-            cmp #$01
-            bne .after_input
-            lda #$00
-            sta key_state
-            jsr stop_note
-            jmp .after_input
-
-.x_pressed:
-            lda key_state
-            cmp #$01
-            beq .after_input
-            lda #$01
-            sta key_state
-            jsr play_note
-
-.after_input:
-            ; Spawn timer
-            dec spawn_timer
-            bne .no_spawn
-            lda #SPAWN_INTERVAL
-            sta spawn_timer
-            jsr spawn_note
-.no_spawn:
-
-            ; Move timer
-            dec move_timer
-            bne .no_move
-            lda #NOTE_SPEED
-            sta move_timer
-            jsr move_notes
-.no_move:
-
-            jmp main_loop
-
-;───────────────────────────────────────────────────────────────────────────────
-; Data
-;───────────────────────────────────────────────────────────────────────────────
-!zone score_text
-score_text:
-            !scr "score: 000000          streak: 00"
-            !byte 0
-
-!zone crowd_text
-crowd_text:
-            !scr "crowd [          ]"
-            !byte 0
-
-;───────────────────────────────────────────────────────────────────────────────
-; Variables
-;───────────────────────────────────────────────────────────────────────────────
-key_state:      !byte $00
-move_timer:     !byte NOTE_SPEED
-spawn_timer:    !byte SPAWN_INTERVAL
-temp_x:         !byte $00
-
-; Note arrays
-!zone note_x
-note_x:
-            !byte $ff, $ff, $ff, $ff
+                ; Infinite loop
+forever:
+                jmp forever

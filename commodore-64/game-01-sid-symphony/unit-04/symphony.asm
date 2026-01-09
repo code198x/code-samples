@@ -1,624 +1,178 @@
-;──────────────────────────────────────────────────────────────
-; SID SYMPHONY
-; A rhythm game for the Commodore 64
-; Unit 4: Keeping Score
+; ============================================================================
+; SID Symphony - Unit 4: Playing a Scale
+; ============================================================================
+; From individual notes to melody. This program plays a C major scale
+; ascending and descending - the foundation for all musical playback.
 ;
-; Current features:
-; - Three-lane track display
-; - Notes spawning and scrolling
-; - Hit detection with timing feedback
-; - Score and streak tracking
-;
-; Controls:
-;   X - Hit notes on the track
-;──────────────────────────────────────────────────────────────
+; Introduces:
+; - Frequency lookup tables
+; - Indexed addressing
+; - Frame-based timing for note duration
+; ============================================================================
 
-; ============================================================
-; CONSTANTS
-; ============================================================
+* = $0801
+                !byte $0c, $08, $0a, $00, $9e
+                !text "2064"
+                !byte $00, $00, $00
 
-; Memory-mapped I/O
-SCREEN          = $0400         ; Screen RAM (1000 bytes)
-COLOUR          = $d800         ; Colour RAM (1000 bytes)
-BORDER          = $d020         ; Border colour register
-BACKGROUND      = $d021         ; Background colour register
-RASTER          = $d012         ; Current raster line
+* = $0810
 
+; ----------------------------------------------------------------------------
 ; SID registers
-SID             = $d400         ; SID base address
-SID_FREQ_LO     = SID + $00     ; Voice 1 frequency low byte
-SID_FREQ_HI     = SID + $01     ; Voice 1 frequency high byte
-SID_PW_LO       = SID + $02     ; Voice 1 pulse width low
-SID_PW_HI       = SID + $03     ; Voice 1 pulse width high
-SID_CTRL        = SID + $04     ; Voice 1 control register
-SID_AD          = SID + $05     ; Voice 1 attack/decay
-SID_SR          = SID + $06     ; Voice 1 sustain/release
-SID_VOLUME      = SID + $18     ; Main volume (low nybble)
+; ----------------------------------------------------------------------------
+SID_BASE        = $d400
+SID_V1_FREQ_LO  = SID_BASE + 0
+SID_V1_FREQ_HI  = SID_BASE + 1
+SID_V1_PW_LO    = SID_BASE + 2
+SID_V1_PW_HI    = SID_BASE + 3
+SID_V1_CTRL     = SID_BASE + 4
+SID_V1_AD       = SID_BASE + 5
+SID_V1_SR       = SID_BASE + 6
+SID_VOLUME      = SID_BASE + 24
 
-; CIA1 keyboard
-CIA1_PORTA      = $dc00         ; Keyboard column select
-CIA1_PORTB      = $dc01         ; Keyboard row read
+; ----------------------------------------------------------------------------
+; Constants
+; ----------------------------------------------------------------------------
+GATE_ON         = %00000001
+WAVE_PULSE      = %01000000
 
-; Screen layout
-ROW_SCORE       = 1             ; Score display row
-ROW_STREAK      = 2             ; Streak display row
-ROW_TRACK       = 12            ; Track row
-HIT_ZONE_COL    = 5             ; Column where notes are hit
+BORDER_COLOUR   = $d020
+BACKGROUND      = $d021
+RASTER          = $d012
 
-; Colours
-COL_BLACK       = $00
-COL_WHITE       = $01
-COL_RED         = $02
-COL_CYAN        = $03
-COL_GREEN       = $05
-COL_BLUE        = $06
-COL_YELLOW      = $07
-COL_GREY        = $0c
+SCALE_LENGTH    = 8                 ; 8 notes in the scale (C to C)
+NOTE_DURATION   = 25                ; Frames per note (~0.5 sec at 50fps)
 
-; Game constants
-MAX_NOTES       = 8             ; Maximum simultaneous notes
-NOTE_INACTIVE   = $ff           ; Marker for empty note slot
-NOTE_SPEED      = 4             ; Frames between note movements
-SPAWN_INTERVAL  = 40            ; Frames between note spawns
-FLASH_TIME      = 4             ; Duration of visual feedback
-HIT_ZONE_W      = 3             ; Hit zone width (columns)
-POINTS_PER_HIT  = 10            ; Points awarded per hit
-
-; SID note frequencies (C4 = middle C)
-FREQ_C4         = 4291          ; 262 Hz
-
-; ============================================================
-; BASIC STUB
-; ============================================================
-*= $0801
-            !byte $0c, $08      ; Pointer to next line
-            !byte $0a, $00      ; Line number 10
-            !byte $9e           ; SYS token
-            !text "2064"        ; Address in decimal
-            !byte $00           ; End of line
-            !byte $00, $00      ; End of program
-
-; ============================================================
-; MAIN PROGRAM
-; ============================================================
-*= $0810
+; ============================================================================
+; Program entry
+; ============================================================================
 start:
-            jsr init_screen
-            jsr init_sid
-            jsr init_game
+                ; Black screen
+                lda #0
+                sta BORDER_COLOUR
+                sta BACKGROUND
+                ldx #0
+.clear:         lda #$20
+                sta $0400,x
+                sta $0500,x
+                sta $0600,x
+                sta $06e8,x
+                inx
+                bne .clear
 
+                ; Master volume
+                lda #15
+                sta SID_VOLUME
+
+                ; Configure voice 1
+                lda #$00
+                sta SID_V1_PW_LO
+                lda #$08
+                sta SID_V1_PW_HI
+                lda #$00            ; Instant attack, no decay
+                sta SID_V1_AD
+                lda #$f6            ; Full sustain, medium release
+                sta SID_V1_SR
+
+; ============================================================================
+; Main loop - play scale up and down
+; ============================================================================
 main_loop:
-            jsr wait_frame
-            jsr read_input
-            jsr check_hit
-            jsr update_notes
-            jsr update_flash
-            jsr update_display
-            jmp main_loop
+                ; --- Ascending scale ---
+                ldx #0
+.ascending:
+                jsr play_note       ; Play note at index X
+                inx
+                cpx #SCALE_LENGTH
+                bne .ascending
 
-; ============================================================
-; INITIALISATION
-; ============================================================
+                ; --- Descending scale (skip the top C, start from B) ---
+                ldx #SCALE_LENGTH - 2
+.descending:
+                jsr play_note       ; Play note at index X
+                dex
+                bpl .descending     ; Continue while X >= 0
 
-init_screen:
-            ; Set border and background to black
-            lda #COL_BLACK
-            sta BORDER
-            sta BACKGROUND
+                ; Loop forever
+                jmp main_loop
 
-            ; Clear screen with spaces
-            ldx #$00
-            lda #$20            ; Space character
--           sta SCREEN,x
-            sta SCREEN + $100,x
-            sta SCREEN + $200,x
-            sta SCREEN + $2e8,x
-            lda #COL_GREY
-            sta COLOUR,x
-            sta COLOUR + $100,x
-            sta COLOUR + $200,x
-            sta COLOUR + $2e8,x
-            inx
-            bne -
-
-            ; Draw title
-            ldx #$00
--           lda title_text,x
-            beq +
-            sta SCREEN + 4,x
-            lda #COL_CYAN
-            sta COLOUR + 4,x
-            inx
-            bne -
-+
-            ; Draw "SCORE:" label
-            ldx #$00
--           lda score_label,x
-            beq +
-            sta SCREEN + (ROW_SCORE * 40),x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_SCORE * 40),x
-            inx
-            bne -
-+
-            ; Draw "STREAK:" label
-            ldx #$00
--           lda streak_label,x
-            beq +
-            sta SCREEN + (ROW_STREAK * 40),x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_STREAK * 40),x
-            inx
-            bne -
-+
-            ; Draw track line
-            ldx #39
-            lda #$43            ; Horizontal line character
--           sta SCREEN + (ROW_TRACK * 40),x
-            lda #COL_BLUE
-            sta COLOUR + (ROW_TRACK * 40),x
-            dex
-            bpl -
-
-            ; Draw hit zone marker
-            lda #$5b            ; Left bracket
-            sta SCREEN + (ROW_TRACK * 40) + HIT_ZONE_COL - 1
-            lda #$5d            ; Right bracket
-            sta SCREEN + (ROW_TRACK * 40) + HIT_ZONE_COL + HIT_ZONE_W
-            lda #COL_WHITE
-            sta COLOUR + (ROW_TRACK * 40) + HIT_ZONE_COL - 1
-            sta COLOUR + (ROW_TRACK * 40) + HIT_ZONE_COL + HIT_ZONE_W
-
-            rts
-
-init_sid:
-            ; Clear all SID registers
-            ldx #$18
-            lda #$00
--           sta SID,x
-            dex
-            bpl -
-
-            ; Set volume to maximum
-            lda #$0f
-            sta SID_VOLUME
-
-            ; Set up voice 1: pulse wave with medium attack
-            lda #<FREQ_C4
-            sta SID_FREQ_LO
-            lda #>FREQ_C4
-            sta SID_FREQ_HI
-            lda #$08            ; Pulse width mid-point (low)
-            sta SID_PW_LO
-            lda #$08            ; Pulse width mid-point (high)
-            sta SID_PW_HI
-            lda #$22            ; Attack=2, Decay=2
-            sta SID_AD
-            lda #$a8            ; Sustain=10, Release=8
-            sta SID_SR
-
-            rts
-
-init_game:
-            ; Clear score
-            lda #$00
-            sta score_lo
-            sta score_hi
-            sta streak
-            sta best_streak
-
-            ; Clear all note slots
-            ldx #MAX_NOTES - 1
-            lda #NOTE_INACTIVE
--           sta note_x,x
-            dex
-            bpl -
-
-            ; Reset timers
-            lda #SPAWN_INTERVAL
-            sta spawn_timer
-            lda #NOTE_SPEED
-            sta move_timer
-
-            ; Clear input state
-            lda #$00
-            sta key_current
-            sta key_previous
-
-            ; Clear flash timers
-            sta hit_flash
-            sta miss_flash
-
-            rts
-
-; ============================================================
-; FRAME SYNCHRONISATION
-; ============================================================
-
-wait_frame:
-            ; Wait for raster to reach line 255 (bottom of screen)
--           lda RASTER
-            cmp #255
-            bne -
-            ; Wait for raster to leave line 255
--           lda RASTER
-            cmp #255
-            beq -
-            rts
-
-; ============================================================
-; INPUT HANDLING
-; ============================================================
-
-read_input:
-            ; Save previous state
-            lda key_current
-            sta key_previous
-
-            ; Read X key (row 2, column 7)
-            lda #%01111111      ; Select column 7
-            sta CIA1_PORTA
-            lda CIA1_PORTB      ; Read rows
-            and #%00000100      ; Check row 2 (X key)
-            beq +               ; Branch if pressed (active low)
-            lda #$00            ; Not pressed
-            jmp ++
-+           lda #$01            ; Pressed
-++          sta key_current
-            rts
-
-; ============================================================
-; HIT DETECTION
-; ============================================================
-
-check_hit:
-            ; Check for key-down transition (not pressed -> pressed)
-            lda key_previous
-            bne ch_done         ; Was already pressed, skip
-            lda key_current
-            beq ch_done         ; Not pressed now, skip
-
-            ; Key just pressed - check for note in hit zone
-            ldx #MAX_NOTES - 1
--           lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq +               ; Skip inactive slots
-            ; Check if note is in hit zone
-            cmp #HIT_ZONE_COL
-            bcc +               ; Before hit zone
-            cmp #HIT_ZONE_COL + HIT_ZONE_W
-            bcs +               ; After hit zone
-
-            ; HIT! Remove note and award points
-            jsr erase_note      ; Erase from screen
-            lda #NOTE_INACTIVE
-            sta note_x,x        ; Mark slot as free
-
-            ; Add to score
-            jsr add_score
-
-            ; Update streak
-            inc streak
-            lda streak
-            cmp best_streak
-            bcc ++
-            sta best_streak     ; New best!
-++
-            ; Play hit sound
-            jsr play_note
-
-            ; Trigger hit flash
-            lda #FLASH_TIME
-            sta hit_flash
-
-            jmp ch_done         ; Only hit one note per press
-
-+           dex
-            bpl -
-
-ch_done:
-            rts
-
-; ============================================================
-; SCORING
-; ============================================================
-
-add_score:
-            clc
-            lda score_lo
-            adc #POINTS_PER_HIT
-            sta score_lo
-            bcc +
-            inc score_hi
-+           rts
-
-; ============================================================
-; NOTE MOVEMENT
-; ============================================================
-
-update_notes:
-            ; Handle spawn timer
-            dec spawn_timer
-            bne +
-            jsr spawn_note
-            lda #SPAWN_INTERVAL
-            sta spawn_timer
-+
-            ; Handle move timer
-            dec move_timer
-            bne un_done
-            lda #NOTE_SPEED
-            sta move_timer
-
-            ; Move all active notes
-            ldx #MAX_NOTES - 1
--           lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq +               ; Skip inactive
-
-            ; Erase at old position
-            jsr erase_note
-
-            ; Move left
-            dec note_x,x
-            bmi ++              ; Despawned off left edge
-
-            ; Draw at new position
-            jsr draw_note
-            jmp +
-
-++          ; Note despawned - missed!
-            lda #NOTE_INACTIVE
-            sta note_x,x
-
-            ; Reset streak
-            lda #$00
-            sta streak
-
-            ; Trigger miss flash
-            lda #FLASH_TIME
-            sta miss_flash
-
-+           dex
-            bpl -
-
-un_done:
-            rts
-
-spawn_note:
-            ; Find empty slot
-            ldx #MAX_NOTES - 1
--           lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq +
-            dex
-            bpl -
-            rts                 ; No empty slots
-
-+           ; Spawn at right edge
-            lda #38
-            sta note_x,x
-            jsr draw_note
-            rts
-
-; ============================================================
-; NOTE DRAWING
-; ============================================================
-
-draw_note:
-            ; X = note index, note_x[X] = column
-            lda note_x,x
-            tay                 ; Y = column
-            lda #$51            ; Filled circle character
-            sta SCREEN + (ROW_TRACK * 40),y
-            lda #COL_YELLOW
-            sta COLOUR + (ROW_TRACK * 40),y
-            rts
-
-erase_note:
-            ; X = note index, note_x[X] = column
-            lda note_x,x
-            tay                 ; Y = column
-            lda #$43            ; Horizontal line (restore track)
-            sta SCREEN + (ROW_TRACK * 40),y
-            lda #COL_BLUE
-            sta COLOUR + (ROW_TRACK * 40),y
-            rts
-
-; ============================================================
-; VISUAL FEEDBACK
-; ============================================================
-
-update_flash:
-            ; Handle hit flash (green border)
-            lda hit_flash
-            beq +
-            dec hit_flash
-            lda #COL_GREEN
-            sta BORDER
-            rts
-+
-            ; Handle miss flash (red border)
-            lda miss_flash
-            beq +
-            dec miss_flash
-            lda #COL_RED
-            sta BORDER
-            rts
-+
-            ; No flash - black border
-            lda #COL_BLACK
-            sta BORDER
-            rts
-
-; ============================================================
-; AUDIO
-; ============================================================
-
+; ----------------------------------------------------------------------------
+; Play note at index X from the frequency table
+; Preserves X for the caller
+; ----------------------------------------------------------------------------
 play_note:
-            ; Gate on (start note)
-            lda #$41            ; Pulse wave + gate
-            sta SID_CTRL
-            ; Note will release naturally via ADSR
-            rts
+                stx temp_x          ; Save X
 
-; ============================================================
-; DISPLAY UPDATE
-; ============================================================
+                ; Load frequency from table
+                lda freq_lo,x
+                sta SID_V1_FREQ_LO
+                lda freq_hi,x
+                sta SID_V1_FREQ_HI
 
-update_display:
-            jsr convert_score
-            jsr draw_score
-            jsr convert_streak
-            jsr draw_streak
-            rts
+                ; Gate on - start the note
+                lda #WAVE_PULSE | GATE_ON
+                sta SID_V1_CTRL
 
-convert_score:
-            ; Copy score to work area
-            lda score_lo
-            sta work_lo
-            lda score_hi
-            sta work_hi
+                ; Hold for NOTE_DURATION frames
+                ldy #NOTE_DURATION
+.hold:          jsr wait_frame
+                dey
+                bne .hold
 
-            ; 10000s digit
-            ldx #$00
--           lda work_hi
-            cmp #>10000
-            bcc +
-            bne ++
-            lda work_lo
-            cmp #<10000
-            bcc +
-++          lda work_lo
-            sec
-            sbc #<10000
-            sta work_lo
-            lda work_hi
-            sbc #>10000
-            sta work_hi
-            inx
-            jmp -
-+           stx score_digits + 0
+                ; Gate off - release the note
+                lda #WAVE_PULSE
+                sta SID_V1_CTRL
 
-            ; 1000s digit
-            ldx #$00
--           lda work_hi
-            cmp #>1000
-            bcc +
-            bne ++
-            lda work_lo
-            cmp #<1000
-            bcc +
-++          lda work_lo
-            sec
-            sbc #<1000
-            sta work_lo
-            lda work_hi
-            sbc #>1000
-            sta work_hi
-            inx
-            jmp -
-+           stx score_digits + 1
+                ; Brief gap between notes (5 frames)
+                ldy #5
+.gap:           jsr wait_frame
+                dey
+                bne .gap
 
-            ; 100s digit
-            ldx #$00
--           lda work_lo
-            cmp #100
-            bcc +
-            sec
-            sbc #100
-            sta work_lo
-            inx
-            jmp -
-+           stx score_digits + 2
+                ldx temp_x          ; Restore X
+                rts
 
-            ; 10s digit
-            ldx #$00
--           lda work_lo
-            cmp #10
-            bcc +
-            sec
-            sbc #10
-            sta work_lo
-            inx
-            jmp -
-+           stx score_digits + 3
+; Temporary storage
+temp_x:         !byte 0
 
-            ; 1s digit
-            lda work_lo
-            sta score_digits + 4
-            rts
+; ----------------------------------------------------------------------------
+; Wait for one frame
+; ----------------------------------------------------------------------------
+wait_frame:
+                pha
+.wait1:         lda RASTER
+                cmp #255
+                bne .wait1
+.wait2:         lda RASTER
+                cmp #255
+                beq .wait2
+                pla
+                rts
 
-draw_score:
-            ldx #$00
--           lda score_digits,x
-            ora #$30            ; Convert to screen code
-            sta SCREEN + (ROW_SCORE * 40) + 8,x
-            lda #COL_WHITE
-            sta COLOUR + (ROW_SCORE * 40) + 8,x
-            inx
-            cpx #$05
-            bne -
-            rts
+; ============================================================================
+; Frequency table - C major scale (C4 to C5)
+; ============================================================================
+; Each note has a 16-bit frequency value, split into low and high bytes.
+; These values are for PAL C64 (clock = 985248 Hz).
+;
+; Formula: freq_value = (note_hz * 16777216) / 985248
 
-convert_streak:
-            lda streak
-            ldx #$00
--           cmp #10
-            bcc +
-            sec
-            sbc #10
-            inx
-            jmp -
-+           stx streak_tens
-            sta streak_ones
-            rts
+freq_lo:
+                !byte $16           ; C4  - 261.63 Hz
+                !byte $27           ; D4  - 293.66 Hz
+                !byte $5b           ; E4  - 329.63 Hz
+                !byte $8f           ; F4  - 349.23 Hz
+                !byte $e1           ; G4  - 392.00 Hz
+                !byte $57           ; A4  - 440.00 Hz
+                !byte $f4           ; B4  - 493.88 Hz
+                !byte $2c           ; C5  - 523.25 Hz
 
-draw_streak:
-            lda streak_tens
-            ora #$30
-            sta SCREEN + (ROW_STREAK * 40) + 8
-            lda streak_ones
-            ora #$30
-            sta SCREEN + (ROW_STREAK * 40) + 9
-            lda #COL_WHITE
-            sta COLOUR + (ROW_STREAK * 40) + 8
-            sta COLOUR + (ROW_STREAK * 40) + 9
-            rts
-
-; ============================================================
-; DATA
-; ============================================================
-
-title_text:
-            !scr "sid symphony"
-            !byte 0
-
-score_label:
-            !scr "score:  "
-            !byte 0
-
-streak_label:
-            !scr "streak: "
-            !byte 0
-
-; ============================================================
-; VARIABLES (uninitialised)
-; ============================================================
-
-note_x:         !fill MAX_NOTES, 0  ; Note X positions
-spawn_timer:    !byte 0             ; Frames until next spawn
-move_timer:     !byte 0             ; Frames until next movement
-key_current:    !byte 0             ; Current key state
-key_previous:   !byte 0             ; Previous key state
-hit_flash:      !byte 0             ; Hit flash countdown
-miss_flash:     !byte 0             ; Miss flash countdown
-score_lo:       !byte 0             ; Score low byte
-score_hi:       !byte 0             ; Score high byte
-streak:         !byte 0             ; Current streak
-best_streak:    !byte 0             ; Best streak this game
-work_lo:        !byte 0             ; Working area for conversion
-work_hi:        !byte 0
-score_digits:   !fill 5, 0          ; 5 decimal digits
-streak_tens:    !byte 0             ; Streak tens digit
-streak_ones:    !byte 0             ; Streak ones digit
+freq_hi:
+                !byte $11           ; C4
+                !byte $13           ; D4
+                !byte $15           ; E4
+                !byte $16           ; F4
+                !byte $18           ; G4
+                !byte $1b           ; A4
+                !byte $1d           ; B4
+                !byte $22           ; C5

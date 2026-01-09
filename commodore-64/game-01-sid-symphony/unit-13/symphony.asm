@@ -1,1910 +1,1339 @@
-;==========================================================
-; SID SYMPHONY
-; Unit 13: Difficulty Progression
-;
-; Adds dynamic difficulty based on multiplier:
-; - Speed lookup table indexed by multiplier
-; - Move timer controls note movement rate
-; - Higher multiplier = faster notes
-; - Speed resets when multiplier drops
-;==========================================================
+; ============================================================================
+; SID Symphony - Unit 13: Miss Detection
+; ============================================================================
+; Detecting when notes are missed:
+; - Notes that leave the hit zone unhit count as misses
+; - Flash track red and play noise on miss
+; - Track and display miss count
+; - Pressing key with no note = explicit miss
+; ============================================================================
 
-; ========================================================
-; BASIC STUB
-; ========================================================
 * = $0801
+                !byte $0c, $08, $0a, $00, $9e
+                !text "2064"
+                !byte $00, $00, $00
 
-            !byte $0c, $08          ; Pointer to next BASIC line
-            !byte $0a, $00          ; Line number 10
-            !byte $9e               ; SYS token
-            !byte $32, $30, $36, $32 ; "2062" ($080e in decimal)
-            !byte $00               ; End of BASIC line
-            !byte $00, $00          ; End of BASIC program
-
-; ========================================================
-; CONSTANTS
-; ========================================================
 * = $0810
 
-; Screen and colour memory
-SCREEN      = $0400
-COLOUR      = $d800
+; ----------------------------------------------------------------------------
+; Hardware registers
+; ----------------------------------------------------------------------------
+SCREEN          = $0400
+COLOUR          = $d800
+BORDER_COLOUR   = $d020
+BACKGROUND      = $d021
+RASTER          = $d012
+CHAR_ROM        = $d000
+CHAR_RAM        = $3000
+VIC_MEMSETUP    = $d018
+KEYBOARD_COLUMN = $dc00
+KEYBOARD_ROW    = $dc01
 
-; SID chip registers
-SID         = $d400
-SID_V1_FREQ_LO = SID + 0
-SID_V1_FREQ_HI = SID + 1
-SID_V1_PW_LO   = SID + 2
-SID_V1_PW_HI   = SID + 3
-SID_V1_CTRL    = SID + 4
-SID_V1_AD      = SID + 5
-SID_V1_SR      = SID + 6
+; SID registers
+SID             = $d400
+SID_V1_FREQ_LO  = $d400
+SID_V1_FREQ_HI  = $d401
+SID_V1_PW_LO    = $d402
+SID_V1_PW_HI    = $d403
+SID_V1_CTRL     = $d404
+SID_V1_AD       = $d405
+SID_V1_SR       = $d406
+SID_V2_FREQ_LO  = $d407
+SID_V2_FREQ_HI  = $d408
+SID_V2_PW_LO    = $d409
+SID_V2_PW_HI    = $d40a
+SID_V2_CTRL     = $d40b
+SID_V2_AD       = $d40c
+SID_V2_SR       = $d40d
+SID_V3_FREQ_LO  = $d40e
+SID_V3_FREQ_HI  = $d40f
+SID_V3_PW_LO    = $d410
+SID_V3_PW_HI    = $d411
+SID_V3_CTRL     = $d412
+SID_V3_AD       = $d413
+SID_V3_SR       = $d414
+SID_FILTER_LO   = $d415
+SID_FILTER_HI   = $d416
+SID_FILT_CTRL   = $d417
+SID_VOLUME      = $d418
 
-SID_V2_FREQ_LO = SID + 7
-SID_V2_FREQ_HI = SID + 8
-SID_V2_PW_LO   = SID + 9
-SID_V2_PW_HI   = SID + 10
-SID_V2_CTRL    = SID + 11
-SID_V2_AD      = SID + 12
-SID_V2_SR      = SID + 13
+SCREEN_WIDTH    = 40
 
-SID_V3_FREQ_LO = SID + 14
-SID_V3_FREQ_HI = SID + 15
-SID_V3_PW_LO   = SID + 16
-SID_V3_PW_HI   = SID + 17
-SID_V3_CTRL    = SID + 18
-SID_V3_AD      = SID + 19
-SID_V3_SR      = SID + 20
+; Track positions (rows)
+TRACK1_ROW      = 9
+TRACK2_ROW      = 13
+TRACK3_ROW      = 17
 
-SID_FC_LO      = SID + 21
-SID_FC_HI      = SID + 22
-SID_RES_FILT   = SID + 23
-SID_MODE_VOL   = SID + 24
+; Layout
+KEY_COL         = 1
+HIT_START       = 3
+HIT_END         = 7
+TRACK_START     = 7
+SPAWN_COLUMN    = 39
 
-; VIC-II
-RASTER      = $d012
-BORDER      = $d020
-BACKGROUND  = $d021
-
-; CIA1 (keyboard)
-CIA1_PORTA  = $dc00
-CIA1_PORTB  = $dc01
+; Characters
+NOTE_CHAR       = 128
+TRACK_CHAR      = 129
+HITZONE_CHAR    = 130
+KEY_BRACKET_L   = $1b
+KEY_BRACKET_R   = $1d
 
 ; Colours
-COL_BLACK   = 0
-COL_WHITE   = 1
-COL_RED     = 2
-COL_CYAN    = 3
-COL_PURPLE  = 4
-COL_GREEN   = 5
-COL_BLUE    = 6
-COL_YELLOW  = 7
-COL_ORANGE  = 8
-COL_BROWN   = 9
-COL_PINK    = 10
-COL_DGREY   = 11
-COL_GREY    = 12
-COL_LGREEN  = 13
-COL_LBLUE   = 14
-COL_LGREY   = 15
+COL_BLACK       = 0
+COL_WHITE       = 1
+COL_RED         = 2
+COL_CYAN        = 3
+COL_GREEN       = 5
+COL_YELLOW      = 7
+COL_GREY        = 11
+COL_DARK_GREY   = 12
 
-; Screen layout
-ROW_TITLE   = 1
-ROW_SCORE   = 3
-ROW_TRACK1  = 10
-ROW_TRACK2  = 14
-ROW_TRACK3  = 18
-ROW_CROWD   = 22
+; Timing
+FRAMES_PER_BEAT = 12
+MOVE_DELAY      = 3
 
-; Game constants
-HIT_ZONE_X  = 8
-NOTE_START_X = 39
-NOTE_INACTIVE = $ff
-MAX_NOTES   = 24
-TRACK_CHAR  = 64
+; Notes
+MAX_NOTES       = 8
+NOTE_INACTIVE   = 0
+NOTE_ACTIVE     = 1
 
-; Track identifiers
-TRACK_1     = 0
-TRACK_2     = 1
-TRACK_3     = 2
+; Song data
+END_MARKER      = $ff
 
-; Crowd meter
-CROWD_MAX   = 40
-CROWD_GAMEOVER = 0
+; Key bits (active low - 0 = pressed)
+KEY_X_COL       = %11111011     ; Column 2
+KEY_X_ROW       = %10000000     ; Row 7 (bit 7)
+KEY_C_COL       = %11111011     ; Column 2
+KEY_C_ROW       = %00010000     ; Row 4 (bit 4)
+KEY_V_COL       = %11110111     ; Column 3
+KEY_V_ROW       = %10000000     ; Row 7 (bit 7)
 
-; Game states
-STATE_TITLE    = 0
-STATE_PLAYING  = 1
-STATE_GAMEOVER = 2
-STATE_VICTORY  = 3
+; Zero page
+screen_ptr      = $fb
+colour_ptr      = $fd
 
-; Waveforms (gate bit already set)
-WAVE_TRIANGLE = $11
-WAVE_SAWTOOTH = $21
-WAVE_PULSE    = $41
-WAVE_NOISE    = $81
+; ============================================================================
+; Program entry
+; ============================================================================
+start:
+                jsr init
 
-; Filter settings
-FILTER_CUTOFF_MIN = $10
-FILTER_CUTOFF_MAX = $70
+main_loop:
+                jsr wait_raster
+                jsr update_counters
+                jsr check_spawn_notes
+                jsr update_notes
+                jsr draw_notes
+                jsr scan_keyboard       ; NEW: Read keyboard
+                jsr handle_input        ; NEW: Process key presses
+                jsr update_display
+                jsr check_quit
+                jmp main_loop
 
-; Timing window boundaries
-ZONE_PERFECT    = 3
-ZONE_GOOD       = 6
+; ============================================================================
+; Initialisation
+; ============================================================================
+init:
+                jsr setup_charset
+                jsr clear_screen
+                jsr draw_header
+                jsr draw_tracks
+                jsr draw_footer
 
-; Point values per grade
-POINTS_PERFECT  = 15
-POINTS_GOOD     = 10
-POINTS_LATE     = 5
+                lda #0
+                sta frame_counter
+                sta beat_counter
+                sta song_position
+                sta move_counter
+                sta key_x_state
+                sta key_c_state
+                sta key_v_state
+                sta key_x_pressed
+                sta key_c_pressed
+                sta key_v_pressed
 
-; Grade identifiers
-GRADE_PERFECT   = 0
-GRADE_GOOD      = 1
-GRADE_LATE      = 2
+                ldx #0
+-               sta note_active,x
+                inx
+                cpx #MAX_NOTES
+                bne -
 
-GRADE_FLASH_TIME = 20
+                ; Initialize SID
+                jsr init_sid
 
-; Combo system constants
-COMBO_THRESHOLD = 10            ; Hits needed per multiplier level
-MAX_MULTIPLIER  = 4             ; Maximum multiplier (4x)
+                ; Initialize score
+                lda #0
+                sta score
+                sta score+1
+                sta score+2
 
-; Visual juice constants
-BORDER_FLASH_TIME = 8           ; Frames for multiplier border flash
-MISS_FLASH_TIME   = 4           ; Frames for miss border flash
+                rts
 
-; Difficulty progression constants
-; Lower number = faster notes (fewer frames between moves)
-SPEED_1X          = 4           ; Normal speed at 1x multiplier
-SPEED_2X          = 3           ; Faster at 2x
-SPEED_3X          = 3           ; Same at 3x (challenge plateau)
-SPEED_4X          = 2           ; Fastest at 4x multiplier
+; ----------------------------------------------------------------------------
+; Initialize SID chip
+; ----------------------------------------------------------------------------
+init_sid:
+                ; Clear all SID registers
+                lda #0
+                ldx #24
+-               sta SID,x
+                dex
+                bpl -
 
-; Zero page usage
-song_ptr_lo = $fb
-song_ptr_hi = $fc
-temp_ptr_lo = $fd
-temp_ptr_hi = $fe
-grade_screen_lo = $57
-grade_screen_hi = $58
-grade_colour_lo = $59
-grade_colour_hi = $5a
+                ; Set volume to max
+                lda #$0f
+                sta SID_VOLUME
 
-; ========================================================
-; ENTRY POINT
-; ========================================================
-            jmp init
+                ; Configure voice 1 (track 1 - cyan)
+                lda #$08                ; Pulse width
+                sta SID_V1_PW_HI
+                lda #$09                ; Attack=0, Decay=9
+                sta SID_V1_AD
+                lda #$00                ; Sustain=0, Release=0
+                sta SID_V1_SR
 
-; ========================================================
-; VARIABLES
-; ========================================================
-game_state:     !byte 0
+                ; Configure voice 2 (track 2 - green)
+                lda #$08
+                sta SID_V2_PW_HI
+                lda #$09
+                sta SID_V2_AD
+                lda #$00
+                sta SID_V2_SR
 
-score_lo:       !byte 0
-score_hi:       !byte 0
-streak:         !byte 0
+                ; Configure voice 3 (track 3 - yellow)
+                lda #$08
+                sta SID_V3_PW_HI
+                lda #$09
+                sta SID_V3_AD
+                lda #$00
+                sta SID_V3_SR
 
-; Combo system variables
-combo_count:    !byte 0         ; Consecutive hits (0-9)
-multiplier:     !byte 1         ; Current multiplier (1-4)
-cg_base_points: !byte 0         ; Temp storage for multiplication
+                rts
 
-crowd_level:    !byte 0
+; ----------------------------------------------------------------------------
+; Scan keyboard - read X, C, V keys
+; Sets key_X_pressed to 1 if newly pressed this frame
+; ----------------------------------------------------------------------------
+scan_keyboard:
+                ; Clear pressed flags
+                lda #0
+                sta key_x_pressed
+                sta key_c_pressed
+                sta key_v_pressed
 
-frame_count:    !byte 0
-spawn_timer:    !byte 0
+                ; --- Check X key (Column 2, Row 7) ---
+                lda #KEY_X_COL
+                sta KEYBOARD_COLUMN
+                lda KEYBOARD_ROW
+                and #KEY_X_ROW
+                bne .x_not_pressed
 
-flash_timer:    !byte 0
-flash_track:    !byte 0
+                ; X is pressed - check if NEW
+                lda key_x_state
+                bne .x_done             ; Already held
+                lda #1
+                sta key_x_pressed       ; New press!
+                sta key_x_state
+                inc key_x_count
+                jmp .x_done
 
-filter_cutoff:  !byte 0
-filter_sweep:   !byte 0
+.x_not_pressed:
+                lda #0
+                sta key_x_state
 
-bum_note_timer: !byte 0
+.x_done:
+                ; --- Check C key (Column 2, Row 4) ---
+                lda #KEY_C_COL
+                sta KEYBOARD_COLUMN
+                lda KEYBOARD_ROW
+                and #KEY_C_ROW
+                bne .c_not_pressed
 
-; Timing grade variables
-hit_position:   !byte 0
-current_grade:  !byte 0
-grade_row:      !byte 0
-grade_timer_t1: !byte 0
-grade_timer_t2: !byte 0
-grade_timer_t3: !byte 0
+                lda key_c_state
+                bne .c_done
+                lda #1
+                sta key_c_pressed
+                sta key_c_state
+                inc key_c_count
+                jmp .c_done
 
-; Visual juice variables
-border_flash_timer: !byte 0
-miss_flash_timer:   !byte 0
+.c_not_pressed:
+                lda #0
+                sta key_c_state
 
-; Difficulty progression variables
-current_speed:  !byte SPEED_1X
-move_timer:     !byte SPEED_1X
+.c_done:
+                ; --- Check V key (Column 3, Row 7) ---
+                lda #KEY_V_COL
+                sta KEYBOARD_COLUMN
+                lda KEYBOARD_ROW
+                and #KEY_V_ROW
+                bne .v_not_pressed
 
-key_x_was_pressed: !byte 0
-key_c_was_pressed: !byte 0
-key_v_was_pressed: !byte 0
+                lda key_v_state
+                bne .v_done
+                lda #1
+                sta key_v_pressed
+                sta key_v_state
+                inc key_v_count
+                rts
 
-; Note arrays (8 notes per track, 24 total)
-note_x:         !fill MAX_NOTES, NOTE_INACTIVE
-note_track:     !fill MAX_NOTES, 0
+.v_not_pressed:
+                lda #0
+                sta key_v_state
 
-; Song playback
-song_position:  !word 0
-song_time:      !byte 0
-next_note_time: !byte 0
+.v_done:
+                rts
 
-; Variables for hit detection
-check_track:    !byte 0
+; ----------------------------------------------------------------------------
+; Handle input - check for hits when key pressed
+; ----------------------------------------------------------------------------
+handle_input:
+                ; Check X key (track 1)
+                lda key_x_pressed
+                beq .no_x
+                lda #1
+                sta miss_track          ; Store track for potential miss
+                jsr check_hit
+                bcc .miss_x             ; No hit - explicit miss
+                lda #10                 ; Flash for 10 frames on hit
+                sta flash_t1_timer
+                jmp .no_x
+.miss_x:
+                jsr handle_explicit_miss
+
+.no_x:
+                ; Check C key (track 2)
+                lda key_c_pressed
+                beq .no_c
+                lda #2
+                sta miss_track
+                jsr check_hit
+                bcc .miss_c
+                lda #10
+                sta flash_t2_timer
+                jmp .no_c
+.miss_c:
+                jsr handle_explicit_miss
+
+.no_c:
+                ; Check V key (track 3)
+                lda key_v_pressed
+                beq .no_v
+                lda #3
+                sta miss_track
+                jsr check_hit
+                bcc .miss_v
+                lda #10
+                sta flash_t3_timer
+                jmp .no_v
+.miss_v:
+                jsr handle_explicit_miss
+
+.no_v:
+                rts
+
+; ----------------------------------------------------------------------------
+; Check for hit - find note in hit zone on given track
+; Input: A = track number (1, 2, or 3)
+; Output: Carry set if hit, clear if miss
+; ----------------------------------------------------------------------------
+check_hit:
+                sta hit_track
+
+                ; Search all active notes for one on this track in hit zone
+                ldx #0
+.search:
+                lda note_active,x
+                beq .next               ; Skip inactive notes
+
+                ; Check if on correct track
+                lda note_track,x
+                cmp hit_track
+                bne .next               ; Wrong track
+
+                ; Check if in hit zone (columns HIT_START to HIT_END-1)
+                lda note_x,x
+                cmp #HIT_START
+                bcc .next               ; Too far left
+                cmp #HIT_END
+                bcs .next               ; Too far right
+
+                ; HIT! Play the note and remove it
+                stx hit_note_idx
+                jsr play_hit_note
+                jsr add_score
+
+                ; Deactivate the note
+                ldx hit_note_idx
+                lda #0
+                sta note_active,x
+
+                sec                     ; Set carry = hit
+                rts
+
+.next:
+                inx
+                cpx #MAX_NOTES
+                bne .search
+
+                clc                     ; Clear carry = miss
+                rts
+
+; ----------------------------------------------------------------------------
+; Play hit note on SID
+; X = note index
+; ----------------------------------------------------------------------------
+play_hit_note:
+                ldx hit_note_idx
+                lda note_value,x        ; Get note frequency index
+                asl                     ; *2 for table lookup
+                tax
+
+                lda hit_track
+                cmp #1
+                bne .not_v1
+
+                ; Voice 1
+                lda freq_table,x
+                sta SID_V1_FREQ_LO
+                lda freq_table+1,x
+                sta SID_V1_FREQ_HI
+                lda #$41                ; Pulse wave, gate on
+                sta SID_V1_CTRL
+                rts
+
+.not_v1:
+                cmp #2
+                bne .not_v2
+
+                ; Voice 2
+                lda freq_table,x
+                sta SID_V2_FREQ_LO
+                lda freq_table+1,x
+                sta SID_V2_FREQ_HI
+                lda #$41
+                sta SID_V2_CTRL
+                rts
+
+.not_v2:
+                ; Voice 3
+                lda freq_table,x
+                sta SID_V3_FREQ_LO
+                lda freq_table+1,x
+                sta SID_V3_FREQ_HI
+                lda #$41
+                sta SID_V3_CTRL
+                rts
+
+; ----------------------------------------------------------------------------
+; Add score for a hit
+; ----------------------------------------------------------------------------
+add_score:
+                ; Add 100 points (BCD)
+                sed                     ; Decimal mode
+                clc
+                lda score
+                adc #0
+                sta score
+                lda score+1
+                adc #1                  ; +100
+                sta score+1
+                lda score+2
+                adc #0
+                sta score+2
+                cld                     ; Binary mode
+                rts
+
+; ----------------------------------------------------------------------------
+; Handle miss - note left hit zone or wrong key pressed
+; X = note index (for implicit miss from update_notes)
+; ----------------------------------------------------------------------------
+handle_miss:
+                ; Increment miss counter
+                inc miss_count
+
+                ; Get the track from the note
+                lda note_track,x
+                sta miss_track
+
+                ; Set flash timer for miss (red)
+                cmp #1
+                bne .not_t1
+                lda #10
+                sta miss_t1_timer
+                jmp .play_miss
+.not_t1:
+                cmp #2
+                bne .not_t2
+                lda #10
+                sta miss_t2_timer
+                jmp .play_miss
+.not_t2:
+                lda #10
+                sta miss_t3_timer
+
+.play_miss:
+                ; Play miss sound (noise burst)
+                lda #$80                ; Noise waveform
+                sta SID_V3_CTRL
+                lda #$20
+                sta SID_V3_FREQ_HI
+                lda #$00
+                sta SID_V3_FREQ_LO
+                lda #$0a                ; Quick attack/decay
+                sta SID_V3_AD
+                lda #$00
+                sta SID_V3_SR
+                lda #$81                ; Gate on
+                sta SID_V3_CTRL
+                rts
+
+; Handle explicit miss (key pressed with no note)
+handle_explicit_miss:
+                inc miss_count
+
+                ; Set flash timer based on track
+                lda miss_track
+                cmp #1
+                bne .exp_not_t1
+                lda #10
+                sta miss_t1_timer
+                jmp .exp_sound
+.exp_not_t1:
+                cmp #2
+                bne .exp_not_t2
+                lda #10
+                sta miss_t2_timer
+                jmp .exp_sound
+.exp_not_t2:
+                lda #10
+                sta miss_t3_timer
+
+.exp_sound:
+                ; Play miss sound
+                lda #$80
+                sta SID_V3_CTRL
+                lda #$10
+                sta SID_V3_FREQ_HI
+                lda #$81
+                sta SID_V3_CTRL
+                rts
+
+; ----------------------------------------------------------------------------
+; Update counters
+; ----------------------------------------------------------------------------
+update_counters:
+                inc frame_counter
+
+                lda frame_counter
+                cmp #FRAMES_PER_BEAT
+                bne +
+
+                lda #0
+                sta frame_counter
+                inc beat_counter
+
+                lda beat_counter
+                cmp #100
+                bcc +
+                lda #0
+                sta beat_counter
+
++               rts
+
+; ----------------------------------------------------------------------------
+; Check spawn notes
+; ----------------------------------------------------------------------------
+check_spawn_notes:
+                lda frame_counter
+                bne .no_spawn
+
+                ldx song_position
+                lda song_beats,x
+                cmp #END_MARKER
+                beq .no_spawn
+
+                cmp beat_counter
+                bne .no_spawn
+
+                lda song_tracks,x
+                sta spawn_track
+                lda song_notes,x
+                sta spawn_note_val
+
+                inc song_position
+                jsr spawn_note
+
+.no_spawn:      rts
+
+; ----------------------------------------------------------------------------
+; Spawn note
+; ----------------------------------------------------------------------------
+spawn_note:
+                ldx #0
+.find_slot:
+                lda note_active,x
+                beq .found_slot
+                inx
+                cpx #MAX_NOTES
+                bne .find_slot
+                rts
+
+.found_slot:
+                lda #NOTE_ACTIVE
+                sta note_active,x
+                lda #SPAWN_COLUMN
+                sta note_x,x
+                lda spawn_track
+                sta note_track,x
+                lda spawn_note_val
+                sta note_value,x
+                rts
+
+; ----------------------------------------------------------------------------
+; Update notes
+; ----------------------------------------------------------------------------
+update_notes:
+                inc move_counter
+                lda move_counter
+                cmp #MOVE_DELAY
+                bcc .no_move
+                lda #0
+                sta move_counter
+
+                ldx #0
+
+.update_loop:
+                lda note_active,x
+                beq .next_note
+
+                stx temp_note_idx
+                jsr erase_note
+
+                ldx temp_note_idx
+                dec note_x,x
+
+                lda note_x,x
+                cmp #HIT_START
+                bcs .next_note
+
+                ; Note left hit zone - it's a MISS!
+                jsr handle_miss
+
+                lda #NOTE_INACTIVE
+                sta note_active,x
+
+.next_note:
+                inx
+                cpx #MAX_NOTES
+                bne .update_loop
+
+.no_move:
+                rts
+
+; ----------------------------------------------------------------------------
+; Erase note
+; ----------------------------------------------------------------------------
+erase_note:
+                lda note_track,x
+                cmp #1
+                bne .e_not_t1
+                lda #TRACK1_ROW
+                jmp .e_got_row
+.e_not_t1:
+                cmp #2
+                bne .e_not_t2
+                lda #TRACK2_ROW
+                jmp .e_got_row
+.e_not_t2:
+                lda #TRACK3_ROW
+
+.e_got_row:
+                stx temp_note_idx
+                jsr calc_row_addr
+
+                ldx temp_note_idx
+                ldy note_x,x
+
+                cpy #HIT_END
+                bcc .e_in_hitzone
+
+                lda #TRACK_CHAR
+                sta (screen_ptr),y
+                lda #COL_DARK_GREY
+                sta (colour_ptr),y
+                rts
+
+.e_in_hitzone:
+                lda #HITZONE_CHAR
+                sta (screen_ptr),y
+
+                ldx temp_note_idx
+                lda note_track,x
+                cmp #1
+                bne .e_not_cyan
+                lda #COL_CYAN
+                jmp .e_set_col
+.e_not_cyan:
+                cmp #2
+                bne .e_not_green
+                lda #COL_GREEN
+                jmp .e_set_col
+.e_not_green:
+                lda #COL_YELLOW
+.e_set_col:
+                sta (colour_ptr),y
+                rts
+
+; ----------------------------------------------------------------------------
+; Draw notes
+; ----------------------------------------------------------------------------
+draw_notes:
+                ldx #0
+
+.d_loop:
+                lda note_active,x
+                beq .d_next
+
+                lda note_track,x
+                cmp #1
+                bne .d_not_t1
+                lda #TRACK1_ROW
+                jmp .d_got_row
+.d_not_t1:
+                cmp #2
+                bne .d_not_t2
+                lda #TRACK2_ROW
+                jmp .d_got_row
+.d_not_t2:
+                lda #TRACK3_ROW
+
+.d_got_row:
+                stx temp_note_idx
+                jsr calc_row_addr
+
+                ldx temp_note_idx
+                ldy note_x,x
+
+                lda #NOTE_CHAR
+                sta (screen_ptr),y
+
+                lda note_track,x
+                cmp #1
+                bne .d_not_cy
+                lda #COL_CYAN
+                jmp .d_set_col
+.d_not_cy:
+                cmp #2
+                bne .d_not_gr
+                lda #COL_GREEN
+                jmp .d_set_col
+.d_not_gr:
+                lda #COL_YELLOW
+
+.d_set_col:
+                sta (colour_ptr),y
+
+.d_next:
+                inx
+                cpx #MAX_NOTES
+                bne .d_loop
+
+                rts
+
+; ----------------------------------------------------------------------------
+; Update display
+; ----------------------------------------------------------------------------
+update_display:
+                ; Update score display (BCD to screen)
+                lda score+2             ; High byte (digits 5-6)
+                jsr display_bcd_byte
+                sta SCREEN + 6*40 + 10
+                stx SCREEN + 6*40 + 9
+                lda score+1             ; Mid byte (digits 3-4)
+                jsr display_bcd_byte
+                sta SCREEN + 6*40 + 12
+                stx SCREEN + 6*40 + 11
+                lda score               ; Low byte (digits 1-2)
+                jsr display_bcd_byte
+                sta SCREEN + 6*40 + 14
+                stx SCREEN + 6*40 + 13
+
+                lda beat_counter
+                jsr display_two_digits
+                sta SCREEN + 6*40 + 20
+                stx SCREEN + 6*40 + 19
+
+                lda song_position
+                jsr display_two_digits
+                sta SCREEN + 6*40 + 35
+                stx SCREEN + 6*40 + 34
+
+                ; Restore hit zone colours (after flash)
+                jsr restore_hitzones
+
+                rts
+
+; Convert BCD byte to two screen code digits
+; Input: A = BCD byte
+; Output: X = high digit, A = low digit
+display_bcd_byte:
+                pha
+                lsr
+                lsr
+                lsr
+                lsr
+                ora #$30                ; High nibble to screen code
+                tax
+                pla
+                and #$0f
+                ora #$30                ; Low nibble to screen code
+                rts
+
+; Restore hit zone colours (or keep flashing if timer active)
+; Priority: hit flash (white) > miss flash (red) > normal colour
+restore_hitzones:
+                ; Track 1
+                lda flash_t1_timer      ; Hit flash?
+                beq .t1_check_miss
+                dec flash_t1_timer
+                lda #TRACK1_ROW
+                ldy #COL_WHITE
+                jsr set_hitzone_colour
+                jmp .check_t2
+.t1_check_miss:
+                lda miss_t1_timer       ; Miss flash?
+                beq .t1_normal
+                dec miss_t1_timer
+                lda #TRACK1_ROW
+                ldy #COL_RED
+                jsr set_hitzone_colour
+                jmp .check_t2
+.t1_normal:
+                lda #TRACK1_ROW
+                ldy #COL_CYAN
+                jsr set_hitzone_colour
+
+.check_t2:
+                ; Track 2
+                lda flash_t2_timer
+                beq .t2_check_miss
+                dec flash_t2_timer
+                lda #TRACK2_ROW
+                ldy #COL_WHITE
+                jsr set_hitzone_colour
+                jmp .check_t3
+.t2_check_miss:
+                lda miss_t2_timer
+                beq .t2_normal
+                dec miss_t2_timer
+                lda #TRACK2_ROW
+                ldy #COL_RED
+                jsr set_hitzone_colour
+                jmp .check_t3
+.t2_normal:
+                lda #TRACK2_ROW
+                ldy #COL_GREEN
+                jsr set_hitzone_colour
+
+.check_t3:
+                ; Track 3
+                lda flash_t3_timer
+                beq .t3_check_miss
+                dec flash_t3_timer
+                lda #TRACK3_ROW
+                ldy #COL_WHITE
+                jsr set_hitzone_colour
+                rts
+.t3_check_miss:
+                lda miss_t3_timer
+                beq .t3_normal
+                dec miss_t3_timer
+                lda #TRACK3_ROW
+                ldy #COL_RED
+                jsr set_hitzone_colour
+                rts
+.t3_normal:
+                lda #TRACK3_ROW
+                ldy #COL_YELLOW
+                jsr set_hitzone_colour
+                rts
+
+set_hitzone_colour:
+                sty flash_colour
+                jsr calc_row_addr
+                ldy #HIT_START
+.shc_loop:
+                lda flash_colour
+                sta (colour_ptr),y
+                iny
+                cpy #HIT_END
+                bne .shc_loop
+                rts
+
+display_two_digits:
+                ldx #0
+-               cmp #10
+                bcc .convert
+                sbc #10
+                inx
+                jmp -
+.convert:
+                ora #$30
+                pha
+                txa
+                ora #$30
+                tax
+                pla
+                rts
+
+; ----------------------------------------------------------------------------
+; Wait for raster
+; ----------------------------------------------------------------------------
+wait_raster:
+-               lda RASTER
+                cmp #250
+                beq -
+-               lda RASTER
+                cmp #250
+                bne -
+                rts
+
+; ----------------------------------------------------------------------------
+; Check for Q key
+; ----------------------------------------------------------------------------
+check_quit:
+                lda #%01111111
+                sta KEYBOARD_COLUMN
+                lda KEYBOARD_ROW
+                and #%01000000
+                bne +
+
+                lda #$14
+                sta VIC_MEMSETUP
+                lda #14
+                sta BORDER_COLOUR
+                lda #6
+                sta BACKGROUND
+                lda #147
+                jsr $ffd2
+                jmp $a474
++               rts
+
+; ============================================================================
+; Song data
+; ============================================================================
+song_beats:
+                !byte 0, 2, 4, 6, 8, 10, 12, 14
+                !byte 16, 18, 20, 22, 24, 26, 28, 30
+                !byte END_MARKER
+
+song_tracks:
+                !byte 1, 2, 3, 2, 1, 3, 2, 1
+                !byte 3, 1, 2, 3, 1, 2, 3, 1
+
+song_notes:
+                !byte $11, $13, $15, $16, $18, $1b, $1d, $22
+                !byte $22, $1d, $1b, $18, $16, $15, $13, $11
+
+; ----------------------------------------------------------------------------
+; Frequency table (low byte, high byte pairs)
+; Index corresponds to note number
+; ----------------------------------------------------------------------------
+freq_table:
+                ; Notes 0-15 (low octave)
+                !word $0112, $0123, $0134, $0146  ; C1, C#1, D1, D#1
+                !word $0159, $016d, $0182, $0198  ; E1, F1, F#1, G1
+                !word $01af, $01c7, $01e1, $01fc  ; G#1, A1, A#1, B1
+                !word $0218, $0236, $0256, $0278  ; C2, C#2, D2, D#2
+
+                ; Notes 16-31 (mid octave) - used by our song
+                !word $029c, $02c1, $02e9, $0313  ; E2, F2, F#2, G2
+                !word $0340, $036f, $03a1, $03d6  ; G#2, A2, A#2, B2
+                !word $040e, $0449, $0488, $04cb  ; C3, C#3, D3, D#3
+                !word $0511, $055c, $05ab, $05fe  ; E3, F3, F#3, G3
+
+                ; Notes 32-47 (high octave)
+                !word $0657, $06b5, $0718, $0781  ; G#3, A3, A#3, B3
+                !word $07f1, $0867, $08e4, $0969  ; C4, C#4, D4, D#4
+                !word $09f5, $0a8a, $0b28, $0bd0  ; E4, F4, F#4, G4
+                !word $0c82, $0d3e, $0e06, $0eda  ; G#4, A4, A#4, B4
+
+; ============================================================================
+; Character set setup
+; ============================================================================
+setup_charset:
+                sei
+                lda $01
+                pha
+                and #%11111011
+                sta $01
+
+                ldx #0
+-               lda CHAR_ROM,x
+                sta CHAR_RAM,x
+                lda CHAR_ROM+$100,x
+                sta CHAR_RAM+$100,x
+                lda CHAR_ROM+$200,x
+                sta CHAR_RAM+$200,x
+                lda CHAR_ROM+$300,x
+                sta CHAR_RAM+$300,x
+                lda CHAR_ROM+$400,x
+                sta CHAR_RAM+$400,x
+                lda CHAR_ROM+$500,x
+                sta CHAR_RAM+$500,x
+                lda CHAR_ROM+$600,x
+                sta CHAR_RAM+$600,x
+                lda CHAR_ROM+$700,x
+                sta CHAR_RAM+$700,x
+                inx
+                bne -
+
+                pla
+                sta $01
+                cli
+
+                ldx #0
+-               lda note_char_data,x
+                sta CHAR_RAM + (NOTE_CHAR * 8),x
+                inx
+                cpx #8
+                bne -
+
+                ldx #0
+-               lda track_char_data,x
+                sta CHAR_RAM + (TRACK_CHAR * 8),x
+                inx
+                cpx #8
+                bne -
+
+                ldx #0
+-               lda hitzone_char_data,x
+                sta CHAR_RAM + (HITZONE_CHAR * 8),x
+                inx
+                cpx #8
+                bne -
+
+                lda #$1c
+                sta VIC_MEMSETUP
+                rts
+
+note_char_data:
+                !byte %00111100, %01111110, %11111111, %11111111
+                !byte %11111111, %11111111, %01111110, %00111100
+
+track_char_data:
+                !byte %00000000, %00000000, %00000000, %11111111
+                !byte %11111111, %00000000, %00000000, %00000000
+
+hitzone_char_data:
+                !byte %11111111, %11111111, %11111111, %11111111
+                !byte %11111111, %11111111, %11111111, %11111111
+
+; ============================================================================
+; Screen drawing
+; ============================================================================
+clear_screen:
+                lda #COL_BLACK
+                sta BORDER_COLOUR
+                sta BACKGROUND
+
+                ldx #0
+-               lda #$20
+                sta SCREEN,x
+                sta SCREEN+$100,x
+                sta SCREEN+$200,x
+                sta SCREEN+$2e8,x
+                lda #COL_BLACK
+                sta COLOUR,x
+                sta COLOUR+$100,x
+                sta COLOUR+$200,x
+                sta COLOUR+$2e8,x
+                inx
+                bne -
+                rts
+
+draw_header:
+                ldx #0
+-               lda #TRACK_CHAR
+                sta SCREEN,x
+                lda #COL_DARK_GREY
+                sta COLOUR,x
+                inx
+                cpx #40
+                bne -
+
+                ldx #0
+-               lda title_text,x
+                beq +
+                sta SCREEN + 2*40 + 13,x
+                lda #COL_CYAN
+                sta COLOUR + 2*40 + 13,x
+                inx
+                bne -
+
++               ldx #0
+-               lda subtitle_text,x
+                beq +
+                sta SCREEN + 4*40 + 12,x
+                lda #COL_GREY
+                sta COLOUR + 4*40 + 12,x
+                inx
+                bne -
+
++               ldx #0
+-               lda score_text,x
+                beq +
+                sta SCREEN + 6*40 + 2,x
+                lda #COL_WHITE
+                sta COLOUR + 6*40 + 2,x
+                inx
+                bne -
+
++               ldx #0
+-               lda #$30
+                sta SCREEN + 6*40 + 9,x
+                lda #COL_YELLOW
+                sta COLOUR + 6*40 + 9,x
+                inx
+                cpx #6
+                bne -
+
+                ldx #0
+-               lda beat_text,x
+                beq +
+                sta SCREEN + 6*40 + 17,x
+                lda #COL_WHITE
+                sta COLOUR + 6*40 + 17,x
+                inx
+                bne -
+
++               lda #$30
+                sta SCREEN + 6*40 + 19
+                sta SCREEN + 6*40 + 20
+                lda #COL_YELLOW
+                sta COLOUR + 6*40 + 19
+                sta COLOUR + 6*40 + 20
+
+                ldx #0
+-               lda pos_text,x
+                beq +
+                sta SCREEN + 6*40 + 29,x
+                lda #COL_WHITE
+                sta COLOUR + 6*40 + 29,x
+                inx
+                bne -
+
++               lda #$30
+                sta SCREEN + 6*40 + 34
+                sta SCREEN + 6*40 + 35
+                lda #COL_YELLOW
+                sta COLOUR + 6*40 + 34
+                sta COLOUR + 6*40 + 35
+                rts
+
+title_text:     !scr "sid symphony"
+                !byte 0
+subtitle_text:  !scr "x=t1 c=t2 v=t3 q=quit"
+                !byte 0
+score_text:     !scr "score:"
+                !byte 0
+beat_text:      !scr "b:"
+                !byte 0
+pos_text:       !scr "pos:"
+                !byte 0
+
+draw_tracks:
+                lda #TRACK1_ROW
+                ldx #$18
+                ldy #COL_CYAN
+                jsr draw_single_track
+
+                lda #TRACK2_ROW
+                ldx #$03
+                ldy #COL_GREEN
+                jsr draw_single_track
+
+                lda #TRACK3_ROW
+                ldx #$16
+                ldy #COL_YELLOW
+                jsr draw_single_track
+                rts
+
+draw_single_track:
+                sta temp_row
+                stx temp_key
+                sty temp_colour
+
+                lda temp_row
+                jsr calc_row_addr
+
+                ldy #KEY_COL
+                lda #KEY_BRACKET_L
+                sta (screen_ptr),y
+                lda #COL_WHITE
+                sta (colour_ptr),y
+
+                iny
+                lda temp_key
+                sta (screen_ptr),y
+                lda temp_colour
+                sta (colour_ptr),y
+
+                iny
+                lda #KEY_BRACKET_R
+                sta (screen_ptr),y
+                lda #COL_WHITE
+                sta (colour_ptr),y
+
+                ldy #HIT_START
+-               lda #HITZONE_CHAR
+                sta (screen_ptr),y
+                lda temp_colour
+                sta (colour_ptr),y
+                iny
+                cpy #HIT_END
+                bne -
+
+                ldy #TRACK_START
+-               lda #TRACK_CHAR
+                sta (screen_ptr),y
+                lda #COL_DARK_GREY
+                sta (colour_ptr),y
+                iny
+                cpy #SCREEN_WIDTH
+                bne -
+                rts
+
+calc_row_addr:
+                sta temp_row
+                sta temp_lo
+                lda #0
+                sta temp_hi
+
+                asl temp_lo
+                rol temp_hi
+                asl temp_lo
+                rol temp_hi
+                asl temp_lo
+                rol temp_hi
+
+                lda temp_lo
+                sta save_lo
+                lda temp_hi
+                sta save_hi
+
+                asl temp_lo
+                rol temp_hi
+                asl temp_lo
+                rol temp_hi
+
+                clc
+                lda save_lo
+                adc temp_lo
+                sta temp_lo
+                lda save_hi
+                adc temp_hi
+                sta temp_hi
+
+                clc
+                lda temp_lo
+                adc #<SCREEN
+                sta screen_ptr
+                lda temp_hi
+                adc #>SCREEN
+                sta screen_ptr+1
+
+                clc
+                lda temp_lo
+                adc #<COLOUR
+                sta colour_ptr
+                lda temp_hi
+                adc #>COLOUR
+                sta colour_ptr+1
+                rts
+
+draw_footer:
+                ldx #0
+-               lda #TRACK_CHAR
+                sta SCREEN + 22*40,x
+                lda #COL_DARK_GREY
+                sta COLOUR + 22*40,x
+                inx
+                cpx #40
+                bne -
+
+                ldx #0
+-               lda footer_text,x
+                beq +
+                sta SCREEN + 24*40 + 6,x
+                lda #COL_GREY
+                sta COLOUR + 24*40 + 6,x
+                inx
+                bne -
++               rts
+
+footer_text:    !scr "hit notes as they reach ["
+                !byte HITZONE_CHAR
+                !scr "]"
+                !byte 0
+
+; ============================================================================
+; Variables
+; ============================================================================
+temp_row:       !byte 0
+temp_key:       !byte 0
+temp_colour:    !byte 0
+temp_lo:        !byte 0
+temp_hi:        !byte 0
+save_lo:        !byte 0
+save_hi:        !byte 0
+
+frame_counter:  !byte 0
+beat_counter:   !byte 0
+song_position:  !byte 0
+move_counter:   !byte 0
+
+spawn_track:    !byte 0
+spawn_note_val: !byte 0
+temp_note_idx:  !byte 0
+flash_colour:   !byte 0
+
+; Flash timers (frames remaining) - hits (white)
+flash_t1_timer: !byte 0
+flash_t2_timer: !byte 0
+flash_t3_timer: !byte 0
+
+; Miss timers (frames remaining) - misses (red)
+miss_t1_timer:  !byte 0
+miss_t2_timer:  !byte 0
+miss_t3_timer:  !byte 0
+
+; Miss tracking
+miss_count:     !byte 0
+miss_track:     !byte 0
+
+; Keyboard state
+key_x_state:    !byte 0         ; 1 if X was held last frame
+key_c_state:    !byte 0         ; 1 if C was held last frame
+key_v_state:    !byte 0         ; 1 if V was held last frame
+key_x_pressed:  !byte 0         ; 1 if X newly pressed THIS frame
+key_c_pressed:  !byte 0         ; 1 if C newly pressed THIS frame
+key_v_pressed:  !byte 0         ; 1 if V newly pressed THIS frame
+
+; Key press counters
+key_x_count:    !byte 0
+key_c_count:    !byte 0
+key_v_count:    !byte 0
+
+note_active:    !byte 0, 0, 0, 0, 0, 0, 0, 0
+note_x:         !byte 0, 0, 0, 0, 0, 0, 0, 0
+note_track:     !byte 0, 0, 0, 0, 0, 0, 0, 0
+note_value:     !byte 0, 0, 0, 0, 0, 0, 0, 0
+
+; Hit detection
+hit_track:      !byte 0
 hit_note_idx:   !byte 0
 
-; Speed lookup table (indexed by multiplier-1)
-speed_table:
-            !byte SPEED_1X          ; 1x multiplier
-            !byte SPEED_2X          ; 2x multiplier
-            !byte SPEED_3X          ; 3x multiplier
-            !byte SPEED_4X          ; 4x multiplier
-
-; ========================================================
-; INITIALISATION
-; ========================================================
-init:
-            ; Clear screen
-            jsr clear_screen
-
-            ; Set border and background colours
-            lda #COL_BLACK
-            sta BORDER
-            sta BACKGROUND
-
-            ; Initialise SID with filter
-            jsr init_sid
-
-            ; Start at title state
-            lda #STATE_TITLE
-            sta game_state
-
-            ; Draw title screen
-            jsr draw_title_screen
-
-            ; Main loop
-            jmp main_loop
-
-; ========================================================
-; MAIN LOOP
-; ========================================================
-main_loop:
-            ; Wait for raster line 255 (frame sync)
-wait_raster:
-            lda RASTER
-            cmp #255
-            bne wait_raster
-
-            ; Wait for raster to leave line 255
-wait_leave:
-            lda RASTER
-            cmp #255
-            beq wait_leave
-
-            ; Branch based on game state
-            lda game_state
-
-            cmp #STATE_TITLE
-            bne ml_not_title
-            jsr update_title
-            jmp main_loop
-
-ml_not_title:
-            cmp #STATE_PLAYING
-            bne ml_not_playing
-            jsr update_game
-            jmp main_loop
-
-ml_not_playing:
-            cmp #STATE_GAMEOVER
-            bne ml_not_gameover
-            jsr update_gameover
-            jmp main_loop
-
-ml_not_gameover:
-            ; STATE_VICTORY
-            jsr update_victory
-            jmp main_loop
-
-; ========================================================
-; TITLE STATE
-; ========================================================
-draw_title_screen:
-            ; Draw "SID SYMPHONY" title
-            ldx #0
-dts_loop:
-            lda title_text,x
-            beq dts_done
-            sta SCREEN + ROW_TITLE * 40 + 14,x
-            lda #COL_CYAN
-            sta COLOUR + ROW_TITLE * 40 + 14,x
-            inx
-            jmp dts_loop
-dts_done:
-            ; Draw "PRESS SPACE" prompt
-            ldx #0
-dts_prompt:
-            lda space_text,x
-            beq dts_prompt_done
-            sta SCREEN + 12 * 40 + 13,x
-            lda #COL_WHITE
-            sta COLOUR + 12 * 40 + 13,x
-            inx
-            jmp dts_prompt
-dts_prompt_done:
-            rts
-
-title_text:
-            !scr "sid symphony"
-            !byte 0
-
-space_text:
-            !scr "press space"
-            !byte 0
-
-update_title:
-            ; Check for SPACE key
-            lda #%01111111
-            sta CIA1_PORTA
-            lda CIA1_PORTB
-            and #%00010000
-            bne ut_done
-
-            ; Start game
-            jsr start_new_game
-
-ut_done:
-            rts
-
-; ========================================================
-; START NEW GAME
-; ========================================================
-start_new_game:
-            ; Clear screen
-            jsr clear_screen
-
-            ; Reset score
-            lda #0
-            sta score_lo
-            sta score_hi
-
-            ; Reset streak
-            lda #0
-            sta streak
-
-            ; Reset combo system
-            lda #0
-            sta combo_count
-            lda #1
-            sta multiplier
-
-            ; Reset crowd to middle
-            lda #CROWD_MAX / 2
-            sta crowd_level
-
-            ; Clear all notes
-            ldx #MAX_NOTES - 1
-sng_clear:
-            lda #NOTE_INACTIVE
-            sta note_x,x
-            dex
-            bpl sng_clear
-
-            ; Reset timers
-            lda #0
-            sta frame_count
-            sta spawn_timer
-            sta flash_timer
-            sta filter_sweep
-            sta bum_note_timer
-            sta grade_timer_t1
-            sta grade_timer_t2
-            sta grade_timer_t3
-
-            ; Reset visual effects
-            sta border_flash_timer
-            sta miss_flash_timer
-
-            ; Reset speed to starting values
-            lda #SPEED_1X
-            sta current_speed
-            sta move_timer
-
-            ; Reset key states
-            lda #0
-            sta key_x_was_pressed
-            sta key_c_was_pressed
-            sta key_v_was_pressed
-
-            ; Reset song playback
-            lda #<song_data
-            sta song_ptr_lo
-            sta song_position
-            lda #>song_data
-            sta song_ptr_hi
-            sta song_position + 1
-
-            lda #0
-            sta song_time
-            ldy #0
-            lda (song_ptr_lo),y
-            sta next_note_time
-
-            ; Draw game screen
-            jsr draw_game_screen
-
-            ; Set state to playing
-            lda #STATE_PLAYING
-            sta game_state
-
-            rts
-
-; ========================================================
-; DRAW GAME SCREEN
-; ========================================================
-draw_game_screen:
-            ; Draw score label
-            ldx #0
-dgs_score:
-            lda score_label,x
-            beq dgs_score_done
-            sta SCREEN + ROW_SCORE * 40,x
-            lda #COL_WHITE
-            sta COLOUR + ROW_SCORE * 40,x
-            inx
-            jmp dgs_score
-dgs_score_done:
-            ; Draw three track lines
-            jsr draw_track_lines
-
-            ; Draw crowd meter label
-            ldx #0
-dgs_crowd:
-            lda crowd_label,x
-            beq dgs_crowd_done
-            sta SCREEN + ROW_CROWD * 40,x
-            lda #COL_WHITE
-            sta COLOUR + ROW_CROWD * 40,x
-            inx
-            jmp dgs_crowd
-dgs_crowd_done:
-            ; Draw initial score, multiplier, and crowd
-            jsr update_display
-
-            rts
-
-score_label:
-            !scr "score:"
-            !byte 0
-
-crowd_label:
-            !scr "crowd:"
-            !byte 0
-
-draw_track_lines:
-            ; Draw track 1 line
-            ldx #39
-dtl_t1:
-            lda #TRACK_CHAR
-            sta SCREEN + ROW_TRACK1 * 40,x
-            lda #COL_CYAN
-            sta COLOUR + ROW_TRACK1 * 40,x
-            dex
-            bpl dtl_t1
-
-            ; Draw track 2 line
-            ldx #39
-dtl_t2:
-            lda #TRACK_CHAR
-            sta SCREEN + ROW_TRACK2 * 40,x
-            lda #COL_YELLOW
-            sta COLOUR + ROW_TRACK2 * 40,x
-            dex
-            bpl dtl_t2
-
-            ; Draw track 3 line
-            ldx #39
-dtl_t3:
-            lda #TRACK_CHAR
-            sta SCREEN + ROW_TRACK3 * 40,x
-            lda #COL_LGREEN
-            sta COLOUR + ROW_TRACK3 * 40,x
-            dex
-            bpl dtl_t3
-
-            ; Draw target zones (hit markers at column 0)
-            lda #91
-            sta SCREEN + ROW_TRACK1 * 40
-            sta SCREEN + ROW_TRACK2 * 40
-            sta SCREEN + ROW_TRACK3 * 40
-
-            lda #COL_WHITE
-            sta COLOUR + ROW_TRACK1 * 40
-            sta COLOUR + ROW_TRACK2 * 40
-            sta COLOUR + ROW_TRACK3 * 40
-
-            ; Draw track labels: X, C, V
-            lda #24
-            sta SCREEN + (ROW_TRACK1 - 1) * 40
-            lda #3
-            sta SCREEN + (ROW_TRACK2 - 1) * 40
-            lda #22
-            sta SCREEN + (ROW_TRACK3 - 1) * 40
-
-            lda #COL_CYAN
-            sta COLOUR + (ROW_TRACK1 - 1) * 40
-            lda #COL_YELLOW
-            sta COLOUR + (ROW_TRACK2 - 1) * 40
-            lda #COL_LGREEN
-            sta COLOUR + (ROW_TRACK3 - 1) * 40
-
-            rts
-
-; ========================================================
-; UPDATE GAME (PLAYING STATE)
-; ========================================================
-update_game:
-            ; Increment frame counter
-            inc frame_count
-
-            ; Update song playback
-            jsr update_song
-
-            ; Handle note movement with speed control
-            dec move_timer
-            bne ug_no_move
-            lda current_speed       ; Reload timer from current speed
-            sta move_timer
-            jsr move_notes
-ug_no_move:
-
-            ; Check for input
-            jsr check_input
-
-            ; Update flash effect
-            jsr update_flash
-
-            ; Update filter sweep
-            jsr update_filter_sweep
-
-            ; Update bum note
-            jsr update_bum_note
-
-            ; Update grade text timers
-            jsr update_grade_text
-
-            ; Update visual effects (border flashes)
-            jsr update_visual_effects
-
-            ; Update score, multiplier, and crowd display
-            jsr update_display
-
-            rts
-
-; ========================================================
-; UPDATE SPEED
-; ========================================================
-update_speed:
-            ldx multiplier
-            dex                     ; Convert 1-4 to 0-3 index
-            lda speed_table,x
-            sta current_speed
-            rts
-
-; ========================================================
-; UPDATE VISUAL EFFECTS
-; ========================================================
-update_visual_effects:
-            ; Border flash (cyan when multiplier increases)
-            lda border_flash_timer
-            beq uve_no_border
-            dec border_flash_timer
-            lda #COL_CYAN           ; Bright cyan border flash
-            sta BORDER
-            rts
-
-uve_no_border:
-            ; Miss flash overrides normal
-            lda miss_flash_timer
-            beq uve_normal_border
-            dec miss_flash_timer
-            lda #COL_RED            ; Red border on miss
-            sta BORDER
-            rts
-
-uve_normal_border:
-            lda #COL_BLACK          ; Black border normally
-            sta BORDER
-            rts
-
-; ========================================================
-; UPDATE SONG PLAYBACK
-; ========================================================
-update_song:
-            ; Check if song finished
-            lda next_note_time
-            cmp #$ff
-            beq us_victory
-
-            ; Increment song time
-            inc song_time
-            lda song_time
-
-            ; Check if time to spawn
-us_check:
-            cmp next_note_time
-            bne us_done
-
-            ; Time to spawn! Get track number
-            ldy #1
-            lda (song_ptr_lo),y
-            cmp #$ff
-            beq us_victory
-
-            ; Spawn note on this track
-            jsr spawn_note
-
-            ; Advance to next note in song
-            clc
-            lda song_ptr_lo
-            adc #2
-            sta song_ptr_lo
-            bcc us_no_carry
-            inc song_ptr_hi
-us_no_carry:
-            ; Read next note time (delta from current)
-            ldy #0
-            lda (song_ptr_lo),y
-            cmp #$ff
-            beq us_end_mark
-            clc
-            adc song_time
-            sta next_note_time
-            jmp us_check
-
-us_end_mark:
-            sta next_note_time
-us_done:
-            rts
-
-us_victory:
-            ; All notes spawned, check if all cleared
-            ldx #MAX_NOTES - 1
-us_check_notes:
-            lda note_x,x
-            cmp #NOTE_INACTIVE
-            bne us_done
-            dex
-            bpl us_check_notes
-
-            ; All notes cleared - victory!
-            lda #STATE_VICTORY
-            sta game_state
-            jsr draw_victory_screen
-            rts
-
-; ========================================================
-; SPAWN NOTE
-; ========================================================
-spawn_note:
-            pha
-
-            ; Find free note slot
-            ldx #MAX_NOTES - 1
-sn_find:
-            lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq sn_found
-            dex
-            bpl sn_find
-            pla
-            rts
-
-sn_found:
-            ; Set note position and track
-            lda #NOTE_START_X
-            sta note_x,x
-            pla
-            sta note_track,x
-
-            ; Draw note at starting position
-            jsr draw_note
-
-            rts
-
-; ========================================================
-; MOVE NOTES
-; ========================================================
-move_notes:
-            ldx #MAX_NOTES - 1
-mn_loop:
-            lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq mn_next
-
-            ; Erase note at current position
-            jsr erase_note
-
-            ; Move note left
-            dec note_x,x
-
-            ; Check if off screen
-            lda note_x,x
-            bmi mn_missed
-
-            ; Draw at new position
-            jsr draw_note
-            jmp mn_next
-
-mn_missed:
-            ; Note missed! Mark inactive
-            lda #NOTE_INACTIVE
-            sta note_x,x
-
-            ; Reset streak
-            lda #0
-            sta streak
-
-            ; Reset combo and multiplier on miss
-            lda #0
-            sta combo_count
-            lda #1
-            sta multiplier
-
-            ; Update speed for new multiplier
-            jsr update_speed
-
-            ; Trigger miss flash effect
-            lda #MISS_FLASH_TIME
-            sta miss_flash_timer
-
-            ; Decrease crowd (lose 2)
-            lda crowd_level
-            sec
-            sbc #2
-            bcs mn_crowd_ok
-            lda #0
-mn_crowd_ok:
-            sta crowd_level
-
-            ; Check for game over
-            beq mn_gameover
-
-            ; Play bum note for miss
-            jsr play_bum_note
-
-mn_next:
-            dex
-            bpl mn_loop
-            rts
-
-mn_gameover:
-            lda #STATE_GAMEOVER
-            sta game_state
-            jsr draw_gameover_screen
-            rts
-
-; ========================================================
-; DRAW/ERASE NOTE
-; ========================================================
-draw_note:
-            lda note_track,x
-            cmp #TRACK_1
-            bne dn_not_t1
-            lda #<(SCREEN + ROW_TRACK1 * 40)
-            sta temp_ptr_lo
-            lda #>(SCREEN + ROW_TRACK1 * 40)
-            sta temp_ptr_hi
-            lda #COL_CYAN
-            jmp dn_draw
-
-dn_not_t1:
-            cmp #TRACK_2
-            bne dn_t3
-            lda #<(SCREEN + ROW_TRACK2 * 40)
-            sta temp_ptr_lo
-            lda #>(SCREEN + ROW_TRACK2 * 40)
-            sta temp_ptr_hi
-            lda #COL_YELLOW
-            jmp dn_draw
-
-dn_t3:
-            lda #<(SCREEN + ROW_TRACK3 * 40)
-            sta temp_ptr_lo
-            lda #>(SCREEN + ROW_TRACK3 * 40)
-            sta temp_ptr_hi
-            lda #COL_LGREEN
-
-dn_draw:
-            pha
-            ldy note_x,x
-            lda #81
-            sta (temp_ptr_lo),y
-
-            lda temp_ptr_hi
-            clc
-            adc #$d4
-            sta temp_ptr_hi
-            pla
-            sta (temp_ptr_lo),y
-
-            rts
-
-erase_note:
-            lda note_track,x
-            cmp #TRACK_1
-            bne en_not_t1
-            lda #<(SCREEN + ROW_TRACK1 * 40)
-            sta temp_ptr_lo
-            lda #>(SCREEN + ROW_TRACK1 * 40)
-            sta temp_ptr_hi
-            lda #COL_CYAN
-            jmp en_erase
-
-en_not_t1:
-            cmp #TRACK_2
-            bne en_t3
-            lda #<(SCREEN + ROW_TRACK2 * 40)
-            sta temp_ptr_lo
-            lda #>(SCREEN + ROW_TRACK2 * 40)
-            sta temp_ptr_hi
-            lda #COL_YELLOW
-            jmp en_erase
-
-en_t3:
-            lda #<(SCREEN + ROW_TRACK3 * 40)
-            sta temp_ptr_lo
-            lda #>(SCREEN + ROW_TRACK3 * 40)
-            sta temp_ptr_hi
-            lda #COL_LGREEN
-
-en_erase:
-            pha
-            ldy note_x,x
-            lda #TRACK_CHAR
-            sta (temp_ptr_lo),y
-
-            lda temp_ptr_hi
-            clc
-            adc #$d4
-            sta temp_ptr_hi
-            pla
-            sta (temp_ptr_lo),y
-
-            rts
-
-; ========================================================
-; CHECK INPUT
-; ========================================================
-check_input:
-            ; Check X key (Track 1)
-            lda #%01111111
-            sta CIA1_PORTA
-            lda CIA1_PORTB
-            and #%10000000
-            bne ci_x_not_pressed
-
-            lda key_x_was_pressed
-            bne ci_check_c
-            lda #1
-            sta key_x_was_pressed
-            lda #TRACK_1
-            sta check_track
-            jsr check_hit_on_track
-            jmp ci_check_c
-
-ci_x_not_pressed:
-            lda #0
-            sta key_x_was_pressed
-
-ci_check_c:
-            ; Check C key (Track 2)
-            lda #%11111011
-            sta CIA1_PORTA
-            lda CIA1_PORTB
-            and #%00010000
-            bne ci_c_not_pressed
-
-            lda key_c_was_pressed
-            bne ci_check_v
-            lda #1
-            sta key_c_was_pressed
-            lda #TRACK_2
-            sta check_track
-            jsr check_hit_on_track
-            jmp ci_check_v
-
-ci_c_not_pressed:
-            lda #0
-            sta key_c_was_pressed
-
-ci_check_v:
-            ; Check V key (Track 3)
-            lda #%01111111
-            sta CIA1_PORTA
-            lda CIA1_PORTB
-            and #%00010000
-            bne ci_v_not_pressed
-
-            lda key_v_was_pressed
-            bne ci_done
-            lda #1
-            sta key_v_was_pressed
-            lda #TRACK_3
-            sta check_track
-            jsr check_hit_on_track
-            jmp ci_done
-
-ci_v_not_pressed:
-            lda #0
-            sta key_v_was_pressed
-
-ci_done:
-            rts
-
-; ========================================================
-; CHECK HIT ON TRACK
-; ========================================================
-check_hit_on_track:
-            ldx #MAX_NOTES - 1
-chot_loop:
-            lda note_x,x
-            cmp #NOTE_INACTIVE
-            beq chot_next
-
-            lda note_track,x
-            cmp check_track
-            bne chot_next
-
-            lda note_x,x
-            cmp #HIT_ZONE_X
-            bcs chot_next
-
-            ; HIT! Save position for grade calculation
-            sta hit_position
-            stx hit_note_idx
-
-            ; Erase and deactivate note
-            jsr erase_note
-            ldx hit_note_idx
-            lda #NOTE_INACTIVE
-            sta note_x,x
-
-            ; Calculate grade and add score
-            jsr calculate_grade
-
-            ; Update combo system
-            jsr update_combo
-
-            ; Show grade text on screen
-            jsr show_grade_text
-
-            ; Play the note
-            jsr play_hit_note
-
-            ; Increment streak
-            inc streak
-
-            ; Increase crowd
-            lda crowd_level
-            cmp #CROWD_MAX
-            beq chot_flash
-            inc crowd_level
-
-chot_flash:
-            ; Start flash effect
-            lda #4
-            sta flash_timer
-            lda check_track
-            sta flash_track
-
-            ; Start filter sweep
-            jsr start_filter_sweep
-
-            rts
-
-chot_next:
-            dex
-            bpl chot_loop
-
-            ; No hit - miss!
-            lda #0
-            sta streak
-
-            ; Reset combo and multiplier
-            lda #0
-            sta combo_count
-            lda #1
-            sta multiplier
-
-            ; Update speed for new multiplier
-            jsr update_speed
-
-            ; Trigger miss flash effect
-            lda #MISS_FLASH_TIME
-            sta miss_flash_timer
-
-            ; Play bum note
-            jsr play_bum_note
-
-            rts
-
-; ========================================================
-; UPDATE COMBO
-; ========================================================
-update_combo:
-            inc combo_count
-            lda combo_count
-            cmp #COMBO_THRESHOLD
-            bcc uc_done
-
-            ; Reached threshold - increase multiplier if not at max
-            lda multiplier
-            cmp #MAX_MULTIPLIER
-            bcs uc_reset
-            inc multiplier
-
-            ; Update speed for new multiplier
-            jsr update_speed
-
-            ; Trigger border flash on multiplier increase
-            lda #BORDER_FLASH_TIME
-            sta border_flash_timer
-
-uc_reset:
-            lda #0
-            sta combo_count
-
-uc_done:
-            rts
-
-; ========================================================
-; CALCULATE GRADE
-; ========================================================
-calculate_grade:
-            lda hit_position
-            cmp #ZONE_PERFECT
-            bcs cg_not_perfect
-
-            ; PERFECT!
-            lda #GRADE_PERFECT
-            sta current_grade
-            lda #POINTS_PERFECT
-            jmp cg_add_score
-
-cg_not_perfect:
-            cmp #ZONE_GOOD
-            bcs cg_late
-
-            ; GOOD
-            lda #GRADE_GOOD
-            sta current_grade
-            lda #POINTS_GOOD
-            jmp cg_add_score
-
-cg_late:
-            lda #GRADE_LATE
-            sta current_grade
-            lda #POINTS_LATE
-
-cg_add_score:
-            ; Multiply by multiplier
-            sta cg_base_points
-            lda multiplier
-            cmp #1
-            beq cg_mult_done
-            cmp #2
-            beq cg_mult_2x
-            cmp #3
-            beq cg_mult_3x
-
-            ; 4x
-            lda cg_base_points
-            asl
-            asl
-            jmp cg_mult_add
-
-cg_mult_2x:
-            lda cg_base_points
-            asl
-            jmp cg_mult_add
-
-cg_mult_3x:
-            lda cg_base_points
-            asl
-            clc
-            adc cg_base_points
-            jmp cg_mult_add
-
-cg_mult_done:
-            lda cg_base_points
-
-cg_mult_add:
-            clc
-            adc score_lo
-            sta score_lo
-            bcc cg_done
-            inc score_hi
-cg_done:
-            rts
-
-; ========================================================
-; SHOW GRADE TEXT
-; ========================================================
-show_grade_text:
-            lda check_track
-            cmp #TRACK_1
-            bne sgt_not_t1
-
-            lda #GRADE_FLASH_TIME
-            sta grade_timer_t1
-            lda #ROW_TRACK1
-            sta grade_row
-            jmp sgt_draw
-
-sgt_not_t1:
-            cmp #TRACK_2
-            bne sgt_t3
-
-            lda #GRADE_FLASH_TIME
-            sta grade_timer_t2
-            lda #ROW_TRACK2
-            sta grade_row
-            jmp sgt_draw
-
-sgt_t3:
-            lda #GRADE_FLASH_TIME
-            sta grade_timer_t3
-            lda #ROW_TRACK3
-            sta grade_row
-
-sgt_draw:
-            jsr calc_grade_addr
-
-            lda current_grade
-            cmp #GRADE_PERFECT
-            bne sgt_not_perf
-
-            jsr draw_perfect_text
-            rts
-
-sgt_not_perf:
-            cmp #GRADE_GOOD
-            bne sgt_is_late
-
-            jsr draw_good_text
-            rts
-
-sgt_is_late:
-            jsr draw_late_text
-            rts
-
-; ========================================================
-; CALCULATE GRADE ADDRESS
-; ========================================================
-calc_grade_addr:
-            lda grade_row
-            sta temp_ptr_lo
-            lda #0
-            sta temp_ptr_hi
-
-            ; Multiply by 40
-            asl temp_ptr_lo
-            rol temp_ptr_hi
-            asl temp_ptr_lo
-            rol temp_ptr_hi
-            asl temp_ptr_lo
-            rol temp_ptr_hi
-
-            lda temp_ptr_lo
-            pha
-            lda temp_ptr_hi
-            pha
-
-            asl temp_ptr_lo
-            rol temp_ptr_hi
-            asl temp_ptr_lo
-            rol temp_ptr_hi
-
-            pla
-            clc
-            adc temp_ptr_hi
-            sta temp_ptr_hi
-            pla
-            clc
-            adc temp_ptr_lo
-            sta temp_ptr_lo
-            bcc cga_no_carry
-            inc temp_ptr_hi
-cga_no_carry:
-            lda temp_ptr_lo
-            clc
-            adc #15
-            sta temp_ptr_lo
-            bcc cga_no_carry2
-            inc temp_ptr_hi
-cga_no_carry2:
-            lda temp_ptr_lo
-            clc
-            adc #<SCREEN
-            sta grade_screen_lo
-            lda temp_ptr_hi
-            adc #>SCREEN
-            sta grade_screen_hi
-
-            lda grade_screen_lo
-            sta grade_colour_lo
-            lda grade_screen_hi
-            clc
-            adc #$d4
-            sta grade_colour_hi
-
-            rts
-
-; ========================================================
-; DRAW GRADE TEXTS
-; ========================================================
-draw_perfect_text:
-            ldy #0
-dpt_loop:
-            lda perfect_text,y
-            beq dpt_colour
-            sta (grade_screen_lo),y
-            iny
-            cpy #7
-            bne dpt_loop
-
-dpt_colour:
-            ldy #0
-dpt_col:
-            lda #COL_GREEN
-            sta (grade_colour_lo),y
-            iny
-            cpy #7
-            bne dpt_col
-            rts
-
-draw_good_text:
-            ldy #0
-dgt_loop:
-            lda good_text,y
-            beq dgt_colour
-            sta (grade_screen_lo),y
-            iny
-            cpy #4
-            bne dgt_loop
-
-dgt_colour:
-            ldy #0
-dgt_col:
-            lda #COL_YELLOW
-            sta (grade_colour_lo),y
-            iny
-            cpy #4
-            bne dgt_col
-            rts
-
-draw_late_text:
-            ldy #0
-dlt_loop:
-            lda late_text,y
-            beq dlt_colour
-            sta (grade_screen_lo),y
-            iny
-            cpy #4
-            bne dlt_loop
-
-dlt_colour:
-            ldy #0
-dlt_col:
-            lda #COL_RED
-            sta (grade_colour_lo),y
-            iny
-            cpy #4
-            bne dlt_col
-            rts
-
-perfect_text:
-            !byte $10, $05, $12, $06, $05, $03, $14
-good_text:
-            !byte $07, $0f, $0f, $04
-late_text:
-            !byte $0c, $01, $14, $05
-
-; ========================================================
-; UPDATE GRADE TEXT
-; ========================================================
-update_grade_text:
-            lda grade_timer_t1
-            beq ugt_t2
-            dec grade_timer_t1
-            bne ugt_t2
-            jsr clear_grade_t1
-
-ugt_t2:
-            lda grade_timer_t2
-            beq ugt_t3
-            dec grade_timer_t2
-            bne ugt_t3
-            jsr clear_grade_t2
-
-ugt_t3:
-            lda grade_timer_t3
-            beq ugt_done
-            dec grade_timer_t3
-            bne ugt_done
-            jsr clear_grade_t3
-
-ugt_done:
-            rts
-
-clear_grade_t1:
-            ldx #0
-cgt1_loop:
-            lda #TRACK_CHAR
-            sta SCREEN + ROW_TRACK1 * 40 + 15,x
-            lda #COL_CYAN
-            sta COLOUR + ROW_TRACK1 * 40 + 15,x
-            inx
-            cpx #8
-            bne cgt1_loop
-            rts
-
-clear_grade_t2:
-            ldx #0
-cgt2_loop:
-            lda #TRACK_CHAR
-            sta SCREEN + ROW_TRACK2 * 40 + 15,x
-            lda #COL_YELLOW
-            sta COLOUR + ROW_TRACK2 * 40 + 15,x
-            inx
-            cpx #8
-            bne cgt2_loop
-            rts
-
-clear_grade_t3:
-            ldx #0
-cgt3_loop:
-            lda #TRACK_CHAR
-            sta SCREEN + ROW_TRACK3 * 40 + 15,x
-            lda #COL_LGREEN
-            sta COLOUR + ROW_TRACK3 * 40 + 15,x
-            inx
-            cpx #8
-            bne cgt3_loop
-            rts
-
-; ========================================================
-; PLAY HIT NOTE
-; ========================================================
-play_hit_note:
-            lda check_track
-            cmp #TRACK_1
-            bne phn_not_t1
-
-            ldx next_note_time
-            lda note_freq_lo,x
-            sta SID_V1_FREQ_LO
-            lda note_freq_hi,x
-            sta SID_V1_FREQ_HI
-            lda #WAVE_PULSE
-            sta SID_V1_CTRL
-            rts
-
-phn_not_t1:
-            cmp #TRACK_2
-            bne phn_t3
-
-            ldx next_note_time
-            lda note_freq_lo,x
-            sta SID_V2_FREQ_LO
-            lda note_freq_hi,x
-            sta SID_V2_FREQ_HI
-            lda #WAVE_SAWTOOTH
-            sta SID_V2_CTRL
-            rts
-
-phn_t3:
-            ldx next_note_time
-            lda note_freq_lo,x
-            sta SID_V3_FREQ_LO
-            lda note_freq_hi,x
-            sta SID_V3_FREQ_HI
-            lda #WAVE_TRIANGLE
-            sta SID_V3_CTRL
-            rts
-
-note_freq_lo:
-            !byte $16, $27, $39, $4b, $5f, $74, $8a, $a1, $ba, $d4, $f0, $0e
-            !byte $2d, $4e, $71, $96, $be, $e8, $14, $43, $74, $a9, $e1, $1c
-note_freq_hi:
-            !byte $11, $12, $13, $14, $15, $16, $17, $18, $19, $1a, $1b, $1d
-            !byte $1e, $1f, $21, $22, $24, $25, $27, $29, $2b, $2d, $2f, $32
-
-; ========================================================
-; FILTER SWEEP
-; ========================================================
-start_filter_sweep:
-            lda #FILTER_CUTOFF_MAX
-            sta filter_cutoff
-            lda #1
-            sta filter_sweep
-            rts
-
-update_filter_sweep:
-            lda filter_sweep
-            beq ufs_done
-
-            dec filter_cutoff
-            dec filter_cutoff
-            lda filter_cutoff
-            cmp #FILTER_CUTOFF_MIN
-            bcs ufs_set
-
-            lda #FILTER_CUTOFF_MIN
-            sta filter_cutoff
-            lda #0
-            sta filter_sweep
-
-ufs_set:
-            lda #0
-            sta SID_FC_LO
-            lda filter_cutoff
-            sta SID_FC_HI
-
-ufs_done:
-            rts
-
-; ========================================================
-; BUM NOTE
-; ========================================================
-play_bum_note:
-            lda #$00
-            sta SID_V3_FREQ_LO
-            lda #$08
-            sta SID_V3_FREQ_HI
-            lda #WAVE_NOISE
-            sta SID_V3_CTRL
-            lda #30
-            sta bum_note_timer
-            rts
-
-update_bum_note:
-            lda bum_note_timer
-            beq ubn_done
-            dec bum_note_timer
-            bne ubn_done
-
-            lda #0
-            sta SID_V3_CTRL
-
-ubn_done:
-            rts
-
-; ========================================================
-; UPDATE FLASH
-; ========================================================
-update_flash:
-            lda flash_timer
-            beq uf_done
-
-            dec flash_timer
-            beq uf_restore
-
-            lda flash_track
-            cmp #TRACK_1
-            bne uf_not_t1
-            lda #COL_WHITE
-            ldx #39
-uf_t1_loop:
-            sta COLOUR + ROW_TRACK1 * 40,x
-            dex
-            bpl uf_t1_loop
-            rts
-
-uf_not_t1:
-            cmp #TRACK_2
-            bne uf_t3
-            lda #COL_WHITE
-            ldx #39
-uf_t2_loop:
-            sta COLOUR + ROW_TRACK2 * 40,x
-            dex
-            bpl uf_t2_loop
-            rts
-
-uf_t3:
-            lda #COL_WHITE
-            ldx #39
-uf_t3_loop:
-            sta COLOUR + ROW_TRACK3 * 40,x
-            dex
-            bpl uf_t3_loop
-            rts
-
-uf_restore:
-            lda flash_track
-            cmp #TRACK_1
-            bne uf_rest_not_t1
-            lda #COL_CYAN
-            ldx #39
-uf_rest_t1:
-            sta COLOUR + ROW_TRACK1 * 40,x
-            dex
-            bpl uf_rest_t1
-            rts
-
-uf_rest_not_t1:
-            cmp #TRACK_2
-            bne uf_rest_t3
-            lda #COL_YELLOW
-            ldx #39
-uf_rest_t2:
-            sta COLOUR + ROW_TRACK2 * 40,x
-            dex
-            bpl uf_rest_t2
-            rts
-
-uf_rest_t3:
-            lda #COL_LGREEN
-            ldx #39
-uf_rest_t3_lp:
-            sta COLOUR + ROW_TRACK3 * 40,x
-            dex
-            bpl uf_rest_t3_lp
-
-uf_done:
-            rts
-
-; ========================================================
-; UPDATE DISPLAY
-; ========================================================
-update_display:
-            jsr draw_score
-            jsr draw_multiplier
-            jsr draw_crowd
-            rts
-
-draw_score:
-            lda score_lo
-            sta temp_ptr_lo
-            lda score_hi
-            sta temp_ptr_hi
-
-            ldx #0
-ds_10000:
-            lda temp_ptr_hi
-            cmp #>10000
-            bcc ds_10000_done
-            bne ds_sub_10000
-            lda temp_ptr_lo
-            cmp #<10000
-            bcc ds_10000_done
-ds_sub_10000:
-            lda temp_ptr_lo
-            sec
-            sbc #<10000
-            sta temp_ptr_lo
-            lda temp_ptr_hi
-            sbc #>10000
-            sta temp_ptr_hi
-            inx
-            jmp ds_10000
-ds_10000_done:
-            txa
-            clc
-            adc #$30
-            sta SCREEN + ROW_SCORE * 40 + 7
-
-            ldx #0
-ds_1000:
-            lda temp_ptr_hi
-            cmp #>1000
-            bcc ds_1000_done
-            bne ds_sub_1000
-            lda temp_ptr_lo
-            cmp #<1000
-            bcc ds_1000_done
-ds_sub_1000:
-            lda temp_ptr_lo
-            sec
-            sbc #<1000
-            sta temp_ptr_lo
-            lda temp_ptr_hi
-            sbc #>1000
-            sta temp_ptr_hi
-            inx
-            jmp ds_1000
-ds_1000_done:
-            txa
-            clc
-            adc #$30
-            sta SCREEN + ROW_SCORE * 40 + 8
-
-            ldx #0
-ds_100:
-            lda temp_ptr_lo
-            cmp #100
-            bcc ds_100_done
-            sec
-            sbc #100
-            sta temp_ptr_lo
-            inx
-            jmp ds_100
-ds_100_done:
-            txa
-            clc
-            adc #$30
-            sta SCREEN + ROW_SCORE * 40 + 9
-
-            ldx #0
-ds_10:
-            lda temp_ptr_lo
-            cmp #10
-            bcc ds_10_done
-            sec
-            sbc #10
-            sta temp_ptr_lo
-            inx
-            jmp ds_10
-ds_10_done:
-            txa
-            clc
-            adc #$30
-            sta SCREEN + ROW_SCORE * 40 + 10
-
-            lda temp_ptr_lo
-            clc
-            adc #$30
-            sta SCREEN + ROW_SCORE * 40 + 11
-
-            lda #COL_WHITE
-            ldx #4
-ds_colour:
-            sta COLOUR + ROW_SCORE * 40 + 7,x
-            dex
-            bpl ds_colour
-
-            rts
-
-draw_multiplier:
-            lda multiplier
-            clc
-            adc #$30
-            sta SCREEN + ROW_SCORE * 40 + 18
-
-            lda #24
-            sta SCREEN + ROW_SCORE * 40 + 19
-
-            lda multiplier
-            cmp #4
-            bcs dm_max
-            cmp #3
-            bcs dm_high
-            cmp #2
-            bcs dm_mid
-            lda #COL_GREY
-            jmp dm_set_col
-dm_mid:
-            lda #COL_YELLOW
-            jmp dm_set_col
-dm_high:
-            lda #COL_GREEN
-            jmp dm_set_col
-dm_max:
-            lda #COL_CYAN
-dm_set_col:
-            sta COLOUR + ROW_SCORE * 40 + 18
-            sta COLOUR + ROW_SCORE * 40 + 19
-            rts
-
-draw_crowd:
-            ldx #0
-dc_loop:
-            cpx crowd_level
-            bcs dc_empty
-            lda #160
-            jmp dc_store
-dc_empty:
-            lda #32
-dc_store:
-            sta SCREEN + ROW_CROWD * 40 + 7,x
-
-            lda crowd_level
-            cmp #CROWD_MAX / 3
-            bcc dc_red
-            cmp #(CROWD_MAX * 2) / 3
-            bcc dc_yellow
-            lda #COL_GREEN
-            jmp dc_set_col
-dc_red:
-            lda #COL_RED
-            jmp dc_set_col
-dc_yellow:
-            lda #COL_YELLOW
-dc_set_col:
-            sta COLOUR + ROW_CROWD * 40 + 7,x
-
-            inx
-            cpx #CROWD_MAX
-            bne dc_loop
-            rts
-
-; ========================================================
-; GAME OVER STATE
-; ========================================================
-draw_gameover_screen:
-            ldx #0
-dgo_loop:
-            lda gameover_text,x
-            beq dgo_done
-            sta SCREEN + 12 * 40 + 16,x
-            lda #COL_RED
-            sta COLOUR + 12 * 40 + 16,x
-            inx
-            jmp dgo_loop
-dgo_done:
-            jsr silence_sid
-            rts
-
-gameover_text:
-            !scr "game over"
-            !byte 0
-
-update_gameover:
-            lda #%01111111
-            sta CIA1_PORTA
-            lda CIA1_PORTB
-            and #%00010000
-            bne ugo_done
-
-            jsr start_new_game
-
-ugo_done:
-            rts
-
-; ========================================================
-; VICTORY STATE
-; ========================================================
-draw_victory_screen:
-            ldx #0
-dvs_loop:
-            lda victory_text,x
-            beq dvs_done
-            sta SCREEN + 12 * 40 + 16,x
-            lda #COL_GREEN
-            sta COLOUR + 12 * 40 + 16,x
-            inx
-            jmp dvs_loop
-dvs_done:
-            jsr silence_sid
-            rts
-
-victory_text:
-            !scr "victory!"
-            !byte 0
-
-update_victory:
-            lda #%01111111
-            sta CIA1_PORTA
-            lda CIA1_PORTB
-            and #%00010000
-            bne uv_done
-
-            jsr start_new_game
-
-uv_done:
-            rts
-
-; ========================================================
-; SID INITIALISATION
-; ========================================================
-init_sid:
-            ; Clear all SID registers
-            ldx #24
-is_clear:
-            lda #0
-            sta SID,x
-            dex
-            bpl is_clear
-
-            ; Set up voice 1 - Pulse wave
-            lda #$00
-            sta SID_V1_PW_LO
-            lda #$08
-            sta SID_V1_PW_HI        ; 50% pulse width
-            lda #$09
-            sta SID_V1_AD           ; Attack=0, Decay=9
-            lda #$52
-            sta SID_V1_SR           ; Sustain=5, Release=2
-
-            ; Set up voice 2 - Sawtooth
-            lda #$0a
-            sta SID_V2_AD
-            lda #$41
-            sta SID_V2_SR
-
-            ; Set up voice 3 - Triangle
-            lda #$18
-            sta SID_V3_AD
-            lda #$84
-            sta SID_V3_SR
-
-            ; Set up filter - low pass with moderate resonance
-            lda #0
-            sta SID_FC_LO
-            lda #FILTER_CUTOFF_MIN
-            sta SID_FC_HI
-            sta filter_cutoff
-
-            ; Route all voices through filter
-            lda #$17                ; Resonance=1, filter voices 1,2,3
-            sta SID_RES_FILT
-
-            ; Low-pass filter, volume 15
-            lda #$1f                ; Low-pass + max volume
-            sta SID_MODE_VOL
-
-            rts
-
-silence_sid:
-            lda #0
-            sta SID_V1_CTRL
-            sta SID_V2_CTRL
-            sta SID_V3_CTRL
-            rts
-
-; ========================================================
-; UTILITY ROUTINES
-; ========================================================
-clear_screen:
-            ldx #0
-            lda #32
-cs_loop:
-            sta SCREEN,x
-            sta SCREEN + 256,x
-            sta SCREEN + 512,x
-            sta SCREEN + 768,x
-            lda #COL_LBLUE
-            sta COLOUR,x
-            sta COLOUR + 256,x
-            sta COLOUR + 512,x
-            sta COLOUR + 768,x
-            lda #32
-            inx
-            bne cs_loop
-            rts
-
-; ========================================================
-; SONG DATA
-; ========================================================
-; Format: delta time, track (0-2)
-; Delta time is frames since last note
-; $ff,$ff marks end of song
-
-song_data:
-            !byte 0, 0              ; Frame 0: Track 1
-            !byte 15, 1             ; Frame 15: Track 2
-            !byte 15, 2             ; Frame 30: Track 3
-            !byte 15, 0             ; Frame 45: Track 1
-            !byte 15, 1             ; Frame 60: Track 2
-            !byte 15, 2             ; Frame 75: Track 3
-            !byte 20, 0             ; Frame 95: Track 1
-            !byte 10, 0             ; Frame 105: Track 1
-            !byte 10, 1             ; Frame 115: Track 2
-            !byte 10, 1             ; Frame 125: Track 2
-            !byte 10, 2             ; Frame 135: Track 3
-            !byte 10, 2             ; Frame 145: Track 3
-            !byte 20, 0             ; Frame 165: Track 1
-            !byte 0, 1              ; Same time: Track 2
-            !byte 0, 2              ; Same time: Track 3 (chord!)
-            !byte 30, 1             ; Frame 195: Track 2
-            !byte 15, 0             ; Frame 210: Track 1
-            !byte 15, 2             ; Frame 225: Track 3
-            !byte 15, 1             ; Frame 240: Track 2
-            !byte 15, 0             ; Frame 255: Track 1
-            !byte 30, 2             ; Frame 285: Track 3
-            !byte 15, 1             ; Frame 300: Track 2
-            !byte 15, 0             ; Frame 315: Track 1
-            !byte $ff, $ff          ; End of song
+; Score (BCD, 6 digits)
+score:          !byte 0, 0, 0           ; Low, mid, high bytes
