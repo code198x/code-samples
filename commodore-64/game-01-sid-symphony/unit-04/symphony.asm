@@ -158,21 +158,21 @@ wait_frame:
 ; Formula: freq_value = (note_hz * 16777216) / 985248
 
 freq_lo:
-                !byte $16           ; C4  - 261.63 Hz
-                !byte $27           ; D4  - 293.66 Hz
-                !byte $5b           ; E4  - 329.63 Hz
-                !byte $8f           ; F4  - 349.23 Hz
-                !byte $e1           ; G4  - 392.00 Hz
-                !byte $57           ; A4  - 440.00 Hz
-                !byte $f4           ; B4  - 493.88 Hz
-                !byte $2c           ; C5  - 523.25 Hz
+                !byte $67           ; C4  - 261.63 Hz = $1167
+                !byte $89           ; D4  - 293.66 Hz = $1389
+                !byte $ed           ; E4  - 329.63 Hz = $15ed
+                !byte $3b           ; F4  - 349.23 Hz = $173b
+                !byte $13           ; G4  - 392.00 Hz = $1a13
+                !byte $45           ; A4  - 440.00 Hz = $1d45
+                !byte $da           ; B4  - 493.88 Hz = $20da
+                !byte $ce           ; C5  - 523.25 Hz = $22ce
 
 freq_hi:
                 !byte $11           ; C4
                 !byte $13           ; D4
                 !byte $15           ; E4
-                !byte $16           ; F4
-                !byte $18           ; G4
-                !byte $1b           ; A4
-                !byte $1d           ; B4
+                !byte $17           ; F4
+                !byte $1a           ; G4
+                !byte $1d           ; A4
+                !byte $20           ; B4
                 !byte $22           ; C5

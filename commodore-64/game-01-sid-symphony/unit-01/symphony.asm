@@ -78,8 +78,8 @@ start:
 
                 ; Set frequency for middle C (C4)
                 ; The SID frequency formula is: freq_value = (frequency_hz * 16777216) / clock
-                ; For PAL C64 (clock = 985248 Hz), middle C (261.63 Hz) = $1168
-                lda #$68            ; Low byte
+                ; For PAL C64 (clock = 985248 Hz), middle C (261.63 Hz) = $1167
+                lda #$67            ; Low byte
                 sta SID_V1_FREQ_LO
                 lda #$11            ; High byte
                 sta SID_V1_FREQ_HI

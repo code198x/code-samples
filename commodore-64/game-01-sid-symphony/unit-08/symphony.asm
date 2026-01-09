@@ -267,20 +267,22 @@ song_tracks:
                 !byte 1             ; Track 1
 
 ; Note values (SID frequency high bytes for simple notes)
+; These are high bytes only - the low byte is set to 0 for simplicity
+; Full values: C4=$1167, D4=$1389, E4=$15ed, F4=$173b, G4=$1a13, A4=$1d45, B4=$20da, C5=$22ce
 song_notes:
                 !byte $11           ; C4
                 !byte $13           ; D4
                 !byte $15           ; E4
-                !byte $16           ; F4
-                !byte $18           ; G4
-                !byte $1b           ; A4
-                !byte $1d           ; B4
+                !byte $17           ; F4
+                !byte $1a           ; G4
+                !byte $1d           ; A4
+                !byte $20           ; B4
                 !byte $22           ; C5
                 !byte $22           ; C5
-                !byte $1d           ; B4
-                !byte $1b           ; A4
-                !byte $18           ; G4
-                !byte $16           ; F4
+                !byte $20           ; B4
+                !byte $1d           ; A4
+                !byte $1a           ; G4
+                !byte $17           ; F4
                 !byte $15           ; E4
                 !byte $13           ; D4
                 !byte $11           ; C4

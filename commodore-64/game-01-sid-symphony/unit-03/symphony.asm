@@ -57,11 +57,12 @@ GATE_ON         = %00000001
 WAVE_PULSE      = %01000000
 
 ; Note frequencies (different pitches so you can hear each voice)
-FREQ_C4_LO      = $68               ; Voice 1: C4 (organ)
+; Formula: freq_value = (frequency_hz * 16777216) / 985248
+FREQ_C4_LO      = $67               ; Voice 1: C4 (organ) = $1167
 FREQ_C4_HI      = $11
-FREQ_E4_LO      = $b5               ; Voice 2: E4 (string)
+FREQ_E4_LO      = $ed               ; Voice 2: E4 (string) = $15ed
 FREQ_E4_HI      = $15
-FREQ_G4_LO      = $43               ; Voice 3: G4 (pluck)
+FREQ_G4_LO      = $13               ; Voice 3: G4 (pluck) = $1a13
 FREQ_G4_HI      = $1a
 
 ; Screen
