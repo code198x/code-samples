@@ -1,341 +1,158 @@
-;══════════════════════════════════════════════════════════════
-; INK WAR
-; A territory control game for the ZX Spectrum
-; Unit 3: Movement
-;══════════════════════════════════════════════════════════════
+; Ink War - Unit 03: Drawing the Board
+; Create the game board: 8x8 white cells with black border
+;
+; Learning objectives:
+; - Use constants for board positioning
+; - Draw a border around the playing area
+; - Fill the board with the "empty" colour
+; - Centre elements on screen
 
-        org $8000
+        org $8000           ; 32768 - our code starts here
 
-;───────────────────────────────────────
-; Constants
-;───────────────────────────────────────
-ATTR_BASE       equ 22528
-BOARD_ATTR      equ 22664
-BOARD_SIZE      equ 8
+; =============================================================================
+; CONSTANTS
+; =============================================================================
 
-WHITE_ON_WHITE  equ %00111111
-RED_ON_RED      equ %00010010
-CYAN_ON_CYAN    equ %00101101
+; Screen layout
+ATTR_START  equ $5800       ; Attribute memory
+ATTR_WIDTH  equ 32          ; Cells per row
+ATTR_SIZE   equ 768         ; Total attribute cells
 
-;───────────────────────────────────────
-; Entry point
-;───────────────────────────────────────
+; Board positioning (centred on 32x24 screen)
+; Board is 8x8, so border is 10x10
+; Centre column: (32 - 10) / 2 = 11
+; Centre row: (24 - 10) / 2 = 7
+BOARD_SIZE  equ 8           ; 8x8 playing area
+BORDER_SIZE equ 10          ; 10x10 including border
+BOARD_TOP   equ 8           ; First board row (row 7 is border)
+BOARD_LEFT  equ 12          ; First board column (col 11 is border)
+BORDER_TOP  equ 7           ; Border starts one row above board
+BORDER_LEFT equ 11          ; Border starts one column left of board
+
+; Ports
+BORDER_PORT equ $FE         ; Screen border colour port
+
+; Colours (as paper colours - shifted to bits 5-3)
+BLACK_PAPER equ %00000000   ; Black background
+WHITE_PAPER equ %00111000   ; White background
+GREY_PAPER  equ %00000000   ; Black (no grey on Spectrum)
+
+; =============================================================================
+; MAIN PROGRAM
+; =============================================================================
+
 start:
-        ; Enable interrupts for HALT
-        im 1
-        ei
+        ; Set the screen border to black
+        xor a               ; A = 0 (black)
+        out (BORDER_PORT), a
 
-        ; Black border
-        ld a, 0
-        out (254), a
-
-        ; Clear screen
+        ; Clear entire screen to black
         call clear_screen
 
-        ; Draw the game board
+        ; Draw the board border (black frame)
+        call draw_border
+
+        ; Fill the playing area with white (empty cells)
         call draw_board
 
-        ; Highlight cursor at starting position
-        call get_cursor_addr
-        call highlight_cursor
+        ; Done - loop forever
+forever:
+        jr forever
 
-        ; Fall through to main loop
+; =============================================================================
+; SUBROUTINES
+; =============================================================================
 
-;───────────────────────────────────────
-; Main game loop
-;───────────────────────────────────────
-main_loop:
-        halt                    ; Wait for next frame
-
-        ; Debounce timer
-        ld a, (move_delay)
-        dec a
-        ld (move_delay), a
-        jr nz, main_loop
-
-        ; Reset timer
-        ld a, 8
-        ld (move_delay), a
-
-        ; Check keyboard
-        call check_keyboard
-
-        jr main_loop
-
-;───────────────────────────────────────
-; Check keyboard and move cursor
-;───────────────────────────────────────
-check_keyboard:
-        ; Q = up
-        ld bc, $fbfe
-        in a, (c)
-        bit 0, a
-        jr nz, .not_up
-        call move_up
-        ret
-.not_up:
-        ; A = down
-        ld bc, $fdfe
-        in a, (c)
-        bit 0, a
-        jr nz, .not_down
-        call move_down
-        ret
-.not_down:
-        ; O = left
-        ld bc, $dffe
-        in a, (c)
-        bit 1, a
-        jr nz, .not_left
-        call move_left
-        ret
-.not_left:
-        ; P = right
-        ld bc, $dffe
-        in a, (c)
-        bit 0, a
-        jr nz, .not_right
-        call move_right
-        ret
-.not_right:
-        ret
-
-;───────────────────────────────────────
-; Movement routines
-;───────────────────────────────────────
-move_up:
-        ld a, (cursor_y)
-        or a
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_y)
-        dec a
-        ld (cursor_y), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-move_down:
-        ld a, (cursor_y)
-        cp 7
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_y)
-        inc a
-        ld (cursor_y), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-move_left:
-        ld a, (cursor_x)
-        or a
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_x)
-        dec a
-        ld (cursor_x), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-move_right:
-        ld a, (cursor_x)
-        cp 7
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_x)
-        inc a
-        ld (cursor_x), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-;───────────────────────────────────────
-; Get cursor address helper
-;───────────────────────────────────────
-get_cursor_addr:
-        ld a, (cursor_y)
-        ld b, a
-        ld a, (cursor_x)
-        ld c, a
-        call get_cell_addr
-        ret
-
-;───────────────────────────────────────
-; Clear screen to black
-;───────────────────────────────────────
+; -----------------------------------------------------------------------------
+; Clear entire attribute memory to black
+; -----------------------------------------------------------------------------
 clear_screen:
-        ld hl, 16384
-        ld de, 16385
-        ld bc, 6143
-        ld (hl), 0
-        ldir
-
-        ld hl, ATTR_BASE
-        ld de, ATTR_BASE + 1
-        ld bc, 767
-        ld (hl), 0
+        ld hl, ATTR_START
+        ld de, ATTR_START + 1
+        ld bc, ATTR_SIZE - 1
+        ld (hl), BLACK_PAPER    ; Black paper, black ink
         ldir
         ret
 
-;───────────────────────────────────────
-; Draw the 8x8 game board
-;───────────────────────────────────────
-draw_board:
-        ld hl, BOARD_ATTR
-        ld b, BOARD_SIZE
+; -----------------------------------------------------------------------------
+; Draw the border around the board
+; The border is 10x10 cells, with the 8x8 board inside
+; We draw a frame of black cells (which will contrast with the white board)
+; Actually, since background is black, we need the border to be visible
+; Let's make the border bright white to frame the playing area
+; -----------------------------------------------------------------------------
+draw_border:
+        ; We'll draw a white frame around where the board will go
+        ; Top border row
+        ld hl, ATTR_START + (BORDER_TOP * ATTR_WIDTH) + BORDER_LEFT
+        ld b, BORDER_SIZE       ; 10 cells wide
+        ld a, %00111111         ; White paper, white ink (solid white)
+border_top:
+        ld (hl), a
+        inc hl
+        djnz border_top
 
-.row_loop:
-        push bc
-        ld b, BOARD_SIZE
+        ; Bottom border row
+        ld hl, ATTR_START + ((BORDER_TOP + BORDER_SIZE - 1) * ATTR_WIDTH) + BORDER_LEFT
+        ld b, BORDER_SIZE
+        ld a, %00111111
+border_bottom:
+        ld (hl), a
+        inc hl
+        djnz border_bottom
 
-.cell_loop:
+        ; Left and right border columns (middle 8 rows)
+        ld hl, ATTR_START + ((BORDER_TOP + 1) * ATTR_WIDTH) + BORDER_LEFT
+        ld b, BORDER_SIZE - 2   ; 8 rows (excluding top and bottom)
+border_sides:
         push bc
         push hl
+        ld a, %00111111         ; White
 
-        ld a, WHITE_ON_WHITE
+        ; Left side
         ld (hl), a
-        inc hl
-        ld (hl), a
-        ld de, 31
+
+        ; Right side (9 cells to the right)
+        ld de, BORDER_SIZE - 1
         add hl, de
-        ld (hl), a
-        inc hl
         ld (hl), a
 
         pop hl
-        inc hl
-        inc hl
-
+        ld de, ATTR_WIDTH       ; Move to next row
+        add hl, de
         pop bc
-        djnz .cell_loop
+        djnz border_sides
 
-        pop bc
+        ret
+
+; -----------------------------------------------------------------------------
+; Fill the 8x8 board with white (empty cells)
+; -----------------------------------------------------------------------------
+draw_board:
+        ; Calculate board start address
+        ; $5800 + (BOARD_TOP × 32) + BOARD_LEFT
+        ld hl, ATTR_START + (BOARD_TOP * ATTR_WIDTH) + BOARD_LEFT
+
+        ld b, BOARD_SIZE        ; 8 rows
+
+board_row:
         push bc
-        ld a, BOARD_SIZE
-        sub b
-        inc a
+        push hl
 
-        ld h, 0
-        ld l, a
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        ld de, BOARD_ATTR
+        ld b, BOARD_SIZE        ; 8 columns
+        ld a, %00111000         ; White paper, black ink (empty cell)
+
+board_col:
+        ld (hl), a
+        inc hl
+        djnz board_col
+
+        pop hl
+        ld de, ATTR_WIDTH       ; 32 bytes to next row
         add hl, de
-
         pop bc
-        djnz .row_loop
-        ret
-
-;───────────────────────────────────────
-; Get attribute address for a game cell
-; Input: B = row (0-7), C = column (0-7)
-; Output: HL = address
-;───────────────────────────────────────
-get_cell_addr:
-        ld hl, BOARD_ATTR
-
-        ld a, b
-        rlca
-        rlca
-        rlca
-        rlca
-        rlca
-        rlca
-        ld e, a
-        ld d, 0
-        add hl, de
-
-        ld a, c
-        add a, a
-        ld e, a
-        ld d, 0
-        add hl, de
+        djnz board_row
 
         ret
-
-;───────────────────────────────────────
-; Highlight cursor (set FLASH)
-; Input: HL = address
-;───────────────────────────────────────
-highlight_cursor:
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ld de, 31
-        add hl, de
-
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ret
-
-;───────────────────────────────────────
-; Clear cursor (reset FLASH)
-; Input: HL = address
-;───────────────────────────────────────
-clear_cursor:
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        ld de, 31
-        add hl, de
-
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        ret
-
-;───────────────────────────────────────
-; Variables
-;───────────────────────────────────────
-cursor_x:       defb 0
-cursor_y:       defb 0
-move_delay:     defb 1          ; Start ready to move
 
         end start

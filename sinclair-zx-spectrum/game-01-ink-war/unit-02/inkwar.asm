@@ -1,207 +1,194 @@
-;══════════════════════════════════════════════════════════════
-; INK WAR
-; A territory control game for the ZX Spectrum
-; Unit 2: The Cursor
-;══════════════════════════════════════════════════════════════
+; Ink War - Unit 02: The Attribute Grid
+; Understanding the 32x24 cell grid and filling regions
+;
+; Learning objectives:
+; - Understand the attribute grid layout (32 columns × 24 rows)
+; - Calculate attribute addresses from row and column
+; - Fill regions with colours
+; - See BRIGHT colours in action
 
-        org $8000
+        org $8000           ; 32768 - our code starts here
 
-;───────────────────────────────────────
-; Constants
-;───────────────────────────────────────
-ATTR_BASE       equ 22528       ; Start of attribute memory
-BOARD_ATTR      equ 22664       ; Board starts at row 4, col 8
-BOARD_SIZE      equ 8           ; 8x8 game cells
+; =============================================================================
+; CONSTANTS
+; =============================================================================
 
-; Colours (paper * 8 + ink)
-WHITE_ON_WHITE  equ %00111111   ; Paper 7, Ink 7
-RED_ON_RED      equ %00010010   ; Paper 2, Ink 2
-CYAN_ON_CYAN    equ %00101101   ; Paper 5, Ink 5
+ATTR_START  equ $5800       ; Attribute memory starts here (768 bytes)
+ATTR_SIZE   equ 768         ; 32 columns × 24 rows
+ATTR_WIDTH  equ 32          ; Cells per row
+BORDER_PORT equ $FE         ; Border colour port
 
-;───────────────────────────────────────
-; Entry point
-;───────────────────────────────────────
+; Colours (for attribute bytes)
+BLACK       equ 0
+BLUE        equ 1
+RED         equ 2
+MAGENTA     equ 3
+GREEN       equ 4
+CYAN        equ 5
+YELLOW      equ 6
+WHITE       equ 7
+
+; Attribute bits
+BRIGHT      equ %01000000   ; Bit 6 = bright
+FLASH       equ %10000000   ; Bit 7 = flash
+
+; =============================================================================
+; MAIN PROGRAM
+; =============================================================================
+
 start:
-        ; Black border
-        ld a, 0
-        out (254), a
+        ; Set border to black
+        ld a, BLACK
+        out (BORDER_PORT), a
 
-        ; Clear screen
-        call clear_screen
+        ; First, clear the entire attribute area to white paper
+        call clear_attributes
 
-        ; Draw the game board
-        call draw_board
+        ; Now demonstrate the checkerboard pattern
+        call draw_checkerboard
 
-        ; Highlight cursor at starting position
-        ld a, (cursor_y)
-        ld b, a
-        ld a, (cursor_x)
-        ld c, a
-        call get_cell_addr
-        call highlight_cursor
+        ; Fill some rows with different colours to show address calculation
+        call fill_colour_bars
 
-        ; Main loop
-.hang:
-        halt
-        jr .hang
+        ; Show BRIGHT vs normal colours
+        call show_bright_demo
 
-;───────────────────────────────────────
-; Clear screen to black
-;───────────────────────────────────────
-clear_screen:
-        ; Clear pixel memory
-        ld hl, 16384
-        ld de, 16385
-        ld bc, 6143
-        ld (hl), 0
-        ldir
+forever:
+        jr forever
 
-        ; Clear attributes to black on black
-        ld hl, ATTR_BASE
-        ld de, ATTR_BASE + 1
-        ld bc, 767
-        ld (hl), 0
-        ldir
+; =============================================================================
+; SUBROUTINES
+; =============================================================================
+
+; -----------------------------------------------------------------------------
+; Clear all attribute memory to white paper, black ink
+; Uses LDIR for fast block copy
+; -----------------------------------------------------------------------------
+clear_attributes:
+        ld hl, ATTR_START   ; Source address
+        ld de, ATTR_START+1 ; Destination (one byte ahead)
+        ld bc, ATTR_SIZE-1  ; Number of bytes to copy (767)
+        ld (hl), %00111000  ; White paper, black ink
+        ldir                ; Copy: (DE) <- (HL), repeat BC times
         ret
 
-;───────────────────────────────────────
-; Draw the 8x8 game board
-; All cells start as white (neutral)
-;───────────────────────────────────────
-draw_board:
-        ld hl, BOARD_ATTR
-        ld b, BOARD_SIZE        ; 8 rows of game cells
+; -----------------------------------------------------------------------------
+; Draw a checkerboard pattern in the centre of the screen
+; 8x8 grid starting at row 8, column 12
+; -----------------------------------------------------------------------------
+draw_checkerboard:
+        ; Calculate start address: $5800 + (row × 32) + column
+        ; Row 8: 8 × 32 = 256 = $100
+        ; Column 12: + 12 = $10C
+        ; Start: $5800 + $10C = $590C
 
-.row_loop:
-        push bc
-        ld b, BOARD_SIZE        ; 8 columns of game cells
+        ld hl, ATTR_START + (8 * ATTR_WIDTH) + 12   ; Row 8, Column 12
+        ld d, 0             ; Row counter (0-7)
 
-.cell_loop:
-        push bc
-        push hl
+checker_row:
+        ld e, 0             ; Column counter (0-7)
 
-        ; Fill 2x2 character block with white
-        ld a, WHITE_ON_WHITE
+checker_col:
+        ; Alternate colours using XOR of row and column
+        ; If (row XOR col) is odd, use red; else use blue
+        ld a, d             ; Get row
+        xor e               ; XOR with column
+        and 1               ; Check bit 0
+        jr z, checker_blue
+        ld a, %00010000     ; Red paper, black ink
+        jr checker_store
+checker_blue:
+        ld a, %00001000     ; Blue paper, black ink
 
-        ; Top-left
-        ld (hl), a
-        ; Top-right
-        inc hl
-        ld (hl), a
-        ; Bottom-left (next row, back one column)
-        ld de, 31
-        add hl, de
-        ld (hl), a
-        ; Bottom-right
-        inc hl
-        ld (hl), a
+checker_store:
+        ld (hl), a          ; Write attribute
+        inc hl              ; Next column
+        inc e               ; Increment column counter
+        ld a, e
+        cp 8                ; Done 8 columns?
+        jr nz, checker_col
 
-        pop hl
-        ; Move to next cell (2 columns right)
-        inc hl
-        inc hl
+        ; Move to next row: add (32 - 8) = 24 to get to next row start
+        ld bc, ATTR_WIDTH - 8  ; 24 bytes to skip
+        add hl, bc          ; Move to next row
 
-        pop bc
-        djnz .cell_loop
-
-        ; Move to next row of cells
-        ; We're at column 16 (8 cells × 2), need to go to column 8 of next row
-        ; That's: 32 - 16 + 32 = 48 bytes forward... but we drew 2 rows
-        ; Actually: move down 2 rows (64 bytes) minus the 16 we moved right
-        ; = 64 - 16 = 48? No wait...
-        ; After 8 cells we're at column 8 + 16 = 24
-        ; Need column 8 of row +2
-        ; Easier: just reset to start of next game row
-        pop bc
-        push bc
-        ld a, BOARD_SIZE
-        sub b                   ; A = rows completed (1-8)
-        inc a                   ; A = next row number (2-9 or 1 if done)
-
-        ; If B=0 we're done, but djnz handles that
-        ; Calculate: BOARD_ATTR + (row * 64)
-        ld h, 0
-        ld l, a
-        add hl, hl              ; × 2
-        add hl, hl              ; × 4
-        add hl, hl              ; × 8
-        add hl, hl              ; × 16
-        add hl, hl              ; × 32
-        add hl, hl              ; × 64
-        ld de, BOARD_ATTR
-        add hl, de
-
-        pop bc
-        djnz .row_loop
+        inc d               ; Next row
+        ld a, d
+        cp 8                ; Done 8 rows?
+        jr nz, checker_row
 
         ret
 
-;───────────────────────────────────────
-; Get attribute address for a game cell
-; Input: B = row (0-7), C = column (0-7)
-; Output: HL = address of top-left attribute
-;───────────────────────────────────────
-get_cell_addr:
-        ld hl, BOARD_ATTR
+; -----------------------------------------------------------------------------
+; Fill rows with different colours to demonstrate address calculation
+; Rows 0-2: coloured bands
+; -----------------------------------------------------------------------------
+fill_colour_bars:
+        ; Row 0: Red band (address = $5800)
+        ld hl, ATTR_START
+        ld b, ATTR_WIDTH    ; 32 columns
+        ld a, %00010000     ; Red paper
+row0_loop:
+        ld (hl), a
+        inc hl
+        djnz row0_loop
 
-        ; Add row offset: y × 64
-        ld a, b
-        rlca
-        rlca
-        rlca
-        rlca
-        rlca
-        rlca
-        ld e, a
-        ld d, 0
-        add hl, de
+        ; Row 1: Green band (address = $5800 + 32 = $5820)
+        ld hl, ATTR_START + ATTR_WIDTH
+        ld b, ATTR_WIDTH
+        ld a, %00100000     ; Green paper
+row1_loop:
+        ld (hl), a
+        inc hl
+        djnz row1_loop
 
-        ; Add column offset: x × 2
+        ; Row 2: Blue band (address = $5800 + 64 = $5840)
+        ld hl, ATTR_START + (2 * ATTR_WIDTH)
+        ld b, ATTR_WIDTH
+        ld a, %00001000     ; Blue paper
+row2_loop:
+        ld (hl), a
+        inc hl
+        djnz row2_loop
+
+        ret
+
+; -----------------------------------------------------------------------------
+; Demonstrate BRIGHT vs normal colours
+; Row 20: normal colours, Row 21: bright colours
+; -----------------------------------------------------------------------------
+show_bright_demo:
+        ; Row 20: Normal colours (address = $5800 + 20×32 = $5A80)
+        ld hl, ATTR_START + (20 * ATTR_WIDTH)
+        ld b, 8             ; Show 8 colours
+        ld c, 0             ; Colour counter
+normal_loop:
+        ; Create paper colour from counter
         ld a, c
-        add a, a
-        ld e, a
-        ld d, 0
-        add hl, de
+        add a, a            ; Shift left
+        add a, a            ; Shift left
+        add a, a            ; Now colour is in bits 5-3
+        ld (hl), a          ; Write attribute
+        inc hl
+        inc c
+        djnz normal_loop
+
+        ; Row 21: Same colours but BRIGHT (address = $5800 + 21×32 = $5AA0)
+        ld hl, ATTR_START + (21 * ATTR_WIDTH)
+        ld b, 8             ; Show 8 colours
+        ld c, 0             ; Colour counter
+bright_loop:
+        ; Create paper colour from counter + BRIGHT bit
+        ld a, c
+        add a, a            ; Shift left
+        add a, a            ; Shift left
+        add a, a            ; Now colour is in bits 5-3
+        or BRIGHT           ; Add bright bit
+        ld (hl), a          ; Write attribute
+        inc hl
+        inc c
+        djnz bright_loop
 
         ret
-
-;───────────────────────────────────────
-; Highlight a cell by setting FLASH bit
-; Input: HL = address of top-left attribute
-;───────────────────────────────────────
-highlight_cursor:
-        ; Top-left
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ; Top-right
-        inc hl
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ; Move to bottom-left (31 bytes forward)
-        ld de, 31
-        add hl, de
-
-        ; Bottom-left
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ; Bottom-right
-        inc hl
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ret
-
-;───────────────────────────────────────
-; Variables
-;───────────────────────────────────────
-cursor_x:       defb 0
-cursor_y:       defb 0
 
         end start

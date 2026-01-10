@@ -1,425 +1,261 @@
-;══════════════════════════════════════════════════════════════
-; INK WAR
-; A territory control game for the ZX Spectrum
-; Unit 4: Claiming Cells
-;══════════════════════════════════════════════════════════════
+; Ink War - Unit 04: Player Colours
+; Define player colours and demonstrate claiming cells
+;
+; Learning objectives:
+; - Define player colour constants
+; - Create a subroutine to colour a cell by row/column
+; - Understand game state: empty, player 1, player 2
+; - See a preview of gameplay
 
         org $8000
 
-;───────────────────────────────────────
-; Constants
-;───────────────────────────────────────
-ATTR_BASE       equ 22528
-BOARD_ATTR      equ 22664
-BOARD_SIZE      equ 8
+; =============================================================================
+; CONSTANTS
+; =============================================================================
 
-WHITE_ON_WHITE  equ %00111111
-RED_ON_RED      equ %00010010
-CYAN_ON_CYAN    equ %00101101
+; Screen layout
+ATTR_START  equ $5800
+ATTR_WIDTH  equ 32
+ATTR_SIZE   equ 768
 
-;───────────────────────────────────────
-; Entry point
-;───────────────────────────────────────
+; Board positioning
+BOARD_SIZE  equ 8
+BOARD_TOP   equ 8
+BOARD_LEFT  equ 12
+BORDER_TOP  equ 7
+BORDER_LEFT equ 11
+BORDER_SIZE equ 10
+
+; Ports
+BORDER_PORT equ $FE
+
+; Cell states
+EMPTY       equ 0
+PLAYER1     equ 1
+PLAYER2     equ 2
+
+; Attribute colours for each state
+; Format: FBPPPIII (Flash, Bright, Paper, Ink)
+EMPTY_ATTR  equ %00111000   ; White paper, black ink
+P1_ATTR     equ %01010000   ; Bright red paper, black ink
+P2_ATTR     equ %01001000   ; Bright blue paper, black ink
+BORDER_ATTR equ %00111111   ; White paper, white ink (solid)
+BLACK_ATTR  equ %00000000   ; Black paper, black ink
+
+; =============================================================================
+; MAIN PROGRAM
+; =============================================================================
+
 start:
-        im 1
-        ei
+        ; Set screen border to black
+        xor a
+        out (BORDER_PORT), a
 
-        ld a, 0
-        out (254), a
-
+        ; Clear screen and draw the game board
         call clear_screen
+        call draw_border
         call draw_board
-        call get_cursor_addr
-        call highlight_cursor
 
-;───────────────────────────────────────
-; Main game loop
-;───────────────────────────────────────
-main_loop:
-        halt
+        ; Now demonstrate player colours by placing some claims
+        ; This simulates a game in progress
 
-        ld a, (move_delay)
-        dec a
-        ld (move_delay), a
-        jr nz, main_loop
+        ; Player 1 claims: (0,0), (0,1), (1,0), (2,3), (3,3), (4,4)
+        ld b, 0             ; Row
+        ld c, 0             ; Column
+        ld a, PLAYER1
+        call set_cell
 
-        ld a, 8
-        ld (move_delay), a
+        ld b, 0
+        ld c, 1
+        ld a, PLAYER1
+        call set_cell
 
-        call check_keyboard
+        ld b, 1
+        ld c, 0
+        ld a, PLAYER1
+        call set_cell
 
-        jr main_loop
+        ld b, 1
+        ld c, 1
+        ld a, PLAYER1
+        call set_cell
 
-;───────────────────────────────────────
-; Check keyboard
-;───────────────────────────────────────
-check_keyboard:
-        ; SPACE = claim
-        call check_space_edge
-        jr nz, .not_space
-        call claim_cell
-        ret
-.not_space:
-        ; Q = up
-        ld bc, $fbfe
-        in a, (c)
-        bit 0, a
-        jr nz, .not_up
-        call move_up
-        ret
-.not_up:
-        ; A = down
-        ld bc, $fdfe
-        in a, (c)
-        bit 0, a
-        jr nz, .not_down
-        call move_down
-        ret
-.not_down:
-        ; O = left
-        ld bc, $dffe
-        in a, (c)
-        bit 1, a
-        jr nz, .not_left
-        call move_left
-        ret
-.not_left:
-        ; P = right
-        ld bc, $dffe
-        in a, (c)
-        bit 0, a
-        jr nz, .not_right
-        call move_right
-        ret
-.not_right:
-        ret
+        ld b, 2
+        ld c, 2
+        ld a, PLAYER1
+        call set_cell
 
-;───────────────────────────────────────
-; Check SPACE with edge detection
-;───────────────────────────────────────
-check_space_edge:
-        ld bc, $7ffe
-        in a, (c)
-        bit 0, a
-        jr nz, .released
+        ; Player 2 claims: (7,7), (7,6), (6,7), (5,5), (6,6)
+        ld b, 7
+        ld c, 7
+        ld a, PLAYER2
+        call set_cell
 
-        ld a, (space_held)
-        or a
-        jr nz, .already_held
+        ld b, 7
+        ld c, 6
+        ld a, PLAYER2
+        call set_cell
 
-        ld a, 1
-        ld (space_held), a
-        xor a
-        ret
+        ld b, 6
+        ld c, 7
+        ld a, PLAYER2
+        call set_cell
 
-.already_held:
-        or 1
-        ret
+        ld b, 6
+        ld c, 6
+        ld a, PLAYER2
+        call set_cell
 
-.released:
-        xor a
-        ld (space_held), a
-        or 1
-        ret
+        ld b, 5
+        ld c, 5
+        ld a, PLAYER2
+        call set_cell
 
-;───────────────────────────────────────
-; Claim the current cell
-;───────────────────────────────────────
-claim_cell:
-        ld a, (cursor_y)
-        ld b, a
-        ld a, (cursor_x)
-        ld c, a
-        call get_board_addr
+forever:
+        jr forever
 
-        ; Check if neutral
-        ld a, (hl)
-        or a
-        ret nz
+; =============================================================================
+; SUBROUTINES
+; =============================================================================
 
-        ; Claim it
-        ld a, (current_player)
+; -----------------------------------------------------------------------------
+; Set a cell to a player's colour
+; Input: B = board row (0-7), C = board column (0-7), A = player (0/1/2)
+; -----------------------------------------------------------------------------
+set_cell:
+        push af             ; Save player value
+
+        ; Calculate attribute address
+        ; Screen row = BOARD_TOP + B
+        ; Screen column = BOARD_LEFT + C
+        ; Address = $5800 + (screen_row × 32) + screen_column
+
+        ; Calculate screen row
+        ld a, BOARD_TOP
+        add a, b            ; A = screen row
+
+        ; Multiply by 32 (shift left 5 times)
+        ld l, a
+        ld h, 0             ; HL = screen row
+        add hl, hl          ; ×2
+        add hl, hl          ; ×4
+        add hl, hl          ; ×8
+        add hl, hl          ; ×16
+        add hl, hl          ; ×32
+
+        ; Add screen column
+        ld a, BOARD_LEFT
+        add a, c            ; A = screen column
+        ld e, a
+        ld d, 0
+        add hl, de          ; HL = (row × 32) + column
+
+        ; Add attribute base address
+        ld de, ATTR_START
+        add hl, de          ; HL = final attribute address
+
+        ; Get colour for this player
+        pop af              ; Restore player value
+        call get_player_colour
+
+        ; Write to screen
         ld (hl), a
 
-        ; Update display
-        call set_cell_colour
-
         ret
 
-;───────────────────────────────────────
-; Set cell to current player's colour
-;───────────────────────────────────────
-set_cell_colour:
-        ld a, (current_player)
-        cp 1
-        jr z, .red
-        ld a, CYAN_ON_CYAN
-        jr .got_colour
-.red:
-        ld a, RED_ON_RED
-.got_colour:
-        ld b, a
-
-        push bc
-        ld a, (cursor_y)
-        ld b, a
-        ld a, (cursor_x)
-        ld c, a
-        call get_cell_addr
-        pop bc
-
-        ld (hl), b
-        inc hl
-        ld (hl), b
-        ld de, 31
-        add hl, de
-        ld (hl), b
-        inc hl
-        ld (hl), b
-
+; -----------------------------------------------------------------------------
+; Get the attribute colour for a player
+; Input: A = player (0=empty, 1=player1, 2=player2)
+; Output: A = attribute byte
+; -----------------------------------------------------------------------------
+get_player_colour:
+        cp EMPTY
+        jr nz, not_empty
+        ld a, EMPTY_ATTR
+        ret
+not_empty:
+        cp PLAYER1
+        jr nz, not_p1
+        ld a, P1_ATTR
+        ret
+not_p1:
+        ld a, P2_ATTR
         ret
 
-;───────────────────────────────────────
-; Get board state address
-;───────────────────────────────────────
-get_board_addr:
-        ld hl, board_state
-
-        ld a, b
-        rlca
-        rlca
-        rlca
-        ld e, a
-        ld d, 0
-        add hl, de
-
-        ld a, c
-        ld e, a
-        ld d, 0
-        add hl, de
-
-        ret
-
-;───────────────────────────────────────
-; Movement routines
-;───────────────────────────────────────
-move_up:
-        ld a, (cursor_y)
-        or a
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_y)
-        dec a
-        ld (cursor_y), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-move_down:
-        ld a, (cursor_y)
-        cp 7
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_y)
-        inc a
-        ld (cursor_y), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-move_left:
-        ld a, (cursor_x)
-        or a
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_x)
-        dec a
-        ld (cursor_x), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-move_right:
-        ld a, (cursor_x)
-        cp 7
-        ret z
-
-        call get_cursor_addr
-        call clear_cursor
-
-        ld a, (cursor_x)
-        inc a
-        ld (cursor_x), a
-
-        call get_cursor_addr
-        call highlight_cursor
-        ret
-
-get_cursor_addr:
-        ld a, (cursor_y)
-        ld b, a
-        ld a, (cursor_x)
-        ld c, a
-        call get_cell_addr
-        ret
-
-;───────────────────────────────────────
-; Screen routines
-;───────────────────────────────────────
+; -----------------------------------------------------------------------------
+; Clear entire screen to black
+; -----------------------------------------------------------------------------
 clear_screen:
-        ld hl, 16384
-        ld de, 16385
-        ld bc, 6143
-        ld (hl), 0
-        ldir
-
-        ld hl, ATTR_BASE
-        ld de, ATTR_BASE + 1
-        ld bc, 767
-        ld (hl), 0
+        ld hl, ATTR_START
+        ld de, ATTR_START + 1
+        ld bc, ATTR_SIZE - 1
+        ld (hl), BLACK_ATTR
         ldir
         ret
 
-draw_board:
-        ld hl, BOARD_ATTR
-        ld b, BOARD_SIZE
+; -----------------------------------------------------------------------------
+; Draw the border frame
+; -----------------------------------------------------------------------------
+draw_border:
+        ld a, BORDER_ATTR
 
-.row_loop:
-        push bc
-        ld b, BOARD_SIZE
+        ; Top row
+        ld hl, ATTR_START + (BORDER_TOP * ATTR_WIDTH) + BORDER_LEFT
+        ld b, BORDER_SIZE
+border_top:
+        ld (hl), a
+        inc hl
+        djnz border_top
 
-.cell_loop:
+        ; Bottom row
+        ld hl, ATTR_START + ((BORDER_TOP + BORDER_SIZE - 1) * ATTR_WIDTH) + BORDER_LEFT
+        ld b, BORDER_SIZE
+border_bottom:
+        ld (hl), a
+        inc hl
+        djnz border_bottom
+
+        ; Left and right sides
+        ld hl, ATTR_START + ((BORDER_TOP + 1) * ATTR_WIDTH) + BORDER_LEFT
+        ld b, BORDER_SIZE - 2
+border_sides:
         push bc
         push hl
-
-        ld a, WHITE_ON_WHITE
-        ld (hl), a
-        inc hl
-        ld (hl), a
-        ld de, 31
+        ld (hl), a              ; Left
+        ld de, BORDER_SIZE - 1
         add hl, de
+        ld (hl), a              ; Right
+        pop hl
+        ld de, ATTR_WIDTH
+        add hl, de
+        pop bc
+        djnz border_sides
+
+        ret
+
+; -----------------------------------------------------------------------------
+; Fill board with empty cells
+; -----------------------------------------------------------------------------
+draw_board:
+        ld hl, ATTR_START + (BOARD_TOP * ATTR_WIDTH) + BOARD_LEFT
+        ld c, BOARD_SIZE        ; Row counter
+
+draw_board_row:
+        push hl
+        ld b, BOARD_SIZE        ; Column counter
+        ld a, EMPTY_ATTR
+
+draw_board_col:
         ld (hl), a
         inc hl
-        ld (hl), a
+        djnz draw_board_col
 
         pop hl
-        inc hl
-        inc hl
-
-        pop bc
-        djnz .cell_loop
-
-        pop bc
-        push bc
-        ld a, BOARD_SIZE
-        sub b
-        inc a
-
-        ld h, 0
-        ld l, a
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        add hl, hl
-        ld de, BOARD_ATTR
+        ld de, ATTR_WIDTH
         add hl, de
-
-        pop bc
-        djnz .row_loop
-        ret
-
-get_cell_addr:
-        ld hl, BOARD_ATTR
-
-        ld a, b
-        rlca
-        rlca
-        rlca
-        rlca
-        rlca
-        rlca
-        ld e, a
-        ld d, 0
-        add hl, de
-
-        ld a, c
-        add a, a
-        ld e, a
-        ld d, 0
-        add hl, de
+        dec c
+        jr nz, draw_board_row
 
         ret
-
-highlight_cursor:
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ld de, 31
-        add hl, de
-
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        set 7, a
-        ld (hl), a
-
-        ret
-
-clear_cursor:
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        ld de, 31
-        add hl, de
-
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        inc hl
-        ld a, (hl)
-        res 7, a
-        ld (hl), a
-
-        ret
-
-;───────────────────────────────────────
-; Variables
-;───────────────────────────────────────
-cursor_x:       defb 0
-cursor_y:       defb 0
-move_delay:     defb 1
-space_held:     defb 0
-current_player: defb 1
-board_state:    defs 64
 
         end start
