@@ -8,9 +8,9 @@ build/
 *.tap
 *.out
 
-# Amiga executables (no extension) - ignore by path
+# Amiga executables (no extension) - explicit names
+commodore-amiga/**/signal
 commodore-amiga/**/hop
-commodore-amiga/**/unit-*/[a-z]*[!.]*
 
 # Emulator files
 *.vsf
