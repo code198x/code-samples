@@ -1,3 +1,0 @@
-.segment "ZEROPAGE"
-; ... existing variables ...
-temp: .res 1            ; Temporary storage for division

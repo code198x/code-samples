@@ -1,6 +1,0 @@
-init_game:
-    ; ... existing initialization ...
-    lda #0
-    sta pause_flag
-    sta buttons_prev    ; clear previous buttons too
-    ; ...

@@ -1,90 +1,282 @@
-; Ink War - Unit 01: The Spectrum's Display
-; First contact with the Spectrum's memory-mapped display
+; ============================================================================
+; INK WAR - Unit 1: Hello Spectrum
+; ============================================================================
+; A territory control game for the ZX Spectrum
+; This scaffold provides: board display, cursor, keyboard movement
 ;
-; Learning objectives:
-; - Run machine code from BASIC
-; - Change the border colour
-; - Write to attribute memory
-; - See colour on screen
+; Controls: Q=Up, A=Down, O=Left, P=Right
+; ============================================================================
 
-        org $8000           ; 32768 - our code starts here
+            org     32768
 
-; =============================================================================
-; CONSTANTS
-; =============================================================================
+; ----------------------------------------------------------------------------
+; Constants
+; ----------------------------------------------------------------------------
 
-ATTR_START  equ $5800       ; Attribute memory starts here
-BORDER_PORT equ $FE         ; Border colour port
+ATTR_BASE   equ     $5800           ; Start of attribute memory
+BOARD_ROW   equ     8               ; Board starts at row 8
+BOARD_COL   equ     12              ; Board starts at column 12
+BOARD_SIZE  equ     8               ; 8x8 playing field
 
-; Colours (for attribute bytes)
-BLACK       equ 0
-BLUE        equ 1
-RED         equ 2
-MAGENTA     equ 3
-GREEN       equ 4
-CYAN        equ 5
-YELLOW      equ 6
-WHITE       equ 7
+; Attribute colours (FBPPPIII format)
+BORDER_ATTR equ     %00000000       ; Black on black (border)
+EMPTY_ATTR  equ     %00111000       ; White paper, black ink (empty cell)
+CURSOR_ATTR equ     %10111000       ; White paper, black ink + FLASH
 
-; =============================================================================
-; MAIN PROGRAM
-; =============================================================================
+; Keyboard ports (active low)
+KEY_PORT    equ     $fe
+ROW_QAOP    equ     $fb             ; Q W E R T row (bits: T R E W Q)
+ROW_ASDF    equ     $fd             ; A S D F G row (bits: G F D S A)
+ROW_YUIOP   equ     $df             ; Y U I O P row (bits: P O I U Y)
+
+; ----------------------------------------------------------------------------
+; Entry Point
+; ----------------------------------------------------------------------------
 
 start:
-        ; Set the border colour to blue
-        ; The border is controlled by port $FE (254)
-        ; Bits 0-2 set the border colour
+            call    init_screen     ; Clear screen and set border
+            call    draw_board      ; Draw the game board
+            call    draw_cursor     ; Show cursor at starting position
 
-        ld a, BLUE          ; Blue border
-        out (BORDER_PORT), a
+main_loop:
+            halt                    ; Wait for frame (50Hz timing)
 
-        ; Now let's put some coloured blocks on screen
-        ; Attribute memory is at $5800-$5AFF (768 bytes)
-        ; Each byte controls the colour of one 8x8 pixel cell
-        ;
-        ; Attribute byte format: FBPPPIII
-        ; F = Flash (bit 7)
-        ; B = Bright (bit 6)
-        ; PPP = Paper colour (bits 5-3)
-        ; III = Ink colour (bits 2-0)
+            call    read_keyboard   ; Check for input
+            call    move_cursor     ; Update cursor if moved
 
-        ; Let's colour some cells in the top-left corner
-        ; Address = $5800 + (row * 32) + column
+            jp      main_loop       ; Repeat forever
 
-        ; First cell (row 0, column 0) - Red paper, white ink
-        ld hl, ATTR_START   ; $5800
-        ld a, %00010111     ; Red paper (010), white ink (111)
-        ld (hl), a
+; ----------------------------------------------------------------------------
+; Initialise Screen
+; ----------------------------------------------------------------------------
+; Clears the screen to black and sets border colour
 
-        ; Second cell (row 0, column 1) - Blue paper, yellow ink
-        inc hl              ; Next cell
-        ld a, %00001110     ; Blue paper (001), yellow ink (110)
-        ld (hl), a
+init_screen:
+            ; Set border to black
+            xor     a               ; A = 0 (black)
+            out     (KEY_PORT), a   ; Set border colour
 
-        ; Third cell (row 0, column 2) - Green paper, black ink
-        inc hl
-        ld a, %00100000     ; Green paper (100), black ink (000)
-        ld (hl), a
+            ; Clear attributes to black
+            ld      hl, ATTR_BASE   ; Start of attributes
+            ld      de, ATTR_BASE+1
+            ld      bc, 767         ; 768 bytes - 1
+            ld      (hl), 0         ; Black on black
+            ldir                    ; Fill all attributes
 
-        ; Fourth cell (row 0, column 3) - Cyan paper, magenta ink
-        inc hl
-        ld a, %00101011     ; Cyan paper (101), magenta ink (011)
-        ld (hl), a
+            ret
 
-        ; Let's add a bright cell below (row 1, column 0)
-        ; Row 1 starts at $5800 + 32 = $5820
-        ld hl, ATTR_START + 32
-        ld a, %01010111     ; Bright + Red paper, white ink
-        ld (hl), a
+; ----------------------------------------------------------------------------
+; Draw Board
+; ----------------------------------------------------------------------------
+; Draws the 8x8 game board with border
 
-        ; And a flashing cell next to it (row 1, column 1)
-        inc hl
-        ld a, %10001110     ; Flash + Blue paper, yellow ink
-        ld (hl), a
+draw_board:
+            ; Draw border (10x10 area, black)
+            ; Border is already black from init, so we just draw the cells
 
-        ; Infinite loop - keep the program running
-        ; Without this, we'd return to BASIC and lose our colours
-forever:
-        jr forever          ; Jump to self - loops forever
+            ; Draw the 8x8 playing field (white cells)
+            ld      b, BOARD_SIZE   ; 8 rows
+            ld      c, BOARD_ROW    ; Start at row 8
 
-        end start
+.row_loop:
+            push    bc
+
+            ld      b, BOARD_SIZE   ; 8 columns
+            ld      d, BOARD_COL    ; Start at column 12
+
+.col_loop:
+            push    bc
+
+            ; Calculate attribute address: ATTR_BASE + row*32 + col
+            ld      a, c            ; Row
+            ld      l, a
+            ld      h, 0
+            add     hl, hl          ; *2
+            add     hl, hl          ; *4
+            add     hl, hl          ; *8
+            add     hl, hl          ; *16
+            add     hl, hl          ; *32
+            ld      a, d            ; Column
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc          ; HL = attribute address
+
+            ld      (hl), EMPTY_ATTR ; Set to white (empty cell)
+
+            pop     bc
+            inc     d               ; Next column
+            djnz    .col_loop
+
+            pop     bc
+            inc     c               ; Next row
+            djnz    .row_loop
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Draw Cursor
+; ----------------------------------------------------------------------------
+; Shows the cursor at current position with FLASH attribute
+
+draw_cursor:
+            ; Calculate attribute address for cursor position
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW    ; Add board offset
+            ld      l, a
+            ld      h, 0
+            add     hl, hl          ; *32
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL    ; Add board offset
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            ld      (hl), CURSOR_ATTR ; Set FLASH attribute
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Clear Cursor
+; ----------------------------------------------------------------------------
+; Removes cursor flash from current position
+
+clear_cursor:
+            ; Calculate attribute address for cursor position
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            ld      (hl), EMPTY_ATTR ; Remove FLASH, back to white
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Read Keyboard
+; ----------------------------------------------------------------------------
+; Checks Q/A/O/P keys and sets direction flags
+
+read_keyboard:
+            xor     a
+            ld      (key_pressed), a ; Clear previous
+
+            ; Check Q (up) - port $FBFE, bit 0
+            ld      a, ROW_QAOP
+            in      a, (KEY_PORT)
+            bit     0, a            ; Q is bit 0
+            jr      nz, .not_q
+            ld      a, 1            ; Up
+            ld      (key_pressed), a
+            ret
+.not_q:
+            ; Check A (down) - port $FDFE, bit 0
+            ld      a, ROW_ASDF
+            in      a, (KEY_PORT)
+            bit     0, a            ; A is bit 0
+            jr      nz, .not_a
+            ld      a, 2            ; Down
+            ld      (key_pressed), a
+            ret
+.not_a:
+            ; Check O (left) - port $DFFE, bit 1
+            ld      a, ROW_YUIOP
+            in      a, (KEY_PORT)
+            bit     1, a            ; O is bit 1
+            jr      nz, .not_o
+            ld      a, 3            ; Left
+            ld      (key_pressed), a
+            ret
+.not_o:
+            ; Check P (right) - port $DFFE, bit 0
+            ld      a, ROW_YUIOP
+            in      a, (KEY_PORT)
+            bit     0, a            ; P is bit 0
+            jr      nz, .not_p
+            ld      a, 4            ; Right
+            ld      (key_pressed), a
+.not_p:
+            ret
+
+; ----------------------------------------------------------------------------
+; Move Cursor
+; ----------------------------------------------------------------------------
+; Moves cursor based on key_pressed value
+
+move_cursor:
+            ld      a, (key_pressed)
+            or      a
+            ret     z               ; No key pressed
+
+            call    clear_cursor    ; Remove old cursor
+
+            ld      a, (key_pressed)
+
+            cp      1               ; Up?
+            jr      nz, .not_up
+            ld      a, (cursor_row)
+            or      a
+            jr      z, .done        ; Already at top
+            dec     a
+            ld      (cursor_row), a
+            jr      .done
+.not_up:
+            cp      2               ; Down?
+            jr      nz, .not_down
+            ld      a, (cursor_row)
+            cp      BOARD_SIZE-1
+            jr      z, .done        ; Already at bottom
+            inc     a
+            ld      (cursor_row), a
+            jr      .done
+.not_down:
+            cp      3               ; Left?
+            jr      nz, .not_left
+            ld      a, (cursor_col)
+            or      a
+            jr      z, .done        ; Already at left
+            dec     a
+            ld      (cursor_col), a
+            jr      .done
+.not_left:
+            cp      4               ; Right?
+            jr      nz, .done
+            ld      a, (cursor_col)
+            cp      BOARD_SIZE-1
+            jr      z, .done        ; Already at right
+            inc     a
+            ld      (cursor_col), a
+
+.done:
+            call    draw_cursor     ; Draw new cursor
+            ret
+
+; ----------------------------------------------------------------------------
+; Variables
+; ----------------------------------------------------------------------------
+
+cursor_row: defb    0               ; Cursor row (0-7)
+cursor_col: defb    0               ; Cursor column (0-7)
+key_pressed: defb   0               ; Last key: 0=none, 1=up, 2=down, 3=left, 4=right
+
+; ----------------------------------------------------------------------------
+; End
+; ----------------------------------------------------------------------------
+
+            end     start

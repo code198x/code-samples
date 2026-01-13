@@ -1,261 +1,882 @@
-; Ink War - Unit 04: Player Colours
-; Define player colours and demonstrate claiming cells
+; ============================================================================
+; INK WAR - Unit 4: Score and Turn Display
+; ============================================================================
+; Adds score display and turn indicator to the game.
+; Shows "P1: nn  P2: nn" and indicates whose turn it is.
 ;
-; Learning objectives:
-; - Define player colour constants
-; - Create a subroutine to colour a cell by row/column
-; - Understand game state: empty, player 1, player 2
-; - See a preview of gameplay
+; Controls: Q=Up, A=Down, O=Left, P=Right, SPACE=Claim
+; ============================================================================
 
-        org $8000
+            org     32768
 
-; =============================================================================
-; CONSTANTS
-; =============================================================================
+; ----------------------------------------------------------------------------
+; Constants
+; ----------------------------------------------------------------------------
 
-; Screen layout
-ATTR_START  equ $5800
-ATTR_WIDTH  equ 32
-ATTR_SIZE   equ 768
+ATTR_BASE   equ     $5800
+DISPLAY_FILE equ    $4000
+CHAR_SET    equ     $3C00           ; ROM character set base address
 
-; Board positioning
-BOARD_SIZE  equ 8
-BOARD_TOP   equ 8
-BOARD_LEFT  equ 12
-BORDER_TOP  equ 7
-BORDER_LEFT equ 11
-BORDER_SIZE equ 10
+BOARD_ROW   equ     8
+BOARD_COL   equ     12
+BOARD_SIZE  equ     8
 
-; Ports
-BORDER_PORT equ $FE
+; Display positions
+SCORE_ROW   equ     2               ; Score display row
+P1_SCORE_COL equ    10              ; "P1: nn" column
+P2_SCORE_COL equ    18              ; "P2: nn" column
+TURN_ROW    equ     4               ; Turn indicator row
+TURN_COL    equ     14              ; Turn indicator column
 
-; Cell states
-EMPTY       equ 0
-PLAYER1     equ 1
-PLAYER2     equ 2
+; Customised colours (from Unit 3)
+EMPTY_ATTR  equ     %01101000       ; Cyan paper + BRIGHT
+BORDER_ATTR equ     %01110000       ; Yellow paper + BRIGHT
+CURSOR_ATTR equ     %01111000       ; White paper + BRIGHT
 
-; Attribute colours for each state
-; Format: FBPPPIII (Flash, Bright, Paper, Ink)
-EMPTY_ATTR  equ %00111000   ; White paper, black ink
-P1_ATTR     equ %01010000   ; Bright red paper, black ink
-P2_ATTR     equ %01001000   ; Bright blue paper, black ink
-BORDER_ATTR equ %00111111   ; White paper, white ink (solid)
-BLACK_ATTR  equ %00000000   ; Black paper, black ink
+P1_ATTR     equ     %01010000       ; Red paper + BRIGHT
+P2_ATTR     equ     %01001000       ; Blue paper + BRIGHT
+P1_CURSOR   equ     %01111010       ; White paper + Red ink + BRIGHT
+P2_CURSOR   equ     %01111001       ; White paper + Blue ink + BRIGHT
 
-; =============================================================================
-; MAIN PROGRAM
-; =============================================================================
+; Text display attributes
+TEXT_ATTR   equ     %00111000       ; White paper, black ink
+P1_TEXT     equ     %01010111       ; Red paper, white ink + BRIGHT
+P2_TEXT     equ     %01001111       ; Blue paper, white ink + BRIGHT
+
+P1_BORDER   equ     2
+P2_BORDER   equ     1
+
+; Keyboard ports
+KEY_PORT    equ     $fe
+ROW_QAOP    equ     $fb
+ROW_ASDF    equ     $fd
+ROW_YUIOP   equ     $df
+ROW_SPACE   equ     $7f
+
+; Game states
+STATE_EMPTY equ     0
+STATE_P1    equ     1
+STATE_P2    equ     2
+
+; ----------------------------------------------------------------------------
+; Entry Point
+; ----------------------------------------------------------------------------
 
 start:
-        ; Set screen border to black
-        xor a
-        out (BORDER_PORT), a
+            call    init_screen
+            call    init_game
+            call    draw_board_border
+            call    draw_board
+            call    draw_ui             ; Draw score and turn display
+            call    draw_cursor
+            call    update_border
 
-        ; Clear screen and draw the game board
-        call clear_screen
-        call draw_border
-        call draw_board
+main_loop:
+            halt
 
-        ; Now demonstrate player colours by placing some claims
-        ; This simulates a game in progress
+            call    read_keyboard
+            call    handle_input
 
-        ; Player 1 claims: (0,0), (0,1), (1,0), (2,3), (3,3), (4,4)
-        ld b, 0             ; Row
-        ld c, 0             ; Column
-        ld a, PLAYER1
-        call set_cell
+            jp      main_loop
 
-        ld b, 0
-        ld c, 1
-        ld a, PLAYER1
-        call set_cell
+; ----------------------------------------------------------------------------
+; Initialise Screen
+; ----------------------------------------------------------------------------
 
-        ld b, 1
-        ld c, 0
-        ld a, PLAYER1
-        call set_cell
+init_screen:
+            xor     a
+            out     (KEY_PORT), a
 
-        ld b, 1
-        ld c, 1
-        ld a, PLAYER1
-        call set_cell
+            ; Clear display file (pixels)
+            ld      hl, DISPLAY_FILE
+            ld      de, DISPLAY_FILE+1
+            ld      bc, 6143
+            ld      (hl), 0
+            ldir
 
-        ld b, 2
-        ld c, 2
-        ld a, PLAYER1
-        call set_cell
+            ; Clear all attributes to white paper, black ink
+            ld      hl, ATTR_BASE
+            ld      de, ATTR_BASE+1
+            ld      bc, 767
+            ld      (hl), TEXT_ATTR     ; White background for text areas
+            ldir
 
-        ; Player 2 claims: (7,7), (7,6), (6,7), (5,5), (6,6)
-        ld b, 7
-        ld c, 7
-        ld a, PLAYER2
-        call set_cell
+            ret
 
-        ld b, 7
-        ld c, 6
-        ld a, PLAYER2
-        call set_cell
+; ----------------------------------------------------------------------------
+; Draw UI
+; ----------------------------------------------------------------------------
+; Draws score display and turn indicator
 
-        ld b, 6
-        ld c, 7
-        ld a, PLAYER2
-        call set_cell
+draw_ui:
+            call    draw_scores
+            call    draw_turn_indicator
+            ret
 
-        ld b, 6
-        ld c, 6
-        ld a, PLAYER2
-        call set_cell
+; ----------------------------------------------------------------------------
+; Draw Scores
+; ----------------------------------------------------------------------------
+; Displays "P1: nn  P2: nn" with player colours
 
-        ld b, 5
-        ld c, 5
-        ld a, PLAYER2
-        call set_cell
+draw_scores:
+            ; Count cells for each player
+            call    count_cells
 
-forever:
-        jr forever
+            ; Draw P1 label "P1:"
+            ld      b, SCORE_ROW
+            ld      c, P1_SCORE_COL
+            ld      a, 'P'
+            call    print_char
+            inc     c
+            ld      a, '1'
+            call    print_char
+            inc     c
+            ld      a, ':'
+            call    print_char
+            inc     c
 
-; =============================================================================
-; SUBROUTINES
-; =============================================================================
+            ; Print P1 score
+            ld      a, (p1_count)
+            call    print_two_digits
 
-; -----------------------------------------------------------------------------
-; Set a cell to a player's colour
-; Input: B = board row (0-7), C = board column (0-7), A = player (0/1/2)
-; -----------------------------------------------------------------------------
-set_cell:
-        push af             ; Save player value
+            ; Set P1 colour attribute
+            ld      a, SCORE_ROW
+            ld      c, P1_SCORE_COL
+            ld      b, 5                ; "P1:nn" = 5 characters
+            ld      e, P1_TEXT
+            call    set_attr_range
 
-        ; Calculate attribute address
-        ; Screen row = BOARD_TOP + B
-        ; Screen column = BOARD_LEFT + C
-        ; Address = $5800 + (screen_row × 32) + screen_column
+            ; Draw P2 label "P2:"
+            ld      b, SCORE_ROW
+            ld      c, P2_SCORE_COL
+            ld      a, 'P'
+            call    print_char
+            inc     c
+            ld      a, '2'
+            call    print_char
+            inc     c
+            ld      a, ':'
+            call    print_char
+            inc     c
 
-        ; Calculate screen row
-        ld a, BOARD_TOP
-        add a, b            ; A = screen row
+            ; Print P2 score
+            ld      a, (p2_count)
+            call    print_two_digits
 
-        ; Multiply by 32 (shift left 5 times)
-        ld l, a
-        ld h, 0             ; HL = screen row
-        add hl, hl          ; ×2
-        add hl, hl          ; ×4
-        add hl, hl          ; ×8
-        add hl, hl          ; ×16
-        add hl, hl          ; ×32
+            ; Set P2 colour attribute
+            ld      a, SCORE_ROW
+            ld      c, P2_SCORE_COL
+            ld      b, 5
+            ld      e, P2_TEXT
+            call    set_attr_range
 
-        ; Add screen column
-        ld a, BOARD_LEFT
-        add a, c            ; A = screen column
-        ld e, a
-        ld d, 0
-        add hl, de          ; HL = (row × 32) + column
+            ret
 
-        ; Add attribute base address
-        ld de, ATTR_START
-        add hl, de          ; HL = final attribute address
+; ----------------------------------------------------------------------------
+; Draw Turn Indicator
+; ----------------------------------------------------------------------------
+; Shows "TURN" with current player's colour
 
-        ; Get colour for this player
-        pop af              ; Restore player value
-        call get_player_colour
+draw_turn_indicator:
+            ; Print "TURN"
+            ld      b, TURN_ROW
+            ld      c, TURN_COL
+            ld      a, 'T'
+            call    print_char
+            inc     c
+            ld      a, 'U'
+            call    print_char
+            inc     c
+            ld      a, 'R'
+            call    print_char
+            inc     c
+            ld      a, 'N'
+            call    print_char
 
-        ; Write to screen
-        ld (hl), a
+            ; Set attribute based on current player
+            ld      a, (current_player)
+            cp      1
+            jr      z, .dti_p1
+            ld      e, P2_TEXT
+            jr      .dti_set
+.dti_p1:
+            ld      e, P1_TEXT
 
-        ret
+.dti_set:
+            ld      a, TURN_ROW
+            ld      c, TURN_COL
+            ld      b, 4                ; "TURN" = 4 chars
+            call    set_attr_range
 
-; -----------------------------------------------------------------------------
-; Get the attribute colour for a player
-; Input: A = player (0=empty, 1=player1, 2=player2)
-; Output: A = attribute byte
-; -----------------------------------------------------------------------------
-get_player_colour:
-        cp EMPTY
-        jr nz, not_empty
-        ld a, EMPTY_ATTR
-        ret
-not_empty:
-        cp PLAYER1
-        jr nz, not_p1
-        ld a, P1_ATTR
-        ret
-not_p1:
-        ld a, P2_ATTR
-        ret
+            ret
 
-; -----------------------------------------------------------------------------
-; Clear entire screen to black
-; -----------------------------------------------------------------------------
-clear_screen:
-        ld hl, ATTR_START
-        ld de, ATTR_START + 1
-        ld bc, ATTR_SIZE - 1
-        ld (hl), BLACK_ATTR
-        ldir
-        ret
+; ----------------------------------------------------------------------------
+; Print Character
+; ----------------------------------------------------------------------------
+; A = ASCII character (32-127), B = row (0-23), C = column (0-31)
+; Writes character directly to display file using ROM character set
 
-; -----------------------------------------------------------------------------
-; Draw the border frame
-; -----------------------------------------------------------------------------
-draw_border:
-        ld a, BORDER_ATTR
+print_char:
+            push    bc
+            push    de
+            push    hl
+            push    af
 
-        ; Top row
-        ld hl, ATTR_START + (BORDER_TOP * ATTR_WIDTH) + BORDER_LEFT
-        ld b, BORDER_SIZE
-border_top:
-        ld (hl), a
-        inc hl
-        djnz border_top
+            ; Calculate character data address: CHAR_SET + char*8
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl          ; HL = char * 8
+            ld      de, CHAR_SET
+            add     hl, de          ; HL = source address
 
-        ; Bottom row
-        ld hl, ATTR_START + ((BORDER_TOP + BORDER_SIZE - 1) * ATTR_WIDTH) + BORDER_LEFT
-        ld b, BORDER_SIZE
-border_bottom:
-        ld (hl), a
-        inc hl
-        djnz border_bottom
+            push    hl              ; Save character data address
 
-        ; Left and right sides
-        ld hl, ATTR_START + ((BORDER_TOP + 1) * ATTR_WIDTH) + BORDER_LEFT
-        ld b, BORDER_SIZE - 2
-border_sides:
-        push bc
-        push hl
-        ld (hl), a              ; Left
-        ld de, BORDER_SIZE - 1
-        add hl, de
-        ld (hl), a              ; Right
-        pop hl
-        ld de, ATTR_WIDTH
-        add hl, de
-        pop bc
-        djnz border_sides
+            ; Calculate display file address
+            ; Screen address: high byte varies with row, low byte = column
+            ld      a, b            ; A = row (0-23)
+            and     %00011000       ; Get which third (0, 8, 16)
+            add     a, $40          ; Add display file base high byte
+            ld      d, a
 
-        ret
+            ld      a, b            ; A = row
+            and     %00000111       ; Get line within character row
+            rrca
+            rrca
+            rrca                    ; Shift to bits 5-7
+            add     a, c            ; Add column
+            ld      e, a            ; DE = screen address
 
-; -----------------------------------------------------------------------------
-; Fill board with empty cells
-; -----------------------------------------------------------------------------
+            pop     hl              ; HL = character data
+
+            ; Copy 8 bytes (8 pixel rows of character)
+            ld      b, 8
+.pc_loop:
+            ld      a, (hl)
+            ld      (de), a
+            inc     hl
+            inc     d               ; Next screen line (add 256)
+            djnz    .pc_loop
+
+            pop     af
+            pop     hl
+            pop     de
+            pop     bc
+            ret
+
+; ----------------------------------------------------------------------------
+; Print Two Digits
+; ----------------------------------------------------------------------------
+; A = number (0-99), B = row, C = column (will advance by 2)
+; Prints number as two digits
+
+print_two_digits:
+            push    bc
+
+            ; Calculate tens digit
+            ld      d, 0            ; Tens counter
+.ptd_tens:
+            cp      10
+            jr      c, .ptd_print
+            sub     10
+            inc     d
+            jr      .ptd_tens
+
+.ptd_print:
+            push    af              ; Save units digit
+
+            ; Print tens digit
+            ld      a, d
+            add     a, '0'
+            call    print_char
+            inc     c
+
+            ; Print units digit
+            pop     af
+            add     a, '0'
+            call    print_char
+            inc     c
+
+            pop     bc
+            ret
+
+; ----------------------------------------------------------------------------
+; Count Cells
+; ----------------------------------------------------------------------------
+; Counts cells owned by each player
+
+count_cells:
+            xor     a
+            ld      (p1_count), a
+            ld      (p2_count), a
+
+            ld      hl, board_state
+            ld      b, 64               ; 64 cells
+
+.cc_loop:
+            ld      a, (hl)
+            cp      STATE_P1
+            jr      nz, .cc_not_p1
+            ld      a, (p1_count)
+            inc     a
+            ld      (p1_count), a
+            jr      .cc_next
+.cc_not_p1:
+            cp      STATE_P2
+            jr      nz, .cc_next
+            ld      a, (p2_count)
+            inc     a
+            ld      (p2_count), a
+.cc_next:
+            inc     hl
+            djnz    .cc_loop
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Set Attribute Range
+; ----------------------------------------------------------------------------
+; A = row, C = start column, B = count, E = attribute
+
+set_attr_range:
+            push    bc
+            push    de
+
+            ; Calculate start address: ATTR_BASE + row*32 + col
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl          ; HL = row * 32
+            ld      a, c
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc          ; HL = attribute address
+
+            pop     de              ; E = attribute
+            pop     bc              ; B = count
+
+.sar_loop:
+            ld      (hl), e
+            inc     hl
+            djnz    .sar_loop
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Update Border
+; ----------------------------------------------------------------------------
+
+update_border:
+            ld      a, (current_player)
+            cp      1
+            jr      z, .ub_p1
+            ld      a, P2_BORDER
+            jr      .ub_set
+.ub_p1:
+            ld      a, P1_BORDER
+.ub_set:
+            out     (KEY_PORT), a
+            ret
+
+; ----------------------------------------------------------------------------
+; Initialise Game State
+; ----------------------------------------------------------------------------
+
+init_game:
+            ld      hl, board_state
+            ld      b, 64
+            xor     a
+.ig_loop:
+            ld      (hl), a
+            inc     hl
+            djnz    .ig_loop
+
+            ld      a, 1
+            ld      (current_player), a
+
+            xor     a
+            ld      (cursor_row), a
+            ld      (cursor_col), a
+            ld      (p1_count), a
+            ld      (p2_count), a
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Draw Board Border
+; ----------------------------------------------------------------------------
+
+draw_board_border:
+            ld      c, BOARD_ROW-1
+            ld      d, BOARD_COL-1
+            ld      b, BOARD_SIZE+2
+            call    draw_border_row
+
+            ld      c, BOARD_ROW+BOARD_SIZE
+            ld      d, BOARD_COL-1
+            ld      b, BOARD_SIZE+2
+            call    draw_border_row
+
+            ld      c, BOARD_ROW
+            ld      d, BOARD_COL-1
+            ld      b, BOARD_SIZE
+            call    draw_border_col
+
+            ld      c, BOARD_ROW
+            ld      d, BOARD_COL+BOARD_SIZE
+            ld      b, BOARD_SIZE
+            call    draw_border_col
+
+            ret
+
+draw_border_row:
+            push    bc
+.dbr_loop:
+            push    bc
+            push    de
+
+            ld      a, c
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, d
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            ld      (hl), BORDER_ATTR
+
+            pop     de
+            pop     bc
+            inc     d
+            djnz    .dbr_loop
+            pop     bc
+            ret
+
+draw_border_col:
+            push    bc
+.dbc_loop:
+            push    bc
+            push    de
+
+            ld      a, c
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, d
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            ld      (hl), BORDER_ATTR
+
+            pop     de
+            pop     bc
+            inc     c
+            djnz    .dbc_loop
+            pop     bc
+            ret
+
+; ----------------------------------------------------------------------------
+; Draw Board
+; ----------------------------------------------------------------------------
+
 draw_board:
-        ld hl, ATTR_START + (BOARD_TOP * ATTR_WIDTH) + BOARD_LEFT
-        ld c, BOARD_SIZE        ; Row counter
+            ld      b, BOARD_SIZE
+            ld      c, BOARD_ROW
 
-draw_board_row:
-        push hl
-        ld b, BOARD_SIZE        ; Column counter
-        ld a, EMPTY_ATTR
+.db_row:
+            push    bc
 
-draw_board_col:
-        ld (hl), a
-        inc hl
-        djnz draw_board_col
+            ld      b, BOARD_SIZE
+            ld      d, BOARD_COL
 
-        pop hl
-        ld de, ATTR_WIDTH
-        add hl, de
-        dec c
-        jr nz, draw_board_row
+.db_col:
+            push    bc
 
-        ret
+            ld      a, c
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, d
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
 
-        end start
+            ld      (hl), EMPTY_ATTR
+
+            pop     bc
+            inc     d
+            djnz    .db_col
+
+            pop     bc
+            inc     c
+            djnz    .db_row
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Draw Cursor
+; ----------------------------------------------------------------------------
+
+draw_cursor:
+            call    get_cell_state
+
+            cp      STATE_P1
+            jr      z, .dc_p1
+            cp      STATE_P2
+            jr      z, .dc_p2
+
+            ld      a, CURSOR_ATTR
+            jr      .dc_set
+
+.dc_p1:
+            ld      a, P1_CURSOR
+            jr      .dc_set
+
+.dc_p2:
+            ld      a, P2_CURSOR
+
+.dc_set:
+            push    af
+
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            pop     af
+            ld      (hl), a
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Clear Cursor
+; ----------------------------------------------------------------------------
+
+clear_cursor:
+            call    get_cell_state
+
+            cp      STATE_P1
+            jr      z, .clc_p1
+            cp      STATE_P2
+            jr      z, .clc_p2
+
+            ld      a, EMPTY_ATTR
+            jr      .clc_set
+
+.clc_p1:
+            ld      a, P1_ATTR
+            jr      .clc_set
+
+.clc_p2:
+            ld      a, P2_ATTR
+
+.clc_set:
+            push    af
+
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            pop     af
+            ld      (hl), a
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Get Cell State
+; ----------------------------------------------------------------------------
+
+get_cell_state:
+            ld      a, (cursor_row)
+            add     a, a
+            add     a, a
+            add     a, a
+            ld      hl, board_state
+            ld      b, 0
+            ld      c, a
+            add     hl, bc
+            ld      a, (cursor_col)
+            ld      c, a
+            add     hl, bc
+            ld      a, (hl)
+            ret
+
+; ----------------------------------------------------------------------------
+; Read Keyboard
+; ----------------------------------------------------------------------------
+
+read_keyboard:
+            xor     a
+            ld      (key_pressed), a
+
+            ld      a, ROW_QAOP
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .rk_not_q
+            ld      a, 1
+            ld      (key_pressed), a
+            ret
+.rk_not_q:
+            ld      a, ROW_ASDF
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .rk_not_a
+            ld      a, 2
+            ld      (key_pressed), a
+            ret
+.rk_not_a:
+            ld      a, ROW_YUIOP
+            in      a, (KEY_PORT)
+            bit     1, a
+            jr      nz, .rk_not_o
+            ld      a, 3
+            ld      (key_pressed), a
+            ret
+.rk_not_o:
+            ld      a, ROW_YUIOP
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .rk_not_p
+            ld      a, 4
+            ld      (key_pressed), a
+            ret
+.rk_not_p:
+            ld      a, ROW_SPACE
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .rk_not_space
+            ld      a, 5
+            ld      (key_pressed), a
+.rk_not_space:
+            ret
+
+; ----------------------------------------------------------------------------
+; Handle Input
+; ----------------------------------------------------------------------------
+
+handle_input:
+            ld      a, (key_pressed)
+            or      a
+            ret     z
+
+            cp      5
+            jr      z, try_claim
+
+            call    clear_cursor
+
+            ld      a, (key_pressed)
+
+            cp      1
+            jr      nz, .hi_not_up
+            ld      a, (cursor_row)
+            or      a
+            jr      z, .hi_done
+            dec     a
+            ld      (cursor_row), a
+            jr      .hi_done
+.hi_not_up:
+            cp      2
+            jr      nz, .hi_not_down
+            ld      a, (cursor_row)
+            cp      BOARD_SIZE-1
+            jr      z, .hi_done
+            inc     a
+            ld      (cursor_row), a
+            jr      .hi_done
+.hi_not_down:
+            cp      3
+            jr      nz, .hi_not_left
+            ld      a, (cursor_col)
+            or      a
+            jr      z, .hi_done
+            dec     a
+            ld      (cursor_col), a
+            jr      .hi_done
+.hi_not_left:
+            cp      4
+            jr      nz, .hi_done
+            ld      a, (cursor_col)
+            cp      BOARD_SIZE-1
+            jr      z, .hi_done
+            inc     a
+            ld      (cursor_col), a
+
+.hi_done:
+            call    draw_cursor
+            ret
+
+; ----------------------------------------------------------------------------
+; Try Claim Cell
+; ----------------------------------------------------------------------------
+
+try_claim:
+            call    get_cell_state
+            or      a
+            ret     nz
+
+            call    claim_cell
+            call    sound_claim
+
+            ld      a, (current_player)
+            xor     3
+            ld      (current_player), a
+
+            call    draw_ui             ; Update scores and turn indicator
+            call    update_border
+            call    draw_cursor
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Claim Cell
+; ----------------------------------------------------------------------------
+
+claim_cell:
+            ld      a, (cursor_row)
+            add     a, a
+            add     a, a
+            add     a, a
+            ld      hl, board_state
+            ld      b, 0
+            ld      c, a
+            add     hl, bc
+            ld      a, (cursor_col)
+            ld      c, a
+            add     hl, bc
+
+            ld      a, (current_player)
+            ld      (hl), a
+
+            push    af
+
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            pop     af
+            cp      1
+            jr      z, .clm_is_p1
+            ld      (hl), P2_ATTR
+            ret
+.clm_is_p1:
+            ld      (hl), P1_ATTR
+            ret
+
+; ----------------------------------------------------------------------------
+; Sound - Claim
+; ----------------------------------------------------------------------------
+
+sound_claim:
+            ld      hl, 400
+            ld      b, 20
+
+.scl_loop:
+            push    bc
+            push    hl
+
+            ld      b, h
+            ld      c, l
+.scl_tone:
+            ld      a, $10
+            out     (KEY_PORT), a
+            call    .scl_delay
+            xor     a
+            out     (KEY_PORT), a
+            call    .scl_delay
+            dec     bc
+            ld      a, b
+            or      c
+            jr      nz, .scl_tone
+
+            pop     hl
+            pop     bc
+
+            ld      de, 20
+            or      a
+            sbc     hl, de
+
+            djnz    .scl_loop
+            ret
+
+.scl_delay:
+            push    bc
+            ld      b, 5
+.scl_delay_loop:
+            djnz    .scl_delay_loop
+            pop     bc
+            ret
+
+; ----------------------------------------------------------------------------
+; Variables
+; ----------------------------------------------------------------------------
+
+cursor_row:     defb    0
+cursor_col:     defb    0
+key_pressed:    defb    0
+current_player: defb    1
+p1_count:       defb    0
+p2_count:       defb    0
+board_state:    defs    64, 0
+
+; ----------------------------------------------------------------------------
+; End
+; ----------------------------------------------------------------------------
+
+            end     start

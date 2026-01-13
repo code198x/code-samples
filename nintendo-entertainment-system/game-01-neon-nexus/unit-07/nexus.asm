@@ -1,41 +1,12 @@
-;──────────────────────────────────────────────────────────────
-; NEON NEXUS
-; A fixed-screen action game for the Nintendo Entertainment System
-; Unit 7: Score
-;──────────────────────────────────────────────────────────────
+; =============================================================================
+; NEON NEXUS - Unit 7: Enemies Appear
+; =============================================================================
+; Add enemy sprites to the arena.
+; =============================================================================
 
-.segment "HEADER"
-    .byte "NES", $1a        ; iNES magic number
-    .byte 2                 ; 2 x 16KB PRG ROM = 32KB
-    .byte 1                 ; 1 x 8KB CHR ROM
-    .byte $01               ; Mapper 0, vertical mirroring
-    .byte $00               ; Mapper 0 continued
-    .byte 0,0,0,0,0,0,0,0   ; Padding
-
-;──────────────────────────────────────────────────────────────
-; Variables
-;──────────────────────────────────────────────────────────────
-
-.segment "ZEROPAGE"
-frame_counter: .res 1
-buttons:       .res 1
-player_x:      .res 1
-player_y:      .res 1
-enemy_x:       .res 4
-enemy_y:       .res 4
-item_x:        .res 1
-item_y:        .res 1
-score:         .res 1
-game_state:    .res 1
-temp:          .res 1       ; Temporary for division
-
-;──────────────────────────────────────────────────────────────
-; Constants
-;──────────────────────────────────────────────────────────────
-
-.segment "CODE"
-
-; PPU registers
+; -----------------------------------------------------------------------------
+; NES Hardware Addresses
+; -----------------------------------------------------------------------------
 PPUCTRL   = $2000
 PPUMASK   = $2001
 PPUSTATUS = $2002
@@ -43,59 +14,103 @@ OAMADDR   = $2003
 PPUSCROLL = $2005
 PPUADDR   = $2006
 PPUDATA   = $2007
-
-; OAM DMA register
 OAMDMA    = $4014
 
-; Controller
 JOYPAD1   = $4016
+JOYPAD2   = $4017
 
-; Button bit positions
-BTN_A      = %00000001
-BTN_B      = %00000010
-BTN_SELECT = %00000100
-BTN_START  = %00001000
-BTN_UP     = %00010000
-BTN_DOWN   = %00100000
-BTN_LEFT   = %01000000
-BTN_RIGHT  = %10000000
+; Controller buttons
+BTN_A      = %10000000
+BTN_B      = %01000000
+BTN_SELECT = %00100000
+BTN_START  = %00010000
+BTN_UP     = %00001000
+BTN_DOWN   = %00000100
+BTN_LEFT   = %00000010
+BTN_RIGHT  = %00000001
 
-; Game constants
-NUM_ENEMIES = 4
+; -----------------------------------------------------------------------------
+; Game Constants
+; -----------------------------------------------------------------------------
+PLAYER_START_X = 124
+PLAYER_START_Y = 116
+PLAYER_SPEED   = 2
 
-; Game states
-STATE_PLAYING  = 0
-STATE_GAMEOVER = 1
+NUM_ENEMIES    = 4
 
-; Tile indices
-TILE_DIGIT_0 = 4            ; First digit tile
+; Tile indices (background)
+TILE_EMPTY     = 0
+TILE_BORDER    = 1
+TILE_FLOOR     = 2
+TILE_CORNER_TL = 3
+TILE_CORNER_TR = 4
+TILE_CORNER_BL = 5
+TILE_CORNER_BR = 6
 
-;──────────────────────────────────────────────────────────────
-; Reset handler
-;──────────────────────────────────────────────────────────────
+; Sprite tiles
+SPRITE_PLAYER  = 7
+SPRITE_ENEMY   = 8
 
-.proc reset
+; Arena boundaries
+ARENA_LEFT   = 16
+ARENA_RIGHT  = 232
+ARENA_TOP    = 16
+ARENA_BOTTOM = 208
+
+BG_COLOUR = $0F
+
+; -----------------------------------------------------------------------------
+; Memory Layout
+; -----------------------------------------------------------------------------
+.segment "ZEROPAGE"
+player_x:    .res 1
+player_y:    .res 1
+buttons:     .res 1
+temp:        .res 1
+row_counter: .res 1
+
+; Enemy positions (4 enemies)
+enemy_x:     .res NUM_ENEMIES
+enemy_y:     .res NUM_ENEMIES
+
+.segment "OAM"
+oam_buffer:  .res 256
+
+.segment "BSS"
+
+; -----------------------------------------------------------------------------
+; iNES Header
+; -----------------------------------------------------------------------------
+.segment "HEADER"
+    .byte "NES", $1A
+    .byte 2
+    .byte 1
+    .byte $01
+    .byte $00
+    .byte 0,0,0,0,0,0,0,0
+
+; -----------------------------------------------------------------------------
+; Code
+; -----------------------------------------------------------------------------
+.segment "CODE"
+
+reset:
     sei
     cld
-
     ldx #$40
     stx $4017
-
-    ldx #$ff
+    ldx #$FF
     txs
-
     inx
     stx PPUCTRL
     stx PPUMASK
     stx $4010
 
-    bit PPUSTATUS
 @vblank1:
     bit PPUSTATUS
     bpl @vblank1
 
-    lda #$00
-    ldx #0
+    lda #0
 @clear_ram:
     sta $0000, x
     sta $0100, x
@@ -108,519 +123,126 @@ TILE_DIGIT_0 = 4            ; First digit tile
     inx
     bne @clear_ram
 
-    lda #$ff
-    ldx #0
-@clear_oam:
-    sta $0200, x
-    inx
-    bne @clear_oam
-
 @vblank2:
     bit PPUSTATUS
     bpl @vblank2
 
     jsr load_palette
-    jsr fill_background
+    jsr draw_arena
+    jsr set_attributes
+    jsr init_enemies
 
-    lda #STATE_PLAYING
-    sta game_state
-
-    lda #128
+    ; Set up player
+    lda #PLAYER_START_X
     sta player_x
-    lda #200
+    lda #PLAYER_START_Y
     sta player_y
 
+    ; Initialise player sprite (OAM slot 0)
     lda player_y
-    sta $0200
-    lda #1
-    sta $0201
-    lda #%00000000
-    sta $0202
+    sta oam_buffer+0
+    lda #SPRITE_PLAYER
+    sta oam_buffer+1
+    lda #0              ; Attributes: palette 0, no flip
+    sta oam_buffer+2
     lda player_x
-    sta $0203
+    sta oam_buffer+3
 
-    jsr init_enemies
-    jsr init_item
+    ; Set up enemy sprites in OAM
+    jsr update_enemy_sprites
+
+    ; Hide remaining sprites (after player + 4 enemies = 5 sprites used)
+    lda #$FF
+    ldx #20             ; Start after 5 sprites (5*4=20)
+@hide_sprites:
+    sta oam_buffer, x
+    inx
+    bne @hide_sprites
 
     lda #0
-    sta score
+    sta PPUSCROLL
+    sta PPUSCROLL
 
     lda #%10000000
     sta PPUCTRL
     lda #%00011110
     sta PPUMASK
 
-    lda #$00
-    sta PPUSCROLL
-    sta PPUSCROLL
-
-forever:
-    lda frame_counter
-@wait:
-    cmp frame_counter
-    beq @wait
-
-    lda game_state
-    cmp #STATE_GAMEOVER
-    beq @handle_gameover
-
+main_loop:
     jsr read_controller
-    jsr update_player
-    jsr move_enemies
-    jsr update_enemy_sprites
-    jsr update_item_sprite
-    jsr check_item_collision
-    jsr check_enemy_collision
-    jmp forever
+    jsr move_player
+    jmp main_loop
 
-@handle_gameover:
-    jsr read_controller
-    lda buttons
-    and #BTN_START
-    beq forever
-    jsr reset_game
-    jmp forever
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; NMI handler
-;──────────────────────────────────────────────────────────────
-
-.proc nmi
-    pha
-    txa
-    pha
-    tya
-    pha
-
-    inc frame_counter
-
-    ; OAM DMA
-    lda #$00
-    sta OAMADDR
-    lda #$02
-    sta OAMDMA
-
-    ; Update score display
-    jsr draw_score
-
-    ; Reset scroll
-    lda #$00
-    sta PPUSCROLL
-    sta PPUSCROLL
-
-    pla
-    tay
-    pla
-    tax
-    pla
-
-    rti
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; IRQ handler (unused)
-;──────────────────────────────────────────────────────────────
-
-.proc irq
-    rti
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Draw score to PPU
-;──────────────────────────────────────────────────────────────
-
-.proc draw_score
-    ; Set PPU address to row 1, column 2 ($2022)
-    bit PPUSTATUS
-    lda #$20
-    sta PPUADDR
-    lda #$22
-    sta PPUADDR
-
-    ; Hundreds digit
-    lda score
-    jsr div100
-    clc
-    adc #TILE_DIGIT_0
-    sta PPUDATA
-
-    ; Tens digit
-    lda temp
-    jsr div10
-    clc
-    adc #TILE_DIGIT_0
-    sta PPUDATA
-
-    ; Ones digit
-    lda temp
-    clc
-    adc #TILE_DIGIT_0
-    sta PPUDATA
-
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Divide A by 100 - result in A, remainder in temp
-;──────────────────────────────────────────────────────────────
-
-.proc div100
-    ldx #0
-@loop:
-    cmp #100
-    bcc @done
-    sec
-    sbc #100
-    inx
-    jmp @loop
-@done:
-    sta temp
-    txa
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Divide A by 10 - result in A, remainder in temp
-;──────────────────────────────────────────────────────────────
-
-.proc div10
-    ldx #0
-@loop:
-    cmp #10
-    bcc @done
-    sec
-    sbc #10
-    inx
-    jmp @loop
-@done:
-    sta temp
-    txa
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Read controller
-;──────────────────────────────────────────────────────────────
-
-.proc read_controller
-    lda #$01
-    sta JOYPAD1
-    lda #$00
-    sta JOYPAD1
-
-    ldx #8
-@loop:
-    lda JOYPAD1
-    lsr a
-    rol buttons
-    dex
-    bne @loop
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Update player position
-;──────────────────────────────────────────────────────────────
-
-.proc update_player
-    lda buttons
-    and #BTN_UP
-    beq @check_down
-    lda player_y
-    cmp #16                 ; Keep below score row
-    bcc @check_down
-    dec player_y
-
-@check_down:
-    lda buttons
-    and #BTN_DOWN
-    beq @check_left
-    lda player_y
-    cmp #224
-    bcs @check_left
-    inc player_y
-
-@check_left:
-    lda buttons
-    and #BTN_LEFT
-    beq @check_right
-    lda player_x
-    cmp #8
-    bcc @check_right
-    dec player_x
-
-@check_right:
-    lda buttons
-    and #BTN_RIGHT
-    beq @done
-    lda player_x
-    cmp #240
-    bcs @done
-    inc player_x
-
-@done:
-    lda player_y
-    sta $0200
-    lda player_x
-    sta $0203
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Initialise enemies
-;──────────────────────────────────────────────────────────────
-
-.proc init_enemies
-    lda #50
-    sta enemy_x
-    lda #32
-    sta enemy_y
-
-    lda #100
-    sta enemy_x + 1
+; -----------------------------------------------------------------------------
+; Initialise Enemies - Place 4 enemies at corners of play area
+; -----------------------------------------------------------------------------
+init_enemies:
+    ; Enemy 0: Top-left area
     lda #48
-    sta enemy_y + 1
-
-    lda #156
-    sta enemy_x + 2
-    lda #24
-    sta enemy_y + 2
-
-    lda #206
-    sta enemy_x + 3
-    lda #40
-    sta enemy_y + 3
-
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Move enemies
-;──────────────────────────────────────────────────────────────
-
-.proc move_enemies
-    ldx #0
-@loop:
-    inc enemy_y, x
-
-    lda enemy_y, x
-    cmp #232
-    bcc @next
-
-    lda #16                 ; Spawn below score row
-    sta enemy_y, x
-
-@next:
-    inx
-    cpx #NUM_ENEMIES
-    bne @loop
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Update enemy sprites
-;──────────────────────────────────────────────────────────────
-
-.proc update_enemy_sprites
-    ldx #0
-    ldy #4
-@loop:
-    lda enemy_y, x
-    sta $0200, y
-    iny
-
-    lda #2
-    sta $0200, y
-    iny
-
-    lda #%00000001
-    sta $0200, y
-    iny
-
-    lda enemy_x, x
-    sta $0200, y
-    iny
-
-    inx
-    cpx #NUM_ENEMIES
-    bne @loop
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Initialise item
-;──────────────────────────────────────────────────────────────
-
-.proc init_item
-    lda #180
-    sta item_x
-    lda #100
-    sta item_y
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Update item sprite
-;──────────────────────────────────────────────────────────────
-
-.proc update_item_sprite
-    lda item_y
-    sta $0200 + 20
-    lda #3
-    sta $0200 + 21
-    lda #%00000010
-    sta $0200 + 22
-    lda item_x
-    sta $0200 + 23
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Check item collision
-;──────────────────────────────────────────────────────────────
-
-.proc check_item_collision
-    lda item_x
-    clc
-    adc #8
-    cmp player_x
-    bcc @no_hit
-
-    lda player_x
-    clc
-    adc #8
-    cmp item_x
-    bcc @no_hit
-
-    lda item_y
-    clc
-    adc #8
-    cmp player_y
-    bcc @no_hit
-
-    lda player_y
-    clc
-    adc #8
-    cmp item_y
-    bcc @no_hit
-
-    jsr collect_item
-
-@no_hit:
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Collect item
-;──────────────────────────────────────────────────────────────
-
-.proc collect_item
-    inc score
-
-    ; Respawn item
-    lda score
-    asl a
-    asl a
-    asl a
-    asl a
-    clc
-    adc #32
-    cmp #224
-    bcc @x_ok
+    sta enemy_x+0
     lda #48
-@x_ok:
-    sta item_x
+    sta enemy_y+0
 
-    lda score
-    and #%00000001
-    beq @high
-    lda #160
-    jmp @set_y
-@high:
-    lda #60
-@set_y:
-    sta item_y
-
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Check enemy collision
-;──────────────────────────────────────────────────────────────
-
-.proc check_enemy_collision
-    ldx #0
-@loop:
-    lda player_x
-    clc
-    adc #8
-    cmp enemy_x, x
-    bcc @next
-
-    lda enemy_x, x
-    clc
-    adc #8
-    cmp player_x
-    bcc @next
-
-    lda player_y
-    clc
-    adc #8
-    cmp enemy_y, x
-    bcc @next
-
-    lda enemy_y, x
-    clc
-    adc #8
-    cmp player_y
-    bcc @next
-
-    lda #STATE_GAMEOVER
-    sta game_state
-    rts
-
-@next:
-    inx
-    cpx #NUM_ENEMIES
-    bne @loop
-    rts
-.endproc
-
-;──────────────────────────────────────────────────────────────
-; Reset game
-;──────────────────────────────────────────────────────────────
-
-.proc reset_game
-    lda #STATE_PLAYING
-    sta game_state
-
-    lda #0
-    sta score
-
-    lda #128
-    sta player_x
+    ; Enemy 1: Top-right area
     lda #200
-    sta player_y
+    sta enemy_x+1
+    lda #48
+    sta enemy_y+1
 
-    lda player_y
-    sta $0200
-    lda player_x
-    sta $0203
+    ; Enemy 2: Bottom-left area
+    lda #48
+    sta enemy_x+2
+    lda #176
+    sta enemy_y+2
 
-    jsr init_enemies
-    jsr init_item
+    ; Enemy 3: Bottom-right area
+    lda #200
+    sta enemy_x+3
+    lda #176
+    sta enemy_y+3
 
     rts
-.endproc
 
-;──────────────────────────────────────────────────────────────
-; Load palette
-;──────────────────────────────────────────────────────────────
+; -----------------------------------------------------------------------------
+; Update Enemy Sprites in OAM
+; -----------------------------------------------------------------------------
+update_enemy_sprites:
+    ldx #0              ; Enemy index
+    ldy #4              ; OAM offset (after player sprite)
 
-.proc load_palette
+@loop:
+    ; Y position
+    lda enemy_y, x
+    sta oam_buffer, y
+    iny
+
+    ; Tile
+    lda #SPRITE_ENEMY
+    sta oam_buffer, y
+    iny
+
+    ; Attributes: palette 1 (different colour from player)
+    lda #%00000001
+    sta oam_buffer, y
+    iny
+
+    ; X position
+    lda enemy_x, x
+    sta oam_buffer, y
+    iny
+
+    inx
+    cpx #NUM_ENEMIES
+    bne @loop
+
+    rts
+
+; -----------------------------------------------------------------------------
+; Load Palette
+; -----------------------------------------------------------------------------
+load_palette:
     bit PPUSTATUS
-    lda #$3f
+    lda #$3F
     sta PPUADDR
     lda #$00
     sta PPUADDR
@@ -633,156 +255,431 @@ forever:
     cpx #32
     bne @loop
     rts
-.endproc
 
-;──────────────────────────────────────────────────────────────
-; Fill background
-;──────────────────────────────────────────────────────────────
-
-.proc fill_background
+; -----------------------------------------------------------------------------
+; Draw Arena
+; -----------------------------------------------------------------------------
+draw_arena:
     bit PPUSTATUS
     lda #$20
     sta PPUADDR
     lda #$00
     sta PPUADDR
 
-    lda #$00
-    ldx #0
-    ldy #4
-@outer:
-@inner:
-    sta PPUDATA
-    inx
-    bne @inner
-    dey
-    bne @outer
+    lda #0
+    sta row_counter
 
+@draw_row:
+    lda row_counter
+
+    cmp #0
+    beq @top_row
+    cmp #1
+    beq @top_row
+
+    cmp #28
+    beq @bottom_row
+    cmp #29
+    beq @bottom_row
+
+    jmp @middle_row
+
+@top_row:
+    lda row_counter
+    cmp #0
+    bne @top_row_inner
+
+    lda #TILE_CORNER_TL
+    sta PPUDATA
+    lda #TILE_BORDER
+    ldx #30
+@top_fill:
+    sta PPUDATA
+    dex
+    bne @top_fill
+    lda #TILE_CORNER_TR
+    sta PPUDATA
+    jmp @next_row
+
+@top_row_inner:
+    lda #TILE_BORDER
+    ldx #32
+@top_inner_fill:
+    sta PPUDATA
+    dex
+    bne @top_inner_fill
+    jmp @next_row
+
+@bottom_row:
+    lda row_counter
+    cmp #29
+    bne @bottom_row_inner
+
+    lda #TILE_CORNER_BL
+    sta PPUDATA
+    lda #TILE_BORDER
+    ldx #30
+@bottom_fill:
+    sta PPUDATA
+    dex
+    bne @bottom_fill
+    lda #TILE_CORNER_BR
+    sta PPUDATA
+    jmp @next_row
+
+@bottom_row_inner:
+    lda #TILE_BORDER
+    ldx #32
+@bottom_inner_fill:
+    sta PPUDATA
+    dex
+    bne @bottom_inner_fill
+    jmp @next_row
+
+@middle_row:
+    lda #TILE_BORDER
+    sta PPUDATA
+    sta PPUDATA
+
+    lda #TILE_FLOOR
+    ldx #28
+@floor_fill:
+    sta PPUDATA
+    dex
+    bne @floor_fill
+
+    lda #TILE_BORDER
+    sta PPUDATA
+    sta PPUDATA
+
+@next_row:
+    inc row_counter
+    lda row_counter
+    cmp #30
+    beq @done_drawing
+    jmp @draw_row
+
+@done_drawing:
+    rts
+
+; -----------------------------------------------------------------------------
+; Set Attribute Table
+; -----------------------------------------------------------------------------
+set_attributes:
     bit PPUSTATUS
     lda #$23
     sta PPUADDR
-    lda #$c0
+    lda #$C0
     sta PPUADDR
 
-    ldx #0
-@attr_loop:
-    lda attribute_data, x
+    ldx #8
+    lda #$00
+@attr_top:
     sta PPUDATA
-    inx
-    cpx #64
-    bne @attr_loop
+    dex
+    bne @attr_top
+
+    ldx #6
+@attr_floor_rows:
+    lda #$00
+    sta PPUDATA
+    lda #%01010101
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    sta PPUDATA
+    lda #$00
+    sta PPUDATA
+    dex
+    bne @attr_floor_rows
+
+    ldx #8
+    lda #$00
+@attr_bottom:
+    sta PPUDATA
+    dex
+    bne @attr_bottom
 
     rts
-.endproc
 
-;──────────────────────────────────────────────────────────────
+; -----------------------------------------------------------------------------
+; Read Controller
+; -----------------------------------------------------------------------------
+read_controller:
+    lda #1
+    sta JOYPAD1
+    lda #0
+    sta JOYPAD1
+
+    ldx #8
+@read_loop:
+    lda JOYPAD1
+    lsr a
+    rol buttons
+    dex
+    bne @read_loop
+    rts
+
+; -----------------------------------------------------------------------------
+; Move Player
+; -----------------------------------------------------------------------------
+move_player:
+    lda buttons
+    and #BTN_UP
+    beq @check_down
+    lda player_y
+    sec
+    sbc #PLAYER_SPEED
+    cmp #ARENA_TOP
+    bcc @check_down
+    sta player_y
+
+@check_down:
+    lda buttons
+    and #BTN_DOWN
+    beq @check_left
+    lda player_y
+    clc
+    adc #PLAYER_SPEED
+    cmp #ARENA_BOTTOM
+    bcs @check_left
+    sta player_y
+
+@check_left:
+    lda buttons
+    and #BTN_LEFT
+    beq @check_right
+    lda player_x
+    sec
+    sbc #PLAYER_SPEED
+    cmp #ARENA_LEFT
+    bcc @check_right
+    sta player_x
+
+@check_right:
+    lda buttons
+    and #BTN_RIGHT
+    beq @done
+    lda player_x
+    clc
+    adc #PLAYER_SPEED
+    cmp #ARENA_RIGHT
+    bcs @done
+    sta player_x
+
+@done:
+    rts
+
+; === NMI ===
+nmi:
+    pha
+    txa
+    pha
+    tya
+    pha
+
+    lda #0
+    sta OAMADDR
+    lda #>oam_buffer
+    sta OAMDMA
+
+    ; Update player sprite position
+    lda player_y
+    sta oam_buffer+0
+    lda player_x
+    sta oam_buffer+3
+
+    lda #0
+    sta PPUSCROLL
+    sta PPUSCROLL
+
+    pla
+    tay
+    pla
+    tax
+    pla
+    rti
+
+irq:
+    rti
+
+; -----------------------------------------------------------------------------
 ; Data
-;──────────────────────────────────────────────────────────────
-
+; -----------------------------------------------------------------------------
 palette_data:
     ; Background palettes
-    .byte $0f, $30, $21, $31    ; Palette 0: White/Blues (for score)
-    .byte $0f, $19, $29, $39    ; Palette 1: Greens
-    .byte $0f, $15, $25, $35    ; Palette 2: Magentas
-    .byte $0f, $00, $10, $30    ; Palette 3: Greys
-
+    .byte BG_COLOUR, $11, $21, $31  ; Palette 0: Blue
+    .byte BG_COLOUR, $13, $23, $33  ; Palette 1: Purple
+    .byte BG_COLOUR, $19, $29, $39  ; Palette 2: Green
+    .byte BG_COLOUR, $16, $26, $36  ; Palette 3: Red
     ; Sprite palettes
-    .byte $0f, $30, $21, $11    ; Palette 0: White/Blue (player)
-    .byte $0f, $2a, $1a, $0a    ; Palette 1: Greens (enemies)
-    .byte $0f, $25, $15, $05    ; Palette 2: Magentas (items)
-    .byte $0f, $17, $27, $37    ; Palette 3: Oranges
+    .byte BG_COLOUR, $30, $27, $17  ; Palette 0: Player (white/orange)
+    .byte BG_COLOUR, $16, $26, $36  ; Palette 1: Enemy (red)
+    .byte BG_COLOUR, $30, $27, $17
+    .byte BG_COLOUR, $30, $27, $17
 
-attribute_data:
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-    .byte $55, $55, $55, $55, $55, $55, $55, $55
-    .byte $55, $55, $55, $55, $55, $55, $55, $55
-    .byte $aa, $aa, $aa, $aa, $aa, $aa, $aa, $aa
-    .byte $aa, $aa, $aa, $aa, $aa, $aa, $aa, $aa
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-
-;──────────────────────────────────────────────────────────────
+; -----------------------------------------------------------------------------
 ; Vectors
-;──────────────────────────────────────────────────────────────
-
+; -----------------------------------------------------------------------------
 .segment "VECTORS"
     .word nmi
     .word reset
     .word irq
 
-;──────────────────────────────────────────────────────────────
-; CHR ROM (graphics)
-;──────────────────────────────────────────────────────────────
-
+; -----------------------------------------------------------------------------
+; CHR-ROM
+; -----------------------------------------------------------------------------
 .segment "CHARS"
-    ; Tile 0: Solid block (background fill)
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
 
-    ; Tile 1: Player ship
-    .byte %00011000, %00111100, %01111110, %11111111
-    .byte %11111111, %00100100, %00100100, %01100110
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 0: Empty
+.byte $00,$00,$00,$00,$00,$00,$00,$00
+.byte $00,$00,$00,$00,$00,$00,$00,$00
 
-    ; Tile 2: Enemy ship
-    .byte %01100110, %11111111, %11011011, %01111110
-    .byte %00111100, %00111100, %00011000, %00011000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 1: Border (brick pattern)
+.byte %11111111
+.byte %10000001
+.byte %10000001
+.byte %11111111
+.byte %11111111
+.byte %00010001
+.byte %00010001
+.byte %11111111
+.byte %00000000
+.byte %01111110
+.byte %01111110
+.byte %00000000
+.byte %00000000
+.byte %11101110
+.byte %11101110
+.byte %00000000
 
-    ; Tile 3: Collectible item
-    .byte %00011000, %00111100, %01111110, %11111111
-    .byte %11111111, %01111110, %00111100, %00011000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 2: Floor (subtle grid)
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %10000001
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
 
-    ; Tile 4: Digit 0
-    .byte %01111110, %11000011, %11000011, %11000011
-    .byte %11000011, %11000011, %01111110, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 3: Corner TL
+.byte %11111111
+.byte %11000000
+.byte %10100000
+.byte %10010000
+.byte %10001000
+.byte %10000100
+.byte %10000010
+.byte %10000001
+.byte %00000000
+.byte %00111111
+.byte %01011111
+.byte %01101111
+.byte %01110111
+.byte %01111011
+.byte %01111101
+.byte %01111110
 
-    ; Tile 5: Digit 1
-    .byte %00011000, %00111000, %00011000, %00011000
-    .byte %00011000, %00011000, %01111110, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 4: Corner TR
+.byte %11111111
+.byte %00000011
+.byte %00000101
+.byte %00001001
+.byte %00010001
+.byte %00100001
+.byte %01000001
+.byte %10000001
+.byte %00000000
+.byte %11111100
+.byte %11111010
+.byte %11110110
+.byte %11101110
+.byte %11011110
+.byte %10111110
+.byte %01111110
 
-    ; Tile 6: Digit 2
-    .byte %01111110, %11000011, %00000110, %00011100
-    .byte %01110000, %11000000, %11111111, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 5: Corner BL
+.byte %10000001
+.byte %10000010
+.byte %10000100
+.byte %10001000
+.byte %10010000
+.byte %10100000
+.byte %11000000
+.byte %11111111
+.byte %01111110
+.byte %01111101
+.byte %01111011
+.byte %01110111
+.byte %01101111
+.byte %01011111
+.byte %00111111
+.byte %00000000
 
-    ; Tile 7: Digit 3
-    .byte %01111110, %11000011, %00000011, %00011110
-    .byte %00000011, %11000011, %01111110, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 6: Corner BR
+.byte %10000001
+.byte %01000001
+.byte %00100001
+.byte %00010001
+.byte %00001001
+.byte %00000101
+.byte %00000011
+.byte %11111111
+.byte %01111110
+.byte %10111110
+.byte %11011110
+.byte %11101110
+.byte %11110110
+.byte %11111010
+.byte %11111100
+.byte %00000000
 
-    ; Tile 8: Digit 4
-    .byte %00001110, %00011110, %00110110, %01100110
-    .byte %11111111, %00000110, %00000110, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 7: Player sprite
+.byte %00011000
+.byte %00011000
+.byte %00111100
+.byte %01111110
+.byte %11111111
+.byte %10111101
+.byte %00100100
+.byte %00100100
+.byte %00000000
+.byte %00011000
+.byte %00011000
+.byte %00111100
+.byte %01000010
+.byte %01000010
+.byte %00011000
+.byte %00000000
 
-    ; Tile 9: Digit 5
-    .byte %11111111, %11000000, %11111110, %00000011
-    .byte %00000011, %11000011, %01111110, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
+; Tile 8: Enemy sprite (hostile diamond shape)
+.byte %00011000
+.byte %00111100
+.byte %01111110
+.byte %11111111
+.byte %11111111
+.byte %01111110
+.byte %00111100
+.byte %00011000
+.byte %00000000
+.byte %00011000
+.byte %00100100
+.byte %01000010
+.byte %01000010
+.byte %00100100
+.byte %00011000
+.byte %00000000
 
-    ; Tile 10: Digit 6
-    .byte %00111110, %01100000, %11000000, %11111110
-    .byte %11000011, %11000011, %01111110, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-
-    ; Tile 11: Digit 7
-    .byte %11111111, %00000011, %00000110, %00001100
-    .byte %00011000, %00011000, %00011000, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-
-    ; Tile 12: Digit 8
-    .byte %01111110, %11000011, %11000011, %01111110
-    .byte %11000011, %11000011, %01111110, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-
-    ; Tile 13: Digit 9
-    .byte %01111110, %11000011, %11000011, %01111111
-    .byte %00000011, %00000110, %01111100, %00000000
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-
-    ; Fill rest of 8KB CHR ROM
-    .res 8192 - 224
+; Fill rest of CHR-ROM
+.res 8192 - 144, $00

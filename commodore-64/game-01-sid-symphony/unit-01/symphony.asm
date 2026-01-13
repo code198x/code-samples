@@ -1,111 +1,499 @@
 ; ============================================================================
-; SID Symphony - Unit 1: First Sound
+; SID SYMPHONY - Unit 1: Hello SID
 ; ============================================================================
-; Your first contact with the SID chip. This program does one thing:
-; make the C64 produce a continuous tone.
+; Your first contact with the SID chip. Three tracks, three keys, three voices.
+; Press Z/X/C to trigger sounds and see the tracks flash.
 ;
-; No graphics. No input. Just sound.
+; Controls: Z = Track 1 (high), X = Track 2 (mid), C = Track 3 (low)
 ; ============================================================================
 
-; BASIC stub - allows the program to run with LOAD"*",8,1 then RUN
-* = $0801
-                !byte $0c, $08      ; Pointer to next BASIC line
-                !byte $0a, $00      ; Line number 10
-                !byte $9e           ; SYS token
-                !text "2064"        ; Address in decimal
-                !byte $00           ; End of line
-                !byte $00, $00      ; End of BASIC program
+; ----------------------------------------------------------------------------
+; Memory Addresses
+; ----------------------------------------------------------------------------
 
-; ============================================================================
-; Main program starts at $0810 (2064 decimal)
-; ============================================================================
-* = $0810
+SCREEN      = $0400             ; Screen memory base
+COLRAM      = $D800             ; Colour RAM base
+BORDER      = $D020             ; Border colour
+BGCOL       = $D021             ; Background colour
+
+; SID registers
+SID         = $D400             ; SID base address
+SID_V1_FREQ_LO = $D400          ; Voice 1 frequency low
+SID_V1_FREQ_HI = $D401          ; Voice 1 frequency high
+SID_V1_PWLO = $D402             ; Voice 1 pulse width low
+SID_V1_PWHI = $D403             ; Voice 1 pulse width high
+SID_V1_CTRL = $D404             ; Voice 1 control register
+SID_V1_AD   = $D405             ; Voice 1 attack/decay
+SID_V1_SR   = $D406             ; Voice 1 sustain/release
+
+SID_V2_FREQ_LO = $D407          ; Voice 2 frequency low
+SID_V2_FREQ_HI = $D408          ; Voice 2 frequency high
+SID_V2_PWLO = $D409             ; Voice 2 pulse width low
+SID_V2_PWHI = $D40A             ; Voice 2 pulse width high
+SID_V2_CTRL = $D40B             ; Voice 2 control register
+SID_V2_AD   = $D40C             ; Voice 2 attack/decay
+SID_V2_SR   = $D40D             ; Voice 2 sustain/release
+
+SID_V3_FREQ_LO = $D40E          ; Voice 3 frequency low
+SID_V3_FREQ_HI = $D40F          ; Voice 3 frequency high
+SID_V3_PWLO = $D410             ; Voice 3 pulse width low
+SID_V3_PWHI = $D411             ; Voice 3 pulse width high
+SID_V3_CTRL = $D412             ; Voice 3 control register
+SID_V3_AD   = $D413             ; Voice 3 attack/decay
+SID_V3_SR   = $D414             ; Voice 3 sustain/release
+
+SID_FLTLO   = $D415             ; Filter cutoff low
+SID_FLTHI   = $D416             ; Filter cutoff high
+SID_FLTCTRL = $D417             ; Filter control
+SID_VOLUME  = $D418             ; Volume and filter mode
+
+; CIA keyboard
+CIA1_PRA    = $DC00             ; CIA1 Port A (keyboard column)
+CIA1_PRB    = $DC01             ; CIA1 Port B (keyboard row)
+
+; Colours
+BLACK       = 0
+WHITE       = 1
+RED         = 2
+CYAN        = 3
+PURPLE      = 4
+GREEN       = 5
+BLUE        = 6
+YELLOW      = 7
+ORANGE      = 8
+BROWN       = 9
+LIGHT_RED   = 10
+DARK_GREY   = 11
+GREY        = 12
+LIGHT_GREEN = 13
+LIGHT_BLUE  = 14
+LIGHT_GREY  = 15
+
+; Track positions (row on screen)
+TRACK1_ROW  = 8                 ; High voice track
+TRACK2_ROW  = 12                ; Mid voice track
+TRACK3_ROW  = 16                ; Low voice track
+
+; Hit zone column
+HIT_ZONE_COL = 3                ; Where notes need to be hit
 
 ; ----------------------------------------------------------------------------
-; SID chip registers (active voice 1 only for now)
+; BASIC Stub - SYS 2064
 ; ----------------------------------------------------------------------------
-SID_BASE        = $d400
 
-; Voice 1 registers
-SID_V1_FREQ_LO  = SID_BASE + 0      ; Frequency low byte
-SID_V1_FREQ_HI  = SID_BASE + 1      ; Frequency high byte
-SID_V1_PW_LO    = SID_BASE + 2      ; Pulse width low byte
-SID_V1_PW_HI    = SID_BASE + 3      ; Pulse width high byte
-SID_V1_CTRL     = SID_BASE + 4      ; Control register
-SID_V1_AD       = SID_BASE + 5      ; Attack/Decay
-SID_V1_SR       = SID_BASE + 6      ; Sustain/Release
+            * = $0801
 
-; Global SID registers
-SID_VOLUME      = SID_BASE + 24     ; Volume and filter mode
+            !byte $0C, $08      ; Pointer to next line
+            !byte $0A, $00      ; Line number 10
+            !byte $9E           ; SYS token
+            !text "2064"        ; Address
+            !byte $00           ; End of line
+            !byte $00, $00      ; End of program
 
 ; ----------------------------------------------------------------------------
-; Control register bits
+; Main Program
 ; ----------------------------------------------------------------------------
-GATE_ON         = %00000001         ; Bit 0: Gate (triggers ADSR)
-WAVEFORM_TRI    = %00010000         ; Bit 4: Triangle wave
-WAVEFORM_SAW    = %00100000         ; Bit 5: Sawtooth wave
-WAVEFORM_PULSE  = %01000000         ; Bit 6: Pulse wave
-WAVEFORM_NOISE  = %10000000         ; Bit 7: Noise
 
-; ----------------------------------------------------------------------------
-; Screen registers (we'll explore these properly in later units)
-; ----------------------------------------------------------------------------
-BORDER_COLOUR   = $d020
-BACKGROUND      = $d021
+            * = $0810
 
-; ============================================================================
-; Program entry point
-; ============================================================================
 start:
-                ; Clear the screen to black (we'll learn how this works later)
-                lda #0
-                sta BORDER_COLOUR
-                sta BACKGROUND
+            jsr init_screen     ; Set up the display
+            jsr init_sid        ; Configure SID chip
 
-                ; Hide BASIC text by filling screen with spaces
-                ldx #0
-.clear:         lda #$20            ; Space character
-                sta $0400,x
-                sta $0500,x
-                sta $0600,x
-                sta $06e8,x
-                inx
-                bne .clear
+main_loop:
+            ; Wait for raster (smooth timing)
+            lda #$FF
+-           cmp $D012
+            bne -
 
-                ; Set master volume to maximum (15)
-                lda #15
-                sta SID_VOLUME
+            ; Reset track colours to default
+            jsr reset_track_colours
 
-                ; Set frequency for middle C (C4)
-                ; The SID frequency formula is: freq_value = (frequency_hz * 16777216) / clock
-                ; For PAL C64 (clock = 985248 Hz), middle C (261.63 Hz) = $1167
-                lda #$67            ; Low byte
-                sta SID_V1_FREQ_LO
-                lda #$11            ; High byte
-                sta SID_V1_FREQ_HI
+            ; Check keyboard and play sounds
+            jsr check_keys
 
-                ; Set pulse width to 50% (for pulse wave)
-                ; Pulse width is 12 bits. $0800 = 2048 = 50%
-                lda #$00
-                sta SID_V1_PW_LO
-                lda #$08
-                sta SID_V1_PW_HI
+            jmp main_loop
 
-                ; Set ADSR envelope
-                ; Attack = 0 (instant), Decay = 0 (none)
-                lda #$00
-                sta SID_V1_AD
-                ; Sustain = 15 (full), Release = 0 (instant)
-                lda #$f0
-                sta SID_V1_SR
+; ----------------------------------------------------------------------------
+; Initialize Screen
+; ----------------------------------------------------------------------------
+; Clears screen and draws the three tracks with hit zones
 
-                ; Select pulse waveform and open the gate
-                ; Gate ON starts the ADSR cycle
-                lda #WAVEFORM_PULSE | GATE_ON
-                sta SID_V1_CTRL
+init_screen:
+            ; Set border and background
+            lda #BLACK
+            sta BORDER
+            sta BGCOL
 
-                ; Infinite loop - keep the program running
-                ; Without this, the program would return to BASIC
-                ; and the SID would be silenced
-forever:
-                jmp forever
+            ; Clear screen with spaces
+            ldx #0
+            lda #$20            ; Space character
+-           sta SCREEN,x
+            sta SCREEN+$100,x
+            sta SCREEN+$200,x
+            sta SCREEN+$2E8,x
+            inx
+            bne -
+
+            ; Set all colours to grey
+            ldx #0
+            lda #GREY
+-           sta COLRAM,x
+            sta COLRAM+$100,x
+            sta COLRAM+$200,x
+            sta COLRAM+$2E8,x
+            inx
+            bne -
+
+            ; Draw track lines
+            jsr draw_tracks
+
+            ; Draw hit zones
+            jsr draw_hit_zones
+
+            ; Draw labels
+            jsr draw_labels
+
+            rts
+
+; ----------------------------------------------------------------------------
+; Draw Tracks
+; ----------------------------------------------------------------------------
+; Draws horizontal lines for each track using minus characters
+
+draw_tracks:
+            ; Track 1 (row 8)
+            ldx #0
+            lda #$2D            ; Minus character for track line
+-           sta SCREEN + (TRACK1_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+
+            ; Track 2 (row 12)
+            ldx #0
+-           sta SCREEN + (TRACK2_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+
+            ; Track 3 (row 16)
+            ldx #0
+-           sta SCREEN + (TRACK3_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+
+            rts
+
+; ----------------------------------------------------------------------------
+; Draw Hit Zones
+; ----------------------------------------------------------------------------
+; Draws vertical bars at the hit zone position
+
+draw_hit_zones:
+            ; Draw vertical line at hit zone column
+            ; Using pipe character for hit zone marker
+            lda #$7D            ; Pipe character
+
+            ; Hit zone spans from track 1 to track 3
+            sta SCREEN + (TRACK1_ROW * 40) + HIT_ZONE_COL
+            sta SCREEN + ((TRACK1_ROW-1) * 40) + HIT_ZONE_COL
+            sta SCREEN + ((TRACK1_ROW+1) * 40) + HIT_ZONE_COL
+
+            sta SCREEN + (TRACK2_ROW * 40) + HIT_ZONE_COL
+            sta SCREEN + ((TRACK2_ROW-1) * 40) + HIT_ZONE_COL
+            sta SCREEN + ((TRACK2_ROW+1) * 40) + HIT_ZONE_COL
+
+            sta SCREEN + (TRACK3_ROW * 40) + HIT_ZONE_COL
+            sta SCREEN + ((TRACK3_ROW-1) * 40) + HIT_ZONE_COL
+            sta SCREEN + ((TRACK3_ROW+1) * 40) + HIT_ZONE_COL
+
+            ; Colour the hit zones yellow
+            lda #YELLOW
+            sta COLRAM + (TRACK1_ROW * 40) + HIT_ZONE_COL
+            sta COLRAM + ((TRACK1_ROW-1) * 40) + HIT_ZONE_COL
+            sta COLRAM + ((TRACK1_ROW+1) * 40) + HIT_ZONE_COL
+
+            sta COLRAM + (TRACK2_ROW * 40) + HIT_ZONE_COL
+            sta COLRAM + ((TRACK2_ROW-1) * 40) + HIT_ZONE_COL
+            sta COLRAM + ((TRACK2_ROW+1) * 40) + HIT_ZONE_COL
+
+            sta COLRAM + (TRACK3_ROW * 40) + HIT_ZONE_COL
+            sta COLRAM + ((TRACK3_ROW-1) * 40) + HIT_ZONE_COL
+            sta COLRAM + ((TRACK3_ROW+1) * 40) + HIT_ZONE_COL
+
+            rts
+
+; ----------------------------------------------------------------------------
+; Draw Labels
+; ----------------------------------------------------------------------------
+; Draws track labels and instructions
+
+draw_labels:
+            ; Title "SID SYMPHONY" at top
+            ldx #0
+-           lda title_text,x
+            beq +
+            sta SCREEN + 13,x
+            lda #WHITE
+            sta COLRAM + 13,x
+            inx
+            bne -
++
+            ; Track labels
+            ; "Z" for track 1
+            lda #$1A            ; Z
+            sta SCREEN + (TRACK1_ROW * 40)
+            lda #LIGHT_RED
+            sta COLRAM + (TRACK1_ROW * 40)
+
+            ; "X" for track 2
+            lda #$18            ; X
+            sta SCREEN + (TRACK2_ROW * 40)
+            lda #LIGHT_GREEN
+            sta COLRAM + (TRACK2_ROW * 40)
+
+            ; "C" for track 3
+            lda #$03            ; C
+            sta SCREEN + (TRACK3_ROW * 40)
+            lda #LIGHT_BLUE
+            sta COLRAM + (TRACK3_ROW * 40)
+
+            ; Instructions at bottom
+            ldx #0
+-           lda instr_text,x
+            beq +
+            sta SCREEN + (23 * 40) + 5,x
+            lda #GREY
+            sta COLRAM + (23 * 40) + 5,x
+            inx
+            bne -
++
+            rts
+
+title_text:
+            !scr "sid symphony"
+            !byte 0
+
+instr_text:
+            !scr "press z, x, c to play"
+            !byte 0
+
+; ----------------------------------------------------------------------------
+; Initialize SID
+; ----------------------------------------------------------------------------
+; Sets up SID with three distinct voices ready to play
+
+init_sid:
+            ; Clear all SID registers first
+            ldx #$18
+            lda #0
+-           sta SID,x
+            dex
+            bpl -
+
+            ; Set volume to maximum
+            lda #$0F
+            sta SID_VOLUME
+
+            ; Voice 1 - High pitch, sawtooth wave
+            lda #$00
+            sta SID_V1_FREQ_LO
+            lda #$1C            ; High frequency (~523 Hz, C5)
+            sta SID_V1_FREQ_HI
+            lda #$09            ; Attack=0, Decay=9
+            sta SID_V1_AD
+            lda #$00            ; Sustain=0, Release=0
+            sta SID_V1_SR
+
+            ; Voice 2 - Mid pitch, pulse wave
+            lda #$00
+            sta SID_V2_FREQ_LO
+            lda #$0E            ; Mid frequency (~262 Hz, C4)
+            sta SID_V2_FREQ_HI
+            lda #$08            ; 50% pulse width
+            sta SID_V2_PWHI
+            lda #$09            ; Attack=0, Decay=9
+            sta SID_V2_AD
+            lda #$00            ; Sustain=0, Release=0
+            sta SID_V2_SR
+
+            ; Voice 3 - Low pitch, triangle wave
+            lda #$00
+            sta SID_V3_FREQ_LO
+            lda #$07            ; Low frequency (~131 Hz, C3)
+            sta SID_V3_FREQ_HI
+            lda #$09            ; Attack=0, Decay=9
+            sta SID_V3_AD
+            lda #$00            ; Sustain=0, Release=0
+            sta SID_V3_SR
+
+            rts
+
+; ----------------------------------------------------------------------------
+; Reset Track Colours
+; ----------------------------------------------------------------------------
+; Returns tracks to their default colours
+
+reset_track_colours:
+            ; Track 1 - default grey
+            ldx #0
+            lda #GREY
+-           sta COLRAM + (TRACK1_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+
+            ; Track 2 - default grey
+            ldx #0
+-           sta COLRAM + (TRACK2_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+
+            ; Track 3 - default grey
+            ldx #0
+-           sta COLRAM + (TRACK3_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+
+            ; Restore key labels
+            lda #LIGHT_RED
+            sta COLRAM + (TRACK1_ROW * 40)
+            lda #LIGHT_GREEN
+            sta COLRAM + (TRACK2_ROW * 40)
+            lda #LIGHT_BLUE
+            sta COLRAM + (TRACK3_ROW * 40)
+
+            ; Restore hit zone colours
+            lda #YELLOW
+            sta COLRAM + (TRACK1_ROW * 40) + HIT_ZONE_COL
+            sta COLRAM + (TRACK2_ROW * 40) + HIT_ZONE_COL
+            sta COLRAM + (TRACK3_ROW * 40) + HIT_ZONE_COL
+
+            rts
+
+; ----------------------------------------------------------------------------
+; Check Keys
+; ----------------------------------------------------------------------------
+; Reads keyboard and triggers sounds for Z, X, C keys
+
+check_keys:
+            ; Check Z key (row 1, column 2)
+            ; Z is at keyboard matrix position: row=$FD (bit 1 low), col=$10 (bit 4)
+            lda #$FD            ; Select row 1 (bit 1 = 0)
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$10            ; Check column 4 (Z key)
+            bne +               ; Branch if not pressed
+            jsr play_voice1
+            jsr flash_track1
++
+            ; Check X key (row 2, column 7)
+            ; X is at keyboard matrix position: row=$FB (bit 2 low), col=$80 (bit 7)
+            lda #$FB            ; Select row 2 (bit 2 = 0)
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$80            ; Check column 7 (X key)
+            bne +               ; Branch if not pressed
+            jsr play_voice2
+            jsr flash_track2
++
+            ; Check C key (row 2, column 4)
+            ; C is at keyboard matrix position: row=$FB (bit 2 low), col=$10 (bit 4)
+            lda #$FB            ; Select row 2 (bit 2 = 0)
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$10            ; Check column 4 (C key)
+            bne +               ; Branch if not pressed
+            jsr play_voice3
+            jsr flash_track3
++
+            ; Reset keyboard scanning
+            lda #$FF
+            sta CIA1_PRA
+
+            rts
+
+; ----------------------------------------------------------------------------
+; Play Voice 1
+; ----------------------------------------------------------------------------
+; Triggers voice 1 (high, sawtooth)
+
+play_voice1:
+            lda #$21            ; Gate on + sawtooth waveform
+            sta SID_V1_CTRL
+            rts
+
+; ----------------------------------------------------------------------------
+; Play Voice 2
+; ----------------------------------------------------------------------------
+; Triggers voice 2 (mid, pulse)
+
+play_voice2:
+            lda #$41            ; Gate on + pulse waveform
+            sta SID_V2_CTRL
+            rts
+
+; ----------------------------------------------------------------------------
+; Play Voice 3
+; ----------------------------------------------------------------------------
+; Triggers voice 3 (low, triangle)
+
+play_voice3:
+            lda #$11            ; Gate on + triangle waveform
+            sta SID_V3_CTRL
+            rts
+
+; ----------------------------------------------------------------------------
+; Flash Track 1
+; ----------------------------------------------------------------------------
+; Highlights track 1 in red
+
+flash_track1:
+            ldx #0
+            lda #RED
+-           sta COLRAM + (TRACK1_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+            ; Keep label visible
+            lda #WHITE
+            sta COLRAM + (TRACK1_ROW * 40)
+            rts
+
+; ----------------------------------------------------------------------------
+; Flash Track 2
+; ----------------------------------------------------------------------------
+; Highlights track 2 in green
+
+flash_track2:
+            ldx #0
+            lda #GREEN
+-           sta COLRAM + (TRACK2_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+            ; Keep label visible
+            lda #WHITE
+            sta COLRAM + (TRACK2_ROW * 40)
+            rts
+
+; ----------------------------------------------------------------------------
+; Flash Track 3
+; ----------------------------------------------------------------------------
+; Highlights track 3 in blue
+
+flash_track3:
+            ldx #0
+            lda #BLUE
+-           sta COLRAM + (TRACK3_ROW * 40),x
+            inx
+            cpx #38
+            bne -
+            ; Keep label visible
+            lda #WHITE
+            sta COLRAM + (TRACK3_ROW * 40)
+            rts

@@ -1,158 +1,632 @@
-; Ink War - Unit 03: Drawing the Board
-; Create the game board: 8x8 white cells with black border
+; ============================================================================
+; INK WAR - Unit 3: Making It Yours
+; ============================================================================
+; Customised version demonstrating attribute control:
+; - Cyan board cells (not white)
+; - Yellow border cells around the board
+; - Screen border changes colour with current player
+; - Bright cursor (not flashing)
 ;
-; Learning objectives:
-; - Use constants for board positioning
-; - Draw a border around the playing area
-; - Fill the board with the "empty" colour
-; - Centre elements on screen
+; Controls: Q=Up, A=Down, O=Left, P=Right, SPACE=Claim
+; ============================================================================
 
-        org $8000           ; 32768 - our code starts here
+            org     32768
 
-; =============================================================================
-; CONSTANTS
-; =============================================================================
+; ----------------------------------------------------------------------------
+; Constants
+; ----------------------------------------------------------------------------
 
-; Screen layout
-ATTR_START  equ $5800       ; Attribute memory
-ATTR_WIDTH  equ 32          ; Cells per row
-ATTR_SIZE   equ 768         ; Total attribute cells
+ATTR_BASE   equ     $5800           ; Start of attribute memory
+BOARD_ROW   equ     8               ; Board starts at row 8
+BOARD_COL   equ     12              ; Board starts at column 12
+BOARD_SIZE  equ     8               ; 8x8 playing field
 
-; Board positioning (centred on 32x24 screen)
-; Board is 8x8, so border is 10x10
-; Centre column: (32 - 10) / 2 = 11
-; Centre row: (24 - 10) / 2 = 7
-BOARD_SIZE  equ 8           ; 8x8 playing area
-BORDER_SIZE equ 10          ; 10x10 including border
-BOARD_TOP   equ 8           ; First board row (row 7 is border)
-BOARD_LEFT  equ 12          ; First board column (col 11 is border)
-BORDER_TOP  equ 7           ; Border starts one row above board
-BORDER_LEFT equ 11          ; Border starts one column left of board
+; ============================================================================
+; CUSTOMISATION SECTION - Change these values to personalise your game!
+; ============================================================================
 
-; Ports
-BORDER_PORT equ $FE         ; Screen border colour port
+; Attribute format: %FBPPPIII
+;   F = Flash (bit 7): 1 = flashing
+;   B = Bright (bit 6): 1 = brighter colours
+;   PPP = Paper colour (bits 5-3): background
+;   III = Ink colour (bits 2-0): foreground
+;
+; Colour values (0-7):
+;   0=Black, 1=Blue, 2=Red, 3=Magenta, 4=Green, 5=Cyan, 6=Yellow, 7=White
 
-; Colours (as paper colours - shifted to bits 5-3)
-BLACK_PAPER equ %00000000   ; Black background
-WHITE_PAPER equ %00111000   ; White background
-GREY_PAPER  equ %00000000   ; Black (no grey on Spectrum)
+; Empty cells - CUSTOMISED: cyan instead of white
+;   %01101000 = BRIGHT + Paper 5 (cyan) + Ink 0 (black)
+EMPTY_ATTR  equ     %01101000       ; Cyan paper, black ink + BRIGHT
 
-; =============================================================================
-; MAIN PROGRAM
-; =============================================================================
+; Board border - CUSTOMISED: yellow border around playing area
+;   %01110000 = BRIGHT + Paper 6 (yellow) + Ink 0 (black)
+BORDER_ATTR equ     %01110000       ; Yellow paper, black ink + BRIGHT
+
+; Cursor - CUSTOMISED: bright white instead of flashing
+;   %01111000 = BRIGHT + Paper 7 (white) + Ink 0 (black)
+CURSOR_ATTR equ     %01111000       ; White paper + BRIGHT (no flash)
+
+; Player 1 - Red (unchanged)
+P1_ATTR     equ     %01010000       ; Red paper + BRIGHT
+P1_CURSOR   equ     %01111010       ; White paper + Red ink + BRIGHT
+
+; Player 2 - Blue (unchanged)
+P2_ATTR     equ     %01001000       ; Blue paper + BRIGHT
+P2_CURSOR   equ     %01111001       ; White paper + Blue ink + BRIGHT
+
+; Screen border colours for each player
+P1_BORDER   equ     2               ; Red border for Player 1's turn
+P2_BORDER   equ     1               ; Blue border for Player 2's turn
+
+; ============================================================================
+; End of customisation section
+; ============================================================================
+
+; Keyboard ports (active low)
+KEY_PORT    equ     $fe
+ROW_QAOP    equ     $fb
+ROW_ASDF    equ     $fd
+ROW_YUIOP   equ     $df
+ROW_SPACE   equ     $7f
+
+; Game states
+STATE_EMPTY equ     0
+STATE_P1    equ     1
+STATE_P2    equ     2
+
+; ----------------------------------------------------------------------------
+; Entry Point
+; ----------------------------------------------------------------------------
 
 start:
-        ; Set the screen border to black
-        xor a               ; A = 0 (black)
-        out (BORDER_PORT), a
+            call    init_screen
+            call    init_game
+            call    draw_board_border   ; NEW: Draw visible border
+            call    draw_board
+            call    draw_cursor
+            call    update_border       ; Set initial border colour
 
-        ; Clear entire screen to black
-        call clear_screen
+main_loop:
+            halt
 
-        ; Draw the board border (black frame)
-        call draw_border
+            call    read_keyboard
+            call    handle_input
 
-        ; Fill the playing area with white (empty cells)
-        call draw_board
+            jp      main_loop
 
-        ; Done - loop forever
-forever:
-        jr forever
+; ----------------------------------------------------------------------------
+; Initialise Screen
+; ----------------------------------------------------------------------------
 
-; =============================================================================
-; SUBROUTINES
-; =============================================================================
+init_screen:
+            xor     a
+            out     (KEY_PORT), a
 
-; -----------------------------------------------------------------------------
-; Clear entire attribute memory to black
-; -----------------------------------------------------------------------------
-clear_screen:
-        ld hl, ATTR_START
-        ld de, ATTR_START + 1
-        ld bc, ATTR_SIZE - 1
-        ld (hl), BLACK_PAPER    ; Black paper, black ink
-        ldir
-        ret
+            ld      hl, ATTR_BASE
+            ld      de, ATTR_BASE+1
+            ld      bc, 767
+            ld      (hl), 0
+            ldir
 
-; -----------------------------------------------------------------------------
-; Draw the border around the board
-; The border is 10x10 cells, with the 8x8 board inside
-; We draw a frame of black cells (which will contrast with the white board)
-; Actually, since background is black, we need the border to be visible
-; Let's make the border bright white to frame the playing area
-; -----------------------------------------------------------------------------
-draw_border:
-        ; We'll draw a white frame around where the board will go
-        ; Top border row
-        ld hl, ATTR_START + (BORDER_TOP * ATTR_WIDTH) + BORDER_LEFT
-        ld b, BORDER_SIZE       ; 10 cells wide
-        ld a, %00111111         ; White paper, white ink (solid white)
-border_top:
-        ld (hl), a
-        inc hl
-        djnz border_top
+            ret
 
-        ; Bottom border row
-        ld hl, ATTR_START + ((BORDER_TOP + BORDER_SIZE - 1) * ATTR_WIDTH) + BORDER_LEFT
-        ld b, BORDER_SIZE
-        ld a, %00111111
-border_bottom:
-        ld (hl), a
-        inc hl
-        djnz border_bottom
+; ----------------------------------------------------------------------------
+; Update Screen Border
+; ----------------------------------------------------------------------------
+; Sets border colour based on current player
 
-        ; Left and right border columns (middle 8 rows)
-        ld hl, ATTR_START + ((BORDER_TOP + 1) * ATTR_WIDTH) + BORDER_LEFT
-        ld b, BORDER_SIZE - 2   ; 8 rows (excluding top and bottom)
-border_sides:
-        push bc
-        push hl
-        ld a, %00111111         ; White
+update_border:
+            ld      a, (current_player)
+            cp      1
+            jr      z, .ub_p1
+            ld      a, P2_BORDER
+            jr      .ub_set
+.ub_p1:
+            ld      a, P1_BORDER
+.ub_set:
+            out     (KEY_PORT), a
+            ret
 
-        ; Left side
-        ld (hl), a
+; ----------------------------------------------------------------------------
+; Initialise Game State
+; ----------------------------------------------------------------------------
 
-        ; Right side (9 cells to the right)
-        ld de, BORDER_SIZE - 1
-        add hl, de
-        ld (hl), a
+init_game:
+            ld      hl, board_state
+            ld      b, 64
+            xor     a
+.clear_loop:
+            ld      (hl), a
+            inc     hl
+            djnz    .clear_loop
 
-        pop hl
-        ld de, ATTR_WIDTH       ; Move to next row
-        add hl, de
-        pop bc
-        djnz border_sides
+            ld      a, 1
+            ld      (current_player), a
 
-        ret
+            xor     a
+            ld      (cursor_row), a
+            ld      (cursor_col), a
 
-; -----------------------------------------------------------------------------
-; Fill the 8x8 board with white (empty cells)
-; -----------------------------------------------------------------------------
+            ret
+
+; ----------------------------------------------------------------------------
+; Draw Board Border
+; ----------------------------------------------------------------------------
+; Draws a visible border around the 8x8 playing area
+
+draw_board_border:
+            ; Top border (row 7, columns 11-20)
+            ld      c, BOARD_ROW-1      ; Row 7
+            ld      d, BOARD_COL-1      ; Start at column 11
+            ld      b, BOARD_SIZE+2     ; 10 cells wide
+            call    draw_border_row
+
+            ; Bottom border (row 16, columns 11-20)
+            ld      c, BOARD_ROW+BOARD_SIZE  ; Row 16
+            ld      d, BOARD_COL-1
+            ld      b, BOARD_SIZE+2
+            call    draw_border_row
+
+            ; Left border (rows 8-15, column 11)
+            ld      c, BOARD_ROW        ; Start at row 8
+            ld      d, BOARD_COL-1      ; Column 11
+            ld      b, BOARD_SIZE       ; 8 cells tall
+            call    draw_border_col
+
+            ; Right border (rows 8-15, column 20)
+            ld      c, BOARD_ROW
+            ld      d, BOARD_COL+BOARD_SIZE  ; Column 20
+            ld      b, BOARD_SIZE
+            call    draw_border_col
+
+            ret
+
+; Draw horizontal border row
+; C = row, D = start column, B = width
+draw_border_row:
+            push    bc
+.row_loop:
+            push    bc
+            push    de
+
+            ; Calculate attribute address
+            ld      a, c
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, d
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            ld      (hl), BORDER_ATTR
+
+            pop     de
+            pop     bc
+            inc     d
+            djnz    .row_loop
+            pop     bc
+            ret
+
+; Draw vertical border column
+; C = start row, D = column, B = height
+draw_border_col:
+            push    bc
+.col_loop:
+            push    bc
+            push    de
+
+            ; Calculate attribute address
+            ld      a, c
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, d
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            ld      (hl), BORDER_ATTR
+
+            pop     de
+            pop     bc
+            inc     c
+            djnz    .col_loop
+            pop     bc
+            ret
+
+; ----------------------------------------------------------------------------
+; Draw Board
+; ----------------------------------------------------------------------------
+
 draw_board:
-        ; Calculate board start address
-        ; $5800 + (BOARD_TOP × 32) + BOARD_LEFT
-        ld hl, ATTR_START + (BOARD_TOP * ATTR_WIDTH) + BOARD_LEFT
+            ld      b, BOARD_SIZE
+            ld      c, BOARD_ROW
 
-        ld b, BOARD_SIZE        ; 8 rows
+.db_row:
+            push    bc
 
-board_row:
-        push bc
-        push hl
+            ld      b, BOARD_SIZE
+            ld      d, BOARD_COL
 
-        ld b, BOARD_SIZE        ; 8 columns
-        ld a, %00111000         ; White paper, black ink (empty cell)
+.db_col:
+            push    bc
 
-board_col:
-        ld (hl), a
-        inc hl
-        djnz board_col
+            ld      a, c
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, d
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
 
-        pop hl
-        ld de, ATTR_WIDTH       ; 32 bytes to next row
-        add hl, de
-        pop bc
-        djnz board_row
+            ld      (hl), EMPTY_ATTR
 
-        ret
+            pop     bc
+            inc     d
+            djnz    .db_col
 
-        end start
+            pop     bc
+            inc     c
+            djnz    .db_row
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Draw Cursor
+; ----------------------------------------------------------------------------
+
+draw_cursor:
+            call    get_cell_state
+
+            cp      STATE_P1
+            jr      z, .dc_p1
+            cp      STATE_P2
+            jr      z, .dc_p2
+
+            ld      a, CURSOR_ATTR
+            jr      .dc_set
+
+.dc_p1:
+            ld      a, P1_CURSOR
+            jr      .dc_set
+
+.dc_p2:
+            ld      a, P2_CURSOR
+
+.dc_set:
+            push    af
+
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            pop     af
+            ld      (hl), a
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Clear Cursor
+; ----------------------------------------------------------------------------
+
+clear_cursor:
+            call    get_cell_state
+
+            cp      STATE_P1
+            jr      z, .cc_p1
+            cp      STATE_P2
+            jr      z, .cc_p2
+
+            ld      a, EMPTY_ATTR
+            jr      .cc_set
+
+.cc_p1:
+            ld      a, P1_ATTR
+            jr      .cc_set
+
+.cc_p2:
+            ld      a, P2_ATTR
+
+.cc_set:
+            push    af
+
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            pop     af
+            ld      (hl), a
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Get Cell State
+; ----------------------------------------------------------------------------
+
+get_cell_state:
+            ld      a, (cursor_row)
+            add     a, a
+            add     a, a
+            add     a, a
+            ld      hl, board_state
+            ld      b, 0
+            ld      c, a
+            add     hl, bc
+            ld      a, (cursor_col)
+            ld      c, a
+            add     hl, bc
+            ld      a, (hl)
+            ret
+
+; ----------------------------------------------------------------------------
+; Read Keyboard
+; ----------------------------------------------------------------------------
+
+read_keyboard:
+            xor     a
+            ld      (key_pressed), a
+
+            ld      a, ROW_QAOP
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .not_q
+            ld      a, 1
+            ld      (key_pressed), a
+            ret
+.not_q:
+            ld      a, ROW_ASDF
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .not_a
+            ld      a, 2
+            ld      (key_pressed), a
+            ret
+.not_a:
+            ld      a, ROW_YUIOP
+            in      a, (KEY_PORT)
+            bit     1, a
+            jr      nz, .not_o
+            ld      a, 3
+            ld      (key_pressed), a
+            ret
+.not_o:
+            ld      a, ROW_YUIOP
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .not_p
+            ld      a, 4
+            ld      (key_pressed), a
+            ret
+.not_p:
+            ld      a, ROW_SPACE
+            in      a, (KEY_PORT)
+            bit     0, a
+            jr      nz, .not_space
+            ld      a, 5
+            ld      (key_pressed), a
+.not_space:
+            ret
+
+; ----------------------------------------------------------------------------
+; Handle Input
+; ----------------------------------------------------------------------------
+
+handle_input:
+            ld      a, (key_pressed)
+            or      a
+            ret     z
+
+            cp      5
+            jr      z, try_claim
+
+            call    clear_cursor
+
+            ld      a, (key_pressed)
+
+            cp      1
+            jr      nz, .not_up
+            ld      a, (cursor_row)
+            or      a
+            jr      z, .done
+            dec     a
+            ld      (cursor_row), a
+            jr      .done
+.not_up:
+            cp      2
+            jr      nz, .not_down
+            ld      a, (cursor_row)
+            cp      BOARD_SIZE-1
+            jr      z, .done
+            inc     a
+            ld      (cursor_row), a
+            jr      .done
+.not_down:
+            cp      3
+            jr      nz, .not_left
+            ld      a, (cursor_col)
+            or      a
+            jr      z, .done
+            dec     a
+            ld      (cursor_col), a
+            jr      .done
+.not_left:
+            cp      4
+            jr      nz, .done
+            ld      a, (cursor_col)
+            cp      BOARD_SIZE-1
+            jr      z, .done
+            inc     a
+            ld      (cursor_col), a
+
+.done:
+            call    draw_cursor
+            ret
+
+; ----------------------------------------------------------------------------
+; Try Claim Cell
+; ----------------------------------------------------------------------------
+
+try_claim:
+            call    get_cell_state
+            or      a
+            ret     nz
+
+            call    claim_cell
+            call    sound_claim
+
+            ld      a, (current_player)
+            xor     3
+            ld      (current_player), a
+
+            call    update_border       ; Update border for new player
+            call    draw_cursor
+
+            ret
+
+; ----------------------------------------------------------------------------
+; Claim Cell
+; ----------------------------------------------------------------------------
+
+claim_cell:
+            ld      a, (cursor_row)
+            add     a, a
+            add     a, a
+            add     a, a
+            ld      hl, board_state
+            ld      b, 0
+            ld      c, a
+            add     hl, bc
+            ld      a, (cursor_col)
+            ld      c, a
+            add     hl, bc
+
+            ld      a, (current_player)
+            ld      (hl), a
+
+            push    af
+
+            ld      a, (cursor_row)
+            add     a, BOARD_ROW
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      a, (cursor_col)
+            add     a, BOARD_COL
+            add     a, l
+            ld      l, a
+            ld      bc, ATTR_BASE
+            add     hl, bc
+
+            pop     af
+            cp      1
+            jr      z, .cc_is_p1
+            ld      (hl), P2_ATTR
+            ret
+.cc_is_p1:
+            ld      (hl), P1_ATTR
+            ret
+
+; ----------------------------------------------------------------------------
+; Sound - Claim
+; ----------------------------------------------------------------------------
+
+sound_claim:
+            ld      hl, 400
+            ld      b, 20
+
+.loop:
+            push    bc
+            push    hl
+
+            ld      b, h
+            ld      c, l
+.tone_loop:
+            ld      a, $10
+            out     (KEY_PORT), a
+            call    .delay
+            xor     a
+            out     (KEY_PORT), a
+            call    .delay
+            dec     bc
+            ld      a, b
+            or      c
+            jr      nz, .tone_loop
+
+            pop     hl
+            pop     bc
+
+            ld      de, 20
+            or      a
+            sbc     hl, de
+
+            djnz    .loop
+            ret
+
+.delay:
+            push    bc
+            ld      b, 5
+.delay_loop:
+            djnz    .delay_loop
+            pop     bc
+            ret
+
+; ----------------------------------------------------------------------------
+; Variables
+; ----------------------------------------------------------------------------
+
+cursor_row:     defb    0
+cursor_col:     defb    0
+key_pressed:    defb    0
+current_player: defb    1
+board_state:    defs    64, 0
+
+; ----------------------------------------------------------------------------
+; End
+; ----------------------------------------------------------------------------
+
+            end     start

@@ -1,3 +1,0 @@
-SFX_NONE    = 0
-SFX_COLLECT = 1
-SFX_DEATH   = 2

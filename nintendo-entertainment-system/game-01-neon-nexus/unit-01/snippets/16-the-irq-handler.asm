@@ -1,3 +1,0 @@
-.proc irq
-    rti
-.endproc
