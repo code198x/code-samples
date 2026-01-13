@@ -1,9 +1,0 @@
-handle_movement:
-            ; ... edge detection code ...
-
-            btst    #3,d1               ; Up pressed?
-            beq.s   .no_up
-            ; ... movement code ...
-            bsr     play_hop_sound      ; ADD THIS
-.no_up:
-            ; ... similar for other directions ...

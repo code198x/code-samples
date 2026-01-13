@@ -1,6 +1,0 @@
-; Enable audio DMA for channel 0
-DMAF_AUD0       equ $0001
-DMAF_AUD1       equ $0002
-
-; Add to DMA enable
-move.w  #DMAF_SETCLR|DMAF_COPPER|DMAF_RASTER|DMAF_SPRITE|DMAF_BLITTER|DMAF_AUD0,DMACON(a5)
