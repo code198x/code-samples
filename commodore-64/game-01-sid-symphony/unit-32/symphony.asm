@@ -21,6 +21,10 @@
 ; Used for automated screenshot capture. Override with: acme -DSCREENSHOT_MODE=1
 !ifndef SCREENSHOT_MODE { SCREENSHOT_MODE = 0 }
 
+; Video mode - set to 1 to skip title AND auto-start gameplay on first song
+; Used for automated video capture. Override with: acme -DVIDEO_MODE=1
+!ifndef VIDEO_MODE { VIDEO_MODE = 0 }
+
 ; SID Voice Settings (for note playback)
 VOICE1_WAVE = $21               ; Sawtooth for track 1
 VOICE2_WAVE = $41               ; Pulse for track 2
@@ -383,16 +387,25 @@ start:
             lda #NUM_SPEEDS-1       ; Start at 1.0x (normal speed)
             sta speed_setting
 
-!if SCREENSHOT_MODE = 1 {
+!if VIDEO_MODE = 1 {
+            ; Video mode: skip title, start first song immediately
+            ; Initialize menu (sets cursor_pos = 0 for first song)
+            jsr show_menu
+            ; Trigger fire pressed to start the game
+            jsr menu_fire_pressed
+            ; State is now STATE_PLAYING
+} else {
+  !if SCREENSHOT_MODE = 1 {
             ; Screenshot mode: skip title, go to menu
             jsr show_menu
             lda #STATE_MENU
             sta game_state
-} else {
+  } else {
             ; Normal mode: show title screen
             jsr show_title
             lda #STATE_TITLE
             sta game_state
+  }
 }
 
 main_loop:
