@@ -113,6 +113,10 @@ CONTINUE_COL equ    9               ; (32-13)/2 = 9.5
 ; Input timing
 KEY_DELAY   equ     8               ; Frames between key repeats
 
+; Video capture mode - when 1, skips title and starts AI Easy game immediately
+; To enable: change VIDEO_MODE to 1 below before building
+VIDEO_MODE  equ     0
+
 ; ----------------------------------------------------------------------------
 ; Entry Point
 ; ----------------------------------------------------------------------------
@@ -121,7 +125,15 @@ start:
             ; Play startup jingle
             call    sound_startup
 
-            ; Start at title screen
+    IF VIDEO_MODE
+            ; VIDEO_MODE: Skip title, start AI Easy game immediately
+            ld      a, GM_VS_AI
+            ld      (game_mode), a
+            ld      a, AI_EASY
+            ld      (ai_difficulty), a
+            call    start_game
+    ELSE
+            ; Normal mode: Start at title screen
             ld      a, GS_TITLE
             ld      (game_state), a
             call    init_screen
@@ -130,6 +142,7 @@ start:
             ; Black border for title
             xor     a
             out     (KEY_PORT), a
+    ENDIF
 
 main_loop:
             halt
