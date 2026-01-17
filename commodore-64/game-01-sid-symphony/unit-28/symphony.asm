@@ -591,9 +591,9 @@ draw_menu_title_done:
 draw_menu_instr:
             lda menu_instructions,x
             beq draw_menu_instr_done
-            sta SCREEN + (21 * 40) + 1,x
+            sta SCREEN + (23 * 40) + 1,x
             lda #SUBTITLE_COL
-            sta COLRAM + (21 * 40) + 1,x
+            sta COLRAM + (23 * 40) + 1,x
             inx
             jmp draw_menu_instr
 draw_menu_instr_done:
@@ -603,9 +603,9 @@ draw_menu_instr_done:
 draw_prac_instr:
             lda practice_instructions,x
             beq draw_prac_instr_done
-            sta SCREEN + (22 * 40) + 5,x
+            sta SCREEN + (24 * 40) + 5,x
             lda #SUBTITLE_COL
-            sta COLRAM + (22 * 40) + 5,x
+            sta COLRAM + (24 * 40) + 5,x
             inx
             jmp draw_prac_instr
 draw_prac_instr_done:
@@ -804,23 +804,23 @@ draw_difficulty:
 draw_diff_label:
             lda diff_label,x
             beq draw_diff_label_done
-            sta SCREEN + (15 * 40) + 10,x
+            sta SCREEN + (18 * 40) + 10,x
             lda #TITLE_COL
-            sta COLRAM + (15 * 40) + 10,x
+            sta COLRAM + (18 * 40) + 10,x
             inx
             jmp draw_diff_label
 draw_diff_label_done:
 
             ; Draw arrows
             lda #CHAR_ARROW_L
-            sta SCREEN + (15 * 40) + 22
+            sta SCREEN + (18 * 40) + 22
             lda #SUBTITLE_COL
-            sta COLRAM + (15 * 40) + 22
+            sta COLRAM + (18 * 40) + 22
 
             lda #CHAR_ARROW_R
-            sta SCREEN + (15 * 40) + 30
+            sta SCREEN + (18 * 40) + 30
             lda #SUBTITLE_COL
-            sta COLRAM + (15 * 40) + 30
+            sta COLRAM + (18 * 40) + 30
 
             ; Draw current difficulty
             jsr draw_current_difficulty
@@ -838,11 +838,11 @@ diff_label:
 draw_current_difficulty:
             ; Clear difficulty name area
             lda #CHAR_SPACE
-            sta SCREEN + (15 * 40) + 24
-            sta SCREEN + (15 * 40) + 25
-            sta SCREEN + (15 * 40) + 26
-            sta SCREEN + (15 * 40) + 27
-            sta SCREEN + (15 * 40) + 28
+            sta SCREEN + (18 * 40) + 24
+            sta SCREEN + (18 * 40) + 25
+            sta SCREEN + (18 * 40) + 26
+            sta SCREEN + (18 * 40) + 27
+            sta SCREEN + (18 * 40) + 28
 
             lda difficulty
             cmp #DIFF_EASY
@@ -856,9 +856,9 @@ draw_diff_easy:
 draw_easy_text:
             lda easy_text,x
             beq draw_diff_done
-            sta SCREEN + (15 * 40) + 24,x
+            sta SCREEN + (18 * 40) + 24,x
             lda #EASY_COL
-            sta COLRAM + (15 * 40) + 24,x
+            sta COLRAM + (18 * 40) + 24,x
             inx
             jmp draw_easy_text
 
@@ -867,9 +867,9 @@ draw_diff_normal:
 draw_normal_text:
             lda normal_text,x
             beq draw_diff_done
-            sta SCREEN + (15 * 40) + 24,x
+            sta SCREEN + (18 * 40) + 24,x
             lda #NORMAL_COL
-            sta COLRAM + (15 * 40) + 24,x
+            sta COLRAM + (18 * 40) + 24,x
             inx
             jmp draw_normal_text
 
@@ -878,9 +878,9 @@ draw_diff_hard:
 draw_hard_text:
             lda hard_text,x
             beq draw_diff_done
-            sta SCREEN + (15 * 40) + 24,x
+            sta SCREEN + (18 * 40) + 24,x
             lda #HARD_COL
-            sta COLRAM + (15 * 40) + 24,x
+            sta COLRAM + (18 * 40) + 24,x
             inx
             jmp draw_hard_text
 
@@ -909,9 +909,9 @@ draw_practice_mode:
 draw_prac_label:
             lda prac_label,x
             beq draw_prac_label_done
-            sta SCREEN + (17 * 40) + 12,x
+            sta SCREEN + (19 * 40) + 12,x
             lda #TITLE_COL
-            sta COLRAM + (17 * 40) + 12,x
+            sta COLRAM + (19 * 40) + 12,x
             inx
             jmp draw_prac_label
 draw_prac_label_done:
@@ -924,9 +924,9 @@ draw_prac_label_done:
 draw_speed_label:
             lda speed_label,x
             beq draw_speed_label_done
-            sta SCREEN + (18 * 40) + 14,x
+            sta SCREEN + (20 * 40) + 14,x
             lda #TITLE_COL
-            sta COLRAM + (18 * 40) + 14,x
+            sta COLRAM + (20 * 40) + 14,x
             inx
             jmp draw_speed_label
 draw_speed_label_done:
@@ -938,9 +938,9 @@ draw_speed_label_done:
 draw_endless_label:
             lda endless_label,x
             beq draw_endless_label_done
-            sta SCREEN + (19 * 40) + 13,x
+            sta SCREEN + (21 * 40) + 13,x
             lda #TITLE_COL
-            sta COLRAM + (19 * 40) + 13,x
+            sta COLRAM + (21 * 40) + 13,x
             inx
             jmp draw_endless_label
 draw_endless_label_done:
@@ -966,39 +966,39 @@ draw_practice_state:
             beq draw_prac_off
             ; Draw ON
             lda #'o'
-            sta SCREEN + (17 * 40) + 22
+            sta SCREEN + (19 * 40) + 22
             lda #'n'
-            sta SCREEN + (17 * 40) + 23
+            sta SCREEN + (19 * 40) + 23
             lda #CHAR_SPACE
-            sta SCREEN + (17 * 40) + 24
+            sta SCREEN + (19 * 40) + 24
             lda #PRACTICE_COL
-            sta COLRAM + (17 * 40) + 22
-            sta COLRAM + (17 * 40) + 23
+            sta COLRAM + (19 * 40) + 22
+            sta COLRAM + (19 * 40) + 23
             rts
 
 draw_prac_off:
             ; Draw OFF
             lda #'o'
-            sta SCREEN + (17 * 40) + 22
+            sta SCREEN + (19 * 40) + 22
             lda #'f'
-            sta SCREEN + (17 * 40) + 23
+            sta SCREEN + (19 * 40) + 23
             lda #'f'
-            sta SCREEN + (17 * 40) + 24
+            sta SCREEN + (19 * 40) + 24
             lda #SUBTITLE_COL
-            sta COLRAM + (17 * 40) + 22
-            sta COLRAM + (17 * 40) + 23
-            sta COLRAM + (17 * 40) + 24
+            sta COLRAM + (19 * 40) + 22
+            sta COLRAM + (19 * 40) + 23
+            sta COLRAM + (19 * 40) + 24
             rts
 
 ; Draw speed (0.5x / 0.75x / 1.0x)
 draw_speed_state:
             ; Clear speed area
             lda #CHAR_SPACE
-            sta SCREEN + (18 * 40) + 21
-            sta SCREEN + (18 * 40) + 22
-            sta SCREEN + (18 * 40) + 23
-            sta SCREEN + (18 * 40) + 24
-            sta SCREEN + (18 * 40) + 25
+            sta SCREEN + (20 * 40) + 21
+            sta SCREEN + (20 * 40) + 22
+            sta SCREEN + (20 * 40) + 23
+            sta SCREEN + (20 * 40) + 24
+            sta SCREEN + (20 * 40) + 25
 
             lda speed_setting
             beq draw_speed_half
@@ -1011,9 +1011,9 @@ draw_speed_half:
 draw_half_text:
             lda half_text,x
             beq draw_speed_done
-            sta SCREEN + (18 * 40) + 21,x
+            sta SCREEN + (20 * 40) + 21,x
             lda #EASY_COL           ; Green - slowest
-            sta COLRAM + (18 * 40) + 21,x
+            sta COLRAM + (20 * 40) + 21,x
             inx
             jmp draw_half_text
 
@@ -1022,9 +1022,9 @@ draw_speed_3qrtr:
 draw_3qrtr_text:
             lda qrtr_text,x
             beq draw_speed_done
-            sta SCREEN + (18 * 40) + 21,x
+            sta SCREEN + (20 * 40) + 21,x
             lda #NORMAL_COL         ; Yellow - medium
-            sta COLRAM + (18 * 40) + 21,x
+            sta COLRAM + (20 * 40) + 21,x
             inx
             jmp draw_3qrtr_text
 
@@ -1033,9 +1033,9 @@ draw_speed_normal:
 draw_normal_speed_text:
             lda full_text,x
             beq draw_speed_done
-            sta SCREEN + (18 * 40) + 21,x
+            sta SCREEN + (20 * 40) + 21,x
             lda #TITLE_COL          ; White - full speed
-            sta COLRAM + (18 * 40) + 21,x
+            sta COLRAM + (20 * 40) + 21,x
             inx
             jmp draw_normal_speed_text
 
@@ -1063,28 +1063,28 @@ draw_endless_state:
             beq draw_endless_off
             ; Draw ON in cyan
             lda #'o'
-            sta SCREEN + (19 * 40) + 22
+            sta SCREEN + (21 * 40) + 22
             lda #'n'
-            sta SCREEN + (19 * 40) + 23
+            sta SCREEN + (21 * 40) + 23
             lda #CHAR_SPACE
-            sta SCREEN + (19 * 40) + 24
+            sta SCREEN + (21 * 40) + 24
             lda #3                  ; Cyan
-            sta COLRAM + (19 * 40) + 22
-            sta COLRAM + (19 * 40) + 23
+            sta COLRAM + (21 * 40) + 22
+            sta COLRAM + (21 * 40) + 23
             rts
 
 draw_endless_off:
             ; Draw OFF in grey
             lda #'o'
-            sta SCREEN + (19 * 40) + 22
+            sta SCREEN + (21 * 40) + 22
             lda #'f'
-            sta SCREEN + (19 * 40) + 23
+            sta SCREEN + (21 * 40) + 23
             lda #'f'
-            sta SCREEN + (19 * 40) + 24
+            sta SCREEN + (21 * 40) + 24
             lda #SUBTITLE_COL
-            sta COLRAM + (19 * 40) + 22
-            sta COLRAM + (19 * 40) + 23
-            sta COLRAM + (19 * 40) + 24
+            sta COLRAM + (21 * 40) + 22
+            sta COLRAM + (21 * 40) + 23
+            sta COLRAM + (21 * 40) + 24
             rts
 
 ; ----------------------------------------------------------------------------

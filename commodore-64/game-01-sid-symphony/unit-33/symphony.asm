@@ -1,10 +1,13 @@
 ; ============================================================================
-; SID SYMPHONY - Unit 31: Results Screen Enhancements
+; SID SYMPHONY - Unit 33: Title Screen Design
 ; ============================================================================
-; Enhancing the results screen with performance grades (S/A/B/C/D), accuracy
-; percentage, best streak display, and improved statistics layout.
+; Phase 3 begins: Polish and professional presentation.
+; This unit creates a professional title screen with custom logo graphics.
 ;
-; New concepts: Grade calculation, percentage display, enhanced UI layout
+; New features:
+; - Custom character logo for "SID SYMPHONY"
+; - Improved visual hierarchy and layout
+; - Professional presentation with borders and spacing
 ;
 ; Controls: Z = Track 1, X = Track 2, C = Track 3
 ;           Up/Down = Song selection, Left/Right = Difficulty
@@ -20,6 +23,10 @@
 ; Screenshot mode - set to 1 to skip title and show menu immediately
 ; Used for automated screenshot capture. Override with: acme -DSCREENSHOT_MODE=1
 !ifndef SCREENSHOT_MODE { SCREENSHOT_MODE = 0 }
+
+; Video mode - set to 1 to skip title AND auto-start gameplay on first song
+; Used for automated video capture. Override with: acme -DVIDEO_MODE=1
+!ifndef VIDEO_MODE { VIDEO_MODE = 0 }
 
 ; SID Voice Settings (for note playback)
 VOICE1_WAVE = $21               ; Sawtooth for track 1
@@ -301,6 +308,18 @@ CHAR_CURSOR = 62                ; > character for menu cursor
 CHAR_ARROW_L = 60               ; < for difficulty
 CHAR_ARROW_R = 62               ; > for difficulty
 
+; Logo characters (for title screen design)
+CHAR_LOGO_TL = 133              ; Top-left corner
+CHAR_LOGO_TR = 134              ; Top-right corner
+CHAR_LOGO_BL = 135              ; Bottom-left corner
+CHAR_LOGO_BR = 136              ; Bottom-right corner
+CHAR_LOGO_H  = 137              ; Horizontal bar
+CHAR_LOGO_V  = 138              ; Vertical bar
+CHAR_LOGO_FULL = 139            ; Full block
+CHAR_LOGO_HALF_T = 140          ; Half block top
+CHAR_LOGO_HALF_B = 141          ; Half block bottom
+CHAR_LOGO_DOT = 142             ; Centre dot (for decorative)
+
 ; Note settings
 MAX_NOTES   = 8                 ; Maximum simultaneous notes
 NOTE_SPAWN_COL = 37             ; Where notes appear
@@ -383,16 +402,25 @@ start:
             lda #NUM_SPEEDS-1       ; Start at 1.0x (normal speed)
             sta speed_setting
 
-!if SCREENSHOT_MODE = 1 {
+!if VIDEO_MODE = 1 {
+            ; Video mode: skip title, start first song immediately
+            ; Initialize menu (sets cursor_pos = 0 for first song)
+            jsr show_menu
+            ; Trigger fire pressed to start the game
+            jsr menu_fire_pressed
+            ; State is now STATE_PLAYING
+} else {
+  !if SCREENSHOT_MODE = 1 {
             ; Screenshot mode: skip title, go to menu
             jsr show_menu
             lda #STATE_MENU
             sta game_state
-} else {
+  } else {
             ; Normal mode: show title screen
             jsr show_title
             lda #STATE_TITLE
             sta game_state
+  }
 }
 
 main_loop:
@@ -453,70 +481,207 @@ clear_title:
             inx
             bne clear_title
 
-            ; Draw big title "SID SYMPHONY"
+            ; ----------------------------------------
+            ; Draw decorative top border (row 2)
+            ; ----------------------------------------
             ldx #0
-draw_title_text:
-            lda title_big,x
-            beq draw_title_done
+draw_top_border:
+            lda logo_top_border,x
+            beq draw_top_done
+            sta SCREEN + (2 * 40) + 10,x
+            lda #6              ; Blue
+            sta COLRAM + (2 * 40) + 10,x
+            inx
+            jmp draw_top_border
+draw_top_done:
+
+            ; ----------------------------------------
+            ; Draw logo row 1 (row 4) - using block chars
+            ; ----------------------------------------
+            ldx #0
+draw_logo_row1:
+            lda logo_row1,x
+            beq draw_logo1_done
+            sta SCREEN + (4 * 40) + 12,x
+            lda #14             ; Light blue
+            sta COLRAM + (4 * 40) + 12,x
+            inx
+            jmp draw_logo_row1
+draw_logo1_done:
+
+            ; ----------------------------------------
+            ; Draw logo row 2 (row 5)
+            ; ----------------------------------------
+            ldx #0
+draw_logo_row2:
+            lda logo_row2,x
+            beq draw_logo2_done
+            sta SCREEN + (5 * 40) + 12,x
+            lda #14             ; Light blue
+            sta COLRAM + (5 * 40) + 12,x
+            inx
+            jmp draw_logo_row2
+draw_logo2_done:
+
+            ; ----------------------------------------
+            ; Draw logo row 3 (row 6)
+            ; ----------------------------------------
+            ldx #0
+draw_logo_row3:
+            lda logo_row3,x
+            beq draw_logo3_done
+            sta SCREEN + (6 * 40) + 12,x
+            lda #6              ; Blue
+            sta COLRAM + (6 * 40) + 12,x
+            inx
+            jmp draw_logo_row3
+draw_logo3_done:
+
+            ; ----------------------------------------
+            ; Draw "SYMPHONY" text (row 8)
+            ; ----------------------------------------
+            ldx #0
+draw_symphony:
+            lda symphony_text,x
+            beq draw_symphony_done
             sta SCREEN + (8 * 40) + 14,x
-            lda #TITLE_COL
+            lda #1              ; White
             sta COLRAM + (8 * 40) + 14,x
             inx
-            jmp draw_title_text
-draw_title_done:
+            jmp draw_symphony
+draw_symphony_done:
 
-            ; Draw subtitle "A RHYTHM GAME"
+            ; ----------------------------------------
+            ; Draw decorative separator (row 10)
+            ; ----------------------------------------
+            ldx #0
+draw_separator:
+            lda separator_text,x
+            beq draw_sep_done
+            sta SCREEN + (10 * 40) + 10,x
+            lda #11             ; Dark grey
+            sta COLRAM + (10 * 40) + 10,x
+            inx
+            jmp draw_separator
+draw_sep_done:
+
+            ; ----------------------------------------
+            ; Draw "A RHYTHM GAME" subtitle (row 12)
+            ; ----------------------------------------
             ldx #0
 draw_subtitle:
             lda subtitle_text,x
             beq draw_subtitle_done
-            sta SCREEN + (10 * 40) + 13,x
+            sta SCREEN + (12 * 40) + 13,x
             lda #SUBTITLE_COL
-            sta COLRAM + (10 * 40) + 13,x
+            sta COLRAM + (12 * 40) + 13,x
             inx
             jmp draw_subtitle
 draw_subtitle_done:
 
-            ; Draw controls
+            ; ----------------------------------------
+            ; Draw controls info (row 15)
+            ; ----------------------------------------
             ldx #0
 draw_controls:
             lda controls_text,x
             beq draw_controls_done
-            sta SCREEN + (14 * 40) + 11,x
-            lda #11
-            sta COLRAM + (14 * 40) + 11,x
+            sta SCREEN + (15 * 40) + 10,x
+            lda #11             ; Dark grey
+            sta COLRAM + (15 * 40) + 10,x
             inx
             jmp draw_controls
 draw_controls_done:
 
-            ; Draw track info
+            ; ----------------------------------------
+            ; Draw track keys (row 17)
+            ; ----------------------------------------
             ldx #0
-draw_track_info:
-            lda track_info,x
-            beq draw_track_done
-            sta SCREEN + (16 * 40) + 9,x
-            lda #11
-            sta COLRAM + (16 * 40) + 9,x
+draw_track_keys:
+            lda track_keys_text,x
+            beq draw_keys_done
+            sta SCREEN + (17 * 40) + 8,x
+            lda #15             ; Light grey
+            sta COLRAM + (17 * 40) + 8,x
             inx
-            jmp draw_track_info
-draw_track_done:
+            jmp draw_track_keys
+draw_keys_done:
 
-            ; Draw "PRESS FIRE TO START"
+            ; ----------------------------------------
+            ; Draw "PRESS FIRE TO START" (row 21)
+            ; ----------------------------------------
             ldx #0
 draw_press_fire:
             lda press_fire_text,x
             beq draw_press_done
-            sta SCREEN + (20 * 40) + 10,x
+            sta SCREEN + (21 * 40) + 10,x
             lda #7              ; Yellow
-            sta COLRAM + (20 * 40) + 10,x
+            sta COLRAM + (21 * 40) + 10,x
             inx
             jmp draw_press_fire
 draw_press_done:
 
+            ; ----------------------------------------
+            ; Draw version (row 24)
+            ; ----------------------------------------
+            ldx #0
+draw_version:
+            lda version_text,x
+            beq draw_version_done
+            sta SCREEN + (24 * 40) + 14,x
+            lda #11             ; Dark grey
+            sta COLRAM + (24 * 40) + 14,x
+            inx
+            jmp draw_version
+draw_version_done:
+
             rts
 
-title_big:
-            !scr "sid symphony"
+; Logo data using custom block characters
+; Creates a stylized "SID" in large block letters
+
+logo_top_border:
+            !byte CHAR_LOGO_TL, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_TR
+            !byte 0
+
+logo_row1:
+            ; S       I       D
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_SPACE, CHAR_SPACE, CHAR_SPACE
+            !byte 0
+
+logo_row2:
+            ; S       I       D
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_LOGO_FULL, CHAR_SPACE, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_SPACE, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_SPACE, CHAR_SPACE, CHAR_SPACE
+            !byte 0
+
+logo_row3:
+            ; S       I       D
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_SPACE, CHAR_SPACE, CHAR_SPACE
+            !byte 0
+
+symphony_text:
+            !scr "s y m p h o n y"
+            !byte 0
+
+separator_text:
+            !byte CHAR_LOGO_DOT, CHAR_SPACE, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_SPACE, CHAR_LOGO_DOT
             !byte 0
 
 subtitle_text:
@@ -527,12 +692,16 @@ controls_text:
             !scr "controls: z / x / c"
             !byte 0
 
-track_info:
-            !scr "hit notes as they reach"
+track_keys_text:
+            !scr "hit notes as they pass the zone"
             !byte 0
 
 press_fire_text:
             !scr "press fire to start"
+            !byte 0
+
+version_text:
+            !scr "phase 3 v0.1"
             !byte 0
 
 ; ----------------------------------------------------------------------------
@@ -2289,6 +2458,132 @@ copy_rom_chars:
             sta CHARSET + (132 * 8) + 6
             lda #%11111111
             sta CHARSET + (132 * 8) + 7
+
+            ; ----------------------------------------
+            ; Logo characters for title screen
+            ; ----------------------------------------
+
+            ; Character 133 - Top-left corner
+            lda #%11111111
+            sta CHARSET + (133 * 8) + 0
+            sta CHARSET + (133 * 8) + 1
+            lda #%11000000
+            sta CHARSET + (133 * 8) + 2
+            sta CHARSET + (133 * 8) + 3
+            sta CHARSET + (133 * 8) + 4
+            sta CHARSET + (133 * 8) + 5
+            sta CHARSET + (133 * 8) + 6
+            sta CHARSET + (133 * 8) + 7
+
+            ; Character 134 - Top-right corner
+            lda #%11111111
+            sta CHARSET + (134 * 8) + 0
+            sta CHARSET + (134 * 8) + 1
+            lda #%00000011
+            sta CHARSET + (134 * 8) + 2
+            sta CHARSET + (134 * 8) + 3
+            sta CHARSET + (134 * 8) + 4
+            sta CHARSET + (134 * 8) + 5
+            sta CHARSET + (134 * 8) + 6
+            sta CHARSET + (134 * 8) + 7
+
+            ; Character 135 - Bottom-left corner
+            lda #%11000000
+            sta CHARSET + (135 * 8) + 0
+            sta CHARSET + (135 * 8) + 1
+            sta CHARSET + (135 * 8) + 2
+            sta CHARSET + (135 * 8) + 3
+            sta CHARSET + (135 * 8) + 4
+            sta CHARSET + (135 * 8) + 5
+            lda #%11111111
+            sta CHARSET + (135 * 8) + 6
+            sta CHARSET + (135 * 8) + 7
+
+            ; Character 136 - Bottom-right corner
+            lda #%00000011
+            sta CHARSET + (136 * 8) + 0
+            sta CHARSET + (136 * 8) + 1
+            sta CHARSET + (136 * 8) + 2
+            sta CHARSET + (136 * 8) + 3
+            sta CHARSET + (136 * 8) + 4
+            sta CHARSET + (136 * 8) + 5
+            lda #%11111111
+            sta CHARSET + (136 * 8) + 6
+            sta CHARSET + (136 * 8) + 7
+
+            ; Character 137 - Horizontal bar (top/bottom)
+            lda #%11111111
+            sta CHARSET + (137 * 8) + 0
+            sta CHARSET + (137 * 8) + 1
+            lda #%00000000
+            sta CHARSET + (137 * 8) + 2
+            sta CHARSET + (137 * 8) + 3
+            sta CHARSET + (137 * 8) + 4
+            sta CHARSET + (137 * 8) + 5
+            lda #%11111111
+            sta CHARSET + (137 * 8) + 6
+            sta CHARSET + (137 * 8) + 7
+
+            ; Character 138 - Vertical bar (left/right side)
+            lda #%11000011
+            sta CHARSET + (138 * 8) + 0
+            sta CHARSET + (138 * 8) + 1
+            sta CHARSET + (138 * 8) + 2
+            sta CHARSET + (138 * 8) + 3
+            sta CHARSET + (138 * 8) + 4
+            sta CHARSET + (138 * 8) + 5
+            sta CHARSET + (138 * 8) + 6
+            sta CHARSET + (138 * 8) + 7
+
+            ; Character 139 - Full block (for logo fill)
+            lda #%11111111
+            sta CHARSET + (139 * 8) + 0
+            sta CHARSET + (139 * 8) + 1
+            sta CHARSET + (139 * 8) + 2
+            sta CHARSET + (139 * 8) + 3
+            sta CHARSET + (139 * 8) + 4
+            sta CHARSET + (139 * 8) + 5
+            sta CHARSET + (139 * 8) + 6
+            sta CHARSET + (139 * 8) + 7
+
+            ; Character 140 - Half block top
+            lda #%11111111
+            sta CHARSET + (140 * 8) + 0
+            sta CHARSET + (140 * 8) + 1
+            sta CHARSET + (140 * 8) + 2
+            sta CHARSET + (140 * 8) + 3
+            lda #%00000000
+            sta CHARSET + (140 * 8) + 4
+            sta CHARSET + (140 * 8) + 5
+            sta CHARSET + (140 * 8) + 6
+            sta CHARSET + (140 * 8) + 7
+
+            ; Character 141 - Half block bottom
+            lda #%00000000
+            sta CHARSET + (141 * 8) + 0
+            sta CHARSET + (141 * 8) + 1
+            sta CHARSET + (141 * 8) + 2
+            sta CHARSET + (141 * 8) + 3
+            lda #%11111111
+            sta CHARSET + (141 * 8) + 4
+            sta CHARSET + (141 * 8) + 5
+            sta CHARSET + (141 * 8) + 6
+            sta CHARSET + (141 * 8) + 7
+
+            ; Character 142 - Centre dot (decorative)
+            lda #%00000000
+            sta CHARSET + (142 * 8) + 0
+            sta CHARSET + (142 * 8) + 1
+            lda #%00011000
+            sta CHARSET + (142 * 8) + 2
+            lda #%00111100
+            sta CHARSET + (142 * 8) + 3
+            sta CHARSET + (142 * 8) + 4
+            lda #%00011000
+            sta CHARSET + (142 * 8) + 5
+            lda #%00000000
+            sta CHARSET + (142 * 8) + 6
+            sta CHARSET + (142 * 8) + 7
 
             rts
 
@@ -5444,5 +5739,5 @@ high_scores:
             !word 0               ; Hard
 
 ; ============================================================================
-; END OF SID SYMPHONY - UNIT 31
+; END OF SID SYMPHONY - UNIT 32 (PHASE 2 COMPLETE)
 ; ============================================================================

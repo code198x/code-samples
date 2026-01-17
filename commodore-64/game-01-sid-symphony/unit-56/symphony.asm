@@ -1,15 +1,24 @@
 ; ============================================================================
-; SID SYMPHONY - Unit 31: Results Screen Enhancements
+; SID SYMPHONY - Unit 56: Loading Screen
 ; ============================================================================
-; Enhancing the results screen with performance grades (S/A/B/C/D), accuracy
-; percentage, best streak display, and improved statistics layout.
+; This unit explores loading screens - the visual display shown while a game
+; loads from tape or disk. We explain the concept without implementing it,
+; as our game runs directly from memory in the emulator.
 ;
-; New concepts: Grade calculation, percentage display, enhanced UI layout
+; CONCEPTS COVERED:
+; - Why loading screens exist (tape/disk wait times)
+; - IRQ-driven loaders that show graphics while loading
+; - Turbo loader integration techniques
+; - Professional polish: music during loading
+;
+; OUR APPROACH:
+; - Game runs from memory (no loading wait)
+; - Educational: understand the technique for distribution
+; - Future: could add loading screen for .d64 disk image release
 ;
 ; Controls: Z = Track 1, X = Track 2, C = Track 3
 ;           Up/Down = Song selection, Left/Right = Difficulty
-;           P = Toggle practice mode, +/- = Speed adjustment
-;           E = Toggle endless mode
+;           P = Pause during gameplay, O = Options from menu
 ;           Fire/Space = Start game
 ; ============================================================================
 
@@ -20,6 +29,14 @@
 ; Screenshot mode - set to 1 to skip title and show menu immediately
 ; Used for automated screenshot capture. Override with: acme -DSCREENSHOT_MODE=1
 !ifndef SCREENSHOT_MODE { SCREENSHOT_MODE = 0 }
+
+; Video mode - set to 1 to skip title AND auto-start gameplay on first song
+; Used for automated video capture. Override with: acme -DVIDEO_MODE=1
+!ifndef VIDEO_MODE { VIDEO_MODE = 0 }
+
+; Pause screenshot mode - set to 1 to show pause screen for screenshots
+; Used for Unit 47 screenshot. Override with: acme -DPAUSE_SCREENSHOT_MODE=1
+!ifndef PAUSE_SCREENSHOT_MODE { PAUSE_SCREENSHOT_MODE = 0 }
 
 ; SID Voice Settings (for note playback)
 VOICE1_WAVE = $21               ; Sawtooth for track 1
@@ -62,6 +79,18 @@ MENU_MOVE_FREQ    = $10         ; Lower pitch for cursor move
 MENU_MOVE_WAVE    = $11         ; Triangle (soft)
 MENU_MOVE_AD      = $00         ; Instant
 MENU_MOVE_SR      = $40         ; Very short
+
+; Menu back sound (Unit 43)
+MENU_BACK_FREQ    = $08         ; Lower pitch for back
+MENU_BACK_WAVE    = $11         ; Triangle (soft)
+MENU_BACK_AD      = $00         ; Instant
+MENU_BACK_SR      = $40         ; Very short
+
+; Game over stinger (Unit 43)
+GAMEOVER_FREQ     = $06         ; Low, somber
+GAMEOVER_WAVE     = $11         ; Triangle
+GAMEOVER_AD       = $09         ; Slow attack
+GAMEOVER_SR       = $A0         ; Long release
 
 ; Visual Settings
 BORDER_COL  = 0
@@ -233,6 +262,11 @@ STATE_MENU    = 1               ; Song selection menu
 STATE_PLAYING = 2               ; Gameplay
 STATE_RESULTS = 3               ; Success results
 STATE_GAMEOVER = 4              ; Failure game over
+STATE_ATTRACT = 5               ; Attract mode / demo
+STATE_OPTIONS = 6               ; Options screen (Unit 46)
+
+; Attract mode settings
+IDLE_THRESHOLD = 250            ; Frames before attract (5 seconds at 50fps)
 
 ; ============================================================================
 ; MEMORY MAP
@@ -264,12 +298,16 @@ SID_V2_SR   = $D40D
 
 SID_V3_FREQ_LO = $D40E
 SID_V3_FREQ_HI = $D40F
+SID_V3_PWLO = $D410
 SID_V3_PWHI = $D411
 SID_V3_CTRL = $D412
 SID_V3_AD   = $D413
 SID_V3_SR   = $D414
 
-SID_VOLUME  = $D418
+SID_FILT_LO = $D415             ; Filter cutoff low (Unit 41)
+SID_FILT_HI = $D416             ; Filter cutoff high
+SID_RESON   = $D417             ; Resonance + filter routing
+SID_VOLUME  = $D418             ; Mode/Volume
 
 ; CIA keyboard and joystick
 CIA1_PRA    = $DC00
@@ -300,6 +338,18 @@ CHAR_BAR_EMPTY = 132
 CHAR_CURSOR = 62                ; > character for menu cursor
 CHAR_ARROW_L = 60               ; < for difficulty
 CHAR_ARROW_R = 62               ; > for difficulty
+
+; Logo characters (for title screen design)
+CHAR_LOGO_TL = 133              ; Top-left corner
+CHAR_LOGO_TR = 134              ; Top-right corner
+CHAR_LOGO_BL = 135              ; Bottom-left corner
+CHAR_LOGO_BR = 136              ; Bottom-right corner
+CHAR_LOGO_H  = 137              ; Horizontal bar
+CHAR_LOGO_V  = 138              ; Vertical bar
+CHAR_LOGO_FULL = 139            ; Full block
+CHAR_LOGO_HALF_T = 140          ; Half block top
+CHAR_LOGO_HALF_B = 141          ; Half block bottom
+CHAR_LOGO_DOT = 142             ; Centre dot (for decorative)
 
 ; Note settings
 MAX_NOTES   = 8                 ; Maximum simultaneous notes
@@ -349,6 +399,70 @@ section_bonus = $21             ; Accumulated section bonus points
 notes_hit     = $22             ; Total notes hit (for accuracy calc)
 current_grade = $23             ; Current performance grade letter (screen code)
 current_grade_col = $24         ; Colour for current grade
+title_anim_frame = $25          ; Title screen animation frame counter
+idle_timer       = $26          ; Frames since last input (for attract mode)
+attract_note_idx = $27          ; Demo playback note index
+attract_timer    = $28          ; Demo timing counter
+perfect_effect   = $29          ; Perfect hit effect countdown
+perfect_track    = $2A          ; Which track showed last perfect (1-3)
+good_effect      = $2B          ; Good hit effect countdown
+good_track       = $2C          ; Which track showed last good (1-3)
+miss_effect      = $2D          ; Miss effect countdown
+; miss_track is already defined earlier at $0A
+screen_shake     = $2E          ; Screen shake countdown
+bg_cycle         = $2F          ; Background colour cycle counter (Unit 40)
+bg_intensity     = $30          ; Background intensity level (0-3, based on combo)
+voice_callout    = $31          ; Voice callout countdown (Unit 41)
+voice_freq_hi    = $32          ; Current voice frequency high byte
+voice_freq_lo    = $33          ; Current voice frequency low byte
+last_milestone   = $34          ; Last milestone reached (prevents re-trigger)
+filter_sweep     = $35          ; Perfect hit filter sweep countdown (Unit 42)
+base_filter      = $36          ; Base filter cutoff (varies with combo/health)
+jingle_playing   = $37          ; Currently playing jingle (0=none, 1=victory, 2=gameover)
+jingle_pos       = $38          ; Position in jingle data
+jingle_timer     = $39          ; Frames until next note
+results_phase    = $3A          ; Results animation phase (Unit 44)
+results_timer    = $3B          ; Timer for current phase
+display_score_lo = $3C          ; Currently displayed score (animating up)
+display_score_hi = $3D          ; High byte of displayed score
+new_high_score   = $3E          ; Flag: 1 = achieved new high score
+grade_flash      = $3F          ; Grade flash animation counter
+
+; Unit 45: High Score Table Variables
+name_entry_mode  = $40          ; 1 = currently entering name
+name_cursor      = $41          ; Current letter position (0-2)
+name_char_0      = $42          ; First letter of name
+name_char_1      = $43          ; Second letter
+name_char_2      = $44          ; Third letter
+name_flash       = $45          ; Flash timer for current letter
+hs_table_rank    = $46          ; Rank achieved (0-4, or $FF if not in top 5)
+hs_temp          = $47          ; Temp storage for table operations
+
+; Unit 46: Options Screen Variables
+options_cursor   = $48          ; Options menu cursor position (0-3)
+sound_test_idx   = $49          ; Current sound in sound test (0-8)
+options_state    = $4A          ; 0=menu, 1=sound test, 2=stats
+
+; Unit 47: Pause Functionality Variables
+game_paused      = $4B          ; 1 = game is paused
+pause_cursor     = $4C          ; Pause menu cursor (0=Resume, 1=Restart, 2=Quit)
+countdown_value  = $4D          ; Resume countdown (3, 2, 1, 0)
+countdown_timer  = $4E          ; Frames remaining for current countdown number
+
+; Unit 50: Shared Temporary Workspace
+; These variables can be reused by any routine that doesn't call other routines
+; using them. Saves allocating separate temps for each routine.
+temp_a           = $50          ; General purpose temp A
+temp_b           = $51          ; General purpose temp B
+temp_c           = $52          ; General purpose temp C
+work_lo          = $53          ; 16-bit workspace low byte
+work_hi          = $54          ; 16-bit workspace high byte
+
+; Zero page summary (Unit 50):
+; $02-$4E: Game state variables (77 bytes)
+; $50-$54: Shared workspace (5 bytes)
+; $FB-$FD: Pointer/temp workspace (3 bytes)
+; Total used: 85 bytes of 254 available (33%)
 
 ; ----------------------------------------------------------------------------
 ; BASIC Stub
@@ -383,24 +497,71 @@ start:
             lda #NUM_SPEEDS-1       ; Start at 1.0x (normal speed)
             sta speed_setting
 
-!if SCREENSHOT_MODE = 1 {
+!if PAUSE_SCREENSHOT_MODE = 1 {
+            ; Pause screenshot mode: start game and immediately pause
+            jsr show_menu
+            jsr menu_fire_pressed
+            ; Now in STATE_PLAYING - pause immediately
+            jsr pause_game
+            ; State is STATE_PLAYING with game_paused = 1
+} else {
+  !if VIDEO_MODE = 1 {
+            ; Video mode: skip title, start first song immediately
+            ; Initialize menu (sets cursor_pos = 0 for first song)
+            jsr show_menu
+            ; Trigger fire pressed to start the game
+            jsr menu_fire_pressed
+            ; State is now STATE_PLAYING
+  } else {
+    !if SCREENSHOT_MODE = 1 {
             ; Screenshot mode: skip title, go to menu
             jsr show_menu
             lda #STATE_MENU
             sta game_state
-} else {
+    } else {
             ; Normal mode: show title screen
             jsr show_title
             lda #STATE_TITLE
             sta game_state
+    }
+  }
 }
 
+; ============================================================================
+; MAIN LOOP - Raster Timing (Unit 52)
+; ============================================================================
+; The VIC-II draws the screen line by line, 50 times per second (PAL).
+; The current line being drawn is in $D012 (raster register).
+;
+; PAL screen layout:
+; Lines 0-50:     Top border (not visible on most TVs)
+; Lines 51-250:   Visible screen area (200 lines)
+; Lines 251-311:  Bottom border and vertical blank
+;
+; We sync to line 255 ($FF) because:
+; 1. It's in the bottom border - safe to update screen memory
+; 2. All visible content has been drawn this frame
+; 3. We have until line 50 next frame before visible drawing starts
+;
+; This gives us the entire vertical blank period (~4,500 cycles) plus
+; the top border period for time-critical updates.
+;
+; POLLING vs INTERRUPTS:
+; - Polling (our approach): Simple, predictable, sufficient for our needs
+; - Interrupts: More complex, but frees CPU during wait period
+;
+; For a rhythm game with 16% CPU usage, polling is the right choice.
+; ============================================================================
+
 main_loop:
+            ; Unit 52: Wait for raster line 255 (bottom border)
+            ; This ensures all screen updates happen during vertical blank
             lda #$FF
 wait_raster:
-            cmp $D012
-            bne wait_raster
+            cmp $D012               ; Compare with current raster line
+            bne wait_raster         ; Loop until we hit line 255
 
+            ; Unit 51: State dispatch - most common states checked first
             lda game_state
             cmp #STATE_TITLE
             beq do_title
@@ -410,10 +571,22 @@ wait_raster:
             beq do_playing
             cmp #STATE_RESULTS
             beq do_results
+            cmp #STATE_ATTRACT
+            beq do_attract
+            cmp #STATE_OPTIONS
+            beq do_options
             jmp do_gameover
 
 do_title:
             jsr update_title
+            jmp main_loop
+
+do_attract:
+            jsr update_attract
+            jmp main_loop
+
+do_options:
+            jsr update_options
             jmp main_loop
 
 do_menu:
@@ -453,70 +626,207 @@ clear_title:
             inx
             bne clear_title
 
-            ; Draw big title "SID SYMPHONY"
+            ; ----------------------------------------
+            ; Draw decorative top border (row 2)
+            ; ----------------------------------------
             ldx #0
-draw_title_text:
-            lda title_big,x
-            beq draw_title_done
+draw_top_border:
+            lda logo_top_border,x
+            beq draw_top_done
+            sta SCREEN + (2 * 40) + 10,x
+            lda #6              ; Blue
+            sta COLRAM + (2 * 40) + 10,x
+            inx
+            jmp draw_top_border
+draw_top_done:
+
+            ; ----------------------------------------
+            ; Draw logo row 1 (row 4) - using block chars
+            ; ----------------------------------------
+            ldx #0
+draw_logo_row1:
+            lda logo_row1,x
+            beq draw_logo1_done
+            sta SCREEN + (4 * 40) + 12,x
+            lda #14             ; Light blue
+            sta COLRAM + (4 * 40) + 12,x
+            inx
+            jmp draw_logo_row1
+draw_logo1_done:
+
+            ; ----------------------------------------
+            ; Draw logo row 2 (row 5)
+            ; ----------------------------------------
+            ldx #0
+draw_logo_row2:
+            lda logo_row2,x
+            beq draw_logo2_done
+            sta SCREEN + (5 * 40) + 12,x
+            lda #14             ; Light blue
+            sta COLRAM + (5 * 40) + 12,x
+            inx
+            jmp draw_logo_row2
+draw_logo2_done:
+
+            ; ----------------------------------------
+            ; Draw logo row 3 (row 6)
+            ; ----------------------------------------
+            ldx #0
+draw_logo_row3:
+            lda logo_row3,x
+            beq draw_logo3_done
+            sta SCREEN + (6 * 40) + 12,x
+            lda #6              ; Blue
+            sta COLRAM + (6 * 40) + 12,x
+            inx
+            jmp draw_logo_row3
+draw_logo3_done:
+
+            ; ----------------------------------------
+            ; Draw "SYMPHONY" text (row 8)
+            ; ----------------------------------------
+            ldx #0
+draw_symphony:
+            lda symphony_text,x
+            beq draw_symphony_done
             sta SCREEN + (8 * 40) + 14,x
-            lda #TITLE_COL
+            lda #1              ; White
             sta COLRAM + (8 * 40) + 14,x
             inx
-            jmp draw_title_text
-draw_title_done:
+            jmp draw_symphony
+draw_symphony_done:
 
-            ; Draw subtitle "A RHYTHM GAME"
+            ; ----------------------------------------
+            ; Draw decorative separator (row 10)
+            ; ----------------------------------------
+            ldx #0
+draw_separator:
+            lda separator_text,x
+            beq draw_sep_done
+            sta SCREEN + (10 * 40) + 10,x
+            lda #11             ; Dark grey
+            sta COLRAM + (10 * 40) + 10,x
+            inx
+            jmp draw_separator
+draw_sep_done:
+
+            ; ----------------------------------------
+            ; Draw "A RHYTHM GAME" subtitle (row 12)
+            ; ----------------------------------------
             ldx #0
 draw_subtitle:
             lda subtitle_text,x
             beq draw_subtitle_done
-            sta SCREEN + (10 * 40) + 13,x
+            sta SCREEN + (12 * 40) + 13,x
             lda #SUBTITLE_COL
-            sta COLRAM + (10 * 40) + 13,x
+            sta COLRAM + (12 * 40) + 13,x
             inx
             jmp draw_subtitle
 draw_subtitle_done:
 
-            ; Draw controls
+            ; ----------------------------------------
+            ; Draw controls info (row 15)
+            ; ----------------------------------------
             ldx #0
 draw_controls:
             lda controls_text,x
             beq draw_controls_done
-            sta SCREEN + (14 * 40) + 11,x
-            lda #11
-            sta COLRAM + (14 * 40) + 11,x
+            sta SCREEN + (15 * 40) + 10,x
+            lda #11             ; Dark grey
+            sta COLRAM + (15 * 40) + 10,x
             inx
             jmp draw_controls
 draw_controls_done:
 
-            ; Draw track info
+            ; ----------------------------------------
+            ; Draw track keys (row 17)
+            ; ----------------------------------------
             ldx #0
-draw_track_info:
-            lda track_info,x
-            beq draw_track_done
-            sta SCREEN + (16 * 40) + 9,x
-            lda #11
-            sta COLRAM + (16 * 40) + 9,x
+draw_track_keys:
+            lda track_keys_text,x
+            beq draw_keys_done
+            sta SCREEN + (17 * 40) + 8,x
+            lda #15             ; Light grey
+            sta COLRAM + (17 * 40) + 8,x
             inx
-            jmp draw_track_info
-draw_track_done:
+            jmp draw_track_keys
+draw_keys_done:
 
-            ; Draw "PRESS FIRE TO START"
+            ; ----------------------------------------
+            ; Draw "PRESS FIRE TO START" (row 21)
+            ; ----------------------------------------
             ldx #0
 draw_press_fire:
             lda press_fire_text,x
             beq draw_press_done
-            sta SCREEN + (20 * 40) + 10,x
+            sta SCREEN + (21 * 40) + 10,x
             lda #7              ; Yellow
-            sta COLRAM + (20 * 40) + 10,x
+            sta COLRAM + (21 * 40) + 10,x
             inx
             jmp draw_press_fire
 draw_press_done:
 
+            ; ----------------------------------------
+            ; Draw version (row 24)
+            ; ----------------------------------------
+            ldx #0
+draw_version:
+            lda version_text,x
+            beq draw_version_done
+            sta SCREEN + (24 * 40) + 14,x
+            lda #11             ; Dark grey
+            sta COLRAM + (24 * 40) + 14,x
+            inx
+            jmp draw_version
+draw_version_done:
+
             rts
 
-title_big:
-            !scr "sid symphony"
+; Logo data using custom block characters
+; Creates a stylized "SID" in large block letters
+
+logo_top_border:
+            !byte CHAR_LOGO_TL, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_TR
+            !byte 0
+
+logo_row1:
+            ; S       I       D
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_SPACE, CHAR_SPACE, CHAR_SPACE
+            !byte 0
+
+logo_row2:
+            ; S       I       D
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_LOGO_FULL, CHAR_SPACE, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_SPACE, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_SPACE, CHAR_SPACE, CHAR_SPACE
+            !byte 0
+
+logo_row3:
+            ; S       I       D
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_LOGO_FULL, CHAR_SPACE
+            !byte CHAR_SPACE, CHAR_SPACE, CHAR_SPACE, CHAR_SPACE
+            !byte 0
+
+symphony_text:
+            !scr "s y m p h o n y"
+            !byte 0
+
+separator_text:
+            !byte CHAR_LOGO_DOT, CHAR_SPACE, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H, CHAR_LOGO_H
+            !byte CHAR_LOGO_H, CHAR_LOGO_H, CHAR_SPACE, CHAR_LOGO_DOT
             !byte 0
 
 subtitle_text:
@@ -527,12 +837,16 @@ controls_text:
             !scr "controls: z / x / c"
             !byte 0
 
-track_info:
-            !scr "hit notes as they reach"
+track_keys_text:
+            !scr "hit notes as they pass the zone"
             !byte 0
 
 press_fire_text:
             !scr "press fire to start"
+            !byte 0
+
+version_text:
+            !scr "phase 4 v0.8"
             !byte 0
 
 ; ----------------------------------------------------------------------------
@@ -540,6 +854,15 @@ press_fire_text:
 ; ----------------------------------------------------------------------------
 
 update_title:
+            ; ----------------------------------------
+            ; Animate title screen
+            ; ----------------------------------------
+            jsr animate_title
+
+            ; ----------------------------------------
+            ; Check for input
+            ; ----------------------------------------
+
             ; Check for fire button (joystick port 2)
             lda CIA1_PRA
             and #$10            ; Bit 4 = fire
@@ -552,12 +875,28 @@ update_title:
             and #$10            ; Space
             beq title_fire_pressed
 
-            ; No input - stay on title
+            ; No input - increment idle timer
             lda #$FF
             sta CIA1_PRA
+
+            ; Increment idle timer and check threshold
+            inc idle_timer
+            lda idle_timer
+            cmp #IDLE_THRESHOLD
+            bcc title_no_attract
+
+            ; Idle threshold reached - start attract mode
+            jsr show_attract
+            lda #STATE_ATTRACT
+            sta game_state
+
+title_no_attract:
             rts
 
 title_fire_pressed:
+            ; Reset idle timer on any input
+            lda #0
+            sta idle_timer
             lda #$FF
             sta CIA1_PRA
 
@@ -569,6 +908,337 @@ title_fire_pressed:
             lda #STATE_MENU
             sta game_state
             rts
+
+; ----------------------------------------------------------------------------
+; Animate Title Screen
+; ----------------------------------------------------------------------------
+; Called every frame while on title. Creates visual polish:
+; - Logo colour cycles through blues
+; - "PRESS FIRE" pulses between yellow and white
+; ----------------------------------------------------------------------------
+
+animate_title:
+            ; Increment animation frame
+            inc title_anim_frame
+
+            ; ----------------------------------------
+            ; Logo colour cycling (every 8 frames)
+            ; ----------------------------------------
+            lda title_anim_frame
+            and #$18            ; Check bits 3-4 (cycle every 8-24 frames)
+            lsr
+            lsr
+            lsr                 ; Now 0, 1, 2, or 3
+            tax
+            lda logo_colours,x
+
+            ; Apply to logo row 1 (row 4)
+            ldx #15
+anim_logo1:
+            sta COLRAM + (4 * 40) + 12,x
+            dex
+            bpl anim_logo1
+
+            ; Apply to logo row 2 (row 5)
+            ldx #15
+anim_logo2:
+            sta COLRAM + (5 * 40) + 12,x
+            dex
+            bpl anim_logo2
+
+            ; ----------------------------------------
+            ; "PRESS FIRE" colour pulse (every 16 frames)
+            ; ----------------------------------------
+            lda title_anim_frame
+            and #$10            ; Toggle every 16 frames
+            beq press_fire_yellow
+            lda #1              ; White
+            jmp set_press_fire_col
+press_fire_yellow:
+            lda #7              ; Yellow
+set_press_fire_col:
+            ldx #18             ; Length of "press fire to start"
+anim_press_fire:
+            sta COLRAM + (21 * 40) + 10,x
+            dex
+            bpl anim_press_fire
+
+            rts
+
+; Logo colour cycle table (blues and cyan)
+logo_colours:
+            !byte 14            ; Light blue
+            !byte 6             ; Blue
+            !byte 3             ; Cyan
+            !byte 14            ; Light blue
+
+; ----------------------------------------------------------------------------
+; Attract Mode
+; ----------------------------------------------------------------------------
+; Auto-plays a demo when the title screen is idle for too long.
+; Demonstrates the game to entice players. Any input returns to title.
+; ----------------------------------------------------------------------------
+
+show_attract:
+            ; Set up for demo playback
+            lda #0
+            sta attract_note_idx
+            sta attract_timer
+            sta score_lo
+            sta score_hi
+            sta combo
+            sta miss_count
+            sta notes_hit
+
+            ; Use song 1 (easiest) for demo
+            lda #0
+            sta selected_song
+            sta song_pos
+            sta song_pos_hi
+            sta frame_count
+
+            ; Initialise health for display
+            lda #HEALTH_START
+            sta health
+
+            ; Set up screen (clear, draw tracks, hit zones)
+            jsr init_screen
+
+            ; Initialise notes array
+            jsr init_notes
+
+            ; Show demo overlay message at top
+            ldx #0
+draw_demo_text:
+            lda demo_overlay_text,x
+            beq draw_demo_done
+            sta SCREEN + (0 * 40) + 16,x
+            lda #7              ; Yellow
+            sta COLRAM + (0 * 40) + 16,x
+            inx
+            jmp draw_demo_text
+draw_demo_done:
+
+            ; Show "PRESS ANY KEY" message
+            ldx #0
+draw_press_any:
+            lda press_any_text,x
+            beq draw_press_any_done
+            sta SCREEN + (24 * 40) + 11,x
+            lda #1              ; White (flashing later)
+            sta COLRAM + (24 * 40) + 11,x
+            inx
+            jmp draw_press_any
+draw_press_any_done:
+
+            rts
+
+; ----------------------------------------------------------------------------
+; Update Attract Mode
+; ----------------------------------------------------------------------------
+; Runs demo playback and checks for any input to exit.
+; ----------------------------------------------------------------------------
+
+update_attract:
+            ; ----------------------------------------
+            ; Check for any input to exit attract mode
+            ; ----------------------------------------
+
+            ; Check joystick (any direction or fire)
+            lda CIA1_PRA
+            and #$1F            ; Check all joystick bits
+            cmp #$1F            ; All released?
+            bne attract_exit
+
+            ; Check common keys (space, return, F-keys)
+            lda #$7F
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$10            ; Space
+            beq attract_exit
+
+            lda #$FF
+            sta CIA1_PRA
+
+            ; ----------------------------------------
+            ; Animate "PRESS ANY KEY" text
+            ; ----------------------------------------
+            inc title_anim_frame
+            lda title_anim_frame
+            and #$10
+            beq attract_white
+            lda #7              ; Yellow
+            jmp attract_set_press
+attract_white:
+            lda #1              ; White
+attract_set_press:
+            ldx #16             ; "press any key" length
+attract_press_loop:
+            sta COLRAM + (24 * 40) + 11,x
+            dex
+            bpl attract_press_loop
+
+            ; ----------------------------------------
+            ; Run demo playback
+            ; ----------------------------------------
+            jsr demo_playback
+
+            rts
+
+attract_exit:
+            lda #$FF
+            sta CIA1_PRA
+
+            ; Reset idle timer
+            lda #0
+            sta idle_timer
+            sta title_anim_frame
+
+            ; Return to title screen
+            jsr show_title
+            lda #STATE_TITLE
+            sta game_state
+            rts
+
+; ----------------------------------------------------------------------------
+; Demo Playback
+; ----------------------------------------------------------------------------
+; Simulates gameplay using pre-recorded note patterns.
+; Notes move horizontally from right (column 37) to left (hit zone at column 2-6).
+; Auto-hits notes when they reach the hit zone.
+; ----------------------------------------------------------------------------
+
+demo_playback:
+            ; Increment demo timer
+            inc attract_timer
+
+            ; Check if time to spawn a demo note (every 16 frames)
+            lda attract_timer
+            and #$0F
+            bne demo_update_notes
+
+            ; Spawn note from demo pattern
+            ldx attract_note_idx
+            cpx #DEMO_PATTERN_LEN
+            bcc demo_spawn_note
+
+            ; Pattern complete - restart
+            lda #0
+            sta attract_note_idx
+            tax
+
+demo_spawn_note:
+            lda demo_pattern,x
+            beq demo_no_spawn   ; 0 = no note this beat
+
+            ; Find free note slot
+            ldy #0
+demo_find_slot:
+            lda note_track,y
+            beq demo_use_slot   ; 0 = empty slot
+            iny
+            cpy #MAX_NOTES
+            bcc demo_find_slot
+            jmp demo_no_spawn   ; No free slots
+
+demo_use_slot:
+            ; Set track from demo pattern (1, 2, or 3)
+            lda demo_pattern,x
+            sta note_track,y
+
+            ; Start at right edge
+            lda #NOTE_SPAWN_COL
+            sta note_col,y
+
+            ; Draw the new note
+            tya
+            pha
+            txa
+            pha
+            tya
+            tax
+            jsr draw_note
+            pla
+            tax
+            pla
+            tay
+
+demo_no_spawn:
+            inc attract_note_idx
+
+demo_update_notes:
+            ; Update all active notes (move left, check for hit zone)
+            ldx #0
+demo_note_loop:
+            lda note_track,x
+            beq demo_next_note  ; Skip empty slots
+
+            ; Erase note at current position
+            jsr erase_note
+
+            ; Move note left
+            dec note_col,x
+
+            ; Check if note reached hit zone (column 2-6)
+            lda note_col,x
+            cmp #HIT_ZONE_START
+            bcs demo_draw_note  ; Not at hit zone yet
+
+            ; Note reached hit zone - auto-hit it!
+            ; Remove the note
+            lda #0
+            sta note_track,x
+
+            ; Flash border briefly for feedback
+            lda #1              ; White
+            sta $D020
+
+            ; Increment score
+            inc score_lo
+
+            jmp demo_next_note
+
+demo_draw_note:
+            ; Draw note at new position
+            jsr draw_note
+
+demo_next_note:
+            inx
+            cpx #MAX_NOTES
+            bcc demo_note_loop
+
+            ; Reset border colour
+            lda #BORDER_COL
+            sta $D020
+
+            rts
+
+; Demo pattern - which track (1, 2, or 3) to spawn note on, 0 = no note
+; Simple pattern that demonstrates all 3 tracks
+demo_pattern:
+            !byte 1, 0, 2, 0    ; Track 1, pause, Track 2, pause
+            !byte 3, 0, 1, 0    ; Track 3, pause, Track 1, pause
+            !byte 1, 2, 0, 0    ; Two quick notes (tracks 1 and 2)
+            !byte 2, 3, 0, 0    ; Two more quick (tracks 2 and 3)
+            !byte 1, 0, 0, 0    ; Single notes with space
+            !byte 2, 0, 0, 0
+            !byte 3, 0, 0, 0
+            !byte 1, 0, 0, 0
+            !byte 1, 2, 3, 0    ; Rapid fire all 3 tracks
+            !byte 0, 0, 0, 0    ; Pause
+            !byte 2, 0, 3, 0    ; Alternate pattern
+            !byte 1, 0, 2, 0
+
+DEMO_PATTERN_LEN = * - demo_pattern
+
+; Attract mode overlay texts
+demo_overlay_text:
+            !scr "- demo -"
+            !byte 0
+
+press_any_text:
+            !scr "press any key"
+            !byte 0
 
 ; ----------------------------------------------------------------------------
 ; Show Song Selection Menu
@@ -1303,7 +1973,22 @@ menu_check_keys:
             and #$40                ; Column 6 = E
             beq menu_e_pressed
 
+            ; Check O key for options (row 4, column 6) - Unit 46
+            lda #$EF                ; Row 4
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$40                ; Column 6 = O
+            beq menu_o_pressed
+
             jmp menu_check_fire
+
+menu_o_pressed:
+            ; Go to options screen (Unit 46)
+            jsr play_menu_select
+            jsr show_options
+            lda #STATE_OPTIONS
+            sta game_state
+            rts
 
 menu_e_pressed:
             ; Toggle endless mode
@@ -1746,6 +2431,32 @@ init_game:
             lda #0
             sta bg_flash
             sta beat_pulse
+            sta perfect_effect
+            sta perfect_track
+            sta good_effect
+            sta good_track
+            sta miss_effect
+            sta miss_track
+            sta screen_shake
+            sta bg_cycle
+            sta bg_intensity
+            sta voice_callout
+            sta voice_freq_hi
+            sta voice_freq_lo
+            sta last_milestone
+            sta filter_sweep
+            lda #$40                ; Default mid-range filter
+            sta base_filter
+            lda #0
+            sta jingle_playing
+            sta jingle_pos
+            sta jingle_timer
+            sta results_phase
+            sta results_timer
+            sta display_score_lo
+            sta display_score_hi
+            sta new_high_score
+            sta grade_flash
 
             ; Initialize advanced scoring variables
             sta perfect_streak
@@ -1781,6 +2492,27 @@ init_combo:
 ; ----------------------------------------------------------------------------
 
 update_playing:
+            ; Check if game is paused (Unit 47)
+            lda game_paused
+            beq up_not_paused
+            jmp update_paused
+up_not_paused:
+
+            ; Check for P key to pause (row 1, column 5)
+            lda #$FD                ; Row 1
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$20                ; Column 5 = P
+            bne up_no_pause_key
+            ; P pressed - pause the game
+            jsr pause_game
+            lda #$FF
+            sta CIA1_PRA
+            rts
+up_no_pause_key:
+            lda #$FF
+            sta CIA1_PRA
+
             inc frame_count
             lda frame_count
             cmp frames_per_beat
@@ -1806,11 +2538,25 @@ no_new_beat:
             rts
 
 ; ----------------------------------------------------------------------------
-; Update Results State
+; Update Results State (Unit 44 - Animated)
 ; ----------------------------------------------------------------------------
 
 update_results:
-            ; Check for fire to return to menu
+            ; Update animations
+            jsr update_results_animation
+
+            ; Check for fire to return to menu (only after animations done)
+            ; Phase 4 = skip name entry, done
+            ; Phase 6 = name entry complete, done
+            lda results_phase
+            cmp #4
+            beq results_check_input
+            cmp #6
+            beq results_check_input
+            jmp results_no_input    ; Still animating
+
+results_check_input:
+
             lda CIA1_PRA
             and #$10
             beq results_fire
@@ -1822,6 +2568,7 @@ update_results:
             and #$10
             beq results_fire
 
+results_no_input:
             lda #$FF
             sta CIA1_PRA
             rts
@@ -1836,6 +2583,254 @@ results_fire:
             jsr show_menu
             lda #STATE_MENU
             sta game_state
+            rts
+
+; ----------------------------------------------------------------------------
+; Update Results Animation (Unit 44)
+; ----------------------------------------------------------------------------
+; Phase 0: Wait for initial delay
+; Phase 1: Score count-up animation
+; Phase 2: Grade reveal
+; Phase 3: High score flash (if applicable)
+; Phase 4: Done - waiting for input
+; ----------------------------------------------------------------------------
+
+update_results_animation:
+            lda results_phase
+            cmp #0
+            beq results_phase_0
+            cmp #1
+            beq results_phase_1
+            cmp #2
+            bne check_phase_3
+            jmp results_phase_2
+check_phase_3:
+            cmp #3
+            bne check_phase_5
+            jmp results_phase_3
+check_phase_5:
+            cmp #5
+            bne results_anim_done
+            jmp results_phase_5
+results_anim_done:
+            ; Phase 4 or 6+ = done
+            rts
+
+results_phase_5:
+            ; Name entry mode (Unit 45)
+            jsr update_name_entry
+            jsr draw_name_entry     ; Update display
+            ; Check if entry complete
+            lda name_entry_mode
+            bne phase_5_wait        ; Still entering
+            ; Done - move to phase 6
+            lda #6
+            sta results_phase
+phase_5_wait:
+            rts
+
+results_phase_0:
+            ; Initial delay before starting
+            dec results_timer
+            bne phase_0_done
+            ; Start score count-up
+            lda #1
+            sta results_phase
+            lda #2                  ; Count up speed (frames per increment)
+            sta results_timer
+phase_0_done:
+            rts
+
+results_phase_1:
+            ; Score count-up animation
+            dec results_timer
+            bne phase_1_done
+
+            ; Reset timer
+            lda #2
+            sta results_timer
+
+            ; Increment display score toward actual score
+            lda display_score_lo
+            clc
+            adc #100                ; Count up by 100 per tick
+            sta display_score_lo
+            lda display_score_hi
+            adc #0
+            sta display_score_hi
+
+            ; Check if we've reached actual score
+            lda display_score_hi
+            cmp score_hi
+            bcc phase_1_update      ; Not there yet
+            bne phase_1_reached     ; Over, clamp it
+            lda display_score_lo
+            cmp score_lo
+            bcc phase_1_update      ; Not there yet
+
+phase_1_reached:
+            ; Clamp to actual score
+            lda score_lo
+            sta display_score_lo
+            lda score_hi
+            sta display_score_hi
+            ; Move to phase 2
+            lda #2
+            sta results_phase
+            lda #30                 ; Delay before grade reveal
+            sta results_timer
+
+phase_1_update:
+            ; Update displayed score
+            jsr update_displayed_score
+phase_1_done:
+            rts
+
+results_phase_2:
+            ; Grade reveal - flash the grade letter
+            dec results_timer
+            bne phase_2_flash
+
+            ; Done flashing, move to phase 3
+            lda #3
+            sta results_phase
+            lda new_high_score
+            beq skip_hs_flash       ; No song high score, but check leaderboard
+            lda #60                 ; Flash duration for "NEW HIGH SCORE!"
+            sta results_timer
+            jmp phase_2_done
+
+skip_hs_flash:
+            ; Skip high score flash, but go to phase 3 to check leaderboard
+            lda #1                  ; 1 frame (immediate check)
+            sta results_timer
+            jmp phase_2_done
+
+phase_2_flash:
+            ; Flash grade colour
+            lda results_timer
+            and #$04                ; Every 4 frames
+            beq phase_2_col_normal
+            lda #1                  ; White flash
+            jmp phase_2_set_col
+phase_2_col_normal:
+            lda current_grade_col
+phase_2_set_col:
+            sta COLRAM + (7 * 40) + 22
+phase_2_done:
+            rts
+
+results_phase_3:
+            ; High score flash
+            dec results_timer
+            bne phase_3_flash
+            ; Done - check if qualified for leaderboard (Unit 45)
+            jsr check_hs_table
+            lda hs_table_rank
+            cmp #$FF
+            beq phase_3_no_entry    ; Not in top 5
+            ; Qualified! Start name entry
+            jsr start_name_entry
+            jsr draw_name_entry
+            lda #5
+            sta results_phase
+            rts
+phase_3_no_entry:
+            lda #6
+            sta results_phase
+            rts
+
+phase_3_flash:
+            ; Flash "NEW HIGH SCORE!" text
+            lda results_timer
+            and #$04
+            beq phase_3_dim
+            lda #1                  ; White
+            jmp phase_3_set_col
+phase_3_dim:
+            lda #7                  ; Yellow
+phase_3_set_col:
+            ldx #14
+phase_3_loop:
+            sta COLRAM + (11 * 40) + 10,x
+            dex
+            bpl phase_3_loop
+            rts
+
+; Update the displayed score on screen
+update_displayed_score:
+            lda display_score_lo
+            sta work_lo
+            lda display_score_hi
+            sta work_hi
+
+            ldx #0
+uds_div_10000:
+            lda work_lo
+            sec
+            sbc #<10000
+            tay
+            lda work_hi
+            sbc #>10000
+            bcc uds_done_10000
+            sta work_hi
+            sty work_lo
+            inx
+            jmp uds_div_10000
+uds_done_10000:
+            txa
+            ora #$30
+            sta SCREEN + (9 * 40) + 23
+
+            ldx #0
+uds_div_1000:
+            lda work_lo
+            sec
+            sbc #<1000
+            tay
+            lda work_hi
+            sbc #>1000
+            bcc uds_done_1000
+            sta work_hi
+            sty work_lo
+            inx
+            jmp uds_div_1000
+uds_done_1000:
+            txa
+            ora #$30
+            sta SCREEN + (9 * 40) + 24
+
+            ldx #0
+uds_div_100:
+            lda work_lo
+            sec
+            sbc #100
+            bcc uds_done_100
+            sta work_lo
+            inx
+            jmp uds_div_100
+uds_done_100:
+            txa
+            ora #$30
+            sta SCREEN + (9 * 40) + 25
+
+            ldx #0
+uds_div_10:
+            lda work_lo
+            sec
+            sbc #10
+            bcc uds_done_10
+            sta work_lo
+            inx
+            jmp uds_div_10
+uds_done_10:
+            txa
+            ora #$30
+            sta SCREEN + (9 * 40) + 26
+
+            lda work_lo
+            ora #$30
+            sta SCREEN + (9 * 40) + 27
             rts
 
 ; ----------------------------------------------------------------------------
@@ -2290,6 +3285,132 @@ copy_rom_chars:
             lda #%11111111
             sta CHARSET + (132 * 8) + 7
 
+            ; ----------------------------------------
+            ; Logo characters for title screen
+            ; ----------------------------------------
+
+            ; Character 133 - Top-left corner
+            lda #%11111111
+            sta CHARSET + (133 * 8) + 0
+            sta CHARSET + (133 * 8) + 1
+            lda #%11000000
+            sta CHARSET + (133 * 8) + 2
+            sta CHARSET + (133 * 8) + 3
+            sta CHARSET + (133 * 8) + 4
+            sta CHARSET + (133 * 8) + 5
+            sta CHARSET + (133 * 8) + 6
+            sta CHARSET + (133 * 8) + 7
+
+            ; Character 134 - Top-right corner
+            lda #%11111111
+            sta CHARSET + (134 * 8) + 0
+            sta CHARSET + (134 * 8) + 1
+            lda #%00000011
+            sta CHARSET + (134 * 8) + 2
+            sta CHARSET + (134 * 8) + 3
+            sta CHARSET + (134 * 8) + 4
+            sta CHARSET + (134 * 8) + 5
+            sta CHARSET + (134 * 8) + 6
+            sta CHARSET + (134 * 8) + 7
+
+            ; Character 135 - Bottom-left corner
+            lda #%11000000
+            sta CHARSET + (135 * 8) + 0
+            sta CHARSET + (135 * 8) + 1
+            sta CHARSET + (135 * 8) + 2
+            sta CHARSET + (135 * 8) + 3
+            sta CHARSET + (135 * 8) + 4
+            sta CHARSET + (135 * 8) + 5
+            lda #%11111111
+            sta CHARSET + (135 * 8) + 6
+            sta CHARSET + (135 * 8) + 7
+
+            ; Character 136 - Bottom-right corner
+            lda #%00000011
+            sta CHARSET + (136 * 8) + 0
+            sta CHARSET + (136 * 8) + 1
+            sta CHARSET + (136 * 8) + 2
+            sta CHARSET + (136 * 8) + 3
+            sta CHARSET + (136 * 8) + 4
+            sta CHARSET + (136 * 8) + 5
+            lda #%11111111
+            sta CHARSET + (136 * 8) + 6
+            sta CHARSET + (136 * 8) + 7
+
+            ; Character 137 - Horizontal bar (top/bottom)
+            lda #%11111111
+            sta CHARSET + (137 * 8) + 0
+            sta CHARSET + (137 * 8) + 1
+            lda #%00000000
+            sta CHARSET + (137 * 8) + 2
+            sta CHARSET + (137 * 8) + 3
+            sta CHARSET + (137 * 8) + 4
+            sta CHARSET + (137 * 8) + 5
+            lda #%11111111
+            sta CHARSET + (137 * 8) + 6
+            sta CHARSET + (137 * 8) + 7
+
+            ; Character 138 - Vertical bar (left/right side)
+            lda #%11000011
+            sta CHARSET + (138 * 8) + 0
+            sta CHARSET + (138 * 8) + 1
+            sta CHARSET + (138 * 8) + 2
+            sta CHARSET + (138 * 8) + 3
+            sta CHARSET + (138 * 8) + 4
+            sta CHARSET + (138 * 8) + 5
+            sta CHARSET + (138 * 8) + 6
+            sta CHARSET + (138 * 8) + 7
+
+            ; Character 139 - Full block (for logo fill)
+            lda #%11111111
+            sta CHARSET + (139 * 8) + 0
+            sta CHARSET + (139 * 8) + 1
+            sta CHARSET + (139 * 8) + 2
+            sta CHARSET + (139 * 8) + 3
+            sta CHARSET + (139 * 8) + 4
+            sta CHARSET + (139 * 8) + 5
+            sta CHARSET + (139 * 8) + 6
+            sta CHARSET + (139 * 8) + 7
+
+            ; Character 140 - Half block top
+            lda #%11111111
+            sta CHARSET + (140 * 8) + 0
+            sta CHARSET + (140 * 8) + 1
+            sta CHARSET + (140 * 8) + 2
+            sta CHARSET + (140 * 8) + 3
+            lda #%00000000
+            sta CHARSET + (140 * 8) + 4
+            sta CHARSET + (140 * 8) + 5
+            sta CHARSET + (140 * 8) + 6
+            sta CHARSET + (140 * 8) + 7
+
+            ; Character 141 - Half block bottom
+            lda #%00000000
+            sta CHARSET + (141 * 8) + 0
+            sta CHARSET + (141 * 8) + 1
+            sta CHARSET + (141 * 8) + 2
+            sta CHARSET + (141 * 8) + 3
+            lda #%11111111
+            sta CHARSET + (141 * 8) + 4
+            sta CHARSET + (141 * 8) + 5
+            sta CHARSET + (141 * 8) + 6
+            sta CHARSET + (141 * 8) + 7
+
+            ; Character 142 - Centre dot (decorative)
+            lda #%00000000
+            sta CHARSET + (142 * 8) + 0
+            sta CHARSET + (142 * 8) + 1
+            lda #%00011000
+            sta CHARSET + (142 * 8) + 2
+            lda #%00111100
+            sta CHARSET + (142 * 8) + 3
+            sta CHARSET + (142 * 8) + 4
+            lda #%00011000
+            sta CHARSET + (142 * 8) + 5
+            lda #%00000000
+            sta CHARSET + (142 * 8) + 6
+            sta CHARSET + (142 * 8) + 7
+
             rts
 
 ; ----------------------------------------------------------------------------
@@ -2604,6 +3725,15 @@ skip_health_loss:
             lda #8
             sta border_flash
 
+            ; Trigger "MISS" text effect (Unit 39)
+            lda #6                  ; Very brief - don't compound frustration
+            sta miss_effect
+            ; miss_track is already set before handle_miss is called
+
+            ; Trigger screen shake (Unit 39)
+            lda #2                  ; Just 2 frames of shake
+            sta screen_shake
+
             ; Flash the track where miss happened
             lda miss_track
             cmp #1
@@ -2733,6 +3863,7 @@ health_not_zero:
             lda health
             bne no_game_over
             jsr show_gameover
+            jsr play_gameover_stinger   ; Unit 43
             lda #STATE_GAMEOVER
             sta game_state
 no_game_over:
@@ -2806,12 +3937,17 @@ increment_combo:
             sta max_combo
 combo_no_max:
             jsr display_combo
+
+            ; Check for combo milestones (Unit 41)
+            jsr check_milestone
+
             rts
 
 break_combo:
             lda #0
             sta combo
             jsr display_combo
+            jsr reset_milestone     ; Allow milestones to trigger again (Unit 41)
             rts
 
 display_combo:
@@ -2970,6 +4106,30 @@ bg_flash_done:
 
             ; Update beat pulse marker
             jsr update_beat_marker
+
+            ; Update perfect hit text effect (Unit 37)
+            jsr update_perfect_effect
+
+            ; Update good hit text effect (Unit 38)
+            jsr update_good_effect
+
+            ; Update miss effect (Unit 39)
+            jsr update_miss_effect
+            jsr update_screen_shake
+
+            ; Update background visuals (Unit 40)
+            jsr update_background
+
+            ; Update voice callout (Unit 41)
+            jsr update_voice_callout
+
+            ; Update game filter (Unit 42)
+            jsr update_game_filter
+            jsr update_filter_sweep
+
+            ; Update jingle playback (Unit 43)
+            jsr update_jingle
+
             rts
 
 ; ----------------------------------------------------------------------------
@@ -2977,6 +4137,7 @@ bg_flash_done:
 ; ----------------------------------------------------------------------------
 ; Shows a pulsing indicator that helps players feel the rhythm.
 ; Pulses bright on downbeat, fades through the beat.
+; Also pulses the hit zone colours for visual timing cues.
 
 update_beat_marker:
             lda beat_pulse
@@ -2992,6 +4153,19 @@ update_beat_marker:
             sta COLRAM + (HIT_ROW * 40) + 19  ; Centre of hit zone
             lda #$51                ; Filled circle character
             sta SCREEN + (HIT_ROW * 40) + 19
+
+            ; ----------------------------------------
+            ; Pulse hit zone colours (new in Unit 36)
+            ; ----------------------------------------
+            lda beat_pulse
+            lsr
+            and #$03
+            tax
+            lda hitzone_pulse_cols,x
+            sta COLRAM + (TRACK1_ROW * 40) + HIT_ZONE_COLUMN
+            sta COLRAM + (TRACK2_ROW * 40) + HIT_ZONE_COLUMN
+            sta COLRAM + (TRACK3_ROW * 40) + HIT_ZONE_COLUMN
+
             rts
 
 beat_marker_dim:
@@ -3000,6 +4174,13 @@ beat_marker_dim:
             sta COLRAM + (HIT_ROW * 40) + 19
             lda #$57                ; Empty circle character
             sta SCREEN + (HIT_ROW * 40) + 19
+
+            ; Reset hit zone to normal colour
+            lda #HIT_ZONE_COL       ; Yellow (7)
+            sta COLRAM + (TRACK1_ROW * 40) + HIT_ZONE_COLUMN
+            sta COLRAM + (TRACK2_ROW * 40) + HIT_ZONE_COLUMN
+            sta COLRAM + (TRACK3_ROW * 40) + HIT_ZONE_COLUMN
+
             rts
 
 beat_colours:
@@ -3007,6 +4188,737 @@ beat_colours:
             !byte 7                 ; Yellow
             !byte 5                 ; Green
             !byte 11                ; Dark grey (dimmest)
+
+; Hit zone pulse colours - bright to normal
+hitzone_pulse_cols:
+            !byte 1                 ; White (brightest on beat)
+            !byte 13                ; Light green
+            !byte 7                 ; Yellow
+            !byte 7                 ; Yellow (normal)
+
+; ----------------------------------------------------------------------------
+; Update Perfect Hit Effect (Unit 37)
+; ----------------------------------------------------------------------------
+; Shows "PERFECT!" text briefly at the hit track position.
+; Creates layered celebration feedback for perfect timing.
+; ----------------------------------------------------------------------------
+
+update_perfect_effect:
+            lda perfect_effect
+            beq clear_perfect_text      ; Effect ended, clear text
+
+            dec perfect_effect
+
+            ; Show "PERFECT!" text near the hit track
+            lda perfect_track
+            cmp #1
+            beq perfect_track1
+            cmp #2
+            beq perfect_track2
+            jmp perfect_track3
+
+perfect_track1:
+            ldx #0
+perfect_draw_t1:
+            lda perfect_text,x
+            beq perfect_draw_done
+            sta SCREEN + (TRACK1_ROW * 40) + 8,x
+            lda perfect_effect
+            lsr
+            and #$03
+            tay
+            lda perfect_colours,y
+            sta COLRAM + (TRACK1_ROW * 40) + 8,x
+            inx
+            jmp perfect_draw_t1
+
+perfect_track2:
+            ldx #0
+perfect_draw_t2:
+            lda perfect_text,x
+            beq perfect_draw_done
+            sta SCREEN + (TRACK2_ROW * 40) + 8,x
+            lda perfect_effect
+            lsr
+            and #$03
+            tay
+            lda perfect_colours,y
+            sta COLRAM + (TRACK2_ROW * 40) + 8,x
+            inx
+            jmp perfect_draw_t2
+
+perfect_track3:
+            ldx #0
+perfect_draw_t3:
+            lda perfect_text,x
+            beq perfect_draw_done
+            sta SCREEN + (TRACK3_ROW * 40) + 8,x
+            lda perfect_effect
+            lsr
+            and #$03
+            tay
+            lda perfect_colours,y
+            sta COLRAM + (TRACK3_ROW * 40) + 8,x
+            inx
+            jmp perfect_draw_t3
+
+perfect_draw_done:
+            rts
+
+clear_perfect_text:
+            ; Clear "PERFECT!" text from all tracks (may have switched tracks)
+            ldx #7
+clear_perfect_loop:
+            lda #CHAR_SPACE
+            sta SCREEN + (TRACK1_ROW * 40) + 8,x
+            sta SCREEN + (TRACK2_ROW * 40) + 8,x
+            sta SCREEN + (TRACK3_ROW * 40) + 8,x
+            dex
+            bpl clear_perfect_loop
+            rts
+
+; "PERFECT!" text (8 characters)
+perfect_text:
+            !scr "perfect!"
+            !byte 0
+
+; Colour cycle for perfect text (bright to normal)
+perfect_colours:
+            !byte 1                 ; White
+            !byte 7                 ; Yellow
+            !byte 13                ; Light green
+            !byte 5                 ; Green
+
+; ----------------------------------------------------------------------------
+; Update Good Hit Effect (Unit 38)
+; ----------------------------------------------------------------------------
+; Shows "GOOD" text briefly at the hit track position.
+; Uses cooler colours (greens/cyans) to distinguish from perfect.
+; ----------------------------------------------------------------------------
+
+update_good_effect:
+            lda good_effect
+            beq clear_good_text         ; Effect ended, clear text
+
+            dec good_effect
+
+            ; Show "GOOD" text near the hit track
+            lda good_track
+            cmp #1
+            beq good_track1
+            cmp #2
+            beq good_track2
+            jmp good_track3
+
+good_track1:
+            ldx #0
+good_draw_t1:
+            lda good_text,x
+            beq good_draw_done
+            sta SCREEN + (TRACK1_ROW * 40) + 8,x
+            lda good_effect
+            lsr
+            and #$03
+            tay
+            lda good_colours,y
+            sta COLRAM + (TRACK1_ROW * 40) + 8,x
+            inx
+            jmp good_draw_t1
+
+good_track2:
+            ldx #0
+good_draw_t2:
+            lda good_text,x
+            beq good_draw_done
+            sta SCREEN + (TRACK2_ROW * 40) + 8,x
+            lda good_effect
+            lsr
+            and #$03
+            tay
+            lda good_colours,y
+            sta COLRAM + (TRACK2_ROW * 40) + 8,x
+            inx
+            jmp good_draw_t2
+
+good_track3:
+            ldx #0
+good_draw_t3:
+            lda good_text,x
+            beq good_draw_done
+            sta SCREEN + (TRACK3_ROW * 40) + 8,x
+            lda good_effect
+            lsr
+            and #$03
+            tay
+            lda good_colours,y
+            sta COLRAM + (TRACK3_ROW * 40) + 8,x
+            inx
+            jmp good_draw_t3
+
+good_draw_done:
+            rts
+
+clear_good_text:
+            ; Clear "GOOD" text from all tracks
+            ldx #3                  ; 4 characters
+clear_good_loop:
+            lda #CHAR_SPACE
+            sta SCREEN + (TRACK1_ROW * 40) + 8,x
+            sta SCREEN + (TRACK2_ROW * 40) + 8,x
+            sta SCREEN + (TRACK3_ROW * 40) + 8,x
+            dex
+            bpl clear_good_loop
+            rts
+
+; "GOOD" text (4 characters)
+good_text:
+            !scr "good"
+            !byte 0
+
+; Colour cycle for good text (cooler colours than perfect)
+good_colours:
+            !byte 3                 ; Cyan
+            !byte 13                ; Light green
+            !byte 5                 ; Green
+            !byte 11                ; Dark grey
+
+; ----------------------------------------------------------------------------
+; Update Miss Effect (Unit 39)
+; ----------------------------------------------------------------------------
+; Shows "MISS" text briefly at the missed track position.
+; Uses red colour scheme for negative feedback.
+; Intentionally brief to avoid compounding player frustration.
+; ----------------------------------------------------------------------------
+
+update_miss_effect:
+            lda miss_effect
+            beq clear_miss_text         ; Effect ended, clear text
+
+            dec miss_effect
+
+            ; Show "MISS" text near the missed track
+            lda miss_track
+            cmp #1
+            beq miss_track1
+            cmp #2
+            beq miss_track2
+            jmp miss_track3
+
+miss_track1:
+            ldx #0
+miss_draw_t1:
+            lda miss_text,x
+            beq miss_draw_done
+            sta SCREEN + (TRACK1_ROW * 40) + 8,x
+            lda #2                  ; Red
+            sta COLRAM + (TRACK1_ROW * 40) + 8,x
+            inx
+            jmp miss_draw_t1
+
+miss_track2:
+            ldx #0
+miss_draw_t2:
+            lda miss_text,x
+            beq miss_draw_done
+            sta SCREEN + (TRACK2_ROW * 40) + 8,x
+            lda #2                  ; Red
+            sta COLRAM + (TRACK2_ROW * 40) + 8,x
+            inx
+            jmp miss_draw_t2
+
+miss_track3:
+            ldx #0
+miss_draw_t3:
+            lda miss_text,x
+            beq miss_draw_done
+            sta SCREEN + (TRACK3_ROW * 40) + 8,x
+            lda #2                  ; Red
+            sta COLRAM + (TRACK3_ROW * 40) + 8,x
+            inx
+            jmp miss_draw_t3
+
+miss_draw_done:
+            rts
+
+clear_miss_text:
+            ; Clear "MISS" text from all tracks
+            ldx #3                  ; 4 characters
+clear_miss_loop:
+            lda #CHAR_SPACE
+            sta SCREEN + (TRACK1_ROW * 40) + 8,x
+            sta SCREEN + (TRACK2_ROW * 40) + 8,x
+            sta SCREEN + (TRACK3_ROW * 40) + 8,x
+            dex
+            bpl clear_miss_loop
+            rts
+
+; "MISS" text (4 characters)
+miss_text:
+            !scr "miss"
+            !byte 0
+
+; ----------------------------------------------------------------------------
+; Update Screen Shake (Unit 39)
+; ----------------------------------------------------------------------------
+; Brief horizontal shake on miss. Uses VIC-II fine scroll register.
+; Effect is very short (1-2 frames) to avoid motion sickness.
+; ----------------------------------------------------------------------------
+
+update_screen_shake:
+            lda screen_shake
+            beq shake_done
+
+            dec screen_shake
+
+            ; Apply horizontal offset using VIC-II fine scroll
+            ; $D016 bit 0-2 control fine X scroll (0-7)
+            lda $D016
+            and #$F8            ; Clear scroll bits
+            ora #$02            ; Offset by 2 pixels
+            sta $D016
+
+            rts
+
+shake_done:
+            ; Reset scroll to normal
+            lda $D016
+            and #$F8            ; Clear scroll bits
+            sta $D016
+            rts
+
+; ----------------------------------------------------------------------------
+; Update Background Visuals (Unit 40)
+; ----------------------------------------------------------------------------
+; Subtle colour cycling during gameplay. Intensity increases with combo.
+; Only updates when bg_flash is not active (don't override hit effects).
+; ----------------------------------------------------------------------------
+
+update_background:
+            ; Skip if bg_flash is active (hit effect in progress)
+            lda bg_flash
+            bne bg_skip_cycle
+
+            ; Increment cycle counter (slow cycling)
+            inc bg_cycle
+            lda bg_cycle
+            and #$0F                ; Only update every 16 frames
+            bne bg_skip_cycle
+
+            ; Calculate intensity based on combo multiplier
+            jsr get_multiplier      ; Returns 1-4 in A
+            sta bg_intensity        ; 1-4 based on combo
+
+            ; Get base colour from cycle position
+            lda bg_cycle
+            lsr
+            lsr
+            lsr
+            lsr                     ; Divide by 16 for slow cycle
+            and #$03                ; 4 colours in sequence
+            tax
+
+            ; Choose colour table based on intensity
+            lda bg_intensity
+            cmp #4
+            bcs bg_use_bright
+            cmp #3
+            bcs bg_use_medium
+            cmp #2
+            bcs bg_use_subtle
+            ; Fall through to darkest
+
+bg_use_darkest:
+            lda bg_colours_dark,x
+            jmp bg_set_colour
+
+bg_use_subtle:
+            lda bg_colours_subtle,x
+            jmp bg_set_colour
+
+bg_use_medium:
+            lda bg_colours_medium,x
+            jmp bg_set_colour
+
+bg_use_bright:
+            lda bg_colours_bright,x
+
+bg_set_colour:
+            sta BGCOL
+
+bg_skip_cycle:
+            rts
+
+; Background colour tables (4 colours each, cycling through dark tones)
+; Darkest - barely visible movement (1x combo)
+bg_colours_dark:
+            !byte 0                 ; Black
+            !byte 0                 ; Black
+            !byte 11                ; Dark grey
+            !byte 0                 ; Black
+
+; Subtle - hints of colour (2x combo)
+bg_colours_subtle:
+            !byte 0                 ; Black
+            !byte 11                ; Dark grey
+            !byte 6                 ; Blue
+            !byte 11                ; Dark grey
+
+; Medium - visible colour shifts (3x combo)
+bg_colours_medium:
+            !byte 11                ; Dark grey
+            !byte 6                 ; Blue
+            !byte 9                 ; Brown
+            !byte 6                 ; Blue
+
+; Bright - dramatic cycling (4x combo)
+bg_colours_bright:
+            !byte 6                 ; Blue
+            !byte 4                 ; Purple
+            !byte 2                 ; Red
+            !byte 6                 ; Blue
+
+; ----------------------------------------------------------------------------
+; Voice Callout System (Unit 41)
+; ----------------------------------------------------------------------------
+; Creates voice-like "wow" sounds on combo milestones using SID filters.
+; Uses voice 3 for callouts to avoid interrupting note playback.
+; ----------------------------------------------------------------------------
+
+; Milestone thresholds
+MILESTONE_1 = 10                ; "Nice!" at 10 combo
+MILESTONE_2 = 25                ; "Great!" at 25 combo
+MILESTONE_3 = 50                ; "Amazing!" at 50 combo
+
+check_milestone:
+            lda combo
+
+            ; Check 50 combo milestone
+            cmp #MILESTONE_3
+            bne check_25
+            lda last_milestone
+            cmp #MILESTONE_3
+            bne do_milestone_50
+            rts                     ; Already triggered
+do_milestone_50:
+            lda #MILESTONE_3
+            sta last_milestone
+            lda #$40                ; High pitch start
+            sta voice_freq_hi
+            lda #$00
+            sta voice_freq_lo
+            lda #30                 ; Longest duration
+            jmp start_callout
+
+check_25:
+            cmp #MILESTONE_2
+            bne check_10
+            lda last_milestone
+            cmp #MILESTONE_2
+            bne do_milestone_25
+            rts                     ; Already triggered
+do_milestone_25:
+            lda #MILESTONE_2
+            sta last_milestone
+            lda #$30                ; Medium pitch start
+            sta voice_freq_hi
+            lda #$00
+            sta voice_freq_lo
+            lda #24                 ; Medium duration
+            jmp start_callout
+
+check_10:
+            lda combo
+            cmp #MILESTONE_1
+            bne milestone_done
+            lda last_milestone
+            cmp #MILESTONE_1
+            bne do_milestone_10
+            rts                     ; Already triggered
+do_milestone_10:
+            lda #MILESTONE_1
+            sta last_milestone
+            lda #$20                ; Lower pitch start
+            sta voice_freq_hi
+            lda #$00
+            sta voice_freq_lo
+            lda #18                 ; Shorter duration
+
+start_callout:
+            sta voice_callout
+
+            ; Configure voice 3 for callout (doesn't interfere with note sounds)
+            ; Use pulse wave with filter for vocal quality
+            lda voice_freq_lo
+            sta SID_V3_FREQ_LO
+            lda voice_freq_hi
+            sta SID_V3_FREQ_HI
+            lda #$08                ; Pulse width for voice quality
+            sta SID_V3_PWLO
+            lda #$04
+            sta SID_V3_PWHI
+            lda #$00                ; Instant attack
+            sta SID_V3_AD
+            lda #$F8                ; Long sustain, slow release
+            sta SID_V3_SR
+
+            ; Enable filter on voice 3
+            lda #$44                ; Filter voice 3, resonance 4
+            sta SID_RESON
+            lda #$00
+            sta SID_FILT_LO
+            lda #$70                ; High cutoff for bright start
+            sta SID_FILT_HI
+            lda #$1F                ; Low-pass filter, volume 15
+            sta SID_VOLUME
+
+            ; Gate on with pulse wave
+            lda #$41                ; Pulse wave, gate on
+            sta SID_V3_CTRL
+
+milestone_done:
+            rts
+
+update_voice_callout:
+            lda voice_callout
+            beq callout_done
+
+            dec voice_callout
+            beq callout_end
+
+            ; Descending pitch creates "wow" effect
+            lda voice_freq_hi
+            sec
+            sbc #$02                ; Pitch descends
+            bcc skip_freq_update    ; Prevent underflow
+            sta voice_freq_hi
+            sta SID_V3_FREQ_HI
+
+            ; Use low byte of frequency as proxy for filter sweep
+            ; (SID filter regs are write-only, can't read them back)
+            lda voice_freq_hi
+            sta SID_FILT_HI         ; Filter follows pitch
+
+skip_freq_update:
+            jmp callout_done
+
+callout_end:
+            ; Gate off - release voice 3
+            lda #$40                ; Pulse wave, gate off
+            sta SID_V3_CTRL
+
+            ; Restore normal filter/volume settings
+            lda #$00
+            sta SID_RESON           ; No filter routing
+            lda #$0F                ; Volume 15, no filter
+            sta SID_VOLUME
+
+callout_done:
+            rts
+
+reset_milestone:
+            ; Called when combo breaks to allow re-triggering
+            lda #0
+            sta last_milestone
+            rts
+
+; ----------------------------------------------------------------------------
+; Game Filter System (Unit 42)
+; ----------------------------------------------------------------------------
+; Dynamic filter cutoff based on combo and health. High combos = brighter,
+; low health = muffled. Filter sweep on perfect hits adds momentary brightness.
+; ----------------------------------------------------------------------------
+
+update_game_filter:
+            ; Skip if voice callout is active (it manages its own filter)
+            lda voice_callout
+            bne filter_skip
+
+            ; Calculate base filter from combo multiplier
+            jsr get_multiplier      ; Returns 1-4 in A
+            asl                     ; x2
+            asl                     ; x4
+            asl                     ; x8
+            asl                     ; x16
+            clc
+            adc #$20                ; Base minimum $20
+            sta base_filter         ; $20-$60 based on combo
+
+            ; Reduce filter if health is low (danger feedback)
+            lda health
+            cmp #30                 ; Low health threshold
+            bcs filter_apply
+            ; Health is low - muffle the sound
+            lda base_filter
+            sec
+            sbc #$20                ; Reduce cutoff
+            bcs filter_store
+            lda #$10                ; Minimum cutoff
+filter_store:
+            sta base_filter
+
+filter_apply:
+            ; Apply base filter (routes voices 1+2 through filter)
+            lda #$13                ; Filter voices 1+2, resonance 1
+            sta SID_RESON
+            lda #$00
+            sta SID_FILT_LO
+            lda base_filter
+            sta SID_FILT_HI
+            lda #$1F                ; Low-pass filter, volume 15
+            sta SID_VOLUME
+
+filter_skip:
+            rts
+
+update_filter_sweep:
+            lda filter_sweep
+            beq sweep_done
+
+            dec filter_sweep
+
+            ; Boost filter cutoff temporarily
+            lda base_filter
+            clc
+            adc #$30                ; Add brightness boost
+            bcc sweep_apply
+            lda #$FF                ; Cap at maximum
+sweep_apply:
+            sta SID_FILT_HI
+
+sweep_done:
+            rts
+
+; ----------------------------------------------------------------------------
+; Sound Effects Layer (Unit 43)
+; ----------------------------------------------------------------------------
+; Complete sound effects for all game events: victory, game over, menu back.
+; Jingles play short melodic sequences using voice 3.
+; ----------------------------------------------------------------------------
+
+; Play victory jingle - ascending triumphant notes
+play_victory_jingle:
+            ; Stop any current note sounds
+            lda #$00
+            sta SID_V3_CTRL
+
+            ; Start victory sequence
+            lda #1                  ; Jingle type 1 = victory
+            sta jingle_playing
+            lda #0
+            sta jingle_pos
+            lda #1                  ; Start immediately
+            sta jingle_timer
+            rts
+
+; Play game over stinger - single low somber note
+play_gameover_stinger:
+            ; Configure voice 3 for somber tone
+            lda #GAMEOVER_FREQ
+            sta SID_V3_FREQ_LO
+            lda #$03                ; Low frequency
+            sta SID_V3_FREQ_HI
+            lda #$08
+            sta SID_V3_PWLO
+            lda #$04
+            sta SID_V3_PWHI
+            lda #GAMEOVER_AD
+            sta SID_V3_AD
+            lda #GAMEOVER_SR
+            sta SID_V3_SR
+            lda #GAMEOVER_WAVE
+            ora #$01                ; Gate on
+            sta SID_V3_CTRL
+            rts
+
+; Play menu back sound
+play_menu_back:
+            lda #MENU_BACK_FREQ
+            sta SID_V3_FREQ_LO
+            lda #$00
+            sta SID_V3_FREQ_HI
+            lda #MENU_BACK_AD
+            sta SID_V3_AD
+            lda #MENU_BACK_SR
+            sta SID_V3_SR
+            lda #MENU_BACK_WAVE
+            ora #$01                ; Gate on
+            sta SID_V3_CTRL
+            rts
+
+; Update jingle playback - called each frame
+update_jingle:
+            lda jingle_playing
+            beq jingle_done
+
+            ; Decrement timer
+            dec jingle_timer
+            bne jingle_done
+
+            ; Time for next note
+            lda jingle_playing
+            cmp #1
+            beq update_victory_jingle
+
+            ; Unknown jingle - stop
+            lda #0
+            sta jingle_playing
+            jmp jingle_done
+
+update_victory_jingle:
+            ; Get note from victory sequence
+            ldx jingle_pos
+            lda victory_notes,x
+            beq victory_end         ; 0 = end of sequence
+
+            ; Play this note
+            sta SID_V3_FREQ_HI
+            lda #$00
+            sta SID_V3_FREQ_LO
+            lda #$08
+            sta SID_V3_PWLO
+            lda #$04
+            sta SID_V3_PWHI
+            lda #$08                ; Quick attack, medium decay
+            sta SID_V3_AD
+            lda #$50                ; Short sustain
+            sta SID_V3_SR
+            lda #$41                ; Pulse, gate on
+            sta SID_V3_CTRL
+
+            ; Set duration for this note
+            lda victory_durations,x
+            sta jingle_timer
+
+            ; Advance position
+            inc jingle_pos
+            jmp jingle_done
+
+victory_end:
+            ; Jingle finished
+            lda #$40                ; Gate off
+            sta SID_V3_CTRL
+            lda #0
+            sta jingle_playing
+
+jingle_done:
+            rts
+
+; Victory jingle note data (freq high bytes, ascending)
+victory_notes:
+            !byte $10               ; C
+            !byte $14               ; E
+            !byte $18               ; G
+            !byte $20               ; C (octave up)
+            !byte $28               ; E (held)
+            !byte 0                 ; End marker
+
+; Victory jingle durations (frames per note)
+victory_durations:
+            !byte 6                 ; Quick
+            !byte 6
+            !byte 6
+            !byte 8                 ; Slightly longer
+            !byte 12                ; Hold final note
 
 ; ----------------------------------------------------------------------------
 ; Check Keys
@@ -3177,6 +5089,7 @@ check_notes_clear:
 end_song_normal:
             ; Show results
             jsr show_results
+            jsr play_victory_jingle     ; Unit 43
             lda #STATE_RESULTS
             sta game_state
 
@@ -3252,6 +5165,12 @@ award_points:
             lda #HEALTH_GOOD
             jsr increase_health
 
+            ; Trigger "GOOD" text effect (Unit 38)
+            lda #8                  ; Shorter duration than perfect
+            sta good_effect
+            lda key_pressed
+            sta good_track
+
             jmp award_done
 
 award_perfect:
@@ -3298,6 +5217,16 @@ skip_best_update:
             sta BGCOL
             lda #3                  ; Flash duration
             sta bg_flash
+
+            ; Trigger "PERFECT!" text effect (Unit 37)
+            lda #12                 ; Effect duration (frames)
+            sta perfect_effect
+            lda key_pressed         ; Which track was hit
+            sta perfect_track
+
+            ; Trigger filter sweep effect (Unit 42)
+            lda #8                  ; Brief brightness boost
+            sta filter_sweep
 
             lda #HEALTH_PERFECT
             jsr increase_health
@@ -3507,6 +5436,1372 @@ get_high_score:
             rts
 
 ; ----------------------------------------------------------------------------
+; High Score Table Routines (Unit 45)
+; ----------------------------------------------------------------------------
+
+; Check if score qualifies for global leaderboard
+; Sets hs_table_rank to 0-4 if qualified, $FF if not
+check_hs_table:
+            lda #0
+            sta hs_table_rank
+            ldx #0                  ; Start at entry 0
+
+.check_loop:
+            ; Compare score_hi with entry's high byte (offset +4 in 5-byte entry)
+            lda score_hi
+            cmp hs_table+4,x
+            bcc .try_next           ; score < entry
+            bne .found_rank         ; score > entry
+
+            ; High bytes equal, compare low bytes
+            lda score_lo
+            cmp hs_table+3,x
+            bcc .try_next           ; score < entry
+            beq .try_next           ; score = entry (not strictly greater)
+
+.found_rank:
+            ; Score beats this entry
+            rts
+
+.try_next:
+            ; Move to next entry
+            txa
+            clc
+            adc #HS_ENTRY_SIZE
+            tax
+            inc hs_table_rank
+            lda hs_table_rank
+            cmp #HS_TABLE_SIZE
+            bcc .check_loop
+
+            ; Didn't qualify
+            lda #$FF
+            sta hs_table_rank
+            rts
+
+; Insert score into high score table at hs_table_rank position
+; Call after name entry is complete
+insert_hs_entry:
+            lda hs_table_rank
+            cmp #$FF
+            beq .insert_done        ; Not in table
+
+            ; Shift entries down from position 4 to hs_table_rank+1
+            ; Work backwards from entry 4
+            ldx #(HS_TABLE_SIZE - 2) ; Start at entry 3 (will copy to 4)
+
+.shift_loop:
+            cpx hs_table_rank
+            bcc .do_insert          ; Past insertion point
+
+            ; Copy entry X to entry X+1
+            txa
+            asl                     ; ×2
+            asl                     ; ×4
+            clc
+            adc hs_table_rank       ; Add rank once more for ×5
+            ; Actually need ×5, let me recalculate
+            ; X × 5 = X × 4 + X
+            stx hs_temp
+            txa
+            asl                     ; ×2
+            asl                     ; ×4
+            clc
+            adc hs_temp             ; ×5
+            tax                     ; X = source offset
+
+            ; Copy 5 bytes from X to X+5
+            ldy #0
+.copy_byte:
+            lda hs_table,x
+            sta hs_table+5,x
+            inx
+            iny
+            cpy #5
+            bne .copy_byte
+
+            ; Move to previous entry
+            ldx hs_temp
+            dex
+            bpl .shift_loop
+
+.do_insert:
+            ; Calculate insertion offset
+            lda hs_table_rank
+            asl                     ; ×2
+            asl                     ; ×4
+            clc
+            adc hs_table_rank       ; ×5
+            tax
+
+            ; Store name
+            lda name_char_0
+            sta hs_table,x
+            lda name_char_1
+            sta hs_table+1,x
+            lda name_char_2
+            sta hs_table+2,x
+            ; Store score
+            lda score_lo
+            sta hs_table+3,x
+            lda score_hi
+            sta hs_table+4,x
+
+.insert_done:
+            rts
+
+; Initialize name entry mode
+start_name_entry:
+            lda #1
+            sta name_entry_mode
+            lda #0
+            sta name_cursor
+            lda #'A'                ; Default starting letter
+            sta name_char_0
+            sta name_char_1
+            sta name_char_2
+            lda #15
+            sta name_flash
+            rts
+
+; Update name entry input
+; Called each frame during name entry
+update_name_entry:
+            lda name_entry_mode
+            beq .entry_done
+
+            ; Update flash timer
+            dec name_flash
+            bpl .flash_ok
+            lda #15
+            sta name_flash
+.flash_ok:
+
+            ; Read joystick
+            lda $DC00
+            sta work_lo             ; Save for comparison
+
+            ; Check up (increment letter)
+            and #$01
+            bne .check_down
+            jsr name_letter_up
+            jmp .check_fire
+
+.check_down:
+            lda work_lo
+            and #$02
+            bne .check_left
+            jsr name_letter_down
+            jmp .check_fire
+
+.check_left:
+            lda work_lo
+            and #$04
+            bne .check_right
+            ; Move cursor left
+            lda name_cursor
+            beq .check_fire         ; Already at left
+            dec name_cursor
+            lda #10                 ; Brief delay
+            sta name_flash
+            jmp .check_fire
+
+.check_right:
+            lda work_lo
+            and #$08
+            bne .check_fire
+            ; Move cursor right
+            lda name_cursor
+            cmp #2
+            bcs .check_fire         ; Already at right
+            inc name_cursor
+            lda #10
+            sta name_flash
+
+.check_fire:
+            lda work_lo
+            and #$10
+            bne .entry_done         ; Fire not pressed
+
+            ; Fire pressed - confirm entry
+            lda #0
+            sta name_entry_mode
+            jsr insert_hs_entry
+            jsr play_menu_select    ; Confirmation sound
+
+.entry_done:
+            rts
+
+; Increment current letter
+name_letter_up:
+            ldx name_cursor
+            lda name_char_0,x
+            clc
+            adc #1
+            cmp #'Z'+1
+            bcc .store_up
+            lda #'A'                ; Wrap to A
+.store_up:
+            sta name_char_0,x
+            lda #8
+            sta name_flash
+            jsr play_menu_move
+            rts
+
+; Decrement current letter
+name_letter_down:
+            ldx name_cursor
+            lda name_char_0,x
+            sec
+            sbc #1
+            cmp #'A'
+            bcs .store_down
+            lda #'Z'                ; Wrap to Z
+.store_down:
+            sta name_char_0,x
+            lda #8
+            sta name_flash
+            jsr play_menu_move
+            rts
+
+; Draw name entry UI on results screen
+draw_name_entry:
+            ; Draw "ENTER NAME:" label at row 15
+            ldx #0
+.label_loop:
+            lda enter_name_text,x
+            beq .draw_letters
+            sta SCREEN + (15 * 40) + 13,x
+            lda #1                  ; White
+            sta COLRAM + (15 * 40) + 13,x
+            inx
+            bne .label_loop
+
+.draw_letters:
+            ; Draw the three letters at row 16
+            lda name_char_0
+            sta SCREEN + (16 * 40) + 18
+            lda name_char_1
+            sta SCREEN + (16 * 40) + 19
+            lda name_char_2
+            sta SCREEN + (16 * 40) + 20
+
+            ; Colour based on cursor position and flash
+            lda #7                  ; Yellow
+            sta COLRAM + (16 * 40) + 18
+            sta COLRAM + (16 * 40) + 19
+            sta COLRAM + (16 * 40) + 20
+
+            ; Flash current letter
+            lda name_flash
+            and #$08
+            beq .no_flash
+            ldx name_cursor
+            lda #1                  ; White
+            sta COLRAM + (16 * 40) + 18,x
+.no_flash:
+            rts
+
+; Draw high score table on screen
+; Shows top 5 scores with rank, name, and score
+draw_hs_table:
+            ; Draw header "HIGH SCORES" at row 3
+            ldx #0
+.header_loop:
+            lda hs_header_text,x
+            beq .draw_entries
+            sta SCREEN + (3 * 40) + 14,x
+            lda #3                  ; Cyan
+            sta COLRAM + (3 * 40) + 14,x
+            inx
+            bne .header_loop
+
+.draw_entries:
+            ; Draw 5 entries starting at row 5
+            lda #0
+            sta hs_temp             ; Entry counter
+            lda #<(SCREEN + (5 * 40) + 10)
+            sta ZP_PTR
+            lda #>(SCREEN + (5 * 40) + 10)
+            sta ZP_PTR_HI
+
+.entry_loop:
+            ; Draw rank (1-5)
+            lda hs_temp
+            clc
+            adc #'1'                ; Convert to ASCII '1'-'5'
+            ldy #0
+            sta (ZP_PTR),y
+            iny
+            lda #'.'
+            sta (ZP_PTR),y
+            iny
+            lda #' '
+            sta (ZP_PTR),y
+
+            ; Draw name (3 characters)
+            lda hs_temp
+            asl                     ; ×2
+            asl                     ; ×4
+            clc
+            adc hs_temp             ; ×5
+            tax                     ; X = table offset
+
+            ldy #3
+            lda hs_table,x
+            sta (ZP_PTR),y
+            iny
+            lda hs_table+1,x
+            sta (ZP_PTR),y
+            iny
+            lda hs_table+2,x
+            sta (ZP_PTR),y
+
+            ; Draw score (5 digits)
+            lda hs_table+3,x
+            sta work_lo
+            lda hs_table+4,x
+            sta work_hi
+
+            ; Position for score: offset 8 from start
+            ldy #8
+            jsr draw_score_at_ptr
+
+            ; Move to next row (add 40 to pointer)
+            lda ZP_PTR
+            clc
+            adc #40
+            sta ZP_PTR
+            bcc .no_carry
+            inc ZP_PTR_HI
+.no_carry:
+
+            ; Next entry
+            inc hs_temp
+            lda hs_temp
+            cmp #5
+            bcc .entry_loop
+
+            ; Colour the table
+            ldx #0
+.colour_loop:
+            lda #1                  ; White
+            sta COLRAM + (5 * 40) + 10,x
+            sta COLRAM + (6 * 40) + 10,x
+            sta COLRAM + (7 * 40) + 10,x
+            sta COLRAM + (8 * 40) + 10,x
+            sta COLRAM + (9 * 40) + 10,x
+            inx
+            cpx #20
+            bne .colour_loop
+
+            rts
+
+; Draw score from work_lo/work_hi at (ZP_PTR),y
+draw_score_at_ptr:
+            ; Convert 16-bit score to 5 decimal digits
+            ; Uses subtraction method
+
+            ; 10000s digit
+            lda #0
+            sta hs_temp
+.sub_10000:
+            lda work_lo
+            sec
+            sbc #<10000
+            tax
+            lda work_hi
+            sbc #>10000
+            bcc .done_10000
+            sta work_hi
+            stx work_lo
+            inc hs_temp
+            jmp .sub_10000
+.done_10000:
+            lda hs_temp
+            clc
+            adc #'0'
+            sta (ZP_PTR),y
+            iny
+
+            ; 1000s digit
+            lda #0
+            sta hs_temp
+.sub_1000:
+            lda work_lo
+            sec
+            sbc #<1000
+            tax
+            lda work_hi
+            sbc #>1000
+            bcc .done_1000
+            sta work_hi
+            stx work_lo
+            inc hs_temp
+            jmp .sub_1000
+.done_1000:
+            lda hs_temp
+            clc
+            adc #'0'
+            sta (ZP_PTR),y
+            iny
+
+            ; 100s digit
+            lda #0
+            sta hs_temp
+.sub_100:
+            lda work_lo
+            sec
+            sbc #100
+            bcc .done_100
+            sta work_lo
+            inc hs_temp
+            jmp .sub_100
+.done_100:
+            lda hs_temp
+            clc
+            adc #'0'
+            sta (ZP_PTR),y
+            iny
+
+            ; 10s digit
+            lda #0
+            sta hs_temp
+.sub_10:
+            lda work_lo
+            sec
+            sbc #10
+            bcc .done_10
+            sta work_lo
+            inc hs_temp
+            jmp .sub_10
+.done_10:
+            lda hs_temp
+            clc
+            adc #'0'
+            sta (ZP_PTR),y
+            iny
+
+            ; 1s digit
+            lda work_lo
+            clc
+            adc #'0'
+            sta (ZP_PTR),y
+
+            rts
+
+enter_name_text:
+            !text "ENTER NAME:"
+            !byte 0
+
+hs_header_text:
+            !text "HIGH SCORES"
+            !byte 0
+
+; ----------------------------------------------------------------------------
+; Options Screen Routines (Unit 46)
+; ----------------------------------------------------------------------------
+
+; Show the options screen
+show_options:
+            ; Clear screen
+            jsr clear_screen
+
+            ; Set colours
+            lda #6                  ; Blue
+            sta $D020
+            sta $D021
+
+            ; Draw title "OPTIONS" at row 2
+            ldx #0
+.opt_title:
+            lda options_title,x
+            beq .draw_menu_items
+            sta SCREEN + (2 * 40) + 16,x
+            lda #3                  ; Cyan
+            sta COLRAM + (2 * 40) + 16,x
+            inx
+            bne .opt_title
+
+.draw_menu_items:
+            ; Draw menu items
+            ldx #0
+.item1:
+            lda opt_sound_test,x
+            beq .item2_start
+            sta SCREEN + (6 * 40) + 12,x
+            inx
+            bne .item1
+
+.item2_start:
+            ldx #0
+.item2:
+            lda opt_high_scores,x
+            beq .item3_start
+            sta SCREEN + (8 * 40) + 12,x
+            inx
+            bne .item2
+
+.item3_start:
+            ldx #0
+.item3:
+            lda opt_stats,x
+            beq .item4_start
+            sta SCREEN + (10 * 40) + 12,x
+            inx
+            bne .item3
+
+.item4_start:
+            ldx #0
+.item4:
+            lda opt_back,x
+            beq .draw_hint
+            sta SCREEN + (14 * 40) + 12,x
+            inx
+            bne .item4
+
+.draw_hint:
+            ; Draw hint at bottom
+            ldx #0
+.hint:
+            lda opt_hint,x
+            beq .init_done
+            sta SCREEN + (23 * 40) + 8,x
+            lda #11                 ; Grey
+            sta COLRAM + (23 * 40) + 8,x
+            inx
+            bne .hint
+
+.init_done:
+            ; Colour menu items white
+            ldx #16
+.col_items:
+            lda #1                  ; White
+            sta COLRAM + (6 * 40) + 12,x
+            sta COLRAM + (8 * 40) + 12,x
+            sta COLRAM + (10 * 40) + 12,x
+            sta COLRAM + (14 * 40) + 12,x
+            dex
+            bpl .col_items
+
+            ; Initialize cursor
+            lda #0
+            sta options_cursor
+            sta options_state
+            jsr draw_options_cursor
+            rts
+
+; Update options screen
+update_options:
+            lda options_state
+            cmp #1
+            bne uo_not_st
+            jmp update_sound_test
+uo_not_st:
+            cmp #2
+            bne uo_menu_state
+            jmp update_stats_view
+uo_menu_state:
+
+            ; State 0: Menu navigation
+            ; Handle key delay
+            lda key_delay_count
+            beq uo_check_input
+            dec key_delay_count
+            jmp uo_check_fire
+
+uo_check_input:
+            ; Check joystick up
+            lda CIA1_PRA
+            and #$01
+            beq uo_up_pressed
+
+            ; Check joystick down
+            lda CIA1_PRA
+            and #$02
+            beq uo_down_pressed
+
+            jmp uo_check_fire
+
+uo_up_pressed:
+            lda options_cursor
+            beq uo_set_delay        ; Already at top
+            dec options_cursor
+            jsr play_menu_move
+            jsr draw_options_cursor
+            jmp uo_set_delay
+
+uo_down_pressed:
+            lda options_cursor
+            cmp #3
+            bcs uo_set_delay        ; Already at bottom (4 items: 0-3)
+            inc options_cursor
+            jsr play_menu_move
+            jsr draw_options_cursor
+            jmp uo_set_delay
+
+uo_set_delay:
+            lda #KEY_DELAY
+            sta key_delay_count
+
+uo_check_fire:
+            ; Check fire button
+            lda CIA1_PRA
+            and #$10
+            beq uo_fire_pressed
+
+            ; Check space bar
+            lda #$7F
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$10
+            beq uo_fire_pressed
+
+            lda #$FF
+            sta CIA1_PRA
+            rts
+
+uo_fire_pressed:
+            lda #$FF
+            sta CIA1_PRA
+            jsr play_menu_select
+
+            ; Handle selection based on cursor
+            lda options_cursor
+            cmp #0
+            beq uo_select_sound_test
+            cmp #1
+            beq uo_select_high_scores
+            cmp #2
+            beq uo_select_stats
+            ; Default: Back
+            jmp uo_go_back
+
+uo_select_sound_test:
+            lda #0
+            sta sound_test_idx
+            lda #1
+            sta options_state
+            jsr show_sound_test_ui
+            rts
+
+uo_select_high_scores:
+            jsr clear_screen
+            jsr draw_hs_table
+            ; Draw "FIRE TO RETURN" hint
+            ldx #0
+uo_hs_hint:
+            lda fire_return_text,x
+            beq uo_hs_wait
+            sta SCREEN + (20 * 40) + 12,x
+            lda #11
+            sta COLRAM + (20 * 40) + 12,x
+            inx
+            bne uo_hs_hint
+uo_hs_wait:
+            lda #2
+            sta options_state       ; Use state 2 for HS view
+            rts
+
+uo_select_stats:
+            jsr show_stats_screen
+            lda #2
+            sta options_state
+            rts
+
+uo_go_back:
+            ; Return to menu
+            jsr show_menu
+            lda #STATE_MENU
+            sta game_state
+            rts
+
+; Update sound test sub-state
+update_sound_test:
+            ; Check left/right for sound selection
+            lda key_delay_count
+            beq ust_check
+            dec key_delay_count
+            jmp ust_fire
+
+ust_check:
+            lda CIA1_PRA
+            and #$04                ; Left
+            beq ust_prev
+            lda CIA1_PRA
+            and #$08                ; Right
+            beq ust_next
+            jmp ust_fire
+
+ust_prev:
+            lda sound_test_idx
+            beq ust_delay
+            dec sound_test_idx
+            jsr play_menu_move
+            jsr draw_sound_test_name
+            jmp ust_delay
+
+ust_next:
+            lda sound_test_idx
+            cmp #8                  ; 9 sounds (0-8)
+            bcs ust_delay
+            inc sound_test_idx
+            jsr play_menu_move
+            jsr draw_sound_test_name
+            jmp ust_delay
+
+ust_delay:
+            lda #KEY_DELAY
+            sta key_delay_count
+
+ust_fire:
+            ; Fire plays the sound
+            lda CIA1_PRA
+            and #$10
+            beq ust_play
+
+            ; Check for back (down or B key)
+            lda CIA1_PRA
+            and #$02
+            beq ust_back
+
+            lda #$FF
+            sta CIA1_PRA
+            rts
+
+ust_play:
+            lda #$FF
+            sta CIA1_PRA
+            ; Play selected sound
+            ldx sound_test_idx
+            jsr play_test_sound
+            lda #10
+            sta key_delay_count
+            rts
+
+ust_back:
+            lda #$FF
+            sta CIA1_PRA
+            ; Return to options menu
+            jsr show_options
+            rts
+
+; Update stats/HS view - just wait for fire
+update_stats_view:
+            lda CIA1_PRA
+            and #$10
+            beq usv_back
+            lda #$7F
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$10
+            beq usv_back
+            lda #$FF
+            sta CIA1_PRA
+            rts
+
+usv_back:
+            lda #$FF
+            sta CIA1_PRA
+            jsr play_menu_back
+            jsr show_options
+            rts
+
+; Draw options cursor
+draw_options_cursor:
+            ; Clear old cursor positions
+            lda #' '
+            sta SCREEN + (6 * 40) + 10
+            sta SCREEN + (8 * 40) + 10
+            sta SCREEN + (10 * 40) + 10
+            sta SCREEN + (14 * 40) + 10
+
+            ; Draw cursor at current position
+            lda options_cursor
+            cmp #0
+            bne doc_not_0
+            lda #'>'
+            sta SCREEN + (6 * 40) + 10
+            rts
+doc_not_0:
+            cmp #1
+            bne doc_not_1
+            lda #'>'
+            sta SCREEN + (8 * 40) + 10
+            rts
+doc_not_1:
+            cmp #2
+            bne doc_not_2
+            lda #'>'
+            sta SCREEN + (10 * 40) + 10
+            rts
+doc_not_2:
+            lda #'>'
+            sta SCREEN + (14 * 40) + 10
+            rts
+
+; Show sound test UI
+show_sound_test_ui:
+            ; Clear middle area
+            ldx #0
+            lda #' '
+.clear_mid:
+            sta SCREEN + (6 * 40),x
+            sta SCREEN + (7 * 40),x
+            sta SCREEN + (8 * 40),x
+            sta SCREEN + (9 * 40),x
+            sta SCREEN + (10 * 40),x
+            inx
+            cpx #40
+            bne .clear_mid
+
+            ; Draw "SOUND TEST" header
+            ldx #0
+.st_hdr:
+            lda sound_test_hdr,x
+            beq .st_nav
+            sta SCREEN + (6 * 40) + 15,x
+            lda #7                  ; Yellow
+            sta COLRAM + (6 * 40) + 15,x
+            inx
+            bne .st_hdr
+
+.st_nav:
+            ; Draw navigation hint
+            ldx #0
+.st_nav_loop:
+            lda sound_test_nav,x
+            beq .st_name
+            sta SCREEN + (10 * 40) + 8,x
+            lda #11                 ; Grey
+            sta COLRAM + (10 * 40) + 8,x
+            inx
+            bne .st_nav_loop
+
+.st_name:
+            jsr draw_sound_test_name
+            rts
+
+; Draw current sound name
+draw_sound_test_name:
+            ; Clear name area
+            ldx #16
+            lda #' '
+.clear_name:
+            sta SCREEN + (8 * 40) + 12,x
+            dex
+            bpl .clear_name
+
+            ; Get sound name pointer
+            lda sound_test_idx
+            asl                     ; ×2 for word offset
+            tax
+            lda sound_names_lo,x
+            sta ZP_PTR
+            lda sound_names_hi,x
+            sta ZP_PTR_HI
+
+            ; Draw name
+            ldy #0
+.draw_name:
+            lda (ZP_PTR),y
+            beq .name_done
+            sta SCREEN + (8 * 40) + 14,y
+            lda #1                  ; White
+            sta COLRAM + (8 * 40) + 14,y
+            iny
+            cpy #12
+            bne .draw_name
+.name_done:
+            rts
+
+; Play test sound based on index
+play_test_sound:
+            cpx #0
+            bne pts_not_0
+            jmp play_menu_move
+pts_not_0:
+            cpx #1
+            bne pts_not_1
+            jmp play_menu_select
+pts_not_1:
+            cpx #2
+            bne pts_not_2
+            jmp play_menu_back
+pts_not_2:
+            cpx #3
+            bne pts_not_3
+            jmp play_good_sound      ; Note hit
+pts_not_3:
+            cpx #4
+            bne pts_not_4
+            jmp play_perfect_sound   ; Perfect hit
+pts_not_4:
+            cpx #5
+            bne pts_not_5
+            jmp play_miss_sound      ; Miss
+pts_not_5:
+            cpx #6
+            bne pts_not_6
+            jmp play_victory_jingle
+pts_not_6:
+            cpx #7
+            bne pts_not_7
+            jmp play_gameover_stinger
+pts_not_7:
+            ; Index 8 = milestone callout
+            lda #$30
+            sta voice_freq_hi
+            lda #$00
+            sta voice_freq_lo
+            lda #24
+            jmp start_callout
+
+; Show statistics screen
+show_stats_screen:
+            jsr clear_screen
+
+            ; Draw title
+            ldx #0
+.stats_title:
+            lda stats_title_text,x
+            beq .draw_labels
+            sta SCREEN + (2 * 40) + 14,x
+            lda #3                  ; Cyan
+            sta COLRAM + (2 * 40) + 14,x
+            inx
+            bne .stats_title
+
+.draw_labels:
+            ; For now, just show placeholder
+            ; (Full stats tracking would need persistent counters)
+            ldx #0
+.games_lbl:
+            lda stats_games,x
+            beq .notes_lbl
+            sta SCREEN + (6 * 40) + 8,x
+            lda #1
+            sta COLRAM + (6 * 40) + 8,x
+            inx
+            bne .games_lbl
+
+.notes_lbl:
+            ldx #0
+.notes_loop:
+            lda stats_notes,x
+            beq .combo_lbl
+            sta SCREEN + (8 * 40) + 8,x
+            lda #1
+            sta COLRAM + (8 * 40) + 8,x
+            inx
+            bne .notes_loop
+
+.combo_lbl:
+            ldx #0
+.combo_loop:
+            lda stats_combo,x
+            beq .hint_lbl
+            sta SCREEN + (10 * 40) + 8,x
+            lda #1
+            sta COLRAM + (10 * 40) + 8,x
+            inx
+            bne .combo_loop
+
+.hint_lbl:
+            ldx #0
+.hint_loop:
+            lda fire_return_text,x
+            beq .stats_done
+            sta SCREEN + (20 * 40) + 12,x
+            lda #11
+            sta COLRAM + (20 * 40) + 12,x
+            inx
+            bne .hint_loop
+
+.stats_done:
+            rts
+
+; Options screen text data
+options_title:
+            !text "OPTIONS"
+            !byte 0
+
+opt_sound_test:
+            !text "SOUND TEST"
+            !byte 0
+
+opt_high_scores:
+            !text "HIGH SCORES"
+            !byte 0
+
+opt_stats:
+            !text "STATISTICS"
+            !byte 0
+
+opt_back:
+            !text "BACK TO MENU"
+            !byte 0
+
+opt_hint:
+            !text "UP/DOWN: SELECT  FIRE: CONFIRM"
+            !byte 0
+
+fire_return_text:
+            !text "FIRE TO RETURN"
+            !byte 0
+
+sound_test_hdr:
+            !text "SOUND TEST"
+            !byte 0
+
+sound_test_nav:
+            !text "LEFT/RIGHT: SELECT  FIRE: PLAY"
+            !byte 0
+
+stats_title_text:
+            !text "STATISTICS"
+            !byte 0
+
+stats_games:
+            !text "GAMES PLAYED: ---"
+            !byte 0
+
+stats_notes:
+            !text "NOTES HIT: ---"
+            !byte 0
+
+stats_combo:
+            !text "BEST COMBO: ---"
+            !byte 0
+
+; Sound names table
+sound_names_lo:
+            !byte <snd_name_0, <snd_name_1, <snd_name_2, <snd_name_3
+            !byte <snd_name_4, <snd_name_5, <snd_name_6, <snd_name_7
+            !byte <snd_name_8
+
+sound_names_hi:
+            !byte >snd_name_0, >snd_name_1, >snd_name_2, >snd_name_3
+            !byte >snd_name_4, >snd_name_5, >snd_name_6, >snd_name_7
+            !byte >snd_name_8
+
+snd_name_0: !text "MENU MOVE"
+            !byte 0
+snd_name_1: !text "MENU SELECT"
+            !byte 0
+snd_name_2: !text "MENU BACK"
+            !byte 0
+snd_name_3: !text "NOTE HIT"
+            !byte 0
+snd_name_4: !text "PERFECT HIT"
+            !byte 0
+snd_name_5: !text "MISS"
+            !byte 0
+snd_name_6: !text "VICTORY"
+            !byte 0
+snd_name_7: !text "GAME OVER"
+            !byte 0
+snd_name_8: !text "MILESTONE"
+            !byte 0
+
+; ----------------------------------------------------------------------------
+; Pause Functionality (Unit 47)
+; ----------------------------------------------------------------------------
+
+; Pause the game
+pause_game:
+            lda #1
+            sta game_paused
+            lda #0
+            sta pause_cursor
+
+            ; Silence SID
+            lda #0
+            sta SID_VOLUME
+
+            ; Draw pause overlay
+            jsr draw_pause_overlay
+            jsr play_menu_select
+            rts
+
+; Update while paused
+update_paused:
+            ; Handle countdown if active
+            lda countdown_value
+            beq up_pause_menu
+            jmp update_countdown
+
+up_pause_menu:
+            ; Handle pause menu input
+            lda key_delay_count
+            beq up_check_pause_input
+            dec key_delay_count
+            rts
+
+up_check_pause_input:
+            ; Check joystick up
+            lda CIA1_PRA
+            and #$01
+            beq up_pause_up
+
+            ; Check joystick down
+            lda CIA1_PRA
+            and #$02
+            beq up_pause_down
+
+            ; Check fire
+            lda CIA1_PRA
+            and #$10
+            beq up_pause_fire
+
+            ; Check space
+            lda #$7F
+            sta CIA1_PRA
+            lda CIA1_PRB
+            and #$10
+            beq up_pause_fire
+
+            lda #$FF
+            sta CIA1_PRA
+            rts
+
+up_pause_up:
+            lda pause_cursor
+            beq up_pause_delay
+            dec pause_cursor
+            jsr play_menu_move
+            jsr draw_pause_cursor
+            jmp up_pause_delay
+
+up_pause_down:
+            lda pause_cursor
+            cmp #2
+            bcs up_pause_delay
+            inc pause_cursor
+            jsr play_menu_move
+            jsr draw_pause_cursor
+            jmp up_pause_delay
+
+up_pause_delay:
+            lda #KEY_DELAY
+            sta key_delay_count
+            rts
+
+up_pause_fire:
+            lda #$FF
+            sta CIA1_PRA
+            jsr play_menu_select
+
+            lda pause_cursor
+            cmp #0
+            beq up_do_resume
+            cmp #1
+            beq up_do_restart
+            ; Quit
+            jmp up_do_quit
+
+up_do_resume:
+            ; Start countdown
+            lda #3
+            sta countdown_value
+            lda #50                 ; 1 second per number
+            sta countdown_timer
+            jsr draw_countdown
+            rts
+
+up_do_restart:
+            ; Restart the song
+            lda #0
+            sta game_paused
+            ; Restore volume
+            lda #$0F
+            sta SID_VOLUME
+            ; Re-init gameplay
+            jsr init_game
+            rts
+
+up_do_quit:
+            ; Return to menu
+            lda #0
+            sta game_paused
+            ; Restore volume
+            lda #$0F
+            sta SID_VOLUME
+            ; Silence all voices
+            jsr init_sid
+            ; Go to menu
+            jsr show_menu
+            lda #STATE_MENU
+            sta game_state
+            rts
+
+; Update countdown
+update_countdown:
+            dec countdown_timer
+            bne uc_not_done
+
+            ; Timer reached zero - decrement countdown value
+            dec countdown_value
+            lda countdown_value
+            beq uc_resume           ; Countdown complete
+
+            ; Draw new number
+            lda #50
+            sta countdown_timer
+            jsr draw_countdown
+            jsr play_menu_move
+            rts
+
+uc_not_done:
+            rts
+
+uc_resume:
+            ; Countdown complete - resume gameplay
+            lda #0
+            sta game_paused
+            ; Restore volume
+            lda #$0F
+            sta SID_VOLUME
+            ; Clear the pause overlay
+            jsr clear_pause_overlay
+            rts
+
+; Draw pause overlay
+draw_pause_overlay:
+            ; Draw semi-transparent overlay effect by darkening screen
+            ; Just draw the pause menu text for now
+
+            ; Draw "PAUSED" at row 8
+            ldx #0
+dpo_title:
+            lda pause_title_text,x
+            beq dpo_items
+            sta SCREEN + (8 * 40) + 17,x
+            lda #1                  ; White
+            sta COLRAM + (8 * 40) + 17,x
+            inx
+            bne dpo_title
+
+dpo_items:
+            ; Draw menu items
+            ldx #0
+dpo_resume:
+            lda pause_resume_text,x
+            beq dpo_restart_start
+            sta SCREEN + (12 * 40) + 15,x
+            lda #7                  ; Yellow
+            sta COLRAM + (12 * 40) + 15,x
+            inx
+            bne dpo_resume
+
+dpo_restart_start:
+            ldx #0
+dpo_restart:
+            lda pause_restart_text,x
+            beq dpo_quit_start
+            sta SCREEN + (14 * 40) + 15,x
+            lda #7
+            sta COLRAM + (14 * 40) + 15,x
+            inx
+            bne dpo_restart
+
+dpo_quit_start:
+            ldx #0
+dpo_quit:
+            lda pause_quit_text,x
+            beq dpo_cursor
+            sta SCREEN + (16 * 40) + 15,x
+            lda #7
+            sta COLRAM + (16 * 40) + 15,x
+            inx
+            bne dpo_quit
+
+dpo_cursor:
+            jsr draw_pause_cursor
+            rts
+
+; Draw pause cursor
+draw_pause_cursor:
+            ; Clear old cursor positions
+            lda #' '
+            sta SCREEN + (12 * 40) + 13
+            sta SCREEN + (14 * 40) + 13
+            sta SCREEN + (16 * 40) + 13
+
+            ; Draw cursor at current position
+            lda pause_cursor
+            cmp #0
+            bne dpc_not_0
+            lda #'>'
+            sta SCREEN + (12 * 40) + 13
+            rts
+dpc_not_0:
+            cmp #1
+            bne dpc_not_1
+            lda #'>'
+            sta SCREEN + (14 * 40) + 13
+            rts
+dpc_not_1:
+            lda #'>'
+            sta SCREEN + (16 * 40) + 13
+            rts
+
+; Draw countdown number
+draw_countdown:
+            ; Clear pause menu area
+            ldx #10
+            lda #' '
+dcn_clear:
+            sta SCREEN + (12 * 40) + 13,x
+            sta SCREEN + (14 * 40) + 13,x
+            sta SCREEN + (16 * 40) + 13,x
+            dex
+            bpl dcn_clear
+
+            ; Draw countdown number (big, centered)
+            lda countdown_value
+            clc
+            adc #'0'
+            sta SCREEN + (13 * 40) + 19
+            sta SCREEN + (13 * 40) + 20
+            lda #1                  ; White
+            sta COLRAM + (13 * 40) + 19
+            sta COLRAM + (13 * 40) + 20
+            rts
+
+; Clear pause overlay
+clear_pause_overlay:
+            ; Clear the pause text areas
+            ldx #10
+            lda #' '
+cpo_clear:
+            sta SCREEN + (8 * 40) + 15,x
+            sta SCREEN + (12 * 40) + 13,x
+            sta SCREEN + (13 * 40) + 17,x
+            sta SCREEN + (14 * 40) + 13,x
+            sta SCREEN + (16 * 40) + 13,x
+            dex
+            bpl cpo_clear
+            rts
+
+; Pause text data
+pause_title_text:
+            !scr "paused"
+            !byte 0
+
+pause_resume_text:
+            !scr "resume"
+            !byte 0
+
+pause_restart_text:
+            !scr "restart"
+            !byte 0
+
+pause_quit_text:
+            !scr "quit"
+            !byte 0
+
+; ----------------------------------------------------------------------------
 ; Display Score
 ; ----------------------------------------------------------------------------
 
@@ -3623,8 +6918,8 @@ miss_done_10:
 
             rts
 
-work_lo:    !byte 0
-work_hi:    !byte 0
+; Unit 50: work_lo/work_hi moved to zero page ($53-$54) for faster access
+; Old storage removed - saves 2 bytes and all accesses are now 1 cycle faster
 
 ; ----------------------------------------------------------------------------
 ; Play Voices (for note playback)
@@ -3921,7 +7216,22 @@ draw_rs_label:
             jmp draw_rs_label
 
 draw_rs_value:
-            ; Draw score value
+            ; Draw initial score as 00000 (Unit 44 - will animate up)
+            lda #$30                ; ASCII '0'
+            sta SCREEN + (9 * 40) + 23
+            sta SCREEN + (9 * 40) + 24
+            sta SCREEN + (9 * 40) + 25
+            sta SCREEN + (9 * 40) + 26
+            sta SCREEN + (9 * 40) + 27
+            lda #7
+            sta COLRAM + (9 * 40) + 23
+            sta COLRAM + (9 * 40) + 24
+            sta COLRAM + (9 * 40) + 25
+            sta COLRAM + (9 * 40) + 26
+            sta COLRAM + (9 * 40) + 27
+            jmp draw_perfect_label
+
+            ; (Original division code preserved but skipped - kept for reference)
             lda score_lo
             sta work_lo
             lda score_hi
@@ -4306,6 +7616,18 @@ draw_return:
             jmp draw_return
 
 results_done:
+            ; Initialize animation state (Unit 44)
+            lda #0
+            sta results_phase       ; Start at phase 0
+            sta display_score_lo    ; Start display at 0
+            sta display_score_hi
+            sta name_entry_mode     ; Not in name entry mode (Unit 45)
+            lda #$FF
+            sta hs_table_rank       ; No rank yet (Unit 45)
+            lda #30                 ; Initial delay (half second)
+            sta results_timer
+            lda #30
+            sta grade_flash         ; Grade flash duration
             rts
 
 complete_text:
@@ -5410,11 +8732,12 @@ good_count:   !byte 0
 health:       !byte 0
 combo:        !byte 0
 max_combo:    !byte 0
-new_high_score: !byte 0          ; Flag: 1 if current score beat high score
+; new_high_score moved to zero page ($3E) for Unit 44 animation
 
 ; ----------------------------------------------------------------------------
 ; High Score Table (6 songs x 3 difficulties = 18 entries, 2 bytes each)
 ; Index = (song * 3) + difficulty
+; Used for per-song high score tracking
 ; ----------------------------------------------------------------------------
 
 high_scores:
@@ -5443,6 +8766,33 @@ high_scores:
             !word 0               ; Normal
             !word 0               ; Hard
 
+; ----------------------------------------------------------------------------
+; Global High Score Leaderboard (Unit 45)
+; Top 5 scores across all songs/difficulties
+; Each entry: 3 bytes name + 2 bytes score = 5 bytes
+; Total: 5 entries x 5 bytes = 25 bytes
+; ----------------------------------------------------------------------------
+
+HS_ENTRY_SIZE = 5               ; 3 name + 2 score
+HS_TABLE_SIZE = 5               ; Top 5 entries
+
+hs_table:
+            ; Entry 1: Default high score
+            !byte 'S', 'I', 'D'   ; Name
+            !word 5000            ; Score
+            ; Entry 2
+            !byte 'C', '6', '4'
+            !word 4000
+            ; Entry 3
+            !byte 'A', 'S', 'M'
+            !word 3000
+            ; Entry 4
+            !byte 'R', 'H', 'Y'
+            !word 2000
+            ; Entry 5
+            !byte 'T', 'H', 'M'
+            !word 1000
+
 ; ============================================================================
-; END OF SID SYMPHONY - UNIT 31
+; END OF SID SYMPHONY - UNIT 46 (OPTIONS SCREEN)
 ; ============================================================================

@@ -587,29 +587,17 @@ draw_menu_title_done:
             ; Draw practice mode section
             jsr draw_practice_mode
 
-            ; Draw instructions
+            ; Draw instructions on row 24 (below Endless on row 23)
             ldx #0
 draw_menu_instr:
             lda menu_instructions,x
             beq draw_menu_instr_done
-            sta SCREEN + (21 * 40) + 1,x
+            sta SCREEN + (24 * 40) + 1,x
             lda #SUBTITLE_COL
-            sta COLRAM + (21 * 40) + 1,x
+            sta COLRAM + (24 * 40) + 1,x
             inx
             jmp draw_menu_instr
 draw_menu_instr_done:
-
-            ; Draw practice instructions
-            ldx #0
-draw_prac_instr:
-            lda practice_instructions,x
-            beq draw_prac_instr_done
-            sta SCREEN + (22 * 40) + 5,x
-            lda #SUBTITLE_COL
-            sta COLRAM + (22 * 40) + 5,x
-            inx
-            jmp draw_prac_instr
-draw_prac_instr_done:
 
             rts
 
