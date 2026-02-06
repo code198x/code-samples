@@ -1,0 +1,37 @@
+
+al C:000e .flash_tbl
+al C:0003 .bullet_y
+al C:0011 .game_state
+al C:0007 .score
+al C:0002 .bullet_active
+al C:0008 .enemy_x_tbl
+al C:000b .enemy_y_tbl
+
+al C:0871 .game_active
+al C:08a5 .not_right
+al C:0979 .enemy_loop
+al C:087e .not_up
+al C:0a1c .init_game
+al C:0aac .spawn_enemy
+al C:09db .ship_hit
+al C:0a08 .clear_screen
+al C:0856 .game_loop
+al C:0ad5 .sprite_colour_off
+al C:0ad2 .sprite_pos_off
+al C:09a9 .next_enemy
+al C:091a .next_collision
+al C:08f6 .check_collision
+al C:0922 .hit_enemy
+al C:0898 .not_left
+al C:0977 .no_hit
+al C:088b .not_down
+al C:08f8 .collision_loop
+al C:09d3 .next_ship_check
+al C:09b0 .ship_collision_loop
+al C:08ef .no_bullet
+al C:099c .update_sprite
+al C:0990 .do_flash
+al C:09c2 .check_ship_x
+al C:0909 .check_x
+al C:0a61 .show_game_over
+al C:08d1 .no_fire
