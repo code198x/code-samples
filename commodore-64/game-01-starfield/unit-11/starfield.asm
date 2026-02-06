@@ -27,21 +27,9 @@ game_state     = $11   ; 0 = playing, 1 = game over
         sta $d020           ; Border colour
         sta $d021           ; Background colour
 
-        ; Sprite 0 setup (ship) — data pointer
-        lda #128
-        sta $07f8           ; Block 128 = $2000
-
-        ; Sprite 1 setup (bullet) — data pointer and colour
-        lda #129
-        sta $07f9           ; Block 129 = $2040
+        ; Sprite 1 colour (yellow, never changes)
         lda #$07
-        sta $d028           ; Colour (yellow)
-
-        ; Sprites 2, 3, 4 setup (enemies) — data pointers
-        lda #130
-        sta $07fa           ; Sprite 2
-        sta $07fb           ; Sprite 3
-        sta $07fc           ; Sprite 4
+        sta $d028
 
         ; Set score colour to white (persists across restarts)
         lda #$01
@@ -425,6 +413,16 @@ clear_screen:
 ; Resets all game state for a new game
 ; ------------------------------------------------
 init_game:
+        ; Sprite data pointers (must be set after clear_screen)
+        lda #128
+        sta $07f8           ; Ship (block 128 = $2000)
+        lda #129
+        sta $07f9           ; Bullet (block 129 = $2040)
+        lda #130
+        sta $07fa           ; Enemy 0 (block 130 = $2080)
+        sta $07fb           ; Enemy 1
+        sta $07fc           ; Enemy 2
+
         ; Ship position and colour
         lda #172
         sta $d000           ; X position
