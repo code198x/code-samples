@@ -1,0 +1,663 @@
+; ============================================================================
+; SHADOWKEEP — Unit 16: Integration
+; ============================================================================
+; Phase 1 complete. The single room is a finished game: navigate walls,
+; collect treasure, avoid the hazard, reach the exit. Win or lose, press
+; any key and play again.
+;
+; This unit adds restart, a title, and the "press any key" prompt.
+; The game now loops: play → end → prompt → restart. No reload needed.
+;
+; wait_key reads all keyboard rows at once by setting A to 0 before IN.
+; Keys are active low — $1F means nothing pressed. The routine waits
+; for release first (debounce), then waits for a new press.
+; ============================================================================
+
+            org     32768
+
+; Attribute values
+WALL        equ     $09             ; PAPER 1 (blue) + INK 1
+FLOOR       equ     $38             ; PAPER 7 (white) + INK 0
+TREASURE    equ     $70             ; BRIGHT + PAPER 6 (yellow) + INK 0
+HAZARD      equ     $90             ; FLASH + PAPER 2 (red) + INK 0
+EXIT        equ     $28             ; PAPER 5 (cyan) + INK 0
+PLAYER      equ     $3a             ; PAPER 7 (white) + INK 2 (red)
+
+; Collision
+WALL_INK    equ     1               ; INK colour that means "wall"
+
+; Room
+ROOM_TOP    equ     10
+ROOM_LEFT   equ     12
+ROOM_WIDTH  equ     9
+ROOM_HEIGHT equ     5
+ROW_SKIP    equ     23              ; 32 - ROOM_WIDTH
+TOTAL_TREASURE equ  3               ; Treasures in the room
+START_LIVES equ     3
+
+; Screen addresses for starting position (row 12, col 13)
+START_ROW   equ     12
+START_COL   equ     13
+START_SCR   equ     $488d
+START_ATT   equ     $598d
+
+; Title display (row 1, col 11 — centred)
+TITLE_SCR   equ     $402b           ; Screen bitmap: row 1, col 11
+TITLE_ATT   equ     $582b           ; Attribute: row 1, col 11
+TITLE_LEN   equ     10              ; "SHADOWKEEP"
+
+; Score display position (row 23, col 10)
+SCORE_SCR   equ     $50ea           ; Screen bitmap: row 23, col 10
+SCORE_ATT   equ     $5aea           ; Attribute: row 23, col 10
+SCORE_LEN   equ     18              ; Wide enough for score and prompt
+
+; Keyboard rows
+KEY_ROW_QT  equ     $fb             ; Q, W, E, R, T
+KEY_ROW_AG  equ     $fd             ; A, S, D, F, G
+KEY_ROW_PY  equ     $df             ; P, O, I, U, Y
+
+; ROM font
+FONT_BASE   equ     $3c00           ; Character set in ROM
+
+; ----------------------------------------------------------------------------
+; Entry point — also the restart target
+; ----------------------------------------------------------------------------
+
+start:
+            ; Reset game state (needed for restart, harmless on first run)
+            xor     a
+            ld      (treasure_count), a
+            out     ($fe), a            ; Border black
+
+            ld      a, START_LIVES
+            ld      (lives), a
+            ld      a, START_ROW
+            ld      (player_row), a
+            ld      a, START_COL
+            ld      (player_col), a
+            ld      hl, START_SCR
+            ld      (player_scr), hl
+            ld      hl, START_ATT
+            ld      (player_att), hl
+
+            ; Clear screen
+            ld      hl, $4000
+            ld      de, $4001
+            ld      bc, 6911
+            ld      (hl), 0
+            ldir
+
+            ; ==================================================================
+            ; Draw room from data table
+            ; ==================================================================
+
+            ld      hl, $594c           ; Attribute address: row 10, col 12
+            ld      de, room_data
+            ld      c, ROOM_HEIGHT
+
+.row:       ld      b, ROOM_WIDTH
+.cell:      ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     hl
+            djnz    .cell
+
+            push    de
+            ld      de, ROW_SKIP
+            add     hl, de
+            pop     de
+            dec     c
+            jr      nz, .row
+
+            ; ==================================================================
+            ; Draw the player at starting position
+            ; ==================================================================
+
+            ld      a, (START_ATT)
+            ld      (player_under), a
+
+            ld      hl, START_SCR
+            ld      de, player_gfx
+            ld      b, 8
+.initdraw:  ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .initdraw
+
+            ld      a, PLAYER
+            ld      (START_ATT), a
+
+            ; ==================================================================
+            ; Set up title
+            ; ==================================================================
+
+            ld      hl, TITLE_ATT
+            ld      a, $42              ; BRIGHT + INK 2 (red on black)
+            ld      b, TITLE_LEN
+.tattr:     ld      (hl), a
+            inc     hl
+            djnz    .tattr
+
+            ld      de, TITLE_SCR
+            ld      hl, title_text
+            call    print_str
+
+            ; ==================================================================
+            ; Set up score line
+            ; ==================================================================
+
+            ld      hl, SCORE_ATT
+            ld      a, $47              ; BRIGHT + INK 7 (white on black)
+            ld      b, SCORE_LEN
+.sattr:     ld      (hl), a
+            inc     hl
+            djnz    .sattr
+
+            call    print_score         ; Show initial status
+
+            ; ==================================================================
+            ; Main loop
+            ; ==================================================================
+
+.loop:      halt
+
+            ; --- Erase player at current position ---
+            ld      hl, (player_scr)
+            ld      b, 8
+            ld      a, 0
+.erase:     ld      (hl), a
+            inc     h
+            djnz    .erase
+
+            ld      hl, (player_att)
+            ld      a, (player_under)
+            ld      (hl), a
+
+            ; --- Check Q (up) ---
+            ld      a, KEY_ROW_QT
+            in      a, ($fe)
+            bit     0, a
+            jr      nz, .not_q
+
+            ld      hl, (player_att)
+            ld      de, $ffe0           ; -32 (one row up)
+            add     hl, de
+            ld      a, (hl)
+            and     $07
+            cp      WALL_INK
+            jr      z, .not_q
+
+            call    check_collect
+
+            ld      (player_att), hl
+
+            ld      hl, (player_scr)
+            ld      de, $ffe0
+            add     hl, de
+            ld      (player_scr), hl
+
+            ld      a, (player_row)
+            dec     a
+            ld      (player_row), a
+
+.not_q:
+            ; --- Check A (down) ---
+            ld      a, KEY_ROW_AG
+            in      a, ($fe)
+            bit     0, a
+            jr      nz, .not_a
+
+            ld      hl, (player_att)
+            ld      de, 32
+            add     hl, de
+            ld      a, (hl)
+            and     $07
+            cp      WALL_INK
+            jr      z, .not_a
+
+            call    check_collect
+
+            ld      (player_att), hl
+
+            ld      hl, (player_scr)
+            ld      de, 32
+            add     hl, de
+            ld      (player_scr), hl
+
+            ld      a, (player_row)
+            inc     a
+            ld      (player_row), a
+
+.not_a:
+            ; --- Check O (left) ---
+            ld      a, KEY_ROW_PY
+            in      a, ($fe)
+            bit     1, a
+            jr      nz, .not_o
+
+            ld      hl, (player_att)
+            dec     hl
+            ld      a, (hl)
+            and     $07
+            cp      WALL_INK
+            jr      z, .not_o
+
+            call    check_collect
+
+            ld      (player_att), hl
+
+            ld      hl, (player_scr)
+            dec     hl
+            ld      (player_scr), hl
+
+            ld      a, (player_col)
+            dec     a
+            ld      (player_col), a
+
+.not_o:
+            ; --- Check P (right) ---
+            ld      a, KEY_ROW_PY
+            in      a, ($fe)
+            bit     0, a
+            jr      nz, .not_p
+
+            ld      hl, (player_att)
+            inc     hl
+            ld      a, (hl)
+            and     $07
+            cp      WALL_INK
+            jr      z, .not_p
+
+            call    check_collect
+
+            ld      (player_att), hl
+
+            ld      hl, (player_scr)
+            inc     hl
+            ld      (player_scr), hl
+
+            ld      a, (player_col)
+            inc     a
+            ld      (player_col), a
+
+.not_p:
+            ; --- Draw player at current position ---
+            ld      hl, (player_scr)
+            ld      de, player_gfx
+            ld      b, 8
+.draw:      ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .draw
+
+            ld      hl, (player_att)
+            ld      a, PLAYER
+            ld      (hl), a
+
+            ; --- Update score display ---
+            call    print_score
+
+            ; --- Check hazard ---
+            ld      a, (player_under)
+            bit     7, a                ; FLASH = hazard?
+            jr      z, .not_hazard
+
+            ; Erase player from hazard cell
+            ld      hl, (player_scr)
+            ld      b, 8
+            ld      a, 0
+.derase:    ld      (hl), a
+            inc     h
+            djnz    .derase
+
+            ld      hl, (player_att)
+            ld      a, (player_under)
+            ld      (hl), a             ; Restore hazard attribute
+
+            ; Lose a life
+            ld      hl, lives
+            dec     (hl)                ; DEC (HL) sets Z flag!
+            jp      z, .game_over
+
+            ; Death sound — short descending tone
+            ld      hl, 80
+            ld      e, 20               ; High
+            call    beep
+            ld      hl, 80
+            ld      e, 40               ; Low
+            call    beep
+
+            ; Reset to start position
+            ld      a, START_ROW
+            ld      (player_row), a
+            ld      a, START_COL
+            ld      (player_col), a
+            ld      hl, START_SCR
+            ld      (player_scr), hl
+            ld      hl, START_ATT
+            ld      (player_att), hl
+
+            ; Save what's under start position
+            ld      a, (START_ATT)
+            ld      (player_under), a
+
+            call    print_score         ; Show reduced lives
+
+            jp      .loop
+
+.not_hazard:
+            ; --- Check win condition ---
+            ld      a, (player_under)
+            cp      EXIT                ; Standing on the exit?
+            jr      nz, .not_on_exit
+
+            ld      a, (treasure_count)
+            cp      TOTAL_TREASURE      ; All treasures collected?
+            jp      z, .room_complete
+
+.not_on_exit:
+            ; --- Border shows progress ---
+            ld      a, (treasure_count)
+            cp      TOTAL_TREASURE
+            jr      nz, .not_all
+            ld      a, 4                ; Green border — door is open
+            out     ($fe), a
+            jp      .loop
+.not_all:
+            ld      a, 0                ; Black border
+            out     ($fe), a
+
+            jp      .loop
+
+            ; ==================================================================
+            ; Room complete — victory sequence
+            ; ==================================================================
+
+.room_complete:
+            ; Victory fanfare — four ascending notes
+            ld      hl, 100
+            ld      e, 45               ; Low
+            call    beep
+            ld      hl, 100
+            ld      e, 35               ; Mid
+            call    beep
+            ld      hl, 100
+            ld      e, 25               ; High
+            call    beep
+            ld      hl, 300
+            ld      e, 18               ; Sustained high
+            call    beep
+
+            ; Overwrite score line with victory message
+            ld      de, SCORE_SCR
+            ld      hl, win_text
+            call    print_str
+
+            ; Green border — permanent
+            ld      a, 4
+            out     ($fe), a
+
+            jp      .end_prompt
+
+            ; ==================================================================
+            ; Game over — death sequence
+            ; ==================================================================
+
+.game_over:
+            ; Game over sound — four descending notes
+            ld      hl, 100
+            ld      e, 18               ; High
+            call    beep
+            ld      hl, 100
+            ld      e, 25               ; Mid-high
+            call    beep
+            ld      hl, 100
+            ld      e, 35               ; Mid-low
+            call    beep
+            ld      hl, 300
+            ld      e, 50               ; Sustained low
+            call    beep
+
+            ; Overwrite score line with game over message
+            ld      de, SCORE_SCR
+            ld      hl, lose_text
+            call    print_str
+
+            ; Red border — permanent
+            ld      a, 2
+            out     ($fe), a
+
+            ; ==================================================================
+            ; End-of-game prompt (shared by victory and game over)
+            ; ==================================================================
+
+.end_prompt:
+            ; Wait ~3 seconds
+            ld      b, 150
+.pdelay:    halt
+            djnz    .pdelay
+
+            ; Overwrite with prompt
+            ld      de, SCORE_SCR
+            ld      hl, prompt_text
+            call    print_str
+
+            ; Wait for keypress then restart
+            call    wait_key
+            jp      start
+
+; ============================================================================
+; Subroutines
+; ============================================================================
+
+; ----------------------------------------------------------------------------
+; check_collect — save target cell, check for treasure, collect if found
+; Entry: HL = target attribute address
+; Exit:  HL preserved, player_under updated
+; ----------------------------------------------------------------------------
+check_collect:
+            ld      a, (hl)
+            ld      (player_under), a
+            bit     6, a                ; BRIGHT = treasure?
+            ret     z                   ; No — done
+            res     6, a                ; Clear BRIGHT (collected)
+            ld      (player_under), a
+            push    hl
+            ld      hl, treasure_count
+            inc     (hl)
+            pop     hl
+
+            ; Play collect sound — short rising tone
+            push    hl
+            push    de
+            ld      hl, 80              ; Duration (cycles)
+            ld      e, 40               ; Pitch (delay — lower = higher)
+            call    beep
+            ld      hl, 80
+            ld      e, 30               ; Higher pitch
+            call    beep
+            ld      hl, 80
+            ld      e, 20               ; Highest pitch
+            call    beep
+            pop     de
+            pop     hl
+            ret
+
+; ----------------------------------------------------------------------------
+; beep — generate a tone on the speaker
+; Entry: HL = duration (number of wave cycles), E = pitch (delay per half)
+; Exit:  speaker off, border black
+; Destroys: A, B, HL
+; ----------------------------------------------------------------------------
+beep:
+            ld      a, $10              ; Bit 4 high — speaker on
+.on:        out     ($fe), a            ; Push speaker cone out
+            ld      b, e                ; Delay counter = pitch
+.delay1:    djnz    .delay1             ; Wait
+
+            xor     $10                 ; Toggle bit 4
+            out     ($fe), a            ; Pull speaker cone back
+            ld      b, e                ; Same delay
+.delay2:    djnz    .delay2             ; Wait
+
+            xor     $10                 ; Toggle bit 4 back
+            dec     hl                  ; One cycle done
+            ld      a, h
+            or      l                   ; HL = 0?
+            ld      a, $10              ; Reload (doesn't affect flags)
+            jr      nz, .on             ; More cycles — continue
+
+            xor     a                   ; A = 0 — speaker off, border black
+            out     ($fe), a
+            ret
+
+; ----------------------------------------------------------------------------
+; wait_key — wait for all keys released, then any key pressed
+; Destroys: A
+; ----------------------------------------------------------------------------
+wait_key:
+.release:   halt
+            xor     a               ; A = 0 → address $00FE (all rows)
+            in      a, ($fe)
+            and     $1f             ; Mask to 5 key bits
+            cp      $1f             ; $1F = no keys pressed
+            jr      nz, .release    ; Key still held — wait
+
+.press:     halt
+            xor     a
+            in      a, ($fe)
+            and     $1f
+            cp      $1f
+            jr      z, .press       ; No key — keep waiting
+            ret
+
+; ----------------------------------------------------------------------------
+; print_score — display "TREASURE n/3  L:n" at row 23
+; Destroys: A, BC, DE, HL
+; ----------------------------------------------------------------------------
+print_score:
+            ld      de, SCORE_SCR
+
+            ld      hl, score_text
+            call    print_str
+
+            ld      a, (treasure_count)
+            add     a, '0'
+            call    print_char
+
+            ld      a, '/'
+            call    print_char
+
+            ld      a, TOTAL_TREASURE
+            add     a, '0'
+            call    print_char
+
+            ld      a, ' '
+            call    print_char
+            ld      a, ' '
+            call    print_char
+
+            ld      hl, lives_text
+            call    print_str
+
+            ld      a, (lives)
+            add     a, '0'
+            call    print_char
+
+            ret
+
+; ----------------------------------------------------------------------------
+; print_str — print null-terminated string at screen address DE
+; Entry: HL = string address, DE = screen address
+; Exit:  HL past null terminator, DE advanced past last character
+; ----------------------------------------------------------------------------
+print_str:
+            ld      a, (hl)
+            or      a
+            ret     z
+            push    hl
+            call    print_char
+            pop     hl
+            inc     hl
+            jr      print_str
+
+; ----------------------------------------------------------------------------
+; print_char — draw one character to screen memory using ROM font
+; Entry: A = character (32-127), DE = screen address (pixel row 0)
+; Exit:  DE advanced to next column (E incremented)
+; ----------------------------------------------------------------------------
+print_char:
+            push    de
+
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      bc, FONT_BASE
+            add     hl, bc
+
+            ld      b, 8
+.pchar:     ld      a, (hl)
+            ld      (de), a
+            inc     hl
+            inc     d
+            djnz    .pchar
+
+            pop     de
+            inc     e
+            ret
+
+; ============================================================================
+; Room data — one byte per cell
+; ============================================================================
+;
+;   W W W W W W W W W
+;   W . W . . . T . W      T = treasure
+;   W . T . . . W . W      H = hazard
+;   W . . . H . . T W      X = exit
+;   W W W W W X W W W
+;
+
+room_data:
+            db      WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL
+            db      WALL, FLOOR, WALL, FLOOR, FLOOR, FLOOR, TREASURE, FLOOR, WALL
+            db      WALL, FLOOR, TREASURE, FLOOR, FLOOR, FLOOR, WALL, FLOOR, WALL
+            db      WALL, FLOOR, FLOOR, FLOOR, HAZARD, FLOOR, FLOOR, TREASURE, WALL
+            db      WALL, WALL, WALL, WALL, WALL, EXIT, WALL, WALL, WALL
+
+; ============================================================================
+; String data
+; ============================================================================
+
+title_text:  db      "SHADOWKEEP", 0
+score_text:  db      "TREASURE ", 0
+lives_text:  db      "L:", 0
+win_text:    db      "ROOM COMPLETE!   ", 0
+lose_text:   db      "   GAME OVER!    ", 0
+prompt_text: db      "  PRESS ANY KEY  ", 0
+
+; ============================================================================
+; Player data
+; ============================================================================
+
+player_gfx: db      $18, $3c, $7e, $ff
+            db      $ff, $7e, $3c, $18
+
+player_row: db      START_ROW
+player_col: db      START_COL
+
+player_scr: dw      START_SCR
+player_att: dw      START_ATT
+
+player_under:
+            db      FLOOR
+
+treasure_count:
+            db      0
+
+lives:      db      START_LIVES
+
+            end     start
