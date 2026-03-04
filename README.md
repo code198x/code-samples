@@ -6,28 +6,28 @@ Complete, working code samples for learning retro game development across classi
 
 | Platform | Game | Units | Description |
 |----------|------|-------|-------------|
-| [Commodore 64](commodore-64/game-01-sid-symphony/) | SID Symphony | 16 | Rhythm game with SID audio |
-| [ZX Spectrum](sinclair-zx-spectrum/game-01-ink-war/) | Ink War | 16 | Territory control strategy |
-| [Commodore Amiga](commodore-amiga/game-01-hop/) | Hop | 16 | Frogger-style arcade game |
-| [NES](nintendo-entertainment-system/game-01-neon-nexus/) | Neon Nexus | 16 | Fixed-screen action game |
+| [Commodore 64](commodore-64/game-01-starfield/) | Starfield | 128 | Single-screen space shooter |
+| [ZX Spectrum](sinclair-zx-spectrum/game-01-shadowkeep/) | Shadowkeep | 128 | Top-down maze explorer |
+| [Commodore Amiga](commodore-amiga/game-01-exodus/) | Exodus | 128 | Terrain puzzle with Blitter |
+| [NES](nintendo-entertainment-system/game-01-dash/) | Dash | 128 | Side-scrolling runner |
 
 ## Structure
 
 ```
 code-samples/
 ├── commodore-64/
-│   └── game-01-sid-symphony/
+│   └── game-01-starfield/
 │       ├── README.md           # Game overview
 │       └── unit-01..16/
 │           ├── README.md       # Unit documentation
-│           ├── symphony.asm    # Assembly source
-│           └── symphony.prg    # Compiled executable
+│           ├── starfield.asm   # Assembly source
+│           └── starfield.prg   # Compiled executable
 ├── sinclair-zx-spectrum/
-│   └── game-01-ink-war/
+│   └── game-01-shadowkeep/
 ├── commodore-amiga/
-│   └── game-01-hop/
+│   └── game-01-exodus/
 └── nintendo-entertainment-system/
-    └── game-01-neon-nexus/
+    └── game-01-dash/
 ```
 
 ## Building
@@ -93,7 +93,7 @@ All code is automatically built and verified on every push via GitHub Actions. B
 
 ## Website
 
-https://code198x.stevehill.xyz
+https://code198x.com
 
 ## Licence
 
