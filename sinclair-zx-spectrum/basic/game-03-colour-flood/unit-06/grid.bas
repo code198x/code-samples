@@ -1,0 +1,7 @@
+10 CLS
+20 FOR r = 0 TO 6
+30 PAPER r
+40 FOR i = 1 TO 96
+50 PRINT " ";
+60 NEXT i
+70 NEXT r

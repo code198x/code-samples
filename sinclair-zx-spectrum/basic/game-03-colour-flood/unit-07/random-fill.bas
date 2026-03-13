@@ -1,0 +1,7 @@
+10 CLS
+20 FOR r = 1 TO 22
+30 FOR c = 1 TO 32
+40 PAPER INT (RND * 8)
+50 PRINT " ";
+60 NEXT c
+70 NEXT r
