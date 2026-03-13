@@ -1,0 +1,10 @@
+10 CLS
+20 PRINT "Get ready..."
+30 PAUSE 100
+40 PRINT "Go!"
+50 LET t = 0
+60 IF INKEY$ <> "" THEN GO TO 90
+70 LET t = t + 1
+80 GO TO 60
+90 PRINT "Your time: "; t
+100 BEEP 0.1, 12
