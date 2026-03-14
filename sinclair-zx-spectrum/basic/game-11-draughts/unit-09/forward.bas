@@ -1,0 +1,78 @@
+10 BORDER 0: PAPER 0: INK 7: CLS
+20 DIM b(8, 8)
+30 GO SUB 400
+40 GO SUB 500
+50 GO SUB 600
+60 GO SUB 700
+70 LET t = 1
+80 REM game loop
+90 GO SUB 800
+100 GO SUB 850
+110 GO SUB 900
+120 GO SUB 950
+130 PRINT AT 16, 1; INK 4; "Valid move!"
+140 STOP
+400 REM === init board ===
+410 FOR r = 1 TO 3
+420 FOR c = 1 TO 8
+430 IF (r + c) / 2 = INT ((r + c) / 2) THEN LET b(r, c) = 1
+440 NEXT c
+450 NEXT r
+460 FOR r = 6 TO 8
+470 FOR c = 1 TO 8
+480 IF (r + c) / 2 = INT ((r + c) / 2) THEN LET b(r, c) = 2
+490 NEXT c
+495 NEXT r
+498 RETURN
+500 REM === draw board ===
+510 FOR r = 1 TO 8
+520 FOR c = 1 TO 8
+530 IF (r + c) / 2 = INT ((r + c) / 2) THEN PRINT AT r + 2, c * 2 + 2; PAPER 0; " ": GO TO 550
+540 PRINT AT r + 2, c * 2 + 2; PAPER 6; " "
+550 NEXT c
+560 NEXT r
+570 RETURN
+600 REM === draw pieces ===
+610 FOR r = 1 TO 8
+620 FOR c = 1 TO 8
+630 IF b(r, c) = 0 THEN GO TO 660
+640 IF b(r, c) = 1 THEN PRINT AT r + 2, c * 2 + 2; PAPER 0; INK 2; "o"
+650 IF b(r, c) = 2 THEN PRINT AT r + 2, c * 2 + 2; PAPER 0; INK 4; "o"
+660 NEXT c
+670 NEXT r
+680 RETURN
+700 REM === draw labels ===
+710 FOR c = 1 TO 8
+720 PRINT AT 1, c * 2 + 2; INK 7; CHR$ (64 + c)
+730 NEXT c
+740 FOR r = 1 TO 8
+750 PRINT AT r + 2, 1; INK 7; r
+760 NEXT r
+770 RETURN
+800 REM === draw status ===
+810 PRINT AT 12, 1; "                              "
+820 IF t = 1 THEN PRINT AT 12, 1; INK 2; "Player 1 (Red)"
+830 IF t = 2 THEN PRINT AT 12, 1; INK 4; "Player 2 (Green)"
+840 RETURN
+850 REM === read input ===
+852 PRINT AT 14, 1; "                              "
+854 INPUT "Move (e.g. A3 B4): "; m$
+856 IF LEN m$ < 5 THEN PRINT AT 14, 1; INK 2; "Use format: A3 B4": GO TO 854
+860 LET p = CODE m$(1) - 64
+862 LET q = VAL m$(2 TO 2)
+864 LET u = CODE m$(4) - 64
+866 LET v = VAL m$(5 TO 5)
+870 IF p < 1 OR p > 8 OR q < 1 OR q > 8 THEN PRINT AT 14, 1; INK 2; "Invalid square": GO TO 854
+872 IF u < 1 OR u > 8 OR v < 1 OR v > 8 THEN PRINT AT 14, 1; INK 2; "Invalid square": GO TO 854
+880 RETURN
+900 REM === validate source ===
+910 IF b(q, p) = 0 THEN PRINT AT 14, 1; INK 2; "No piece there      ": GO TO 854
+920 IF t = 1 AND b(q, p) <> 1 THEN PRINT AT 14, 1; INK 2; "Not your piece      ": GO TO 854
+930 IF t = 2 AND b(q, p) <> 2 THEN PRINT AT 14, 1; INK 2; "Not your piece      ": GO TO 854
+940 RETURN
+950 REM === check move ===
+960 LET e = ABS (u - p): LET f = ABS (v - q)
+970 IF e <> 1 OR f <> 1 THEN PRINT AT 14, 1; INK 2; "Not diagonal        ": GO TO 854
+980 IF t = 1 AND v < q THEN PRINT AT 14, 1; INK 2; "Must move forward   ": GO TO 854
+990 IF t = 2 AND v > q THEN PRINT AT 14, 1; INK 2; "Must move forward   ": GO TO 854
+995 RETURN
