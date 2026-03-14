@@ -1,0 +1,34 @@
+10 CLS
+20 BORDER 0
+30 PAPER 0
+40 INK 7
+50 CLS
+60 PRINT AT 0, 8; INK 6; "Treasure Hunt"
+70 REM draw play area border
+80 INK 3
+90 FOR i = 0 TO 31
+100 PRINT AT 1, i; "="
+110 PRINT AT 21, i; "="
+120 NEXT i
+130 FOR i = 1 TO 21
+140 PRINT AT i, 0; "|"
+150 PRINT AT i, 31; "|"
+160 NEXT i
+170 INK 7
+180 REM place coins
+190 FOR i = 1 TO 8
+200 LET y = INT (RND * 18) + 2
+210 LET x = INT (RND * 29) + 1
+220 INK 6: PRINT AT y, x; "*": INK 7
+230 NEXT i
+240 REM place hazards
+250 FOR i = 1 TO 3
+260 LET y = INT (RND * 18) + 2
+270 LET x = INT (RND * 29) + 1
+280 INK 2: PRINT AT y, x; "#": INK 7
+290 NEXT i
+300 REM place player
+310 INK 4: BRIGHT 1: PRINT AT 10, 15; "O": BRIGHT 0: INK 7
+320 REM HUD
+330 PRINT AT 0, 0; "L:1 C:8  V:3"
+340 PRINT AT 0, 24; "T:500"
