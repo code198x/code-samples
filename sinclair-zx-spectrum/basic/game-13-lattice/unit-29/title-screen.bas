@@ -1,0 +1,30 @@
+5 REM === TITLE SCREEN ===
+10 BORDER 0: PAPER 0: INK 7: CLS
+15 GO SUB 2500
+20 STOP
+2500 REM === title screen ===
+2510 PRINT AT 3, 10; INK 7; BRIGHT 1; "LATTICE"
+2515 REM Decorative nodes
+2520 CIRCLE INK 7; 60, 130, 3
+2522 CIRCLE INK 7; 128, 145, 3
+2524 CIRCLE INK 7; 196, 130, 3
+2526 CIRCLE INK 7; 90, 110, 3
+2528 CIRCLE INK 7; 166, 110, 3
+2530 REM Decorative lines
+2532 PLOT INK 4; 60, 130: DRAW INK 4; 68, 15
+2534 PLOT INK 4; 128, 145: DRAW INK 4; 68, -15
+2536 PLOT INK 5; 90, 110: DRAW INK 5; 76, 0
+2538 PLOT INK 4; 60, 130: DRAW INK 4; 30, -20
+2540 PRINT AT 9, 3; INK 6; "Connect nodes with lines."
+2545 PRINT AT 10, 3; INK 6; "Lines must not cross."
+2550 PRINT AT 12, 3; INK 7; "Q/A = up/down"
+2555 PRINT AT 13, 3; INK 7; "O/P = left/right"
+2560 PRINT AT 14, 3; INK 7; "SPACE = select node"
+2565 PRINT AT 15, 3; INK 7; "D = undo last line"
+2567 PRINT AT 16, 3; INK 7; "H = hint"
+2570 PRINT AT 18, 3; INK 4; "Stars: * complete"
+2575 PRINT AT 19, 3; INK 4; "       ** no undo"
+2580 PRINT AT 20, 3; INK 4; "       *** clean solve"
+2590 PRINT AT 21, 6; INK 7; "Press any key"
+2595 PAUSE 0
+2598 RETURN

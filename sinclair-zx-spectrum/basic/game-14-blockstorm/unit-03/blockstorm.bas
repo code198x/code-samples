@@ -1,0 +1,19 @@
+5 REM === THE SHIP ===
+10 BORDER 0: PAPER 0: INK 7: CLS
+20 REM Define UDG I: player ship
+30 FOR i = 0 TO 7
+40 READ a
+50 POKE USR "I" + i, a
+60 NEXT i
+70 DATA 16, 56, 56, 124, 254, 254, 130, 0
+80 REM Define UDG E: bullet
+90 FOR i = 0 TO 7
+100 READ a
+110 POKE USR "E" + i, a
+120 NEXT i
+130 DATA 16, 56, 16, 16, 0, 0, 0, 0
+140 LET px = 15: LET py = 20
+150 PRINT AT py, px; INK 7; CHR$ 152
+160 PRINT AT 0, 0; INK 7; BRIGHT 1; "BLOCKSTORM"
+170 PRINT AT 0, 20; INK 6; "Ship ready"
+180 PAUSE 0
