@@ -1,0 +1,167 @@
+   1 REM Lucky Number v3
+   5 BORDER 0: PAPER 0: INK 7: CLS
+  10 REM === Rainbow cascade ===
+  20 FOR i=0 TO 7
+  30 FOR j=0 TO 31
+  40 PRINT AT i,j; PAPER i;" "
+  50 NEXT j
+  55 BEEP 0.01,i*4+20
+  60 NEXT i
+  70 REM === Big LUCKY ===
+  80 RESTORE 5000
+  90 FOR r=0 TO 4
+ 100 READ a$
+ 110 FOR q=1 TO LEN a$
+ 120 IF a$(q)="1" THEN PRINT AT 9+r,q; PAPER 6;" "
+ 130 NEXT q
+ 140 NEXT r
+ 150 REM === Big NUMBER ===
+ 160 RESTORE 5010
+ 170 FOR r=0 TO 4
+ 180 READ a$
+ 190 FOR q=1 TO LEN a$
+ 200 IF a$(q)="1" THEN PRINT AT 15+r,q; PAPER 5;" "
+ 210 NEXT q
+ 220 NEXT r
+ 230 PRINT AT 21,6; INK 7; FLASH 1;" Press any key "; FLASH 0
+ 240 IF INKEY$="" THEN GO TO 240
+ 250 REM === NEW GAME ===
+ 280 LET n=INT (RND*100)+1
+ 290 LET c=0
+ 300 CLS
+ 310 FOR i=0 TO 31
+ 320 PRINT AT 0,i; PAPER 1;" "
+ 330 NEXT i
+ 340 PRINT AT 0,9; PAPER 1; INK 6; BRIGHT 1;" LUCKY NUMBER "
+ 350 PRINT AT 2,1; INK 5;"Guesses: 0"
+ 360 PRINT AT 10,3; INK 7;"Temperature:"
+ 370 REM === Guess loop ===
+ 380 LET c=c+1
+ 390 PRINT AT 2,10; INK 5;c;"  "
+ 400 INPUT "Your guess (1-100): ";g
+ 410 IF g<1 OR g>100 THEN GO TO 400
+ 420 REM === Show guess big ===
+ 430 LET pc=6: LET v=g: LET dr=4: GO SUB 8200
+ 440 IF g=n THEN GO TO 700
+ 450 LET d=ABS (g-n)
+ 460 REM === Heat bar ===
+ 470 LET h=INT ((100-d)/3.4)+1
+ 480 IF h>30 THEN LET h=30
+ 490 IF h<1 THEN LET h=1
+ 500 FOR i=1 TO 30
+ 510 IF i<=h AND i<=10 THEN PRINT AT 11,1+i; PAPER 1;" "
+ 520 IF i<=h AND i>10 AND i<=20 THEN PRINT AT 11,1+i; PAPER 6;" "
+ 530 IF i<=h AND i>20 AND i<=26 THEN PRINT AT 11,1+i; PAPER 2;" "
+ 540 IF i<=h AND i>26 THEN PRINT AT 11,1+i; PAPER 7;" "
+ 550 IF i>h THEN PRINT AT 11,1+i; PAPER 0;" "
+ 560 NEXT i
+ 570 BEEP 0.05,h/2-8
+ 580 REM === Border ===
+ 590 IF d<=5 THEN BORDER 2
+ 600 IF d>5 AND d<=15 THEN BORDER 6
+ 610 IF d>15 AND d<=30 THEN BORDER 1
+ 620 IF d>30 THEN BORDER 0
+ 630 REM === Feedback ===
+ 640 PRINT AT 13,2;"                            "
+ 650 PRINT AT 14,2;"                            "
+ 660 IF g<n THEN PRINT AT 13,2; INK 6; BRIGHT 1;"Too low!": PRINT AT 14,2; INK 5; BRIGHT 0;"Guess higher."
+ 670 IF g>n THEN PRINT AT 13,2; INK 3; BRIGHT 1;"Too high!": PRINT AT 14,2; INK 5; BRIGHT 0;"Guess lower."
+ 680 GO TO 370
+5000 REM === LUCKY (5 wide, 1 gap) ===
+5001 DATA "1.....1...1.11111.1...1.1...1"
+5002 DATA "1.....1...1.1.....1..1...1.1."
+5003 DATA "1.....1...1.1.....111.....1.."
+5004 DATA "1.....1...1.1.....1..1....1.."
+5005 DATA "11111.11111.11111.1...1...1.."
+5010 REM === NUMBER (4 wide, 1 gap) ===
+5011 DATA "1..1.1..1.1..1.111..1111.111."
+5012 DATA "11.1.1..1.1111.1..1.1....1..1"
+5013 DATA "1.11.1..1.1111.111..111..111."
+5014 DATA "1..1.1..1.1..1.1..1.1....1.1."
+5015 DATA "1..1.1111.1..1.111..1111.1..1"
+5100 REM === Digit 0 ===
+5101 DATA "1111"
+5102 DATA "1..1"
+5103 DATA "1..1"
+5104 DATA "1..1"
+5105 DATA "1111"
+5110 REM === Digit 1 ===
+5111 DATA ".11."
+5112 DATA "..1."
+5113 DATA "..1."
+5114 DATA "..1."
+5115 DATA ".11."
+5120 REM === Digit 2 ===
+5121 DATA "1111"
+5122 DATA "...1"
+5123 DATA "1111"
+5124 DATA "1..."
+5125 DATA "1111"
+5130 REM === Digit 3 ===
+5131 DATA "1111"
+5132 DATA "...1"
+5133 DATA ".111"
+5134 DATA "...1"
+5135 DATA "1111"
+5140 REM === Digit 4 ===
+5141 DATA "1..1"
+5142 DATA "1..1"
+5143 DATA "1111"
+5144 DATA "...1"
+5145 DATA "...1"
+5150 REM === Digit 5 ===
+5151 DATA "1111"
+5152 DATA "1..."
+5153 DATA "1111"
+5154 DATA "...1"
+5155 DATA "1111"
+5160 REM === Digit 6 ===
+5161 DATA "1111"
+5162 DATA "1..."
+5163 DATA "1111"
+5164 DATA "1..1"
+5165 DATA "1111"
+5170 REM === Digit 7 ===
+5171 DATA "1111"
+5172 DATA "...1"
+5173 DATA "..1."
+5174 DATA ".1.."
+5175 DATA ".1.."
+5180 REM === Digit 8 ===
+5181 DATA "1111"
+5182 DATA "1..1"
+5183 DATA "1111"
+5184 DATA "1..1"
+5185 DATA "1111"
+5190 REM === Digit 9 ===
+5191 DATA "1111"
+5192 DATA "1..1"
+5193 DATA "1111"
+5194 DATA "...1"
+5195 DATA "1111"
+8000 REM === Draw digit f at dr,dc ===
+8010 RESTORE 5100+f*10
+8020 FOR r=0 TO 4
+8030 READ a$
+8040 FOR q=1 TO LEN a$
+8050 IF a$(q)="1" THEN PRINT AT dr+r,dc+q-1; PAPER pc;" "
+8060 NEXT q
+8070 NEXT r
+8080 RETURN
+8200 REM === Draw number v centred ===
+8210 FOR r=dr TO dr+4
+8220 PRINT AT r,5; PAPER 0;"                      "
+8230 NEXT r
+8240 IF v>=100 THEN GO TO 8400
+8250 IF v>=10 THEN GO TO 8350
+8260 LET dc=14: LET f=v: GO SUB 8000
+8270 RETURN
+8350 REM Two digits
+8360 LET dc=12: LET f=INT (v/10): GO SUB 8000
+8370 LET dc=17: LET f=v-INT (v/10)*10: GO SUB 8000
+8380 RETURN
+8400 REM Three digits (100)
+8410 LET dc=9: LET f=1: GO SUB 8000
+8420 LET dc=14: LET f=0: GO SUB 8000
+8430 LET dc=19: LET f=0: GO SUB 8000
+8440 RETURN
