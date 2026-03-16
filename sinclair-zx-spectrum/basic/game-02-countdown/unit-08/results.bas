@@ -1,0 +1,15 @@
+ 240 CLS
+ 250 FOR i=0 TO 31
+ 260 PRINT AT 0,i; PAPER 2;" "
+ 270 NEXT i
+ 280 PRINT AT 0,10; PAPER 2; INK 7; BRIGHT 1;" COUNTDOWN "
+ 290 PRINT AT 4,11; INK 7; BRIGHT 1;"RESULTS"
+ 300 PRINT AT 7,9; INK 5;"Best time: ";b
+ 310 IF b<=5 THEN PRINT AT 10,8; INK 2; BRIGHT 1;"Lightning fast!"
+ 320 IF b>5 AND b<=15 THEN PRINT AT 10,8; INK 6;"Quick reflexes!"
+ 330 IF b>15 AND b<=30 THEN PRINT AT 10,8; INK 5;"Not bad!"
+ 340 IF b>30 THEN PRINT AT 10,8; INK 3;"Keep practising!"
+ 350 PRINT AT 14,6; INK 7;"Press any key to exit"
+ 360 IF INKEY$="" THEN GO TO 360
+ 370 BORDER 7: PAPER 7: INK 0: CLS
+ 380 PRINT "Thanks for playing!": STOP

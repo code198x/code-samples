@@ -1,0 +1,4 @@
+ 200 PRINT AT 16,7; INK 7;"Press any key..."
+ 210 IF INKEY$<>"" THEN GO TO 210
+ 220 IF INKEY$="" THEN GO TO 220
+ 230 NEXT n
