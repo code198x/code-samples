@@ -1,0 +1,124 @@
+   1 REM Countdown v1
+   5 BORDER 0: PAPER 0: INK 7: CLS
+  10 REM === Red fill with rising tone ===
+  12 FOR i=0 TO 21
+  14 FOR j=0 TO 31
+  16 PRINT AT i,j; PAPER 2;" "
+  18 NEXT j
+  19 BEEP 0.005,i
+  20 NEXT i
+  22 BORDER 2
+  24 PRINT AT 3,11; PAPER 2; INK 7; BRIGHT 1;"COUNTDOWN"
+  26 PRINT AT 5,6; PAPER 2; INK 0;"Test your reflexes!"
+  30 REM === Countdown 3 (white on red) ===
+  32 LET pc=7: LET f=3: LET dr=9: LET dc=14: GO SUB 8000
+  34 BEEP 0.3,-10
+  36 PAUSE 35
+  38 REM === 2 (yellow on red) ===
+  40 LET pc=6: LET f=2: LET dr=9: LET dc=14: GO SUB 8000
+  42 BEEP 0.3,-10
+  44 PAUSE 35
+  46 REM === 1 (black on red) ===
+  48 LET pc=0: LET f=1: LET dr=9: LET dc=14: GO SUB 8000
+  50 BEEP 0.3,-10
+  52 PAUSE 35
+  54 REM === GO! green flash ===
+  56 FOR i=8 TO 14
+  58 FOR j=10 TO 21
+  60 PRINT AT i,j; PAPER 4;" "
+  62 NEXT j
+  64 NEXT i
+  66 PRINT AT 11,13; PAPER 4; INK 0; BRIGHT 1;"GO!"
+  68 BORDER 4
+  70 BEEP 0.4,20
+  72 PAUSE 40
+  74 REM === Game title screen ===
+  76 BORDER 0: CLS
+  78 FOR i=0 TO 31
+  80 PRINT AT 0,i; PAPER 2;" "
+  82 NEXT i
+  84 PRINT AT 0,10; PAPER 2; INK 7; BRIGHT 1;" COUNTDOWN "
+  86 PRINT AT 3,8; INK 5;"Test your reflexes!"
+  88 PRINT AT 5,6; INK 7;"Press any key to begin"
+  90 IF INKEY$="" THEN GO TO 90
+  92 LET b=9999
+ 100 REM === Round loop ===
+ 110 FOR n=1 TO 5
+ 120 CLS
+ 130 FOR i=0 TO 31
+ 140 PRINT AT 0,i; PAPER 2;" "
+ 150 NEXT i
+ 160 PRINT AT 0,10; PAPER 2; INK 7; BRIGHT 1;" COUNTDOWN "
+ 170 PRINT AT 2,1; INK 5;"Round ";n;" of 5"
+ 180 IF b<9999 THEN PRINT AT 2,20; INK 4;"Best: ";b
+ 190 PRINT AT 10,10; INK 6;"Get ready..."
+ 200 LET w=50+INT (RND*100)
+ 210 FOR i=1 TO w
+ 220 IF INKEY$<>"" THEN PRINT AT 14,10; INK 2; BRIGHT 1;"Too early!": BEEP 0.3,-10: PAUSE 50: GO TO 120
+ 230 PAUSE 1
+ 240 NEXT i
+ 250 REM === NOW! ===
+ 260 PRINT AT 10,4;"                        "
+ 270 BORDER 6
+ 280 PRINT AT 10,13; INK 6; BRIGHT 1; FLASH 1;"NOW!"; FLASH 0
+ 290 BEEP 0.05,20
+ 300 LET t=0
+ 310 IF INKEY$<>"" THEN GO TO 350
+ 320 LET t=t+1
+ 330 IF t>500 THEN PRINT AT 14,10; INK 2;"Too slow!": BEEP 0.3,-5: PAUSE 100: GO TO 390
+ 340 GO TO 310
+ 350 REM === Got it ===
+ 360 BORDER 4
+ 370 BEEP 0.1,15
+ 380 PRINT AT 10,4;"                        "
+ 390 PRINT AT 10,10; INK 7; BRIGHT 1;"Time: ";t
+ 400 IF t<b AND t>0 THEN LET b=t: PRINT AT 12,9; INK 4; BRIGHT 1;"New best!"
+ 410 BORDER 0
+ 420 PRINT AT 16,7; INK 7;"Press any key..."
+ 430 IF INKEY$<>"" THEN GO TO 430
+ 440 IF INKEY$="" THEN GO TO 440
+ 450 NEXT n
+ 460 REM === Results ===
+ 470 CLS
+ 480 FOR i=0 TO 31
+ 490 PRINT AT 0,i; PAPER 2;" "
+ 500 NEXT i
+ 510 PRINT AT 0,10; PAPER 2; INK 7; BRIGHT 1;" COUNTDOWN "
+ 520 PRINT AT 4,11; INK 7; BRIGHT 1;"RESULTS"
+ 530 PRINT AT 7,9; INK 5;"Best time: ";b
+ 540 IF b<=5 THEN PRINT AT 10,8; INK 2; BRIGHT 1;"Lightning fast!"
+ 550 IF b>5 AND b<=15 THEN PRINT AT 10,8; INK 6;"Quick reflexes!"
+ 560 IF b>15 AND b<=30 THEN PRINT AT 10,8; INK 5;"Not bad!"
+ 570 IF b>30 THEN PRINT AT 10,8; INK 3;"Keep practising!"
+ 580 PRINT AT 14,6; INK 7;"Press any key to exit"
+ 590 IF INKEY$="" THEN GO TO 590
+ 600 BORDER 7: PAPER 7: INK 0: CLS
+ 610 PRINT "Thanks for playing!": STOP
+5100 DATA "1111"
+5102 DATA "1..1"
+5103 DATA "1..1"
+5104 DATA "1..1"
+5105 DATA "1111"
+5110 DATA ".11."
+5112 DATA "..1."
+5113 DATA "..1."
+5114 DATA "..1."
+5115 DATA ".11."
+5120 DATA "1111"
+5122 DATA "...1"
+5123 DATA "1111"
+5124 DATA "1..."
+5125 DATA "1111"
+5130 DATA "1111"
+5132 DATA "...1"
+5133 DATA ".111"
+5134 DATA "...1"
+5135 DATA "1111"
+8000 RESTORE 5100+f*10
+8020 FOR r=0 TO 4
+8030 READ a$
+8040 FOR q=1 TO LEN a$
+8050 IF a$(q)="1" THEN PRINT AT dr+r,dc+q-1; PAPER pc;" "
+8060 NEXT q
+8070 NEXT r
+8080 RETURN
