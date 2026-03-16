@@ -1,0 +1,6 @@
+ 100 REM === Found! ===
+ 102 PRINT AT r,c; INK 4; BRIGHT 1; FLASH 1;"*"; FLASH 0
+ 104 BORDER 7
+ 106 BEEP 0.1,10: BEEP 0.1,15: BEEP 0.1,20: BEEP 0.2,25
+ 108 PRINT AT 21,0; INK 4; BRIGHT 1;"Found! ";m;" moves!             "
+ 110 STOP
