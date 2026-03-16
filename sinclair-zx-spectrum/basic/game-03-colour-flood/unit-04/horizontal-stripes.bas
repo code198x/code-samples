@@ -1,6 +1,0 @@
-   5 BORDER 0: PAPER 0: INK 7: CLS
-  10 FOR r=0 TO 21
-  20 FOR c=0 TO 31
-  30 PRINT AT r,c; PAPER (r-INT (r/8)*8);" "
-  40 NEXT c
-  50 NEXT r

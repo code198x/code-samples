@@ -1,0 +1,7 @@
+  10 FOR i=1 TO 7
+  20 BORDER i
+  30 BEEP 0.3,i*3
+  40 PAUSE 10
+  50 BORDER 0
+  60 PAUSE 8
+  70 NEXT i

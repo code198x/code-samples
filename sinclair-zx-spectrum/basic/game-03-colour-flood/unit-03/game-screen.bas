@@ -1,0 +1,10 @@
+   5 BORDER 0: PAPER 0: INK 7: CLS
+  12 FOR i=0 TO 31
+  14 PRINT AT 0,i; PAPER 1;" "
+  16 NEXT i
+  18 PRINT AT 0,8; PAPER 1; INK 7; BRIGHT 1;" COLOUR FLOOD "
+  22 FOR i=1 TO 7
+  24 PRINT AT 2+i,1; PAPER i;" ";i;" "
+  26 NEXT i
+  28 PRINT AT 11,1; INK 5;"Score: 0"
+  30 PRINT AT 13,1; INK 6;"Watch the border..."
