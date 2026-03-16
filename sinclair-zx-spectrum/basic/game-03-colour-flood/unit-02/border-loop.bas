@@ -1,0 +1,5 @@
+  10 FOR i=0 TO 7
+  20 BORDER i
+  30 PAUSE 25
+  40 NEXT i
+  50 GO TO 10

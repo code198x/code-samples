@@ -1,7 +1,4 @@
-10 CLS
-20 FOR i = 10 TO 1 STEP -1
-30 PRINT i; "..."
-40 PAUSE 25
-50 NEXT i
-60 PRINT "Go!"
-70 BEEP 0.5, 12
+  10 FOR i=10 TO 1 STEP -1
+  20 PRINT i
+  30 NEXT i
+  40 PRINT "Go!"
