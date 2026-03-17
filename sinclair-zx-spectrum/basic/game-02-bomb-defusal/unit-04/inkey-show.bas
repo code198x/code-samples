@@ -1,3 +1,0 @@
-10 LET k$ = INKEY$
-20 PRINT k$;
-30 GO TO 10

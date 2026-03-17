@@ -1,0 +1,4 @@
+  10 FOR i=10 TO 1 STEP -1
+  20 PRINT i
+  30 NEXT i
+  40 PRINT "Go!"

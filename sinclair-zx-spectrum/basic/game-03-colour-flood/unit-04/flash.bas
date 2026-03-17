@@ -1,0 +1,11 @@
+ 500 REM === Flash panel c bright ===
+ 502 LET px=1+(c-1)*8
+ 504 FOR i=0 TO 7
+ 506 PRINT AT 3+i,px; PAPER c; BRIGHT 1;"       "
+ 508 NEXT i
+ 512 BORDER c
+ 514 IF c=1 THEN BEEP 0.2,5
+ 516 IF c=2 THEN BEEP 0.2,10
+ 518 IF c=3 THEN BEEP 0.2,15
+ 520 IF c=4 THEN BEEP 0.2,20
+ 522 RETURN

@@ -1,0 +1,20 @@
+ 216 CLS
+ 218 FOR i=0 TO 31
+ 220 PRINT AT 0,i; PAPER 1;" "
+ 222 NEXT i
+ 224 PRINT AT 0,8; PAPER 1; INK 7; BRIGHT 1;" COLOUR FLOOD "
+ 226 PRINT AT 4,11; INK 7; BRIGHT 1;"GAME OVER"
+ 228 FOR i=0 TO sc
+ 230 PRINT AT 7,8; INK 5;"Sequence: ";i;"    "
+ 232 IF i<sc THEN BEEP 0.06,10+i*2
+ 234 NEXT i
+ 236 BEEP 0.2,24
+ 238 IF sc>=10 THEN LET m$="Incredible!": INK 4: BRIGHT 1: GO TO 248
+ 240 IF sc>=6 THEN LET m$="Good memory!": INK 6: BRIGHT 1: GO TO 248
+ 242 IF sc>=3 THEN LET m$="Not bad!": INK 5: GO TO 248
+ 244 LET m$="Keep practising!": INK 3
+ 248 PRINT AT 10,(32-LEN m$)/2;m$
+ 250 BRIGHT 0
+ 252 PRINT AT 16,5; INK 7;"Press any key to exit"
+ 254 PAUSE 0
+ 256 BORDER 7: PAPER 7: INK 0: CLS

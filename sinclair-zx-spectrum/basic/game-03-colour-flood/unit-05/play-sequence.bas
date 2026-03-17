@@ -1,0 +1,8 @@
+  50 LET s$="132"
+  52 FOR i=1 TO LEN s$
+  54 LET c=VAL s$(i TO i)
+  56 GO SUB 500
+  58 PAUSE 12
+  60 GO SUB 400
+  62 PAUSE 6
+  64 NEXT i

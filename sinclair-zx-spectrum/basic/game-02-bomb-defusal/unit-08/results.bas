@@ -1,15 +1,20 @@
- 240 CLS
- 250 FOR i=0 TO 31
- 260 PRINT AT 0,i; PAPER 2;" "
- 270 NEXT i
- 280 PRINT AT 0,10; PAPER 2; INK 7; BRIGHT 1;" COUNTDOWN "
- 290 PRINT AT 4,11; INK 7; BRIGHT 1;"RESULTS"
- 300 PRINT AT 7,9; INK 5;"Best time: ";b
- 310 IF b<=5 THEN PRINT AT 10,8; INK 2; BRIGHT 1;"Lightning fast!"
- 320 IF b>5 AND b<=15 THEN PRINT AT 10,8; INK 6;"Quick reflexes!"
- 330 IF b>15 AND b<=30 THEN PRINT AT 10,8; INK 5;"Not bad!"
- 340 IF b>30 THEN PRINT AT 10,8; INK 3;"Keep practising!"
- 350 PRINT AT 14,6; INK 7;"Press any key to exit"
- 360 IF INKEY$="" THEN GO TO 360
- 370 BORDER 7: PAPER 7: INK 0: CLS
- 380 PRINT "Thanks for playing!": STOP
+ 262 CLS
+ 264 FOR i=0 TO 31
+ 266 PRINT AT 0,i; PAPER 2;" "
+ 268 NEXT i
+ 270 PRINT AT 0,8; PAPER 2; INK 7; BRIGHT 1;" BOMB DEFUSAL "
+ 272 PRINT AT 4,11; INK 7; BRIGHT 1;"RESULTS"
+ 276 FOR i=0 TO sc
+ 278 PRINT AT 7,9; INK 5;"Defused: ";i;" of 5  "
+ 280 IF i<sc THEN BEEP 0.08,10+i*4
+ 282 NEXT i
+ 284 BEEP 0.2,24
+ 286 IF sc=5 THEN LET m$="Bomb expert!": INK 4: BRIGHT 1: GO TO 296
+ 288 IF sc>=3 THEN LET m$="Steady hands!": INK 6: BRIGHT 1: GO TO 296
+ 290 IF sc>=1 THEN LET m$="Needs practice!": INK 5: GO TO 296
+ 292 LET m$="Boom boom boom!": INK 2
+ 296 PRINT AT 10,(32-LEN m$)/2;m$
+ 298 BRIGHT 0
+ 300 PRINT AT 16,5; INK 7;"Press any key to exit"
+ 302 PAUSE 0
+ 304 BORDER 7: PAPER 7: INK 0: CLS

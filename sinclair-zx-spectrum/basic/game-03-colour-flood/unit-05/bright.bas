@@ -1,7 +1,0 @@
-10 CLS
-20 PAPER 2
-30 PRINT "  Normal red  "
-40 BRIGHT 1
-50 PAPER 2
-60 PRINT "  Bright red  "
-70 BRIGHT 0

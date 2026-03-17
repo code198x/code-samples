@@ -1,0 +1,15 @@
+   5 BORDER 0: PAPER 0: INK 7: CLS
+  10 FOR i=0 TO 31
+  12 PRINT AT 0,i; PAPER 2;" "
+  14 NEXT i
+  16 PRINT AT 0,8; PAPER 2; INK 7; BRIGHT 1;" BOMB DEFUSAL "
+  20 FOR i=0 TO 1
+  22 PRINT AT 13+i,5; PAPER 1;"            "
+  24 PRINT AT 15+i,5; PAPER 2;"            "
+  26 PRINT AT 17+i,5; PAPER 4;"            "
+  28 PRINT AT 19+i,5; PAPER 6;"            "
+  30 NEXT i
+  32 PRINT AT 13,2; INK 1; BRIGHT 1;"1"
+  34 PRINT AT 15,2; INK 2; BRIGHT 1;"2"
+  36 PRINT AT 17,2; INK 4; BRIGHT 1;"3"
+  38 PRINT AT 19,2; INK 6; BRIGHT 1;"4"

@@ -1,11 +1,17 @@
    5 BORDER 0: PAPER 0: INK 7: CLS
   10 LET t=9
-  12 LET pc=7
-  14 FOR c=t TO 0 STEP -1
-  16 LET dr=3: LET v=c: GO SUB 8200
-  18 PAUSE 25
-  20 NEXT c
-  22 STOP
+  12 FOR c=t TO 0 STEP -1
+  14 IF c>5 THEN LET pc=7
+  16 IF c<=5 AND c>2 THEN LET pc=6
+  18 IF c<=2 THEN LET pc=2
+  20 LET dr=3: LET v=c: GO SUB 8200
+  22 IF c>5 THEN BORDER 0
+  24 IF c<=5 AND c>2 THEN BORDER 6
+  26 IF c<=2 THEN BORDER 2
+  28 BEEP 0.06,5+((t-c)*3)
+  30 PAUSE 20
+  32 NEXT c
+  34 STOP
 8200 REM === Draw single digit centred ===
 8210 FOR r=dr TO dr+4
 8220 PRINT AT r,12;"        "
