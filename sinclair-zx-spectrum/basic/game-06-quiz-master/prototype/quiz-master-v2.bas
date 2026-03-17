@@ -23,6 +23,7 @@
   48 GO SUB 300
   50 REM === Wait for A/B/C/D ===
   52 LET k$=INKEY$
+  53 IF k$>="A" AND k$<="Z" THEN LET k$=CHR$ (CODE k$+32)
   54 IF k$<>"a" AND k$<>"b" AND k$<>"c" AND k$<>"d" THEN GO TO 52
   56 IF k$=r$ THEN GO TO 100
   58 REM === Wrong ===

@@ -46,7 +46,9 @@
   94 BEEP 0.05,5+i*2
   96 NEXT i
  100 INPUT "Your guess? ";g$
- 102 IF g$=w$ THEN GO TO 140
+ 101 LET l$="": FOR j=1 TO LEN g$: LET v=CODE g$(j TO j): IF v>=65 AND v<=90 THEN LET v=v+32
+ 102 LET l$=l$+CHR$ v: NEXT j: LET g$=l$
+ 103 IF g$=w$ THEN GO TO 140
  104 REM === Wrong ===
  106 BORDER 2
  108 LET m$="Wrong!"
