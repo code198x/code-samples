@@ -1,0 +1,12 @@
+   5 BORDER 0: PAPER 0: INK 7: CLS
+  10 FOR i=0 TO 31
+  12 PRINT AT 0,i; PAPER 2;" "
+  14 NEXT i
+  16 PRINT AT 0,8; PAPER 2; INK 7; BRIGHT 1;" WORD SCRAMBLE "
+  20 PRINT AT 4,10; INK 5;"Unscramble:"
+  30 LET w$="cat"
+  40 PRINT AT 8,14; INK 6; BRIGHT 1;w$
+  50 INPUT "Your guess? ";g$
+  60 IF g$=w$ THEN PRINT AT 12,12; INK 4; BRIGHT 1;"Correct!": STOP
+  70 PRINT AT 12,13; INK 2; BRIGHT 1;"Wrong!"
+  80 PRINT AT 14,8; INK 7;"The word was: ";w$

@@ -1,12 +1,11 @@
-10 CLS
-20 LET a$ = "SPEC"
-30 LET b$ = "TRUM"
-40 LET c$ = a$ + b$
-50 PRINT a$; " + "; b$; " = "; c$
-60 PRINT
-70 LET d$ = ""
-80 LET w$ = "HELLO"
-90 FOR i = LEN w$ TO 1 STEP -1
-100 LET d$ = d$ + w$(i)
-110 NEXT i
-120 PRINT w$; " reversed is "; d$
+  10 LET a$="spec"
+  20 LET b$="trum"
+  30 LET r$=a$+b$
+  40 PRINT a$;" + ";b$;" = ";r$
+  50 PRINT
+  60 LET w$="hello"
+  70 LET r$=""
+  80 FOR i=1 TO LEN w$
+  90 LET r$=r$+w$(i TO i)
+ 100 PRINT "Building: ";r$
+ 110 NEXT i

@@ -1,4 +1,4 @@
-   1 REM Word Scramble
+   1 REM Word Scramble v3
    5 BORDER 0: PAPER 0: INK 7: CLS
   10 REM === Title screen ===
   12 FOR i=0 TO 31

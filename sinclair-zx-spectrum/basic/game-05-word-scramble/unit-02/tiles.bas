@@ -1,0 +1,12 @@
+   5 BORDER 0: PAPER 0: INK 7: CLS
+  10 FOR i=0 TO 31
+  12 PRINT AT 0,i; PAPER 2;" "
+  14 NEXT i
+  16 PRINT AT 0,8; PAPER 2; INK 7; BRIGHT 1;" WORD SCRAMBLE "
+  20 PRINT AT 4,10; INK 5;"Unscramble:"
+  30 LET w$="cat"
+  32 LET c=(32-LEN w$*2)/2
+  34 FOR i=1 TO LEN w$
+  36 PRINT AT 8,c+i*2-2; PAPER 1;" "
+  38 PRINT AT 9,c+i*2-2; PAPER 1;" "
+  40 NEXT i

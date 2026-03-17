@@ -1,0 +1,6 @@
+  10 LET w$="cat"
+  20 PRINT w$;" has ";LEN w$;" letters"
+  30 LET w$="planet"
+  40 PRINT w$;" has ";LEN w$;" letters"
+  50 LET w$="adventure"
+  60 PRINT w$;" has ";LEN w$;" letters"
