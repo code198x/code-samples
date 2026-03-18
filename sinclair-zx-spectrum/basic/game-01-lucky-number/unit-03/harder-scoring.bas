@@ -1,1 +1,0 @@
- 880 IF c<=3 THEN PRINT AT 18,7; INK 2; BRIGHT 1;"Incredible!"

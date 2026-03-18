@@ -1,4 +1,0 @@
-  10 LET a=5
-  20 PRINT a
-  30 LET a=42
-  40 PRINT a

@@ -1,0 +1,3 @@
+ 570 IF g=n THEN GO TO 800
+ 700 IF g<n THEN PRINT AT 17,10; INK 6; BRIGHT 1;"Too low!"
+ 710 IF g>n THEN PRINT AT 17,9; INK 3; BRIGHT 1;"Too high!"

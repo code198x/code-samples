@@ -1,0 +1,29 @@
+  10 REM Lucky Number
+  20 RANDOMIZE
+  30 BORDER 0: PAPER 0: INK 7: CLS
+  40 REM === Rainbow cascade ===
+  50 FOR i=0 TO 7
+  60 FOR j=0 TO 31
+  70 PRINT AT i,j; PAPER i;" "
+  80 NEXT j
+  90 BEEP 0.02,i*3+24
+ 100 NEXT i
+ 110 REM === Title: LUCKY ===
+ 120 RESTORE 9000
+ 130 FOR r=0 TO 4
+ 140 READ a$
+ 150 FOR q=1 TO LEN a$
+ 160 IF a$(q)="1" THEN PRINT AT 9+r,q+1; PAPER 6;" "
+ 170 NEXT q
+ 180 NEXT r
+ 190 REM === Title: NUMBER ===
+ 200 RESTORE 9010
+ 210 FOR r=0 TO 4
+ 220 READ a$
+ 230 FOR q=1 TO LEN a$
+ 240 IF a$(q)="1" THEN PRINT AT 15+r,q; PAPER 5;" "
+ 250 NEXT q
+ 260 NEXT r
+ 270 PRINT AT 21,7; INK 6; FLASH 1;"  Press any key  "; FLASH 0
+ 280 IF INKEY$="" THEN GO TO 280
+ 290 PAUSE 5
