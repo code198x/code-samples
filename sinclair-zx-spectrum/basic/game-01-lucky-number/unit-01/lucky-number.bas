@@ -1,4 +1,4 @@
-  10 REM Lucky Number
+  10 REM Lucky Number v5 (PLOT/DRAW digits)
   20 RANDOMIZE
   30 BORDER 0: PAPER 0: INK 7: CLS
   40 REM === Rainbow cascade ===
@@ -9,7 +9,7 @@
   90 BEEP 0.02,i*3+24
  100 NEXT i
  110 REM === Title: LUCKY ===
- 120 RESTORE 9000
+ 120 RESTORE 9100
  130 FOR r=0 TO 4
  140 READ a$
  150 FOR q=1 TO LEN a$
@@ -17,14 +17,14 @@
  170 NEXT q
  180 NEXT r
  190 REM === Title: NUMBER ===
- 200 RESTORE 9010
+ 200 RESTORE 9110
  210 FOR r=0 TO 4
  220 READ a$
  230 FOR q=1 TO LEN a$
  240 IF a$(q)="1" THEN PRINT AT 15+r,q; PAPER 5;" "
  250 NEXT q
  260 NEXT r
- 270 PRINT AT 21,7; INK 6; FLASH 1;"  Press any key  "; FLASH 0
+ 270 LET r=21: LET t$="Press any key": INK 6: FLASH 1: GO SUB 3000: FLASH 0
  280 IF INKEY$="" THEN GO TO 280
  290 PAUSE 5
  300 REM === NEW GAME ===
@@ -36,21 +36,22 @@
  360 PRINT AT 0,i; PAPER 1;" "
  370 PRINT AT 21,i; PAPER 1;" "
  380 NEXT i
- 390 PRINT AT 0,8; PAPER 1; INK 6; BRIGHT 1;"  LUCKY NUMBER  "
- 400 PRINT AT 21,7; PAPER 1; INK 5;"  Guess 1-100  "
+ 390 LET r=0: LET t$="LUCKY NUMBER": PAPER 1: INK 6: BRIGHT 1: GO SUB 3000: BRIGHT 0
+ 400 LET r=21: LET t$="Guess 1-100": PAPER 1: INK 5: GO SUB 3000
  410 FOR i=1 TO 20
  420 PRINT AT i,0; PAPER 1;" "
  430 PRINT AT i,31; PAPER 1;" "
  440 NEXT i
- 450 PRINT AT 2,2; INK 5;"Guesses:"
- 460 PRINT AT 14,5; INK 5;"Temperature:"
+ 450 PAPER 0
+ 460 PRINT AT 2,2; INK 5;"Guesses:"
+ 470 PRINT AT 14,5; INK 5;"Temperature:"
  500 REM === Guess loop ===
  510 LET c=c+1
  520 PRINT AT 2,11; INK 6; BRIGHT 1;c;"  "
  530 INPUT "Your guess? ";g
  540 IF g<1 OR g>100 THEN GO TO 530
  550 REM === Show guess as big digits ===
- 560 LET pc=6: GO SUB 2400
+ 560 INK 6: GO SUB 2400
  570 IF g=n THEN GO TO 800
  580 LET d=ABS (g-n)
  590 REM === Temperature bar ===
@@ -62,10 +63,10 @@
  650 IF d>5 AND d<=10 THEN BORDER 2
  660 IF d<=5 THEN BORDER 7
  670 REM === Feedback ===
- 680 PRINT AT 17,2;"                            "
- 690 PRINT AT 18,2;"                            "
- 700 IF g<n THEN PRINT AT 17,10; INK 6; BRIGHT 1;"Too low!": PRINT AT 18,9; INK 5; BRIGHT 0;"Guess higher.": BEEP 0.05,0: BEEP 0.1,10
- 710 IF g>n THEN PRINT AT 17,9; INK 3; BRIGHT 1;"Too high!": PRINT AT 18,9; INK 5; BRIGHT 0;"Guess lower.": BEEP 0.05,10: BEEP 0.1,0
+ 680 LET r=17: GO SUB 3100
+ 690 LET r=18: GO SUB 3100
+ 700 IF g<n THEN LET r=17: LET t$="Too low!": INK 6: BRIGHT 1: GO SUB 3000: LET r=18: LET t$="Guess higher.": INK 5: BRIGHT 0: GO SUB 3000: BEEP 0.05,0: BEEP 0.1,10
+ 710 IF g>n THEN LET r=17: LET t$="Too high!": INK 3: BRIGHT 1: GO SUB 3000: LET r=18: LET t$="Guess lower.": INK 5: BRIGHT 0: GO SUB 3000: BEEP 0.05,10: BEEP 0.1,0
  720 GO TO 500
  800 REM === WIN! ===
  810 FOR i=1 TO 20
@@ -74,39 +75,40 @@
  840 NEXT i
  850 BORDER 0
  860 REM === Green digits ===
- 870 LET pc=4: GO SUB 2400
+ 870 INK 4: GO SUB 2400
  880 REM === Green bar ===
  890 FOR i=1 TO 28
  900 PRINT AT 15,1+i; PAPER 4;" "
  910 BEEP 0.01,i
  920 NEXT i
- 930 PRINT AT 17,2;"                            "
- 940 PRINT AT 18,2;"                            "
- 950 PRINT AT 17,8; INK 4; BRIGHT 1; FLASH 1;"  YOU GOT IT!  "; FLASH 0
- 960 PRINT AT 19,8; INK 5;"The number was ";n
- 970 PRINT AT 20,8; INK 7;"Found in ";c;" guesses"
- 980 IF c<=5 THEN PRINT AT 18,10; INK 2; BRIGHT 1;"Incredible!"
- 990 IF c>5 AND c<=8 THEN PRINT AT 18,10; INK 6;"Impressive!"
-1000 IF c>8 AND c<=12 THEN PRINT AT 18,10; INK 5;"Well done!"
-1010 IF c>12 THEN PRINT AT 18,9; INK 4;"Keep practising!"
+ 930 LET r=17: GO SUB 3100
+ 940 LET r=18: GO SUB 3100
+ 950 LET r=17: LET t$="YOU GOT IT!": INK 4: BRIGHT 1: FLASH 1: GO SUB 3000: FLASH 0
+ 960 LET r=19: LET t$="The number was "+STR$ n: INK 5: GO SUB 3000
+ 970 LET r=20: LET t$="Found in "+STR$ c+" guesses": INK 7: GO SUB 3000
+ 980 IF c<=5 THEN LET r=18: LET t$="Incredible!": INK 2: BRIGHT 1: GO SUB 3000
+ 990 IF c>5 AND c<=8 THEN LET r=18: LET t$="Impressive!": INK 6: GO SUB 3000
+1000 IF c>8 AND c<=12 THEN LET r=18: LET t$="Well done!": INK 5: GO SUB 3000
+1010 IF c>12 THEN LET r=18: LET t$="Keep practising!": INK 4: GO SUB 3000
 1020 BRIGHT 0
-1030 PRINT AT 21,7; PAPER 1; INK 5;" Play again? y/n  "
+1030 LET r=21: LET t$="Play again? y/n": PAPER 1: INK 5: GO SUB 3000: PAPER 0
 1040 LET k$=INKEY$
 1050 IF k$="" THEN GO TO 1040
 1060 IF k$="y" THEN GO TO 300
 1070 BORDER 7: PAPER 7: INK 0: CLS
 1080 PRINT "Thanks for playing!"
 1090 STOP
-2000 REM === Draw single digit f ===
-2010 RESTORE 9200+f*10
-2020 FOR r=0 TO 6
-2030 READ a$
-2040 FOR q=1 TO LEN a$
-2050 IF a$(q)="1" THEN PRINT AT dr+r,dc+q-1; PAPER pc;" "
-2060 IF a$(q)="." THEN PRINT AT dr+r,dc+q-1; PAPER 0;" "
-2070 NEXT q
-2080 NEXT r
-2090 RETURN
+2000 REM === Draw single digit d at px,py ===
+2010 RESTORE 9000+d
+2020 READ s$
+2030 IF s$(1)="1" THEN FOR i=1 TO 6: PLOT px+9,py-i: DRAW 21,0: NEXT i
+2040 IF s$(2)="1" THEN FOR i=1 TO 6: PLOT px+i,py-9: DRAW 0,-13: NEXT i
+2050 IF s$(3)="1" THEN FOR i=1 TO 6: PLOT px+33+i,py-9: DRAW 0,-13: NEXT i
+2060 IF s$(4)="1" THEN FOR i=1 TO 6: PLOT px+9,py-25-i: DRAW 21,0: NEXT i
+2070 IF s$(5)="1" THEN FOR i=1 TO 6: PLOT px+i,py-33: DRAW 0,-13: NEXT i
+2080 IF s$(6)="1" THEN FOR i=1 TO 6: PLOT px+33+i,py-33: DRAW 0,-13: NEXT i
+2090 IF s$(7)="1" THEN FOR i=1 TO 6: PLOT px+9,py-49-i: DRAW 21,0: NEXT i
+2100 RETURN
 2200 REM === Temperature bar ===
 2210 LET h=INT ((100-d)/3.6)+1
 2220 IF h>28 THEN LET h=28
@@ -121,109 +123,46 @@
 2310 BEEP 0.05,h/2-8
 2320 RETURN
 2400 REM === Draw number g centred ===
-2410 FOR r=5 TO 11
+2410 FOR r=4 TO 11
 2420 PRINT AT r,2; PAPER 0;"                            "
 2430 NEXT r
-2440 IF g>=100 THEN GO TO 2520
-2450 IF g>=10 THEN GO TO 2490
-2460 LET dc=14: LET dr=5: LET f=g: GO SUB 2000
-2470 RETURN
-2490 LET dc=11: LET dr=5: LET f=INT (g/10): GO SUB 2000
-2500 LET dc=18: LET dr=5: LET f=g-INT (g/10)*10: GO SUB 2000
+2440 LET py=140
+2450 IF g>=100 THEN GO TO 2520
+2460 IF g>=10 THEN GO TO 2490
+2470 LET px=108: LET d=g: GO SUB 2000
+2480 RETURN
+2490 LET px=92: LET d=INT (g/10): GO SUB 2000
+2500 LET px=140: LET d=g-INT (g/10)*10: GO SUB 2000
 2510 RETURN
-2520 LET dc=8: LET dr=5: LET f=1: GO SUB 2000
-2530 LET dc=14: LET dr=5: LET f=0: GO SUB 2000
-2540 LET dc=20: LET dr=5: LET f=0: GO SUB 2000
+2520 LET px=60: LET d=1: GO SUB 2000
+2530 LET px=108: LET d=0: GO SUB 2000
+2540 LET px=156: LET d=0: GO SUB 2000
 2550 RETURN
-9000 REM === LUCKY ===
-9001 DATA "1.....1...1..111..1...1.1...1"
-9002 DATA "1.....1...1.1.....1..1..1...1"
-9003 DATA "1.....1...1.1.....11.....1.1."
-9004 DATA "1.....1...1.1.....1.1.....1.."
-9005 DATA "11111.11111..111..1..1....1.."
-9010 REM === NUMBER ===
-9011 DATA "1..1.1..1.1...1.111..1111.111."
-9012 DATA "11.1.1..1.11.11.1..1.1....1..1"
-9013 DATA "1.11.1..1.1.1.1.111..111..111."
-9014 DATA "1..1.1..1.1...1.1..1.1....1.1."
-9015 DATA "1..1.1111.1...1.111..1111.1..1"
-9200 REM === Digit 0 ===
-9201 DATA "11111"
-9202 DATA "1...1"
-9203 DATA "1...1"
-9204 DATA "1...1"
-9205 DATA "1...1"
-9206 DATA "1...1"
-9207 DATA "11111"
-9210 REM === Digit 1 ===
-9211 DATA "..1.."
-9212 DATA ".11.."
-9213 DATA "..1.."
-9214 DATA "..1.."
-9215 DATA "..1.."
-9216 DATA "..1.."
-9217 DATA ".111."
-9220 REM === Digit 2 ===
-9221 DATA "11111"
-9222 DATA "....1"
-9223 DATA "....1"
-9224 DATA "11111"
-9225 DATA "1...."
-9226 DATA "1...."
-9227 DATA "11111"
-9230 REM === Digit 3 ===
-9231 DATA "11111"
-9232 DATA "....1"
-9233 DATA "....1"
-9234 DATA ".1111"
-9235 DATA "....1"
-9236 DATA "....1"
-9237 DATA "11111"
-9240 REM === Digit 4 ===
-9241 DATA "1...1"
-9242 DATA "1...1"
-9243 DATA "1...1"
-9244 DATA "11111"
-9245 DATA "....1"
-9246 DATA "....1"
-9247 DATA "....1"
-9250 REM === Digit 5 ===
-9251 DATA "11111"
-9252 DATA "1...."
-9253 DATA "1...."
-9254 DATA "11111"
-9255 DATA "....1"
-9256 DATA "....1"
-9257 DATA "11111"
-9260 REM === Digit 6 ===
-9261 DATA "11111"
-9262 DATA "1...."
-9263 DATA "1...."
-9264 DATA "11111"
-9265 DATA "1...1"
-9266 DATA "1...1"
-9267 DATA "11111"
-9270 REM === Digit 7 ===
-9271 DATA "11111"
-9272 DATA "....1"
-9273 DATA "...1."
-9274 DATA "..1.."
-9275 DATA "..1.."
-9276 DATA "..1.."
-9277 DATA "..1.."
-9280 REM === Digit 8 ===
-9281 DATA "11111"
-9282 DATA "1...1"
-9283 DATA "1...1"
-9284 DATA "11111"
-9285 DATA "1...1"
-9286 DATA "1...1"
-9287 DATA "11111"
-9290 REM === Digit 9 ===
-9291 DATA "11111"
-9292 DATA "1...1"
-9293 DATA "1...1"
-9294 DATA "11111"
-9295 DATA "....1"
-9296 DATA "....1"
-9297 DATA ".1111"
+3000 REM === Centre text t$ on row r ===
+3010 PRINT AT r,(32-LEN t$)/2;t$
+3020 RETURN
+3100 REM === Clear row r (cols 2-29) ===
+3110 PRINT AT r,2;"                            "
+3120 RETURN
+9000 DATA "1110111"
+9001 DATA "0010010"
+9002 DATA "1011101"
+9003 DATA "1011011"
+9004 DATA "0111010"
+9005 DATA "1101011"
+9006 DATA "1101111"
+9007 DATA "1010010"
+9008 DATA "1111111"
+9009 DATA "1111011"
+9100 REM === LUCKY ===
+9101 DATA "1.....1...1..111..1...1.1...1"
+9102 DATA "1.....1...1.1.....1..1..1...1"
+9103 DATA "1.....1...1.1.....11.....1.1."
+9104 DATA "1.....1...1.1.....1.1.....1.."
+9105 DATA "11111.11111..111..1..1....1.."
+9110 REM === NUMBER ===
+9111 DATA "1..1.1..1.1...1.111..1111.111."
+9112 DATA "11.1.1..1.11.11.1..1.1....1..1"
+9113 DATA "1.11.1..1.1.1.1.111..111..111."
+9114 DATA "1..1.1..1.1...1.1..1.1....1.1."
+9115 DATA "1..1.1111.1...1.111..1111.1..1"

@@ -5,23 +5,23 @@
  840 NEXT i
  850 BORDER 0
  860 REM === Green digits ===
- 870 LET pc=4: GO SUB 2400
+ 870 INK 4: GO SUB 2400
  880 REM === Green bar ===
  890 FOR i=1 TO 28
  900 PRINT AT 15,1+i; PAPER 4;" "
  910 BEEP 0.01,i
  920 NEXT i
- 930 PRINT AT 17,2;"                            "
- 940 PRINT AT 18,2;"                            "
- 950 PRINT AT 17,8; INK 4; BRIGHT 1; FLASH 1;"  YOU GOT IT!  "; FLASH 0
- 960 PRINT AT 19,8; INK 5;"The number was ";n
- 970 PRINT AT 20,8; INK 7;"Found in ";c;" guesses"
- 980 IF c<=5 THEN PRINT AT 18,10; INK 2; BRIGHT 1;"Incredible!"
- 990 IF c>5 AND c<=8 THEN PRINT AT 18,10; INK 6;"Impressive!"
-1000 IF c>8 AND c<=12 THEN PRINT AT 18,10; INK 5;"Well done!"
-1010 IF c>12 THEN PRINT AT 18,9; INK 4;"Keep practising!"
+ 930 LET r=17: GO SUB 3100
+ 940 LET r=18: GO SUB 3100
+ 950 LET r=17: LET t$="YOU GOT IT!": INK 4: BRIGHT 1: FLASH 1: GO SUB 3000: FLASH 0
+ 960 LET r=19: LET t$="The number was "+STR$ n: INK 5: GO SUB 3000
+ 970 LET r=20: LET t$="Found in "+STR$ c+" guesses": INK 7: GO SUB 3000
+ 980 IF c<=5 THEN LET r=18: LET t$="Incredible!": INK 2: BRIGHT 1: GO SUB 3000
+ 990 IF c>5 AND c<=8 THEN LET r=18: LET t$="Impressive!": INK 6: GO SUB 3000
+1000 IF c>8 AND c<=12 THEN LET r=18: LET t$="Well done!": INK 5: GO SUB 3000
+1010 IF c>12 THEN LET r=18: LET t$="Keep practising!": INK 4: GO SUB 3000
 1020 BRIGHT 0
-1030 PRINT AT 21,7; PAPER 1; INK 5;" Play again? y/n  "
+1030 LET r=21: LET t$="Play again? y/n": PAPER 1: INK 5: GO SUB 3000: PAPER 0
 1040 LET k$=INKEY$
 1050 IF k$="" THEN GO TO 1040
 1060 IF k$="y" THEN GO TO 300

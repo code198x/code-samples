@@ -1,13 +1,14 @@
-2000 REM === Draw single digit f ===
-2010 RESTORE 9200+f*10
-2020 FOR r=0 TO 6
-2030 READ a$
-2040 FOR q=1 TO LEN a$
-2050 IF a$(q)="1" THEN PRINT AT dr+r,dc+q-1; PAPER pc;" "
-2060 IF a$(q)="." THEN PRINT AT dr+r,dc+q-1; PAPER 0;" "
-2070 NEXT q
-2080 NEXT r
-2090 RETURN
+2000 REM === Draw single digit d at px,py ===
+2010 RESTORE 9000+d
+2020 READ s$
+2030 IF s$(1)="1" THEN FOR i=1 TO 6: PLOT px+9,py-i: DRAW 21,0: NEXT i
+2040 IF s$(2)="1" THEN FOR i=1 TO 6: PLOT px+i,py-9: DRAW 0,-13: NEXT i
+2050 IF s$(3)="1" THEN FOR i=1 TO 6: PLOT px+33+i,py-9: DRAW 0,-13: NEXT i
+2060 IF s$(4)="1" THEN FOR i=1 TO 6: PLOT px+9,py-25-i: DRAW 21,0: NEXT i
+2070 IF s$(5)="1" THEN FOR i=1 TO 6: PLOT px+i,py-33: DRAW 0,-13: NEXT i
+2080 IF s$(6)="1" THEN FOR i=1 TO 6: PLOT px+33+i,py-33: DRAW 0,-13: NEXT i
+2090 IF s$(7)="1" THEN FOR i=1 TO 6: PLOT px+9,py-49-i: DRAW 21,0: NEXT i
+2100 RETURN
 2200 REM === Temperature bar ===
 2210 LET h=INT ((100-d)/3.6)+1
 2220 IF h>28 THEN LET h=28
@@ -22,17 +23,24 @@
 2310 BEEP 0.05,h/2-8
 2320 RETURN
 2400 REM === Draw number g centred ===
-2410 FOR r=5 TO 11
+2410 FOR r=4 TO 11
 2420 PRINT AT r,2; PAPER 0;"                            "
 2430 NEXT r
-2440 IF g>=100 THEN GO TO 2520
-2450 IF g>=10 THEN GO TO 2490
-2460 LET dc=14: LET dr=5: LET f=g: GO SUB 2000
-2470 RETURN
-2490 LET dc=11: LET dr=5: LET f=INT (g/10): GO SUB 2000
-2500 LET dc=18: LET dr=5: LET f=g-INT (g/10)*10: GO SUB 2000
+2440 LET py=140
+2450 IF g>=100 THEN GO TO 2520
+2460 IF g>=10 THEN GO TO 2490
+2470 LET px=108: LET d=g: GO SUB 2000
+2480 RETURN
+2490 LET px=92: LET d=INT (g/10): GO SUB 2000
+2500 LET px=140: LET d=g-INT (g/10)*10: GO SUB 2000
 2510 RETURN
-2520 LET dc=8: LET dr=5: LET f=1: GO SUB 2000
-2530 LET dc=14: LET dr=5: LET f=0: GO SUB 2000
-2540 LET dc=20: LET dr=5: LET f=0: GO SUB 2000
+2520 LET px=60: LET d=1: GO SUB 2000
+2530 LET px=108: LET d=0: GO SUB 2000
+2540 LET px=156: LET d=0: GO SUB 2000
 2550 RETURN
+3000 REM === Centre text t$ on row r ===
+3010 PRINT AT r,(32-LEN t$)/2;t$
+3020 RETURN
+3100 REM === Clear row r (cols 2-29) ===
+3110 PRINT AT r,2;"                            "
+3120 RETURN
