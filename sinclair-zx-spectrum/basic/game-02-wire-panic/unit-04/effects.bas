@@ -1,0 +1,17 @@
+  10 REM === Tick ===
+  20 BEEP 0.05,20
+  30 PAUSE 25
+  40 BEEP 0.05,20
+  50 PAUSE 25
+  60 BEEP 0.05,20
+  70 PAUSE 50
+  80 REM === Explosion ===
+  90 FOR i=1 TO 10
+ 100 BEEP 0.02,INT (RND*40)
+ 110 NEXT i
+ 120 PAUSE 50
+ 130 REM === Victory ===
+ 140 FOR i=1 TO 10
+ 150 BEEP 0.03,20+i*2
+ 160 NEXT i
+ 170 BEEP 0.5,30

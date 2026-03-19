@@ -1,0 +1,24 @@
+  10 REM Wire Cutter — the text version
+  20 RANDOMIZE
+  30 CLS
+  40 LET w=INT (RND*4)+1
+  50 LET w$="1"
+  60 IF w=2 THEN LET w$="2"
+  70 IF w=3 THEN LET w$="3"
+  80 IF w=4 THEN LET w$="4"
+  90 LET t=10
+ 100 PRINT AT 0,9;"WIRE CUTTER"
+ 110 PRINT AT 5,7;"Wires: 1 2 3 4"
+ 120 PRINT AT 10,14;t;" "
+ 130 BEEP 0.05,t
+ 140 PAUSE 40
+ 150 LET k$=INKEY$
+ 160 IF k$="1" THEN GO TO 250
+ 170 IF k$="2" THEN GO TO 250
+ 180 IF k$="3" THEN GO TO 250
+ 190 IF k$="4" THEN GO TO 250
+ 200 LET t=t-1
+ 210 IF t<0 THEN PRINT AT 12,12;"Too late!": PRINT AT 14,8;"Wire was ";w$: STOP
+ 220 GO TO 120
+ 250 IF k$=w$ THEN PRINT AT 12,11;"DEFUSED!": STOP
+ 260 PRINT AT 12,10;"Wrong wire!": PRINT AT 14,8;"Wire was ";w$

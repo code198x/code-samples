@@ -1,0 +1,9 @@
+  10 REM Wire Panic
+  20 RANDOMIZE
+  30 BORDER 0: PAPER 0: INK 7: CLS
+  40 LET w=INT (RND*4)+1
+  50 LET w$="1"
+  60 IF w=2 THEN LET w$="2"
+  70 IF w=3 THEN LET w$="3"
+  80 IF w=4 THEN LET w$="4"
+  90 LET t=20
