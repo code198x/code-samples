@@ -1,0 +1,4 @@
+  10 CLS
+  20 FOR i=1 TO 10
+  30 PRINT i
+  40 NEXT i
