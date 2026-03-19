@@ -1,0 +1,9 @@
+  10 REM Bright Spark
+  20 RANDOMIZE
+  30 BORDER 0: PAPER 0: INK 7: CLS
+  40 LET s$=""
+  50 LET score=0
+ 100 REM === Draw panels ===
+ 110 GO SUB 2000
+ 120 LET r=0: LET t$="BRIGHT SPARK": INK 6: BRIGHT 1: GO SUB 3000: BRIGHT 0
+ 130 PRINT AT 10,14; INK 5;"vs"
