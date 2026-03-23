@@ -32,12 +32,9 @@
   72 IF r$="a" THEN LET y=8
   74 IF r$="b" THEN LET y=10
   76 IF r$="c" THEN LET y=12
-  78 IF r$="d" THEN LET y=14
-  79 PRINT AT y,4; INK 4; BRIGHT 1;">"
-  77 BEEP 0.3,-5
-  78 BORDER 0
-  79 PAUSE 75
-  GO TO 100
+  77 IF r$="d" THEN LET y=14
+  78 PRINT AT y,4; INK 4; BRIGHT 1;">"
+  79 BEEP 0.3,-5: BORDER 0: PAUSE 75: GO TO 100
   80 REM === Correct ===
   82 LET sc=sc+1
   84 BORDER 4
