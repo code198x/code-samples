@@ -1,8 +1,0 @@
-  10 CLS
-  20 PRINT AT 0,10; INK 6; BRIGHT 1;"MY GAME"
-  30 PRINT AT 3,2; INK 5;"Score:"
-  40 PRINT AT 3,9; INK 6;"0"
-  50 PRINT AT 3,20; INK 5;"Lives:"
-  60 PRINT AT 3,27; INK 6;"3"
-  70 PRINT AT 10,8; INK 7;"Press any key"
-  80 PRINT AT 21,7; INK 5;"A Simple Layout"

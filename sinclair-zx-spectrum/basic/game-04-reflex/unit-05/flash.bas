@@ -1,0 +1,20 @@
+  10 CLS
+  20 RANDOMIZE
+  30 PRINT "Get ready..."
+  40 PRINT
+  50 FOR x = 0 TO 200
+  60 PLOT x, 88
+  70 NEXT x
+  80 PAPER 2: BORDER 2: CLS
+  90 PRINT "NOW!"
+ 100 LET t = 0
+ 110 IF INKEY$ <> "" THEN GO TO 140
+ 120 LET t = t + 1
+ 130 GO TO 110
+ 140 PAPER 0: BORDER 0: CLS
+ 150 PRINT "Your time: "; t
+ 160 PRINT
+ 170 IF t < 5 THEN INK 4: PRINT "Lightning!"
+ 180 IF t >= 5 AND t < 15 THEN INK 5: PRINT "Quick!"
+ 190 IF t >= 15 AND t < 30 THEN INK 6: PRINT "OK"
+ 200 IF t >= 30 THEN INK 2: PRINT "Slow..."

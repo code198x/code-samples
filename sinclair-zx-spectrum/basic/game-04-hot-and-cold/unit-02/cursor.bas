@@ -1,2 +1,0 @@
-  26 LET r=10: LET c=15
-  32 PRINT AT r,c; INK 6; BRIGHT 1;"+"

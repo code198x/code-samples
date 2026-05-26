@@ -1,6 +1,0 @@
-  10 FOR t=20 TO 0 STEP -1
-  20 PRINT t;" "
-  30 BEEP 0.05,t
-  40 PAUSE 40
-  50 NEXT t
-  60 PRINT "BOOM!"

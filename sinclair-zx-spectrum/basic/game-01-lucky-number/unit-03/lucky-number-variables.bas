@@ -1,4 +1,0 @@
- 310 LET n=INT (RND*100)+1
- 320 LET c=0
- 510 LET c=c+1
- 520 PRINT AT 2,11; INK 6; BRIGHT 1;c;"  "

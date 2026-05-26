@@ -1,2 +1,0 @@
- 570 IF g=n THEN GO TO 800
- 720 GO TO 500

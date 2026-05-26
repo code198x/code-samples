@@ -1,4 +1,0 @@
-  10 LET n=42
-  20 PRINT n+10
-  30 PRINT n-10
-  40 PRINT n*2
