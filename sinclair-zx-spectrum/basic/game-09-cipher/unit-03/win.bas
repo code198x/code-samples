@@ -4,19 +4,11 @@
  180 LET d$ = ""
  190 FOR i = 1 TO LEN w$: LET d$ = d$ + "_": NEXT i
  200 LET lives = 7
- 210 LET tried$ = ""
  220 CLS
  260 FOR i = 1 TO LEN d$: PRINT d$(i); " ";: NEXT i
  310 PRINT: PRINT "Lives: "; lives
- 350 PRINT "Tried: "; tried$
  360 PRINT
  370 INPUT "Guess: "; g$
- 380 LET already = 0
- 390 FOR i = 1 TO LEN tried$
- 400 IF tried$(i) = g$ THEN LET already = 1
- 410 NEXT i
- 420 IF already = 1 THEN PRINT "Already tried!": PAUSE 50: GO TO 220
- 430 LET tried$ = tried$ + g$
  440 LET found = 0
  450 FOR i = 1 TO LEN w$
  460 IF w$(i) = g$ THEN LET d$(i TO i) = g$: LET found = 1
