@@ -4,7 +4,10 @@
   50 PRINT
   60 PRINT "  Ask any yes-or-no question."
   90 INPUT "  Speak, mortal: "; q$
- 200 LET r = INT (RND * 3) + 1
+ 200 LET r = INT (RND * 6) + 1
  230 IF r = 1 THEN PRINT "  YES"
  240 IF r = 2 THEN PRINT "  NO"
  250 IF r = 3 THEN PRINT "  PERHAPS"
+ 260 IF r = 4 THEN PRINT "  ASK AGAIN LATER"
+ 270 IF r = 5 THEN PRINT "  THE SIGNS ARE UNCLEAR"
+ 280 IF r = 6 THEN PRINT "  DEFINITELY NOT"

@@ -1,6 +1,6 @@
   10 CLS
-  20 PRINT "The Oracle awaits your question."
-  30 PRINT
-  40 INPUT "Speak, mortal: "; q$
+  40 PRINT "  *** THE ORACLE STONE ***"
   50 PRINT
-  60 PRINT "The Oracle says... YES"
+  60 PRINT "  Ask any yes-or-no question."
+  90 INPUT "  Speak, mortal: "; q$
+ 230 PRINT "  YES"
