@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 # Capture a Spectrum unit screenshot by driving emu198x-spectrum --mcp
-# over stdio JSON-RPC. Proof of concept for Emu198x's SOLID criterion 5
-# ("MCP server functional, exercised by Code198x"); same CLI surface
-# as capture-spectrum-screenshot.sh but uses MCP rather than the
-# --script JSON-file transport.
+# over stdio JSON-RPC. Same CLI surface as capture-spectrum-screenshot.sh
+# but uses MCP rather than the --script JSON-file transport.
 #
 # Usage:
 #   mcp-capture-spectrum-screenshot.sh <game-dir> <unit-number>
@@ -12,14 +10,21 @@
 #   mcp-capture-spectrum-screenshot.sh game-01-shadowkeep 14
 #
 # Resolves:
-#   .tap input        code-samples/sinclair-zx-spectrum/<game-dir>/unit-NN/<game>.tap
+#   .sna input        code-samples/sinclair-zx-spectrum/<game-dir>/unit-NN/<game>.sna
 #   .png output       website/public/images/sinclair-zx-spectrum/<game-dir>/unit-NN/screenshot.png
+#
+# What changed (2026-05-14):
+# Previously used .tap + autoload-tape + wait-for-tape-stop. Emu198x's
+# load_snapshot MCP tool now accepts portable .sna / .z80 / .zip directly
+# (commit ff02827). The JSON-RPC sequence drops from 4 tool calls (load_media,
+# autoload_tape, wait_for_query_bool, run_frames 100) down to 2 (load_snapshot,
+# run_frames 10). Faster, cleaner, no tape-loader header in the resulting PNG.
 #
 # Requires:
 #   - emu198x-spectrum built at $EMU198X_BIN (default: target/release in $EMU198X)
 #   - Python 3 on PATH (used to walk the JSON-RPC responses)
 #   - 48K ROM at the conventional path
-#   - .tap built first (run `make` in the unit's directory)
+#   - .sna built first (run `make` in the unit's directory)
 
 set -euo pipefail
 
@@ -31,14 +36,14 @@ fi
 GAME_DIR="$1"
 UNIT="$(printf '%02d' "$2")"
 GAME_NAME="${GAME_DIR#game-*-}"
-TAP_BASENAME="$GAME_NAME"
+SNA_BASENAME="$GAME_NAME"
 
-EMU198X="${EMU198X:-/Users/stevehill/Projects/Emu198x}"
+EMU198X="${EMU198X:-/Users/stevehill/Projects/198x/Emu198x}"
 EMU198X_BIN="${EMU198X_BIN:-$EMU198X/target/release/emu198x-spectrum}"
 SPECTRUM_ROM="${SPECTRUM_ROM:-$HOME/.emu198x/roms/sinclair-zx-spectrum-48k/48.rom}"
-CODE198X="${CODE198X:-/Users/stevehill/Projects/Code198x}"
+CODE198X="${CODE198X:-/Users/stevehill/Projects/198x/Code198x}"
 
-TAP="$CODE198X/code-samples/sinclair-zx-spectrum/$GAME_DIR/unit-$UNIT/$TAP_BASENAME.tap"
+SNA="$CODE198X/code-samples/sinclair-zx-spectrum/$GAME_DIR/unit-$UNIT/$SNA_BASENAME.sna"
 OUT_DIR="$CODE198X/website/public/images/sinclair-zx-spectrum/$GAME_DIR/unit-$UNIT"
 OUT="$OUT_DIR/screenshot.png"
 
@@ -52,9 +57,9 @@ if [[ ! -f "$SPECTRUM_ROM" ]]; then
     exit 1
 fi
 
-if [[ ! -f "$TAP" ]]; then
-    echo "error: TAP not found at $TAP" >&2
-    echo "       build it: (cd $(dirname "$TAP") && make)" >&2
+if [[ ! -f "$SNA" ]]; then
+    echo "error: SNA not found at $SNA" >&2
+    echo "       build it: (cd $(dirname "$SNA") && make)" >&2
     exit 1
 fi
 
@@ -66,8 +71,8 @@ fi
 mkdir -p "$OUT_DIR"
 
 # JSON-RPC stream. Newline-delimited per the MCP stdio transport.
-# initialize → notifications/initialized → tools/call×5 (load_media,
-# autoload_tape, wait for tape stop, settle frames, save_screenshot).
+# initialize → notifications/initialized → tools/call×3 (load_snapshot,
+# run_frames settle, save_screenshot).
 REQUESTS_FILE="$(mktemp -t mcp-screenshot.XXXXXX.jsonl)"
 RESPONSES_FILE="$(mktemp -t mcp-screenshot-out.XXXXXX.jsonl)"
 trap 'rm -f "$REQUESTS_FILE" "$RESPONSES_FILE"' EXIT
@@ -75,11 +80,9 @@ trap 'rm -f "$REQUESTS_FILE" "$RESPONSES_FILE"' EXIT
 cat > "$REQUESTS_FILE" <<EOF
 {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"code198x-mcp-screenshot","version":"0"}}}
 {"jsonrpc":"2.0","method":"notifications/initialized"}
-{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"load_media","arguments":{"slot":"tape-1","kind":"tape","path":"$TAP"}}}
-{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"autoload_tape","arguments":{"slot":"tape-1","max_boot_frames":250}}}
-{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"wait_for_query_bool","arguments":{"path":"spectrum.tape.playing","value":false,"max_frames":2000}}}
-{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"run_frames","arguments":{"frames":100}}}
-{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"save_screenshot","arguments":{"path":"$OUT"}}}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"load_snapshot","arguments":{"path":"$SNA"}}}
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"run_frames","arguments":{"frames":10}}}
+{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"save_screenshot","arguments":{"path":"$OUT"}}}
 EOF
 
 "$EMU198X_BIN" --mcp <"$REQUESTS_FILE" >"$RESPONSES_FILE"

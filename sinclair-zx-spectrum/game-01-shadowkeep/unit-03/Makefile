@@ -1,16 +1,18 @@
 .PHONY: all clean
 
-all: shadowkeep.tap shadowkeep.sna
+STAGES := 01-a-pixel-in-the-dark 02-the-first-stone 03-the-walls-remember 04-the-thief
 
-shadowkeep.tap: shadowkeep.asm
+all: $(addsuffix .tap,$(STAGES)) $(addsuffix .sna,$(STAGES))
+
+%.tap: %.asm
 	docker run --rm -v "$$(pwd)":/code -w /code \
 		ghcr.io/code198x/sinclair-zx-spectrum:latest \
-		pasmonext --tapbas shadowkeep.asm shadowkeep.tap
+		pasmonext --tapbas $< $@
 
-shadowkeep.sna: shadowkeep.asm
+%.sna: %.asm
 	docker run --rm -v "$$(pwd)":/code -w /code \
 		ghcr.io/code198x/sinclair-zx-spectrum:latest \
-		pasmonext --sna shadowkeep.asm shadowkeep.sna
+		pasmonext --sna $< $@
 
 clean:
-	rm -f shadowkeep.tap shadowkeep.sna
+	rm -f *.tap *.sna

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Capture a screenshot from a Spectrum unit's .tap file using emu198x-spectrum
+# Capture a screenshot from a Spectrum unit's .sna file using emu198x-spectrum
 # in headless / script mode.
 #
 # Usage:
@@ -9,7 +9,7 @@
 #   capture-spectrum-screenshot.sh game-01-shadowkeep 1
 #
 # Resolves:
-#   .tap input        code-samples/sinclair-zx-spectrum/<game-dir>/unit-NN/<game>.tap
+#   .sna input        code-samples/sinclair-zx-spectrum/<game-dir>/unit-NN/<game>.sna
 #   .png output       website/public/images/sinclair-zx-spectrum/<game-dir>/unit-NN/screenshot.png
 #
 # Requires:
@@ -19,12 +19,15 @@
 #   - 48K ROM at the conventional path: $HOME/.emu198x/roms/sinclair-zx-spectrum-48k/48.rom
 #     The binary's eager 48K boot picks it up from there automatically — no
 #     `--rom` flag needed in script mode.
-#   - .tap built first (run `make` in the unit's directory)
+#   - .sna built first (run `make` in the unit's directory)
 #
-# Why script mode (not the old --tape/--autoload-tape/--screenshot/--frames
-# flag soup): the new emu198x-spectrum binary expresses machine-state verbs
-# as JSON script steps. Flags can't carry ordering or composition; script
-# steps can, and the same vocabulary serves the upcoming MCP server.
+# What changed (2026-05-14):
+# Previous pipeline used .tap + autoload-tape + wait-for-tape-stop. Emu198x's
+# LoadSnapshot script step now accepts portable .sna / .z80 / .zip directly
+# (commit ff02827, "LoadSnapshot: route .sna / .z80 / .zip through portable
+# parsers"), so we skip the tape loader entirely: instant restore from the
+# pasmonext-built .sna, no "Bytes: shadowkeep" header in the resulting PNG,
+# and the capture finishes in tens of frames rather than thousands.
 
 set -euo pipefail
 
@@ -38,14 +41,14 @@ UNIT="$(printf '%02d' "$2")"
 
 # Game name = strip leading "game-NN-" from GAME_DIR
 GAME_NAME="${GAME_DIR#game-*-}"
-TAP_BASENAME="$GAME_NAME"
+SNA_BASENAME="$GAME_NAME"
 
-EMU198X="${EMU198X:-/Users/stevehill/Projects/Emu198x}"
+EMU198X="${EMU198X:-/Users/stevehill/Projects/198x/Emu198x}"
 EMU198X_BIN="${EMU198X_BIN:-$EMU198X/target/release/emu198x-spectrum}"
 SPECTRUM_ROM="${SPECTRUM_ROM:-$HOME/.emu198x/roms/sinclair-zx-spectrum-48k/48.rom}"
-CODE198X="${CODE198X:-/Users/stevehill/Projects/Code198x}"
+CODE198X="${CODE198X:-/Users/stevehill/Projects/198x/Code198x}"
 
-TAP="$CODE198X/code-samples/sinclair-zx-spectrum/$GAME_DIR/unit-$UNIT/$TAP_BASENAME.tap"
+SNA="$CODE198X/code-samples/sinclair-zx-spectrum/$GAME_DIR/unit-$UNIT/$SNA_BASENAME.sna"
 OUT_DIR="$CODE198X/website/public/images/sinclair-zx-spectrum/$GAME_DIR/unit-$UNIT"
 OUT="$OUT_DIR/screenshot.png"
 
@@ -61,29 +64,26 @@ if [[ ! -f "$SPECTRUM_ROM" ]]; then
     exit 1
 fi
 
-if [[ ! -f "$TAP" ]]; then
-    echo "error: TAP not found at $TAP" >&2
-    echo "       build it: (cd $(dirname "$TAP") && make)" >&2
+if [[ ! -f "$SNA" ]]; then
+    echo "error: SNA not found at $SNA" >&2
+    echo "       build it: (cd $(dirname "$SNA") && make)" >&2
     exit 1
 fi
 
 mkdir -p "$OUT_DIR"
 
-# JSON script: load tape into slot tape-1, autoload BASIC, wait for
-# tape-stop, run a few extra frames so the screen settles, save PNG.
-# All machine-state verbs live in this JSON now — the binary's surviving
-# CLI flags are for mode selection (--headless / --script / --mcp) and
-# convenience aliases.
+# JSON script: restore the .sna directly into the live machine (skipping the
+# tape-loader animation entirely), run a handful of frames so the code has
+# time to execute and the screen to settle, save the PNG. All machine-state
+# verbs live in this JSON; the binary's CLI flags only select the mode.
 SCRIPT_TMP="$(mktemp -t emu198x-capture.XXXXXX.json)"
 trap 'rm -f "$SCRIPT_TMP"' EXIT
 
 cat > "$SCRIPT_TMP" <<EOF
 [
-  { "action": "load_media",            "slot": "tape-1", "kind": "tape", "path": "$TAP" },
-  { "action": "autoload_tape",         "slot": "tape-1", "max_boot_frames": 250 },
-  { "action": "wait_for_query_bool",   "path": "spectrum.tape.playing", "value": false, "max_frames": 2000 },
-  { "action": "run_frames",            "frames": 100 },
-  { "action": "save_screenshot",       "path": "$OUT" }
+  { "action": "load_snapshot",   "path": "$SNA" },
+  { "action": "run_frames",      "frames": 10 },
+  { "action": "save_screenshot", "path": "$OUT" }
 ]
 EOF
 
