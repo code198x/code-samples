@@ -25,14 +25,12 @@
  250 PRINT AT 2, 1;
  260 FOR j = 1 TO fuel: PRINT INK 4; "*";: NEXT j
  270 FOR j = fuel + 1 TO 50: PRINT " ";: NEXT j
- 280 REM Ambient border
  290 IF alt > 70 THEN BORDER 1
  300 IF alt > 40 AND alt <= 70 THEN BORDER 5
  310 IF alt > 20 AND alt <= 40 THEN BORDER 6
  320 IF alt > 10 AND alt <= 20 THEN BORDER 2
  330 IF alt <= 10 THEN BORDER 7
  340 IF fuel < 10 AND fuel > 0 THEN BEEP 0.02, 30
- 350 REM Lander position
  360 LET row = 20 - INT (alt / 5)
  370 IF row < 4 THEN LET row = 4
  380 IF row > 20 THEN LET row = 20
@@ -42,23 +40,7 @@
  420 PRINT AT prow, 15; " "
  430 PRINT AT row, 15; "V"
  440 PAUSE 3
- 450 IF alt = 0 AND spd <= 2 THEN GO TO 600
- 460 IF alt = 0 AND spd <= 5 THEN GO TO 700
- 470 IF alt = 0 AND spd > 5 THEN GO TO 800
+ 450 IF alt = 0 AND spd <= 2 THEN PRINT AT 10, 8; "PERFECT LANDING!": STOP
+ 460 IF alt = 0 AND spd <= 5 THEN PRINT AT 10, 8; "Bumpy but safe": STOP
+ 470 IF alt = 0 AND spd > 5 THEN PRINT AT 10, 8; "CRASH!": STOP
  480 GO TO 150
- 600 BORDER 4
- 610 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20: BEEP 0.2, 24
- 620 PRINT AT 10, 8; INK 4; "PERFECT LANDING!"
- 630 GO TO 900
- 700 BORDER 6
- 710 BEEP 0.1, 10: BEEP 0.1, 12
- 720 PRINT AT 10, 8; INK 6; "Bumpy but safe"
- 730 GO TO 900
- 800 BORDER 2
- 810 BEEP 0.5, -10
- 820 PRINT AT 10, 8; INK 2; "CRASH!"
- 900 PRINT AT 14, 8; "Speed at landing: "; spd
- 910 PRINT AT 15, 8; "Fuel remaining:  "; fuel
- 920 PRINT AT 18, 4; "Press any key to play again"
- 930 PAUSE 0
- 940 GO TO 10

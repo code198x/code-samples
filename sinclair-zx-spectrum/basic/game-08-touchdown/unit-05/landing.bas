@@ -7,16 +7,11 @@
  150 LET spd = spd + 1
  160 IF INKEY$ = " " AND fuel > 0 THEN LET spd = spd - 2: LET fuel = fuel - 1
  170 IF spd < 0 THEN LET spd = 0
- 180 LET prev = alt
  190 LET alt = alt - spd
  200 IF alt <= 0 THEN LET alt = 0
  210 PRINT AT 1, 6; alt; "  "
  220 PRINT AT 1, 18; spd; "  "
  230 PRINT AT 1, 31; fuel; "  "
- 360 LET row = 20 - INT (alt / 5)
- 380 IF row > 20 THEN LET row = 20
- 420 PRINT AT 20, 15; " "
- 430 PRINT AT row, 15; "V"
  440 PAUSE 3
  450 IF alt = 0 AND spd <= 2 THEN PRINT AT 10, 8; "PERFECT LANDING!": STOP
  460 IF alt = 0 AND spd <= 5 THEN PRINT AT 10, 8; "Bumpy but safe": STOP

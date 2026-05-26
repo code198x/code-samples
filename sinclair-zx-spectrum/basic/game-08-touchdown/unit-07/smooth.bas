@@ -14,8 +14,12 @@
  220 PRINT AT 1, 18; spd; "  "
  230 PRINT AT 1, 31; fuel; "  "
  360 LET row = 20 - INT (alt / 5)
+ 370 IF row < 4 THEN LET row = 4
  380 IF row > 20 THEN LET row = 20
- 420 PRINT AT 20, 15; " "
+ 390 LET prow = 20 - INT (prev / 5)
+ 400 IF prow < 4 THEN LET prow = 4
+ 410 IF prow > 20 THEN LET prow = 20
+ 420 PRINT AT prow, 15; " "
  430 PRINT AT row, 15; "V"
  440 PAUSE 3
  450 IF alt = 0 AND spd <= 2 THEN PRINT AT 10, 8; "PERFECT LANDING!": STOP

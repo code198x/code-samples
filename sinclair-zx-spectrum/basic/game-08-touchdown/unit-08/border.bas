@@ -13,9 +13,19 @@
  210 PRINT AT 1, 6; alt; "  "
  220 PRINT AT 1, 18; spd; "  "
  230 PRINT AT 1, 31; fuel; "  "
+ 290 IF alt > 70 THEN BORDER 1
+ 300 IF alt > 40 AND alt <= 70 THEN BORDER 5
+ 310 IF alt > 20 AND alt <= 40 THEN BORDER 6
+ 320 IF alt > 10 AND alt <= 20 THEN BORDER 2
+ 330 IF alt <= 10 THEN BORDER 7
+ 340 IF fuel < 10 AND fuel > 0 THEN BEEP 0.02, 30
  360 LET row = 20 - INT (alt / 5)
+ 370 IF row < 4 THEN LET row = 4
  380 IF row > 20 THEN LET row = 20
- 420 PRINT AT 20, 15; " "
+ 390 LET prow = 20 - INT (prev / 5)
+ 400 IF prow < 4 THEN LET prow = 4
+ 410 IF prow > 20 THEN LET prow = 20
+ 420 PRINT AT prow, 15; " "
  430 PRINT AT row, 15; "V"
  440 PAUSE 3
  450 IF alt = 0 AND spd <= 2 THEN PRINT AT 10, 8; "PERFECT LANDING!": STOP
