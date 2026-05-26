@@ -1,4 +1,8 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
+  30 PRINT "*** REFLEX ***"
+  40 PRINT
+  90 PAUSE 0
  100 CLS
  110 PRINT "Get ready..."
  120 PRINT
@@ -12,6 +16,8 @@
  230 LET t = t + 1
  240 GO TO 220
  250 PAPER 0: BORDER 0: CLS
+ 260 PRINT "*** REFLEX ***"
+ 270 PRINT
  280 PRINT "Your time: "; t
  290 PRINT
  300 IF t < 5 THEN INK 4: PRINT "Lightning!"
