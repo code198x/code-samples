@@ -1,0 +1,200 @@
+#!/usr/bin/env python3
+"""
+compile_music.py - compose-by-text -> Z80 .inc for Spectrum beeper playback.
+
+Input format (one event per line; '#' starts a comment):
+
+    # Optional header directives
+    tempo 120        # quarter-note BPM (default 120)
+    octave 4         # default octave for notes that don't specify one (default 4)
+
+    # Events
+    c 4 8            # C4, eighth note
+    d# 4 8           # D-sharp 4, eighth note
+    eb 4 4           # E-flat 4, quarter note
+    rest 16          # rest, sixteenth note
+    end              # terminator (optional; EOF works too)
+
+Notes:
+    Pitch:    a-g, with optional # (sharp) or b (flat) suffix
+    Octave:   0-7 (Spectrum BEEP comfortably covers ~3-7)
+    Duration: 1 (whole), 2 (half), 4 (quarter), 8 (eighth), 16 (sixteenth),
+              32 (thirty-second). Dotted durations not supported yet -
+              write two notes tied with a longer first if needed.
+
+Output: Z80 .inc file emitting a label and a sequence of (period, cycles)
+4-byte entries, terminated by (0, 0). Rests are emitted as
+(0, frames-at-50Hz).
+
+Period and cycle counts target the custom `play_tone` routine in
+test/beeper-validation/beeper-test.asm, which uses a 16-bit inner-delay
+counter. Per-cycle T-state cost: 52 * period + 115. So:
+
+    period_count = round((3500000 / freq - 115) / 52)
+    cycle_count  = round(freq * duration_seconds)
+
+Example:
+    python compile_music.py \\
+        --input  assets/game-01-shadowkeep/music/test-melody.txt \\
+        --output game-01-shadowkeep/music/test_melody.inc \\
+        --label  test_melody
+"""
+
+import argparse
+import math
+import sys
+from pathlib import Path
+
+
+# A4 = 440 Hz. Semitone offsets from A.
+NOTE_OFFSETS = {
+    "c": -9, "c#": -8, "db": -8,
+    "d": -7, "d#": -6, "eb": -6,
+    "e": -5, "fb": -5,
+    "f": -4, "f#": -3, "gb": -3,
+    "g": -2, "g#": -1, "ab": -1,
+    "a":  0, "a#":  1, "bb":  1,
+    "b":  2, "cb":  2,
+}
+
+
+def note_to_freq(name, octave):
+    """Convert note name + octave to frequency in Hz (A4 = 440)."""
+    if name not in NOTE_OFFSETS:
+        raise ValueError(f"unknown note name: {name!r}")
+    semitones_from_a4 = NOTE_OFFSETS[name] + (octave - 4) * 12
+    return 440.0 * (2.0 ** (semitones_from_a4 / 12.0))
+
+
+def beep_params(freq_hz, duration_seconds):
+    """Return (period_count, cycle_count) for the custom play_tone routine.
+
+    See test/beeper-validation/beeper-test.asm for the T-state derivation.
+    Per-cycle cost: 52 * period + 91 T-states at 3.5 MHz.
+    """
+    cycles = max(1, round(freq_hz * duration_seconds))
+    period_t_states_per_cycle = 3500000.0 / freq_hz
+    period = max(1, round((period_t_states_per_cycle - 91.0) / 52.0))
+    if cycles > 65535:
+        cycles = 65535
+    if period > 65535:
+        period = 65535
+    return period, cycles
+
+
+def parse_score(path):
+    """Parse a .txt score file -> list of events.
+
+    Each event is one of:
+        ("note", freq_hz, duration_seconds)
+        ("rest", duration_seconds)
+
+    Returns: (events, defaults_dict)
+    """
+    tempo_bpm = 120
+    default_octave = 4
+    events = []
+    seen_end = False
+
+    with open(path) as f:
+        for line_no, raw in enumerate(f, 1):
+            line = raw.split("#", 1)[0].strip()
+            if not line:
+                continue
+            if seen_end:
+                continue
+
+            parts = line.split()
+            head = parts[0].lower()
+
+            if head == "tempo":
+                tempo_bpm = int(parts[1])
+                continue
+            if head == "octave":
+                default_octave = int(parts[1])
+                continue
+            if head == "end":
+                seen_end = True
+                continue
+
+            # quarter-note duration in seconds:
+            quarter = 60.0 / tempo_bpm
+
+            if head == "rest":
+                duration_denominator = int(parts[1])
+                duration = 4.0 / duration_denominator * quarter
+                events.append(("rest", duration))
+                continue
+
+            # note line: <note> <octave?> <duration>
+            #   "c 4 8"   -> note c, octave 4, eighth
+            #   "c# 8"    -> note c#, octave default, eighth
+            note_name = head
+            if len(parts) == 3:
+                octave = int(parts[1])
+                duration_denominator = int(parts[2])
+            elif len(parts) == 2:
+                octave = default_octave
+                duration_denominator = int(parts[1])
+            else:
+                sys.exit(f"line {line_no}: cannot parse {raw!r}")
+
+            duration = 4.0 / duration_denominator * quarter
+            freq = note_to_freq(note_name, octave)
+            events.append(("note", freq, duration, note_name, octave, duration_denominator))
+
+    return events, {"tempo": tempo_bpm, "default_octave": default_octave}
+
+
+def emit_inc(events, label, source_path, output_path):
+    lines = []
+    lines.append(f"; Generated by compile_music.py")
+    lines.append(f"; Source: {source_path}")
+    lines.append(f"; Events: {len(events)} (excluding end sentinel)")
+    lines.append(f"; Format per event: defw <period>, <cycles>  (4 bytes each)")
+    lines.append(f"; End sentinel: defw 0, 0")
+    lines.append(f"; Rests are encoded as period=0, cycles=frames-at-50Hz.")
+    lines.append(f"; The playback routine inspects period: 0 with non-zero cycles means")
+    lines.append(f"; 'rest <cycles> frames'; 0 with cycles=0 means 'end of score'.")
+    lines.append("")
+    lines.append(f"{label}:")
+
+    for ev in events:
+        kind = ev[0]
+        if kind == "note":
+            _, freq, duration, name, octave, dur_den = ev
+            period, cycles = beep_params(freq, duration)
+            lines.append(
+                f"    defw ${period:04x}, ${cycles:04x}   ; {name}{octave} 1/{dur_den}  "
+                f"({freq:6.1f} Hz, {duration*1000:5.0f} ms)"
+            )
+        elif kind == "rest":
+            _, duration = ev
+            frames = max(1, round(duration * 50.0))
+            if frames > 65535:
+                frames = 65535
+            lines.append(f"    defw $0000, ${frames:04x}   ; rest {frames} frames")
+        else:
+            raise AssertionError(f"unknown event kind: {kind!r}")
+
+    lines.append(f"    defw $0000, $0000   ; end sentinel")
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines) + "\n")
+    print(f"wrote {output_path} ({len(events)} events)")
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[1])
+    ap.add_argument("--input", required=True, help="source .txt score path")
+    ap.add_argument("--output", required=True, help="destination .inc path")
+    ap.add_argument("--label", required=True, help="assembly label for the score data")
+    args = ap.parse_args()
+
+    events, defaults = parse_score(args.input)
+    emit_inc(events, args.label, args.input, args.output)
+
+
+if __name__ == "__main__":
+    main()

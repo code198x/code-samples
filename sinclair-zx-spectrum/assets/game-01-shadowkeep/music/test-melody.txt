@@ -1,0 +1,26 @@
+# Test melody for beeper pipeline validation.
+# 8-note ascending C-major scale, then 4 chord-tones descending.
+# Audible verification: should sound like "do-re-mi-fa-so-la-ti-do, so-mi-do, hold".
+
+tempo 120
+octave 4
+
+# Ascending scale - eight eighth notes
+c 4 8
+d 4 8
+e 4 8
+f 4 8
+g 4 8
+a 4 8
+b 4 8
+c 5 8
+
+# Brief pause
+rest 8
+
+# Descending triad
+g 4 8
+e 4 8
+c 4 4
+
+end
