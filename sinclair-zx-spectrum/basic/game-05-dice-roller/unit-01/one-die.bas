@@ -1,4 +1,4 @@
-  10 CLS
   20 RANDOMIZE
-  30 LET d = INT (RND * 6) + 1
-  40 PRINT "You rolled: "; d
+  60 CLS
+ 120 LET d = INT (RND * 6) + 1
+ 190 PRINT "You rolled: "; d
