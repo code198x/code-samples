@@ -1,18 +1,12 @@
-  10 CLS
-  20 DATA "What is the largest ocean?"
-  30 DATA "Atlantic","Indian","Pacific","Arctic"
-  40 DATA 3
-  50 READ q$
-  60 READ a$,b$,c$,d$
-  70 READ correct
-  80 PRINT q$
-  90 PRINT
- 100 PRINT "1. ";a$
- 110 PRINT "2. ";b$
- 120 PRINT "3. ";c$
- 130 PRINT "4. ";d$
- 140 PRINT
- 150 INPUT "Your answer (1-4): ";g
- 160 PRINT
- 170 IF g = correct THEN PRINT "Correct!"
- 180 IF g <> correct THEN PRINT "The answer was ";correct
+ 130 CLS
+ 190 READ q$,a$,b$,c$,d$
+ 210 PRINT q$
+ 220 PRINT "1. ";a$
+ 230 PRINT "2. ";b$
+ 240 PRINT "3. ";c$
+ 250 PRINT "4. ";d$
+ 260 INPUT "Answer (1-4): ";g
+ 280 IF g <> 2 THEN PRINT "The answer was 2"
+ 290 IF g = 2 THEN PRINT "Correct!"
+ 550 DATA 2,2,2,2,3,2,3,2
+ 610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"

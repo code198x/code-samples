@@ -20,13 +20,20 @@
  240 PRINT AT 9,2;"3. ";c$
  250 PRINT AT 10,2;"4. ";d$
  260 PRINT AT 12,0;: INPUT "Answer (1-4): ";g
- 270 IF g = k(n) THEN PRINT AT 14,0;"Correct!": LET score = score + 1
- 280 IF g <> k(n) THEN PRINT AT 14,0;"The answer was ";k(n)
+ 270 IF g = k(n) THEN PRINT AT 14,0;"Correct!": LET score = score + 1: BEEP 0.2,12
+ 280 IF g <> k(n) THEN PRINT AT 14,0;"The answer was ";k(n): BEEP 0.3,-5
  290 PRINT AT 0,26;score;"/8"
  300 PAUSE 80
  310 NEXT q
  340 NEXT c
- 360 PRINT "You scored ";score;" out of 8"
+ 350 CLS
+ 360 PRINT AT 3,9;"Quiz complete!"
+ 370 PRINT AT 5,6;"You scored ";score;" out of 8"
+ 420 IF score = 8 THEN INK 4: PRINT AT 14,10;"Quiz Master!": GO TO 460
+ 430 IF score >= 6 THEN INK 5: PRINT AT 14,12;"Expert": GO TO 460
+ 440 IF score >= 4 THEN INK 6: PRINT AT 14,11;"Not bad": GO TO 460
+ 450 INK 2: PRINT AT 14,9;"Keep trying"
+ 460 INK 0
  550 DATA 2,2,2,2,3,2,3,2
  600 DATA "Animals",4
  610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"

@@ -1,12 +1,12 @@
-   5 DIM k(8): DIM s(4)
   10 CLS
   20 INK 2: PRINT AT 6,10;"QUIZ MASTER"
   30 INK 0: PRINT AT 9,5;"Press any key to start"
   40 PAUSE 0
+   5 DIM k(8): DIM s(4)
   50 RESTORE: FOR i = 1 TO 8: READ k(i): NEXT i
   60 RESTORE 600
-  70 FOR i = 1 TO 4: LET s(i) = 0: NEXT i
   80 LET score = 0: LET n = 0
+  70 FOR i = 1 TO 4: LET s(i) = 0: NEXT i
   90 FOR c = 1 TO 4
  100 READ t$,ink
  110 FOR q = 1 TO 2

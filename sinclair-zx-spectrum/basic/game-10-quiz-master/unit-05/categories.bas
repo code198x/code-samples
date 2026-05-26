@@ -1,40 +1,28 @@
-  10 DIM k(8)
-  20 FOR i = 1 TO 8
-  30 READ k(i)
-  40 NEXT i
-  50 RESTORE 600
-  60 LET score = 0
-  70 LET n = 0
-  80 FOR c = 1 TO 4
-  90 READ t$,ink
- 100 FOR q = 1 TO 2
- 110 LET n = n + 1
- 120 CLS
- 130 PAPER ink: INK 7
- 140 PRINT " ";t$
- 150 PAPER 7: INK 0
- 160 PRINT
- 170 READ q$,a$,b$,c$,d$
- 180 PRINT q$
- 190 PRINT
- 200 PRINT "1. ";a$
- 210 PRINT "2. ";b$
- 220 PRINT "3. ";c$
- 230 PRINT "4. ";d$
- 240 PRINT
- 250 INPUT "Your answer (1-4): ";g
- 260 PRINT
+   5 DIM k(8)
+  50 RESTORE: FOR i = 1 TO 8: READ k(i): NEXT i
+  60 RESTORE 600
+  80 LET score = 0: LET n = 0
+  90 FOR c = 1 TO 4
+ 100 READ t$,ink
+ 110 FOR q = 1 TO 2
+ 120 LET n = n + 1
+ 130 CLS
+ 140 PRINT t$
+ 190 READ q$,a$,b$,c$,d$
+ 200 PRINT "Question ";n;" of 8"
+ 210 PRINT q$
+ 220 PRINT "1. ";a$
+ 230 PRINT "2. ";b$
+ 240 PRINT "3. ";c$
+ 250 PRINT "4. ";d$
+ 260 INPUT "Answer (1-4): ";g
  270 IF g = k(n) THEN PRINT "Correct!": LET score = score + 1
  280 IF g <> k(n) THEN PRINT "The answer was ";k(n)
- 290 PRINT : PRINT "Score: ";score;" / ";n
- 300 PAUSE 100
+ 300 PAUSE 80
  310 NEXT q
- 320 NEXT c
- 330 CLS
- 340 PRINT "Quiz complete!"
- 350 PRINT
+ 340 NEXT c
  360 PRINT "You scored ";score;" out of 8"
- 500 DATA 2,2,2,2,3,2,3,2
+ 550 DATA 2,2,2,2,3,2,3,2
  600 DATA "Animals",4
  610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"
  620 DATA "What is the fastest land animal?","Lion","Cheetah","Horse","Wolf"
