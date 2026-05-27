@@ -1,4 +1,7 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
+  12 DATA 60,126,255,255,255,255,126,60
+  13 DATA 60,126,195,195,195,195,126,60
+  14 FOR u = 0 TO 1: FOR j = 0 TO 7: READ b: POKE USR CHR$ (144 + u) + j, b: NEXT j: NEXT u
   20 PRINT AT 5, 8; BRIGHT 1; "*** LOCKSMITH ***"
   30 PRINT AT 8, 2; "Crack my 4-digit code."
   40 PRINT AT 9, 2; "Each digit is 1 to 6."
@@ -32,8 +35,10 @@
  420 IF gc < cc THEN LET total = total + gc
  430 NEXT d
  440 LET cows = total - bulls
- 460 PRINT AT 2 + t, 2; g$; "  "; INK 4; bulls; " bull";
- 470 INK 6: PRINT "  "; cows; " cow"
+ 460 PRINT AT 2 + t, 2; g$; "  ";
+ 462 INK 2: FOR j = 1 TO bulls: PRINT CHR$ 144;: NEXT j
+ 464 INK 7: FOR j = 1 TO cows: PRINT CHR$ 145;: NEXT j
+ 466 INK 7
  480 INK 7
  490 BEEP 0.05, bulls * 5
  500 IF bulls = 4 THEN GO TO 600

@@ -1,4 +1,6 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
+  12 DATA 0,102,255,255,255,126,60,24
+  14 FOR j = 0 TO 7: READ b: POKE USR "A" + j, b: NEXT j
   20 RANDOMIZE
   30 PRINT AT 5, 10; BRIGHT 1; "*** CIPHER ***"
   40 PRINT AT 8, 4; "Guess the hidden word,"
@@ -29,7 +31,7 @@
  290 NEXT i
  300 INK 7
  310 PRINT AT 7, 2; "Lives: ";
- 320 INK 4: FOR i = 1 TO lives: PRINT "*";: NEXT i
+ 320 INK 2: FOR i = 1 TO lives: PRINT CHR$ 144;: NEXT i
  330 FOR i = lives + 1 TO 7: PRINT " ";: NEXT i
  340 INK 7
  350 PRINT AT 9, 2; "Tried: "; z$; "  "

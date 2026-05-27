@@ -3,7 +3,7 @@
   90 DIM b(9)
  100 LET moves = 0
  120 CLS
- 130 PRINT AT 0, 7; BRIGHT 1; "*** THREE IN A ROW ***"
+ 130 INVERSE 1: PRINT AT 0, 0; "    *** THREE IN A ROW ***      ": INVERSE 0
  150 FOR n = 1 TO 9
  160 LET row = INT ((n - 1) / 3)
  170 LET col = n - 1 - row * 3

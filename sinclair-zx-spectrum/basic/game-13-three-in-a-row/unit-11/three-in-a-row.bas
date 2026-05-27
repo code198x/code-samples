@@ -1,4 +1,7 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
+  12 DATA 195,102,60,24,60,102,195,0
+  13 DATA 60,126,195,195,195,126,60,0
+  14 FOR u = 0 TO 1: FOR j = 0 TO 7: READ b: POKE USR CHR$ (144 + u) + j, b: NEXT j: NEXT u
   20 PRINT AT 5, 7; BRIGHT 1; "*** THREE IN A ROW ***"
   30 PRINT AT 8, 5; "You are X. Computer is O."
   40 PRINT AT 10, 5; "Get three in a row to win."
@@ -10,15 +13,15 @@
  100 LET moves = 0
  110 LET wins = 0: LET losses = 0: LET draws = 0
  120 CLS
- 130 PRINT AT 0, 7; BRIGHT 1; "*** THREE IN A ROW ***"
+ 130 INVERSE 1: PRINT AT 0, 0; "    *** THREE IN A ROW ***      ": INVERSE 0
  140 PRINT AT 1, 2; "W: "; wins; " L: "; losses; " D: "; draws; "  "
  150 FOR n = 1 TO 9
  160 LET row = INT ((n - 1) / 3)
  170 LET col = n - 1 - row * 3
  180 PRINT AT 3 + row * 2, 11 + col * 4;
  190 IF b(n) = 0 THEN PRINT CHR$ (48 + n);
- 200 IF b(n) = 1 THEN INK 5: PRINT "X";: INK 7
- 210 IF b(n) = 2 THEN INK 2: PRINT "O";: INK 7
+ 200 IF b(n) = 1 THEN INK 5: PRINT CHR$ 144;: INK 7
+ 210 IF b(n) = 2 THEN INK 2: PRINT CHR$ 145;: INK 7
  220 NEXT n
  230 PRINT AT 4, 10; "---+---+---"
  240 PRINT AT 6, 10; "---+---+---"
