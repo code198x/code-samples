@@ -10,9 +10,9 @@
  100 LET pop = 100: LET grain = 2800
  110 LET land = 1000: LET yr = 1
  120 CLS
- 130 PRINT AT 0, 9; BRIGHT 1; "*** YEARFALL ***"
- 140 PRINT AT 1, 4; "Year "; yr; " of 10"
- 150 PRINT AT 3, 2; "Population: "; pop
+ 130 INVERSE 1: PRINT AT 0, 0; "    *** YEARFALL ***  Year "; yr; "   ": INVERSE 0
+ 150 PRINT AT 3, 2; "Population: "; pop; "    "
+ 155 PRINT AT 2, 2;: INK 4: FOR j = 1 TO INT (pop / 10): PRINT CHR$ 143;: NEXT j: FOR j = INT (pop / 10) + 1 TO 30: PRINT " ";: NEXT j: INK 7
  160 PRINT AT 4, 2; "Grain: "; grain
  170 PRINT AT 5, 2; "Land: "; land; " acres"
  180 LET price = INT (RND * 10) + 17
@@ -39,11 +39,10 @@
  490 LET pop = pop + births
  500 IF pop <= 0 THEN GO TO 900
  600 CLS
- 640 PRINT AT 0, 9; BRIGHT 1; "*** YEARFALL ***"
- 650 PRINT AT 1, 4; "Year "; yr; " report"
+ 640 INVERSE 1: PRINT AT 0, 0; "    *** YEARFALL ***  Year "; yr; "   ": INVERSE 0
  660 PRINT AT 3, 2; "Harvest: "; harvested; " grain"
  670 PRINT AT 4, 2; "("; yield; " grain per acre)"
- 680 IF starved > 0 THEN PRINT AT 6, 2; INK 2; starved; " people starved.": BEEP 0.2, -10
+ 680 IF starved > 0 THEN BORDER 2: PRINT AT 6, 2; INK 2; starved; " people starved.": BEEP 0.2, -10: BORDER 0
  690 IF starved = 0 THEN PRINT AT 6, 2; INK 4; "Nobody starved."
  700 IF births > 0 THEN PRINT AT 7, 2; INK 4; births; " newcomers arrived."
  710 IF births = 0 THEN PRINT AT 7, 2; "No newcomers this year."
