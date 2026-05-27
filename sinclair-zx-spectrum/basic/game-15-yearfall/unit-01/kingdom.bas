@@ -6,3 +6,6 @@
  150 PRINT AT 3, 2; "Population: "; pop
  160 PRINT AT 4, 2; "Grain: "; grain
  170 PRINT AT 5, 2; "Land: "; land; " acres"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

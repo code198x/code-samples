@@ -28,3 +28,6 @@
  310 IF t >= 5 AND t < 15 THEN INK 5: PRINT "Quick!"
  320 IF t >= 15 AND t < 30 THEN INK 6: PRINT "OK"
  330 IF t >= 30 THEN INK 2: PRINT "Slow..."
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

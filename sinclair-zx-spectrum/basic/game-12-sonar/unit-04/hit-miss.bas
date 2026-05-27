@@ -25,3 +25,6 @@
  510 PRINT AT 13, 2; "Miss       "
  530 PAUSE 30
  550 GO TO 180
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

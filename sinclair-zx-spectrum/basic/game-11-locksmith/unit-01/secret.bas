@@ -6,3 +6,6 @@
  130 PRINT "The code is: ";
  140 FOR i = 1 TO 4: PRINT c(i);: NEXT i
  150 STOP
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

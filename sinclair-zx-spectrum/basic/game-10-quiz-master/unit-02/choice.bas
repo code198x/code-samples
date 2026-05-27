@@ -11,3 +11,6 @@
  290 IF g = 2 THEN PRINT "Correct!"
  550 DATA 2,2,2,2,3,2,3,2
  610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

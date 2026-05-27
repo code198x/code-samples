@@ -10,3 +10,6 @@
  220 NEXT n
  230 PRINT AT 4, 10; "---+---+---"
  240 PRINT AT 6, 10; "---+---+---"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

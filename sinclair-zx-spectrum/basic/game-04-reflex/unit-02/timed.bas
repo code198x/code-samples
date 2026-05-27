@@ -9,3 +9,6 @@
  230 LET t = t + 1
  240 GO TO 220
  280 PRINT "Your time: "; t
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

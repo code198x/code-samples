@@ -12,3 +12,6 @@
  460 IF w$(i) = g$ THEN LET d$(i TO i) = g$
  470 NEXT i
  520 GO TO 220
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

@@ -16,3 +16,6 @@
  270 IF g(r,c) = 0 THEN PRINT ".";
  290 NEXT c
  340 NEXT r
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

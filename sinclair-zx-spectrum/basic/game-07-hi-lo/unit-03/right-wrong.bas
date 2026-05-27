@@ -12,3 +12,6 @@
  250 IF b = a THEN LET ok = 1
  260 IF ok = 0 THEN PRINT "Wrong!"
  290 IF ok = 1 THEN PRINT "Correct!"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

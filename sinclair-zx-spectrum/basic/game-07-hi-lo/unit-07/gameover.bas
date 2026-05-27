@@ -27,3 +27,6 @@
  430 PRINT AT 5, 10; "*** HI-LO ***"
  440 PRINT AT 8, 8; "GAME OVER"
  450 PRINT AT 10, 8; "Streak: "; streak
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

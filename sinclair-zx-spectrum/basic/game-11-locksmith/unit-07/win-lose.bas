@@ -43,3 +43,6 @@
  690 PRINT AT 11, 6; "The code was ";
  700 FOR i = 1 TO 4: PRINT c(i);: NEXT i
  710 BEEP 0.3, -10
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

@@ -61,3 +61,6 @@
 1000 IF pop >= 50 THEN PRINT AT 13, 4; INK 6; "Hard Times.": GO TO 1030
 1010 PRINT AT 13, 4; INK 2; "The People Suffer."
 1030 PAUSE 0: STOP
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

@@ -6,3 +6,6 @@
  200 PRINT "NOW!"
  220 IF INKEY$ = "" THEN GO TO 220
  280 PRINT "You pressed!"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

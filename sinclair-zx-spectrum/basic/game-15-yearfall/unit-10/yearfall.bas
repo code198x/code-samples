@@ -71,3 +71,6 @@
 1030 PRINT AT 18, 4; "Press any key to play again"
 1040 PAUSE 0
 1050 GO TO 10
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

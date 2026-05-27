@@ -19,3 +19,6 @@
  290 PRINT AT 13, 8; "Correct!"
  330 LET a = b
  340 GO TO 130
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

@@ -26,3 +26,6 @@
  430 NEXT d
  440 LET cows = total - bulls
  450 PRINT "Bulls: "; bulls; "  Cows: "; cows
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

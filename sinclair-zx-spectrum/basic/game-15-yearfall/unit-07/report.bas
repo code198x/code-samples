@@ -48,3 +48,6 @@
  770 LET yr = yr + 1
  780 IF yr > 10 THEN PRINT AT 16, 2; "10 years complete! Pop: "; pop: STOP
  790 GO TO 120
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

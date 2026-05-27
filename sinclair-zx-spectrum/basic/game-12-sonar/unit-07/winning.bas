@@ -47,3 +47,6 @@
  720 PRINT AT 9, 6; INK 4; "All targets found!"
  730 PRINT AT 11, 6; INK 7; "Guesses: "; guesses
  740 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

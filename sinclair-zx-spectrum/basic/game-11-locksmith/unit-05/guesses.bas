@@ -33,3 +33,6 @@
  520 PRINT "Out of guesses!"
  530 PRINT "The code was ";
  540 FOR i = 1 TO 4: PRINT c(i);: NEXT i
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

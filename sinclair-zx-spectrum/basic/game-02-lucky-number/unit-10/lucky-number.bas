@@ -28,3 +28,6 @@
  340 IF c <= 5 THEN PRINT "Incredible!"
  350 IF c > 5 AND c <= 10 THEN PRINT "Not bad!"
  360 IF c > 10 THEN PRINT "Keep trying!"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

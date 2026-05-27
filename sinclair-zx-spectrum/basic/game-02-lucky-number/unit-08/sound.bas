@@ -19,3 +19,6 @@
  230 GO TO 120
  300 BORDER 4: BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20: BEEP 0.2, 24
  310 PRINT "Got it! The number was "; n
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

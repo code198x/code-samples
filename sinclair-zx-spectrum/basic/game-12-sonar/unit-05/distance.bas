@@ -33,3 +33,6 @@
  580 PRINT AT 13, 2; "Distance: "; dist; "  "
  590 PAUSE 30
  600 GO TO 180
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

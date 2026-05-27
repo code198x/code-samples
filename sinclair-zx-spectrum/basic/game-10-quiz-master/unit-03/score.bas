@@ -21,3 +21,6 @@
  620 DATA "What is the fastest land animal?","Lion","Cheetah","Horse","Wolf"
  640 DATA "Which planet is closest to the Sun?","Venus","Mercury","Earth","Mars"
  650 DATA "How many planets orbit the Sun?","Seven","Eight","Nine","Ten"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

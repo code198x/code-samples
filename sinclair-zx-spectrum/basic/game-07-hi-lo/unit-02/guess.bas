@@ -9,3 +9,6 @@
  230 IF g$ = "H" AND b > a THEN PRINT "Correct!"
  240 IF g$ = "L" AND b < a THEN PRINT "Correct!"
  260 IF g$ <> "H" AND g$ <> "L" THEN PRINT "Type H or L"
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

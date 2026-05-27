@@ -4,3 +4,6 @@
   60 PRINT
   70 PRINT "I'm thinking of a number"
   80 PRINT "between 1 and 100."
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

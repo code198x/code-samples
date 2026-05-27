@@ -7,3 +7,6 @@
  120 LET d = INT (RND * 6) + 1
  190 PRINT d; " ";
  250 NEXT i
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

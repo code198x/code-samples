@@ -58,3 +58,6 @@
  840 PRINT AT 14, 4; INK 7; "Won: "; wins; "  Lost: "; losses
  850 PRINT AT 18, 4; "Press any key for next word"
  860 PAUSE 0: GO TO 150
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

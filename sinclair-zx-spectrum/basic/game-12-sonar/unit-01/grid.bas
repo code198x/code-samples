@@ -7,3 +7,6 @@
  230 PRINT AT 3 + r, 9; r;
  240 FOR c = 1 TO 8: PRINT ".";: NEXT c
  340 NEXT r
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

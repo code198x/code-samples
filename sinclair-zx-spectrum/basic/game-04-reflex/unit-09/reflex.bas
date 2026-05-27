@@ -31,3 +31,6 @@
  310 IF t >= 5 AND t < 15 THEN INK 5: PRINT "Quick!": BEEP 0.1, 15
  320 IF t >= 15 AND t < 30 THEN INK 6: PRINT "OK": BEEP 0.1, 10
  330 IF t >= 30 THEN INK 2: PRINT "Slow...": BEEP 0.1, 0
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

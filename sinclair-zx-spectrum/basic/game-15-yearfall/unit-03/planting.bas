@@ -25,3 +25,6 @@
  610 PRINT AT 9, 2; "Population: "; pop
  620 PRINT AT 10, 2; "Harvest: "; harvested; " ("; yield; "/acre)"
  630 PRINT AT 11, 2; "Grain: "; grain
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN

@@ -16,3 +16,6 @@
  250 NEXT i
  260 PRINT "1: "; t1; "  2: "; t2; "  3: "; t3
  270 PRINT "4: "; t4; "  5: "; t5; "  6: "; t6
+
+9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9010 RETURN
