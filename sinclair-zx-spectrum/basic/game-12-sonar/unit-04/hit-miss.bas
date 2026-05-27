@@ -1,26 +1,26 @@
-  50 RANDOMIZE
-  55 DIM g(8,8)
-  60 FOR i = 1 TO 3
-  62 LET r = INT (RND * 8) + 1: LET c = INT (RND * 8) + 1
-  64 IF g(r,c) = 9 THEN GO TO 62
-  66 LET g(r,c) = 9
-  68 NEXT i
-  75 CLS
-  85 PRINT AT 0, 10; "*** SONAR ***"
-  90 PRINT AT 3, 11; "12345678"
-  95 FOR r = 1 TO 8
-  96 PRINT AT 3 + r, 9; r;
-  99 FOR c = 1 TO 8
- 100 LET v = g(r,c)
- 101 IF v = 9 THEN PRINT "X";
- 102 IF v = 0 THEN PRINT ".";
- 103 IF v = -1 THEN PRINT "*";
- 104 NEXT c
- 109 NEXT r
- 120 INPUT "Row (1-8): "; r
- 122 INPUT "Col (1-8): "; c
- 125 IF r < 1 OR r > 8 OR c < 1 OR c > 8 THEN GO TO 120
- 200 IF g(r,c) = 9 THEN PRINT AT 13, 2; "HIT!       ": LET g(r,c) = -1: PAUSE 30: GO TO 75
- 210 PRINT AT 13, 2; "Miss       "
- 220 PAUSE 30
- 230 GO TO 75
+ 100 RANDOMIZE
+ 110 DIM g(8,8)
+ 120 FOR i = 1 TO 3
+ 130 LET r = INT (RND * 8) + 1: LET c = INT (RND * 8) + 1
+ 140 IF g(r,c) = 9 THEN GO TO 130
+ 150 LET g(r,c) = 9
+ 160 NEXT i
+ 180 CLS
+ 190 PRINT AT 0, 10; "*** SONAR ***"
+ 210 PRINT AT 3, 11; "12345678"
+ 220 FOR r = 1 TO 8
+ 230 PRINT AT 3 + r, 9; r;
+ 240 FOR c = 1 TO 8
+ 250 LET v = g(r,c)
+ 260 IF v = 9 THEN PRINT "X";
+ 270 IF v = 0 THEN PRINT ".";
+ 280 IF v = -1 THEN PRINT "*";
+ 290 NEXT c
+ 340 NEXT r
+ 350 INPUT "Row (1-8): "; r
+ 360 INPUT "Col (1-8): "; c
+ 370 IF r < 1 OR r > 8 OR c < 1 OR c > 8 THEN GO TO 350
+ 500 IF g(r,c) = 9 THEN PRINT AT 13, 2; "HIT!       ": LET g(r,c) = -1: PAUSE 30: GO TO 180
+ 510 PRINT AT 13, 2; "Miss       "
+ 530 PAUSE 30
+ 550 GO TO 180

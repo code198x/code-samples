@@ -1,6 +1,6 @@
-  10 CLS
-  20 INPUT "What is your name? "; n$
-  40 INPUT "Name an adjective: "; a$
-  50 INPUT "Name an animal: "; b$
- 100 PRINT
- 110 PRINT n$; " met a "; a$; " "; b$
+  20 CLS
+  50 INPUT "What is your name? "; n$
+  60 INPUT "Name an adjective: "; a$
+  70 INPUT "Name an animal: "; b$
+ 130 PRINT
+ 140 PRINT n$; " met a "; a$; " "; b$

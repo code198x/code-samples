@@ -1,8 +1,8 @@
    5 DIM k(8): DIM s(4)
   50 RESTORE: FOR i = 1 TO 8: READ k(i): NEXT i
   60 RESTORE 600
-  80 LET score = 0: LET n = 0
   70 FOR i = 1 TO 4: LET s(i) = 0: NEXT i
+  80 LET score = 0: LET n = 0
   90 FOR c = 1 TO 4
  100 READ t$,ink
  110 FOR q = 1 TO 2

@@ -1,11 +1,11 @@
-  10 CLS
-  20 INPUT "What is your name? "; n$
-  40 INPUT "Name an adjective: "; a$
-  50 INPUT "Name an animal: "; b$
-  60 INPUT "Name a place: "; p$
-  70 INPUT "Name a food: "; f$
-  90 CLS
- 100 PRINT
- 110 PRINT n$; " found a "; a$; " "; b$
- 120 PRINT "hiding in "; p$; "."
- 130 PRINT "They fed it "; f$; "."
+  20 CLS
+  50 INPUT "What is your name? "; n$
+  60 INPUT "Name an adjective: "; a$
+  70 INPUT "Name an animal: "; b$
+  80 INPUT "Name a place: "; p$
+  90 INPUT "Name a food: "; f$
+ 100 CLS
+ 130 PRINT
+ 140 PRINT n$; " found a "; a$; " "; b$
+ 150 PRINT "hiding in "; p$; "."
+ 160 PRINT "They fed it "; f$; "."

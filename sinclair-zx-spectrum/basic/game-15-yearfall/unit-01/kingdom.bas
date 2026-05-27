@@ -1,7 +1,7 @@
-  50 LET pop = 100: LET grain = 2800
-  52 LET land = 1000
-  75 CLS
-  80 PRINT AT 0, 9; "*** YEARFALL ***"
-  85 PRINT AT 3, 2; "Population: "; pop
-  87 PRINT AT 4, 2; "Grain: "; grain
-  89 PRINT AT 5, 2; "Land: "; land; " acres"
+ 100 LET pop = 100: LET grain = 2800
+ 110 LET land = 1000
+ 120 CLS
+ 130 PRINT AT 0, 9; "*** YEARFALL ***"
+ 150 PRINT AT 3, 2; "Population: "; pop
+ 160 PRINT AT 4, 2; "Grain: "; grain
+ 170 PRINT AT 5, 2; "Land: "; land; " acres"
