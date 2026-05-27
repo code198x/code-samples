@@ -18,19 +18,21 @@
  180 CLS
  190 INVERSE 1: PRINT AT 0, 0; "        *** SONAR ***           ": INVERSE 0
  200 PRINT AT 1, 2; "Found: "; hits; "/3  Guesses: "; guesses; "  "
+ 205 INK 5: FOR i = 0 TO 8: PLOT 80, 136 - i * 8: DRAW 64, 0: NEXT i
+ 206 FOR i = 0 TO 8: PLOT 80 + i * 8, 136: DRAW 0, -64: NEXT i: INK 7
  210 PRINT AT 3, 11; "12345678"
  220 FOR r = 1 TO 8
  230 PRINT AT 3 + r, 9; r;
  240 FOR c = 1 TO 8
  250 LET v = g(r,c)
  260 IF v = 9 OR v = 0 THEN INK 7: PRINT ".";
- 280 IF v = -1 THEN INK 4: PRINT "*";
- 290 NEXT c
- 300 IF v >= 1 AND v <= 2 THEN INK 2: PRINT v;
- 310 IF v >= 3 AND v <= 4 THEN INK 6: PRINT v;
- 320 IF v >= 5 AND v < 9 THEN INK 5: PRINT v;
- 330 INK 7
- 340 NEXT r
+ 270 IF v = -1 THEN INK 4: PRINT "*";
+ 280 IF v >= 1 AND v <= 2 THEN INK 2: PRINT v;
+ 290 IF v >= 3 AND v <= 4 THEN INK 6: PRINT v;
+ 300 IF v >= 5 AND v < 9 THEN INK 5: PRINT v;
+ 310 NEXT c
+ 320 INK 7
+ 330 NEXT r
  350 INPUT "Row (1-8): "; r
  360 INPUT "Col (1-8): "; c
  370 IF r < 1 OR r > 8 OR c < 1 OR c > 8 THEN GO TO 350

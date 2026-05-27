@@ -16,8 +16,8 @@
  260 IF v = 9 THEN PRINT "X";
  270 IF v = 0 THEN PRINT ".";
  280 IF v = -1 THEN PRINT "*";
- 290 NEXT c
- 300 IF v >= 1 AND v < 9 THEN PRINT v;
+ 290 IF v >= 1 AND v < 9 THEN PRINT v;
+ 300 NEXT c
  340 NEXT r
  350 INPUT "Row (1-8): "; r
  360 INPUT "Col (1-8): "; c
