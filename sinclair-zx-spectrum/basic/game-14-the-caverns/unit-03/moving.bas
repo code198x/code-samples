@@ -6,7 +6,7 @@
  150 NEXT i
  160 LET rm = 1
  270 CLS
- 280 PRINT AT 0, 8; "*** THE CAVERNS ***"
+ 280 PRINT AT 0, 8; BRIGHT 1; "*** THE CAVERNS ***"
  300 PRINT AT 3, 2; "You are in room "; rm; "."
  310 PRINT AT 5, 2; "Exits: ";
  320 IF n(rm) > 0 THEN PRINT "N ";

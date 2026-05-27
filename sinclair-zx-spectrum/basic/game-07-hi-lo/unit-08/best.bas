@@ -3,7 +3,7 @@
  110 LET a = INT (RND * 13) + 1
  120 LET streak = 0
  130 CLS
- 140 PRINT AT 1, 10; "*** HI-LO ***"
+ 140 PRINT AT 1, 10; BRIGHT 1; "*** HI-LO ***"
  150 PRINT AT 3, 8; "Number: "; a; "   "
  160 PRINT AT 5, 8; "Streak: "; streak; "   "
  170 PRINT AT 6, 8; "Best:   "; best; "   "
@@ -27,7 +27,7 @@
  400 BORDER 2: BEEP 0.3, -10
  410 IF streak > best THEN LET best = streak
  420 CLS
- 430 PRINT AT 5, 10; "*** HI-LO ***"
+ 430 PRINT AT 5, 10; BRIGHT 1; "*** HI-LO ***"
  440 PRINT AT 8, 8; "GAME OVER"
  450 PRINT AT 10, 8; "Streak: "; streak
  460 PRINT AT 11, 8; "Best:   "; best

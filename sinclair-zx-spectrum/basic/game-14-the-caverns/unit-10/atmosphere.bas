@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 1: INK 7: CLS
-  20 PRINT AT 5, 8; "*** THE CAVERNS ***"
+  20 PRINT AT 5, 8; BRIGHT 1; "*** THE CAVERNS ***"
   30 PRINT AT 8, 4; "Explore 20 dark rooms."
   40 PRINT AT 9, 4; "Collect 3 treasures to win."
   50 PRINT AT 11, 4; "Beware the pit and the"
@@ -25,7 +25,7 @@
  250 LET t(3) = INT (RND * 19) + 2
  260 IF t(3) = pit OR t(3) = cr OR t(3) = t(1) OR t(3) = t(2) THEN GO TO 250
  270 CLS
- 280 PRINT AT 0, 8; "*** THE CAVERNS ***"
+ 280 PRINT AT 0, 8; BRIGHT 1; "*** THE CAVERNS ***"
  290 PRINT AT 1, 4; "Treasures: "; found; "/3"
  300 PRINT AT 3, 2; "You are in room "; rm; "."
  310 PRINT AT 5, 2; "Exits: ";
@@ -73,13 +73,13 @@
  750 LET adj = 0
  760 IF n(rm) = chk OR s(rm) = chk OR e(rm) = chk OR w(rm) = chk THEN LET adj = 1
  770 RETURN
- 800 CLS: PRINT AT 6, 8; "*** THE CAVERNS ***"
+ 800 CLS: PRINT AT 6, 8; BRIGHT 1; "*** THE CAVERNS ***"
  810 PRINT AT 9, 4; INK 2; "You fell into the pit!"
  820 BEEP 0.5, -15: PAUSE 0: STOP
- 840 CLS: PRINT AT 6, 8; "*** THE CAVERNS ***"
+ 840 CLS: PRINT AT 6, 8; BRIGHT 1; "*** THE CAVERNS ***"
  850 PRINT AT 9, 4; INK 2; "The creature got you!"
  860 BEEP 0.3, -5: BEEP 0.3, -10: PAUSE 0: STOP
- 880 CLS: PRINT AT 6, 8; "*** THE CAVERNS ***"
+ 880 CLS: PRINT AT 6, 8; BRIGHT 1; "*** THE CAVERNS ***"
  890 PRINT AT 9, 4; INK 4; "All treasures found!"
  900 PRINT AT 11, 4; "You escaped the caverns!"
  910 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20: PAUSE 0: STOP

@@ -7,7 +7,7 @@
  150 LET g(r,c) = 9
  160 NEXT i
  180 CLS
- 190 PRINT AT 0, 10; "*** SONAR ***"
+ 190 PRINT AT 0, 10; BRIGHT 1; "*** SONAR ***"
  210 PRINT AT 3, 11; "12345678"
  220 FOR r = 1 TO 8
  230 PRINT AT 3 + r, 9; r;

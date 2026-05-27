@@ -1,6 +1,6 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
-  30 PRINT "*** REFLEX ***"
+  30 PRINT AT 3, 9; BRIGHT 1; "*** REFLEX ***"
   40 PRINT
   50 PRINT "Wait for the screen to"
   60 PRINT "flash red, then press"
@@ -20,7 +20,7 @@
  230 LET t = t + 1
  240 GO TO 220
  250 PAPER 0: BORDER 0: CLS
- 260 PRINT "*** REFLEX ***"
+ 260 PRINT AT 3, 9; BRIGHT 1; "*** REFLEX ***"
  270 PRINT
  280 PRINT "Your time: "; t
  290 PRINT

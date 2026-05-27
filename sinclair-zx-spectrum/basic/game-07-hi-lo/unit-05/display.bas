@@ -3,7 +3,7 @@
  110 LET a = INT (RND * 13) + 1
  120 LET streak = 0
  130 CLS
- 140 PRINT AT 1, 10; "*** HI-LO ***"
+ 140 PRINT AT 1, 10; BRIGHT 1; "*** HI-LO ***"
  150 PRINT AT 3, 8; "Number: "; a; "   "
  160 PRINT AT 5, 8; "Streak: "; streak; "   "
  180 PRINT AT 9, 4;

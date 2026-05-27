@@ -13,7 +13,7 @@
  200 LET lives = 7
  210 LET z$ = ""
  220 CLS
- 230 PRINT AT 0, 10; "*** CIPHER ***"
+ 230 INVERSE 1: PRINT AT 0, 0; "       *** CIPHER ***           ": INVERSE 0
  250 PRINT AT 4, 2;
  260 FOR i = 1 TO LEN d$
  270 IF d$(i) = "_" THEN INK 7: PRINT "_ ";

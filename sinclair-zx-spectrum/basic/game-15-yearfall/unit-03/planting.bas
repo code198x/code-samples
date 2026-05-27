@@ -3,7 +3,7 @@
  100 LET pop = 100: LET grain = 2800
  110 LET land = 1000: LET yr = 1
  120 CLS
- 130 PRINT AT 0, 9; "*** YEARFALL ***"
+ 130 PRINT AT 0, 9; BRIGHT 1; "*** YEARFALL ***"
  140 PRINT AT 1, 4; "Year "; yr; " of 10"
  150 PRINT AT 3, 2; "Population: "; pop
  160 PRINT AT 4, 2; "Grain: "; grain

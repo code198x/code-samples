@@ -5,7 +5,7 @@
  120 CLS
  130 PRINT AT 14, 2; "Code: ";
  140 FOR i = 1 TO 4: PRINT c(i);: NEXT i
- 150 PRINT AT 0, 8; "*** LOCKSMITH ***"
+ 150 INVERSE 1: PRINT AT 0, 0; "      *** LOCKSMITH ***        ": INVERSE 0
  160 FOR t = 1 TO 10
  170 PRINT AT 20, 0; "Guess "; t; " of 10: ";
  180 INPUT g$
@@ -32,13 +32,13 @@
  510 NEXT t
  520 GO TO 660
  600 CLS
- 610 PRINT AT 6, 8; "*** LOCKSMITH ***"
+ 610 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
  620 PRINT AT 9, 6; "Code cracked!"
  630 PRINT AT 11, 6; "You got it in "; t; " guesses"
  640 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  650 STOP
  660 CLS
- 670 PRINT AT 6, 8; "*** LOCKSMITH ***"
+ 670 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
  680 PRINT AT 9, 6; "Out of guesses!"
  690 PRINT AT 11, 6; "The code was ";
  700 FOR i = 1 TO 4: PRINT c(i);: NEXT i

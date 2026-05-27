@@ -5,7 +5,7 @@
  120 CLS
  130 PRINT AT 14, 2; "Code: ";
  140 FOR i = 1 TO 4: PRINT c(i);: NEXT i
- 150 PRINT AT 0, 8; "*** LOCKSMITH ***"
+ 150 INVERSE 1: PRINT AT 0, 0; "      *** LOCKSMITH ***        ": INVERSE 0
  160 FOR t = 1 TO 10
  170 PRINT AT 20, 0; "Guess "; t; " of 10: ";
  180 INPUT g$

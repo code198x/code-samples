@@ -8,7 +8,7 @@
  160 LET rm = 1
  170 LET pit = INT (RND * 19) + 2
  270 CLS
- 280 PRINT AT 0, 8; "*** THE CAVERNS ***"
+ 280 PRINT AT 0, 8; BRIGHT 1; "*** THE CAVERNS ***"
  300 PRINT AT 3, 2; "You are in room "; rm; "."
  310 PRINT AT 5, 2; "Exits: ";
  320 IF n(rm) > 0 THEN PRINT "N ";
@@ -34,7 +34,7 @@
  750 LET adj = 0
  760 IF n(rm) = chk OR s(rm) = chk OR e(rm) = chk OR w(rm) = chk THEN LET adj = 1
  770 RETURN
- 800 CLS: PRINT AT 6, 8; "*** THE CAVERNS ***"
+ 800 CLS: PRINT AT 6, 8; BRIGHT 1; "*** THE CAVERNS ***"
  810 PRINT AT 9, 4; INK 2; "You fell into the pit!"
  820 BEEP 0.5, -15: PAUSE 0: STOP
 1000 REM --- Room map: N,S,E,W ---

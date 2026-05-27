@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  20 PRINT AT 5, 7; "*** THREE IN A ROW ***"
+  20 PRINT AT 5, 7; BRIGHT 1; "*** THREE IN A ROW ***"
   30 PRINT AT 8, 5; "You are X. Computer is O."
   40 PRINT AT 10, 5; "Get three in a row to win."
   50 PRINT AT 12, 5; "Pick a position: 1 to 9."
@@ -9,7 +9,7 @@
   90 DIM b(9)
  100 LET moves = 0
  120 CLS
- 130 PRINT AT 0, 7; "*** THREE IN A ROW ***"
+ 130 PRINT AT 0, 7; BRIGHT 1; "*** THREE IN A ROW ***"
  150 FOR n = 1 TO 9
  160 LET row = INT ((n - 1) / 3)
  170 LET col = n - 1 - row * 3
@@ -65,15 +65,15 @@
  780 FOR i = 1 TO 9: IF b(i) = 0 THEN LET mv = i
  790 NEXT i
  800 RETURN
- 900 CLS: PRINT AT 6, 7; "*** THREE IN A ROW ***"
+ 900 CLS: PRINT AT 6, 7; BRIGHT 1; "*** THREE IN A ROW ***"
  910 PRINT AT 9, 10; INK 4; "You win!"
  930 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  940 STOP
- 950 CLS: PRINT AT 6, 7; "*** THREE IN A ROW ***"
+ 950 CLS: PRINT AT 6, 7; BRIGHT 1; "*** THREE IN A ROW ***"
  960 PRINT AT 9, 8; INK 2; "Computer wins!"
  970 BEEP 0.3, -10
  990 STOP
-1000 CLS: PRINT AT 6, 7; "*** THREE IN A ROW ***"
+1000 CLS: PRINT AT 6, 7; BRIGHT 1; "*** THREE IN A ROW ***"
 1010 PRINT AT 9, 11; INK 6; "Draw!"
 1020 BEEP 0.1, 5: BEEP 0.1, 5
 1200 DATA 1,2,3, 4,5,6, 7,8,9

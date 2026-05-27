@@ -14,7 +14,7 @@
  200 LET lives = 7
  210 LET z$ = ""
  220 CLS
- 230 PRINT AT 0, 10; "*** CIPHER ***"
+ 230 INVERSE 1: PRINT AT 0, 0; "       *** CIPHER ***           ": INVERSE 0
  240 PRINT AT 1, 4; "Won: "; wins; "  Lost: "; losses; "   "
  250 PRINT AT 4, 2;
  260 FOR i = 1 TO LEN d$
@@ -44,14 +44,14 @@
  500 IF d$ = w$ THEN LET wins = wins + 1: GO TO 700
  510 IF lives = 0 THEN LET losses = losses + 1: GO TO 800
  520 GO TO 220
- 700 CLS: PRINT AT 6, 10; "*** CIPHER ***"
+ 700 CLS: PRINT AT 6, 10; BRIGHT 1; "*** CIPHER ***"
  710 PRINT AT 9, 4; INK 4; "You cracked it!"
  720 PRINT AT 11, 4; "The word was "; w$
  730 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  740 PRINT AT 14, 4; INK 7; "Won: "; wins; "  Lost: "; losses
  750 PRINT AT 18, 4; "Press any key for next word"
  760 PAUSE 0: GO TO 150
- 800 CLS: PRINT AT 6, 10; "*** CIPHER ***"
+ 800 CLS: PRINT AT 6, 10; BRIGHT 1; "*** CIPHER ***"
  810 PRINT AT 9, 4; INK 2; "Out of lives!"
  820 PRINT AT 11, 4; "The word was "; w$
  830 BEEP 0.3, -10

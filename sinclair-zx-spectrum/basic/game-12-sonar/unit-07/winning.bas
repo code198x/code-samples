@@ -8,7 +8,7 @@
  160 NEXT i
  170 LET hits = 0: LET guesses = 0
  180 CLS
- 190 PRINT AT 0, 10; "*** SONAR ***"
+ 190 INVERSE 1: PRINT AT 0, 0; "        *** SONAR ***           ": INVERSE 0
  200 PRINT AT 1, 2; "Found: "; hits; "/3  Guesses: "; guesses; "  "
  210 PRINT AT 3, 11; "12345678"
  220 FOR r = 1 TO 8
@@ -43,7 +43,7 @@
  640 IF hits = 3 THEN GO TO 700
  650 GO TO 180
  700 CLS
- 710 PRINT AT 6, 10; "*** SONAR ***"
+ 710 PRINT AT 6, 10; BRIGHT 1; "*** SONAR ***"
  720 PRINT AT 9, 6; INK 4; "All targets found!"
  730 PRINT AT 11, 6; INK 7; "Guesses: "; guesses
  740 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20

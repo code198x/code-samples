@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  20 PRINT AT 5, 8; "*** LOCKSMITH ***"
+  20 PRINT AT 5, 8; BRIGHT 1; "*** LOCKSMITH ***"
   30 PRINT AT 8, 2; "Crack my 4-digit code."
   40 PRINT AT 9, 2; "Each digit is 1 to 6."
   50 PRINT AT 11, 1; "Bull: right digit, right place"
@@ -10,7 +10,7 @@
  100 DIM c(4)
  110 FOR i = 1 TO 4: LET c(i) = INT (RND * 6) + 1: NEXT i
  120 CLS
- 150 PRINT AT 0, 8; "*** LOCKSMITH ***"
+ 150 INVERSE 1: PRINT AT 0, 0; "      *** LOCKSMITH ***        ": INVERSE 0
  160 FOR t = 1 TO 10
  170 PRINT AT 20, 0; "Guess "; t; " of 10: ";
  180 INPUT g$
@@ -40,13 +40,13 @@
  510 NEXT t
  520 GO TO 660
  600 CLS
- 610 PRINT AT 6, 8; "*** LOCKSMITH ***"
+ 610 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
  620 PRINT AT 9, 6; INK 4; "Code cracked!"
  630 PRINT AT 11, 6; INK 7; "You got it in "; t; " guesses"
  640 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  650 GO TO 720
  660 CLS
- 670 PRINT AT 6, 8; "*** LOCKSMITH ***"
+ 670 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
  680 PRINT AT 9, 6; INK 2; "Out of guesses!"
  690 PRINT AT 11, 6; INK 7; "The code was ";
  700 FOR i = 1 TO 4: PRINT c(i);: NEXT i

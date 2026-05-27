@@ -1,6 +1,6 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
-  30 PRINT "*** DICE ROLLER ***"
+  30 PRINT AT 3, 7; BRIGHT 1; "*** DICE ROLLER ***"
   40 PRINT
   50 INPUT "How many rolls? "; n
   60 CLS
