@@ -6,6 +6,7 @@
   40 PRINT AT 8, 4; "Guess the hidden word,"
   50 PRINT AT 9, 4; "one letter at a time."
   60 PRINT AT 11, 4; "You have 7 lives per word."
+  75 PLOT 120, 108: DRAW 16, 0: DRAW 0, -16: DRAW -16, 0: DRAW 0, 16: CIRCLE 128, 116, 8
   70 PRINT AT 15, 4; "Press any key to start"
   80 PAUSE 0
   90 DATA "SPECTRUM","COMPUTER","KEYBOARD","PROGRAM","SCREEN"

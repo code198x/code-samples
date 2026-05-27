@@ -5,6 +5,7 @@
   50 PRINT AT 11, 4; "Hits show *"
   60 PRINT AT 12, 4; "Misses show distance."
   70 PRINT AT 14, 4; "Red = close. Blue = far."
+  38 CIRCLE 128, 100, 12: CIRCLE 128, 100, 20: PLOT 128, 100: DRAW 14, 14: PLOT 128, 100: DRAW 0, 20
   80 PRINT AT 18, 4; "Press any key to start"
   90 PAUSE 0
  100 RANDOMIZE

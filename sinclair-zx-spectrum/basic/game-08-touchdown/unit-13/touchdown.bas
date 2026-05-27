@@ -8,6 +8,7 @@
   40 PRINT AT 10, 4; "Hold SPACE to fire thrusters."
   50 PRINT AT 11, 4; "Land slowly or you crash."
   60 PRINT AT 13, 4; "Fuel is limited. Use it wisely."
+  65 PLOT 128, 118: DRAW -6, -12: DRAW 0, -16: DRAW -4, -6: DRAW 20, 0: DRAW -4, 6: DRAW 0, 16: DRAW -6, 12
   70 PRINT AT 18, 4; "Press any key to launch"
   80 PAUSE 0
   90 CLS

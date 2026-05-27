@@ -1,6 +1,7 @@
   10 INK 7: PAPER 0: BORDER 0
   20 CLS
   30 PRINT AT 3, 6; BRIGHT 1; "*** STORY BUILDER ***"
+  35 PLOT 148, 120: DRAW -20, -30: DRAW 3, 0: DRAW 17, 30: PLOT 128, 90: DRAW -8, -12
   40 PRINT
   50 INPUT "What is your name? "; n$
   60 INPUT "Name an adjective: "; a$
