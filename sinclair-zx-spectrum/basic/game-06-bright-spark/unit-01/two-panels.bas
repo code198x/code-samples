@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
  100 CLS
  610 PAPER 2
  620 FOR r = 2 TO 9: PRINT AT r, 1; "       1      ": NEXT r

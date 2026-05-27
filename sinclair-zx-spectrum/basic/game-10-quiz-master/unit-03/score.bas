@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   80 LET score = 0: LET n = 0
  110 FOR q = 1 TO 4
  120 LET n = n + 1

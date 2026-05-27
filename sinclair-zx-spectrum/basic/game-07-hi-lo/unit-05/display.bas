@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
  110 LET a = INT (RND * 13) + 1
  120 LET streak = 0

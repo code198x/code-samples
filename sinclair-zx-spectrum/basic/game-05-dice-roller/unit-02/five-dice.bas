@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
   60 CLS
   90 PRINT "Rolling 5 dice:"

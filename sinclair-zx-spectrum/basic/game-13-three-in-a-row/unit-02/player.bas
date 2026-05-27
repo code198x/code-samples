@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   90 DIM b(9)
  120 CLS
  130 PRINT AT 0, 7; "*** THREE IN A ROW ***"

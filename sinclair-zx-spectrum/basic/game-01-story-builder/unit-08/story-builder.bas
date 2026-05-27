@@ -1,6 +1,6 @@
   10 INK 7: PAPER 0: BORDER 0
   20 CLS
-  30 PRINT "*** STORY BUILDER ***"
+  30 PRINT AT 3, 6; BRIGHT 1; "*** STORY BUILDER ***"
   40 PRINT
   50 INPUT "What is your name? "; n$
   60 INPUT "Name an adjective: "; a$

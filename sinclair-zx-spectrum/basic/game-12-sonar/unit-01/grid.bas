@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
  110 DIM g(8,8)
  180 CLS
  190 PRINT AT 0, 10; "*** SONAR ***"

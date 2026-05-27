@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
  100 LET pop = 100: LET grain = 2800
  110 LET land = 1000
  120 CLS

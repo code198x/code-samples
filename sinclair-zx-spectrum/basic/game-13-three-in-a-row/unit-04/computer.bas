@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   80 RANDOMIZE
   90 DIM b(9)
  100 LET moves = 0

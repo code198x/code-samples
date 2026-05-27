@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
   60 CLS
   70 LET t1 = 0: LET t2 = 0: LET t3 = 0

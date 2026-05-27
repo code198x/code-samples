@@ -1,4 +1,5 @@
    5 DIM k(8)
+  10 BORDER 0: PAPER 0: INK 7: CLS
   50 RESTORE: FOR i = 1 TO 8: READ k(i): NEXT i
   60 RESTORE 600
   80 LET score = 0: LET n = 0

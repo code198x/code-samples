@@ -1,5 +1,5 @@
    5 DIM k(8): DIM s(4)
-  10 CLS
+  10 BORDER 0: PAPER 0: INK 7: CLS
   20 INK 2: PRINT AT 6,10;"QUIZ MASTER"
   30 INK 0: PRINT AT 9,5;"Press any key to start"
   40 PAUSE 0

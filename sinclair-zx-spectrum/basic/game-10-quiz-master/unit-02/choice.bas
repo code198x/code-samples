@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
  130 CLS
  190 READ q$,a$,b$,c$,d$
  210 PRINT q$

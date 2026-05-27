@@ -1,3 +1,4 @@
+  10 BORDER 0: PAPER 0: INK 7: CLS
   90 CLS
  100 LET alt = 100
  110 LET spd = 0
