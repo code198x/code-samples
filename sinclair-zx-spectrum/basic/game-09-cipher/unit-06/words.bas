@@ -10,7 +10,7 @@
  180 LET d$ = ""
  190 FOR i = 1 TO LEN w$: LET d$ = d$ + "_": NEXT i
  200 LET lives = 7
- 210 LET tried$ = ""
+ 210 LET z$ = ""
  220 CLS
  230 PRINT AT 0, 10; "*** CIPHER ***"
  250 PRINT AT 4, 2;
@@ -23,15 +23,15 @@
  320 INK 4: FOR i = 1 TO lives: PRINT "*";: NEXT i
  330 FOR i = lives + 1 TO 7: PRINT " ";: NEXT i
  340 INK 7
- 350 PRINT AT 9, 2; "Tried: "; tried$; "  "
+ 350 PRINT AT 9, 2; "Tried: "; z$; "  "
  360 PRINT AT 12, 2;
  370 INPUT "Guess: "; g$
  380 LET already = 0
- 390 FOR i = 1 TO LEN tried$
- 400 IF tried$(i) = g$ THEN LET already = 1
+ 390 FOR i = 1 TO LEN z$
+ 400 IF z$(i) = g$ THEN LET already = 1
  410 NEXT i
  420 IF already = 1 THEN PRINT AT 14, 2; INK 6; "Already tried!  ": PAUSE 50: GO TO 220
- 430 LET tried$ = tried$ + g$
+ 430 LET z$ = z$ + g$
  440 LET found = 0
  450 FOR i = 1 TO LEN w$
  460 IF w$(i) = g$ THEN LET d$(i TO i) = g$: LET found = 1
