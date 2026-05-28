@@ -2,18 +2,15 @@
   20 RANDOMIZE
  100 CLS
  110 PRINT "Get ready..."
- 185 PAUSE INT (RND * 100) + 50
- 200 PRINT "NOW!"
- 210 LET t = 0
- 220 IF INKEY$ <> "" THEN GO TO 280
- 230 LET t = t + 1
- 240 GO TO 220
- 280 PRINT "Your time: "; t
- 290 PRINT
- 300 IF t < 5 THEN INK 4: PRINT "Lightning!"
- 310 IF t >= 5 AND t < 15 THEN INK 5: PRINT "Quick!"
- 320 IF t >= 15 AND t < 30 THEN INK 6: PRINT "OK"
- 330 IF t >= 30 THEN INK 2: PRINT "Slow..."
-
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
-9010 RETURN
+ 200 PAUSE INT (RND * 100) + 50
+ 220 PRINT "NOW!"
+ 230 LET t = 0
+ 240 IF INKEY$ <> "" THEN GO TO 300
+ 250 LET t = t + 1
+ 260 GO TO 240
+ 300 PRINT "Your time: "; t
+ 310 PRINT
+ 320 IF t < 5 THEN INK 4: PRINT "Lightning!"
+ 330 IF t >= 5 AND t < 15 THEN INK 5: PRINT "Quick!"
+ 340 IF t >= 15 AND t < 30 THEN INK 6: PRINT "OK"
+ 350 IF t >= 30 THEN INK 2: PRINT "Slow..."
