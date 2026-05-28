@@ -1,11 +1,12 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
-  30 PRINT AT 5, 5; "*** BRIGHT SPARK ***"
+  30 PRINT AT 5, 5; BRIGHT 1; "*** BRIGHT SPARK ***"
   40 PRINT AT 8, 5; "Watch the panels flash."
   50 PRINT AT 9, 5; "Repeat the sequence."
   60 PRINT AT 11, 5; "Keys: 1=Red 2=Blue"
   70 PRINT AT 12, 5; "      3=Green 4=Yellow"
   80 PRINT AT 16, 5; "Press any key to start"
+  85 PRINT AT 6, 11; PAPER 2; "  "; PAPER 1; "  "; PAPER 4; "  "; PAPER 6; "  "
   90 PAUSE 0
  100 CLS
  110 GO SUB 600

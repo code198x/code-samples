@@ -1,12 +1,10 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  12 DATA 195,102,60,24,60,102,195,0
-  13 DATA 60,126,195,195,195,126,60,0
-  14 FOR u = 0 TO 1: FOR j = 0 TO 7: READ b: POKE USR CHR$ (144 + u) + j, b: NEXT j: NEXT u
   20 PRINT AT 5, 7; BRIGHT 1; "*** THREE IN A ROW ***"
   30 PRINT AT 8, 5; "You are X. Computer is O."
   40 PRINT AT 10, 5; "Get three in a row to win."
   50 PRINT AT 12, 5; "Pick a position: 1 to 9."
   60 PRINT AT 18, 4; "Press any key to start"
+  65 INK 6: PLOT 116, 34: DRAW 0, 36: PLOT 140, 34: DRAW 0, 36: PLOT 104, 46: DRAW 48, 0: PLOT 104, 58: DRAW 48, 0: INK 7
   70 PAUSE 0
   80 RANDOMIZE
   90 DIM b(9)
@@ -15,19 +13,19 @@
  120 CLS
  130 INVERSE 1: PRINT AT 0, 0; "    *** THREE IN A ROW ***      ": INVERSE 0
  140 PRINT AT 1, 2; "W: "; wins; " L: "; losses; " D: "; draws; "  "
+ 145 INK 7: FOR i = 0 TO 3: PLOT 80 + i * 32, 79: DRAW 0, 72: NEXT i
+ 147 FOR i = 0 TO 3: PLOT 80, 79 + i * 24: DRAW 96, 0: NEXT i
  150 FOR n = 1 TO 9
  160 LET row = INT ((n - 1) / 3)
  170 LET col = n - 1 - row * 3
- 180 PRINT AT 3 + row * 2, 11 + col * 4;
- 190 IF b(n) = 0 THEN PRINT CHR$ (48 + n);
- 200 IF b(n) = 1 THEN INK 5: PRINT CHR$ 144;: INK 7
- 210 IF b(n) = 2 THEN INK 2: PRINT CHR$ 145;: INK 7
+ 175 LET cx = 96 + col * 32: LET cy = 139 - row * 24
+ 180 IF b(n) = 0 THEN PRINT AT 4 + row * 3, 12 + col * 4; CHR$ (48 + n)
+ 200 IF b(n) = 1 THEN INK 5: PLOT cx - 7, cy - 7: DRAW 14, 14: PLOT cx - 7, cy + 7: DRAW 14, -14: INK 7
+ 210 IF b(n) = 2 THEN INK 2: CIRCLE cx, cy, 7: INK 7
  220 NEXT n
- 230 PRINT AT 4, 10; "---+---+---"
- 240 PRINT AT 6, 10; "---+---+---"
  250 INPUT "Your move (1-9): "; m
  260 IF m < 1 OR m > 9 THEN GO TO 250
- 270 IF b(m) <> 0 THEN PRINT AT 10, 4; "Already taken!": PAUSE 30: GO TO 120
+ 270 IF b(m) <> 0 THEN PRINT AT 16, 4; "Already taken!": PAUSE 30: GO TO 120
  280 LET b(m) = 1
  290 LET moves = moves + 1
  300 GO SUB 420

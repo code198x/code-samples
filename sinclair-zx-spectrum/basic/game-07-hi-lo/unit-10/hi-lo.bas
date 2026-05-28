@@ -13,6 +13,7 @@
   70 PRINT AT 12, 4; "Press H or L each round."
   80 PRINT AT 14, 4; "How long can your streak last?"
   90 PRINT AT 18, 4; "Press any key to start"
+  95 PRINT AT 6, 12; INK 2; CHR$ 144; " "; CHR$ 145; INK 7; " "; CHR$ 146; " "; CHR$ 147
  100 PAUSE 0
  110 LET a = INT (RND * 13) + 1
  112 LET sa = INT (RND * 4) + 1
