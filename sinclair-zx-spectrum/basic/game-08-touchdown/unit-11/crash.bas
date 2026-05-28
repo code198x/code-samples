@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  20 PRINT AT 5, 8; BRIGHT 1; "*** TOUCHDOWN ***"
+  20 LET a$ = "*** TOUCHDOWN ***": LET y = 5: GO SUB 9000
   30 PRINT AT 8, 4; "Land the spacecraft safely."
   40 PRINT AT 10, 4; "Hold SPACE to fire thrusters."
   50 PRINT AT 11, 4; "Land slowly or you crash."
@@ -48,5 +48,5 @@
  810 BEEP 0.5, -10
  820 PRINT AT 10, 8; INK 2; "CRASH!"
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

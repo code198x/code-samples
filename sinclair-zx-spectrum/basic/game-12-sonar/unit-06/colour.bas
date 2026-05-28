@@ -7,7 +7,7 @@
  150 LET g(r,c) = 9
  160 NEXT i
  180 CLS
- 190 PRINT AT 0, 10; BRIGHT 1; "*** SONAR ***"
+ 190 LET a$ = "*** SONAR ***": LET y = 0: GO SUB 9000
  210 PRINT AT 3, 11; "12345678"
  220 FOR r = 1 TO 8
  230 PRINT AT 3 + r, 9; r;
@@ -37,5 +37,5 @@
  590 PAUSE 30
  600 GO TO 180
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

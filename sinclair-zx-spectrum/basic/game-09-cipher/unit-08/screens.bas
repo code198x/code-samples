@@ -44,14 +44,14 @@
  500 IF d$ = w$ THEN LET wins = wins + 1: GO TO 700
  510 IF lives = 0 THEN LET losses = losses + 1: GO TO 800
  520 GO TO 220
- 700 CLS: PRINT AT 6, 10; BRIGHT 1; "*** CIPHER ***"
+ 700 CLS: LET a$ = "*** CIPHER ***": LET y = 6: GO SUB 9000
  710 PRINT AT 9, 4; INK 4; "You cracked it!"
  720 PRINT AT 11, 4; "The word was "; w$
  730 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  740 PRINT AT 14, 4; INK 7; "Won: "; wins; "  Lost: "; losses
  750 PRINT AT 18, 4; "Press any key for next word"
  760 PAUSE 0: GO TO 150
- 800 CLS: PRINT AT 6, 10; BRIGHT 1; "*** CIPHER ***"
+ 800 CLS: LET a$ = "*** CIPHER ***": LET y = 6: GO SUB 9000
  810 PRINT AT 9, 4; INK 2; "Out of lives!"
  820 PRINT AT 11, 4; "The word was "; w$
  830 BEEP 0.3, -10
@@ -59,5 +59,5 @@
  850 PRINT AT 18, 4; "Press any key for next word"
  860 PAUSE 0: GO TO 150
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

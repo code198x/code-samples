@@ -54,5 +54,5 @@
 1210 DATA 1,4,7, 2,5,8, 3,6,9
 1220 DATA 1,5,9, 3,5,7
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

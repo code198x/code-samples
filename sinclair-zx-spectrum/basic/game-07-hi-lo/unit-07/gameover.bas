@@ -2,7 +2,7 @@
  110 LET a = INT (RND * 13) + 1
  120 LET streak = 0
  130 CLS
- 140 PRINT AT 1, 10; BRIGHT 1; "*** HI-LO ***"
+ 140 LET a$ = "*** HI-LO ***": LET y = 1: GO SUB 9000
  150 PRINT AT 3, 8; "Number: "; a; "   "
  160 PRINT AT 5, 8; "Streak: "; streak; "   "
  180 PRINT AT 9, 4;
@@ -24,9 +24,9 @@
  340 GO TO 130
  400 BORDER 2: BEEP 0.3, -10
  420 CLS
- 430 PRINT AT 5, 10; BRIGHT 1; "*** HI-LO ***"
+ 430 LET a$ = "*** HI-LO ***": LET y = 5: GO SUB 9000
  440 PRINT AT 8, 8; "GAME OVER"
  450 PRINT AT 10, 8; "Streak: "; streak
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

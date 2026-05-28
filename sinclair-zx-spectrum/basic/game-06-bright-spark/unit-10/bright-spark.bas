@@ -1,6 +1,6 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
-  30 PRINT AT 5, 5; BRIGHT 1; "*** BRIGHT SPARK ***"
+  30 LET a$ = "*** BRIGHT SPARK ***": LET y = 5: GO SUB 9000
   40 PRINT AT 8, 5; "Watch the panels flash."
   50 PRINT AT 9, 5; "Repeat the sequence."
   60 PRINT AT 11, 5; "Keys: 1=Red 2=Blue"
@@ -69,5 +69,5 @@
  690 FOR r = pr TO pr + 7: PRINT AT r, pc; "              ": NEXT r
  700 PAPER 0: RETURN
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

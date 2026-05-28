@@ -15,5 +15,5 @@
  230 PRINT AT 1, 31; fuel; "  "
  480 IF alt > 0 THEN GO TO 150
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

@@ -2,7 +2,7 @@
   20 DATA 0,102,255,255,255,126,60,24
   30 FOR j = 0 TO 7: READ b: POKE USR "A" + j, b: NEXT j
   40 RANDOMIZE
-  50 PRINT AT 5, 10; BRIGHT 1; "*** CIPHER ***"
+  50 LET a$ = "*** CIPHER ***": LET y = 5: GO SUB 9000
   60 PRINT AT 7, 4; "Guess the hidden word,"
   70 PRINT AT 8, 4; "one letter at a time."
   80 PRINT AT 9, 4; "You have 7 lives per word."
@@ -53,14 +53,14 @@
  530 IF d$ = w$ THEN LET wins = wins + 1: GO TO 700
  540 IF lives = 0 THEN LET losses = losses + 1: GO TO 770
  550 GO TO 250
- 700 CLS: PRINT AT 6, 10; BRIGHT 1; "*** CIPHER ***"
+ 700 CLS: LET a$ = "*** CIPHER ***": LET y = 6: GO SUB 9000
  710 PRINT AT 9, 4; INK 4; "You cracked it!"
  720 PRINT AT 11, 4; "The word was "; w$
  730 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  740 PRINT AT 14, 4; INK 7; "Won: "; wins; "  Lost: "; losses
  750 PRINT AT 18, 4; "Press any key for next word"
  760 PAUSE 0: GO TO 180
- 770 CLS: PRINT AT 6, 10; BRIGHT 1; "*** CIPHER ***"
+ 770 CLS: LET a$ = "*** CIPHER ***": LET y = 6: GO SUB 9000
  780 PRINT AT 9, 4; INK 2; "Out of lives!"
  790 PRINT AT 11, 4; "The word was "; w$
  800 BEEP 0.3, -10
@@ -68,5 +68,5 @@
  820 PRINT AT 18, 4; "Press any key for next word"
  830 PAUSE 0: GO TO 180
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

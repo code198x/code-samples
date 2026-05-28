@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  20 PRINT AT 5, 10; BRIGHT 1; "*** SONAR ***"
+  20 LET a$ = "*** SONAR ***": LET y = 5: GO SUB 9000
   30 PRINT AT 8, 4; "Find 3 hidden targets on"
   40 CIRCLE 128, 100, 12: CIRCLE 128, 100, 20: PLOT 128, 100: DRAW 14, 14: PLOT 128, 100: DRAW 0, 20
   50 PRINT AT 9, 4; "an 8x8 grid."
@@ -57,7 +57,7 @@
  570 IF hits = 3 THEN GO TO 590
  580 GO TO 190
  590 CLS
- 600 PRINT AT 6, 10; BRIGHT 1; "*** SONAR ***"
+ 600 LET a$ = "*** SONAR ***": LET y = 6: GO SUB 9000
  610 PRINT AT 9, 6; INK 4; "All targets found!"
  620 PRINT AT 11, 6; INK 7; "Guesses: "; guesses
  630 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
@@ -66,7 +66,7 @@
  660 INK 6: PRINT AT 14, 8; "Keep searching"
  670 GO TO 770
  680 CLS
- 690 PRINT AT 6, 10; BRIGHT 1; "*** SONAR ***"
+ 690 LET a$ = "*** SONAR ***": LET y = 6: GO SUB 9000
  700 PRINT AT 9, 6; INK 2; "Out of probes!"
  710 PRINT AT 11, 6; INK 7; "Targets were at:"
  720 LET n = 12
@@ -79,5 +79,5 @@
  790 PAUSE 0
  800 GO TO 10
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

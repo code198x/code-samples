@@ -32,17 +32,17 @@
  510 NEXT t
  520 GO TO 660
  600 CLS
- 610 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
+ 610 LET a$ = "*** LOCKSMITH ***": LET y = 6: GO SUB 9000
  620 PRINT AT 9, 6; "Code cracked!"
  630 PRINT AT 11, 6; "You got it in "; t; " guesses"
  640 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  650 STOP
  660 CLS
- 670 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
+ 670 LET a$ = "*** LOCKSMITH ***": LET y = 6: GO SUB 9000
  680 PRINT AT 9, 6; "Out of guesses!"
  690 PRINT AT 11, 6; "The code was ";
  700 FOR i = 1 TO 4: PRINT c(i);: NEXT i
  710 BEEP 0.3, -10
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

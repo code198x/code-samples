@@ -1,6 +1,6 @@
   10 BORDER 1: PAPER 1: INK 7: CLS
   20 RANDOMIZE
-  30 PRINT AT 3, 4; BRIGHT 1; "*** THE ORACLE STONE ***"
+  30 LET a$ = "*** THE ORACLE STONE ***": LET y = 3: GO SUB 9000
   50 PRINT
   60 PRINT "  Ask any yes-or-no question."
   70 PRINT "  The Oracle will answer."
@@ -12,7 +12,7 @@
  130 PAUSE 25
  140 CLS
  150 PRINT
- 160 PRINT AT 3, 4; BRIGHT 1; "*** THE ORACLE STONE ***"
+ 160 LET a$ = "*** THE ORACLE STONE ***": LET y = 3: GO SUB 9000
  170 PRINT
  180 INK 5: FOR i = 1 TO 28: PRINT CHR$ 143;: NEXT i: INK 7
  190 PRINT
@@ -33,5 +33,5 @@
  340 PRINT
  350 INK 5: FOR i = 1 TO 28: PRINT CHR$ 143;: NEXT i: INK 7
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

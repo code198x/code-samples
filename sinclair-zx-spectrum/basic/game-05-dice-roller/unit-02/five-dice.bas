@@ -8,5 +8,5 @@
  190 PRINT d; " ";
  250 NEXT i
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

@@ -3,7 +3,7 @@
   30 DATA 0,24,36,36,66,66,129,24
   40 DATA 66,36,0,24,0,36,66,0
   50 FOR u = 0 TO 2: FOR j = 0 TO 7: READ b: POKE USR CHR$ (144 + u) + j, b: NEXT j: NEXT u
-  60 PRINT AT 5, 8; BRIGHT 1; "*** TOUCHDOWN ***"
+  60 LET a$ = "*** TOUCHDOWN ***": LET y = 5: GO SUB 9000
   70 PRINT AT 7, 4; "Land the spacecraft safely."
   80 PRINT AT 8, 4; "Hold SPACE to thrust."
   90 PRINT AT 9, 4; "Land slowly or you crash."
@@ -68,5 +68,5 @@
  740 PAUSE 0
  750 GO TO 10
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

@@ -4,5 +4,5 @@
  120 LET d = INT (RND * 6) + 1
  190 PRINT "You rolled: "; d
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

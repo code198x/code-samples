@@ -2,7 +2,7 @@
   20 DATA 60,126,255,255,255,255,126,60
   30 DATA 60,126,195,195,195,195,126,60
   40 FOR u = 0 TO 1: FOR j = 0 TO 7: READ b: POKE USR CHR$ (144 + u) + j, b: NEXT j: NEXT u
-  50 PRINT AT 5, 8; BRIGHT 1; "*** LOCKSMITH ***"
+  50 LET a$ = "*** LOCKSMITH ***": LET y = 5: GO SUB 9000
   60 PRINT AT 8, 2; "Crack my 4-digit code."
   70 PRINT AT 9, 2; "Each digit is 1 to 6."
   80 CIRCLE 128, 116, 8: PLOT 120, 108: DRAW 16, 0: DRAW 0, -14: DRAW -16, 0: DRAW 0, 14: PLOT 126, 100: DRAW 4, 0: DRAW 0, -4: DRAW -4, 0: DRAW 0, 4
@@ -46,13 +46,13 @@
  460 NEXT t
  470 GO TO 540
  480 CLS
- 490 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
+ 490 LET a$ = "*** LOCKSMITH ***": LET y = 6: GO SUB 9000
  500 PRINT AT 9, 6; INK 4; "Code cracked!"
  510 PRINT AT 11, 6; INK 7; "You got it in "; t; " guesses"
  520 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  530 GO TO 600
  540 CLS
- 550 PRINT AT 6, 8; BRIGHT 1; "*** LOCKSMITH ***"
+ 550 LET a$ = "*** LOCKSMITH ***": LET y = 6: GO SUB 9000
  560 PRINT AT 9, 6; INK 2; "Out of guesses!"
  570 PRINT AT 11, 6; INK 7; "The code was ";
  580 FOR i = 1 TO 4: PRINT c(i);: NEXT i
@@ -61,5 +61,5 @@
  610 PAUSE 0
  620 GO TO 10
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

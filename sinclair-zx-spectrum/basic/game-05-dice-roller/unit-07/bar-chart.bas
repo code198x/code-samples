@@ -1,6 +1,6 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 RANDOMIZE
-  30 PRINT AT 3, 7; BRIGHT 1; "*** DICE ROLLER ***"
+  30 LET a$ = "*** DICE ROLLER ***": LET y = 3: GO SUB 9000
   40 PRINT
   50 INPUT "How many rolls? "; n
   60 CLS
@@ -31,5 +31,5 @@
  310 FOR j = 1 TO t5: PRINT CHR$ 143;: NEXT j: PRINT
  320 FOR j = 1 TO t6: PRINT CHR$ 143;: NEXT j: PRINT
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

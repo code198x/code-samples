@@ -8,7 +8,7 @@
  160 LET rm = 1
  170 LET pit = INT (RND * 19) + 2
  270 CLS
- 280 PRINT AT 0, 8; BRIGHT 1; "*** THE CAVERNS ***"
+ 280 LET a$ = "*** THE CAVERNS ***": LET y = 0: GO SUB 9000
  300 PRINT AT 3, 2; "You are in room "; rm; "."
  310 PRINT AT 5, 2; "Exits: ";
  320 IF n(rm) > 0 THEN PRINT "N ";
@@ -55,5 +55,5 @@
 1190 DATA 15,0,20,18
 1200 DATA 16,0,0,19
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

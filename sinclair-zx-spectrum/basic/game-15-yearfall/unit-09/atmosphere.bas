@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  20 PRINT AT 4, 9; BRIGHT 1; "*** YEARFALL ***"
+  20 LET a$ = "*** YEARFALL ***": LET y = 4: GO SUB 9000
   30 PRINT AT 7, 4; "Rule a kingdom for 10 years."
   40 PRINT AT 8, 4; "Feed your people."
   50 PRINT AT 9, 4; "Plant crops. Trade land."
@@ -10,7 +10,7 @@
  100 LET pop = 100: LET grain = 2800
  110 LET land = 1000: LET yr = 1
  120 CLS
- 130 PRINT AT 0, 9; BRIGHT 1; "*** YEARFALL ***"
+ 130 LET a$ = "*** YEARFALL ***": LET y = 0: GO SUB 9000
  140 PRINT AT 1, 4; "Year "; yr; " of 10"
  150 PRINT AT 3, 2; "Population: "; pop
  160 PRINT AT 4, 2; "Grain: "; grain
@@ -39,7 +39,7 @@
  490 LET pop = pop + births
  500 IF pop <= 0 THEN GO TO 900
  600 CLS
- 640 PRINT AT 0, 9; BRIGHT 1; "*** YEARFALL ***"
+ 640 LET a$ = "*** YEARFALL ***": LET y = 0: GO SUB 9000
  650 PRINT AT 1, 4; "Year "; yr; " report"
  660 PRINT AT 3, 2; "Harvest: "; harvested; " grain"
  670 PRINT AT 4, 2; "("; yield; " grain per acre)"
@@ -56,7 +56,7 @@
  780 IF yr > 10 THEN GO TO 900
  790 GO TO 120
  900 CLS
- 910 PRINT AT 4, 9; BRIGHT 1; "*** YEARFALL ***"
+ 910 LET a$ = "*** YEARFALL ***": LET y = 4: GO SUB 9000
  920 IF pop <= 0 THEN PRINT AT 7, 4; INK 2; "Your kingdom collapsed.": BEEP 0.5, -15: GO TO 1030
  930 PRINT AT 7, 4; "After 10 years..."
  940 PRINT AT 9, 2; "Population: "; pop
@@ -70,5 +70,5 @@
 1020 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
 1030 PAUSE 0: STOP
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

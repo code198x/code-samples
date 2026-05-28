@@ -3,7 +3,7 @@
  100 LET pop = 100: LET grain = 2800
  110 LET land = 1000: LET yr = 1
  120 CLS
- 130 PRINT AT 0, 9; BRIGHT 1; "*** YEARFALL ***"
+ 130 LET a$ = "*** YEARFALL ***": LET y = 0: GO SUB 9000
  140 PRINT AT 1, 4; "Year "; yr; " of 10"
  150 PRINT AT 3, 2; "Population: "; pop
  160 PRINT AT 4, 2; "Grain: "; grain
@@ -41,5 +41,5 @@
  780 IF yr > 10 THEN PRINT AT 16, 2; "10 years complete! Pop: "; pop: STOP
  790 GO TO 120
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

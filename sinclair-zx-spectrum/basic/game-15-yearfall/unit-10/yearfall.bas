@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  20 PRINT AT 4, 9; BRIGHT 1; "*** YEARFALL ***"
+  20 LET a$ = "*** YEARFALL ***": LET y = 4: GO SUB 9000
   30 PRINT AT 7, 4; "Rule a kingdom for 10 years."
   40 PRINT AT 8, 4; "Feed your people."
   50 PRINT AT 9, 4; "Plant crops. Trade land."
@@ -56,7 +56,7 @@
  740 IF yr > 10 THEN GO TO 900
  750 GO TO 130
  900 CLS
- 910 PRINT AT 4, 9; BRIGHT 1; "*** YEARFALL ***"
+ 910 LET a$ = "*** YEARFALL ***": LET y = 4: GO SUB 9000
  920 IF pop <= 0 THEN PRINT AT 7, 4; INK 2; "Your kingdom collapsed.": BEEP 0.5, -15: GO TO 1030
  930 PRINT AT 7, 4; "After 10 years..."
  940 PRINT AT 9, 2; "Population: "; pop
@@ -72,5 +72,5 @@
 1040 PAUSE 0
 1050 GO TO 10
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

@@ -45,5 +45,5 @@
  510 IF lives = 0 THEN LET losses = losses + 1: PRINT "The word was "; w$: PAUSE 50: GO TO 150
  520 GO TO 220
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

@@ -9,5 +9,5 @@
  240 IF r = 2 THEN PRINT "  NO"
  250 IF r = 3 THEN PRINT "  PERHAPS"
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

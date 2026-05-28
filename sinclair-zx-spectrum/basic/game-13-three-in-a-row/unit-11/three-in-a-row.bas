@@ -1,5 +1,5 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  20 PRINT AT 5, 7; BRIGHT 1; "*** THREE IN A ROW ***"
+  20 LET a$ = "*** THREE IN A ROW ***": LET y = 5: GO SUB 9000
   30 PRINT AT 8, 5; "You are X. Computer is O."
   40 PRINT AT 10, 5; "Get three in a row to win."
   50 PRINT AT 12, 5; "Pick a position: 1 to 9."
@@ -68,17 +68,17 @@
  780 FOR i = 1 TO 9: IF b(i) = 0 THEN LET mv = i
  790 NEXT i
  800 RETURN
- 900 CLS: PRINT AT 6, 7; BRIGHT 1; "*** THREE IN A ROW ***"
+ 900 CLS: LET a$ = "*** THREE IN A ROW ***": LET y = 6: GO SUB 9000
  910 PRINT AT 9, 10; INK 4; "You win!"
  920 LET wins = wins + 1
  930 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20
  940 GO TO 1040
- 950 CLS: PRINT AT 6, 7; BRIGHT 1; "*** THREE IN A ROW ***"
+ 950 CLS: LET a$ = "*** THREE IN A ROW ***": LET y = 6: GO SUB 9000
  960 PRINT AT 9, 8; INK 2; "Computer wins!"
  970 LET losses = losses + 1
  980 BEEP 0.3, -10
  990 GO TO 1040
-1000 CLS: PRINT AT 6, 7; BRIGHT 1; "*** THREE IN A ROW ***"
+1000 CLS: LET a$ = "*** THREE IN A ROW ***": LET y = 6: GO SUB 9000
 1010 PRINT AT 9, 11; INK 6; "Draw!"
 1020 LET draws = draws + 1
 1030 BEEP 0.1, 5: BEEP 0.1, 5
@@ -92,5 +92,5 @@
 1210 DATA 1,4,7, 2,5,8, 3,6,9
 1220 DATA 1,5,9, 3,5,7
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

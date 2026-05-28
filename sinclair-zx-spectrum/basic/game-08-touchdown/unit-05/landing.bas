@@ -19,5 +19,5 @@
  470 IF alt = 0 AND spd > 5 THEN PRINT AT 10, 8; "CRASH!": STOP
  480 GO TO 150
 
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

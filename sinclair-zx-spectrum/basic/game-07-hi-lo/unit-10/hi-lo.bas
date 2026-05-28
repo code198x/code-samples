@@ -7,7 +7,7 @@
   70 LET f$ = "A234567890JQK"
   80 RANDOMIZE
   90 LET best = 0
- 100 PRINT AT 5, 10; BRIGHT 1; "*** HI-LO ***"
+ 100 LET a$ = "*** HI-LO ***": LET y = 5: GO SUB 9000
  110 PRINT AT 8, 4; "Guess if the next card"
  120 PRINT AT 9, 4; "will be higher or lower."
  130 PRINT AT 12, 4; "Press H or L each round."
@@ -43,7 +43,7 @@
  430 BORDER 2: BEEP 0.3, -10
  440 IF streak > best THEN LET best = streak
  450 CLS
- 460 PRINT AT 5, 10; BRIGHT 1; "*** HI-LO ***"
+ 460 LET a$ = "*** HI-LO ***": LET y = 5: GO SUB 9000
  470 PRINT AT 8, 8; "GAME OVER"
  480 PRINT AT 10, 8; "Streak: "; streak
  490 PRINT AT 11, 8; "Best:   "; best
@@ -73,5 +73,5 @@
  940 PRINT AT cy + 3, cx + 4; "?"
  950 PAPER 0: INK 7
  960 RETURN
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
+9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN
