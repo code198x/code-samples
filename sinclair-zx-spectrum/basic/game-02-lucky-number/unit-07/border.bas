@@ -17,6 +17,3 @@
  210 IF g < n THEN PRINT "Too low!"
  220 IF g > n THEN PRINT "Too high!"
  230 GO TO 120
-
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
-9010 RETURN

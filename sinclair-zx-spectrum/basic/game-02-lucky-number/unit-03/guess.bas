@@ -7,6 +7,3 @@
   90 PRINT
  120 INPUT "Your guess: "; g
  310 PRINT "You guessed "; g; ". The answer was "; n
-
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
-9010 RETURN

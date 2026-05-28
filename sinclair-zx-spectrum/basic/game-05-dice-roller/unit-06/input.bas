@@ -23,6 +23,7 @@
  230 PRINT AT 6, 3; t5; "  "
  240 PRINT AT 7, 3; t6; "  "
  250 NEXT i
+ 260 STOP
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN
