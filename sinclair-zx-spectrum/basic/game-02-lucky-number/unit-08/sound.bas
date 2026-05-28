@@ -17,5 +17,5 @@
  210 IF g < n THEN PRINT "Too low!": BEEP 0.1, -5
  220 IF g > n THEN PRINT "Too high!": BEEP 0.1, 5
  230 GO TO 120
- 300 BORDER 4: BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20: BEEP 0.2, 24
+ 300 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20: BEEP 0.2, 24
  310 PRINT "Got it! The number was "; n
