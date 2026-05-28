@@ -43,6 +43,7 @@
  480 IF score >= 3 AND score < 6 THEN INK 6: PRINT "Not bad"
  490 IF score < 3 THEN INK 2: PRINT "Keep practising"
  500 INK 7
+ 510 STOP
  540 REM --- Draw all panels ---
  550 PAPER 2
  560 FOR r = 2 TO 9: PRINT AT r, 1; "       1      ": NEXT r

@@ -37,6 +37,7 @@
  420 PRINT AT 9, 5; "GAME OVER"
  430 PRINT AT 11, 5; "The sequence was"
  440 PRINT AT 12, 5; score; " long."
+ 450 STOP
  540 REM --- Draw all panels ---
  550 PAPER 2
  560 FOR r = 2 TO 9: PRINT AT r, 1; "       1      ": NEXT r
