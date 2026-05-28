@@ -1,22 +1,22 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  90 DATA "SPECTRUM"
- 160 RESTORE
- 170 READ w$
- 180 LET d$ = ""
- 190 FOR i = 1 TO LEN w$: LET d$ = d$ + "_": NEXT i
- 200 LET lives = 7
- 220 CLS
- 260 FOR i = 1 TO LEN d$: PRINT d$(i); " ";: NEXT i
- 310 PRINT: PRINT "Lives: "; lives
- 360 PRINT
- 370 INPUT "Guess: "; g$
- 440 LET found = 0
- 450 FOR i = 1 TO LEN w$
- 460 IF w$(i) = g$ THEN LET d$(i TO i) = g$: LET found = 1
- 470 NEXT i
- 480 IF found = 0 THEN LET lives = lives - 1
- 510 IF lives = 0 THEN PRINT "The word was "; w$: STOP
- 520 GO TO 220
+ 120 DATA "SPECTRUM"
+ 190 RESTORE
+ 200 READ w$
+ 210 LET d$ = ""
+ 220 FOR i = 1 TO LEN w$: LET d$ = d$ + "_": NEXT i
+ 230 LET lives = 7
+ 250 CLS
+ 290 FOR i = 1 TO LEN d$: PRINT d$(i); " ";: NEXT i
+ 340 PRINT: PRINT "Lives: "; lives
+ 390 PRINT
+ 400 INPUT "Guess: "; g$
+ 470 LET found = 0
+ 480 FOR i = 1 TO LEN w$
+ 490 IF w$(i) = g$ THEN LET d$(i TO i) = g$: LET found = 1
+ 500 NEXT i
+ 510 IF found = 0 THEN LET lives = lives - 1
+ 540 IF lives = 0 THEN PRINT "The word was "; w$: STOP
+ 550 GO TO 250
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

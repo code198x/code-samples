@@ -5,28 +5,28 @@
   50 PRINT AT 9, 4; "Plant crops. Trade land."
   60 PRINT AT 10, 4; "Grow or collapse."
   70 PRINT AT 14, 4; "Press any key to begin"
-  80 PAUSE 0
-  90 RANDOMIZE
- 100 LET pop = 100: LET grain = 2800
- 110 LET land = 1000: LET yr = 1
- 120 CLS
- 130 LET a$ = "*** YEARFALL ***": LET y = 0: GO SUB 9000
- 140 PRINT AT 1, 4; "Year "; yr; " of 10"
- 150 PRINT AT 3, 2; "Population: "; pop
- 160 PRINT AT 4, 2; "Grain: "; grain
- 170 PRINT AT 5, 2; "Land: "; land; " acres"
- 180 LET price = INT (RND * 10) + 17
- 190 PRINT AT 6, 2; "Land price: "; price; " grain/acre"
- 200 INPUT "Buy(+)/Sell(-) acres: "; trade
- 210 IF trade > 0 AND trade * price > grain THEN BEEP 0.1, -5: GO TO 200
- 220 IF trade < 0 AND -trade > land THEN BEEP 0.1, -5: GO TO 200
- 230 LET land = land + trade: LET grain = grain - trade * price
- 240 INPUT "Grain to feed: "; feed
- 250 IF feed < 0 OR feed > grain THEN BEEP 0.1, -5: GO TO 240
- 260 INPUT "Acres to plant: "; plant
- 270 IF plant < 0 OR plant > land THEN BEEP 0.1, -5: GO TO 260
- 280 IF plant > grain - feed THEN BEEP 0.1, -5: GO TO 260
- 290 IF plant > pop * 10 THEN BEEP 0.1, -5: GO TO 260
+  90 PAUSE 0
+ 100 RANDOMIZE
+ 110 LET pop = 100: LET grain = 2800
+ 120 LET land = 1000: LET yr = 1
+ 130 CLS
+ 140 LET a$ = "*** YEARFALL ***": LET y = 0: GO SUB 9000
+ 150 PRINT AT 1, 4; "Year "; yr; " of 10"
+ 160 PRINT AT 3, 2; "Population: "; pop
+ 180 PRINT AT 4, 2; "Grain: "; grain
+ 190 PRINT AT 5, 2; "Land: "; land; " acres"
+ 200 LET price = INT (RND * 10) + 17
+ 210 PRINT AT 6, 2; "Land price: "; price; " grain/acre"
+ 220 INPUT "Buy(+)/Sell(-) acres: "; trade
+ 230 IF trade > 0 AND trade * price > grain THEN BEEP 0.1, -5: GO TO 220
+ 240 IF trade < 0 AND -trade > land THEN BEEP 0.1, -5: GO TO 220
+ 250 LET land = land + trade: LET grain = grain - trade * price
+ 260 INPUT "Grain to feed: "; feed
+ 270 IF feed < 0 OR feed > grain THEN BEEP 0.1, -5: GO TO 260
+ 280 INPUT "Acres to plant: "; plant
+ 290 IF plant < 0 OR plant > land THEN BEEP 0.1, -5: GO TO 280
+ 300 IF plant > grain - feed THEN BEEP 0.1, -5: GO TO 280
+ 310 IF plant > pop * 10 THEN BEEP 0.1, -5: GO TO 280
  400 LET grain = grain - feed - plant
  410 LET starved = 0
  420 IF feed < pop * 20 THEN LET starved = pop - INT (feed / 20)
@@ -54,7 +54,7 @@
  760 PAUSE 0
  770 LET yr = yr + 1
  780 IF yr > 10 THEN GO TO 900
- 790 GO TO 120
+ 790 GO TO 130
  900 CLS
  910 LET a$ = "*** YEARFALL ***": LET y = 4: GO SUB 9000
  920 IF pop <= 0 THEN PRINT AT 7, 4; INK 2; "Your kingdom collapsed.": BEEP 0.5, -15: GO TO 1030

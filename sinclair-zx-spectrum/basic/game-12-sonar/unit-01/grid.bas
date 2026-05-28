@@ -1,12 +1,12 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
- 110 DIM g(8,8)
- 180 CLS
- 190 LET a$ = "*** SONAR ***": LET y = 0: GO SUB 9000
- 210 PRINT AT 3, 11; "12345678"
- 220 FOR r = 1 TO 8
- 230 PRINT AT 3 + r, 9; r;
- 240 FOR c = 1 TO 8: PRINT ".";: NEXT c
- 340 NEXT r
+ 120 DIM g(8,8)
+ 190 CLS
+ 200 LET a$ = "*** SONAR ***": LET y = 0: GO SUB 9000
+ 240 PRINT AT 3, 11; "12345678"
+ 250 FOR r = 1 TO 8
+ 260 PRINT AT 3 + r, 9; r;
+ 270 FOR c = 1 TO 8: PRINT ".";: NEXT c
+ 370 NEXT r
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

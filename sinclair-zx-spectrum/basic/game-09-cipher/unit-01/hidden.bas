@@ -1,17 +1,17 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
-  90 DATA "SPECTRUM"
- 160 RESTORE
- 170 READ w$
- 180 LET d$ = ""
- 190 FOR i = 1 TO LEN w$: LET d$ = d$ + "_": NEXT i
- 220 CLS
- 260 FOR i = 1 TO LEN d$: PRINT d$(i); " ";: NEXT i
- 360 PRINT
- 370 INPUT "Guess: "; g$
- 450 FOR i = 1 TO LEN w$
- 460 IF w$(i) = g$ THEN LET d$(i TO i) = g$
- 470 NEXT i
- 520 GO TO 220
+ 120 DATA "SPECTRUM"
+ 190 RESTORE
+ 200 READ w$
+ 210 LET d$ = ""
+ 220 FOR i = 1 TO LEN w$: LET d$ = d$ + "_": NEXT i
+ 250 CLS
+ 290 FOR i = 1 TO LEN d$: PRINT d$(i); " ";: NEXT i
+ 390 PRINT
+ 400 INPUT "Guess: "; g$
+ 480 FOR i = 1 TO LEN w$
+ 490 IF w$(i) = g$ THEN LET d$(i TO i) = g$
+ 500 NEXT i
+ 550 GO TO 250
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

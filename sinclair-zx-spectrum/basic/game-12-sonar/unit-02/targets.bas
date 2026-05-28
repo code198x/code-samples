@@ -1,21 +1,21 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
- 100 RANDOMIZE
- 110 DIM g(8,8)
- 120 FOR i = 1 TO 3
- 130 LET r = INT (RND * 8) + 1: LET c = INT (RND * 8) + 1
- 140 IF g(r,c) = 9 THEN GO TO 130
- 150 LET g(r,c) = 9
- 160 NEXT i
- 180 CLS
- 190 LET a$ = "*** SONAR ***": LET y = 0: GO SUB 9000
- 210 PRINT AT 3, 11; "12345678"
- 220 FOR r = 1 TO 8
- 230 PRINT AT 3 + r, 9; r;
- 240 FOR c = 1 TO 8
- 260 IF g(r,c) = 9 THEN PRINT "X";
- 270 IF g(r,c) = 0 THEN PRINT ".";
- 290 NEXT c
- 340 NEXT r
+ 110 RANDOMIZE
+ 120 DIM g(8,8)
+ 130 FOR i = 1 TO 3
+ 140 LET r = INT (RND * 8) + 1: LET c = INT (RND * 8) + 1
+ 150 IF g(r,c) = 9 THEN GO TO 140
+ 160 LET g(r,c) = 9
+ 170 NEXT i
+ 190 CLS
+ 200 LET a$ = "*** SONAR ***": LET y = 0: GO SUB 9000
+ 240 PRINT AT 3, 11; "12345678"
+ 250 FOR r = 1 TO 8
+ 260 PRINT AT 3 + r, 9; r;
+ 270 FOR c = 1 TO 8
+ 290 IF g(r,c) = 9 THEN PRINT "X";
+ 300 IF g(r,c) = 0 THEN PRINT ".";
+ 320 NEXT c
+ 370 NEXT r
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN
