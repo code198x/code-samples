@@ -19,26 +19,26 @@
  190 CLS
  200 INVERSE 1: PRINT AT 0, 0; "        *** SONAR ***           ": INVERSE 0
  210 PRINT AT 1, 2; "Found: "; hits; "/3  Guesses: "; guesses; "  "
- 220 INK 5: FOR i = 0 TO 8: PLOT 80, 136 - i * 8: DRAW 64, 0: NEXT i
- 230 FOR i = 0 TO 8: PLOT 80 + i * 8, 136: DRAW 0, -64: NEXT i: INK 7
- 240 PRINT AT 3, 11; "12345678"
+ 220 INK 5: FOR i = 0 TO 8: PLOT 68, 139 - i * 16: DRAW 128, 0: NEXT i
+ 230 FOR i = 0 TO 8: PLOT 68 + i * 16, 139: DRAW 0, -128: NEXT i: INK 7
+ 240 PRINT AT 3, 9; "1 2 3 4 5 6 7 8"
  250 FOR r = 1 TO 8
- 260 PRINT AT 3 + r, 9; r;
- 270 FOR c = 1 TO 8
+ 260 LET pr = 3 + 2 * r: PRINT AT pr, 7; r
+ 270 FOR c = 1 TO 8: LET pc = 7 + 2 * c
  280 LET v = g(r,c)
- 290 IF v = 9 OR v = 0 THEN INK 7: PRINT ".";
- 300 IF v = -1 THEN INK 4: PRINT "*";
- 310 IF v >= 1 AND v <= 2 THEN INK 2: PRINT v;
- 320 IF v >= 3 AND v <= 4 THEN INK 6: PRINT v;
- 330 IF v >= 5 AND v < 9 THEN INK 5: PRINT v;
+ 290 IF v = 9 OR v = 0 THEN INK 7: PRINT AT pr, pc; "."
+ 300 IF v = -1 THEN INK 4: PRINT AT pr, pc; "*"
+ 310 IF v >= 1 AND v <= 2 THEN INK 2: PRINT AT pr, pc; v
+ 320 IF v >= 3 AND v <= 4 THEN INK 6: PRINT AT pr, pc; v
+ 330 IF v >= 5 AND v < 9 THEN INK 5: PRINT AT pr, pc; v
  340 NEXT c
  350 INK 7
  360 NEXT r
  370 INPUT "Row (1-8): "; r
  380 INPUT "Col (1-8): "; c
  390 IF r < 1 OR r > 8 OR c < 1 OR c > 8 THEN GO TO 370
- 400 IF g(r,c) > 0 AND g(r,c) < 9 THEN PRINT AT 13, 2; "Already probed!  ": PAUSE 50: GO TO 190
- 410 IF g(r,c) = -1 THEN PRINT AT 13, 2; "Already found!   ": PAUSE 50: GO TO 190
+ 400 IF g(r,c) > 0 AND g(r,c) < 9 THEN PRINT AT 2, 2; "Already probed!  ": PAUSE 50: GO TO 190
+ 410 IF g(r,c) = -1 THEN PRINT AT 2, 2; "Already found!   ": PAUSE 50: GO TO 190
  420 LET guesses = guesses + 1
  430 IF guesses > 30 THEN GO TO 680
  440 IF g(r,c) = 9 THEN GO TO 540
