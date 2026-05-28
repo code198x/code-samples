@@ -1,1 +1,1 @@
-  20 PRINT "Hello"
+  10 PRINT "Hello"

@@ -1,4 +1,4 @@
-  20 BORDER 0: PAPER 0: INK 7: CLS
+  10 BORDER 0: PAPER 0: INK 7: CLS
   30 PRINT AT 3, 6; BRIGHT 1; "*** STORY BUILDER ***"
   40 PRINT
   50 INPUT "What is your name? "; n$
