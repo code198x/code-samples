@@ -13,15 +13,15 @@
  130 CLS
  140 INVERSE 1: PRINT AT 0, 0; "    *** THREE IN A ROW ***      ": INVERSE 0
  150 PRINT AT 1, 2; "W: "; wins; " L: "; losses; " D: "; draws; "  "
- 160 INK 7: FOR i = 0 TO 3: PLOT 80 + i * 32, 79: DRAW 0, 72: NEXT i
- 170 FOR i = 0 TO 3: PLOT 80, 79 + i * 24: DRAW 96, 0: NEXT i
+ 160 INK 7: FOR i = 0 TO 3: PLOT 80 + i * 32, 55: DRAW 0, 96: NEXT i
+ 170 FOR i = 0 TO 3: PLOT 80, 55 + i * 32: DRAW 96, 0: NEXT i
  180 FOR n = 1 TO 9
  190 LET row = INT ((n - 1) / 3)
  200 LET col = n - 1 - row * 3
- 210 LET cx = 96 + col * 32: LET cy = 139 - row * 24
- 220 IF b(n) = 0 THEN PRINT AT 4 + row * 3, 12 + col * 4; CHR$ (48 + n)
- 230 IF b(n) = 1 THEN INK 5: PLOT cx - 7, cy - 7: DRAW 14, 14: PLOT cx - 7, cy + 7: DRAW 14, -14: INK 7
- 240 IF b(n) = 2 THEN INK 2: CIRCLE cx, cy, 7: INK 7
+ 210 LET cx = 100 + col * 32: LET cy = 131 - row * 32
+ 220 IF b(n) = 0 THEN PRINT AT 5 + row * 4, 12 + col * 4; CHR$ (48 + n)
+ 230 IF b(n) = 1 THEN INK 5: PLOT cx - 8, cy - 8: DRAW 16, 16: PLOT cx - 8, cy + 8: DRAW 16, -16: INK 7
+ 240 IF b(n) = 2 THEN INK 2: CIRCLE cx, cy, 8: INK 7
  250 NEXT n
  260 INPUT "Your move (1-9): "; m
  270 IF m < 1 OR m > 9 THEN GO TO 260
