@@ -4,33 +4,33 @@
   40 PRINT AT 10, 5; "Get three in a row to win."
   50 PRINT AT 12, 5; "Pick a position: 1 to 9."
   60 PRINT AT 18, 4; "Press any key to start"
-  65 INK 6: PLOT 116, 34: DRAW 0, 36: PLOT 140, 34: DRAW 0, 36: PLOT 104, 46: DRAW 48, 0: PLOT 104, 58: DRAW 48, 0: INK 7
-  70 PAUSE 0
-  80 RANDOMIZE
-  90 DIM b(9)
- 100 LET moves = 0
- 110 LET wins = 0: LET losses = 0: LET draws = 0
- 120 CLS
- 130 INVERSE 1: PRINT AT 0, 0; "    *** THREE IN A ROW ***      ": INVERSE 0
- 140 PRINT AT 1, 2; "W: "; wins; " L: "; losses; " D: "; draws; "  "
- 145 INK 7: FOR i = 0 TO 3: PLOT 80 + i * 32, 79: DRAW 0, 72: NEXT i
- 147 FOR i = 0 TO 3: PLOT 80, 79 + i * 24: DRAW 96, 0: NEXT i
- 150 FOR n = 1 TO 9
- 160 LET row = INT ((n - 1) / 3)
- 170 LET col = n - 1 - row * 3
- 175 LET cx = 96 + col * 32: LET cy = 139 - row * 24
- 180 IF b(n) = 0 THEN PRINT AT 4 + row * 3, 12 + col * 4; CHR$ (48 + n)
- 200 IF b(n) = 1 THEN INK 5: PLOT cx - 7, cy - 7: DRAW 14, 14: PLOT cx - 7, cy + 7: DRAW 14, -14: INK 7
- 210 IF b(n) = 2 THEN INK 2: CIRCLE cx, cy, 7: INK 7
- 220 NEXT n
- 250 INPUT "Your move (1-9): "; m
- 260 IF m < 1 OR m > 9 THEN GO TO 250
- 270 IF b(m) <> 0 THEN PRINT AT 16, 4; "Already taken!": PAUSE 30: GO TO 120
- 280 LET b(m) = 1
- 290 LET moves = moves + 1
- 300 GO SUB 420
- 310 IF winner = 1 THEN GO TO 900
- 320 IF moves = 9 THEN GO TO 1000
+  70 INK 6: PLOT 116, 34: DRAW 0, 36: PLOT 140, 34: DRAW 0, 36: PLOT 104, 46: DRAW 48, 0: PLOT 104, 58: DRAW 48, 0: INK 7
+  80 PAUSE 0
+  90 RANDOMIZE
+ 100 DIM b(9)
+ 110 LET moves = 0
+ 120 LET wins = 0: LET losses = 0: LET draws = 0
+ 130 CLS
+ 140 INVERSE 1: PRINT AT 0, 0; "    *** THREE IN A ROW ***      ": INVERSE 0
+ 150 PRINT AT 1, 2; "W: "; wins; " L: "; losses; " D: "; draws; "  "
+ 160 INK 7: FOR i = 0 TO 3: PLOT 80 + i * 32, 79: DRAW 0, 72: NEXT i
+ 170 FOR i = 0 TO 3: PLOT 80, 79 + i * 24: DRAW 96, 0: NEXT i
+ 180 FOR n = 1 TO 9
+ 190 LET row = INT ((n - 1) / 3)
+ 200 LET col = n - 1 - row * 3
+ 210 LET cx = 96 + col * 32: LET cy = 139 - row * 24
+ 220 IF b(n) = 0 THEN PRINT AT 4 + row * 3, 12 + col * 4; CHR$ (48 + n)
+ 230 IF b(n) = 1 THEN INK 5: PLOT cx - 7, cy - 7: DRAW 14, 14: PLOT cx - 7, cy + 7: DRAW 14, -14: INK 7
+ 240 IF b(n) = 2 THEN INK 2: CIRCLE cx, cy, 7: INK 7
+ 250 NEXT n
+ 260 INPUT "Your move (1-9): "; m
+ 270 IF m < 1 OR m > 9 THEN GO TO 260
+ 280 IF b(m) <> 0 THEN PRINT AT 16, 4; "Already taken!": PAUSE 30: GO TO 130
+ 290 LET b(m) = 1
+ 300 LET moves = moves + 1
+ 310 GO SUB 420
+ 320 IF winner = 1 THEN GO TO 900
+ 330 IF moves = 9 THEN GO TO 1000
  340 GO SUB 600
  350 LET b(mv) = 2
  360 LET moves = moves + 1
@@ -38,7 +38,7 @@
  380 GO SUB 420
  390 IF winner = 2 THEN GO TO 950
  400 IF moves = 9 THEN GO TO 1000
- 410 GO TO 120
+ 410 GO TO 130
  420 REM --- Check winner ---
  430 RESTORE 1200
  440 LET winner = 0
@@ -87,7 +87,7 @@
 1060 PAUSE 0
 1070 DIM b(9)
 1080 LET moves = 0
-1090 GO TO 120
+1090 GO TO 130
 1200 DATA 1,2,3, 4,5,6, 7,8,9
 1210 DATA 1,4,7, 2,5,8, 3,6,9
 1220 DATA 1,5,9, 3,5,7
