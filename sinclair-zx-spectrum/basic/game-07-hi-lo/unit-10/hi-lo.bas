@@ -11,7 +11,7 @@
  110 PRINT AT 8, 4; "Guess if the next card"
  120 PRINT AT 9, 4; "will be higher or lower."
  130 PRINT AT 12, 4; "Press H or L each round."
- 140 PRINT AT 14, 4; "How long can your streak last?"
+ 140 PRINT AT 14, 4; "How long can your streak go?"
  150 PRINT AT 18, 4; "Press any key to start"
  160 PRINT AT 6, 12; INK 2; CHR$ 144; " "; CHR$ 145; INK 7; " "; CHR$ 146; " "; CHR$ 147
  170 PAUSE 0

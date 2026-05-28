@@ -5,7 +5,7 @@
   50 PRINT AT 9, 4; "Plant crops. Trade land."
   60 PRINT AT 10, 4; "Grow or collapse."
   70 PRINT AT 14, 4; "Press any key to begin"
-  80 PLOT 104, 72: DRAW 0, -20: DRAW 8, 0: DRAW 0, 8: DRAW 8, 0: DRAW 0, -8: DRAW 16, 0: DRAW 0, 8: DRAW 8, 0: DRAW 0, -8: DRAW 8, 0: DRAW 0, 20: DRAW -48, 0
+  80 PLOT 104, 84: DRAW 0, -20: DRAW 8, 0: DRAW 0, 8: DRAW 8, 0: DRAW 0, -8: DRAW 16, 0: DRAW 0, 8: DRAW 8, 0: DRAW 0, -8: DRAW 8, 0: DRAW 0, 20: DRAW -48, 0
   90 PAUSE 0
  100 RANDOMIZE
  110 LET pop = 100: LET grain = 2800

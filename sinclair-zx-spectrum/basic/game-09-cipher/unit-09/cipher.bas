@@ -3,11 +3,11 @@
   30 FOR j = 0 TO 7: READ b: POKE USR "A" + j, b: NEXT j
   40 RANDOMIZE
   50 PRINT AT 5, 10; BRIGHT 1; "*** CIPHER ***"
-  60 PRINT AT 8, 4; "Guess the hidden word,"
-  70 PRINT AT 9, 4; "one letter at a time."
-  80 PRINT AT 11, 4; "You have 7 lives per word."
+  60 PRINT AT 7, 4; "Guess the hidden word,"
+  70 PRINT AT 8, 4; "one letter at a time."
+  80 PRINT AT 9, 4; "You have 7 lives per word."
   90 PRINT AT 15, 4; "Press any key to start"
- 100 PLOT 120, 108: DRAW 16, 0: DRAW 0, -16: DRAW -16, 0: DRAW 0, 16: CIRCLE 128, 116, 8
+ 100 PLOT 120, 78: DRAW 16, 0: DRAW 0, -16: DRAW -16, 0: DRAW 0, 16: CIRCLE 128, 86, 8
  110 PAUSE 0
  120 DATA "SPECTRUM","COMPUTER","KEYBOARD","PROGRAM","SCREEN"
  130 DATA "PRINTER","CASSETTE","JOYSTICK","MEMORY","CIRCUIT"
