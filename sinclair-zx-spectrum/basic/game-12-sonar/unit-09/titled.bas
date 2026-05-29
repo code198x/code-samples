@@ -69,6 +69,7 @@
  780 IF g(a,b) = 9 THEN PRINT AT n, 8; "("; a; ","; b; ")": LET n = n + 1
  790 NEXT b: NEXT a
  800 BEEP 0.3, -10
+ 810 STOP
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN

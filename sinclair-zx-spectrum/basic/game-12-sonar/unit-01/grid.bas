@@ -7,6 +7,7 @@
  260 PRINT AT 3 + r, 9; r;
  270 FOR c = 1 TO 8: PRINT ".";: NEXT c
  370 NEXT r
+ 380 STOP
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN
