@@ -1,8 +1,7 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 DATA 24,24,60,60,126,126,90,24
   30 DATA 0,24,36,36,66,66,129,24
-  40 DATA 66,36,0,24,0,36,66,0
-  50 FOR u = 0 TO 2: FOR j = 0 TO 7: READ b: POKE USR CHR$ (144 + u) + j, b: NEXT j: NEXT u
+  50 FOR u = 0 TO 1: FOR j = 0 TO 7: READ b: POKE USR CHR$ (144 + u) + j, b: NEXT j: NEXT u
   60 LET a$ = "*** TOUCHDOWN ***": LET y = 5: GO SUB 9000
   70 PRINT AT 7, 4; "Land the spacecraft safely."
   80 PRINT AT 8, 4; "Hold SPACE to thrust."
