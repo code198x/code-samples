@@ -13,6 +13,7 @@
  330 IF s(rm) > 0 THEN PRINT "S ";
  340 IF e(rm) > 0 THEN PRINT "E ";
  350 IF w(rm) > 0 THEN PRINT "W ";
+ 360 STOP
 1000 REM --- Room map: N,S,E,W ---
 1010 DATA 0,5,2,0
 1020 DATA 0,0,3,1
