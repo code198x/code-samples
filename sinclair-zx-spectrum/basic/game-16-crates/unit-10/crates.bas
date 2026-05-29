@@ -1,7 +1,7 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 PRINT AT 5, 10; "*** CRATES ***"
   30 PRINT AT 8, 3; "Push crates onto red targets."
-  40 PRINT AT 9, 3; "I/J/K/L to move. R to restart."
+  40 PRINT AT 9, 3; "I/J/K/L to move. R restarts."
   50 PRINT AT 11, 3; "You can push but never pull."
   60 PRINT AT 14, 4; "Press any key to begin"
   70 PAUSE 0
@@ -46,7 +46,7 @@
  470 LET ps = 0: IF v = 2 THEN LET ps = 1
  480 LET pr = nr: LET pc = nc
  490 PRINT AT sr+pr-1, sc+pc-1; PAPER (7-ps*5); INK 4; "P"
- 500 GO TO 320
+ 500 LET moves = moves + 1: PRINT AT 0, 24; "Moves: "; moves; "  ": GO TO 320
  510 REM --- Push crate ---
  520 LET br = nr + dy: LET bc = nc + dx
  530 LET bv = g(br, bc)
