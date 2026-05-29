@@ -1,16 +1,16 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 LET a$ = "*** TOUCHDOWN ***": LET y = 5: GO SUB 9000
   30 PRINT AT 8, 4; "Land the spacecraft safely."
-  40 PRINT AT 10, 4; "Hold SPACE to fire thrusters."
+  40 PRINT AT 10, 4; "Hold SPACE to thrust."
   50 PRINT AT 11, 4; "Land slowly or you crash."
-  60 PRINT AT 13, 4; "Fuel is limited. Use it wisely."
+  60 PRINT AT 13, 4; "Limited fuel. Use it wisely."
   70 PRINT AT 18, 4; "Press any key to launch"
   80 PAUSE 0
   90 CLS
  100 LET alt = 100
  110 LET spd = 0
  120 LET fuel = 50
- 130 PRINT AT 1, 1; "ALT:         SPD:         FUEL:"
+ 130 PRINT AT 1, 1; "ALT:         SPD:      FUEL:"
  140 PRINT AT 21, 0; "================================"
  150 LET spd = spd + 1
  160 IF INKEY$ = " " AND fuel > 0 THEN LET spd = spd - 2: LET fuel = fuel - 1: BEEP 0.02, 15
@@ -20,7 +20,7 @@
  200 IF alt <= 0 THEN LET alt = 0
  210 PRINT AT 1, 6; alt; "  "
  220 PRINT AT 1, 18; spd; "  "
- 230 PRINT AT 1, 31; fuel; "  "
+ 230 PRINT AT 1, 29; fuel; "  "
  240 REM Fuel bar
  250 PRINT AT 2, 1;
  260 FOR j = 1 TO fuel: PRINT INK 4; "*";: NEXT j
