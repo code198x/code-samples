@@ -45,13 +45,18 @@
  650 IF mv = 0 AND b(p) = 2 AND b(q) = 2 AND b(f) = 0 THEN LET mv = f
  660 IF mv = 0 AND b(p) = 2 AND b(f) = 2 AND b(q) = 0 THEN LET mv = q
  670 IF mv = 0 AND b(q) = 2 AND b(f) = 2 AND b(p) = 0 THEN LET mv = p
- 680 IF mv = 0 AND b(p) = 1 AND b(q) = 1 AND b(f) = 0 THEN LET mv = f
- 690 IF mv = 0 AND b(p) = 1 AND b(f) = 1 AND b(q) = 0 THEN LET mv = q
- 700 IF mv = 0 AND b(q) = 1 AND b(f) = 1 AND b(p) = 0 THEN LET mv = p
- 710 NEXT w
- 720 IF mv > 0 THEN GO TO 800
- 730 LET mv = INT (RND * 9) + 1
- 740 IF b(mv) <> 0 THEN GO TO 730
+ 680 NEXT w
+ 690 IF mv > 0 THEN GO TO 800
+ 700 RESTORE 1200
+ 710 FOR w = 1 TO 8
+ 720 READ p, q, f
+ 730 IF mv = 0 AND b(p) = 1 AND b(q) = 1 AND b(f) = 0 THEN LET mv = f
+ 740 IF mv = 0 AND b(p) = 1 AND b(f) = 1 AND b(q) = 0 THEN LET mv = q
+ 750 IF mv = 0 AND b(q) = 1 AND b(f) = 1 AND b(p) = 0 THEN LET mv = p
+ 760 NEXT w
+ 770 IF mv > 0 THEN GO TO 800
+ 780 LET mv = INT (RND * 9) + 1
+ 790 IF b(mv) <> 0 THEN GO TO 780
  800 RETURN
 1200 DATA 1,2,3, 4,5,6, 7,8,9
 1210 DATA 1,4,7, 2,5,8, 3,6,9

@@ -53,19 +53,24 @@
  650 IF mv = 0 AND b(p) = 2 AND b(q) = 2 AND b(f) = 0 THEN LET mv = f
  660 IF mv = 0 AND b(p) = 2 AND b(f) = 2 AND b(q) = 0 THEN LET mv = q
  670 IF mv = 0 AND b(q) = 2 AND b(f) = 2 AND b(p) = 0 THEN LET mv = p
- 680 IF mv = 0 AND b(p) = 1 AND b(q) = 1 AND b(f) = 0 THEN LET mv = f
- 690 IF mv = 0 AND b(p) = 1 AND b(f) = 1 AND b(q) = 0 THEN LET mv = q
- 700 IF mv = 0 AND b(q) = 1 AND b(f) = 1 AND b(p) = 0 THEN LET mv = p
- 710 NEXT w
- 720 IF mv > 0 THEN GO TO 800
- 730 IF b(5) = 0 THEN LET mv = 5: GO TO 800
- 740 IF b(1) = 0 THEN LET mv = 1: GO TO 800
- 750 IF b(3) = 0 THEN LET mv = 3: GO TO 800
- 760 IF b(7) = 0 THEN LET mv = 7: GO TO 800
- 770 IF b(9) = 0 THEN LET mv = 9: GO TO 800
- 780 FOR i = 1 TO 9: IF b(i) = 0 THEN LET mv = i
- 790 NEXT i
- 800 RETURN
+ 680 NEXT w
+ 690 IF mv > 0 THEN GO TO 850
+ 700 RESTORE 1200
+ 710 FOR w = 1 TO 8
+ 720 READ p, q, f
+ 730 IF mv = 0 AND b(p) = 1 AND b(q) = 1 AND b(f) = 0 THEN LET mv = f
+ 740 IF mv = 0 AND b(p) = 1 AND b(f) = 1 AND b(q) = 0 THEN LET mv = q
+ 750 IF mv = 0 AND b(q) = 1 AND b(f) = 1 AND b(p) = 0 THEN LET mv = p
+ 760 NEXT w
+ 770 IF mv > 0 THEN GO TO 850
+ 780 IF b(5) = 0 THEN LET mv = 5: GO TO 850
+ 790 IF b(1) = 0 THEN LET mv = 1: GO TO 850
+ 800 IF b(3) = 0 THEN LET mv = 3: GO TO 850
+ 810 IF b(7) = 0 THEN LET mv = 7: GO TO 850
+ 820 IF b(9) = 0 THEN LET mv = 9: GO TO 850
+ 830 FOR i = 1 TO 9: IF b(i) = 0 THEN LET mv = i
+ 840 NEXT i
+ 850 RETURN
  900 CLS: LET a$ = "*** THREE IN A ROW ***": LET y = 6: GO SUB 9000
  910 PRINT AT 9, 10; INK 4; "You win!"
  920 LET wins = wins + 1
