@@ -12,6 +12,3 @@
  490 IF w$(i) = g$ THEN LET d$(i TO i) = g$
  500 NEXT i
  550 GO TO 250
-
-9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
-9010 RETURN

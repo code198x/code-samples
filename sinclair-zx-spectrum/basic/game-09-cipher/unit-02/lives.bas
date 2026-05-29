@@ -17,6 +17,3 @@
  510 IF found = 0 THEN LET lives = lives - 1
  540 IF lives = 0 THEN PRINT "The word was "; w$: STOP
  550 GO TO 250
-
-9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
-9010 RETURN

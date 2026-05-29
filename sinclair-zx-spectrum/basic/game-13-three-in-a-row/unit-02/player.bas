@@ -16,6 +16,3 @@
  270 IF b(m) <> 0 THEN PRINT AT 18, 4; "Already taken!": PAUSE 30: GO TO 120
  280 LET b(m) = 1
  300 GO TO 120
-
-9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
-9010 RETURN

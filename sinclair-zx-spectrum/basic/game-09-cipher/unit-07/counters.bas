@@ -44,6 +44,3 @@
  530 IF d$ = w$ THEN LET wins = wins + 1: PRINT "You cracked it!": PAUSE 50: GO TO 180
  540 IF lives = 0 THEN LET losses = losses + 1: PRINT "The word was "; w$: PAUSE 50: GO TO 180
  550 GO TO 250
-
-9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
-9010 RETURN

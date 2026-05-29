@@ -6,6 +6,3 @@
  580 FOR r = 2 TO 9: PRINT AT r, 17; "       2      ": NEXT r
  630 PAPER 0
  640 STOP
-
-9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
-9010 RETURN
