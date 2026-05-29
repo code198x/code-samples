@@ -7,7 +7,7 @@
  250 CLS
  290 FOR i = 1 TO LEN d$: PRINT d$(i); " ";: NEXT i
  390 PRINT
- 400 INPUT "Guess: "; g$
+ 400 INPUT "Guess: "; g$: IF g$ >= "a" AND g$ <= "z" THEN LET g$ = CHR$ (CODE g$ - 32)
  480 FOR i = 1 TO LEN w$
  490 IF w$(i) = g$ THEN LET d$(i TO i) = g$
  500 NEXT i

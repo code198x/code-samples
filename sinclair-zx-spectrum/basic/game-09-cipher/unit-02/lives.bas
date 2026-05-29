@@ -9,7 +9,7 @@
  290 FOR i = 1 TO LEN d$: PRINT d$(i); " ";: NEXT i
  340 PRINT: PRINT "Lives: "; lives
  390 PRINT
- 400 INPUT "Guess: "; g$
+ 400 INPUT "Guess: "; g$: IF g$ >= "a" AND g$ <= "z" THEN LET g$ = CHR$ (CODE g$ - 32)
  470 LET found = 0
  480 FOR i = 1 TO LEN w$
  490 IF w$(i) = g$ THEN LET d$(i TO i) = g$: LET found = 1

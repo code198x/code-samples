@@ -11,7 +11,7 @@
  340 PRINT: PRINT "Lives: "; lives
  380 PRINT "Tried: "; z$
  390 PRINT
- 400 INPUT "Guess: "; g$
+ 400 INPUT "Guess: "; g$: IF g$ >= "a" AND g$ <= "z" THEN LET g$ = CHR$ (CODE g$ - 32)
  410 LET already = 0
  420 FOR i = 1 TO LEN z$
  430 IF z$(i) = g$ THEN LET already = 1
