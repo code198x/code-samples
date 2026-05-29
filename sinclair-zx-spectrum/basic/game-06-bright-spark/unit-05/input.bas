@@ -15,8 +15,8 @@
  260 IF INKEY$ <> "" THEN GO TO 260
  270 IF INKEY$ = "" THEN GO TO 270
  280 LET k$ = INKEY$
- 290 LET p = VAL k$
- 300 IF p < 1 OR p > 4 THEN GO TO 260
+ 290 IF k$ < "1" OR k$ > "4" THEN GO TO 260
+ 300 LET p = VAL k$
  310 GO SUB 640
  320 NEXT i
  330 PRINT AT 21, 1; "Done!                    "
