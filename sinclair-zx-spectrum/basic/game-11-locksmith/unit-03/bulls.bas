@@ -15,6 +15,3 @@
  290 IF g(i) = c(i) THEN LET bulls = bulls + 1
  300 NEXT i
  310 PRINT "Bulls: "; bulls
-
-9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
-9010 RETURN
