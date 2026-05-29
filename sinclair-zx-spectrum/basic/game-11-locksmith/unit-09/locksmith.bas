@@ -6,9 +6,9 @@
   60 PRINT AT 8, 2; "Crack my 4-digit code."
   70 PRINT AT 9, 2; "Each digit is 1 to 6."
   80 PRINT AT 12, 1; "Cow:  right digit, wrong place"
-  90 CIRCLE 128, 116, 8: PLOT 120, 108: DRAW 16, 0: DRAW 0, -14: DRAW -16, 0: DRAW 0, 14: PLOT 126, 100: DRAW 4, 0: DRAW 0, -4: DRAW -4, 0: DRAW 0, 4
+  90 CIRCLE 128, 60, 8: PLOT 120, 52: DRAW 16, 0: DRAW 0, -14: DRAW -16, 0: DRAW 0, 14: PLOT 126, 44: DRAW 4, 0: DRAW 0, -4: DRAW -4, 0: DRAW 0, 4
  100 PRINT AT 11, 1; "Bull: right digit, right place"
- 110 PRINT AT 16, 4; "Press any key to start"
+ 110 PRINT AT 19, 4; "Press any key to start"
  120 PAUSE 0
  130 RANDOMIZE
  140 DIM c(4)
