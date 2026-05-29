@@ -40,13 +40,13 @@
  440 IF score >= 4 THEN INK 6: PRINT AT 14,11;"Not bad": GO TO 460
  450 INK 2: PRINT AT 14,9;"Keep trying"
  460 INK 0
- 550 DATA 2,2,2,2,3,2,3,2
+ 550 DATA 1,2,3,4,3,2,3,2
  600 DATA "Animals",4
- 610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"
+ 610 DATA "How many legs does a spider have?","Eight","Six","Ten","Twelve"
  620 DATA "What is the fastest land animal?","Lion","Cheetah","Horse","Wolf"
  630 DATA "Space",5
- 640 DATA "Which planet is closest to the Sun?","Venus","Mercury","Earth","Mars"
- 650 DATA "How many planets orbit the Sun?","Seven","Eight","Nine","Ten"
+ 640 DATA "Which planet is closest to the Sun?","Venus","Earth","Mercury","Mars"
+ 650 DATA "How many planets orbit the Sun?","Seven","Nine","Ten","Eight"
  660 DATA "History",2
  670 DATA "In what year was the Moon landing?","1959","1965","1969","1972"
  680 DATA "Which country built the pyramids?","Greece","Egypt","Rome","China"

@@ -16,7 +16,7 @@
  300 PAUSE 80
  310 NEXT q
  360 PRINT "You scored ";score;" out of 4"
- 610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"
+ 610 DATA "How many legs does a spider have?","Eight","Six","Ten","Twelve"
  620 DATA "What is the fastest land animal?","Lion","Cheetah","Horse","Wolf"
- 640 DATA "Which planet is closest to the Sun?","Venus","Mercury","Earth","Mars"
- 650 DATA "How many planets orbit the Sun?","Seven","Eight","Nine","Ten"
+ 640 DATA "Which planet is closest to the Sun?","Venus","Earth","Mercury","Mars"
+ 650 DATA "How many planets orbit the Sun?","Seven","Nine","Ten","Eight"

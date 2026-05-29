@@ -23,13 +23,13 @@
  310 NEXT q
  340 NEXT c
  360 PRINT "You scored ";score;" out of 8"
- 550 DATA 2,2,2,2,3,2,3,2
+ 550 DATA 1,2,3,4,3,2,3,2
  600 DATA "Animals",4
- 610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"
+ 610 DATA "How many legs does a spider have?","Eight","Six","Ten","Twelve"
  620 DATA "What is the fastest land animal?","Lion","Cheetah","Horse","Wolf"
  630 DATA "Space",5
- 640 DATA "Which planet is closest to the Sun?","Venus","Mercury","Earth","Mars"
- 650 DATA "How many planets orbit the Sun?","Seven","Eight","Nine","Ten"
+ 640 DATA "Which planet is closest to the Sun?","Venus","Earth","Mercury","Mars"
+ 650 DATA "How many planets orbit the Sun?","Seven","Nine","Ten","Eight"
  660 DATA "History",2
  670 DATA "In what year was the Moon landing?","1959","1965","1969","1972"
  680 DATA "Which country built the pyramids?","Greece","Egypt","Rome","China"
