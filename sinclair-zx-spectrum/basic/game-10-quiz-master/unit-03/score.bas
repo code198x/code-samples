@@ -16,11 +16,7 @@
  300 PAUSE 80
  310 NEXT q
  360 PRINT "You scored ";score;" out of 4"
- 550 DATA 2,2,2,2,3,2,3,2
  610 DATA "How many legs does a spider have?","Six","Eight","Ten","Twelve"
  620 DATA "What is the fastest land animal?","Lion","Cheetah","Horse","Wolf"
  640 DATA "Which planet is closest to the Sun?","Venus","Mercury","Earth","Mars"
  650 DATA "How many planets orbit the Sun?","Seven","Eight","Nine","Ten"
-
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
-9010 RETURN

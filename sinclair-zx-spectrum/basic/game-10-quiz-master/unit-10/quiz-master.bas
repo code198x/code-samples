@@ -1,8 +1,8 @@
    5 DIM k(8): DIM s(4)
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 INK 2: PRINT AT 6,10;"QUIZ MASTER"
-  35 PLOT 112, 106: DRAW 32, 8: DRAW 0, -16: DRAW -32, 8: PLOT 118, 100: DRAW 20, 0: DRAW 0, -10: DRAW -20, 0: DRAW 0, 10
-  30 INK 0: PRINT AT 9,5;"Press any key to start"
+  30 INK 6: PLOT 112, 106: DRAW 32, 8: DRAW 0, -16: DRAW -32, 8: PLOT 118, 100: DRAW 20, 0: DRAW 0, -10: DRAW -20, 0: DRAW 0, 10
+  35 INK 7: PRINT AT 15,5;"Press any key to start"
   40 PAUSE 0
   50 RESTORE: FOR i = 1 TO 8: READ k(i): NEXT i
   60 RESTORE 600
@@ -64,6 +64,3 @@
  690 DATA "Geography",6
  700 DATA "What is the largest ocean?","Atlantic","Indian","Pacific","Arctic"
  710 DATA "What is the capital of France?","London","Paris","Rome","Berlin"
-
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
-9010 RETURN

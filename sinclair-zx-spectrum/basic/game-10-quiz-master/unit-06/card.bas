@@ -41,6 +41,3 @@
  690 DATA "Geography",6
  700 DATA "What is the largest ocean?","Atlantic","Indian","Pacific","Arctic"
  710 DATA "What is the capital of France?","London","Paris","Rome","Berlin"
-
-9000 PRINT AT y, (32 - LEN a$) / 2; a$
-9010 RETURN
