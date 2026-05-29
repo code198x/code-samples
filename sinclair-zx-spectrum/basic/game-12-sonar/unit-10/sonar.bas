@@ -1,12 +1,12 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
   20 LET a$ = "*** SONAR ***": LET y = 5: GO SUB 9000
   30 PRINT AT 8, 4; "Find 3 hidden targets on"
-  40 PRINT AT 14, 4; "Red = close. Blue = far."
-  50 CIRCLE 128, 100, 12: CIRCLE 128, 100, 20: PLOT 128, 100: DRAW 14, 14: PLOT 128, 100: DRAW 0, 20
+  40 PRINT AT 13, 4; "Red = close. Blue = far."
+  50 CIRCLE 128, 44, 10: CIRCLE 128, 44, 6: PLOT 128, 44: DRAW 7, 7: PLOT 128, 44: DRAW 0, 10
   60 PRINT AT 9, 4; "an 8x8 grid."
   70 PRINT AT 11, 4; "Hits show *"
   80 PRINT AT 12, 4; "Misses show distance."
-  90 PRINT AT 18, 4; "Press any key to start"
+  90 PRINT AT 20, 4; "Press any key to start"
  100 PAUSE 0
  110 RANDOMIZE
  120 DIM g(8,8)
