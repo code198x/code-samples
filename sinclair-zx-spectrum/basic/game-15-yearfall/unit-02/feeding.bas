@@ -17,6 +17,7 @@
  600 PRINT AT 8, 2; "Starved: "; starved
  610 PRINT AT 9, 2; "Population: "; pop
  620 PRINT AT 10, 2; "Grain left: "; grain
+ 630 STOP
 
 9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
 9010 RETURN
