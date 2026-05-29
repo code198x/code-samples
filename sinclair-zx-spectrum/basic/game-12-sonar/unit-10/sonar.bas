@@ -47,7 +47,7 @@
  490 IF g(a,b) <> 9 THEN GO TO 520
  500 LET d = ABS (r - a) + ABS (c - b)
  510 IF d < dist THEN LET dist = d
- 520 NEXT b: NEXT a
+ 520 NEXT b: NEXT a: IF dist > 8 THEN LET dist = 8
  530 LET g(r,c) = dist
  540 BEEP 0.1, -5
  560 GO TO 190
