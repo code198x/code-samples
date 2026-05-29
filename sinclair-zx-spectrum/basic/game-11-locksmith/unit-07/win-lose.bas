@@ -10,8 +10,9 @@
  210 PRINT AT 20, 0; "Guess "; t; " of 10: ";
  220 INPUT g$
  230 IF LEN g$ <> 4 THEN GO TO 210
- 240 DIM g(4)
- 250 FOR i = 1 TO 4: LET g(i) = VAL g$(i): NEXT i
+ 240 IF g$(1) < "1" OR g$(1) > "6" OR g$(2) < "1" OR g$(2) > "6" OR g$(3) < "1" OR g$(3) > "6" OR g$(4) < "1" OR g$(4) > "6" THEN GO TO 210
+ 250 DIM g(4)
+ 260 FOR i = 1 TO 4: LET g(i) = VAL g$(i): NEXT i
  270 LET bulls = 0
  280 FOR i = 1 TO 4
  290 IF g(i) = c(i) THEN LET bulls = bulls + 1

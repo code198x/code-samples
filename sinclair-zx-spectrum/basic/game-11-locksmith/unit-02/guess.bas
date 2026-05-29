@@ -8,6 +8,7 @@
  190 PRINT
  220 INPUT "Your guess (4 digits): "; g$
  230 IF LEN g$ <> 4 THEN GO TO 220
- 240 DIM g(4)
- 250 FOR i = 1 TO 4: LET g(i) = VAL g$(i): NEXT i
- 260 PRINT "You guessed: "; g$
+ 240 IF g$(1) < "1" OR g$(1) > "6" OR g$(2) < "1" OR g$(2) > "6" OR g$(3) < "1" OR g$(3) > "6" OR g$(4) < "1" OR g$(4) > "6" THEN GO TO 220
+ 250 DIM g(4)
+ 260 FOR i = 1 TO 4: LET g(i) = VAL g$(i): NEXT i
+ 270 PRINT "You guessed: "; g$
