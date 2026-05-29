@@ -3,7 +3,8 @@
  100 CLS
  110 PRINT "Get ready..."
  120 PRINT
- 160 FOR x = 28 TO 228
+ 155 LET e = INT (RND * 140) + 88
+ 160 FOR x = 28 TO e
  170 PLOT x, 87
  190 NEXT x
  210 PAPER 2: BORDER 2: CLS
