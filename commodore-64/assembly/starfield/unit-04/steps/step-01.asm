@@ -1,6 +1,6 @@
 ; Starfield - Unit 4: Laser Sound
-; Assemble with: acme -f cbm -o starfield.prg starfield.asm
-
+; Cumulative steps: step-00 (silent) -> step-01 (+ SID configured) -> step-02 (+ gate: a flat blip) -> step-03 (+ pitch sweep: a 'pew')
+; Assemble: acme -f cbm -o <step>.prg <step>.asm
 ; ------------------------------------------------
 ; Zero-page variables
 ; ------------------------------------------------
@@ -65,22 +65,10 @@ bullet_y      = $03     ; Bullet Y position
         lda #$10
         sta $d401           ; Frequency high byte ($1000 = mid-high pitch)
 
-        lda #$09
-        sta $d405           ; Attack=0, Decay=9
+        lda #$06
+        sta $d405           ; Attack=0, Decay=6 (a short, snappy fall)
         lda #$00
         sta $d406           ; Sustain=0, Release=0
-
-!ifdef SCREENSHOT_MODE {
-        ; Place a static bullet for screenshot capture
-        ; Set sprite registers directly but leave bullet_active = 0
-        ; so the game loop won't move or deactivate it
-        lda $d000
-        sta $d002           ; Bullet X = ship X
-        lda #140
-        sta $d003           ; Bullet Y mid-screen
-        lda #%00000011
-        sta $d015           ; Enable both sprites
-}
 
 ; ------------------------------------------------
 ; Game loop — runs once per frame
@@ -149,11 +137,7 @@ not_right:
         lda #$01
         sta bullet_active
 
-        ; Trigger laser sound (gate off then on to retrigger)
-        lda #$20
-        sta $d404           ; Sawtooth, gate OFF (reset envelope)
-        lda #$21
-        sta $d404           ; Sawtooth, gate ON (start sound)
+        ; (No sound yet — the voice is configured but never gated.)
 
 no_fire:
 
@@ -214,24 +198,24 @@ no_bullet:
 ; Sprite data at $2040 (block 129) — bullet
 ; ------------------------------------------------
 *= $2040
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
         !byte $00,$18,$00   ;        ##
         !byte $00,$18,$00   ;        ##
         !byte $00,$18,$00   ;        ##
         !byte $00,$18,$00   ;        ##
         !byte $00,$18,$00   ;        ##
         !byte $00,$18,$00   ;        ##
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
-        !byte $00,$00,$00   ;
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00
+        !byte $00,$00,$00

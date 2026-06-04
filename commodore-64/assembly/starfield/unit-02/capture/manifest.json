@@ -1,0 +1,65 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-02",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "before",
+      "prg": "steps/step-00.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 30 },
+        { "screenshot": "before.png" }
+      ],
+      "alt": "A single white ship sprite sitting still near the bottom centre of an otherwise black screen — the static ship from Unit 1."
+    },
+    {
+      "id": "step-01-up",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-up.mp4" },
+        { "wait": 12 },
+        { "hold": "up" },
+        { "wait": 70 },
+        { "release": "up" },
+        { "wait": 16 },
+        { "stop_video": true }
+      ],
+      "caption": "Holding the joystick up: the ship climbs from the bottom of the screen towards the top, two pixels per frame.",
+      "alt": "The white ship sprite rising steadily up the black screen while the joystick is held up, then stopping when released."
+    },
+    {
+      "id": "step-02-fly",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-fly.mp4" },
+        { "wait": 12 },
+        { "hold": "right" }, { "wait": 28 }, { "release": "right" },
+        { "hold": "up" }, { "wait": 28 }, { "release": "up" },
+        { "hold": "left" }, { "hold": "up" }, { "wait": 28 }, { "release": "left" }, { "release": "up" },
+        { "hold": "down" }, { "wait": 24 }, { "release": "down" },
+        { "wait": 12 },
+        { "stop_video": true }
+      ],
+      "caption": "All four directions: the ship moves right, up, diagonally up-left, then down — pushing two directions at once gives diagonals for free.",
+      "alt": "The white ship sprite flying around the black screen — right, then up, then diagonally up and to the left, then down — following the joystick."
+    },
+    {
+      "id": "after",
+      "prg": "steps/step-02.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "hold": "up" }, { "wait": 30 }, { "release": "up" },
+        { "hold": "right" }, { "wait": 20 }, { "release": "right" },
+        { "wait": 6 },
+        { "screenshot": "after.png" }
+      ],
+      "alt": "The white ship sprite moved up and to the right of its starting position, where the joystick steered it."
+    }
+  ]
+}

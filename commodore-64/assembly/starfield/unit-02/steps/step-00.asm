@@ -1,5 +1,6 @@
 ; Starfield - Unit 2: Joystick Movement
-; Assemble with: acme -f cbm -o starfield.prg starfield.asm
+; Cumulative steps: step-00 (static ship) -> step-01 (+ game loop, up) -> step-02 (+ all directions)
+; Assemble: acme -f cbm -o <step>.prg <step>.asm
 
 ; ------------------------------------------------
 ; BASIC stub
@@ -39,50 +40,10 @@
         sta $d015           ; Enable sprite 0
 
 ; ------------------------------------------------
-; Game loop — runs once per frame
+; Hold — do nothing, forever
 ; ------------------------------------------------
-game_loop:
-        ; Wait for the raster beam to reach line 255
-        ; This syncs our code to the display (~50Hz PAL)
--       lda $d012
-        cmp #$ff
-        bne -
-
-        ; --- Read joystick and move ship ---
-
-        ; UP (bit 0)
-        lda $dc00           ; Read joystick port 2
-        and #%00000001      ; Isolate bit 0
-        bne not_up          ; Bit is 1 = NOT pressed (active low)
-        dec $d001           ; Move ship up (decrease Y)
-        dec $d001           ; 2 pixels per frame
-not_up:
-
-        ; DOWN (bit 1)
-        lda $dc00
-        and #%00000010
-        bne not_down
-        inc $d001           ; Move ship down (increase Y)
-        inc $d001
-not_down:
-
-        ; LEFT (bit 2)
-        lda $dc00
-        and #%00000100
-        bne not_left
-        dec $d000           ; Move ship left (decrease X)
-        dec $d000
-not_left:
-
-        ; RIGHT (bit 3)
-        lda $dc00
-        and #%00001000
-        bne not_right
-        inc $d000           ; Move ship right (increase X)
-        inc $d000
-not_right:
-
-        jmp game_loop
+hold:
+        jmp hold
 
 ; ------------------------------------------------
 ; Sprite data at $2000 (block 128)
