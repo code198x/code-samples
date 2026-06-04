@@ -1,0 +1,38 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-15",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-scroll",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-scroll.mp4" },
+        { "wait": 14 },
+        { "hold": "right" }, { "wait": 24 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 24 }, { "release": "left" },
+        { "wait": 110 },
+        { "stop_video": true }
+      ],
+      "caption": "A field of white stars now scrolls down behind the ship and the wave — drawn straight into screen RAM with the indirect pointer, all drifting at one speed for now.",
+      "alt": "White asterisk stars scattered across the screen drift steadily downward behind the ship and enemies, wrapping back to the top, while the ship moves left and right."
+    },
+    {
+      "id": "step-02-parallax",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-parallax.mp4" },
+        { "wait": 14 },
+        { "hold": "right" }, { "wait": 24 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 24 }, { "release": "left" },
+        { "wait": 150 },
+        { "stop_video": true }
+      ],
+      "caption": "Three depths at three speeds: bright white stars race down the front, light-grey ones drift slower, and dim grey ones crawl at the back — the screen gains real depth.",
+      "alt": "Stars at three brightness levels scroll downward at clearly different speeds — bright white fastest, medium grey slower, dim grey slowest — giving an impression of depth behind the gameplay."
+    }
+  ]
+}

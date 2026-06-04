@@ -1,0 +1,48 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-16",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-title",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-title.mp4" },
+        { "wait": 48 },
+        { "press": "fire", "frames": 4 }, { "wait": 10 },
+        { "hold": "right" }, { "wait": 26 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 26 }, { "release": "left" },
+        { "wait": 30 },
+        { "stop_video": true }
+      ],
+      "caption": "The game now opens on a title: STARFIELD and PRESS FIRE over the scrolling stars, no ship or wave yet. Press fire and the game begins — ship, enemies, score and lives all appear.",
+      "alt": "A title screen shows the word STARFIELD above PRESS FIRE, with stars drifting behind it; when fire is pressed the title clears and the playable game appears with the ship, three enemies and the score and lives readouts."
+    },
+    {
+      "id": "step-02-cycle",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-cycle.mp4" },
+        { "wait": 30 },
+        { "press": "fire", "frames": 4 }, { "wait": 8 },
+        { "hold": "left" }, { "wait": 60 }, { "release": "left" },
+        { "hold": "right" }, { "wait": 130 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 130 }, { "release": "left" },
+        { "hold": "right" }, { "wait": 130 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 130 }, { "release": "left" },
+        { "hold": "right" }, { "wait": 130 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 130 }, { "release": "left" },
+        { "hold": "right" }, { "wait": 130 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 130 }, { "release": "left" },
+        { "wait": 30 },
+        { "press": "fire", "frames": 1 }, { "wait": 80 },
+        { "stop_video": true }
+      ],
+      "caption": "The loop closes. Play it out, lose all three lives, and the GAME OVER screen now offers a way back — a press of fire returns to the title, ready for another go. Title, play, game over, title.",
+      "alt": "The game is played until all three lives are lost and GAME OVER appears; a press of fire then clears it and returns to the STARFIELD title screen, completing the cycle."
+    }
+  ]
+}
