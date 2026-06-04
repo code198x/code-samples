@@ -1,0 +1,38 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-11",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-death",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-death.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "hold": "up" }, { "wait": 70 }, { "release": "up" },
+        { "wait": 55 },
+        { "stop_video": true }
+      ],
+      "caption": "An enemy reaches the ship and it turns red as the game freezes — the first way to lose. Nothing responds afterwards: the wave hangs where it was, mid-descent.",
+      "alt": "The ship moves and a descending green enemy catches it; on contact the ship turns red and everything stops — the enemies freeze in place and the controls no longer respond."
+    },
+    {
+      "id": "death",
+      "prg": "steps/step-02.prg",
+      "medium": "audio",
+      "timeline": [
+        { "boot_run": true },
+        { "record_audio": "death.wav" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "hold": "up" }, { "wait": 70 }, { "release": "up" },
+        { "wait": 75 },
+        { "stop_audio": true }
+      ],
+      "caption": "The moment of death, heard: voice 3 — the SID's third and last channel — gates a low sawtooth note that rings out and fades over a long decay as the ship dies.",
+      "alt": "A single low sawtooth tone sounds at the instant the ship is hit and fades slowly away over about a second — the death sound, on the SID's third voice."
+    }
+  ]
+}

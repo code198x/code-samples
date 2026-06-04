@@ -1,0 +1,39 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-14",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-flash",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-flash.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "hold": "up" }, { "wait": 70 }, { "release": "up" },
+        { "wait": 120 },
+        { "stop_video": true }
+      ],
+      "caption": "Losing a life now flashes the border red for a moment, so the hit is unmissable — then it settles back to black and play resumes.",
+      "alt": "When the ship is hit and respawns, the screen border blinks red several times over about a second, then returns to black."
+    },
+    {
+      "id": "step-02-invulnerable",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-invulnerable.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "hold": "up" }, { "wait": 95 }, { "release": "up" },
+        { "hold": "down" }, { "wait": 130 }, { "release": "down" },
+        { "wait": 50 },
+        { "stop_video": true }
+      ],
+      "caption": "Now the flash is a shield. While the border blinks, the ship flies straight back up among the descending wave and keeps the lives it has left — the brief grace that stops a respawn dying on the spot. The protection lasts exactly as long as the flash.",
+      "alt": "After being hit and respawning, the ship flies up among the descending enemies while the border flashes red, without losing a life; the moving ship keeps its remaining lives for as long as the border keeps flashing."
+    }
+  ]
+}

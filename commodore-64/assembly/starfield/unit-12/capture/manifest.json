@@ -1,0 +1,40 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-12",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-message",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-message.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "hold": "up" }, { "wait": 70 }, { "release": "up" },
+        { "wait": 70 },
+        { "stop_video": true }
+      ],
+      "caption": "On death the frozen screen now says so: GAME OVER prints across the middle in white, held there with the rest of the scene.",
+      "alt": "An enemy hits the ship; it turns red, everything freezes, and the words GAME OVER appear in white across the centre of the screen."
+    },
+    {
+      "id": "step-02-restart",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-restart.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "hold": "up" }, { "wait": 70 }, { "release": "up" },
+        { "wait": 45 },
+        { "press": "fire", "frames": 4 },
+        { "wait": 70 },
+        { "stop_video": true }
+      ],
+      "caption": "Now GAME OVER waits for input: a press of fire restarts from the top — the message clears, the ship is white again, the score resets to 00, and a fresh wave descends.",
+      "alt": "The GAME OVER screen is shown, then fire is pressed: the message disappears, the score returns to 00, the ship is white and controllable again, and new enemies start descending."
+    }
+  ]
+}

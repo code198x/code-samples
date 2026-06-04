@@ -1,0 +1,41 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-13",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-lose-life",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-lose-life.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "hold": "up" }, { "wait": 70 }, { "release": "up" },
+        { "wait": 45 },
+        { "stop_video": true }
+      ],
+      "caption": "A hit no longer ends the game — it costs a life. The counter in the top-right ticks from 3 to 2, the ship reappears at the bottom, and play carries on.",
+      "alt": "The ship flies into an enemy and is hit; the lives count in the top-right drops from 3 to 2, the ship reappears at the bottom of the screen, and the wave keeps descending."
+    },
+    {
+      "id": "step-02-last-life",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-last-life.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 60 }, { "release": "left" },
+        { "hold": "right" }, { "wait": 130 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 130 }, { "release": "left" },
+        { "hold": "right" }, { "wait": 130 }, { "release": "right" },
+        { "hold": "left" }, { "wait": 130 }, { "release": "left" },
+        { "wait": 110 },
+        { "stop_video": true }
+      ],
+      "caption": "Each hit spends a life — 3, 2, 1 — and only when the last one is gone does the game end: the ship stays red and GAME OVER returns.",
+      "alt": "The ship is hit repeatedly, the lives counter counting down from 3 to 0; on the final hit the ship turns red, freezes, and the GAME OVER message appears."
+    }
+  ]
+}
