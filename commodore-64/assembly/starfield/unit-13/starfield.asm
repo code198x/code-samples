@@ -1,4 +1,4 @@
-; Starfield - Unit 13: Life Lost Flash
+; Starfield - Unit 12: Three Lives
 ; Assemble with: acme -f cbm -o starfield.prg starfield.asm
 
 ; ------------------------------------------------
@@ -12,7 +12,6 @@ enemy_y_tbl   = $0b    ; 3 bytes ($0b, $0c, $0d)
 flash_tbl      = $0e   ; 3 bytes ($0e, $0f, $10)
 game_state     = $11   ; 0 = playing, 1 = game over
 lives          = $12   ; Lives remaining (starts at 3)
-death_timer    = $13   ; Death flash countdown (0 = no flash)
 
 ; ------------------------------------------------
 ; BASIC stub
@@ -74,12 +73,6 @@ death_timer    = $13   ; Death flash countdown (0 = no flash)
         lda #$32            ; '2'
         sta $0427
 
-        ; Death flash active (border red, invulnerable)
-        lda #$08
-        sta death_timer
-        lda #$02
-        sta $d020           ; Border red
-
         ; Position bullet mid-screen
         lda $d000
         sta $d002
@@ -119,19 +112,6 @@ game_loop:
         jmp game_loop
 
 game_active:
-
-        ; --- Death timer (invulnerability flash) ---
-        lda death_timer
-        beq no_death_flash      ; Timer not running
-
-        dec death_timer
-        bne no_death_flash      ; Still counting down
-
-        ; Timer just expired — restore border to black
-        lda #$00
-        sta $d020
-
-no_death_flash:
 
         ; --- Read joystick and move ship ---
 
@@ -363,9 +343,6 @@ next_enemy:
         bne enemy_loop
 
         ; --- Check ship-enemy collision ---
-        lda death_timer
-        bne skip_ship_collision ; Invulnerable during flash
-
         ldx #$00
 ship_collision_loop:
         lda flash_tbl,x
@@ -395,8 +372,6 @@ next_ship_check:
         inx
         cpx #$03
         bne ship_collision_loop
-
-skip_ship_collision:
         jmp game_loop
 
 ship_hit:
@@ -421,11 +396,6 @@ ship_hit:
         lda #$02
         sta $d027
 
-        ; Restore border to black (clear any death flash)
-        lda #$00
-        sta $d020
-        sta death_timer
-
         ; Show GAME OVER text
         jsr show_game_over
         jmp play_death_sound
@@ -436,14 +406,6 @@ life_lost:
         sta $d000
         lda #220
         sta $d001
-
-        ; Start death flash (invulnerability)
-        lda #16
-        sta death_timer
-
-        ; Border flash red
-        lda #$02
-        sta $d020
 
 play_death_sound:
         ; Death sound — SID voice 3 (descending sawtooth)
@@ -526,8 +488,6 @@ init_game:
         sta bullet_active
         sta game_state
         sta score
-        sta death_timer
-        sta $d020               ; Border black (clear any death flash)
 
         ; Score display
         lda #$30
@@ -548,7 +508,7 @@ init_game:
 ; ------------------------------------------------
 show_game_over:
         ; Screen codes: G=7, A=1, M=13, E=5, space=32, O=15, V=22, E=5, R=18
-        ; Position: row 12 x 40 + col 16 = 496 -> $0400 + $01F0 = $05F0
+        ; Position: row 12 × 40 + col 16 = 496 → $0400 + $01F0 = $05F0
         lda #$07            ; G
         sta $05f0
         lda #$01            ; A

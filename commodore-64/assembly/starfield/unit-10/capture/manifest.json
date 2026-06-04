@@ -1,0 +1,39 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-10",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-two",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-two.mp4" },
+        { "wait": 256 },
+        { "stop_video": true }
+      ],
+      "caption": "Two enemies now, started at different heights and driven by one indexed loop — each drifts and respawns on its own from the same shared code.",
+      "alt": "Two green enemy sprites descend the screen at once from different starting heights, each independently reaching the bottom and reappearing at the top in a new column."
+    },
+    {
+      "id": "step-02-three",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-three.mp4" },
+        { "wait": 70 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "press": "fire", "frames": 4 }, { "wait": 40 },
+        { "press": "fire", "frames": 4 }, { "wait": 40 },
+        { "hold": "right" }, { "wait": 30 }, { "release": "right" },
+        { "press": "fire", "frames": 4 }, { "wait": 40 },
+        { "hold": "left" }, { "wait": 52 }, { "release": "left" },
+        { "press": "fire", "frames": 4 }, { "wait": 40 },
+        { "stop_video": true }
+      ],
+      "caption": "One more constant and an extra sprite turns two into three — the full wave descends, and the same shot can pick off any of them, the score climbing with each.",
+      "alt": "Three green enemies descend together. The ship moves beneath them and fires; individual enemies flash white and are destroyed as the score in the corner rises."
+    }
+  ]
+}

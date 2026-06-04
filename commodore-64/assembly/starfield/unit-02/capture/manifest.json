@@ -47,19 +47,6 @@
       ],
       "caption": "All four directions: the ship moves right, up, diagonally up-left, then down — pushing two directions at once gives diagonals for free.",
       "alt": "The white ship sprite flying around the black screen — right, then up, then diagonally up and to the left, then down — following the joystick."
-    },
-    {
-      "id": "after",
-      "prg": "steps/step-02.prg",
-      "medium": "still",
-      "timeline": [
-        { "boot_run": true },
-        { "hold": "up" }, { "wait": 30 }, { "release": "up" },
-        { "hold": "right" }, { "wait": 20 }, { "release": "right" },
-        { "wait": 6 },
-        { "screenshot": "after.png" }
-      ],
-      "alt": "The white ship sprite moved up and to the right of its starting position, where the joystick steered it."
     }
   ]
 }

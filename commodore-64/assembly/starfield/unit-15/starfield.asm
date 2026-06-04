@@ -1,4 +1,4 @@
-; Starfield - Unit 15: Title Screen
+; Starfield - Unit 14: Starfield
 ; Assemble with: acme -f cbm -o starfield.prg starfield.asm
 
 ; ------------------------------------------------
@@ -10,7 +10,7 @@ score          = $07   ; Score (0-99, BCD format)
 enemy_x_tbl   = $08   ; 3 bytes ($08, $09, $0a)
 enemy_y_tbl   = $0b   ; 3 bytes ($0b, $0c, $0d)
 flash_tbl      = $0e   ; 3 bytes ($0e, $0f, $10)
-game_state     = $11   ; 0 = title, 1 = playing, 2 = game over
+game_state     = $11   ; 0 = playing, 1 = game over
 lives          = $12   ; Lives remaining (starts at 3)
 death_timer    = $13   ; Death flash countdown (0 = no flash)
 star_row       = $14   ; 8 bytes ($14-$1b) — row 0-24
@@ -60,12 +60,38 @@ frame_count    = $24   ; Frame counter for parallax timing
         lda #$00
         sta $d406           ; Sustain=0, Release=0
 
-        ; Start on the title screen
+        ; First-time init
         jsr clear_screen
-        jsr init_title
+        jsr init_game
 
 !ifdef SCREENSHOT_MODE {
-        ; Title screen is the default state — no modifications needed
+        ; Set a visible score
+        lda #$05
+        sta score
+        lda #$30
+        sta $0400
+        lda #$35
+        sta $0401
+
+        ; Lives at 2 (lost one life)
+        lda #$02
+        sta lives
+        lda #$32
+        sta $0427
+
+        ; Position bullet mid-screen
+        lda $d000
+        sta $d002
+        lda #140
+        sta $d003
+
+        ; Enable all sprites (ship + bullet + 3 enemies)
+        lda #%00011111
+        sta $d015
+
+        ; Freeze the game
+        lda #$01
+        sta game_state
 }
 
 ; ------------------------------------------------
@@ -77,9 +103,26 @@ game_loop:
         cmp #$ff
         bne -
 
-        ; --- Update stars (all states) ---
+        ; --- Check game state ---
+        lda game_state
+        beq game_active
+
+        ; --- Game over: poll fire button ---
+        lda $dc00
+        and #%00010000
+        bne game_loop           ; Not pressed, keep waiting
+
+        ; Fire pressed — restart the game
+        jsr clear_screen
+        jsr init_game
+        jmp game_loop
+
+game_active:
+
+        ; --- Update frame counter ---
         inc frame_count
 
+        ; --- Update stars ---
         ldx #$00
 star_loop:
         jsr erase_star
@@ -109,46 +152,6 @@ skip_move:
         inx
         cpx #$08
         bne star_loop
-
-        ; --- State dispatch ---
-        lda game_state
-        beq title_state         ; 0 = title
-        cmp #$02
-        beq game_over_state     ; 2 = game over
-        jmp game_active         ; 1 = playing
-
-title_state:
-        ; Redraw title text (repairs any star damage)
-        jsr show_title
-
-        ; Poll fire button
-        lda $dc00
-        and #%00010000
-        bne state_done          ; Not pressed
-
-        ; Fire pressed — start the game
-        jsr clear_screen
-        jsr init_game
-        jmp game_loop
-
-game_over_state:
-        ; Redraw game over text (repairs any star damage)
-        jsr show_game_over
-
-        ; Poll fire button
-        lda $dc00
-        and #%00010000
-        bne state_done          ; Not pressed
-
-        ; Fire pressed — return to title
-        jsr clear_screen
-        jsr init_title
-        jmp game_loop
-
-state_done:
-        jmp game_loop
-
-game_active:
 
         ; --- Death timer (invulnerability flash) ---
         lda death_timer
@@ -437,7 +440,7 @@ ship_hit:
         bne life_lost
 
         ; Game over
-        lda #$02
+        lda #$01
         sta game_state
         lda #$02
         sta $d027
@@ -535,23 +538,6 @@ clear_screen:
         rts
 
 ; ------------------------------------------------
-; Subroutine: init_title
-; Sets up the title screen
-; ------------------------------------------------
-init_title:
-        ; No sprites on title screen
-        lda #$00
-        sta $d015
-        sta frame_count
-        sta game_state          ; 0 = title
-
-        ; Draw stars and title text
-        jsr init_stars
-        jsr show_title
-
-        rts
-
-; ------------------------------------------------
 ; Subroutine: init_game
 ; Resets all game state for a new game
 ; ------------------------------------------------
@@ -598,13 +584,11 @@ init_game:
         ; Reset state
         lda #$00
         sta bullet_active
+        sta game_state
         sta score
         sta death_timer
         sta frame_count
         sta $d020               ; Border black
-
-        lda #$01
-        sta game_state          ; 1 = playing
 
         ; Score display
         lda #$30
@@ -617,16 +601,7 @@ init_game:
         lda #$33
         sta $0427
 
-        ; Draw stars
-        jsr init_stars
-
-        rts
-
-; ------------------------------------------------
-; Subroutine: init_stars
-; Resets star positions and draws them
-; ------------------------------------------------
-init_stars:
+        ; Initialize and draw stars
         ldx #$00
 -       lda star_init_row,x
         sta star_row,x
@@ -636,79 +611,6 @@ init_stars:
         inx
         cpx #$08
         bne -
-        rts
-
-; ------------------------------------------------
-; Subroutine: show_title
-; Writes "STARFIELD" and "PRESS FIRE" to screen RAM
-; ------------------------------------------------
-show_title:
-        ; "STARFIELD" at row 10, col 16 ($05A0)
-        lda #$13            ; S
-        sta $05a0
-        lda #$14            ; T
-        sta $05a1
-        lda #$01            ; A
-        sta $05a2
-        lda #$12            ; R
-        sta $05a3
-        lda #$06            ; F
-        sta $05a4
-        lda #$09            ; I
-        sta $05a5
-        lda #$05            ; E
-        sta $05a6
-        lda #$0c            ; L
-        sta $05a7
-        lda #$04            ; D
-        sta $05a8
-
-        ; Colour to white
-        lda #$01
-        sta $d9a0
-        sta $d9a1
-        sta $d9a2
-        sta $d9a3
-        sta $d9a4
-        sta $d9a5
-        sta $d9a6
-        sta $d9a7
-        sta $d9a8
-
-        ; "PRESS FIRE" at row 14, col 15 ($063F)
-        lda #$10            ; P
-        sta $063f
-        lda #$12            ; R
-        sta $0640
-        lda #$05            ; E
-        sta $0641
-        lda #$13            ; S
-        sta $0642
-        lda #$13            ; S
-        sta $0643
-        lda #$20            ; (space)
-        sta $0644
-        lda #$06            ; F
-        sta $0645
-        lda #$09            ; I
-        sta $0646
-        lda #$12            ; R
-        sta $0647
-        lda #$05            ; E
-        sta $0648
-
-        ; Colour to light grey
-        lda #$0f
-        sta $da3f
-        sta $da40
-        sta $da41
-        sta $da42
-        sta $da43
-        sta $da44
-        sta $da45
-        sta $da46
-        sta $da47
-        sta $da48
 
         rts
 

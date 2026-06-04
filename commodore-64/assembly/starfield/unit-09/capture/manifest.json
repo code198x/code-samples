@@ -1,0 +1,39 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-09",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-readout",
+      "prg": "steps/step-01.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 40 },
+        { "screenshot": "step-01-readout.png" }
+      ],
+      "alt": "A white '00' in the very top-left corner of the screen, above the ship and the descending green enemy — the score readout, not yet counting."
+    },
+    {
+      "id": "step-02-counting",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-counting.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "wait": 2 }, { "press": "fire", "frames": 4 }, { "wait": 42 },
+        { "press": "fire", "frames": 4 }, { "wait": 42 },
+        { "hold": "right" }, { "wait": 24 }, { "release": "right" },
+        { "press": "fire", "frames": 4 }, { "wait": 42 },
+        { "hold": "left" }, { "wait": 44 }, { "release": "left" },
+        { "press": "fire", "frames": 4 }, { "wait": 42 },
+        { "hold": "right" }, { "wait": 30 }, { "release": "right" },
+        { "press": "fire", "frames": 4 }, { "wait": 42 },
+        { "stop_video": true }
+      ],
+      "caption": "Every hit adds one. Across this run five enemies fall and the readout climbs in step — 00, 01, and on up to 05 — each a real BCD count poked straight into screen RAM.",
+      "alt": "The white score in the top-left corner ticks up by one with each enemy destroyed, rising from 00 through to 05 over several hits during the run."
+    }
+  ]
+}

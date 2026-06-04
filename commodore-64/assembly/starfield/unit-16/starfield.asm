@@ -1,4 +1,4 @@
-; Starfield - Unit 16: Screen Edges
+; Starfield - Unit 15: Title Screen
 ; Assemble with: acme -f cbm -o starfield.prg starfield.asm
 
 ; ------------------------------------------------
@@ -65,26 +65,7 @@ frame_count    = $24   ; Frame counter for parallax timing
         jsr init_title
 
 !ifdef SCREENSHOT_MODE {
-        ; Override: start in playing state with ship on the right
-        jsr clear_screen
-        jsr init_game
-
-        ; Move ship past X=255 (X=296 = 256 + 40)
-        lda #40
-        sta $d000
-        lda $d010
-        ora #$01
-        sta $d010
-
-        ; Set a visible score
-        sed
-        lda #$05
-        sta score
-        cld
-        lda #$30
-        sta $0400
-        lda #$35
-        sta $0401
+        ; Title screen is the default state — no modifications needed
 }
 
 ; ------------------------------------------------
@@ -184,89 +165,36 @@ no_death_flash:
 
         ; --- Read joystick and move ship ---
 
-        ; UP (bit 0) — clamp to Y >= 50
+        ; UP (bit 0)
         lda $dc00
         and #%00000001
         bne not_up
-        lda $d001
-        cmp #52                 ; 50 + 2 (room for 2-pixel move)
-        bcc not_up
         dec $d001
         dec $d001
 not_up:
 
-        ; DOWN (bit 1) — clamp to Y <= 234
+        ; DOWN (bit 1)
         lda $dc00
         and #%00000010
         bne not_down
-        lda $d001
-        cmp #233                ; 234 - 1 (room for 2-pixel move)
-        bcs not_down
         inc $d001
         inc $d001
 not_down:
 
-        ; LEFT (bit 2) — 9-bit clamp to X >= 24
+        ; LEFT (bit 2)
         lda $dc00
         and #%00000100
         bne not_left
-
-        ; Check left boundary
-        lda $d010
-        and #$01
-        bne left_ok             ; MSB set, X >= 256, safe to move left
-        lda $d000
-        cmp #26                 ; 24 + 2 (room for 2-pixel move)
-        bcc not_left            ; Too close to left edge
-
-left_ok:
-        ; Decrement 1 — check for $00 wrap
-        lda $d000
-        bne +
-        lda $d010               ; Low byte is $00 — toggle bit 8
-        eor #$01
-        sta $d010
-+       dec $d000
-
-        ; Decrement 2
-        lda $d000
-        bne +
-        lda $d010
-        eor #$01
-        sta $d010
-+       dec $d000
-
+        dec $d000
+        dec $d000
 not_left:
 
-        ; RIGHT (bit 3) — 9-bit clamp to X <= 320
+        ; RIGHT (bit 3)
         lda $dc00
         and #%00001000
         bne not_right
-
-        ; Check right boundary
-        lda $d010
-        and #$01
-        beq right_ok            ; MSB clear, X < 256, safe to move right
-        lda $d000
-        cmp #63                 ; 320 - 256 - 2 + 1 (room for 2-pixel move)
-        bcs not_right           ; Too close to right edge
-
-right_ok:
-        ; Increment 1 — check for $FF wrap
         inc $d000
-        bne +
-        lda $d010               ; Low byte wrapped to $00 — toggle bit 8
-        eor #$01
-        sta $d010
-+
-        ; Increment 2
         inc $d000
-        bne +
-        lda $d010
-        eor #$01
-        sta $d010
-+
-
 not_right:
 
         ; --- Fire button (bit 4) ---
@@ -282,16 +210,6 @@ not_right:
         sta $d002
         lda $d001
         sta bullet_y
-
-        ; Copy ship X bit 8 to bullet X bit 8
-        lda $d010
-        and #%11111101          ; Clear bullet bit (bit 1)
-        sta $d010
-        lda $d010
-        and #$01                ; Get ship bit (bit 0)
-        asl                     ; Shift to bullet position (bit 1)
-        ora $d010
-        sta $d010
 
         ; Enable sprite 1
         lda $d015
@@ -329,9 +247,6 @@ no_fire:
         lda $d015
         and #%11111101
         sta $d015
-        lda $d010
-        and #%11111101          ; Clear bullet MSB
-        sta $d010
 
 no_bullet:
 
@@ -340,12 +255,6 @@ no_bullet:
         bne check_collision
         jmp no_hit
 check_collision:
-        ; Skip if bullet past X=255 (enemies are always < 256)
-        lda $d010
-        and #%00000010
-        beq do_collision
-        jmp no_hit
-do_collision:
 
         ldx #$00
 collision_loop:
@@ -385,9 +294,6 @@ hit_enemy:
         lda $d015
         and #%11111101
         sta $d015
-        lda $d010
-        and #%11111101          ; Clear bullet MSB
-        sta $d010
 
         ; Flash this enemy white
         lda #$08
@@ -483,11 +389,6 @@ next_enemy:
         lda death_timer
         bne skip_ship_collision
 
-        ; Skip if ship past X=255 (enemies are always < 256)
-        lda $d010
-        and #$01
-        bne skip_ship_collision
-
         ldx #$00
 ship_collision_loop:
         lda flash_tbl,x
@@ -547,14 +448,11 @@ ship_hit:
         jmp play_death_sound
 
 life_lost:
-        ; Reset ship position (X=172 < 256, clear MSB)
+        ; Reset ship position
         lda #172
         sta $d000
         lda #220
         sta $d001
-        lda $d010
-        and #%11111110          ; Clear ship MSB (bit 0)
-        sta $d010
 
         ; Start death flash
         lda #16
@@ -644,14 +542,8 @@ init_title:
         ; No sprites on title screen
         lda #$00
         sta $d015
-        sta $d010               ; Clear all MSBs
         sta frame_count
         sta game_state          ; 0 = title
-
-        ; Silence all SID voices
-        sta $d404
-        sta $d40b
-        sta $d412
 
         ; Draw stars and title text
         jsr init_stars
@@ -710,12 +602,6 @@ init_game:
         sta death_timer
         sta frame_count
         sta $d020               ; Border black
-        sta $d010               ; Clear all MSBs
-
-        ; Silence all SID voices
-        sta $d404
-        sta $d40b
-        sta $d412
 
         lda #$01
         sta game_state          ; 1 = playing

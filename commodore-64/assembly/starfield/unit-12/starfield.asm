@@ -1,4 +1,4 @@
-; Starfield - Unit 12: Three Lives
+; Starfield - Unit 11: Game Over
 ; Assemble with: acme -f cbm -o starfield.prg starfield.asm
 
 ; ------------------------------------------------
@@ -11,7 +11,6 @@ enemy_x_tbl   = $08    ; 3 bytes ($08, $09, $0a)
 enemy_y_tbl   = $0b    ; 3 bytes ($0b, $0c, $0d)
 flash_tbl      = $0e   ; 3 bytes ($0e, $0f, $10)
 game_state     = $11   ; 0 = playing, 1 = game over
-lives          = $12   ; Lives remaining (starts at 3)
 
 ; ------------------------------------------------
 ; BASIC stub
@@ -37,9 +36,6 @@ lives          = $12   ; Lives remaining (starts at 3)
         sta $d800
         sta $d801
 
-        ; Set lives colour to white (persists across restarts)
-        sta $d827
-
         ; SID setup — voice 1 laser sound
         lda #$0f
         sta $d418           ; Volume to maximum
@@ -60,32 +56,27 @@ lives          = $12   ; Lives remaining (starts at 3)
 
 !ifdef SCREENSHOT_MODE {
         ; Set a visible score
-        lda #$05
+        lda #$07
         sta score
         lda #$30
         sta $0400
-        lda #$35
+        lda #$37
         sta $0401
 
-        ; Lives at 2 (lost one life)
-        lda #$02
-        sta lives
-        lda #$32            ; '2'
-        sta $0427
-
-        ; Position bullet mid-screen
-        lda $d000
-        sta $d002
-        lda #140
-        sta $d003
-
-        ; Enable all sprites (ship + bullet + 3 enemies)
-        lda #%00011111
-        sta $d015
-
-        ; Freeze the game (prevents enemies moving during capture)
+        ; Set game over state
         lda #$01
         sta game_state
+
+        ; Ship is dead — turn red
+        lda #$02
+        sta $d027
+
+        ; Show GAME OVER text
+        jsr show_game_over
+
+        ; Enable sprites (ship + 3 enemies, no bullet)
+        lda #%00011101
+        sta $d015
 }
 
 ; ------------------------------------------------
@@ -375,20 +366,7 @@ next_ship_check:
         jmp game_loop
 
 ship_hit:
-        ; --- Decrement lives ---
-        dec lives
-
-        ; Update lives display
-        lda lives
-        clc
-        adc #$30
-        sta $0427
-
-        ; Check if lives exhausted
-        lda lives
-        bne life_lost
-
-        ; --- No lives left — game over ---
+        ; Ship is destroyed
         lda #$01
         sta game_state
 
@@ -398,16 +376,7 @@ ship_hit:
 
         ; Show GAME OVER text
         jsr show_game_over
-        jmp play_death_sound
 
-life_lost:
-        ; --- Lives remaining — reset ship position ---
-        lda #172
-        sta $d000
-        lda #220
-        sta $d001
-
-play_death_sound:
         ; Death sound — SID voice 3 (descending sawtooth)
         lda #$00
         sta $d40e               ; Frequency low
@@ -493,12 +462,6 @@ init_game:
         lda #$30
         sta $0400
         sta $0401
-
-        ; Lives
-        lda #$03
-        sta lives
-        lda #$33            ; Screen code for '3'
-        sta $0427
 
         rts
 

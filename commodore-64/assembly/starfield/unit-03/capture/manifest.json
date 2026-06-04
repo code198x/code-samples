@@ -1,0 +1,53 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-03",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-00-wrap",
+      "prg": "steps/step-00.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-00-wrap.mp4" },
+        { "wait": 12 },
+        { "hold": "right" }, { "wait": 80 }, { "release": "right" },
+        { "wait": 12 },
+        { "stop_video": true }
+      ],
+      "caption": "Unit 2's ship pushed right: the 8-bit X position can't pass 255, so about seven-eighths across it wraps straight back to the left edge — the right strip of screen is unreachable.",
+      "alt": "The ship slides right, then suddenly jumps back to the left edge when its X position wraps past 255, never reaching the rightmost part of the screen."
+    },
+    {
+      "id": "step-01-fullwidth",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-fullwidth.mp4" },
+        { "wait": 12 },
+        { "hold": "right" }, { "wait": 90 }, { "release": "right" },
+        { "wait": 12 },
+        { "stop_video": true }
+      ],
+      "caption": "With the 9th bit, pushing right carries the ship smoothly past the old halfway point all the way to the right edge — the full screen width is reachable now.",
+      "alt": "The ship slides right and continues smoothly past where it used to wrap, reaching the far right edge of the screen without jumping."
+    },
+    {
+      "id": "step-02-clamp",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-clamp.mp4" },
+        { "wait": 10 },
+        { "hold": "right" }, { "wait": 85 }, { "release": "right" },
+        { "wait": 14 },
+        { "hold": "left" }, { "wait": 155 }, { "release": "left" },
+        { "wait": 14 },
+        { "stop_video": true }
+      ],
+      "caption": "Clamped: the ship runs to the right edge and stops dead, then to the left edge and stops — no wrapping, always on screen.",
+      "alt": "The ship moves to the right edge and halts there, then moves to the left edge and halts, staying fully visible at both extremes instead of wrapping."
+    }
+  ]
+}

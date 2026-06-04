@@ -1,0 +1,131 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-05",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "before",
+      "prg": "steps/step-03.prg",
+      "medium": "still",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 20
+        },
+        {
+          "screenshot": "before.png"
+        }
+      ],
+      "alt": "The white ship near the bottom centre of a black screen, at rest before firing."
+    },
+    {
+      "id": "step-01-silent",
+      "prg": "steps/step-01.prg",
+      "medium": "audio",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "record_audio": "step-01-silent.wav"
+        },
+        {
+          "wait": 5
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 22
+        },
+        {
+          "stop_audio": true
+        }
+      ],
+      "caption": "Firing with voice 1 configured but never gated: the recording is silent. A set-up voice makes no sound on its own.",
+      "alt": "A silent audio recording \u2014 firing produces no sound, because the voice is configured but its gate is never set."
+    },
+    {
+      "id": "step-02-blip",
+      "prg": "steps/step-02.prg",
+      "medium": "audio",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "record_audio": "step-02-blip.wav"
+        },
+        {
+          "wait": 5
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 22
+        },
+        {
+          "stop_audio": true
+        }
+      ],
+      "caption": "With the gate set but the pitch fixed: a sound plays, but it's a flat buzzy blip \u2014 it doesn't read as a laser.",
+      "alt": "A short, flat, buzzy tone at a constant pitch \u2014 it makes a sound, but not a laser-like one."
+    },
+    {
+      "id": "laser",
+      "prg": "steps/step-03.prg",
+      "medium": "audio",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "record_audio": "laser.wav"
+        },
+        {
+          "wait": 5
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 22
+        },
+        {
+          "stop_audio": true
+        }
+      ],
+      "caption": "The same shot with the pitch swept downwards: a bright 'pew' that drops in pitch as it fires and decays away.",
+      "alt": "A laser 'pew' \u2014 a bright tone that starts high and rapidly slides down in pitch over about a quarter-second as it fades."
+    },
+    {
+      "id": "shot",
+      "prg": "steps/step-03.prg",
+      "medium": "still",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 10
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 16
+        },
+        {
+          "screenshot": "shot.png"
+        }
+      ],
+      "alt": "The yellow bullet sprite rising from the ship towards the top of the screen, a short way above it."
+    }
+  ]
+}

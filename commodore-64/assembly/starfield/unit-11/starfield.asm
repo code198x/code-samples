@@ -1,4 +1,4 @@
-; Starfield - Unit 11: Game Over
+; Starfield - Unit 10: Player Death
 ; Assemble with: acme -f cbm -o starfield.prg starfield.asm
 
 ; ------------------------------------------------
@@ -10,7 +10,7 @@ score         = $07     ; Score (0-99, BCD format)
 enemy_x_tbl   = $08    ; 3 bytes ($08, $09, $0a)
 enemy_y_tbl   = $0b    ; 3 bytes ($0b, $0c, $0d)
 flash_tbl      = $0e   ; 3 bytes ($0e, $0f, $10)
-game_state     = $11   ; 0 = playing, 1 = game over
+game_over      = $11   ; 0 = playing, 1 = game over
 
 ; ------------------------------------------------
 ; BASIC stub
@@ -19,7 +19,7 @@ game_state     = $11   ; 0 = playing, 1 = game over
 !byte $0c,$08,$0a,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 ; ------------------------------------------------
-; One-time hardware setup
+; Initialisation
 ; ------------------------------------------------
 *= $080d
         ; Black screen
@@ -27,11 +27,75 @@ game_state     = $11   ; 0 = playing, 1 = game over
         sta $d020           ; Border colour
         sta $d021           ; Background colour
 
-        ; Sprite 1 colour (yellow, never changes)
-        lda #$07
-        sta $d028
+        ; Clear the screen
+        ldx #$00
+-       lda #$20
+        sta $0400,x
+        sta $0500,x
+        sta $0600,x
+        sta $0700,x
+        inx
+        bne -
 
-        ; Set score colour to white (persists across restarts)
+        ; Sprite 0 setup (ship)
+        lda #128
+        sta $07f8           ; Data pointer (block 128 = $2000)
+        lda #172
+        sta $d000           ; X position
+        lda #220
+        sta $d001           ; Y position
+        lda #$01
+        sta $d027           ; Colour (white)
+
+        ; Sprite 1 setup (bullet)
+        lda #129
+        sta $07f9           ; Data pointer (block 129 = $2040)
+        lda #$07
+        sta $d028           ; Colour (yellow)
+
+        ; Sprites 2, 3, 4 setup (enemies)
+        lda #130
+        sta $07fa           ; Sprite 2 data pointer
+        sta $07fb           ; Sprite 3 data pointer
+        sta $07fc           ; Sprite 4 data pointer
+        lda #$05
+        sta $d029           ; Sprite 2 colour (green)
+        sta $d02a           ; Sprite 3 colour (green)
+        sta $d02b           ; Sprite 4 colour (green)
+
+        ; Spawn three enemies at staggered heights
+        lda #$32            ; Top
+        ldx #$00
+        jsr spawn_enemy
+        lda #$82            ; Middle
+        ldx #$01
+        jsr spawn_enemy
+        lda #$d2            ; Lower
+        ldx #$02
+        jsr spawn_enemy
+
+        ; Enable sprites 0, 2, 3, 4 (bullet starts disabled)
+        lda #%00011101
+        sta $d015
+
+        ; Bullet starts inactive
+        lda #$00
+        sta bullet_active
+
+        ; Game starts in playing state
+        lda #$00
+        sta game_over
+
+        ; Score starts at zero (BCD)
+        lda #$00
+        sta score
+
+        ; Write "00" to screen RAM (top-left corner)
+        lda #$30            ; Screen code for '0'
+        sta $0400           ; Tens digit (row 0, col 0)
+        sta $0401           ; Ones digit (row 0, col 1)
+
+        ; Set score colour to white
         lda #$01
         sta $d800
         sta $d801
@@ -50,10 +114,6 @@ game_state     = $11   ; 0 = playing, 1 = game over
         lda #$00
         sta $d406           ; Sustain=0, Release=0
 
-        ; First-time init
-        jsr clear_screen
-        jsr init_game
-
 !ifdef SCREENSHOT_MODE {
         ; Set a visible score
         lda #$07
@@ -63,16 +123,22 @@ game_state     = $11   ; 0 = playing, 1 = game over
         lda #$37
         sta $0401
 
-        ; Set game over state
-        lda #$01
-        sta game_state
-
         ; Ship is dead — turn red
         lda #$02
         sta $d027
+        lda #$01
+        sta game_over
 
-        ; Show GAME OVER text
-        jsr show_game_over
+        ; Position enemy 1 near the ship (just collided)
+        lda #200
+        sta enemy_y_tbl+1
+        lda $d000
+        sta enemy_x_tbl+1
+        ldy #$06
+        lda enemy_x_tbl+1
+        sta $d000,y
+        lda enemy_y_tbl+1
+        sta $d001,y
 
         ; Enable sprites (ship + 3 enemies, no bullet)
         lda #%00011101
@@ -88,19 +154,10 @@ game_loop:
         cmp #$ff
         bne -
 
-        ; --- Check game state ---
-        lda game_state
+        ; --- Check game over ---
+        lda game_over
         beq game_active
-
-        ; --- Game over: poll fire button ---
-        lda $dc00
-        and #%00010000
-        bne game_loop           ; Not pressed, keep waiting
-
-        ; Fire pressed — restart the game
-        jsr clear_screen
-        jsr init_game
-        jmp game_loop
+        jmp game_loop       ; Game frozen — just keep waiting
 
 game_active:
 
@@ -363,19 +420,16 @@ next_ship_check:
         inx
         cpx #$03
         bne ship_collision_loop
-        jmp game_loop
+        jmp no_ship_hit
 
 ship_hit:
         ; Ship is destroyed
         lda #$01
-        sta game_state
+        sta game_over
 
         ; Turn ship red
         lda #$02
         sta $d027
-
-        ; Show GAME OVER text
-        jsr show_game_over
 
         ; Death sound — SID voice 3 (descending sawtooth)
         lda #$00
@@ -391,119 +445,8 @@ ship_hit:
         lda #$21
         sta $d411               ; Sawtooth, gate ON (trigger)
 
+no_ship_hit:
         jmp game_loop
-
-; ------------------------------------------------
-; Subroutine: clear_screen
-; Fills screen RAM with spaces ($20)
-; ------------------------------------------------
-clear_screen:
-        ldx #$00
--       lda #$20
-        sta $0400,x
-        sta $0500,x
-        sta $0600,x
-        sta $0700,x
-        inx
-        bne -
-        rts
-
-; ------------------------------------------------
-; Subroutine: init_game
-; Resets all game state for a new game
-; ------------------------------------------------
-init_game:
-        ; Sprite data pointers (must be set after clear_screen)
-        lda #128
-        sta $07f8           ; Ship (block 128 = $2000)
-        lda #129
-        sta $07f9           ; Bullet (block 129 = $2040)
-        lda #130
-        sta $07fa           ; Enemy 0 (block 130 = $2080)
-        sta $07fb           ; Enemy 1
-        sta $07fc           ; Enemy 2
-
-        ; Ship position and colour
-        lda #172
-        sta $d000           ; X position
-        lda #220
-        sta $d001           ; Y position
-        lda #$01
-        sta $d027           ; Colour (white)
-
-        ; Enemy colours
-        lda #$05
-        sta $d029
-        sta $d02a
-        sta $d02b
-
-        ; Spawn three enemies at staggered heights
-        lda #$32            ; Top
-        ldx #$00
-        jsr spawn_enemy
-        lda #$82            ; Middle
-        ldx #$01
-        jsr spawn_enemy
-        lda #$d2            ; Lower
-        ldx #$02
-        jsr spawn_enemy
-
-        ; Enable sprites 0, 2, 3, 4 (bullet starts disabled)
-        lda #%00011101
-        sta $d015
-
-        ; Reset state
-        lda #$00
-        sta bullet_active
-        sta game_state
-        sta score
-
-        ; Score display
-        lda #$30
-        sta $0400
-        sta $0401
-
-        rts
-
-; ------------------------------------------------
-; Subroutine: show_game_over
-; Writes "GAME OVER" to screen RAM, row 12, col 16
-; ------------------------------------------------
-show_game_over:
-        ; Screen codes: G=7, A=1, M=13, E=5, space=32, O=15, V=22, E=5, R=18
-        ; Position: row 12 × 40 + col 16 = 496 → $0400 + $01F0 = $05F0
-        lda #$07            ; G
-        sta $05f0
-        lda #$01            ; A
-        sta $05f1
-        lda #$0d            ; M
-        sta $05f2
-        lda #$05            ; E
-        sta $05f3
-        lda #$20            ; (space)
-        sta $05f4
-        lda #$0f            ; O
-        sta $05f5
-        lda #$16            ; V
-        sta $05f6
-        lda #$05            ; E
-        sta $05f7
-        lda #$12            ; R
-        sta $05f8
-
-        ; Colour to white
-        lda #$01
-        sta $d9f0
-        sta $d9f1
-        sta $d9f2
-        sta $d9f3
-        sta $d9f4
-        sta $d9f5
-        sta $d9f6
-        sta $d9f7
-        sta $d9f8
-
-        rts
 
 ; ------------------------------------------------
 ; Subroutine: spawn_enemy

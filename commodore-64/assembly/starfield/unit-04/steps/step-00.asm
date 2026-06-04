@@ -1,11 +1,6 @@
-; Starfield - Unit 4: Laser Sound
-; Cumulative steps: step-00 (silent) -> step-01 (+ SID configured) -> step-02 (+ gate: a flat blip) -> step-03 (+ pitch sweep: a 'pew')
+; Starfield - Unit 4: Fire Button Shoots
+; Cumulative steps: step-00 (ship + clamping) -> step-01 (+ a bullet) -> step-02 (+ 9th-bit-aware bullet)
 ; Assemble: acme -f cbm -o <step>.prg <step>.asm
-; ------------------------------------------------
-; Zero-page variables
-; ------------------------------------------------
-bullet_active = $02     ; 0 = no bullet, 1 = active
-bullet_y      = $03     ; Bullet Y position
 
 ; ------------------------------------------------
 ; BASIC stub
@@ -41,122 +36,100 @@ bullet_y      = $03     ; Bullet Y position
         sta $d001           ; Y position
         lda #$01
         sta $d027           ; Colour (white)
-
-        ; Sprite 1 setup (bullet)
-        lda #129
-        sta $07f9           ; Data pointer (block 129 = $2040)
-        lda #$07
-        sta $d028           ; Colour (yellow)
-
-        ; Enable sprite 0 only (bullet starts disabled)
         lda #%00000001
-        sta $d015
-
-        ; Bullet starts inactive
+        sta $d015           ; Enable sprite 0
         lda #$00
-        sta bullet_active
-
+        sta $d010           ; sprite high-X bits clear (ship starts under X=256)
 
 ; ------------------------------------------------
 ; Game loop — runs once per frame
 ; ------------------------------------------------
 game_loop:
         ; Wait for the raster beam to reach line 255
+        ; This syncs our code to the display (~50Hz PAL)
 -       lda $d012
         cmp #$ff
         bne -
 
         ; --- Read joystick and move ship ---
 
-        ; UP (bit 0)
-        lda $dc00
-        and #%00000001
-        bne not_up
-        dec $d001
-        dec $d001
+        ; UP (bit 0) — clamp to Y >= 50
+        lda $dc00           ; Read joystick port 2
+        and #%00000001      ; Isolate bit 0
+        bne not_up          ; Bit is 1 = NOT pressed (active low)
+        lda $d001
+        cmp #52             ; 50 + room for a 2-pixel move
+        bcc not_up          ; already at the top — don't move
+        dec $d001           ; Move ship up (decrease Y)
+        dec $d001           ; 2 pixels per frame
 not_up:
 
-        ; DOWN (bit 1)
+        ; DOWN (bit 1) — clamp to Y <= 234
         lda $dc00
         and #%00000010
         bne not_down
-        inc $d001
+        lda $d001
+        cmp #233            ; 234 - room for a 2-pixel move
+        bcs not_down        ; already at the bottom — don't move
+        inc $d001           ; Move ship down (increase Y)
         inc $d001
 not_down:
 
-        ; LEFT (bit 2)
+        ; LEFT (bit 2) — 9-bit X, clamp to X >= 24
         lda $dc00
         and #%00000100
         bne not_left
-        dec $d000
-        dec $d000
+        lda $d010
+        and #$01
+        bne left_ok         ; high bit set: X >= 256, always safe to go left
+        lda $d000
+        cmp #26             ; 24 + room for a 2-pixel move
+        bcc not_left        ; already at the left edge — don't move
+left_ok:
+        ; before each step, flip the 9th bit when X is about to wrap $00 -> $ff
+        lda $d000
+        bne +
+        lda $d010
+        eor #$01            ; the eor bit-flip from the Primer, on sprite 0's high X bit
+        sta $d010
++       dec $d000
+        lda $d000
+        bne +
+        lda $d010
+        eor #$01
+        sta $d010
++       dec $d000
 not_left:
 
-        ; RIGHT (bit 3)
+        ; RIGHT (bit 3) — 9-bit X, clamp to X <= 320
         lda $dc00
         and #%00001000
         bne not_right
+        lda $d010
+        and #$01
+        beq right_ok        ; high bit clear: X < 256, always safe to go right
+        lda $d000
+        cmp #63             ; (320 - 256) - room for a 2-pixel move
+        bcs not_right       ; already at the right edge — don't move
+right_ok:
+        ; after each step, flip the 9th bit when X wraps $ff -> $00
         inc $d000
-        inc $d000
+        bne +
+        lda $d010
+        eor #$01
+        sta $d010
++       inc $d000
+        bne +
+        lda $d010
+        eor #$01
+        sta $d010
++
 not_right:
 
-        ; --- Fire button (bit 4) ---
-        lda $dc00
-        and #%00010000
-        bne no_fire         ; Bit is 1 = NOT pressed
-
-        ; Fire is pressed — only spawn if no bullet active
-        lda bullet_active
-        bne no_fire         ; Already active, skip
-
-        ; Spawn bullet at ship position
-        lda $d000           ; Ship X → bullet X
-        sta $d002
-        lda $d001           ; Ship Y → bullet Y
-        sta bullet_y
-
-        ; Enable sprite 1 (keep sprite 0 enabled)
-        lda $d015
-        ora #%00000010
-        sta $d015
-
-        ; Mark bullet active
-        lda #$01
-        sta bullet_active
-
-        ; (No sound yet — the voice is configured but never gated.)
-
-no_fire:
-
-        ; --- Update bullet ---
-        lda bullet_active
-        beq no_bullet       ; Not active, skip
-
-        ; Move bullet up (4 pixels per frame)
-        lda bullet_y
-        sec
-        sbc #$04
-        sta bullet_y
-        sta $d003           ; Update sprite 1 Y position
-
-        ; Check if bullet has left the screen (Y < 30)
-        cmp #$1e
-        bcs no_bullet       ; Y >= 30, still on screen
-
-        ; Deactivate bullet
-        lda #$00
-        sta bullet_active
-
-        ; Disable sprite 1 (keep sprite 0 enabled)
-        lda $d015
-        and #%11111101
-        sta $d015
-
-no_bullet:
         jmp game_loop
 
 ; ------------------------------------------------
-; Sprite data at $2000 (block 128) — ship
+; Sprite data at $2000 (block 128)
 ; ------------------------------------------------
 *= $2000
         !byte $00,$18,$00   ;        ##
@@ -180,29 +153,3 @@ no_bullet:
         !byte $00,$66,$00   ;      ##..##
         !byte $00,$24,$00   ;       #..#
         !byte $00,$00,$00   ;
-
-; ------------------------------------------------
-; Sprite data at $2040 (block 129) — bullet
-; ------------------------------------------------
-*= $2040
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$18,$00   ;        ##
-        !byte $00,$18,$00   ;        ##
-        !byte $00,$18,$00   ;        ##
-        !byte $00,$18,$00   ;        ##
-        !byte $00,$18,$00   ;        ##
-        !byte $00,$18,$00   ;        ##
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00
-        !byte $00,$00,$00

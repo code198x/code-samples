@@ -1,0 +1,43 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-06",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "before",
+      "prg": "steps/step-00.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 30 },
+        { "screenshot": "before.png" }
+      ],
+      "alt": "The white ship at the bottom centre of an otherwise empty black screen — the armed, sounding ship from Unit 5, with nothing to shoot at yet."
+    },
+    {
+      "id": "step-01-drift",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-drift.mp4" },
+        { "wait": 210 },
+        { "stop_video": true }
+      ],
+      "caption": "The green enemy drifts down at one pixel a frame and slides off the bottom — then, with no respawn logic, the Y byte wraps and it pops straight back in at the top, in the very same column.",
+      "alt": "A green enemy sprite descending steadily from the top of the screen on its own, passing to the left of the ship and off the bottom edge, then reappearing at the top in the same horizontal position and descending again."
+    },
+    {
+      "id": "step-02-respawn",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-respawn.mp4" },
+        { "wait": 300 },
+        { "stop_video": true }
+      ],
+      "caption": "With respawn added, the enemy reaches the bottom, jumps back to the top in a new column, and comes again — a steady stream instead of one pass.",
+      "alt": "A green enemy descends to the bottom of the screen, then reappears at the top in a different horizontal position and descends again, repeating as a continuous threat."
+    }
+  ]
+}

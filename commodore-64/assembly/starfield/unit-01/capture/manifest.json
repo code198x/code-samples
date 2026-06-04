@@ -1,0 +1,39 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-01",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "before",
+      "prg": "steps/step-00.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 20 },
+        { "screenshot": "before.png" }
+      ],
+      "alt": "A freshly booted Commodore 64 screen — light-blue border and dark-blue background with the start-up message and READY prompt — after typing RUN. The bare program does nothing yet."
+    },
+    {
+      "id": "canvas",
+      "prg": "steps/step-01.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 20 },
+        { "screenshot": "canvas.png" }
+      ],
+      "alt": "A completely black screen — the border and background set to black and the start-up text cleared away, leaving a blank canvas."
+    },
+    {
+      "id": "ship",
+      "prg": "steps/step-02.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 20 },
+        { "screenshot": "ship.png" }
+      ],
+      "alt": "A single white spaceship sprite — a pointed hull with flared wings — sitting near the bottom centre of an otherwise black screen."
+    }
+  ]
+}

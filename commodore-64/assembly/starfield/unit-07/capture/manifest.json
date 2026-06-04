@@ -1,0 +1,64 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-07",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "before",
+      "prg": "steps/step-00.prg",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 40 },
+        { "screenshot": "before.png" }
+      ],
+      "alt": "The white ship at the bottom and the green enemy partway down the screen, in separate columns — at this point a bullet would fly straight past the enemy without effect."
+    },
+    {
+      "id": "step-01-yonly",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-yonly.mp4" },
+        { "wait": 12 },
+        { "press": "fire", "frames": 4 },
+        { "wait": 90 },
+        { "stop_video": true }
+      ],
+      "caption": "Y-only collision is too eager: the bullet rises straight up the centre, and the enemy — off to the left in a different column — vanishes the instant the bullet reaches its row.",
+      "alt": "The ship fires straight up. The green enemy, well to the left of the bullet's path, disappears the moment the bullet reaches the same height, then respawns at the top — a hit that should have been a miss."
+    },
+    {
+      "id": "step-02-miss",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-miss.mp4" },
+        { "wait": 12 },
+        { "press": "fire", "frames": 4 },
+        { "wait": 90 },
+        { "stop_video": true }
+      ],
+      "caption": "With the column check added, the same centred shot now passes the enemy's row harmlessly — different column, no hit. The enemy drifts on unharmed.",
+      "alt": "The ship fires straight up while the enemy is off to the left. The bullet passes the enemy's height without effect and continues off the top; the enemy keeps drifting down, unharmed."
+    },
+    {
+      "id": "step-02-hit",
+      "prg": "steps/step-02.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-02-hit.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "wait": 4 },
+        { "press": "fire", "frames": 4 },
+        { "wait": 70 },
+        { "stop_video": true }
+      ],
+      "caption": "Line the ship up under the enemy first, then fire: same row and same column, so it's a real hit — the enemy is destroyed and respawns at the top.",
+      "alt": "The ship slides left until it is directly below the green enemy, then fires. The bullet rises into the enemy, which disappears on contact and reappears at the top of the screen."
+    }
+  ]
+}

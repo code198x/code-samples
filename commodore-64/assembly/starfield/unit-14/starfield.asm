@@ -1,23 +1,18 @@
-; Starfield - Unit 14: Starfield
+; Starfield - Unit 13: Life Lost Flash
 ; Assemble with: acme -f cbm -o starfield.prg starfield.asm
 
 ; ------------------------------------------------
 ; Zero-page variables
 ; ------------------------------------------------
-bullet_active  = $02   ; 0 = no bullet, 1 = active
-bullet_y       = $03   ; Bullet Y position
-score          = $07   ; Score (0-99, BCD format)
-enemy_x_tbl   = $08   ; 3 bytes ($08, $09, $0a)
-enemy_y_tbl   = $0b   ; 3 bytes ($0b, $0c, $0d)
+bullet_active = $02     ; 0 = no bullet, 1 = active
+bullet_y      = $03     ; Bullet Y position
+score         = $07     ; Score (0-99, BCD format)
+enemy_x_tbl   = $08    ; 3 bytes ($08, $09, $0a)
+enemy_y_tbl   = $0b    ; 3 bytes ($0b, $0c, $0d)
 flash_tbl      = $0e   ; 3 bytes ($0e, $0f, $10)
 game_state     = $11   ; 0 = playing, 1 = game over
 lives          = $12   ; Lives remaining (starts at 3)
 death_timer    = $13   ; Death flash countdown (0 = no flash)
-star_row       = $14   ; 8 bytes ($14-$1b) — row 0-24
-star_col       = $1c   ; 8 bytes ($1c-$23) — column 0-39
-frame_count    = $24   ; Frame counter for parallax timing
-
-; $fb-$fc: temporary pointer (used by star routines)
 
 ; ------------------------------------------------
 ; BASIC stub
@@ -53,7 +48,7 @@ frame_count    = $24   ; Frame counter for parallax timing
         lda #$00
         sta $d400           ; Frequency low byte
         lda #$10
-        sta $d401           ; Frequency high byte
+        sta $d401           ; Frequency high byte ($1000 = mid-high pitch)
 
         lda #$09
         sta $d405           ; Attack=0, Decay=9
@@ -76,8 +71,14 @@ frame_count    = $24   ; Frame counter for parallax timing
         ; Lives at 2 (lost one life)
         lda #$02
         sta lives
-        lda #$32
+        lda #$32            ; '2'
         sta $0427
+
+        ; Death flash active (border red, invulnerable)
+        lda #$08
+        sta death_timer
+        lda #$02
+        sta $d020           ; Border red
 
         ; Position bullet mid-screen
         lda $d000
@@ -89,7 +90,7 @@ frame_count    = $24   ; Frame counter for parallax timing
         lda #%00011111
         sta $d015
 
-        ; Freeze the game
+        ; Freeze the game (prevents enemies moving during capture)
         lda #$01
         sta game_state
 }
@@ -119,48 +120,14 @@ game_loop:
 
 game_active:
 
-        ; --- Update frame counter ---
-        inc frame_count
-
-        ; --- Update stars ---
-        ldx #$00
-star_loop:
-        jsr erase_star
-
-        ; Check if star should move this frame
-        cpx #$04
-        bcc move_star           ; Close stars (0-3) always move
-
-        ; Distant star — only move on odd frames
-        lda frame_count
-        and #$01
-        beq skip_move           ; Even frame, don't move
-
-move_star:
-        inc star_row,x
-        lda star_row,x
-        cmp #25
-        bcc skip_move
-
-        ; Wrap to row 0
-        lda #$00
-        sta star_row,x
-
-skip_move:
-        jsr draw_star
-
-        inx
-        cpx #$08
-        bne star_loop
-
         ; --- Death timer (invulnerability flash) ---
         lda death_timer
-        beq no_death_flash
+        beq no_death_flash      ; Timer not running
 
         dec death_timer
-        bne no_death_flash
+        bne no_death_flash      ; Still counting down
 
-        ; Timer expired — restore border to black
+        ; Timer just expired — restore border to black
         lda #$00
         sta $d020
 
@@ -203,50 +170,55 @@ not_right:
         ; --- Fire button (bit 4) ---
         lda $dc00
         and #%00010000
-        bne no_fire
+        bne no_fire         ; Bit is 1 = NOT pressed
 
+        ; Fire is pressed — only spawn if no bullet active
         lda bullet_active
-        bne no_fire
+        bne no_fire         ; Already active, skip
 
         ; Spawn bullet at ship position
-        lda $d000
+        lda $d000           ; Ship X → bullet X
         sta $d002
-        lda $d001
+        lda $d001           ; Ship Y → bullet Y
         sta bullet_y
 
-        ; Enable sprite 1
+        ; Enable sprite 1 (keep other sprites enabled)
         lda $d015
         ora #%00000010
         sta $d015
 
+        ; Mark bullet active
         lda #$01
         sta bullet_active
 
-        ; Trigger laser sound
+        ; Trigger laser sound (gate off then on to retrigger)
         lda #$20
-        sta $d404
+        sta $d404           ; Sawtooth, gate OFF (reset envelope)
         lda #$21
-        sta $d404
+        sta $d404           ; Sawtooth, gate ON (start sound)
 
 no_fire:
 
         ; --- Update bullet ---
         lda bullet_active
-        beq no_bullet
+        beq no_bullet       ; Not active, skip
 
-        ; Move bullet up
+        ; Move bullet up (4 pixels per frame)
         lda bullet_y
         sec
         sbc #$04
         sta bullet_y
-        sta $d003
+        sta $d003           ; Update sprite 1 Y position
 
-        ; Off-screen check
+        ; Check if bullet has left the screen (Y < 30)
         cmp #$1e
-        bcs no_bullet
+        bcs no_bullet       ; Y >= 30, still on screen
 
+        ; Deactivate bullet
         lda #$00
         sta bullet_active
+
+        ; Disable sprite 1 (keep other sprites enabled)
         lda $d015
         and #%11111101
         sta $d015
@@ -262,7 +234,7 @@ check_collision:
         ldx #$00
 collision_loop:
         lda flash_tbl,x
-        bne next_collision
+        bne next_collision      ; Skip flashing enemies
 
         ; Check Y distance
         lda bullet_y
@@ -275,14 +247,14 @@ collision_loop:
 
 check_x:
         ; Check X distance
-        lda $d002
+        lda $d002               ; Bullet X (sprite 1)
         sec
         sbc enemy_x_tbl,x
         cmp #$10
         bcc hit_enemy
         cmp #$f0
         bcc next_collision
-        jmp hit_enemy
+        jmp hit_enemy           ; >= $F0 = close (negative)
 
 next_collision:
         inx
@@ -291,6 +263,7 @@ next_collision:
         jmp no_hit
 
 hit_enemy:
+        ; X = index of hit enemy
         ; Deactivate bullet
         lda #$00
         sta bullet_active
@@ -303,46 +276,46 @@ hit_enemy:
         sta flash_tbl,x
         ldy sprite_colour_off,x
         lda #$01
-        sta $d000,y
+        sta $d000,y             ; White
 
         ; Explosion sound — SID voice 2 (noise)
         lda #$00
-        sta $d407
+        sta $d407               ; Frequency low
         lda #$08
-        sta $d408
+        sta $d408               ; Frequency high (low rumble)
         lda #$09
-        sta $d40c
+        sta $d40c               ; Attack=0, Decay=9
         lda #$00
-        sta $d40d
+        sta $d40d               ; Sustain=0, Release=0
         lda #$80
-        sta $d40b
+        sta $d40b               ; Noise, gate OFF (reset envelope)
         lda #$81
-        sta $d40b
+        sta $d40b               ; Noise, gate ON (trigger)
 
         ; Increment score (BCD)
-        sed
+        sed                     ; Decimal mode
         lda score
         clc
         adc #$01
         sta score
-        cld
+        cld                     ; Back to binary mode
 
         ; Update score display — tens digit
         lda score
         lsr
         lsr
         lsr
-        lsr
+        lsr                     ; High nybble in A (0-9)
         clc
-        adc #$30
-        sta $0400
+        adc #$30                ; Convert to screen code
+        sta $0400               ; Write tens digit
 
         ; Update score display — ones digit
         lda score
-        and #$0f
+        and #$0f                ; Low nybble in A (0-9)
         clc
-        adc #$30
-        sta $0401
+        adc #$30                ; Convert to screen code
+        sta $0401               ; Write ones digit
 
 no_hit:
 
@@ -358,9 +331,9 @@ enemy_loop:
         adc #$01
         sta enemy_y_tbl,x
 
-        ; Off-screen check
+        ; Off-screen check (Y >= 248)
         cmp #$f8
-        bcc update_enemy_sprite
+        bcc update_sprite
 
         ; Respawn at top
         lda #$32
@@ -369,14 +342,15 @@ enemy_loop:
 
 do_flash:
         dec flash_tbl,x
-        bne update_enemy_sprite
+        bne update_sprite       ; Still flashing
 
         ; Flash done — respawn
         lda #$32
         jsr spawn_enemy
         jmp next_enemy
 
-update_enemy_sprite:
+update_sprite:
+        ; Copy position to VIC-II
         ldy sprite_pos_off,x
         lda enemy_x_tbl,x
         sta $d000,y
@@ -390,15 +364,15 @@ next_enemy:
 
         ; --- Check ship-enemy collision ---
         lda death_timer
-        bne skip_ship_collision
+        bne skip_ship_collision ; Invulnerable during flash
 
         ldx #$00
 ship_collision_loop:
         lda flash_tbl,x
-        bne next_ship_check
+        bne next_ship_check     ; Skip flashing enemies
 
-        ; Check Y distance
-        lda $d001
+        ; Check Y distance (ship Y vs enemy Y)
+        lda $d001               ; Ship Y
         sec
         sbc enemy_y_tbl,x
         cmp #$10
@@ -407,15 +381,15 @@ ship_collision_loop:
         bcc next_ship_check
 
 check_ship_x:
-        ; Check X distance
-        lda $d000
+        ; Check X distance (ship X vs enemy X)
+        lda $d000               ; Ship X
         sec
         sbc enemy_x_tbl,x
         cmp #$10
         bcc ship_hit
         cmp #$f0
         bcc next_ship_check
-        jmp ship_hit
+        jmp ship_hit            ; >= $F0 = close (negative)
 
 next_ship_check:
         inx
@@ -426,7 +400,7 @@ skip_ship_collision:
         jmp game_loop
 
 ship_hit:
-        ; Decrement lives
+        ; --- Decrement lives ---
         dec lives
 
         ; Update lives display
@@ -439,88 +413,54 @@ ship_hit:
         lda lives
         bne life_lost
 
-        ; Game over
+        ; --- No lives left — game over ---
         lda #$01
         sta game_state
+
+        ; Turn ship red
         lda #$02
         sta $d027
+
+        ; Restore border to black (clear any death flash)
         lda #$00
         sta $d020
         sta death_timer
+
+        ; Show GAME OVER text
         jsr show_game_over
         jmp play_death_sound
 
 life_lost:
-        ; Reset ship position
+        ; --- Lives remaining — reset ship position ---
         lda #172
         sta $d000
         lda #220
         sta $d001
 
-        ; Start death flash
+        ; Start death flash (invulnerability)
         lda #16
         sta death_timer
+
+        ; Border flash red
         lda #$02
         sta $d020
 
 play_death_sound:
-        ; SID voice 3 (descending sawtooth)
+        ; Death sound — SID voice 3 (descending sawtooth)
         lda #$00
-        sta $d40e
+        sta $d40e               ; Frequency low
         lda #$10
-        sta $d40f
+        sta $d40f               ; Frequency high
         lda #$0a
-        sta $d412
+        sta $d412               ; Attack=0, Decay=10 (long decay)
         lda #$00
-        sta $d413
+        sta $d413               ; Sustain=0, Release=0
         lda #$20
-        sta $d411
+        sta $d411               ; Sawtooth, gate OFF (reset envelope)
         lda #$21
-        sta $d411
+        sta $d411               ; Sawtooth, gate ON (trigger)
 
         jmp game_loop
-
-; ------------------------------------------------
-; Subroutine: erase_star
-; X = star index. Writes space to the star's screen position.
-; ------------------------------------------------
-erase_star:
-        ldy star_row,x
-        lda row_addr_lo,y
-        sta $fb
-        lda row_addr_hi,y
-        sta $fc
-        ldy star_col,x
-        lda #$20
-        sta ($fb),y
-        rts
-
-; ------------------------------------------------
-; Subroutine: draw_star
-; X = star index. Writes character and colour at the star's position.
-; ------------------------------------------------
-draw_star:
-        ldy star_row,x
-        lda row_addr_lo,y
-        sta $fb
-        lda row_addr_hi,y
-        sta $fc
-        ldy star_col,x
-
-        ; Write character to screen RAM
-        lda star_char_tbl,x
-        sta ($fb),y
-
-        ; Switch pointer to colour RAM (high byte + $D4)
-        lda $fc
-        clc
-        adc #$d4
-        sta $fc
-
-        ; Write colour
-        lda star_colour_tbl,x
-        sta ($fb),y
-        rts
 
 ; ------------------------------------------------
 ; Subroutine: clear_screen
@@ -554,11 +494,11 @@ init_game:
 
         ; Ship position and colour
         lda #172
-        sta $d000
+        sta $d000           ; X position
         lda #220
-        sta $d001
+        sta $d001           ; Y position
         lda #$01
-        sta $d027
+        sta $d027           ; Colour (white)
 
         ; Enemy colours
         lda #$05
@@ -567,13 +507,13 @@ init_game:
         sta $d02b
 
         ; Spawn three enemies at staggered heights
-        lda #$32
+        lda #$32            ; Top
         ldx #$00
         jsr spawn_enemy
-        lda #$82
+        lda #$82            ; Middle
         ldx #$01
         jsr spawn_enemy
-        lda #$d2
+        lda #$d2            ; Lower
         ldx #$02
         jsr spawn_enemy
 
@@ -587,8 +527,7 @@ init_game:
         sta game_state
         sta score
         sta death_timer
-        sta frame_count
-        sta $d020               ; Border black
+        sta $d020               ; Border black (clear any death flash)
 
         ; Score display
         lda #$30
@@ -598,19 +537,8 @@ init_game:
         ; Lives
         lda #$03
         sta lives
-        lda #$33
+        lda #$33            ; Screen code for '3'
         sta $0427
-
-        ; Initialize and draw stars
-        ldx #$00
--       lda star_init_row,x
-        sta star_row,x
-        lda star_init_col,x
-        sta star_col,x
-        jsr draw_star
-        inx
-        cpx #$08
-        bne -
 
         rts
 
@@ -619,25 +547,28 @@ init_game:
 ; Writes "GAME OVER" to screen RAM, row 12, col 16
 ; ------------------------------------------------
 show_game_over:
-        lda #$07
+        ; Screen codes: G=7, A=1, M=13, E=5, space=32, O=15, V=22, E=5, R=18
+        ; Position: row 12 x 40 + col 16 = 496 -> $0400 + $01F0 = $05F0
+        lda #$07            ; G
         sta $05f0
-        lda #$01
+        lda #$01            ; A
         sta $05f1
-        lda #$0d
+        lda #$0d            ; M
         sta $05f2
-        lda #$05
+        lda #$05            ; E
         sta $05f3
-        lda #$20
+        lda #$20            ; (space)
         sta $05f4
-        lda #$0f
+        lda #$0f            ; O
         sta $05f5
-        lda #$16
+        lda #$16            ; V
         sta $05f6
-        lda #$05
+        lda #$05            ; E
         sta $05f7
-        lda #$12
+        lda #$12            ; R
         sta $05f8
 
+        ; Colour to white
         lda #$01
         sta $d9f0
         sta $d9f1
@@ -677,47 +608,20 @@ spawn_enemy:
         ; Update VIC-II sprite position
         ldy sprite_pos_off,x
         lda enemy_x_tbl,x
-        sta $d000,y
+        sta $d000,y             ; Sprite X
         lda enemy_y_tbl,x
-        sta $d001,y
+        sta $d001,y             ; Sprite Y (offset + 1)
 
         rts
 
 ; ------------------------------------------------
 ; Lookup tables
 ; ------------------------------------------------
-
-; VIC-II sprite register offsets
 sprite_pos_off:
-        !byte $04, $06, $08
+        !byte $04, $06, $08    ; VIC-II X-position offsets for sprites 2, 3, 4
 
 sprite_colour_off:
-        !byte $29, $2a, $2b
-
-; Screen RAM row start addresses (rows 0-24)
-row_addr_lo:
-        !byte $00, $28, $50, $78, $a0, $c8, $f0, $18
-        !byte $40, $68, $90, $b8, $e0, $08, $30, $58
-        !byte $80, $a8, $d0, $f8, $20, $48, $70, $98, $c0
-
-row_addr_hi:
-        !byte $04, $04, $04, $04, $04, $04, $04, $05
-        !byte $05, $05, $05, $05, $05, $06, $06, $06
-        !byte $06, $06, $06, $06, $07, $07, $07, $07, $07
-
-; Star initial positions (8 stars: 0-3 close, 4-7 distant)
-star_init_row:
-        !byte 2, 8, 14, 20, 5, 11, 17, 23
-
-star_init_col:
-        !byte 5, 28, 15, 35, 18, 7, 32, 22
-
-; Star appearance (close = bright asterisk, distant = dim period)
-star_char_tbl:
-        !byte $2a, $2a, $2a, $2a, $2e, $2e, $2e, $2e
-
-star_colour_tbl:
-        !byte $01, $01, $01, $01, $0b, $0b, $0b, $0b
+        !byte $29, $2a, $2b   ; VIC-II colour register offsets
 
 ; ------------------------------------------------
 ; Sprite data at $2000 (block 128) — ship

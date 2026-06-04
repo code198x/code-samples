@@ -1,0 +1,40 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-08",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-flash",
+      "prg": "steps/step-01.prg",
+      "medium": "video",
+      "timeline": [
+        { "boot_run": true },
+        { "record_video": "step-01-flash.mp4" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "wait": 4 },
+        { "press": "fire", "frames": 4 },
+        { "wait": 95 },
+        { "stop_video": true }
+      ],
+      "caption": "On a hit the enemy turns white and freezes for eight frames before respawning — instead of blinking out instantly, the kill now lands with a visible beat.",
+      "alt": "The ship lines up under the enemy and fires; on impact the enemy flashes from green to white and holds still for a moment, then disappears and respawns green at the top."
+    },
+    {
+      "id": "explosion",
+      "prg": "steps/step-02.prg",
+      "medium": "audio",
+      "timeline": [
+        { "boot_run": true },
+        { "record_audio": "explosion.wav" },
+        { "wait": 6 },
+        { "hold": "left" }, { "wait": 36 }, { "release": "left" },
+        { "wait": 4 },
+        { "press": "fire", "frames": 4 },
+        { "wait": 60 },
+        { "stop_audio": true }
+      ],
+      "caption": "The full hit, heard: the shot pews on voice 1, then the impact booms on voice 2 — a low noise burst layered over the laser, both voices sounding at once.",
+      "alt": "A bright laser 'pew' as the shot fires, followed a moment later by a low, noisy explosion burst as it connects — two distinct SID voices, the second a broadband boom that fades quickly."
+    }
+  ]
+}
