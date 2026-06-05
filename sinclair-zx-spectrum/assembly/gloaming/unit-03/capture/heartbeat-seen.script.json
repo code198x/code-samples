@@ -1,0 +1,21 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-03/heartbeat-seen.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-03/heartbeat-seen.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 96
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]

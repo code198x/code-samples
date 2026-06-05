@@ -1,0 +1,12 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-02",
+  "captures": [
+    { "id": "step-01-solid",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 50}, {"screenshot": "step-01-solid.png"} ] },
+    { "id": "step-02-figure",
+      "program": "steps/step-02.asm",
+      "timeline": [ {"wait": 50}, {"screenshot": "step-02-figure.png"} ] }
+  ]
+}

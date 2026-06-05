@@ -1,38 +1,9 @@
-; ============================================================================
-; GLOAMING — Unit 5: One Step
-; ============================================================================
-; The machine can feel the keys (Unit 4) — now it acts on them. Hold O and the
-; lamplighter steps left; hold P and he steps right. This is the first half of
-; Gloaming's second big technique, the *cell sprite*: a figure that has a
-; position, and moves by being rubbed out where he was and drawn where he's
-; going.
-;
-; Two new ideas:
-;
-;   1. His position is no longer fixed in the source — it's a byte in memory,
-;      `lamp_col`, that we change as he walks. State the program keeps and
-;      edits is what makes a thing a *game* and not a picture.
-;
-;   2. Moving = ERASE then DRAW. Blank the eight bitmap bytes of his old cell,
-;      change the column, draw his shape in the new one. Do it every frame a
-;      key is held and he glides cell by cell along his row.
-;
-; He moves only left and right for now, so he never leaves one character row —
-; and that keeps the address arithmetic gentle. Every cell in a row shares the
-; same screen "third" and the same row-within-third, so the address of his
-; cell is simply ROW_SCR + col. No thirds to decode; just add the column.
-;
-; >>> THE ASSUMPTION, NAMED OUT LOUD <<<
-; Erasing means writing zeros over his cell. That only looks right because the
-; floor is BLANK — cobbles are pure attribute colour, no pixels to destroy. The
-; moment he steps over something with pixels (a lamp, in Unit 9) this naive
-; erase would rub it out too. Unit 6 fixes it by saving what's underneath
-; before drawing. For now: blank floor, blank erase, and it works.
-; ============================================================================
+; Gloaming — Unit 5: One Step
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 gives him a position in memory and walks him right while P is held.
 
             org     32768
 
-; --- the cell vocabulary (from Unit 1) ---
 COBBLE      equ     %00000001       ; PAPER black, INK blue — dark ground
 WALL        equ     %00001111       ; PAPER blue, INK white — pale stone
 LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black, INK white — the figure
@@ -47,9 +18,6 @@ START_COL   equ     15
 
 KEYS_OP     equ     $DFFE           ; half-row with P(bit0) and O(bit1)
 
-; ============================================================================
-; SETUP — runs once.
-; ============================================================================
 start:
             ld      a, 0            ; border black
             out     ($FE), a
@@ -89,43 +57,30 @@ start:
 
             call    draw_lamp       ; draw him once, at his starting column
 
-; ============================================================================
-; THE HEARTBEAT — read a direction, and if held, step that way.
-; ============================================================================
+; --- the heartbeat: read P and, if held, step right ---
             im      1
             ei
 
 game_loop:
             halt
 
-            ; --- INPUT: which way is held? ---
             ld      bc, KEYS_OP
             in      a, (c)          ; bottom bits, 0 = held
-            bit     1, a            ; O (left)?
-            jr      z, .step_left
             bit     0, a            ; P (right)?
             jr      z, .step_right
             jr      game_loop       ; nothing held — hold position
 
-.step_left:
+.step_right:
             call    erase_lamp      ; rub him out where he is
             ld      a, (lamp_col)
-            dec     a               ; one cell left
+            inc     a               ; one cell right
             ld      (lamp_col), a
             call    draw_lamp       ; draw him where he's going
             jr      game_loop
 
-.step_right:
-            call    erase_lamp
-            ld      a, (lamp_col)
-            inc     a               ; one cell right
-            ld      (lamp_col), a
-            call    draw_lamp
-            jr      game_loop
-
 ; ----------------------------------------------------------------------------
 ; draw_lamp — colour his cell and stamp his shape into it.
-;   reads lamp_col; cell address = ROW_SCR + col, attribute = ROW_ATTR + col.
+;   cell address = ROW_SCR + col, attribute = ROW_ATTR + col.
 ; ----------------------------------------------------------------------------
 draw_lamp:
             ld      a, (lamp_col)
@@ -149,7 +104,7 @@ draw_lamp:
 
 ; ----------------------------------------------------------------------------
 ; erase_lamp — blank his cell back to bare cobbles.
-;   (Safe ONLY because the floor has no pixels — see the note up top.)
+;   (Safe ONLY because the floor has no pixels — see the unit page.)
 ; ----------------------------------------------------------------------------
 erase_lamp:
             ld      a, (lamp_col)

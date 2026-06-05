@@ -1,0 +1,15 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-01",
+  "captures": [
+    { "id": "step-01-cobbles",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 50}, {"screenshot": "step-01-cobbles.png"} ] },
+    { "id": "step-02-walls",
+      "program": "steps/step-02.asm",
+      "timeline": [ {"wait": 50}, {"screenshot": "step-02-walls.png"} ] },
+    { "id": "step-03-frame",
+      "program": "steps/step-03.asm",
+      "timeline": [ {"wait": 50}, {"screenshot": "step-03-frame.png"} ] }
+  ]
+}

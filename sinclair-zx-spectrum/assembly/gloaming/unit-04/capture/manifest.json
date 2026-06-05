@@ -1,0 +1,18 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-04",
+  "captures": [
+    { "id": "step-01-rest",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 40}, {"screenshot": "step-01-rest.png"} ] },
+    { "id": "step-01-right",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 30}, {"hold": "P"}, {"wait": 10}, {"screenshot": "step-01-right.png"} ] },
+    { "id": "step-02-left",
+      "program": "steps/step-02.asm",
+      "timeline": [ {"wait": 30}, {"hold": "O"}, {"wait": 10}, {"screenshot": "step-02-left.png"} ] },
+    { "id": "step-02-right",
+      "program": "steps/step-02.asm",
+      "timeline": [ {"wait": 30}, {"hold": "P"}, {"wait": 10}, {"screenshot": "step-02-right.png"} ] }
+  ]
+}

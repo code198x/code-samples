@@ -1,0 +1,17 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-03",
+  "captures": [
+    { "id": "step-01-steady",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 50}, {"screenshot": "step-01-steady.png"} ] },
+    { "id": "heartbeat-seen",
+      "program": "heartbeat-seen.asm",
+      "timeline": [
+        {"wait": 10},
+        {"record_video": "heartbeat-seen.mp4"},
+        {"wait": 96},
+        {"stop_video": true}
+      ] }
+  ]
+}
