@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/meet-basic/unit-14",
+  "captures":[
+    {"id":"step-01-program","program":"steps/step-01.bas",
+     "comment":"The title-card program running — the thing worth keeping. SAVE/LOAD itself is a workflow done interactively in the emulator (the Spectrum's keyword-entry makes scripting the SAVE command unreliable), so this unit captures the program, not a tape prompt.",
+     "timeline":[{"wait":50},{"screenshot":"step-01-program.png"}]}
+  ]}
