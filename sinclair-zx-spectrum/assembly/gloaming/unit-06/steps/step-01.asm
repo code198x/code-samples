@@ -1,28 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 6: Save and Restore
-; ============================================================================
-; Unit 5 moved the lamplighter by blanking the cell he left — and we named the
-; flaw out loud: that only works because the floor has no pixels. Step him onto
-; anything with a shape (a lamp, soon) and the blank-erase would scrub it away.
-;
-; This unit fixes it properly, and it's the second half of the cell-sprite
-; major. Instead of blanking, we *remember*. Before the lamplighter stands in a
-; cell, we SAVE the nine bytes already there — the eight bitmap rows plus the
-; one attribute — into a little buffer. When he leaves, we RESTORE them, putting
-; the cell back exactly as we found it. He can now cross anything unharmed.
-;
-; The dance, every move:
-;
-;   RESTORE   put back what was under him (he's leaving this cell)
-;   step      change the column
-;   SAVE      grab what's under the new cell (before we cover it)
-;   DRAW      draw him in the new cell
-;
-; On today's blank floor this looks identical to Unit 5 — he walks, no trail,
-; no damage. The difference is invisible *now* and load-bearing *later*: it's
-; the honest, simple preservation that a future game upgrades into true masking.
-; (Remember Unit 5's "watch the assumption bite"? Try the mirror of it below.)
-; ============================================================================
+; Gloaming — Unit 6: Save and Restore
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 remembers what's under him — save on arrival, restore on leaving.
 
             org     32768
 

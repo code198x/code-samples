@@ -1,0 +1,21 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-06",
+  "captures": [
+    { "id": "step-01-walked",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {"wait": 20}, {"hold": "O"}, {"wait": 8}, {"release": "O"},
+        {"wait": 5}, {"screenshot": "step-01-walked.png"}
+      ] },
+    { "id": "survives-before",
+      "program": "survives.asm",
+      "timeline": [ {"wait": 40}, {"screenshot": "survives-before.png"} ] },
+    { "id": "survives-after",
+      "program": "survives.asm",
+      "timeline": [
+        {"wait": 20}, {"hold": "O"}, {"wait": 6}, {"release": "O"},
+        {"wait": 8}, {"screenshot": "survives-after.png"}
+      ] }
+  ]
+}
