@@ -1,0 +1,9 @@
+  10 BORDER 1
+  20 PAPER 1
+  30 INK 6
+  40 CLS
+  50 PRINT AT 8, 11; "MEET BASIC"
+  60 PRINT AT 10, 7; "a Spectrum primer"
+  70 PRINT AT 14, 7; "normal";
+  80 PRINT AT 14, 18; BRIGHT 1; "bright"
+  90 PRINT AT 16, 11; FLASH 1; "FLASH"
