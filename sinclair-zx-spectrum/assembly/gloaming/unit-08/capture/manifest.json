@@ -1,0 +1,12 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-08",
+  "captures": [
+    { "id": "step-01-corner",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 20}, {"hold": "P"}, {"wait": 20}, {"release": "P"}, {"hold": "Q"}, {"wait": 16}, {"release": "Q"}, {"wait": 5}, {"screenshot": "step-01-corner.png"} ] },
+    { "id": "step-01-roam",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 12}, {"record_video": "step-01-roam.mp4"}, {"hold": "P"}, {"wait": 18}, {"release": "P"}, {"hold": "Q"}, {"wait": 14}, {"release": "Q"}, {"wait": 8}, {"stop_video": true} ] }
+  ]
+}

@@ -1,27 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 8: Edges
-; ============================================================================
-; The lamplighter walks left and right, blocked by the side walls (Unit 7).
-; This unit completes the movement engine: up and down as well, bounded on all
-; four sides. By the end he roams the whole square — and is properly shut inside
-; it. The cell-sprite technique is finished here.
-;
-; Two things change. The controls become the classic QAOP: Q up, A down, O
-; left, P right. And — the big one — his ROW can change now, not just his
-; column. The moment he moves between rows, the gentle "address = ROW_SCR + col"
-; from Units 5-7 stops working, because different rows live in different parts
-; of the Spectrum's awkward screen layout. The full arithmetic from Unit 2
-; comes back, now done at run time for any (col, row):
-;
-;   high byte = $40 + (row AND $18)          ; which third  (×8 in the high byte)
-;   low  byte = ((row AND 7) << 5) OR col    ; row-within-third ×32, plus column
-;
-; That one routine, scr_addr_cr, turns any cell into a screen address. The
-; attribute address is the easy linear one, $5800 + row*32 + col. Collision
-; (Unit 7) doesn't change at all — it already tested an arbitrary target cell;
-; now the target can be a row away, and the top and bottom walls catch him just
-; as the sides do.
-; ============================================================================
+; Gloaming — Unit 8: Edges
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 completes the engine: up/down (QAOP) + full (col,row) addressing.
 
             org     32768
 
