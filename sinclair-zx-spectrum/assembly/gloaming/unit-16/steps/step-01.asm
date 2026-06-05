@@ -1,25 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 16: The Title
-; ============================================================================
-; The game works, but it starts in the middle — load it and you're already
-; playing. Real games have a front door. Phase E makes Gloaming feel finished,
-; and it begins with a title screen and the thing that ties the whole game
-; together: a STATE MACHINE.
-;
-; A state machine is just a variable that says "what is the game doing right
-; now?" — TITLE, PLAY, WIN, or LOSE — and a loop that does the right thing for
-; whichever state we're in. Each frame we look at game_state and dispatch:
-;
-;   TITLE  show "GLOAMING", wait for a key, then start a fresh game -> PLAY
-;   PLAY   the game you've built: move, light, dodge; win or lose ends it
-;   WIN    hold the win screen   (Unit 19 will send it back to the title)
-;   LOSE   hold the lose screen  (Unit 19 will too)
-;
-; The other change this needs: the game's setup — drawing the square, the
-; lamps, resetting lives and the tally — moves into init_game, a routine we can
-; call to build a *fresh* play session. That's what "press a key to begin"
-; calls, and it's the seed of "play again".
-; ============================================================================
+; Gloaming — Unit 16: The Title
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 adds a title screen and a TITLE/PLAY/WIN/LOSE state machine.
 
             org     32768
 

@@ -1,0 +1,16 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-16",
+  "captures": [
+    { "id": "step-01-title",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 30}, {"screenshot": "step-01-title.png"} ] },
+    { "id": "step-01-start",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {"wait": 25}, {"record_video": "step-01-start.mp4"},
+        {"hold": "Space"}, {"wait": 4}, {"release": "Space"},
+        {"wait": 45}, {"stop_video": true}
+      ] }
+  ]
+}
