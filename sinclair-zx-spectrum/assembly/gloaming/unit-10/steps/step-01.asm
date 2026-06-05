@@ -1,28 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 10: Light It
-; ============================================================================
-; The lamps are placed and cold (Unit 9). Now the lamplighter lights them — and
-; the trick is so neat it's almost a cheat. We already save the nine bytes
-; beneath him every time he moves (Unit 6). Lighting a lamp is just *editing
-; the saved copy*: change the stored attribute from cold cyan to bright yellow,
-; and when he steps off, restore paints the lamp back — lit.
-;
-; The whole mechanic, in the move we already have:
-;
-;   restore  put back the cell he's leaving (lit, if we changed it)
-;   step     move to the target
-;   save     copy the new cell's nine bytes into the buffer
-;   >>> if the cell we just saved is an UNLIT lamp, change the saved
-;       attribute to LIT. He's standing on it now, so nothing shows yet —
-;       but the moment he leaves, restore writes the lit lamp back. <<<
-;   draw     draw him over the top
-;
-; This is two ideas at once. COLLISION-AS-RULE: stepping onto a particular kind
-; of cell *does something*, not just "can I go there". And PERSISTENT CELL
-; STATE: the floor under the sprite isn't scenery, it's data we change and that
-; stays changed. Light a lamp, walk away, and it's still glowing — because the
-; change lives in the cell, not in the sprite.
-; ============================================================================
+; Gloaming — Unit 10: Light It
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 lights a lamp by editing its saved attribute from cyan to yellow.
 
             org     32768
 
