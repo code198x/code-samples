@@ -1,0 +1,2 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-02",
+  "captures":[{"id":"step-01-hall","program":"steps/step-01.asm","timeline":[{"wait":12},{"screenshot":"step-01-hall.png"}]}]}

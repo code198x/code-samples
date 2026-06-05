@@ -1,24 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 2: The First Hall
-; ============================================================================
-; In Unit 1 the thief stood on a flat wash of blue — one attribute byte, the
-; same colour in every cell. That was the honest "before". A real keep is made
-; of stone, and stone has texture and shade. This unit gives the keep its first
-; room, and the trick that makes it look like stone: DITHERING.
-;
-; A cell still has only two colours — INK and PAPER. But the bitmap chooses
-; INK-or-PAPER for each of its 64 pixels, so a pattern of the two MIXES them:
-; the eye blends scattered black INK pixels over blue PAPER into a perceived
-; shade *between* the two. The DENSITY of the pattern sets the shade:
-;
-;   sparse black  -> mostly blue   -> a light, lit stone   (the walls)
-;   half black    -> blue/black    -> dark slate           (the floor)
-;
-; So from one pair of colours — blue and black — we get two readable shades of
-; stone, plus texture, where a flat fill gave us neither. No engine change:
-; these are just eight-byte tiles, drawn cell by cell exactly as Gloaming drew
-; its lantern glyph.
-; ============================================================================
+; Shadowkeep — Unit 2: The First Hall
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 builds the dithered hall — lit stone walls, dark slate floor — around him.
 
             org     32768
 
