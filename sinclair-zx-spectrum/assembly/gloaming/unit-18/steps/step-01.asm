@@ -1,24 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 18: The Square Warms
-; ============================================================================
-; The game plays and sounds right. This unit adds the last layer to the play
-; itself: atmosphere. As you light lamps, the square warms — the cold blue
-; stone of the walls catches the spreading light and glows, brightening through
-; to a warm dusk-magenta as the night is held back. Snuff a lamp and the stone
-; cools again. The look of the place now tells you how you're doing, before you
-; even glance at the tally.
-;
-; It's built entirely from the very first thing you learned — writing attribute
-; colour (Unit 1). A small table maps "lamps lit" to a wall colour; whenever the
-; count changes, we repaint the frame in that colour. No new technique, just the
-; oldest one used for mood. (This is the faintest taste of what a later, larger
-; game makes its whole craft: lighting and colour as atmosphere.)
-;
-; ONE CONSTRAINT, NOTED: the walls must stay *solid* to collision (Unit 7), and
-; that test reads PAPER's bottom bit (bit 3). So every colour in the ramp uses a
-; PAPER whose bottom bit is set — blue (1) and magenta (3). Warm the walls, but
-; never break the bit that makes them walls.
-; ============================================================================
+; Gloaming — Unit 18: The Square Warms
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 warms the walls: a colour ramp keyed to lamps lit, repainted on change.
 
             org     32768
 
