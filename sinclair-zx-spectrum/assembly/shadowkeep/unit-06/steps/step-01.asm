@@ -1,21 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 6: Through the Doorway
-; ============================================================================
-; Unit 5 let the thief travel the keep, but the crossing was a teleport: walk
-; through any door and you appeared in the middle of the next room. This unit
-; makes it a real step.
-;
-; The idea is simple and it's the heart of the flick-screen adventure: when you
-; leave by one edge, you ENTER FROM THE OPPOSITE EDGE, at the same height. Walk
-; off the east edge at row 11 and you arrive at the WEST edge, still at row 11,
-; mid-stride — exactly as if you'd stepped through the doorway in the wall. Your
-; position across the seam is preserved; only the side flips.
-;
-; So check_exit now does two things per edge: follow the link (as before), and
-; set the entry coordinate — opposite edge, same cross-axis — instead of the
-; blunt "drop him in the centre". One cell INSIDE the edge, so he doesn't land
-; back on a doorway and immediately bounce out again.
-; ============================================================================
+; Shadowkeep — Unit 6: Through the Doorway
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 makes the crossing a step — arrive at the opposite edge, same height.
 
             org     32768
 

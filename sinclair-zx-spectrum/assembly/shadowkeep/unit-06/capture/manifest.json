@@ -1,0 +1,8 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-06",
+  "captures":[
+    {"id":"step-01-step","program":"steps/step-01.asm",
+     "comment":"Walk east through the hall's east doorway; instead of landing in the centre, the thief arrives at the WEST doorway of room 1 at the same height, then walks on into the room.",
+     "timeline":[{"wait":8},{"record_video":"step-01-step.mp4"},{"hold":"P"},{"wait":60},{"release":"P"},{"wait":12},{"stop_video":true}]},
+    {"id":"step-01-at-door","program":"steps/step-01.asm",
+     "timeline":[{"hold":"P"},{"wait":34},{"release":"P"},{"wait":3},{"screenshot":"step-01-at-door.png"}]}
+  ]}
