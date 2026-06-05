@@ -1,0 +1,153 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-12",
+  "captures": [
+    {
+      "id": "step-01-win",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {
+          "wait": 20
+        },
+        {
+          "hold": "A"
+        },
+        {
+          "wait": 9
+        },
+        {
+          "release": "A"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "O"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "release": "O"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "P"
+        },
+        {
+          "wait": 5
+        },
+        {
+          "release": "P"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "Q"
+        },
+        {
+          "wait": 5
+        },
+        {
+          "release": "Q"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "O"
+        },
+        {
+          "wait": 12
+        },
+        {
+          "release": "O"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "P"
+        },
+        {
+          "wait": 19
+        },
+        {
+          "release": "P"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "Q"
+        },
+        {
+          "wait": 8
+        },
+        {
+          "release": "Q"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "O"
+        },
+        {
+          "wait": 16
+        },
+        {
+          "release": "O"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "Q"
+        },
+        {
+          "wait": 4
+        },
+        {
+          "release": "Q"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "O"
+        },
+        {
+          "wait": 5
+        },
+        {
+          "release": "O"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "hold": "P"
+        },
+        {
+          "wait": 23
+        },
+        {
+          "release": "P"
+        },
+        {
+          "wait": 2
+        },
+        {
+          "wait": 12
+        },
+        {
+          "screenshot": "step-01-win.png"
+        }
+      ]
+    }
+  ]
+}

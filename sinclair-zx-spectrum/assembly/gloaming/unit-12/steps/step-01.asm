@@ -1,26 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 12: Nightheld
-; ============================================================================
-; The tally can fill (Unit 11) — so filling it should mean something. This unit
-; adds the WIN: light every lamp and the lamplighter has held back the dark.
-; The game says so with a closing line, then holds that end state.
-;
-; Two new pieces:
-;
-;   1. The win condition. We already count lit lamps; when lit_count reaches
-;      NUM_LAMPS, the game is won. We test it right after a lamp lights — the
-;      only moment the count can change.
-;
-;   2. Printing text. The closing line is drawn with the SPECTRUM'S OWN FONT,
-;      which lives in ROM at $3C00. Each character's 8-byte shape sits at
-;      $3C00 + code*8, so printing a letter is the glyph-draw we've done since
-;      Unit 2, with the bytes coming from ROM instead of our own data. One
-;      routine, print_char, then a loop over the string.
-;
-; On a win we reveal the last lamp (the lamplighter steps aside), print the
-; line across the middle, and sit in a tiny end loop — the game is over, and
-; won.
-; ============================================================================
+; Gloaming — Unit 12: Nightheld
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 adds the win: all lamps lit prints a closing line from the ROM font.
 
             org     32768
 
