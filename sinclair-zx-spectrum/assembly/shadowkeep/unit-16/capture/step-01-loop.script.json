@@ -1,0 +1,120 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-16/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-16/step-01-loop.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 34
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 92
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36510,
+  "value": 1
+ },
+ {
+  "action": "run_frames",
+  "frames": 46
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 80
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]

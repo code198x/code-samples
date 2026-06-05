@@ -1,20 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 16: The Keep Stands
-; ============================================================================
-; Every piece is built — rooms, light, sound, gold, a win. This unit makes
-; them a GAME: the complete loop a player sits down to.
-;
-;   TITLE  — a title screen (borrowing the ROM font at $3D00 for the words),
-;            the theme looping under it, waiting for SPACE.
-;   PLAY   — the keep we built: explore, collect the gold.
-;   WIN    — when the last coin is gone: "THE KEEP STANDS", a flourish, SPACE.
-;   -> back to TITLE.
-;
-; The new capability is structure: a state machine around the parts, a fresh
-; game each time (state reset, not just re-drawn), and text on screen. No new
-; engine — just the whole thing, wired into a loop you can finish and replay.
-; This is the end of Arc 1: a complete, cell-based flick-adventure.
-; ============================================================================
+; Shadowkeep — Unit 16: The Keep Stands
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 wraps it in a state machine: title -> play -> win -> title, a finishable, replayable game.
 
             org     32768
 

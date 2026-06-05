@@ -1,0 +1,112 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-16",
+ "captures": [
+  {
+   "id": "step-01-title",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 24
+    },
+    {
+     "screenshot": "step-01-title.png"
+    }
+   ]
+  },
+  {
+   "id": "step-01-win",
+   "program": "steps/step-01.asm",
+   "comment": "Press SPACE to enter, then set the won flag (a capture-setup poke) so the real show_win state draws THE KEEP STANDS.",
+   "timeline": [
+    {
+     "wait": 24
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 14
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 90
+    },
+    {
+     "poke": "0x8E9E",
+     "value": 1
+    },
+    {
+     "wait": 40
+    },
+    {
+     "screenshot": "step-01-win.png"
+    }
+   ]
+  },
+  {
+   "id": "step-01-loop",
+   "program": "steps/step-01.asm",
+   "comment": "The whole loop: title (theme) -> SPACE enters -> the keep, played -> the win state (won flag set for the capture) draws THE KEEP STANDS -> SPACE returns to the title, reset and waiting.",
+   "timeline": [
+    {
+     "wait": 4
+    },
+    {
+     "record_video": "step-01-loop.mp4"
+    },
+    {
+     "wait": 34
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 14
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 92
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 8
+    },
+    {
+     "poke": "0x8E9E",
+     "value": 1
+    },
+    {
+     "wait": 46
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 14
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 80
+    },
+    {
+     "stop_video": true
+    }
+   ]
+  }
+ ]
+}

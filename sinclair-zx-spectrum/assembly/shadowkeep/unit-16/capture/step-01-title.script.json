@@ -1,0 +1,14 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-16/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 24
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-16/step-01-title.png"
+ }
+]
