@@ -1,0 +1,2 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/meet-the-machine/unit-08",
+  "captures":[{"id":"space-red","program":"read-a-key.asm","timeline":[{"hold":"Space"},{"wait":10},{"screenshot":"space-held-red.png"},{"release":"Space"}]}]}
