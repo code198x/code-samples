@@ -1,0 +1,7 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/meet-basic/unit-01",
+  "captures":[
+    {"id":"step-01-hello","program":"steps/step-01.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-01-hello.png"}]},
+    {"id":"step-02-two-lines","program":"steps/step-02.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-02-two-lines.png"}]}
+  ]}
