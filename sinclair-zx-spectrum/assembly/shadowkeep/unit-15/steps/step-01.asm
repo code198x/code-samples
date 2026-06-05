@@ -1,20 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 15: A Theme in One Voice
-; ============================================================================
-; The keep has sound effects, but a game ANNOUNCES itself. This unit gives the
-; keep a composed beeper theme, played once as it opens.
-;
-; The new capability: a little MUSIC PLAYER — a note-table interpreter. The
-; tune is a stream of (pitch, duration) byte pairs; the player walks it,
-; calling our `beep` primitive for each note:
-;   pitch 0    -> a rest (silence for the duration)
-;   pitch $FF  -> end of tune
-;   otherwise  -> a tone at that delay, held for `duration` chunks
-;
-; The Spectrum beeper is ONE voice — no harmony, no chords. So the melody must
-; carry everything: rhythm, mood, identity, alone. The theme here is a short,
-; solemn phrase in D minor. Composition discipline, not new hardware.
-; ============================================================================
+; Shadowkeep — Unit 15: A Theme in One Voice
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 adds a note-table player and a short D-minor theme that plays as the keep opens.
 
             org     32768
 

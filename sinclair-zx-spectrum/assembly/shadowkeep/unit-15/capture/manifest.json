@@ -1,0 +1,34 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-15",
+ "captures": [
+  {
+   "id": "step-01-theme",
+   "program": "steps/step-01.asm",
+   "comment": "Record from the cold open: the D-minor theme plays once as the keep comes up, then the game loop takes over.",
+   "timeline": [
+    {
+     "record_audio": "step-01-theme.wav"
+    },
+    {
+     "wait": 140
+    },
+    {
+     "stop_audio": true
+    }
+   ]
+  },
+  {
+   "id": "step-01-hall",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 480
+    },
+    {
+     "screenshot": "step-01-hall.png"
+    }
+   ]
+  }
+ ]
+}
