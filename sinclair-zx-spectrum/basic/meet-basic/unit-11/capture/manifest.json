@@ -1,0 +1,9 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/meet-basic/unit-11",
+  "captures":[
+    {"id":"step-01-note","program":"steps/step-01.bas","run":false,
+     "timeline":[{"record_audio":"step-01-note.wav"},{"run_program":true},{"wait":70},{"stop_audio":true}]},
+    {"id":"step-02-fanfare","program":"steps/step-02.bas","run":false,
+     "timeline":[{"record_audio":"step-02-fanfare.wav"},{"run_program":true},{"wait":90},{"stop_audio":true}]},
+    {"id":"step-03-buzz","program":"steps/step-03.bas","run":false,
+     "timeline":[{"record_audio":"step-03-buzz.wav"},{"run_program":true},{"wait":40},{"stop_audio":true}]}
+  ]}

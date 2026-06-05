@@ -1,0 +1,6 @@
+[
+ { "action": "start_audio_recording", "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/basic/meet-basic/unit-11/step-03-buzz.wav" },
+ { "action": "load_basic_program", "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/basic/meet-basic/unit-11/steps/step-03.bas", "run": true },
+ { "action": "run_frames", "frames": 40 },
+ { "action": "stop_audio_recording" }
+]
