@@ -1,0 +1,23 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-11",
+  "captures": [
+    { "id": "step-01-tally",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {"wait": 20}, {"hold": "A"}, {"wait": 9}, {"release": "A"},
+        {"hold": "P"}, {"wait": 3}, {"release": "P"},
+        {"hold": "O"}, {"wait": 6}, {"release": "O"},
+        {"wait": 6}, {"screenshot": "step-01-tally.png"}
+      ] },
+    { "id": "step-01-fill",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {"wait": 12}, {"record_video": "step-01-fill.mp4"},
+        {"hold": "A"}, {"wait": 9}, {"release": "A"}, {"wait": 3},
+        {"hold": "P"}, {"wait": 3}, {"release": "P"}, {"wait": 3},
+        {"hold": "O"}, {"wait": 6}, {"release": "O"},
+        {"wait": 10}, {"stop_video": true}
+      ] }
+  ]
+}

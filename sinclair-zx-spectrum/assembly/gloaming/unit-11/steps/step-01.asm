@@ -1,26 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 11: The Tally
-; ============================================================================
-; Lamps light (Unit 10) but nothing keeps score. A game tells you how you're
-; doing — so we add a TALLY: a row of pips along the top, one per lamp, cold at
-; first and warming as you light them. A progress bar you read at a glance.
-;
-; Deliberately simple: each pip is just a COLOURED CELL — no glyph, no digits.
-; Pure attribute, like the very first thing we drew in Unit 1. Cyan for a lamp
-; not yet lit, bright yellow for one that is, echoing the lamps themselves.
-; (Drawing actual *numbers* is a real technique — a later, bigger game builds a
-; digit HUD. This coloured-pip readout is the honest, smaller "before".)
-;
-; Two changes:
-;
-;   1. The square gets a HUD strip. The top wall moves down to row 1, leaving
-;      row 0 as a black band above the playfield where the pips live — out of
-;      the lamplighter's reach (the row-1 wall stops him at row 2).
-;
-;   2. We keep a count, lit_count. Each time a lamp is freshly lit, we bump the
-;      count and warm the next pip. Because lighting is idempotent (Unit 10),
-;      re-crossing a lit lamp never double-counts.
-; ============================================================================
+; Gloaming — Unit 11: The Tally
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 adds a HUD strip and a row of pips that warm as lamps light.
 
             org     32768
 
