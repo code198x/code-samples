@@ -1,0 +1,52 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-12",
+ "captures": [
+  {
+   "id": "step-01-hall",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 60
+    },
+    {
+     "screenshot": "step-01-hall.png"
+    }
+   ]
+  },
+  {
+   "id": "step-01-vault",
+   "program": "steps/step-01.asm",
+   "comment": "Navigate to the Vault (frame counts measured at settle 60, with the slow many-torch hall draw complete) to show the opposite character: one cold flame on the altar, the rest near-black \u2014 the same hand, the restraint dialled the other way.",
+   "timeline": [
+    {
+     "wait": 12
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 51
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 26
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 3
+    },
+    {
+     "screenshot": "step-01-vault.png"
+    }
+   ]
+  }
+ ]
+}

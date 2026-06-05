@@ -1,21 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 12: A Keep with Character
-; ============================================================================
-; Each room can hold a mood, but we composed them one at a time. This unit
-; pulls back and treats the whole keep as ONE composition, with a single,
-; coherent set of tools — so the three rooms read as parts of one place, each
-; lit to its own character, not three separate experiments.
-;
-; The new capability that makes it possible: a room can have MORE THAN ONE
-; torch, and every floor cell takes its light from the NEAREST flame. So light
-; is no longer one pool — it's as many overlapping pools as a room has fires.
-;
-; With that plus the per-room falloff from Unit 11, each room is composed:
-;   Hall  — three sconces, broad falloff: a grand, evenly-lit chamber.
-;   Gallery — two torches, medium falloff.
-;   Vault — one flame, on the altar, tight falloff: the crypt, unchanged.
-; One engine, one ramp of dither, three characters — a keep you believe in.
-; ============================================================================
+; Shadowkeep — Unit 12: A Keep with Character
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 lets a room hold many torches — each floor cell lit by its nearest flame.
 
             org     32768
 
