@@ -1,21 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 9: Light and Shadow
-; ============================================================================
-; The keep is built but flatly lit — every cell the same cold blue. A real keep
-; has dark corners and lit pools, a torch throwing light a little way into the
-; gloom. This unit gives it that, and the tool is the one you already have:
-; DITHERING. Density is shade (Unit 2). So light is just density chosen by
-; DISTANCE FROM A TORCH.
-;
-; A torch is a glyph 'T' in the room map. When we draw a floor cell, we measure
-; how far it is from the torch and pick a floor tile from a ramp of five — from
-; nearly-all-blue right by the flame, through the half-and-half slate you know,
-; down to nearly-black in the far dark. The same eight-byte tiles as ever; the
-; only new idea is choosing which by distance.
-;
-; The lighting is baked when the room is drawn — static, computed once on entry.
-; (A flickering, moving light comes later; this is the still pool it casts.)
-; ============================================================================
+; Shadowkeep — Unit 9: Light and Shadow
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 hangs a torch in each room and shades the floor by distance from the flame.
 
             org     32768
 
