@@ -1,20 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 1: A Hooded Figure
-; ============================================================================
-; Shadowkeep does not start from nothing. It starts from Gloaming — the game
-; you already finished. The engine is carried over wholesale: the screen-address
-; helpers, the eight-row sprite draw, the dark attribute wash. Nearly everything
-; in this file you have written before.
-;
-; The one new thing is identity. Gloaming's hero was a little lamplighter with
-; arms out. Shadowkeep's hero is a hooded thief — a cloaked silhouette that says
-; "this is a different game" before a single wall is drawn. This unit designs
-; that figure as eight bytes and stands him, alone, in the dark of the keep.
-;
-; Carried from Gloaming:  the black border, the LDIR stone wash, scr_addr_cr and
-;                         attr_addr_cr, the (de)->(hl)/inc h draw loop.
-; New in Shadowkeep:      the thief's eight-byte silhouette, and his colour.
-; ============================================================================
+; Shadowkeep — Unit 1: A Hooded Figure
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-02 stands the hooded thief in the centre of the keep.
 
             org     32768
 
