@@ -1,28 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 13: The Draught
-; ============================================================================
-; Gloaming can be won but not lost — there's no danger. Phase D brings it. This
-; unit adds the threat: a cold draught, a wisp that drifts through the square on
-; its own. Unit 14 will let it snuff lamps; Unit 15 will make it cost you. Today
-; it just moves.
-;
-; The big idea is REUSE. The draught is a second cell sprite — and it runs the
-; exact same dance the lamplighter does: save what's under it, move, restore,
-; draw. We built that engine over Units 5-8 for one character; here it carries a
-; second for almost free. The draught routines below are deliberately the same
-; shape as the lamplighter's, pointed at the draught's own data. (In a larger
-; game you'd factor the pair into one parameterised routine; seeing them side by
-; side first makes the symmetry plain.)
-;
-; The draught steers itself with a tiny PATROL RULE — no clever AI. It carries a
-; velocity (one step in x, one in y) and drifts diagonally; when a wall lies
-; ahead on an axis, it reverses that axis and bounces. The same `wall_at` test
-; the lamplighter obeys keeps the draught inside the square too.
-;
-; It moves slowly — once every few frames, on a little timer — so it drifts
-; rather than races. The loop now does two things each frame: step the player,
-; then step the draught.
-; ============================================================================
+; Gloaming — Unit 13: The Draught
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 adds a second cell sprite — a wisp that drifts and bounces on its own.
 
             org     32768
 

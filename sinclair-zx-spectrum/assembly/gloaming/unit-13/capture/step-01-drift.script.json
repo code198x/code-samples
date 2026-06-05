@@ -1,0 +1,21 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-13/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-13/step-01-drift.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 100
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]

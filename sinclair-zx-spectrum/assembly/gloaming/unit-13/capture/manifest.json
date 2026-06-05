@@ -1,0 +1,12 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-13",
+  "captures": [
+    { "id": "step-01-draught",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 70}, {"screenshot": "step-01-draught.png"} ] },
+    { "id": "step-01-drift",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 20}, {"record_video": "step-01-drift.mp4"}, {"wait": 100}, {"stop_video": true} ] }
+  ]
+}
