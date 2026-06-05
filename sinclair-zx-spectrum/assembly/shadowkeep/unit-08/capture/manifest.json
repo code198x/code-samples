@@ -1,0 +1,94 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-08",
+ "captures": [
+  {
+   "id": "step-01-gallery",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 12
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "screenshot": "step-01-gallery.png"
+    }
+   ]
+  },
+  {
+   "id": "step-01-tour",
+   "program": "steps/step-01.asm",
+   "comment": "Hall east into the Gallery, thread the gap in its dividing wall, north into the Vault, and round the altar. Frame counts measured against thief_col/thief_row in RAM \u2014 he lands on the north-door column exactly, and the altar turns him aside.",
+   "timeline": [
+    {
+     "wait": 12
+    },
+    {
+     "record_video": "step-01-tour.mp4"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 39
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 28
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 12
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 3
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 8
+    },
+    {
+     "stop_video": true
+    }
+   ]
+  }
+ ]
+}

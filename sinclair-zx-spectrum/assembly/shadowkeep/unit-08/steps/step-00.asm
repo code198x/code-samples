@@ -1,27 +1,12 @@
-; ============================================================================
-; SHADOWKEEP — Unit 8: Three Rooms
-; ============================================================================
-; Everything the flick-screen keep needs is built: a room graph, doorways that
-; carry you across the seam, rooms that remember. This unit adds no engine at
-; all. It does the thing all that machinery was for — it builds a *keep*.
-;
-; Three connected rooms, each with its own character, laid out to be explored:
-;
-;   THE GREAT HALL  --east-->  THE GALLERY  --north-->  THE VAULT
-;        (room 0)                (room 1)                (room 2)
-;
-; The Hall is the pillared room you know. The Gallery is split by a wall with a
-; single gap you must find to pass. The Vault holds a great altar of stone you
-; can only circle. The doors line up — Hall's east with Gallery's west (row 11),
-; Gallery's north with Vault's south (column 15) — so walking between them feels
-; like one place. Your chalk (hold SPACE) maps it as you go.
-; ============================================================================
+; Shadowkeep — Unit 8: Three Rooms
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-00 = Unit 7's end: two rooms in RAM, chalk that persists.
 
             org     32768
 
 WALL_ATTR   equ     %01001000
 FLOOR_ATTR  equ     %00001000
-MARK_ATTR   equ     %00001111
+MARK_ATTR   equ     %00001111       ; dim, PAPER 1 (blue), INK 7 (white) — chalk, walkable
 THIEF       equ     %01001010
 WALL_BIT    equ     6
 
@@ -34,6 +19,9 @@ KEYS_Q      equ     $FBFE
 KEYS_A      equ     $FDFE
 KEYS_SPACE  equ     $7FFE
 
+; ----------------------------------------------------------------------------
+; SETUP — copy the room templates into their RAM state buffers, then run.
+; ----------------------------------------------------------------------------
 start:
             ld      a, 0
             out     ($FE), a
@@ -44,10 +32,6 @@ start:
             ldir
             ld      hl, room1_template
             ld      de, room1_state
-            ld      bc, 768
-            ldir
-            ld      hl, room2_template
-            ld      de, room2_state
             ld      bc, 768
             ldir
 
@@ -70,14 +54,21 @@ start:
             call    mark_step
             jr      .loop
 
+; ----------------------------------------------------------------------------
+; mark_step — while SPACE is held, chalk the cell the thief is on: write the
+; mark glyph into the room's state buffer (so it persists and redraws), and
+; set what's "under" him to the mark, so it shows the moment he steps off.
+; ----------------------------------------------------------------------------
 mark_step:
             ld      bc, KEYS_SPACE
             in      a, (c)
             bit     0, a
-            ret     nz
-            call    cell_state_addr
+            ret     nz              ; SPACE not held
+
+            call    cell_state_addr ; HL -> this cell in the state buffer
             ld      (hl), '+'
-            ld      hl, mark_tile
+
+            ld      hl, mark_tile   ; remember the mark as what's under him
             ld      de, under_thief
             ld      bc, 8
             ldir
@@ -85,12 +76,13 @@ mark_step:
             ld      (under_thief + 8), a
             ret
 
+; cell_state_addr — HL = current room's state buffer + thief_row*32 + thief_col.
 cell_state_addr:
             call    room_entry_addr
-            ld      a, (hl)
+            ld      a, (hl)         ; state buffer pointer (low)
             inc     hl
             ld      h, (hl)
-            ld      l, a
+            ld      l, a            ; HL = state base
             push    hl
             ld      a, (thief_row)
             ld      l, a
@@ -99,15 +91,19 @@ cell_state_addr:
             add     hl, hl
             add     hl, hl
             add     hl, hl
-            add     hl, hl
+            add     hl, hl          ; HL = row * 32
             ld      a, (thief_col)
             ld      e, a
             ld      d, 0
-            add     hl, de
+            add     hl, de          ; + col
             pop     de
-            add     hl, de
+            add     hl, de          ; + base
             ret
 
+; ----------------------------------------------------------------------------
+; room_entry_addr / draw_room — draw_room now paints from the state buffer the
+; room table points at.
+; ----------------------------------------------------------------------------
 room_entry_addr:
             ld      a, (current_room)
             ld      l, a
@@ -187,6 +183,9 @@ draw_tile:
             pop     bc
             ret
 
+; ----------------------------------------------------------------------------
+; player_step / wall_at / check_exit — unchanged from Unit 6.
+; ----------------------------------------------------------------------------
 player_step:
             ld      a, (thief_col)
             ld      (tcol), a
@@ -396,6 +395,9 @@ attr_addr_cr:
             add     hl, de
             ret
 
+; ----------------------------------------------------------------------------
+; Palette — now with a chalk mark. The mark is dim, so it stays walkable.
+; ----------------------------------------------------------------------------
 palette:
             defb    '.'
             defw    floor_tile
@@ -408,18 +410,14 @@ palette:
             defb    MARK_ATTR
 
 ; ----------------------------------------------------------------------------
-; The keep: three rooms. Hall -east-> Gallery -north-> Vault, and back.
-;   entry: map ptr, North, South, East, West
+; The room graph — pointers now name the RAM STATE buffers, not the templates.
 ; ----------------------------------------------------------------------------
 rooms:
             defw    room0_state
-            defb    NO_EXIT, NO_EXIT, 1, NO_EXIT      ; Hall: east -> Gallery
+            defb    NO_EXIT, NO_EXIT, 1, NO_EXIT
             defw    room1_state
-            defb    2, NO_EXIT, NO_EXIT, 0            ; Gallery: north -> Vault, west -> Hall
-            defw    room2_state
-            defb    NO_EXIT, 1, NO_EXIT, NO_EXIT      ; Vault: south -> Gallery
+            defb    NO_EXIT, NO_EXIT, NO_EXIT, 0
 
-; The Great Hall — four pillars, east door at row 11.
 room0_template:
             defb    "################################"
             defb    "#..............................#"
@@ -446,18 +444,16 @@ room0_template:
             defb    "#..............................#"
             defb    "################################"
 
-; The Gallery — a dividing wall with one gap (column 15). West door (row 11)
-; back to the Hall; north door (column 15) up to the Vault.
 room1_template:
-            defb    "###############.################"
+            defb    "################################"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
+            defb    "#..............##..............#"
+            defb    "#..............##..............#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "###############.################"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "...............................#"
@@ -473,34 +469,6 @@ room1_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "################################"
-
-; The Vault — a great altar of stone in the middle, south door (column 15)
-; down to the Gallery.
-room2_template:
-            defb    "################################"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#.............####.............#"
-            defb    "#.............####.............#"
-            defb    "#.............####.............#"
-            defb    "#.............####.............#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "###############.################"
 
 floor_tile:
             defb    %10101010
@@ -542,6 +510,9 @@ thief:
             defb    %00111100
             defb    %00100100
 
+; ----------------------------------------------------------------------------
+; Variables, then the room state buffers (RAM copies of the templates).
+; ----------------------------------------------------------------------------
 current_room:
             defb    0
 thief_col:
@@ -564,8 +535,6 @@ under_thief:
 room0_state:
             defs    768
 room1_state:
-            defs    768
-room2_state:
             defs    768
 
             end     start
