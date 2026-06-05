@@ -1,0 +1,83 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-11",
+ "captures": [
+  {
+   "id": "step-01-vault",
+   "program": "steps/step-01.asm",
+   "comment": "Navigate Hall -> Gallery -> Vault (frame counts measured against thief_col/thief_row), stopping in the dark below the altar \u2014 the crypt's tight pool of altar-light, the thief a dim figure approaching.",
+   "timeline": [
+    {
+     "wait": 12
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 45
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 27
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 3
+    },
+    {
+     "screenshot": "step-01-vault.png"
+    }
+   ]
+  },
+  {
+   "id": "step-01-mood",
+   "program": "steps/step-01.asm",
+   "comment": "Walk the keep end to end and feel the rooms change: the Hall's broad light, the Gallery's medium pool, the Vault's tight crypt-dark around the altar. Same engine, one byte of falloff per room.",
+   "timeline": [
+    {
+     "wait": 4
+    },
+    {
+     "record_video": "step-01-mood.mp4"
+    },
+    {
+     "wait": 8
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 45
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 6
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 14
+    },
+    {
+     "stop_video": true
+    }
+   ]
+  }
+ ]
+}

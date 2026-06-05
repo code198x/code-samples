@@ -1,32 +1,15 @@
-; ============================================================================
-; SHADOWKEEP — Unit 11: Mood through Constraint
-; ============================================================================
-; The keep is lit and furnished. Now we COMPOSE with it. Unit 9 gave every room
-; the same gentle pool of light; but a hall and a crypt should not feel the
-; same. This unit gives each room its own light CHARACTER, so the keep's mood
-; changes as you move through it — using nothing the machine didn't already
-; have. The two-colours-a-cell limit and the dither ramp are the whole palette;
-; restraint is the technique.
-;
-; The new lever is one byte per room: FALLOFF — how fast its light fades.
-;
-;   Hall   (falloff 2): distance >> 2 — a big, soft pool. An open, lit chamber.
-;   Gallery(falloff 1): distance >> 1 — a medium pool. (Unit 9's default.)
-;   Vault  (falloff 0): distance      — a tight pool in deep dark. A crypt, lit
-;                       only at the altar's flame; everything else near black.
-;
-; Same torch, same five shades. The difference between welcoming and oppressive
-; is one shift count, chosen per room. Sharp contrast, the eye led to the light.
-; ============================================================================
+; Shadowkeep — Unit 11: Mood through Constraint
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-00 = Unit 10's end: lit, furnished rooms, all lit the same.
 
             org     32768
 
 WALL_ATTR   equ     %01001000
 FLOOR_ATTR  equ     %00001000
 TORCH_ATTR  equ     %01001110
-STATUE_ATTR equ     %01001111
-BANNER_ATTR equ     %01001011
-RUBBLE_ATTR equ     %00001000
+STATUE_ATTR equ     %01001111       ; BRIGHT white on blue — pale stone (solid)
+BANNER_ATTR equ     %01001011       ; BRIGHT magenta on blue — a hanging (solid)
+RUBBLE_ATTR equ     %00001000       ; dim, like floor — walkable broken stone
 MARK_ATTR   equ     %00001111
 THIEF       equ     %01001010
 WALL_BIT    equ     6
@@ -161,13 +144,7 @@ find_torch:
             jr      nz, .ft_row
             ret
 
-; ----------------------------------------------------------------------------
-; shade_for_cell — row in B, column in C. Distance to the torch, shifted by
-; THIS ROOM's falloff, clamped. Bigger falloff = light fades slower = wider,
-; softer pool. Preserves B and C (the draw loop needs them).
-; ----------------------------------------------------------------------------
 shade_for_cell:
-            push    bc
             ld      a, (torch_col)
             cp      NO_TORCH
             jr      z, .sf_dark
@@ -188,30 +165,14 @@ shade_for_cell:
             jr      nc, .sf_max
             ld      a, d
 .sf_max:
-            ld      e, a                ; E = Chebyshev distance
-            ld      a, (current_room)
-            ld      c, a
-            ld      b, 0
-            ld      hl, room_falloff
-            add     hl, bc
-            ld      b, (hl)             ; B = this room's falloff
-            ld      a, e
-            inc     b
-.sf_shift:
-            dec     b
-            jr      z, .sf_clamp
             srl     a
-            jr      .sf_shift
-.sf_clamp:
             cp      MAX_SHADE + 1
             jr      c, .sf_done
             ld      a, MAX_SHADE
 .sf_done:
-            pop     bc
             ret
 .sf_dark:
             ld      a, MAX_SHADE
-            pop     bc
             ret
 
 draw_room:
@@ -508,6 +469,10 @@ attr_addr_cr:
             add     hl, de
             ret
 
+; ----------------------------------------------------------------------------
+; Palette — now furnished. 'S' statue and 'B' banner are bright (solid); 'o'
+; rubble is dim (walkable). '.' is still handled by the lighting path.
+; ----------------------------------------------------------------------------
 palette:
             defb    '.'
             defw    shade2_tile
@@ -538,12 +503,6 @@ shade_tiles:
             defw    shade3_tile
             defw    shade4_tile
 
-; One byte of mood per room: how slowly its light fades.
-room_falloff:
-            defb    2                   ; Hall — broad, soft pool
-            defb    1                   ; Gallery — medium
-            defb    0                   ; Vault — tight pool, deep dark
-
 rooms:
             defw    room0_state
             defb    NO_EXIT, NO_EXIT, 1, NO_EXIT
@@ -552,7 +511,7 @@ rooms:
             defw    room2_state
             defb    NO_EXIT, 1, NO_EXIT, NO_EXIT
 
-; The Great Hall — broadly lit, a torch high in the wall.
+; The Great Hall — torch above, banners flanking a statue, rubble at its feet.
 room0_template:
             defb    "###############T################"
             defb    "#..............................#"
@@ -579,6 +538,7 @@ room0_template:
             defb    "#..............................#"
             defb    "################################"
 
+; The Gallery — a banner on the west wall, a heap of rubble in the corner.
 room1_template:
             defb    "###############.################"
             defb    "#..............................#"
@@ -605,10 +565,9 @@ room1_template:
             defb    "#..............................#"
             defb    "###############T################"
 
-; The Vault — a crypt. No wall torch; the only flame is on the altar itself, so
-; with falloff 0 the light pools tight around it and the rest sinks to black.
+; The Vault — banners flanking the great altar.
 room2_template:
-            defb    "################################"
+            defb    "###############T################"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -618,9 +577,9 @@ room2_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#.............#T##.............#"
             defb    "#.............####.............#"
-            defb    "#.............####.............#"
+            defb    "B.............####.............#"
+            defb    "#.............####.............B"
             defb    "#.............####.............#"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -633,6 +592,9 @@ room2_template:
             defb    "#..............................#"
             defb    "###############.################"
 
+; ----------------------------------------------------------------------------
+; Floor shade ramp.
+; ----------------------------------------------------------------------------
 shade0_tile:
             defb    %00000000
             defb    %00100010
