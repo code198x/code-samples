@@ -1,0 +1,92 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-07/steps/step-01.sna"
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 16
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 12
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-07/step-01-chalk.png"
+ }
+]

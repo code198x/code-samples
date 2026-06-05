@@ -1,30 +1,11 @@
-; ============================================================================
-; SHADOWKEEP — Unit 7: The Hero Remembers
-; ============================================================================
-; The thief can step between rooms, but the keep has no memory: each room is
-; drawn from its fixed template every time he enters, so nothing he does to a
-; room can last. This unit gives the keep a memory.
-;
-; The trick is to stop treating the maps as read-only. At start-up we COPY each
-; room's template into a RAM buffer — its "state" — and from then on the keep
-; lives in those buffers, not in the templates. draw_room paints from the state;
-; anything we write into the state persists, because the state is never thrown
-; away.
-;
-; To make that visible, the thief maps the keep the old way: hold SPACE and he
-; chalks a mark on the floor as he goes. Each mark is written into the room's
-; state buffer, so when you leave a room and come back, your trail is exactly
-; where you left it. The keep remembers.
-;
-; (Two rooms, two 768-byte buffers — fine here. It doesn't scale to a hundred
-; rooms; a later game packs state far tighter. Honest version first.)
-; ============================================================================
+; Shadowkeep — Unit 7: The Hero Remembers
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-00 = Unit 6's end: rooms drawn from fixed templates — the keep forgets.
 
             org     32768
 
 WALL_ATTR   equ     %01001000
 FLOOR_ATTR  equ     %00001000
-MARK_ATTR   equ     %00001111       ; dim, PAPER 1 (blue), INK 7 (white) — chalk, walkable
 THIEF       equ     %01001010
 WALL_BIT    equ     6
 
@@ -35,23 +16,13 @@ NO_EXIT     equ     $FF
 KEYS_OP     equ     $DFFE
 KEYS_Q      equ     $FBFE
 KEYS_A      equ     $FDFE
-KEYS_SPACE  equ     $7FFE
 
 ; ----------------------------------------------------------------------------
-; SETUP — copy the room templates into their RAM state buffers, then run.
+; SETUP.
 ; ----------------------------------------------------------------------------
 start:
             ld      a, 0
             out     ($FE), a
-
-            ld      hl, room0_template
-            ld      de, room0_state
-            ld      bc, 768
-            ldir
-            ld      hl, room1_template
-            ld      de, room1_state
-            ld      bc, 768
-            ldir
 
             xor     a
             ld      (current_room), a
@@ -69,59 +40,8 @@ start:
 .loop:
             halt
             call    player_step
-            call    mark_step
             jr      .loop
 
-; ----------------------------------------------------------------------------
-; mark_step — while SPACE is held, chalk the cell the thief is on: write the
-; mark glyph into the room's state buffer (so it persists and redraws), and
-; set what's "under" him to the mark, so it shows the moment he steps off.
-; ----------------------------------------------------------------------------
-mark_step:
-            ld      bc, KEYS_SPACE
-            in      a, (c)
-            bit     0, a
-            ret     nz              ; SPACE not held
-
-            call    cell_state_addr ; HL -> this cell in the state buffer
-            ld      (hl), '+'
-
-            ld      hl, mark_tile   ; remember the mark as what's under him
-            ld      de, under_thief
-            ld      bc, 8
-            ldir
-            ld      a, MARK_ATTR
-            ld      (under_thief + 8), a
-            ret
-
-; cell_state_addr — HL = current room's state buffer + thief_row*32 + thief_col.
-cell_state_addr:
-            call    room_entry_addr
-            ld      a, (hl)         ; state buffer pointer (low)
-            inc     hl
-            ld      h, (hl)
-            ld      l, a            ; HL = state base
-            push    hl
-            ld      a, (thief_row)
-            ld      l, a
-            ld      h, 0
-            add     hl, hl
-            add     hl, hl
-            add     hl, hl
-            add     hl, hl
-            add     hl, hl          ; HL = row * 32
-            ld      a, (thief_col)
-            ld      e, a
-            ld      d, 0
-            add     hl, de          ; + col
-            pop     de
-            add     hl, de          ; + base
-            ret
-
-; ----------------------------------------------------------------------------
-; room_entry_addr / draw_room — draw_room now paints from the state buffer the
-; room table points at.
-; ----------------------------------------------------------------------------
 room_entry_addr:
             ld      a, (current_room)
             ld      l, a
@@ -201,9 +121,6 @@ draw_tile:
             pop     bc
             ret
 
-; ----------------------------------------------------------------------------
-; player_step / wall_at / check_exit — unchanged from Unit 6.
-; ----------------------------------------------------------------------------
 player_step:
             ld      a, (thief_col)
             ld      (tcol), a
@@ -263,6 +180,12 @@ wall_at:
             bit     WALL_BIT, (hl)
             ret
 
+; ----------------------------------------------------------------------------
+; check_exit — on an edge, follow that edge's link AND set the entry position
+; to the opposite edge at the same height: a step through the doorway, not a
+; jump to the middle. He arrives one cell inside the edge so he doesn't sit on
+; the doorway and bounce straight back.
+; ----------------------------------------------------------------------------
 check_exit:
             ld      a, (thief_col)
             or      a
@@ -275,7 +198,7 @@ check_exit:
             cp      23
             jr      z, .south
             ret
-.east:
+.east:                              ; left by the east edge -> enter at the west
             call    room_entry_addr
             ld      de, 4
             add     hl, de
@@ -283,10 +206,10 @@ check_exit:
             cp      NO_EXIT
             ret     z
             ld      (current_room), a
-            ld      a, 1
+            ld      a, 1            ; west side, one cell in; row unchanged
             ld      (thief_col), a
             jr      .enter
-.west:
+.west:                              ; left by the west edge -> enter at the east
             call    room_entry_addr
             ld      de, 5
             add     hl, de
@@ -294,10 +217,10 @@ check_exit:
             cp      NO_EXIT
             ret     z
             ld      (current_room), a
-            ld      a, 30
+            ld      a, 30           ; east side, one cell in; row unchanged
             ld      (thief_col), a
             jr      .enter
-.north:
+.north:                             ; left by the north edge -> enter at the south
             call    room_entry_addr
             inc     hl
             inc     hl
@@ -305,10 +228,10 @@ check_exit:
             cp      NO_EXIT
             ret     z
             ld      (current_room), a
-            ld      a, 22
+            ld      a, 22           ; bottom, one cell in; column unchanged
             ld      (thief_row), a
             jr      .enter
-.south:
+.south:                             ; left by the south edge -> enter at the north
             call    room_entry_addr
             inc     hl
             inc     hl
@@ -317,7 +240,7 @@ check_exit:
             cp      NO_EXIT
             ret     z
             ld      (current_room), a
-            ld      a, 1
+            ld      a, 1            ; top, one cell in; column unchanged
             ld      (thief_row), a
 .enter:
             call    draw_room
@@ -325,6 +248,9 @@ check_exit:
             call    draw_thief
             ret
 
+; ----------------------------------------------------------------------------
+; Save / restore / draw the thief — unchanged.
+; ----------------------------------------------------------------------------
 pos_bc:
             ld      a, (thief_row)
             ld      b, a
@@ -414,7 +340,7 @@ attr_addr_cr:
             ret
 
 ; ----------------------------------------------------------------------------
-; Palette — now with a chalk mark. The mark is dim, so it stays walkable.
+; Palette and the room graph (unchanged from Unit 5 — doors aligned at row 11).
 ; ----------------------------------------------------------------------------
 palette:
             defb    '.'
@@ -423,20 +349,14 @@ palette:
             defb    '#'
             defw    wall_tile
             defb    WALL_ATTR
-            defb    '+'
-            defw    mark_tile
-            defb    MARK_ATTR
 
-; ----------------------------------------------------------------------------
-; The room graph — pointers now name the RAM STATE buffers, not the templates.
-; ----------------------------------------------------------------------------
 rooms:
-            defw    room0_state
+            defw    room0_data
             defb    NO_EXIT, NO_EXIT, 1, NO_EXIT
-            defw    room1_state
+            defw    room1_data
             defb    NO_EXIT, NO_EXIT, NO_EXIT, 0
 
-room0_template:
+room0_data:
             defb    "################################"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -462,7 +382,7 @@ room0_template:
             defb    "#..............................#"
             defb    "################################"
 
-room1_template:
+room1_data:
             defb    "################################"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -508,16 +428,6 @@ wall_tile:
             defb    %01000100
             defb    %00000000
 
-mark_tile:
-            defb    %00000000
-            defb    %00011000
-            defb    %00011000
-            defb    %01111110
-            defb    %01111110
-            defb    %00011000
-            defb    %00011000
-            defb    %00000000
-
 thief:
             defb    %00011000
             defb    %00111100
@@ -528,9 +438,6 @@ thief:
             defb    %00111100
             defb    %00100100
 
-; ----------------------------------------------------------------------------
-; Variables, then the room state buffers (RAM copies of the templates).
-; ----------------------------------------------------------------------------
 current_room:
             defb    0
 thief_col:
@@ -549,10 +456,5 @@ tile_attr:
             defb    0
 under_thief:
             defb    0, 0, 0, 0, 0, 0, 0, 0, 0
-
-room0_state:
-            defs    768
-room1_state:
-            defs    768
 
             end     start

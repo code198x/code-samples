@@ -1,0 +1,12 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-07",
+  "captures":[
+    {"id":"step-01-chalk","program":"steps/step-01.asm",
+     "timeline":[{"hold":"Space"},{"hold":"O"},{"wait":16},{"release":"O"},{"wait":2},{"hold":"P"},{"wait":12},{"release":"P"},{"release":"Space"},{"wait":4},{"screenshot":"step-01-chalk.png"}]},
+    {"id":"step-01-remember","program":"steps/step-01.asm",
+     "comment":"Chalk a short trail, walk east into room 1 and back; the marks in room 0 are exactly where they were left — the keep remembered.",
+     "timeline":[{"wait":8},{"record_video":"step-01-remember.mp4"},
+       {"hold":"Space"},{"hold":"O"},{"wait":16},{"release":"O"},{"release":"Space"},{"wait":6},
+       {"hold":"P"},{"wait":50},{"release":"P"},{"wait":10},
+       {"hold":"O"},{"wait":50},{"release":"O"},{"wait":12},
+       {"stop_video":true}]}
+  ]}
