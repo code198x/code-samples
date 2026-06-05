@@ -1,0 +1,2 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/meet-the-machine/unit-06",
+  "captures":[{"id":"red-cell","program":"colour-map.asm","timeline":[{"wait":12},{"screenshot":"red-cell.png"}]}]}
