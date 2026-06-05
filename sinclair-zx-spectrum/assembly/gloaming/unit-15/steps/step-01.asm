@@ -1,25 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 15: Lives, and the Fall of Night
-; ============================================================================
-; The draught can undo your work, but it can't touch *you*. This unit closes
-; Phase D: the draught and the lamplighter can collide, each collision costs a
-; life, and when the lives run out, night falls — the lose state. Now Gloaming
-; is a game you can lose as well as win.
-;
-; Three new pieces:
-;
-;   1. ENTITY-VS-ENTITY collision. We check whether the lamplighter and the
-;      draught are trying to share a cell. Rather than let two sprites overlap
-;      (which would tangle their save/restore buffers — each assumes it's the
-;      only thing on its cell), we treat "same cell" as a blocked move: the move
-;      is refused and a life is lost. They never actually overlap.
-;
-;   2. LIVES, shown as pips. Three red pips in the HUD; each hit removes one —
-;      the mirror, again, of the lamp tally.
-;
-;   3. THE LOSE STATE. Out of lives, the screen washes to black — night taking
-;      the square — and a closing line holds, just as the win does.
-; ============================================================================
+; Gloaming — Unit 15: Lives, and the Fall of Night
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 adds collision, lives, and the lose state — night falls at zero lives.
 
             org     32768
 

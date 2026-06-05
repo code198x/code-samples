@@ -1,0 +1,111 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-15",
+  "captures": [
+    {
+      "id": "step-01-lives",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {
+          "wait": 30
+        },
+        {
+          "screenshot": "step-01-lives.png"
+        }
+      ]
+    },
+    {
+      "id": "step-01-night",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {
+          "hold": "Q"
+        },
+        {
+          "wait": 4
+        },
+        {
+          "release": "Q"
+        },
+        {
+          "wait": 1
+        },
+        {
+          "hold": "P"
+        },
+        {
+          "wait": 7
+        },
+        {
+          "release": "P"
+        },
+        {
+          "wait": 1
+        },
+        {
+          "wait": 28
+        },
+        {
+          "hold": "P"
+        },
+        {
+          "wait": 9
+        },
+        {
+          "release": "P"
+        },
+        {
+          "wait": 1
+        },
+        {
+          "hold": "A"
+        },
+        {
+          "wait": 10
+        },
+        {
+          "release": "A"
+        },
+        {
+          "wait": 1
+        },
+        {
+          "wait": 120
+        },
+        {
+          "hold": "P"
+        },
+        {
+          "wait": 5
+        },
+        {
+          "release": "P"
+        },
+        {
+          "wait": 1
+        },
+        {
+          "hold": "A"
+        },
+        {
+          "wait": 8
+        },
+        {
+          "release": "A"
+        },
+        {
+          "wait": 1
+        },
+        {
+          "wait": 120
+        },
+        {
+          "wait": 10
+        },
+        {
+          "screenshot": "step-01-night.png"
+        }
+      ]
+    }
+  ]
+}
