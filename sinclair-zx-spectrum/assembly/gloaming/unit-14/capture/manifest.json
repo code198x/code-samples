@@ -1,0 +1,26 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-14",
+  "captures": [
+    { "id": "step-01-snuff",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {"hold": "Q"}, {"wait": 4}, {"release": "Q"}, {"wait": 1},
+        {"hold": "P"}, {"wait": 7}, {"release": "P"}, {"wait": 1},
+        {"hold": "A"}, {"wait": 4}, {"release": "A"}, {"wait": 1},
+        {"record_video": "step-01-snuff.mp4"},
+        {"wait": 34},
+        {"stop_video": true}
+      ] },
+    { "id": "step-01-snuffed",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {"hold": "Q"}, {"wait": 4}, {"release": "Q"}, {"wait": 1},
+        {"hold": "P"}, {"wait": 7}, {"release": "P"}, {"wait": 1},
+        {"hold": "A"}, {"wait": 8}, {"release": "A"}, {"wait": 1},
+        {"hold": "O"}, {"wait": 16}, {"release": "O"}, {"wait": 1},
+        {"hold": "O"}, {"wait": 1}, {"release": "O"},
+        {"wait": 14}, {"screenshot": "step-01-snuffed.png"}
+      ] }
+  ]
+}

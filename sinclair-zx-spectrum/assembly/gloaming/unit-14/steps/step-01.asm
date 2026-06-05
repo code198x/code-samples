@@ -1,22 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 14: It Snuffs the Light
-; ============================================================================
-; The draught drifts harmlessly (Unit 13). Now it bites. When the draught
-; crosses a LIT lamp, it puts it out — cold cyan again — and the tally drops.
-; The dark reclaims ground you've covered, and suddenly where the draught is,
-; and where it's heading, matters.
-;
-; This is the exact mirror of the lamplighter's lighting in Unit 10, and it
-; works the same beautiful way. The draught already saves the cell it steps
-; onto. So: if the saved attribute is a lit lamp, we change the SAVED copy back
-; to unlit — and when the draught moves on, restore paints the lamp cold. The
-; lamplighter edits his buffer to light; the draught edits its buffer to snuff.
-; Same trick, opposite sign.
-;
-; And it's the first ENTITY-VS-WORLD interaction: one moving thing changing the
-; state of the world that another moving thing cares about. The lamplighter
-; lights; the draught unlights; the lamps are the shared ground they fight over.
-; ============================================================================
+; Gloaming — Unit 14: It Snuffs the Light
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 lets the draught snuff a lit lamp — Unit 10's lighting, mirrored.
 
             org     32768
 
