@@ -1,27 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 4: The Keep's Hand
-; ============================================================================
-; Until now the room was baked into the code: draw_hall decided "wall on the
-; edge, floor within" by testing each cell's position. That makes exactly one
-; shape — a bordered box — and the keep needs many shapes. So this unit gives
-; the keep a HAND: a way to describe a room as DATA, and a routine that lays it
-; out, whatever its shape.
-;
-; Two pieces:
-;
-;   1. A PALETTE. Each kind of tile gets one entry — a glyph that names it, the
-;      eight bytes that draw it, and the attribute that colours it. Add a tile
-;      to the keep's vocabulary by adding one line here.
-;
-;   2. A ROOM MAP. The room is 24 rows of 32 glyphs — and because the glyphs are
-;      '#' for wall and '.' for floor, you can SEE the room in the source. It's
-;      a picture you can read. draw_room walks the map, looks each glyph up in
-;      the palette, and draws the tile it names.
-;
-; The reward is immediate: this room has *pillars* — interior walls a position
-; test could never make — and the thief (moving exactly as in Unit 3) walks
-; between them. Collision needed no change: a wall is still a wall by its light.
-; ============================================================================
+; Shadowkeep — Unit 4: The Keep's Hand
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 describes the room as data — a tile palette and a readable map — and draws pillars.
 
             org     32768
 
