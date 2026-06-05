@@ -1,38 +1,12 @@
-; ============================================================================
-; GLOAMING — Unit 7: Walls
-; ============================================================================
-; The lamplighter can walk anywhere and harm nothing (Unit 6). Now we decide
-; where he's *allowed* to go. The blue frame round the square has been pure
-; decoration; this unit turns it into a boundary he cannot cross.
-;
-; Collision, the cheap and beautiful way: the map is already colour, and colour
-; is already in memory (the whole point of Unit 1). So we don't need a separate
-; table of "what's solid" — we read it straight from the attribute of the cell
-; he's trying to enter.
-;
-; Look at the two cell types:
-;
-;   COBBLE = %0000 0 001   PAPER black (0)  — floor, walkable
-;   WALL   = %0000 1 111   PAPER blue  (1)  — solid
-;                     ^
-;                     bit 3 = the bottom bit of PAPER
-;
-; A wall is the only thing with a non-black PAPER, so PAPER's bottom bit —
-; bit 3 — is SET on walls and CLEAR on floor. One `BIT 3,(HL)` on the target
-; cell's attribute answers "can I go there?". Set = wall = no.
-;
-; So each step now: work out the target cell, BIT-test its attribute, and only
-; commit the move (restore / step / save / draw) if it's clear. Walk into the
-; side walls and he simply stops — no bounds-checking code, just the map
-; refusing him.
-; ============================================================================
+; Gloaming — Unit 7: Walls
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-00 is Unit 6's walker — safe over anything, but stopped by nothing.
 
             org     32768
 
-COBBLE      equ     %00000001       ; PAPER black, INK blue — floor
-WALL        equ     %00001111       ; PAPER blue, INK white — solid
+COBBLE      equ     %00000001       ; PAPER black, INK blue — dark ground
+WALL        equ     %00001111       ; PAPER blue, INK white — pale stone
 LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black, INK white — the figure
-WALL_BIT    equ     3               ; PAPER bit 0: set on walls, clear on floor
 
 ROW         equ     11
 ROW_THIRD   equ     ROW / 8
@@ -83,11 +57,11 @@ start:
             add     hl, de
             djnz    .sides
 
-            call    save_under
-            call    draw_lamp
+            call    save_under      ; remember what's under his start cell
+            call    draw_lamp       ; then draw him on top of it
 
 ; ============================================================================
-; THE HEARTBEAT — test the target cell, move only if it isn't a wall.
+; THE HEARTBEAT — restore, step, save, draw.
 ; ============================================================================
             im      1
             ei
@@ -104,49 +78,27 @@ game_loop:
             jr      game_loop
 
 .step_left:
+            call    restore_under   ; put the old cell back as it was
             ld      a, (lamp_col)
-            dec     a               ; A = the cell he wants to enter
-            call    wall_at         ; NZ = wall, Z = clear  (A preserved)
-            jr      nz, game_loop   ; wall — refuse the step
-            ld      (target_col), a
-            call    commit_move
+            dec     a
+            ld      (lamp_col), a
+            call    save_under      ; remember the new cell's contents
+            call    draw_lamp       ; draw him over them
             jr      game_loop
 
 .step_right:
+            call    restore_under
             ld      a, (lamp_col)
             inc     a
-            call    wall_at
-            jr      nz, game_loop
-            ld      (target_col), a
-            call    commit_move
-            jr      game_loop
-
-; ----------------------------------------------------------------------------
-; wall_at — A = column to test. Reads that cell's attribute and BIT-tests it.
-;   Returns NZ if it's a wall, Z if walkable. Leaves A unchanged.
-; ----------------------------------------------------------------------------
-wall_at:
-            ld      e, a
-            ld      d, 0
-            ld      hl, ROW_ATTR
-            add     hl, de
-            bit     WALL_BIT, (hl)  ; set = wall, clear = floor
-            ret
-
-; ----------------------------------------------------------------------------
-; commit_move — the move is clear: restore old cell, adopt target_col, save and
-;   draw the new one.
-; ----------------------------------------------------------------------------
-commit_move:
-            call    restore_under
-            ld      a, (target_col)
             ld      (lamp_col), a
             call    save_under
             call    draw_lamp
-            ret
+            jr      game_loop
 
 ; ----------------------------------------------------------------------------
-; Address helpers (Unit 6).
+; scr_addr  — HL = screen address of his cell  (ROW_SCR + lamp_col)
+; attr_addr — HL = attribute address of his cell (ROW_ATTR + lamp_col)
+;   Both clobber A, DE, HL.
 ; ----------------------------------------------------------------------------
 scr_addr:
             ld      a, (lamp_col)
@@ -165,23 +117,27 @@ attr_addr:
             ret
 
 ; ----------------------------------------------------------------------------
-; save_under / restore_under / draw_lamp (Unit 6).
+; save_under — copy the nine bytes at his cell into the buffer.
+;   8 bitmap rows -> under_lamp[0..7], attribute -> under_lamp[8].
 ; ----------------------------------------------------------------------------
 save_under:
-            call    scr_addr
+            call    scr_addr        ; HL = screen cell
             ld      de, under_lamp
             ld      b, 8
 .su:
             ld      a, (hl)
             ld      (de), a
             inc     de
-            inc     h
+            inc     h               ; down one screen row
             djnz    .su
-            call    attr_addr
+            call    attr_addr       ; HL = attribute cell
             ld      a, (hl)
             ld      (under_lamp + 8), a
             ret
 
+; ----------------------------------------------------------------------------
+; restore_under — write the nine saved bytes back over his cell.
+; ----------------------------------------------------------------------------
 restore_under:
             call    scr_addr
             ld      de, under_lamp
@@ -197,6 +153,9 @@ restore_under:
             ld      (hl), a
             ret
 
+; ----------------------------------------------------------------------------
+; draw_lamp — colour his cell and stamp his shape into it.
+; ----------------------------------------------------------------------------
 draw_lamp:
             call    attr_addr
             ld      (hl), LAMP_ATTR
@@ -215,12 +174,10 @@ draw_lamp:
 ; State, buffer, and shape.
 ; ----------------------------------------------------------------------------
 lamp_col:
-            defb    START_COL
-target_col:
-            defb    0
+            defb    START_COL       ; his column
 
 under_lamp:
-            defb    0, 0, 0, 0, 0, 0, 0, 0, 0
+            defb    0, 0, 0, 0, 0, 0, 0, 0, 0   ; 9-byte buffer: 8 pixels + 1 attribute
 
 lamplighter:
             defb    %00111100       ; ..XXXX..   head

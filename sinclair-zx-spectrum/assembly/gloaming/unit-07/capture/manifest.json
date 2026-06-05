@@ -1,0 +1,12 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-07",
+  "captures": [
+    { "id": "step-01-blocked",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 20}, {"hold": "P"}, {"wait": 30}, {"release": "P"}, {"wait": 5}, {"screenshot": "step-01-blocked.png"} ] },
+    { "id": "step-01-stop",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 15}, {"record_video": "step-01-stop.mp4"}, {"hold": "P"}, {"wait": 28}, {"release": "P"}, {"wait": 8}, {"stop_video": true} ] }
+  ]
+}
