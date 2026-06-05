@@ -1,24 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 19: Again
-; ============================================================================
-; Gloaming is a finished game — but it ends and stays ended. A real game loops:
-; you finish, and it offers you another go. This unit closes that loop. Win or
-; lose, a key press returns you to the title, and pressing start there builds a
-; brand-new game. Title -> play -> win/lose -> title -> play, round and round.
-;
-; The state machine (Unit 16) makes this almost free. The WIN and LOSE states
-; were dead ends that just held their screen; now they each watch for a key and
-; hand control back to TITLE. The crucial part is that starting again must give
-; a *fresh* game — and it does, because init_game already rebuilds everything
-; from scratch: lamps unlit, three lives, the walls cold and blue, the sprites
-; at their starts. "Play again" and "start" are the same act.
-;
-; One real-world detail: DEBOUNCE. When you win, the key you were holding to
-; play is probably still down; without care it would dismiss the win screen and
-; start a new game in the same instant. So on entering any screen that waits for
-; a key, we set a short input_lock countdown and ignore the key until it expires
-; — a beat to let go and read the screen.
-; ============================================================================
+; Gloaming — Unit 19: Again
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 closes the loop: a key on the end screen returns to the title, debounced.
 
             org     32768
 

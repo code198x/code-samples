@@ -251,6 +251,15 @@ def expand_timeline_spectrum(timeline: list[dict], image_dir: Path) -> list[dict
             if "settle" in action:
                 step["settle_frames"] = int(action["settle"])
             out.append(step)
+        elif "poke" in action:
+            # Capture-setup write to CPU memory (binary-dispatched poke_byte).
+            # Used to reach a state quickly before exercising the *real* game
+            # logic — e.g. set lives to 1 so one engineered collision drives
+            # the genuine lose path. Address accepts int or "0x.." string.
+            addr = action["poke"]
+            addr = int(addr, 0) if isinstance(addr, str) else int(addr)
+            out.append({"action": "poke_byte", "addr": addr,
+                        "value": int(action["value"]) & 0xFF})
         elif "screenshot" in action:
             out.append({"action": "save_screenshot",
                         "path": str(image_dir / action["screenshot"])})

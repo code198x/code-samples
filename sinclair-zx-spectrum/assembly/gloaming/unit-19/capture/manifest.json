@@ -1,0 +1,31 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-19",
+  "captures": [
+    { "id": "step-01-again",
+      "program": "steps/step-01.asm",
+      "comment": "Force a real loss for capture: set lives to 1 and park the draught on the cell the lamplighter steps into, so one move drives the genuine lose path (draw_lose_screen + the new PRESS SPACE prompt).",
+      "timeline": [
+        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 24},
+        {"poke": "0x848B", "value": 1},
+        {"poke": "0x848C", "value": 16},
+        {"poke": "0x848D", "value": 11},
+        {"hold": "P"}, {"wait": 1}, {"release": "P"}, {"wait": 30},
+        {"screenshot": "step-01-again.png"}
+      ] },
+    { "id": "step-01-loop",
+      "program": "steps/step-01.asm",
+      "comment": "The full arcade loop: lose -> the prompt -> SPACE to the title -> SPACE to a brand-new game. The lose is engineered as above; everything after is the real loop and a real init_game rebuild.",
+      "timeline": [
+        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 24},
+        {"record_video": "step-01-loop.mp4"},
+        {"poke": "0x848B", "value": 1},
+        {"poke": "0x848C", "value": 16},
+        {"poke": "0x848D", "value": 11},
+        {"hold": "P"}, {"wait": 1}, {"release": "P"}, {"wait": 44},
+        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 34},
+        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 40},
+        {"stop_video": true}
+      ] }
+  ]
+}
