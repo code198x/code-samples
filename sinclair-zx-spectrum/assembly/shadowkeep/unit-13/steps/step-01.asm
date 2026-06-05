@@ -1,20 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 13: Footsteps and Doors
-; ============================================================================
-; The keep looks like somewhere — but it's silent. This unit gives it a voice.
-;
-; The new capability: a small SOUND-EFFECTS DRIVER on the beeper. One tone
-; primitive — `beep` — toggles the speaker (bit 4 of port $FE) to make a
-; square wave: B counts the cycles (duration), C sets the delay between
-; toggles (pitch; larger = lower). Everything else is composition.
-;
-; From it, two sounds that are about PLACE, not feedback:
-;   sfx_step — a short, low click under every footfall on the stone.
-;   sfx_door — a falling creak as you pass from one chamber to the next.
-;
-; The beeper is the same single bit your very first game blipped. Grown up a
-; little, it's enough to make the keep heard as well as seen.
-; ============================================================================
+; Shadowkeep — Unit 13: Footsteps and Doors
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 adds a one-bit beeper driver — a footfall under each step, a creak at each door.
 
             org     32768
 

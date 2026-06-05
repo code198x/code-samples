@@ -1,0 +1,17 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-13",
+  "captures":[
+    {"id":"step-01-hall","program":"steps/step-01.asm",
+     "timeline":[{"wait":60},{"screenshot":"step-01-hall.png"}]},
+    {"id":"step-01-footsteps","program":"steps/step-01.asm",
+     "comment":"Walk a dozen steps across the Hall floor (no doorway), recording the beeper — a soft low click under each footfall.",
+     "timeline":[{"wait":60},{"record_audio":"step-01-footsteps.wav"},
+       {"hold":"P"},{"wait":12},{"release":"P"},{"wait":4},
+       {"stop_audio":true}]},
+    {"id":"step-01-door","program":"steps/step-01.asm",
+     "comment":"Walk to the Hall's east door (silently), then record only the crossing — a door groaning downward on its hinges as the screen flicks to the Gallery.",
+     "timeline":[{"wait":60},
+       {"hold":"P"},{"wait":15},{"release":"P"},{"wait":2},
+       {"record_audio":"step-01-door.wav"},
+       {"hold":"P"},{"wait":6},{"release":"P"},{"wait":6},
+       {"stop_audio":true}]}
+  ]}
