@@ -1,0 +1,2 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/meet-the-machine/unit-15",
+  "captures":[{"id":"shot","program":"no-safety-net.asm","timeline":[{"wait":12},{"screenshot":"overrun.png"}]}]}
