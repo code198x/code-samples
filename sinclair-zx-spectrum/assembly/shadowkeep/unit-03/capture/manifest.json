@@ -1,0 +1,17 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-03",
+  "captures":[
+    { "id":"step-01-walk","program":"steps/step-01.asm",
+      "comment":"Walk a tour with QAOP — the thief steps cell by cell, the walls turn him back on every side, and the dithered floor stays unbroken behind him (save/restore).",
+      "timeline":[
+        {"wait":8},{"record_video":"step-01-walk.mp4"},
+        {"hold":"Q"},{"wait":26},{"release":"Q"},{"wait":4},
+        {"hold":"O"},{"wait":34},{"release":"O"},{"wait":4},
+        {"hold":"A"},{"wait":20},{"release":"A"},{"wait":4},
+        {"hold":"P"},{"wait":28},{"release":"P"},{"wait":8},
+        {"stop_video":true} ] },
+    { "id":"step-01-against-wall","program":"steps/step-01.asm",
+      "timeline":[
+        {"hold":"Q"},{"wait":28},{"release":"Q"},{"wait":2},
+        {"hold":"O"},{"wait":10},{"release":"O"},{"wait":6},
+        {"screenshot":"step-01-against-wall.png"} ] }
+  ]}

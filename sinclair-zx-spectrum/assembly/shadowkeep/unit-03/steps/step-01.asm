@@ -1,26 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 3: A Place to Move
-; ============================================================================
-; The hall is built; the thief is rooted to the spot. This unit sets him
-; walking — and it's almost entirely Gloaming. The keyboard read, the cell-step
-; movement, the save-and-restore of what's under the hero, the wall collision:
-; you wrote all of it for the lamplighter. Here it moves a thief through a room
-; of stone instead.
-;
-; Two things are worth a second look, because the keep is not the empty square:
-;
-;   1. SAVE/RESTORE NOW CARRIES TEXTURE. Under the lamplighter was blank paper;
-;      under the thief is dithered stone. The nine-byte buffer (eight bitmap
-;      rows + one attribute) was always big enough — so the floor's dither is
-;      saved before he steps on, and restored as he steps off. The slate
-;      survives his passing, no smear, no trail.
-;
-;   2. COLLISION READS THE LOOK. The hall's walls and floor are both blue PAPER;
-;      what separates them is BRIGHT — the walls are lit, the floor is dim. So
-;      "is this a wall?" is "is this cell BRIGHT?" — WALL_BIT is bit 6. It's the
-;      honest cell-based rule: solidity read straight from the attribute. (A
-;      later game decouples the two, so a cell can be lit *and* walkable.)
-; ============================================================================
+; Shadowkeep — Unit 3: A Place to Move
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 sets him walking — QAOP, wall-by-light, and save/restore the stone.
 
             org     32768
 
