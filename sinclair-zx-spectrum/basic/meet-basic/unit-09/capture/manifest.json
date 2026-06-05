@@ -1,0 +1,9 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/meet-basic/unit-09",
+  "captures":[
+    {"id":"step-01-place","program":"steps/step-01.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-01-place.png"}]},
+    {"id":"step-02-corners","program":"steps/step-02.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-02-corners.png"}]},
+    {"id":"step-03-titlecard-placed","program":"steps/step-03.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-03-titlecard-placed.png"}]}
+  ]}

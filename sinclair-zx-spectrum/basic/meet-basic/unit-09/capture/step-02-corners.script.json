@@ -1,0 +1,5 @@
+[
+ { "action": "load_basic_program", "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/basic/meet-basic/unit-09/steps/step-02.bas", "run": true },
+ { "action": "run_frames", "frames": 50 },
+ { "action": "save_screenshot", "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/basic/meet-basic/unit-09/step-02-corners.png" }
+]
