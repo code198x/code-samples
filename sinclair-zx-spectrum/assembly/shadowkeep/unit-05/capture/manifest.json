@@ -1,0 +1,8 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-05",
+  "captures":[
+    {"id":"step-01-travel","program":"steps/step-01.asm",
+     "comment":"Walk east through the pillared hall's doorway: the screen flicks to room 1, the second chamber. Then walk west back through its doorway and flick to room 0.",
+     "timeline":[{"wait":8},{"record_video":"step-01-travel.mp4"},{"hold":"P"},{"wait":40},{"release":"P"},{"wait":12},{"hold":"O"},{"wait":40},{"release":"O"},{"wait":10},{"stop_video":true}]},
+    {"id":"step-01-room1","program":"steps/step-01.asm",
+     "timeline":[{"hold":"P"},{"wait":40},{"release":"P"},{"wait":12},{"screenshot":"step-01-room1.png"}]}
+  ]}

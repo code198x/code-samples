@@ -1,21 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 5: The Room Graph
-; ============================================================================
-; A keep is more than one room, and the rooms know each other: north of this
-; hall is that one, east is another. This unit gives the keep that structure —
-; a GRAPH of rooms — and lets the thief travel it.
-;
-; Each room is one entry in a table: a pointer to its map (Unit 4's picture),
-; then four links — the room that lies North, South, East and West, or $FF for
-; "solid wall, no way through". draw_room now draws whichever room is current.
-;
-; Travel is crude on purpose. Walk the thief onto a doorway — a gap in the wall
-; — and he steps to the edge; we follow that edge's link, switch the current
-; room, redraw, and drop him in the middle of the new one. He has crossed the
-; keep. (It's abrupt — he teleports to the centre. Unit 6 makes it a real
-; doorway: he'll re-enter from the opposite edge, so it reads as a step, not a
-; jump. This unit is the map; the next is the walk.)
-; ============================================================================
+; Shadowkeep — Unit 5: The Room Graph
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 gives the keep a graph of rooms — walk a doorway, flick to the next.
 
             org     32768
 
