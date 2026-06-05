@@ -1,0 +1,12 @@
+  10 BORDER 1
+  20 PAPER 1
+  30 INK 6
+  40 CLS
+  50 PRINT AT 8, 11; "MEET BASIC"
+  60 PRINT AT 10, 7; "a Spectrum primer"
+  70 FOR x = 0 TO 31
+  80 PRINT AT 14, x; "*"
+  90 PAUSE 6
+ 100 PRINT AT 14, x; " "
+ 110 NEXT x
+ 120 GO TO 70

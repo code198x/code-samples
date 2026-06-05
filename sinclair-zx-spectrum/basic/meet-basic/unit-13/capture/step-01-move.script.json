@@ -1,0 +1,9 @@
+[
+ { "action": "load_basic_program", "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/basic/meet-basic/unit-13/steps/step-01.bas", "run": true },
+ { "action": "run_frames", "frames": 16 },
+ { "action": "start_video_recording", "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/basic/meet-basic/unit-13/step-01-move.mp4" },
+ { "action": "run_frames", "frames": 90 },
+ { "action": "save_screenshot", "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/basic/meet-basic/unit-13/step-01-poster.png" },
+ { "action": "run_frames", "frames": 150 },
+ { "action": "stop_video_recording" }
+]

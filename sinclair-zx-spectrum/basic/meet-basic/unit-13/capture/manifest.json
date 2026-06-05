@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/meet-basic/unit-13",
+  "captures":[
+    {"id":"step-01-move","program":"steps/step-01.bas",
+     "comment":"Title card draws, then a star tracks across row 14 (PRINT AT + erase + PAUSE), looping via GO TO 70. Record ~2 passes of continuous motion as video; grab a mid-run still as the poster.",
+     "timeline":[{"wait":16},{"record_video":"step-01-move.mp4"},{"wait":90},{"screenshot":"step-01-poster.png"},{"wait":150},{"stop_video":true}]}
+  ]}
