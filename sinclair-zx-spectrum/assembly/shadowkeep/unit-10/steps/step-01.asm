@@ -1,23 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 10: Furnishings
-; ============================================================================
-; The keep is lit, but its rooms are bare — stone, pillars, floor. A place you
-; believe in has *things* in it: a statue, banners on the walls, a scatter of
-; rubble underfoot. This unit furnishes the keep, and it needs almost no new
-; code — because "furniture" is just more tiles in the palette, placed in the
-; map like everything else.
-;
-; The one idea worth naming is BLOCKING vs NON-BLOCKING. The keep already
-; decides solidity by light: a BRIGHT cell is solid, a dim one is walkable. So
-; furniture sorts itself:
-;
-;   STATUE, BANNER  — BRIGHT, so SOLID: the thief walks *around* them.
-;   RUBBLE          — dim, so WALKABLE: the thief walks *over* it, and his
-;                     save/restore carries it just like floor.
-;
-; No collision code changes at all. A statue is a wall that looks like a statue;
-; rubble is a floor that looks like broken stone. Atmosphere from the palette.
-; ============================================================================
+; Shadowkeep — Unit 10: Furnishings
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 dresses the rooms with furniture — bright pieces block, dim ones you walk over.
 
             org     32768
 

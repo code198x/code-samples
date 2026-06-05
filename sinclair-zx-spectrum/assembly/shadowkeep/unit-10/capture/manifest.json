@@ -1,0 +1,13 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-10",
+  "captures":[
+    {"id":"step-01-furnished","program":"steps/step-01.asm",
+     "timeline":[{"wait":14},{"screenshot":"step-01-furnished.png"}]},
+    {"id":"step-01-around-and-over","program":"steps/step-01.asm",
+     "comment":"Walk up to the statue (bright, solid) and stop on the rubble at its feet; then stride sideways across the rubble (dim, walkable) and off it — the broken stone stays where it lay. Two kinds of furniture, one collision rule.",
+     "timeline":[{"wait":14},{"record_video":"step-01-around-and-over.mp4"},
+       {"wait":10},
+       {"hold":"Q"},{"wait":12},{"release":"Q"},{"wait":10},
+       {"hold":"O"},{"wait":10},{"release":"O"},{"wait":8},
+       {"hold":"P"},{"wait":14},{"release":"P"},{"wait":8},
+       {"stop_video":true}]}
+  ]}
