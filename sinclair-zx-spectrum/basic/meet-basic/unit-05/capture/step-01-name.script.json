@@ -1,0 +1,7 @@
+[
+ { "action": "load_basic_program", "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/basic/meet-basic/unit-05/steps/step-01.bas", "run": true },
+ { "action": "run_frames", "frames": 40 },
+ { "action": "type_string", "text": "Ada\n" },
+ { "action": "run_frames", "frames": 30 },
+ { "action": "save_screenshot", "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/basic/meet-basic/unit-05/step-01-name.png" }
+]
