@@ -1,0 +1,7 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"foundations/general-programming/unit-07",
+  "captures":[
+    {"id":"step-01-correct","program":"steps/step-01.bas",
+     "timeline":[{"wait":40},{"type":"7\n"},{"wait":30},{"screenshot":"step-01-correct.png"}]},
+    {"id":"step-02-toolow","program":"steps/step-02.bas",
+     "timeline":[{"wait":40},{"type":"4\n"},{"wait":30},{"screenshot":"step-02-toolow.png"}]}
+  ]}

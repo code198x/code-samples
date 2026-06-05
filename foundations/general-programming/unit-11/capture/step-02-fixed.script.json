@@ -1,0 +1,23 @@
+[
+ {
+  "action": "load_basic_program",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/foundations/general-programming/unit-11/steps/step-02.bas",
+  "run": true
+ },
+ {
+  "action": "run_frames",
+  "frames": 40
+ },
+ {
+  "action": "type_string",
+  "text": "5\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/foundations/general-programming/unit-11/step-02-fixed.png"
+ }
+]

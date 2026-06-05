@@ -1,0 +1,5 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"foundations/general-programming/unit-01",
+  "captures":[
+    {"id":"step-01-hello","program":"steps/step-01.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-01-hello.png"}]}
+  ]}

@@ -1,0 +1,7 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"foundations/general-programming/unit-03",
+  "captures":[
+    {"id":"step-01-text-vs-sum","program":"steps/step-01.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-01-text-vs-sum.png"}]},
+    {"id":"step-02-joined","program":"steps/step-02.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-02-joined.png"}]}
+  ]}

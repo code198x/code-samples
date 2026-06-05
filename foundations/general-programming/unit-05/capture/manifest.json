@@ -1,0 +1,7 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"foundations/general-programming/unit-05",
+  "captures":[
+    {"id":"step-01-sam","program":"steps/step-01.bas",
+     "timeline":[{"wait":40},{"type":"Sam\n"},{"wait":30},{"screenshot":"step-01-sam.png"}]},
+    {"id":"step-01-ada","program":"steps/step-01.bas",
+     "timeline":[{"wait":40},{"type":"Ada\n"},{"wait":30},{"screenshot":"step-01-ada.png"}]}
+  ]}
