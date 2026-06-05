@@ -1,0 +1,9 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/meet-basic/unit-12",
+  "captures":[
+    {"id":"step-01-line","program":"steps/step-01.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-01-line.png"}]},
+    {"id":"step-02-shapes","program":"steps/step-02.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-02-shapes.png"}]},
+    {"id":"step-03-titlecard-framed","program":"steps/step-03.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-03-titlecard-framed.png"}]}
+  ]}

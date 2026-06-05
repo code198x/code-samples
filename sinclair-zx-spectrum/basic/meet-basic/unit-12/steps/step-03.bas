@@ -1,0 +1,11 @@
+  10 BORDER 1
+  20 PAPER 1
+  30 INK 6
+  40 CLS
+  50 PRINT AT 8, 11; "MEET BASIC"
+  60 PRINT AT 10, 7; "a Spectrum primer"
+  70 PLOT 48, 70
+  80 DRAW 160, 0
+  90 DRAW 0, 50
+ 100 DRAW -160, 0
+ 110 DRAW 0, -50
