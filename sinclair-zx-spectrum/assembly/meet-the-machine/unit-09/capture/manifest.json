@@ -1,0 +1,2 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/meet-the-machine/unit-09",
+  "captures":[{"id":"three-cells","program":"a-finger-on-the-boxes.asm","timeline":[{"wait":12},{"screenshot":"three-cells.png"}]}]}
