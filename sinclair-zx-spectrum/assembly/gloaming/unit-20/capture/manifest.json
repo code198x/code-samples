@@ -1,0 +1,15 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-20",
+  "captures": [
+    { "id": "step-01",
+      "program": "gloaming.asm",
+      "load": "tape",
+      "comment": "Build the finished game to a real .tap (pasmonext --tapbas) and load it through the ROM, pulse by pulse. Two crisp PNG stills (the mp4 codec averages the fine border stripes to grey): the loading stripes mid-load, then GLOAMING at the title once the auto-running BASIC loader has started the game from tape.",
+      "timeline": [
+        {"autoload": 700},
+        {"wait": 250}, {"screenshot": "step-01-stripes.png"},
+        {"wait": 1300}, {"screenshot": "step-01-from-tape.png"}
+      ] }
+  ]
+}

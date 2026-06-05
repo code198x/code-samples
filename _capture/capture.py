@@ -219,13 +219,46 @@ def ensure_sna(asm_or_sna: Path) -> Path:
     return sna
 
 
+def ensure_tap(asm_or_tap: Path) -> Path:
+    """Return a .tap path, assembling the matching .asm with `pasmonext
+    --tapbas` (a real tape image with an auto-running BASIC loader) if needed.
+    Written next to the .asm so it sits inside the /code-samples mount."""
+    if asm_or_tap.suffix == ".tap":
+        tap = asm_or_tap
+        asm = asm_or_tap.with_suffix(".asm")
+    else:
+        asm = asm_or_tap
+        tap = asm_or_tap.with_suffix(".tap")
+    if asm.exists():
+        stale = (not tap.exists()) or tap.stat().st_mtime < asm.stat().st_mtime
+        if stale:
+            subprocess.run(
+                ["docker", "run", "--rm",
+                 "-v", f"{CODE_SAMPLES}:/code-samples",
+                 SPECTRUM_IMAGE,
+                 "pasmonext", "--tapbas",
+                 container_path(asm), container_path(tap)],
+                check=True)
+    if not tap.exists():
+        sys.exit(f"No program to run: {tap}")
+    return tap
+
+
+TAPE_SLOT = "tape-1"
+
+
 def spectrum_load_step(program: Path) -> dict:
     """The in-script step that installs the program. A .sna resumes a saved
-    machine; a .bas is tokenised into a freshly booted BASIC and RUN."""
+    machine; a .bas is tokenised into a freshly booted BASIC and RUN; a .tap
+    is inserted into the tape deck for a real, pulse-driven load (drive it
+    from the timeline with {"autoload": frames})."""
     if program.suffix == ".sna":
         return {"action": "load_snapshot", "path": str(program)}
     if program.suffix == ".bas":
         return {"action": "load_basic_program", "path": str(program), "run": True}
+    if program.suffix == ".tap":
+        return {"action": "load_media", "slot": TAPE_SLOT, "kind": "tape",
+                "path": str(program)}
     sys.exit(f"Unsupported Spectrum program: {program}")
 
 
@@ -260,6 +293,13 @@ def expand_timeline_spectrum(timeline: list[dict], image_dir: Path) -> list[dict
             addr = int(addr, 0) if isinstance(addr, str) else int(addr)
             out.append({"action": "poke_byte", "addr": addr,
                         "value": int(action["value"]) & 0xFF})
+        elif "autoload" in action:
+            # Real pulse-driven tape load: type LOAD"", play the tape, and run
+            # the ROM loader for up to N frames (the loading stripes show
+            # during these). The auto-running BASIC loader then starts the
+            # game. Pair with a .tap program and a record_video around it.
+            out.append({"action": "autoload_tape", "slot": TAPE_SLOT,
+                        "max_boot_frames": int(action["autoload"])})
         elif "screenshot" in action:
             out.append({"action": "save_screenshot",
                         "path": str(image_dir / action["screenshot"])})
@@ -283,7 +323,12 @@ def run_spectrum(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
     for cap in manifest["captures"]:
         cap_id = cap["id"]
         program_ref = (unit_dir / cap["program"]).resolve()
-        if program_ref.suffix in (".asm", ".sna"):
+        tape = cap.get("load") == "tape"
+        if tape and program_ref.suffix in (".asm", ".tap"):
+            program = ensure_tap(program_ref)        # real tape image (--tapbas)
+            if program_ref.suffix == ".asm":
+                built.append(program)
+        elif program_ref.suffix in (".asm", ".sna"):
             program = ensure_sna(program_ref)
             if program_ref.suffix == ".asm":
                 built.append(program)

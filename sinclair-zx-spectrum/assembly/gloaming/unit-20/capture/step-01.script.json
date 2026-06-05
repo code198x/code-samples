@@ -1,0 +1,29 @@
+[
+ {
+  "action": "load_media",
+  "slot": "tape-1",
+  "kind": "tape",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-20/gloaming.tap"
+ },
+ {
+  "action": "autoload_tape",
+  "slot": "tape-1",
+  "max_boot_frames": 700
+ },
+ {
+  "action": "run_frames",
+  "frames": 250
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-20/step-01-stripes.png"
+ },
+ {
+  "action": "run_frames",
+  "frames": 1300
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-20/step-01-from-tape.png"
+ }
+]
