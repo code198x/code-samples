@@ -1,0 +1,20 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-09",
+  "captures": [
+    { "id": "step-01-lamps",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 40}, {"screenshot": "step-01-lamps.png"} ] },
+    { "id": "step-01-cross",
+      "program": "steps/step-01.asm",
+      "timeline": [
+        {"wait": 15},
+        {"record_video": "step-01-cross.mp4"},
+        {"hold": "A"}, {"wait": 9}, {"release": "A"},
+        {"wait": 6},
+        {"hold": "P"}, {"wait": 8}, {"release": "P"},
+        {"wait": 10},
+        {"stop_video": true}
+      ] }
+  ]
+}

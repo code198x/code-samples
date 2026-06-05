@@ -1,25 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 9: The Lamps
-; ============================================================================
-; The engine is finished (Unit 8): a figure that roams a walled room, keeping
-; whatever it crosses. Now the *game* arrives. The lamplighter has a job —
-; light the lamps — so first there must be lamps.
-;
-; A lamp is just another cell sprite, but a still one: a lantern glyph, drawn
-; in cold cyan to say "unlit", sitting on the floor waiting. We don't hand-place
-; each one in code; we keep a small DATA TABLE of (column, row) pairs and draw
-; whatever the table says. Change the table, change the level — the placement
-; is data, not program.
-;
-; This is also where Unit 6 finally pays off in full. The lamps have *pixels*
-; now. When the lamplighter walks over a lamp, his save/restore quietly tucks
-; the lantern away underneath him and puts it back when he leaves — so he can
-; cross a lamp without scrubbing it out. The naive blank-erase we replaced in
-; Unit 6 would have destroyed it; save/restore protects it for free.
-;
-; Lamps are walkable: their PAPER is black (bit 3 clear), so the wall test from
-; Unit 7 lets him step onto them — which is exactly what Unit 10 needs.
-; ============================================================================
+; Gloaming — Unit 9: The Lamps
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 scatters lamps from a (col,row) data table; he crosses them unharmed.
 
             org     32768
 
