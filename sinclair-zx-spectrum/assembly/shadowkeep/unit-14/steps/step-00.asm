@@ -1,21 +1,6 @@
-; ============================================================================
-; SHADOWKEEP — Unit 14: The Keep's Gold
-; ============================================================================
-; The keep is a place now — lit, furnished, heard. But there's nothing to DO
-; in it. A game needs a goal. This unit gives it one: gold, scattered through
-; the chambers; the thief lifts it on contact; and when the last coin is gone,
-; the keep is WON.
-;
-; The new capability: a goal loop, on top of the world we already have.
-;   - 'G' cells in the room maps are gold (walkable — no BRIGHT bit).
-;   - stepping onto a gold cell COLLECTS it: the map cell becomes floor (so the
-;     gold is gone for good), a bright chime sounds, and a counter ticks down.
-;   - when the counter hits zero, a victory flourish plays and the keep freezes,
-;     won.
-;
-; No new engine — collection is the move we already make, plus a check; the win
-; is a counter reaching zero. The world becomes a game by adding a reason.
-; ============================================================================
+; Shadowkeep — Unit 14: The Keep's Gold
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-00 = Unit 13's end: the keep walkable, lit, voiced — but no goal.
 
             org     32768
 
@@ -26,7 +11,6 @@ STATUE_ATTR equ     %01001111
 BANNER_ATTR equ     %01001011
 RUBBLE_ATTR equ     %00001000
 MARK_ATTR   equ     %00001111
-GOLD_ATTR   equ     %00000110         ; yellow ink, no BRIGHT -> walkable gold
 THIEF       equ     %01001010
 WALL_BIT    equ     6
 
@@ -35,7 +19,6 @@ START_ROW   equ     11
 NO_EXIT     equ     $FF
 MAX_SHADE   equ     4
 MAX_TORCHES equ     4
-TOTAL_GOLD  equ     6
 
 KEYS_OP     equ     $DFFE
 KEYS_Q      equ     $FBFE
@@ -74,9 +57,6 @@ start:
             ei
 .loop:
             halt
-            ld      a, (won)
-            or      a
-            jr      nz, .loop        ; keep won: freeze on the last coin
             call    player_step
             call    mark_step
             jr      .loop
@@ -265,7 +245,19 @@ draw_room:
             ld      a, (hl)
             cp      '.'
             jr      nz, .not_floor
-            call    draw_floor_cell
+            call    shade_for_cell
+            add     a, a
+            ld      e, a
+            ld      d, 0
+            ld      hl, shade_tiles
+            add     hl, de
+            ld      e, (hl)
+            inc     hl
+            ld      d, (hl)
+            ld      (tile_ptr), de
+            ld      a, FLOOR_ATTR
+            ld      (tile_attr), a
+            call    draw_tile
             jr      .cell_done
 .not_floor:
             call    lookup_tile
@@ -371,7 +363,6 @@ player_step:
             ld      (thief_col), a
             ld      a, (trow)
             ld      (thief_row), a
-            call    collect_gold     ; new cell might be gold — lift it first
             call    save_under
             call    draw_thief
             call    sfx_step
@@ -497,79 +488,6 @@ sfx_door:
             jr      c, .sd_sweep
             ret
 
-; sfx_pickup — a bright two-blip chime: short, high, rising. The sound of gold.
-sfx_pickup:
-            ld      b, 8
-            ld      c, 20
-            call    beep
-            ld      b, 8
-            ld      c, 14            ; a touch higher — a little ting
-            call    beep
-            ret
-
-; sfx_win — an ascending flourish: a low note climbing in steps to a high one.
-sfx_win:
-            ld      c, 60            ; low-ish
-.sw_loop:
-            ld      b, 12
-            push    bc
-            call    beep
-            pop     bc
-            ld      a, c
-            sub     8                ; smaller delay -> higher pitch (rising)
-            ld      c, a
-            cp      16
-            jr      nc, .sw_loop     ; until we've climbed high
-            ret
-
-; ----------------------------------------------------------------------------
-; draw_floor_cell — paint the floor at (row B, col C), shaded for the light.
-; Extracted from draw_room so collection can repaint a cell as floor too.
-; ----------------------------------------------------------------------------
-draw_floor_cell:
-            call    shade_for_cell
-            add     a, a
-            ld      e, a
-            ld      d, 0
-            ld      hl, shade_tiles
-            add     hl, de
-            ld      e, (hl)
-            inc     hl
-            ld      d, (hl)
-            ld      (tile_ptr), de
-            ld      a, FLOOR_ATTR
-            ld      (tile_attr), a
-            call    draw_tile
-            ret
-
-; ----------------------------------------------------------------------------
-; collect_gold — if the cell the thief just moved onto is gold, lift it: turn
-; the map cell to floor (gone for good), repaint it, chime, and tick the
-; counter down. At zero, the keep is won.
-; ----------------------------------------------------------------------------
-collect_gold:
-            call    cell_state_addr  ; HL -> map cell at the thief's position
-            ld      a, (hl)
-            cp      'G'
-            ret     nz
-            ld      (hl), '.'        ; the gold is taken — floor from now on
-            call    pos_bc           ; B = row, C = col
-            call    draw_floor_cell  ; so save_under grabs floor, not gold
-            call    sfx_pickup
-            ld      hl, gold_remaining
-            dec     (hl)
-            ld      a, (hl)
-            or      a
-            call    z, win
-            ret
-
-; win — the last coin is gone. Flourish, and raise the flag the loop watches.
-win:
-            ld      a, 1
-            ld      (won), a
-            call    sfx_win
-            ret
-
 pos_bc:
             ld      a, (thief_row)
             ld      b, a
@@ -680,9 +598,6 @@ palette:
             defb    '+'
             defw    mark_tile
             defb    MARK_ATTR
-            defb    'G'
-            defw    gold_tile
-            defb    GOLD_ATTR
 
 shade_tiles:
             defw    shade0_tile
@@ -709,7 +624,7 @@ rooms:
 room0_template:
             defb    "###############T################"
             defb    "#..............................#"
-            defb    "#.......G......................#"
+            defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "B..............S...............B"
@@ -727,7 +642,7 @@ room0_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#.....................G........#"
+            defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "################################"
@@ -736,7 +651,7 @@ room0_template:
 room1_template:
             defb    "###############.################"
             defb    "#..............................#"
-            defb    "#.....G........................#"
+            defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................T"
             defb    "#..............................#"
@@ -754,7 +669,7 @@ room1_template:
             defb    "#..............................#"
             defb    "#........................ooo...#"
             defb    "#..............................#"
-            defb    "#.......................G......#"
+            defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "###############T################"
@@ -763,7 +678,7 @@ room1_template:
 room2_template:
             defb    "################################"
             defb    "#..............................#"
-            defb    "#.........G....................#"
+            defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -782,7 +697,7 @@ room2_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#...................G..........#"
+            defb    "#..............................#"
             defb    "#..............................#"
             defb    "###############.################"
 
@@ -892,16 +807,6 @@ mark_tile:
             defb    %00011000
             defb    %00000000
 
-gold_tile:
-            defb    %00000000
-            defb    %00111100
-            defb    %01111110
-            defb    %01111110
-            defb    %01111110
-            defb    %01111110
-            defb    %00111100
-            defb    %00000000
-
 thief:
             defb    %00011000
             defb    %00111100
@@ -921,10 +826,6 @@ cell_row:
 cell_col:
             defb    0
 min_dist:
-            defb    0
-gold_remaining:
-            defb    TOTAL_GOLD
-won:
             defb    0
 thief_col:
             defb    START_COL

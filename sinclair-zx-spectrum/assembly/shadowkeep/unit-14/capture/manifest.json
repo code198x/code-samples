@@ -1,0 +1,18 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-14",
+  "captures":[
+    {"id":"step-01-hall","program":"steps/step-01.asm",
+     "timeline":[{"wait":60},{"screenshot":"step-01-hall.png"}]},
+    {"id":"step-01-collect","program":"steps/step-01.asm",
+     "comment":"Walk onto the Hall's upper-left coin (left to its column, then up onto it). It vanishes with a bright chime and the counter drops 6 -> 5. Video for the eye, WAV for the ear.",
+     "timeline":[{"wait":60},{"record_video":"step-01-collect.mp4"},{"record_audio":"step-01-pickup.wav"},
+       {"hold":"O"},{"wait":7},{"release":"O"},{"wait":2},
+       {"hold":"Q"},{"wait":9},{"release":"Q"},{"wait":8},
+       {"stop_audio":true},{"stop_video":true}]},
+    {"id":"step-01-win","program":"steps/step-01.asm",
+     "comment":"Set gold_remaining to 1 (a capture-setup poke), then lift one coin so the real win path fires: the ascending victory run, and the keep freezes cleared.",
+     "timeline":[{"wait":60},{"poke":"0x8D3B","value":1},
+       {"record_audio":"step-01-win.wav"},
+       {"hold":"O"},{"wait":7},{"release":"O"},{"wait":2},
+       {"hold":"Q"},{"wait":9},{"release":"Q"},{"wait":18},
+       {"stop_audio":true}]}
+  ]}
