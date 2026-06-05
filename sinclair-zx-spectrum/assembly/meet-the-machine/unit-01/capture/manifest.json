@@ -1,0 +1,6 @@
+{ "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/meet-the-machine/unit-01",
+  "captures": [
+    { "id": "red-border", "program": "border.asm",
+      "timeline": [ {"wait": 12}, {"screenshot": "red-border.png"} ] }
+  ] }

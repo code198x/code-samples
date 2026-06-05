@@ -1,0 +1,14 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/meet-the-machine/unit-01/border.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 12
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/meet-the-machine/unit-01/red-border.png"
+ }
+]
