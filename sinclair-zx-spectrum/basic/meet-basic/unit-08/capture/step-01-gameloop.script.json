@@ -1,0 +1,11 @@
+[
+ { "action": "load_basic_program", "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/basic/meet-basic/unit-08/steps/step-01.bas", "run": true },
+ { "action": "run_frames", "frames": 40 },
+ { "action": "type_string", "text": "4\n" },
+ { "action": "run_frames", "frames": 40 },
+ { "action": "type_string", "text": "9\n" },
+ { "action": "run_frames", "frames": 40 },
+ { "action": "type_string", "text": "7\n" },
+ { "action": "run_frames", "frames": 40 },
+ { "action": "save_screenshot", "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/basic/meet-basic/unit-08/step-01-gameloop.png" }
+]
