@@ -1,25 +1,6 @@
-; ============================================================================
-; GLOAMING — Unit 17: A Small Sound
-; ============================================================================
-; The game has been silent. This unit gives it a voice — the simplest one the
-; Spectrum has: the beeper. A bright little blip when a lamp lights, a colder,
-; lower note when the draught snuffs one. Two sounds, a few bytes each.
-;
-; The Spectrum's speaker is bit 4 of port $FE — the same port we set the border
-; with. Write a 1 to bit 4 and the speaker cone pushes out; write a 0 and it
-; pulls back. A single write is a click. To make a *tone*, we flip the bit on
-; and off over and over: each on-off pair is one cycle of a square wave, and how
-; long we wait between flips sets the pitch — shorter waits, higher note.
-;
-;   beep:  B = how many cycles (the length of the sound)
-;          C = the delay between flips (the pitch — smaller is higher)
-;
-; The blip is short and BLOCKING: the game pauses for the few milliseconds it
-; sounds. That's exactly how beeper games worked, and it's the honest "before"
-; of a real sound driver (one that plays music *while* the game runs, which a
-; later game builds). We turn interrupts off around the beep so the 50 Hz frame
-; routine doesn't jitter the tone, then back on.
-; ============================================================================
+; Gloaming — Unit 17: A Small Sound
+; Cumulative build; every step runs on its own. Narrative: the unit page.
+; step-01 gives the game a voice: a beeper blip on light, a colder note on snuff.
 
             org     32768
 
