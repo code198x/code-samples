@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/lucky-number/unit-05",
+  "comment":"Shipped lucky-number.bas (the complete game) uses RANDOMIZE/RND; demo fixes the secret to 42. Offered start (space), then a 7-guess play -> 'Not bad!'.",
+  "captures":[
+    {"id":"rating","program":"capture/lucky-number-demo.bas","run":true,
+     "timeline":[{"wait":30},{"type":" "},{"wait":25},{"type":"75\n"},{"wait":22},{"type":"25\n"},{"wait":22},{"type":"50\n"},{"wait":22},{"type":"35\n"},{"wait":22},{"type":"45\n"},{"wait":22},{"type":"40\n"},{"wait":22},{"type":"42\n"},{"wait":45},{"screenshot":"rating.png"}]}
+  ]}

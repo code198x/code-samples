@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/lucky-number/unit-02",
+  "comment":"Shipped hot-cold.bas uses RANDOMIZE/RND; demo fixes the secret to 42. A far guess (95, distance 53) turns the border blue.",
+  "captures":[
+    {"id":"cold","program":"capture/hot-cold-demo.bas","run":true,
+     "timeline":[{"wait":40},{"type":"95\n"},{"wait":30},{"screenshot":"cold.png"}]}
+  ]}

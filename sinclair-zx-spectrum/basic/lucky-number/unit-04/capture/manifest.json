@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/lucky-number/unit-04",
+  "comment":"Shipped win-screen.bas uses RANDOMIZE/RND; demo fixes the secret to 42. The space keypress passes the PAUSE 0 offered start, then a 7-guess play wins with a green border.",
+  "captures":[
+    {"id":"win","program":"capture/win-screen-demo.bas","run":true,
+     "timeline":[{"wait":30},{"type":" "},{"wait":30},{"type":"75\n"},{"wait":25},{"type":"25\n"},{"wait":25},{"type":"50\n"},{"wait":25},{"type":"35\n"},{"wait":25},{"type":"45\n"},{"wait":25},{"type":"40\n"},{"wait":25},{"type":"42\n"},{"wait":45},{"screenshot":"win.png"}]}
+  ]}

@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/lucky-number/unit-03",
+  "comment":"Shipped sound.bas uses RANDOMIZE/RND; demo fixes the secret to 42. Audio: a low beep (guess 30, go higher), a high beep (guess 50, come down), then the win fanfare (guess 42).",
+  "captures":[
+    {"id":"feedback","program":"capture/sound-demo.bas","run":true,
+     "timeline":[{"wait":40},{"record_audio":"feedback.wav"},{"type":"30\n"},{"wait":35},{"type":"50\n"},{"wait":35},{"type":"42\n"},{"wait":50},{"stop_audio":true},{"screenshot":"win.png"}]}
+  ]}
