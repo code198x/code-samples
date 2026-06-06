@@ -40,9 +40,9 @@
  420 PRINT AT prow, 15; " "
  430 PRINT AT row, 15; "V"
  440 PAUSE 3
-  450 IF alt = 0 AND spd <= 2 THEN GO TO 600
-  460 IF alt = 0 AND spd <= 5 THEN GO TO 700
-  470 IF alt = 0 AND spd > 5 THEN GO TO 800
+ 450 IF alt = 0 AND spd <= 2 THEN GO TO 600
+ 460 IF alt = 0 AND spd <= 5 THEN GO TO 700
+ 470 IF alt = 0 AND spd > 5 THEN GO TO 800
  480 GO TO 150
  600 BORDER 4
  610 BEEP 0.1, 10: BEEP 0.1, 15: BEEP 0.1, 20: BEEP 0.2, 24
