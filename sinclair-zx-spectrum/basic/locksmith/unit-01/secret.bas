@@ -1,8 +1,0 @@
-  10 BORDER 0: PAPER 0: INK 7: CLS
- 130 RANDOMIZE
- 140 DIM c(4)
- 150 FOR i = 1 TO 4: LET c(i) = INT (RND * 6) + 1: NEXT i
- 160 CLS
- 170 PRINT "The code is: ";
- 180 FOR i = 1 TO 4: PRINT c(i);: NEXT i
- 190 STOP
