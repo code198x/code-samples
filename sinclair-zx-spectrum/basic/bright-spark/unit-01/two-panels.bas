@@ -1,8 +1,0 @@
-  10 BORDER 0: PAPER 0: INK 7: CLS
- 110 CLS
- 550 PAPER 2
- 560 FOR r = 2 TO 9: PRINT AT r, 1; "       1      ": NEXT r
- 570 PAPER 1
- 580 FOR r = 2 TO 9: PRINT AT r, 17; "       2      ": NEXT r
- 630 PAPER 0
- 640 STOP
