@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/oracle-stone/unit-04",
+  "comment":"Real RND. The answer reveals framed by the title and rule-off bars.",
+  "captures":[
+    {"id":"framed","program":"framed.bas","run":true,
+     "timeline":[{"wait":40},{"type":"SHOULD I QUIT MY JOB\n"},{"wait":130},{"screenshot":"framed.png"}]}
+  ]}

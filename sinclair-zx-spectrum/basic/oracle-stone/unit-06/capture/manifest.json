@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/oracle-stone/unit-06",
+  "comment":"Real RND. The finished chamber: centred title (GO SUB), CHR$ 143 block bars, the FLASH'd cyan verdict.",
+  "captures":[
+    {"id":"chamber","program":"oracle-stone.bas","run":true,
+     "timeline":[{"wait":40},{"type":"WILL I BE RICH\n"},{"wait":130},{"screenshot":"chamber.png"}]}
+  ]}

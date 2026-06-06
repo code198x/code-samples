@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/oracle-stone/unit-02",
+  "comment":"Real RND. After the question, the ponder (BEEP + PAUSE) runs, then the answer reveals on a cleared screen.",
+  "captures":[
+    {"id":"reveal","program":"ponder.bas","run":true,
+     "timeline":[{"wait":40},{"type":"AM I A WIZARD\n"},{"wait":130},{"screenshot":"reveal.png"}]}
+  ]}

@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/oracle-stone/unit-05",
+  "comment":"Real RND. The framed answer, now in cyan (INK 5).",
+  "captures":[
+    {"id":"voice","program":"voice.bas","run":true,
+     "timeline":[{"wait":40},{"type":"DOES THE ORACLE LIE\n"},{"wait":135},{"screenshot":"voice.png"}]}
+  ]}

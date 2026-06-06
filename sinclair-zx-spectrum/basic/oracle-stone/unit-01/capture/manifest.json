@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/oracle-stone/unit-01",
+  "comment":"Real RND; the captured answer (YES) is one of ten — re-running gives another.",
+  "captures":[
+    {"id":"answer","program":"oracle.bas","run":true,
+     "timeline":[{"wait":40},{"type":"WILL I BE RICH\n"},{"wait":25},{"screenshot":"answer.png"}]}
+  ]}

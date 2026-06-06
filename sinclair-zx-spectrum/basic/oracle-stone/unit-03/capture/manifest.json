@@ -1,0 +1,6 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/basic/oracle-stone/unit-03",
+  "comment":"The opening instructions screen, captured at the question prompt (no question entered).",
+  "captures":[
+    {"id":"rules","program":"rules.bas","run":true,
+     "timeline":[{"wait":40},{"screenshot":"rules.png"}]}
+  ]}
