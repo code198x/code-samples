@@ -47,7 +47,16 @@
  600 IF v = 4 THEN LET g(nr,nc) = 2
  610 LET pr = nr: LET pc = nc
  620 PRINT AT sr+pr-1, sc+pc-1; PAPER (7-ps*5); INK 4; "P"
- 630 GO TO 320
+ 650 REM --- All targets covered? ---
+ 660 LET win = 1
+ 670 FOR r = 1 TO h
+ 680 FOR c = 1 TO w
+ 690 IF g(r, c) = 2 THEN LET win = 0
+ 700 NEXT c
+ 710 NEXT r
+ 720 IF win = 0 THEN GO TO 320
+ 730 PRINT AT 20, 4; "Level complete!"
+ 740 PAUSE 0: STOP
  900 DATA 5,5
  901 DATA "WWWWW"
  902 DATA "W . W"
