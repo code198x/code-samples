@@ -1,0 +1,2 @@
+10 LET N$="ZARA"
+20 PRINT "HELLO ";N$
