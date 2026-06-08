@@ -1,0 +1,22 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 1300
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ }
+]
