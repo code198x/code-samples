@@ -102,6 +102,30 @@ def container_path(host: Path) -> str:
     return "/code-samples/" + str(host.resolve().relative_to(CODE_SAMPLES))
 
 
+def frame_screenshot(path: Path, border: int = 24) -> None:
+    """Re-frame a raw framebuffer PNG so the picture is centred.
+
+    The emulator saves the whole hardware raster, so a normal-sized screen
+    sits wherever the display window lands — off-centre, floating in the
+    overscan border. This crops to the active (non-black) picture and pastes
+    it back onto a canvas with a uniform `border` all round, so the result is
+    tight and centred rather than lopsided. A no-op if Pillow is unavailable
+    or the frame is entirely black."""
+    try:
+        from PIL import Image
+    except ImportError:
+        return
+    im = Image.open(path).convert("RGB")
+    bbox = im.getbbox()  # tightest box around the non-black picture
+    if not bbox:
+        return
+    content = im.crop(bbox)
+    w, h = content.size
+    canvas = Image.new("RGB", (w + 2 * border, h + 2 * border), (0, 0, 0))
+    canvas.paste(content, (border, border))
+    canvas.save(path)
+
+
 # --------------------------------------------------------------------------
 # Commodore 64
 # --------------------------------------------------------------------------
@@ -436,6 +460,10 @@ def run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
              "--disk", disk, "--script", str(script_path)],
             capture_output=True, text=True)
         report_capture(cap, result)
+        # Centre each screenshot in a clean border (the raw raster is off-centre).
+        for action in cap["timeline"]:
+            if "screenshot" in action:
+                frame_screenshot(image_dir / action["screenshot"])
 
 
 # --------------------------------------------------------------------------
