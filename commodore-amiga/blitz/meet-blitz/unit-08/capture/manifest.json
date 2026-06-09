@@ -1,0 +1,3 @@
+{ "machine": "commodore-amiga-blitz", "image_dir": "commodore-amiga/blitz/meet-blitz/unit-08",
+  "captures": [ { "id": "bounce", "program": "bounce.bb2", "object_memory": true, "medium": "video",
+    "timeline": [ { "wait": 600 }, { "record_video": "bounce.mp4" }, { "wait": 250 }, { "stop_video": true }, { "screenshot": "screenshot.png" } ] } ] }

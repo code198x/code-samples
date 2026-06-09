@@ -1,0 +1,26 @@
+; Blit a shape and move it every frame, drawing flicker-free with two pages.
+BLITZ
+  ; grab a ball shape from a work bitmap
+  BitMap 2,24,24,3
+  Circle 12,12,11,6
+  Circle 12,12,7,2
+  GetaShape 0,0,0,24,24
+
+  ; two display bitmaps for flicker-free motion
+  BitMap 0,320,256,3
+  BitMap 1,320,256,3
+  Slice 0,44,3
+
+  t.f=0
+  db=0
+  While Joyb(0)=0
+    VWait
+    Show db
+    db=1-db
+    Use BitMap db
+    Cls 0
+    x.w = 148 + Sin(t)*120
+    y.w = 112 + Cos(t*1.3)*92
+    Blit 0,x,y
+    t = t + 0.05
+  Wend

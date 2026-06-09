@@ -1,0 +1,20 @@
+; Draw a picture once, grab it as a shape, then stamp it everywhere.
+BLITZ
+  ; draw a target on a small work bitmap, then grab it as shape 0
+  BitMap 1,32,32,3
+  For i=1 To 14
+    Circle 16,16,i,2+i/5
+  Next
+  GetaShape 0,0,0,32,32
+
+  ; the display bitmap
+  BitMap 0,320,256,3
+  Cls 0
+  For n=0 To 8
+    Blit 0,n*34+8,112
+  Next
+
+  VWait 100
+  Slice 0,44,3
+  Show 0
+  MouseWait

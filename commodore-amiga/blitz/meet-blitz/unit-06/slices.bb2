@@ -1,0 +1,18 @@
+; Two slices carve the display into two independent regions.
+BLITZ
+  BitMap 0,320,128,3
+  Cls 1
+  Boxf 50,30,270,90,2
+
+  BitMap 1,320,128,3
+  Cls 4
+  Circle 160,55,40,6
+
+  VWait 100
+  Slice 0,44,320,110,$fff8,3,8,8,320,320
+  Use Slice 0
+  Show 0
+  Slice 1,160,320,110,$fff8,3,8,8,320,320
+  Use Slice 1
+  Show 1
+  MouseWait
