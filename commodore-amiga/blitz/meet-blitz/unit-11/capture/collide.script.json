@@ -39,7 +39,7 @@
  },
  {
   "action": "type_string",
-  "text": "; ShapesHit tells you the instant two shapes overlap.\nBLITZ\n  ; ball (shape 0) and a target block (shape 1)\n  BitMap 2,24,24,3 : Use BitMap 2 : Cls 0 : Circle 12,12,11,4 : GetaShape 0,0,0,24,24\n  Use BitMap 2 : Cls 0 : Boxf 1,1,22,22,2 : GetaShape 1,0,0,24,24\n\n  BitMap 0,320,256,3\n  BitMap 1,320,256,3\n  Slice 0,44,3\n\n  bx.w=30 : by.w=120\n  tx.w=180 : ty.w=120\n  dx.w=3\n  db=0\n  While Joyb(0)=0\n    VWait\n    Show db : db=1-db : Use BitMap db\n    Cls 0\n    bx=bx+dx\n    If bx>250 Then dx=-dx\n    If bx<30 Then dx=-dx\n    Blit 1,tx,ty\n    Blit 0,bx,by\n    If ShapesHit(0,bx,by,1,tx,ty) Then Boxf 20,30,300,55,6\n  Wend\n"
+  "text": "; ShapesHit tells you the instant two shapes overlap.\nBLITZ\n  ; ball (shape 0) and a target block (shape 1), both 24x24\n  BitMap 2,24,24,3 : Use BitMap 2 : Cls 0 : Circle 12,12,11,4 : GetaShape 0,0,0,24,24\n  Use BitMap 2 : Cls 0 : Boxf 1,1,22,22,2 : GetaShape 1,0,0,24,24\n\n  BitMap 0,320,256,3\n  BitMap 1,320,256,3\n  Slice 0,44,320,256,$fff8,3,8,8,320,320\n\n  bx.w=20 : by.w=116\n  tx.w=180 : ty.w=116\n  dx.w=3\n  ht.w=0\n  db=0\n  While Joyb(0)=0\n    VWait\n    Show db : db=1-db : Use BitMap db\n    If ShapesHit(0,bx,by,1,tx,ty) Then ht=18\n    Cls 0\n    Blit 1,tx,ty\n    Blit 0,bx,by\n    If ht>0 Then Boxf 60,36,260,66,6\n    If ht>0 Then ht=ht-1\n    bx=bx+dx\n    If bx>270 Then dx=-dx\n    If bx<20 Then dx=-dx\n  Wend\n"
  },
  {
   "action": "run_frames",
