@@ -1,0 +1,17 @@
+Hide
+Screen Open 0,320,200,16,Lowres
+Colour 0,$111
+Colour 1,$F00
+Colour 2,$0F0
+Colour 3,$FF0
+Colour 4,$3AF
+Cls 0
+Ink 1
+Box 40,30 To 140,90
+Ink 2
+Bar 180,30 To 280,90
+Ink 3
+Circle 90,150,30
+Ink 4
+Draw 160,150 To 290,150
+Wait Key

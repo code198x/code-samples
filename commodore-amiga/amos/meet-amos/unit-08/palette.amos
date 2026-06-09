@@ -1,0 +1,22 @@
+Hide
+Screen Open 0,320,200,16,Lowres
+Colour 0,$111
+Colour 1,$F00
+Colour 2,$0F0
+Colour 3,$22F
+Colour 4,$FF0
+Cls 0
+Paper 0
+Pen 1
+Locate 6,6
+Print "Red, mixed by me."
+Pen 2
+Locate 6,8
+Print "Green, mixed by me."
+Pen 3
+Locate 6,10
+Print "Blue, mixed by me."
+Pen 4
+Locate 6,12
+Print "Yellow, mixed by me."
+Wait Key

@@ -1,0 +1,116 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2500
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "Hide\nScreen Open 0,320,200,16,Lowres\nColour 0,$111\nColour 1,$F00\nColour 2,$0F0\nColour 3,$22F\nColour 4,$FF0\nCls 0\nPaper 0\nPen 1\nLocate 6,6\nPrint \"Red, mixed by me.\"\nPen 2\nLocate 6,8\nPrint \"Green, mixed by me.\"\nPen 3\nLocate 6,10\nPrint \"Blue, mixed by me.\"\nPen 4\nLocate 6,12\nPrint \"Yellow, mixed by me.\"\nWait Key\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 120
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/amos/meet-amos/unit-08/screenshot.png"
+ }
+]

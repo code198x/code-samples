@@ -1,0 +1,10 @@
+Hide
+Screen Open 0,320,200,16,Lowres
+Cls 2
+Locate 6,9
+Print "This screen is mine."
+Locate 6,11
+Print "320 x 200, 16 colours,"
+Locate 6,13
+Print "opened by one command."
+Wait Key
