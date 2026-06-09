@@ -1,0 +1,267 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2100
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "; Eighty objects, all moving every frame. Compiled Blitz does it smoothly.\nBLITZ\n  BitMap 0,320,256,3\n  BitMap 1,320,256,3\n  Slice 0,44,3\n  t.f = 0\n  db = 0\n  While Joyb(0) = 0\n    VWait\n    Show db\n    db = 1-db\n    Use BitMap db\n    Cls 0\n    For i = 0 To 79\n      x.w = 160 + Sin(t + i*0.4)*140\n      y.w = 128 + Cos(t*0.8 + i*0.27)*110\n      Circle x, y, 7, 2+i/20\n    Next\n    t = t + 0.04\n  Wend\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 90,
+     "dy": 47
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "run_frames",
+  "frames": 650
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-05/many.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 250
+ },
+ {
+  "action": "stop_video_recording"
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-05/screenshot.png"
+ }
+]

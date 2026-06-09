@@ -451,6 +451,11 @@ def expand_timeline_amiga(timeline: list[dict], image_dir: Path) -> list[dict]:
         elif "screenshot" in action:
             out.append({"action": "save_screenshot",
                         "path": str(image_dir / action["screenshot"])})
+        elif "record_video" in action:
+            out.append({"action": "start_video_recording",
+                        "path": str(image_dir / action["record_video"])})
+        elif action.get("stop_video"):
+            out.append({"action": "stop_video_recording"})
         elif "record_audio" in action:
             out.append({"action": "start_audio_recording",
                         "path": str(image_dir / action["record_audio"])})

@@ -1,0 +1,20 @@
+; Eighty objects, all moving every frame. Compiled Blitz does it smoothly.
+BLITZ
+  BitMap 0,320,256,3
+  BitMap 1,320,256,3
+  Slice 0,44,3
+  t.f = 0
+  db = 0
+  While Joyb(0) = 0
+    VWait
+    Show db
+    db = 1-db
+    Use BitMap db
+    Cls 0
+    For i = 0 To 79
+      x.w = 160 + Sin(t + i*0.4)*140
+      y.w = 128 + Cos(t*0.8 + i*0.27)*110
+      Circle x, y, 7, 2+i/20
+    Next
+    t = t + 0.04
+  Wend
