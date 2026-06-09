@@ -69,12 +69,24 @@ REPO_ROOT = Path(__file__).resolve().parents[2]      # the Code198x container
 EMU_DEFAULTS = {
     "commodore-64": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-c64",
     "sinclair-zx-spectrum": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-spectrum",
+    "commodore-amiga": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
 }
 EMU_ENV = {
     "commodore-64": "EMU198X_C64",
     "sinclair-zx-spectrum": "EMU198X_SPECTRUM",
+    "commodore-amiga": "EMU198X_AMIGA",
 }
 SPECTRUM_IMAGE = "ghcr.io/code198x/sinclair-zx-spectrum:latest"
+
+# AMOS (Commodore Amiga) capture: there is no host build — the learner's ASCII
+# AMOS source is *typed* into the AMOS Pro editor via `type_string`, then run
+# with F1. The work disk is a prepared AMOS Pro System ADF whose startup loads
+# the US keymap (`SetMap usa1`) so the US `type_string` table matches.
+AMOS_KICKSTART = str(Path.home() / ".emu198x/roms/commodore-amiga/kick204.rom")
+AMOS_DISK = str(Path.home() / ".emu198x/media/commodore-amiga/amospro-system-usa.adf")
+AMOS_MODEL = "a500-plus"
+AMOS_BOOT_FRAMES = 2500   # frames to reach the AMOS Pro editor
+AMOS_TYPE_SETTLE = 20     # frames after typing, before F1 runs the program
 
 
 def resolve_emu(machine: str, arg: str | None) -> str:
@@ -353,6 +365,80 @@ def run_spectrum(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
 
 
 # --------------------------------------------------------------------------
+# Commodore Amiga — AMOS Professional
+# --------------------------------------------------------------------------
+
+def _amos_key(name: str, pressed: bool) -> dict:
+    return {"action": "input", "events": [key_event(name, pressed)]}
+
+
+def _amos_tap(name: str, hold: int = 3, up: int = 3) -> list[dict]:
+    return [
+        _amos_key(name, True),
+        {"action": "run_frames", "frames": hold},
+        _amos_key(name, False),
+        {"action": "run_frames", "frames": up},
+    ]
+
+
+def expand_timeline_amiga(timeline: list[dict], image_dir: Path) -> list[dict]:
+    out: list[dict] = []
+    for action in timeline:
+        if "wait" in action:
+            out.append({"action": "run_frames", "frames": int(action["wait"])})
+        elif "screenshot" in action:
+            out.append({"action": "save_screenshot",
+                        "path": str(image_dir / action["screenshot"])})
+        elif "record_audio" in action:
+            out.append({"action": "start_audio_recording",
+                        "path": str(image_dir / action["record_audio"])})
+        elif action.get("stop_audio"):
+            out.append({"action": "stop_audio_recording"})
+        else:
+            sys.exit(f"Unknown AMOS timeline action: {action!r}")
+    return out
+
+
+def run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
+    """Type each capture's ASCII AMOS source into AMOS Pro and run it (F1).
+
+    No host build: the source is typed via `type_string`. The work disk is a
+    prepared AMOS Pro System ADF (US keymap). `kickstart`, `disk`, and `model`
+    may be overridden per manifest."""
+    kickstart = manifest.get("kickstart", AMOS_KICKSTART)
+    disk = manifest.get("disk", AMOS_DISK)
+    model = manifest.get("model", AMOS_MODEL)
+    for asset in (kickstart, disk):
+        if not Path(asset).exists():
+            sys.exit(f"AMOS capture asset not found: {asset}")
+
+    for cap in manifest["captures"]:
+        cap_id = cap["id"]
+        source = (unit_dir / cap["program"]).resolve().read_text()
+
+        script = [{"action": "run_frames", "frames": AMOS_BOOT_FRAMES}]
+        # The AMOS Pro credits banner swallows the first keystroke; spend a
+        # throwaway space+backspace before typing the real program.
+        script += _amos_tap("space") + _amos_tap("backspace")
+        script += [
+            {"action": "run_frames", "frames": 10},
+            {"action": "type_string", "text": source},
+            {"action": "run_frames", "frames": AMOS_TYPE_SETTLE},
+        ]
+        script += _amos_tap("f1")              # F1 = Run the program
+        script += expand_timeline_amiga(cap["timeline"], image_dir)
+
+        script_path = capture_dir / f"{cap_id}.script.json"
+        script_path.write_text(json.dumps(script, indent=1) + "\n")
+
+        result = subprocess.run(
+            [emu, "--headless", "--kickstart", kickstart, "--model", model,
+             "--disk", disk, "--script", str(script_path)],
+            capture_output=True, text=True)
+        report_capture(cap, result)
+
+
+# --------------------------------------------------------------------------
 # Shared
 # --------------------------------------------------------------------------
 
@@ -405,6 +491,8 @@ def main() -> None:
 
     if machine == "commodore-64":
         run_c64(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
+    elif machine == "commodore-amiga":
+        run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     else:
         run_spectrum(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
 
