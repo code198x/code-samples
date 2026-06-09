@@ -1,0 +1,3 @@
+{ "machine": "commodore-amiga", "image_dir": "commodore-amiga/amos/meet-amos/unit-12",
+  "captures": [ { "id": "steer", "program": "steer.amos",
+    "timeline": [ { "wait": 30 }, { "joy": "right", "frames": 40 }, { "joy": "down", "frames": 25 }, { "wait": 20 }, { "screenshot": "screenshot.png" } ] } ] }

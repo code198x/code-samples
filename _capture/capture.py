@@ -396,6 +396,18 @@ def _amos_key(name: str, pressed: bool) -> dict:
     return {"action": "input", "events": [key_event(name, pressed)]}
 
 
+# The Amiga's canonical joystick is control port 2 (JOY1DAT); port 1 is the
+# mouse (JOY0DAT). emu198x-amiga maps input port 2 (and 0 as an alias) onto
+# JOY1DAT, which AMOS reads as port 1 — so inject on port 2, read Jright(1).
+# Control names match the C64 set: up, down, left, right, fire.
+AMOS_JOY_PORT = 2
+
+
+def _amos_joy(name: str, pressed: bool, port: int = AMOS_JOY_PORT) -> dict:
+    return {"action": "input",
+            "events": [{"Button": {"port": port, "name": name, "pressed": pressed}}]}
+
+
 def _amos_tap(name: str, hold: int = 3, up: int = 3) -> list[dict]:
     return [
         _amos_key(name, True),
@@ -410,6 +422,16 @@ def expand_timeline_amiga(timeline: list[dict], image_dir: Path) -> list[dict]:
     for action in timeline:
         if "wait" in action:
             out.append({"action": "run_frames", "frames": int(action["wait"])})
+        elif "joy" in action:
+            # Push the joystick, hold for `frames`, release. e.g. {"joy": "right", "frames": 60}
+            port = int(action.get("port", AMOS_JOY_PORT))
+            out.append(_amos_joy(action["joy"], True, port))
+            out.append({"action": "run_frames", "frames": int(action.get("frames", 50))})
+            out.append(_amos_joy(action["joy"], False, port))
+        elif "joy_hold" in action:
+            out.append(_amos_joy(action["joy_hold"], True, int(action.get("port", AMOS_JOY_PORT))))
+        elif "joy_release" in action:
+            out.append(_amos_joy(action["joy_release"], False, int(action.get("port", AMOS_JOY_PORT))))
         elif "screenshot" in action:
             out.append({"action": "save_screenshot",
                         "path": str(image_dir / action["screenshot"])})

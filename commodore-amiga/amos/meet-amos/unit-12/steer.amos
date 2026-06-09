@@ -1,0 +1,22 @@
+Hide
+Screen Open 0,320,200,16,Lowres
+Colour 0,$111
+Colour 1,$F40
+Colour 2,$FD0
+Cls 0
+Ink 1
+Bar 0,0 To 23,23
+Ink 2
+Bar 6,6 To 17,17
+Get Bob 1,0,0 To 24,24
+Cls 0
+X=40
+Y=88
+Do
+   If Jright(1) Then Add X,3
+   If Jleft(1) Then Add X,-3
+   If Jup(1) Then Add Y,-3
+   If Jdown(1) Then Add Y,3
+   Bob 1,X,Y,1
+   Wait Vbl
+Loop
