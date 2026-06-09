@@ -1,6 +1,13 @@
 { "machine": "commodore-amiga-blitz", "image_dir": "commodore-amiga/blitz/meet-blitz/unit-09",
   "captures": [ { "id": "steer", "program": "steer.bb2", "object_memory": true, "medium": "video",
-    "timeline": [ { "wait": 620 }, { "record_video": "steer.mp4" },
-                  { "joy": "right", "frames": 45 }, { "joy": "down", "frames": 35 },
-                  { "joy": "left", "frames": 45 }, { "joy": "up", "frames": 30 },
-                  { "wait": 20 }, { "stop_video": true }, { "screenshot": "screenshot.png" } ] } ] }
+    "timeline": [
+      { "wait": 120 },
+      { "record_video": "steer.mp4" },
+      { "joy_hold": "right" }, { "wait": 55 }, { "joy_release": "right" },
+      { "joy_hold": "down" },  { "wait": 42 }, { "joy_release": "down" },
+      { "joy_hold": "left" },  { "wait": 70 }, { "joy_release": "left" },
+      { "joy_hold": "up" },    { "wait": 42 }, { "joy_release": "up" },
+      { "wait": 30 },
+      { "stop_video": true },
+      { "screenshot": "screenshot.png" }
+    ] } ] }
