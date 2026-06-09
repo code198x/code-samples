@@ -1,0 +1,116 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2500
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "Hide\nCls 6\nLocate 9,4\nPrint \"Print goes where you say.\"\nLocate 9,12\nPrint \"Locate sets the spot;\"\nLocate 9,14\nPrint \"Cls wipes the screen clean.\"\nWait Key\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 120
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/amos/meet-amos/unit-02/screenshot.png"
+ }
+]

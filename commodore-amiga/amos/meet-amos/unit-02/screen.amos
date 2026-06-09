@@ -1,0 +1,9 @@
+Hide
+Cls 6
+Locate 9,4
+Print "Print goes where you say."
+Locate 9,12
+Print "Locate sets the spot;"
+Locate 9,14
+Print "Cls wipes the screen clean."
+Wait Key

@@ -1,0 +1,9 @@
+Hide
+Cls 6
+SCORE=100
+NAME$="AMOS"
+Locate 8,8
+Print "Score: ";SCORE
+Locate 8,10
+Print "Name:  ";NAME$
+Wait Key

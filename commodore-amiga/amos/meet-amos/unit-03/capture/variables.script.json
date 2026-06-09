@@ -1,0 +1,116 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2500
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "Hide\nCls 6\nSCORE=100\nNAME$=\"AMOS\"\nLocate 8,8\nPrint \"Score: \";SCORE\nLocate 8,10\nPrint \"Name:  \";NAME$\nWait Key\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 120
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/amos/meet-amos/unit-03/screenshot.png"
+ }
+]
