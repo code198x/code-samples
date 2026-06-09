@@ -1,0 +1,3 @@
+{ "machine": "commodore-amiga", "image_dir": "commodore-amiga/amos/meet-amos/unit-11",
+  "captures": [ { "id": "move", "program": "move.amos",
+    "timeline": [ { "wait": 200 }, { "screenshot": "screenshot.png" } ] } ] }

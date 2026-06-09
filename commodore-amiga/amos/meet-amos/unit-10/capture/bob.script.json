@@ -1,0 +1,116 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2500
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "Hide\nScreen Open 0,320,200,16,Lowres\nColour 0,$111\nColour 1,$F40\nColour 2,$FD0\nCls 0\nInk 1\nBar 0,0 To 23,23\nInk 2\nBar 6,6 To 17,17\nGet Bob 1,0,0 To 24,24\nCls 0\nBob 1,148,88,1\nWait Vbl\nWait Key\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 120
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/amos/meet-amos/unit-10/screenshot.png"
+ }
+]
