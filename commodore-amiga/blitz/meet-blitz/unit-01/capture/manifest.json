@@ -1,0 +1,3 @@
+{ "machine": "commodore-amiga-blitz", "image_dir": "commodore-amiga/blitz/meet-blitz/unit-01",
+  "captures": [ { "id": "hello", "program": "hello.bb2",
+    "timeline": [ { "wait": 450 }, { "screenshot": "screenshot.png" } ] } ] }

@@ -70,11 +70,14 @@ EMU_DEFAULTS = {
     "commodore-64": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-c64",
     "sinclair-zx-spectrum": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-spectrum",
     "commodore-amiga": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
+    # Blitz BASIC 2 runs on the same Amiga binary; only the disk/editor differs.
+    "commodore-amiga-blitz": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
 }
 EMU_ENV = {
     "commodore-64": "EMU198X_C64",
     "sinclair-zx-spectrum": "EMU198X_SPECTRUM",
     "commodore-amiga": "EMU198X_AMIGA",
+    "commodore-amiga-blitz": "EMU198X_AMIGA",
 }
 SPECTRUM_IMAGE = "ghcr.io/code198x/sinclair-zx-spectrum:latest"
 
@@ -87,6 +90,19 @@ AMOS_DISK = str(Path.home() / ".emu198x/media/commodore-amiga/amospro-system-usa
 AMOS_MODEL = "a500-plus"
 AMOS_BOOT_FRAMES = 2500   # frames to reach the AMOS Pro editor
 AMOS_TYPE_SETTLE = 20     # frames after typing, before F1 runs the program
+
+# Blitz BASIC 2 (Commodore Amiga) capture: same as AMOS — no host build, the
+# learner's plain-text Blitz source is *typed* into the Ted editor via
+# `type_string`, then compiled-and-run with the Compiler menu's command key
+# right-Amiga+X. The work disk is the BB2 v1.60 Amiga Format single disk with its
+# startup-sequence edited to launch `blitz2` straight into Ted. Needs KS2.04 (the
+# editor's console needs the 2.0+ ROM console; KS1.3 fails to open it).
+BLITZ_KICKSTART = str(Path.home() / ".emu198x/roms/commodore-amiga/kick204.rom")
+BLITZ_DISK = str(Path.home() / ".emu198x/media/commodore-amiga/bb2-af-blitz.adf")
+BLITZ_MODEL = "a500-plus"
+BLITZ_BOOT_FRAMES = 2100   # frames to reach the Ted editor (with the startup requester up)
+BLITZ_TYPE_SETTLE = 30     # frames after typing, before the compile-and-run trigger
+RAMIGA_RAW = "raw-67"      # right-Amiga qualifier (the menu command-key modifier)
 
 
 def resolve_emu(machine: str, arg: str | None) -> str:
@@ -488,6 +504,61 @@ def run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
                 frame_screenshot(image_dir / action["screenshot"])
 
 
+def _blitz_compile_run() -> list[dict]:
+    """Compiler menu COMPILE/RUN, via its command key right-Amiga+X."""
+    return [
+        _amos_key(RAMIGA_RAW, True),
+        {"action": "run_frames", "frames": 3},
+        _amos_key("x", True),
+        {"action": "run_frames", "frames": 3},
+        _amos_key("x", False),
+        _amos_key(RAMIGA_RAW, False),
+    ]
+
+
+def run_blitz(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
+    """Type each capture's plain-text Blitz source into Ted and compile-and-run it.
+
+    No host build: the source is typed via `type_string`, then compiled and run
+    with right-Amiga+X. The work disk is the BB2 Amiga Format single disk, edited
+    to boot straight into Ted. `kickstart`, `disk`, and `model` may be overridden
+    per manifest."""
+    kickstart = manifest.get("kickstart", BLITZ_KICKSTART)
+    disk = manifest.get("disk", BLITZ_DISK)
+    model = manifest.get("model", BLITZ_MODEL)
+    for asset in (kickstart, disk):
+        if not Path(asset).exists():
+            sys.exit(f"Blitz capture asset not found: {asset}")
+
+    for cap in manifest["captures"]:
+        cap_id = cap["id"]
+        source = (unit_dir / cap["program"]).resolve().read_text()
+
+        script = [{"action": "run_frames", "frames": BLITZ_BOOT_FRAMES}]
+        # The BB2 startup requester ("OKEE DOKEE") is dismissed with Return.
+        script += _amos_tap("return")
+        script += [
+            {"action": "run_frames", "frames": 10},
+            {"action": "type_string", "text": source},
+            {"action": "run_frames", "frames": BLITZ_TYPE_SETTLE},
+        ]
+        script += _blitz_compile_run()         # right-Amiga+X = Compile & Run
+        script += expand_timeline_amiga(cap["timeline"], image_dir)
+
+        script_path = capture_dir / f"{cap_id}.script.json"
+        script_path.write_text(json.dumps(script, indent=1) + "\n")
+
+        result = subprocess.run(
+            [emu, "--headless", "--kickstart", kickstart, "--model", model,
+             "--disk", disk, "--script", str(script_path)],
+            capture_output=True, text=True)
+        report_capture(cap, result)
+        # Centre each screenshot in a clean border (the raw raster is off-centre).
+        for action in cap["timeline"]:
+            if "screenshot" in action:
+                frame_screenshot(image_dir / action["screenshot"])
+
+
 # --------------------------------------------------------------------------
 # Shared
 # --------------------------------------------------------------------------
@@ -543,6 +614,8 @@ def main() -> None:
         run_c64(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     elif machine == "commodore-amiga":
         run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
+    elif machine == "commodore-amiga-blitz":
+        run_blitz(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     else:
         run_spectrum(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
 

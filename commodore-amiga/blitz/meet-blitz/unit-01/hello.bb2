@@ -1,0 +1,4 @@
+NPrint "Hello from Blitz!"
+NPrint "Compiled, not interpreted."
+MouseWait
+End
