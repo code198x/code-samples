@@ -1,2 +1,9 @@
-{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/meet-the-machine/unit-15",
-  "captures":[{"id":"shot","program":"no-safety-net.asm","timeline":[{"wait":12},{"screenshot":"overrun.png"}]}]}
+{ "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/meet-the-machine/unit-15",
+  "captures": [
+    { "id": "screenshot", "program": "beeper.asm",
+      "timeline": [ { "wait": 20 }, { "screenshot": "screenshot.png" } ] },
+    { "id": "tone", "program": "beeper.asm",
+      "timeline": [ { "wait": 10 }, { "record_audio": "tone.wav" }, { "wait": 120 }, { "stop_audio": true } ] }
+  ]
+}
