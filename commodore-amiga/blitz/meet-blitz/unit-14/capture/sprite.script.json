@@ -39,7 +39,7 @@
  },
  {
   "action": "type_string",
-  "text": "; The Blitz way: parts you assembled yourself, running at compiled speed.\nBLITZ\n  ; one ball shape, grabbed once\n  BitMap 2,16,16,2\n  Circle 8,8,7,2\n  Circle 8,8,4,6\n  GetaShape 0,0,0,16,16\n\n  ; two display pages for flicker-free motion\n  BitMap 0,320,256,3\n  BitMap 1,320,256,3\n  Slice 0,44,320,256,$fff8,3,8,8,320,320\n\n  ; give 24 balls a starting place and a velocity\n  Dim px.w(23)\n  Dim py.w(23)\n  Dim vx.w(23)\n  Dim vy.w(23)\n  cx.w=10\n  cy.w=20\n  For i=0 To 23\n    px(i)=cx\n    py(i)=cy\n    cx=cx+48\n    If cx>290 Then cx=10 : cy=cy+44\n    vx(i)=2\n    vy(i)=1\n    If i<8 Then vy(i)=-2\n    If i>15 Then vx(i)=-1\n    If i>15 Then vy(i)=2\n  Next\n\n  db=0\n  While Joyb(0)=0\n    VWait\n    Show db\n    db=1-db\n    Use BitMap db\n    Cls 0\n    For i=0 To 23\n      px(i)=px(i)+vx(i)\n      py(i)=py(i)+vy(i)\n      If px(i)<0 Then px(i)=0 : vx(i)=-vx(i)\n      If px(i)>303 Then px(i)=303 : vx(i)=-vx(i)\n      If py(i)<0 Then py(i)=0 : vy(i)=-vy(i)\n      If py(i)>239 Then py(i)=239 : vy(i)=-vy(i)\n      Blit 0,px(i),py(i)\n    Next\n  Wend\n"
+  "text": "; A hardware sprite the chips move for you, over a backdrop drawn once.\nBLITZ\n  ; build a shape, then turn it into hardware sprite 0\n  BitMap 2,16,16,2\n  Circle 8,8,7,1\n  Circle 8,8,4,2\n  GetaShape 0,0,0,16,16\n  GetaSprite 0,0\n\n  ; a backdrop, drawn ONCE - the loop never touches it again\n  BitMap 0,320,256,3\n  Cls 0\n  Boxf 0,170,319,255,2\n  Circle 230,70,40,3\n  Boxf 50,40,110,100,5\n\n  Slice 0,44,320,256,$fff8,3,8,8,320,320\n  Use Slice 0\n  Show 0\n\n  x.w=0\n  dx.w=2\n  While Joyb(0)=0\n    VWait\n    ShowSprite 0,x,72,0\n    x=x+dx\n    If x>304 Then dx=-dx\n    If x<0 Then dx=-dx\n  Wend\n"
  },
  {
   "action": "run_frames",
@@ -251,7 +251,7 @@
  },
  {
   "action": "start_video_recording",
-  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-14/swarm.mp4"
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-14/sprite.mp4"
  },
  {
   "action": "run_frames",

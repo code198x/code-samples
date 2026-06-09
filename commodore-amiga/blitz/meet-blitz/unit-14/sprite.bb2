@@ -1,0 +1,29 @@
+; A hardware sprite the chips move for you, over a backdrop drawn once.
+BLITZ
+  ; build a shape, then turn it into hardware sprite 0
+  BitMap 2,16,16,2
+  Circle 8,8,7,1
+  Circle 8,8,4,2
+  GetaShape 0,0,0,16,16
+  GetaSprite 0,0
+
+  ; a backdrop, drawn ONCE - the loop never touches it again
+  BitMap 0,320,256,3
+  Cls 0
+  Boxf 0,170,319,255,2
+  Circle 230,70,40,3
+  Boxf 50,40,110,100,5
+
+  Slice 0,44,320,256,$fff8,3,8,8,320,320
+  Use Slice 0
+  Show 0
+
+  x.w=0
+  dx.w=2
+  While Joyb(0)=0
+    VWait
+    ShowSprite 0,x,72,0
+    x=x+dx
+    If x>304 Then dx=-dx
+    If x<0 Then dx=-dx
+  Wend

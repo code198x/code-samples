@@ -1,3 +1,3 @@
 { "machine": "commodore-amiga-blitz", "image_dir": "commodore-amiga/blitz/meet-blitz/unit-14",
-  "captures": [ { "id": "swarm", "program": "swarm.bb2", "object_memory": true, "medium": "video",
-    "timeline": [ { "wait": 400 }, { "record_video": "swarm.mp4" }, { "wait": 250 }, { "stop_video": true }, { "screenshot": "screenshot.png" } ] } ] }
+  "captures": [ { "id": "sprite", "program": "sprite.bb2", "object_memory": true, "medium": "video",
+    "timeline": [ { "wait": 400 }, { "record_video": "sprite.mp4" }, { "wait": 250 }, { "stop_video": true }, { "screenshot": "screenshot.png" } ] } ] }
