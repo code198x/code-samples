@@ -1,0 +1,13 @@
+Hide
+Cls 6
+Locate 8,5
+DIVIDER
+Locate 12,8
+Print "Player One"
+Locate 8,11
+DIVIDER
+Wait Key
+
+Procedure DIVIDER
+   Print "==================="
+End Proc

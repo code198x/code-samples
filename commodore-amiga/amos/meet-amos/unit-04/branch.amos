@@ -1,0 +1,15 @@
+Hide
+Cls 6
+LIVES=3
+Locate 8,7
+Print "Checking your lives..."
+If LIVES>0
+   Locate 8,10
+   Print "Still in the game!"
+Else
+   Locate 8,10
+   Print "Game over, man."
+End If
+Locate 8,12
+Print "Lives left: ";LIVES
+Wait Key

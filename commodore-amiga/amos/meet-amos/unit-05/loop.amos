@@ -1,0 +1,9 @@
+Hide
+Cls 6
+For N=1 To 5
+   Locate 10,4+N
+   Print "Line number ";N
+Next N
+Locate 10,12
+Print "Done!"
+Wait Key

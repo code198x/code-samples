@@ -1,0 +1,3 @@
+{ "machine": "commodore-amiga", "image_dir": "commodore-amiga/amos/meet-amos/unit-06",
+  "captures": [ { "id": "divider", "program": "divider.amos",
+    "timeline": [ { "wait": 120 }, { "screenshot": "screenshot.png" } ] } ] }
