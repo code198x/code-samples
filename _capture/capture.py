@@ -516,6 +516,36 @@ def _blitz_compile_run() -> list[dict]:
     ]
 
 
+def _mouse_move(dx: int, dy: int) -> dict:
+    return {"action": "input",
+            "events": [{"PointerMotion": {"device": "mouse-1", "dx": dx, "dy": dy}}]}
+
+
+def _mouse_click() -> list[dict]:
+    return [
+        {"action": "input", "events": [{"PointerButton": {"device": "mouse-1", "button": "left", "pressed": True}}]},
+        {"action": "run_frames", "frames": 4},
+        {"action": "input", "events": [{"PointerButton": {"device": "mouse-1", "button": "left", "pressed": False}}]},
+    ]
+
+
+def _blitz_dismiss_objmem() -> list[dict]:
+    """Dismiss the "Not Enough Object Memory" requester that the BB2 compiler
+    raises on the fresh work disk whenever a program allocates Blitz objects
+    (BitMap, Slice, Shape...). Click "MAKE SMALLEST - RECOMPILE" — a two-pass
+    compile that sizes memory to fit. The requester is always centred, so the
+    button coordinates are stable. Mouse deltas are small (the quadrature
+    counter wraps mod 256), so the pointer is homed top-left then walked over."""
+    steps: list[dict] = [{"action": "run_frames", "frames": 60}]  # let the requester appear
+    for _ in range(4):                                            # home pointer to top-left
+        steps += [_mouse_move(-110, -110), {"action": "run_frames", "frames": 2}]
+    for dx, dy in ((110, 110), (110, 110), (90, 47)):             # walk to the button (~395,315)
+        steps += [_mouse_move(dx, dy), {"action": "run_frames", "frames": 2}]
+    steps += _mouse_click()
+    steps += [{"action": "run_frames", "frames": 60}]             # let the recompile begin
+    return steps
+
+
 def run_blitz(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
     """Type each capture's plain-text Blitz source into Ted and compile-and-run it.
 
@@ -543,6 +573,11 @@ def run_blitz(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
             {"action": "run_frames", "frames": BLITZ_TYPE_SETTLE},
         ]
         script += _blitz_compile_run()         # right-Amiga+X = Compile & Run
+        # Programs that allocate Blitz objects (BitMap/Slice/Shape) trip the
+        # "Not Enough Object Memory" requester on the fresh disk; set
+        # "object_memory": true on the capture (or manifest) to auto-dismiss it.
+        if cap.get("object_memory", manifest.get("object_memory", False)):
+            script += _blitz_dismiss_objmem()
         script += expand_timeline_amiga(cap["timeline"], image_dir)
 
         script_path = capture_dir / f"{cap_id}.script.json"

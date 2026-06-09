@@ -1,0 +1,10 @@
+; Blitz mode takes over the whole machine for full-speed graphics.
+BLITZ
+  BitMap 0,320,256,3
+  Cls 0
+  Boxf 40,50,200,160,2
+  Circle 240,110,55,5
+  VWait 100
+  Slice 0,44,3
+  Show 0
+  MouseWait

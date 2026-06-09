@@ -1,0 +1,13 @@
+; Blitz lets you choose how big each number is.
+big.l = 1000000
+small.b = 100
+
+NPrint "A long holds big numbers:      ", big
+NPrint "A byte holds just -128 to 127: ", small
+NPrint ""
+NPrint "Now add 50 to the byte..."
+small = small + 50
+NPrint "100 + 50 in a byte gives:      ", small
+NPrint "(150 won't fit, so it wrapped round to a negative)"
+MouseWait
+End
