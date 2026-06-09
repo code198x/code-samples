@@ -1,0 +1,30 @@
+{
+  "image_dir": "commodore-64/assembly/meet-the-machine/unit-15",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "screenshot",
+      "prg": "sid.asm",
+      "medium": "still",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 30 },
+        { "screenshot": "screenshot.png" }
+      ],
+      "alt": "A black-bordered blue C64 screen with nothing drawn on it."
+    },
+    {
+      "id": "tone",
+      "prg": "sid.asm",
+      "medium": "audio",
+      "timeline": [
+        { "boot_run": true },
+        { "wait": 25 },
+        { "record_audio": "tone.wav" },
+        { "wait": 120 },
+        { "stop_audio": true }
+      ],
+      "alt": "A steady sawtooth tone from SID voice 1."
+    }
+  ]
+}
