@@ -1,0 +1,3 @@
+{ "machine": "commodore-amiga", "image_dir": "commodore-amiga/amos/meet-amos/unit-15",
+  "captures": [ { "id": "sound", "program": "sound.amos",
+    "timeline": [ { "record_audio": "tone.wav" }, { "wait": 185 }, { "stop_audio": true }, { "screenshot": "screenshot.png" } ] } ] }

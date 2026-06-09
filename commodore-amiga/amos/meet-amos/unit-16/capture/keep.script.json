@@ -1,0 +1,116 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2500
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "backspace",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "Hide\nScreen Open 0,320,200,16,Lowres\nColour 0,$111\nColour 1,$FF0\nColour 2,$2DF\nCls 0\nPen 2\nPaper 0\nLocate 13,5\nPrint \"MYGAME.AMOS\"\nPen 1\nLocate 6,9\nPrint \"Saved to disk. Switch off,\"\nLocate 6,11\nPrint \"come back tomorrow, load it,\"\nLocate 6,13\nPrint \"and carry on where you left off.\"\nWait Key\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "f1",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 160
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/amos/meet-amos/unit-16/screenshot.png"
+ }
+]

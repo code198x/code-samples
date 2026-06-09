@@ -1,0 +1,3 @@
+{ "machine": "commodore-amiga", "image_dir": "commodore-amiga/amos/meet-amos/unit-17",
+  "captures": [ { "id": "theamosway", "program": "theamosway.amos",
+    "timeline": [ { "wait": 170 }, { "screenshot": "screenshot.png" } ] } ] }

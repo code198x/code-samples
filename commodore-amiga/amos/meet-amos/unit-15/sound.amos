@@ -1,0 +1,17 @@
+Hide
+Screen Open 0,320,200,16,Lowres
+Colour 0,$111
+Colour 1,$FF0
+Cls 0
+Pen 1
+Paper 0
+Locate 11,9
+Print "Listen!"
+Locate 6,12
+Print "Boom... Shoot... and a Bell."
+Boom
+Wait 40
+Shoot
+Wait 40
+Bell
+Wait Key

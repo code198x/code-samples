@@ -1,0 +1,18 @@
+Hide
+Screen Open 0,320,200,16,Lowres
+Colour 0,$111
+Colour 1,$FF0
+Colour 2,$2DF
+Cls 0
+Pen 2
+Paper 0
+Locate 13,5
+Print "MYGAME.AMOS"
+Pen 1
+Locate 6,9
+Print "Saved to disk. Switch off,"
+Locate 6,11
+Print "come back tomorrow, load it,"
+Locate 6,13
+Print "and carry on where you left off."
+Wait Key

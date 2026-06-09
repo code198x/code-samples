@@ -1,0 +1,24 @@
+Hide
+Screen Open 0,320,200,16,Lowres
+Colour 0,$006
+Colour 1,$F40
+Colour 2,$FD0
+Colour 3,$FF0
+Cls 0
+Ink 1
+Bar 0,0 To 23,23
+Ink 2
+Bar 6,6 To 17,17
+Get Bob 1,0,0 To 24,24
+Cls 0
+Pen 3
+Paper 0
+Locate 10,3
+Print "Made with AMOS"
+Bob 1,40,100,1
+Channel 1 To Bob 1
+Amal 1,"Loop: M 240,0,90 ; M -240,0,90 ; Jump Loop"
+Amal On
+Do
+   Wait Vbl
+Loop
