@@ -1,0 +1,21 @@
+; A bitmap wider than the screen, with the display window panning across it.
+BLITZ
+  BitMap 0,640,256,3
+  Cls 0
+  ; paint 40 coloured stripes across the full 640-pixel width
+  For i=0 To 39
+    Boxf i*16,30,i*16+13,220,1+(i mod 7)
+  Next
+
+  Slice 0,44,320,256,$fff8,3,8,8,640,640
+  Use Slice 0
+
+  sx.w=0
+  sdx.w=2
+  While Joyb(0)=0
+    VWait
+    Show 0,sx,0
+    sx=sx+sdx
+    If sx>318 Then sdx=-sdx
+    If sx<1 Then sdx=-sdx
+  Wend

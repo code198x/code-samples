@@ -1,0 +1,267 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2100
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "; Reaching the hardware: animate by rewriting colour registers, not pixels.\nBLITZ\n  Dim r(6)\n  Dim g(6)\n  Dim b(6)\n  r(0)=15 : g(0)=0  : b(0)=0\n  r(1)=15 : g(1)=8  : b(1)=0\n  r(2)=15 : g(2)=15 : b(2)=0\n  r(3)=0  : g(3)=15 : b(3)=0\n  r(4)=0  : g(4)=15 : b(4)=15\n  r(5)=0  : g(5)=0  : b(5)=15\n  r(6)=15 : g(6)=0  : b(6)=15\n\n  BitMap 0,320,256,3\n  Cls 0\n  ; seven solid bars, each painted in a different colour register (1..7)\n  For i=0 To 6\n    Boxf i*44+6,40,i*44+44,210,i+1\n  Next\n\n  Slice 0,44,320,256,$fff8,3,8,8,320,320\n  Use Slice 0\n  Show 0\n\n  c.w=0\n  n.w=0\n  While Joyb(0)=0\n    VWait 5\n    For i=0 To 6\n      c=i+n\n      If c>6 Then c=c-7\n      RGB i+1,r(c),g(c),b(c)\n    Next\n    n=n+1\n    If n>6 Then n=0\n  Wend\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 200
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 90,
+     "dy": 47
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "run_frames",
+  "frames": 400
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-13/cycle.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 250
+ },
+ {
+  "action": "stop_video_recording"
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-13/screenshot.png"
+ }
+]

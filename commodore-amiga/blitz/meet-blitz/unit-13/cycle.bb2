@@ -1,0 +1,36 @@
+; Reaching the hardware: animate by rewriting colour registers, not pixels.
+BLITZ
+  Dim r(6)
+  Dim g(6)
+  Dim b(6)
+  r(0)=15 : g(0)=0  : b(0)=0
+  r(1)=15 : g(1)=8  : b(1)=0
+  r(2)=15 : g(2)=15 : b(2)=0
+  r(3)=0  : g(3)=15 : b(3)=0
+  r(4)=0  : g(4)=15 : b(4)=15
+  r(5)=0  : g(5)=0  : b(5)=15
+  r(6)=15 : g(6)=0  : b(6)=15
+
+  BitMap 0,320,256,3
+  Cls 0
+  ; seven solid bars, each painted in a different colour register (1..7)
+  For i=0 To 6
+    Boxf i*44+6,40,i*44+44,210,i+1
+  Next
+
+  Slice 0,44,320,256,$fff8,3,8,8,320,320
+  Use Slice 0
+  Show 0
+
+  c.w=0
+  n.w=0
+  While Joyb(0)=0
+    VWait 5
+    For i=0 To 6
+      c=i+n
+      If c>6 Then c=c-7
+      RGB i+1,r(c),g(c),b(c)
+    Next
+    n=n+1
+    If n>6 Then n=0
+  Wend

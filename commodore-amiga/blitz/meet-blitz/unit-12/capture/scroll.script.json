@@ -1,0 +1,267 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2100
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "; A bitmap wider than the screen, with the display window panning across it.\nBLITZ\n  BitMap 0,640,256,3\n  Cls 0\n  ; paint 40 coloured stripes across the full 640-pixel width\n  For i=0 To 39\n    Boxf i*16,30,i*16+13,220,1+(i mod 7)\n  Next\n\n  Slice 0,44,320,256,$fff8,3,8,8,640,640\n  Use Slice 0\n\n  sx.w=0\n  sdx.w=2\n  While Joyb(0)=0\n    VWait\n    Show 0,sx,0\n    sx=sx+sdx\n    If sx>318 Then sdx=-sdx\n    If sx<1 Then sdx=-sdx\n  Wend\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 200
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 90,
+     "dy": 47
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "run_frames",
+  "frames": 750
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-12/scroll.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 200
+ },
+ {
+  "action": "stop_video_recording"
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-12/screenshot.png"
+ }
+]

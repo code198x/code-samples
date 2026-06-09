@@ -1,0 +1,49 @@
+; The Blitz way: parts you assembled yourself, running at compiled speed.
+BLITZ
+  ; one ball shape, grabbed once
+  BitMap 2,16,16,2
+  Circle 8,8,7,2
+  Circle 8,8,4,6
+  GetaShape 0,0,0,16,16
+
+  ; two display pages for flicker-free motion
+  BitMap 0,320,256,3
+  BitMap 1,320,256,3
+  Slice 0,44,320,256,$fff8,3,8,8,320,320
+
+  ; give 24 balls a starting place and a velocity
+  Dim px.w(23)
+  Dim py.w(23)
+  Dim vx.w(23)
+  Dim vy.w(23)
+  cx.w=10
+  cy.w=20
+  For i=0 To 23
+    px(i)=cx
+    py(i)=cy
+    cx=cx+48
+    If cx>290 Then cx=10 : cy=cy+44
+    vx(i)=2
+    vy(i)=1
+    If i<8 Then vy(i)=-2
+    If i>15 Then vx(i)=-1
+    If i>15 Then vy(i)=2
+  Next
+
+  db=0
+  While Joyb(0)=0
+    VWait
+    Show db
+    db=1-db
+    Use BitMap db
+    Cls 0
+    For i=0 To 23
+      px(i)=px(i)+vx(i)
+      py(i)=py(i)+vy(i)
+      If px(i)<0 Then px(i)=0 : vx(i)=-vx(i)
+      If px(i)>303 Then px(i)=303 : vx(i)=-vx(i)
+      If py(i)<0 Then py(i)=0 : vy(i)=-vy(i)
+      If py(i)>239 Then py(i)=239 : vy(i)=-vy(i)
+      Blit 0,px(i),py(i)
+    Next
+  Wend
