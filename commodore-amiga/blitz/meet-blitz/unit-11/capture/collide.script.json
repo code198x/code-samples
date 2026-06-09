@@ -1,0 +1,267 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2100
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "; ShapesHit tells you the instant two shapes overlap.\nBLITZ\n  ; ball (shape 0) and a target block (shape 1)\n  BitMap 2,24,24,3 : Use BitMap 2 : Cls 0 : Circle 12,12,11,4 : GetaShape 0,0,0,24,24\n  Use BitMap 2 : Cls 0 : Boxf 1,1,22,22,2 : GetaShape 1,0,0,24,24\n\n  BitMap 0,320,256,3\n  BitMap 1,320,256,3\n  Slice 0,44,3\n\n  bx.w=30 : by.w=120\n  tx.w=180 : ty.w=120\n  dx.w=3\n  db=0\n  While Joyb(0)=0\n    VWait\n    Show db : db=1-db : Use BitMap db\n    Cls 0\n    bx=bx+dx\n    If bx>250 Then dx=-dx\n    If bx<30 Then dx=-dx\n    Blit 1,tx,ty\n    Blit 0,bx,by\n    If ShapesHit(0,bx,by,1,tx,ty) Then Boxf 20,30,300,55,6\n  Wend\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 200
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 90,
+     "dy": 47
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "run_frames",
+  "frames": 700
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-11/collide.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 220
+ },
+ {
+  "action": "stop_video_recording"
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-11/screenshot.png"
+ }
+]

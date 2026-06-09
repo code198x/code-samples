@@ -541,7 +541,10 @@ def _blitz_dismiss_objmem() -> list[dict]:
     compile that sizes memory to fit. The requester is always centred, so the
     button coordinates are stable. Mouse deltas are small (the quadrature
     counter wraps mod 256), so the pointer is homed top-left then walked over."""
-    steps: list[dict] = [{"action": "run_frames", "frames": 60}]  # let the requester appear
+    # Wait long enough for the requester to appear — the compiler reaches the
+    # object-allocation stage later for bigger programs, so a short wait can
+    # click before the requester is up and miss it entirely.
+    steps: list[dict] = [{"action": "run_frames", "frames": 200}]
     for _ in range(4):                                            # home pointer to top-left
         steps += [_mouse_move(-110, -110), {"action": "run_frames", "frames": 2}]
     for dx, dy in ((110, 110), (110, 110), (90, 47)):             # walk to the button (~395,315)

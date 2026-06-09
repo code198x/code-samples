@@ -1,0 +1,29 @@
+; The player steers the ball with the joystick.
+BLITZ
+  BitMap 2,24,24,3
+  Circle 12,12,11,6
+  Circle 12,12,7,2
+  GetaShape 0,0,0,24,24
+
+  BitMap 0,320,256,3
+  BitMap 1,320,256,3
+  Slice 0,44,3
+
+  x.w=148 : y.w=112
+  db=0
+  While Joyb(0)=0
+    VWait
+    Show db
+    db=1-db
+    Use BitMap db
+    Cls 0
+    If Joyx(1)=1 Then x=x+4
+    If Joyx(1)=-1 Then x=x-4
+    If Joyy(1)=1 Then y=y+4
+    If Joyy(1)=-1 Then y=y-4
+    If x<0 Then x=0
+    If x>294 Then x=294
+    If y<0 Then y=0
+    If y>230 Then y=230
+    Blit 0,x,y
+  Wend

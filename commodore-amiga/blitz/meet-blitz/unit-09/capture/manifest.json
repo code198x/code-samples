@@ -1,0 +1,6 @@
+{ "machine": "commodore-amiga-blitz", "image_dir": "commodore-amiga/blitz/meet-blitz/unit-09",
+  "captures": [ { "id": "steer", "program": "steer.bb2", "object_memory": true, "medium": "video",
+    "timeline": [ { "wait": 620 }, { "record_video": "steer.mp4" },
+                  { "joy": "right", "frames": 45 }, { "joy": "down", "frames": 35 },
+                  { "joy": "left", "frames": 45 }, { "joy": "up", "frames": 30 },
+                  { "wait": 20 }, { "stop_video": true }, { "screenshot": "screenshot.png" } ] } ] }

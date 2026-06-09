@@ -1,0 +1,267 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 2100
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "return",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "type_string",
+  "text": "; Cycle through four shape frames to make a pulsing animation.\nBLITZ\n  ; build four frames of a pulsing ring on one work bitmap\n  BitMap 2,32,32,3\n  For f=0 To 3\n    Use BitMap 2\n    Cls 0\n    Circle 16,16,4+f*4,2+f\n    GetaShape f,0,0,32,32\n  Next\n\n  BitMap 0,320,256,3\n  BitMap 1,320,256,3\n  Slice 0,44,3\n\n  frame=0\n  tick=0\n  db=0\n  While Joyb(0)=0\n    VWait\n    Show db\n    db=1-db\n    Use BitMap db\n    Cls 0\n    Blit frame,144,108\n    tick=tick+1\n    If tick=8\n      tick=0\n      frame=frame+1\n      If frame=4 Then frame=0\n    EndIf\n  Wend\n"
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 3
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "x",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "raw-67",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": -110,
+     "dy": -110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 110,
+     "dy": 110
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerMotion": {
+     "device": "mouse-1",
+     "dx": 90,
+     "dy": 47
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "PointerButton": {
+     "device": "mouse-1",
+     "button": "left",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "run_frames",
+  "frames": 700
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-10/animate.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 200
+ },
+ {
+  "action": "stop_video_recording"
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/blitz/meet-blitz/unit-10/screenshot.png"
+ }
+]

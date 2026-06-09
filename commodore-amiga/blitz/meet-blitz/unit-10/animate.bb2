@@ -1,0 +1,32 @@
+; Cycle through four shape frames to make a pulsing animation.
+BLITZ
+  ; build four frames of a pulsing ring on one work bitmap
+  BitMap 2,32,32,3
+  For f=0 To 3
+    Use BitMap 2
+    Cls 0
+    Circle 16,16,4+f*4,2+f
+    GetaShape f,0,0,32,32
+  Next
+
+  BitMap 0,320,256,3
+  BitMap 1,320,256,3
+  Slice 0,44,3
+
+  frame=0
+  tick=0
+  db=0
+  While Joyb(0)=0
+    VWait
+    Show db
+    db=1-db
+    Use BitMap db
+    Cls 0
+    Blit frame,144,108
+    tick=tick+1
+    If tick=8
+      tick=0
+      frame=frame+1
+      If frame=4 Then frame=0
+    EndIf
+  Wend

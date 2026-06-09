@@ -1,0 +1,25 @@
+; ShapesHit tells you the instant two shapes overlap.
+BLITZ
+  ; ball (shape 0) and a target block (shape 1)
+  BitMap 2,24,24,3 : Use BitMap 2 : Cls 0 : Circle 12,12,11,4 : GetaShape 0,0,0,24,24
+  Use BitMap 2 : Cls 0 : Boxf 1,1,22,22,2 : GetaShape 1,0,0,24,24
+
+  BitMap 0,320,256,3
+  BitMap 1,320,256,3
+  Slice 0,44,3
+
+  bx.w=30 : by.w=120
+  tx.w=180 : ty.w=120
+  dx.w=3
+  db=0
+  While Joyb(0)=0
+    VWait
+    Show db : db=1-db : Use BitMap db
+    Cls 0
+    bx=bx+dx
+    If bx>250 Then dx=-dx
+    If bx<30 Then dx=-dx
+    Blit 1,tx,ty
+    Blit 0,bx,by
+    If ShapesHit(0,bx,by,1,tx,ty) Then Boxf 20,30,300,55,6
+  Wend
