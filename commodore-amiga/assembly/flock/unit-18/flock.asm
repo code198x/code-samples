@@ -82,6 +82,7 @@ ENDWAIT             equ 300         ; Frames to sit with the ending
 WINWAIT             equ 180         ; ...and to savour a full fold
 SHEPHERD_BONUS      equ 250         ; A clean flock: nobody lost
 MAXLEVEL            equ 4           ; The table's last row repeats
+PROMPT_ROW          equ 150         ; PRESS FIRE, under the logo
 JINGLE_VOL          equ 48          ; The title tune's voice
 ; The jingle's notes (PAL: period = 3546895 / (freq * 8))
 NOTE_C              equ 1694
@@ -359,6 +360,7 @@ mainloop:
             bsr     soundtick
             bsr     updsprite
             bsr     showframe           ; (Hides the sheep: see below)
+            bsr     blinkprompt         ; PRESS FIRE, on and off
             bsr     checkfire           ; Fire starts the game
             bra.s   .endloop
 
@@ -716,6 +718,9 @@ losesheep:
             tst.w   lives
             bgt.s   .next               ; Sheep remain — send the next one
             move.w  #1,gameover         ; The field is empty
+            lea     losesting,a0        ; Queue the lament for endtick
+            move.l  a0,jinglep
+            clr.w   jingletimer
             rts
 .next:
             bsr     newsheep            ; The next sheep steps up
@@ -832,6 +837,7 @@ startgame:
             bsr     drawfarmyard
             bsr     drawflock
             bsr     drawscore
+            bsr     drawlevel
             bsr     newsheep
             rts
 
@@ -842,11 +848,13 @@ endtick:
             bne     .losing             ;   back to the title
             rts
 .winning:
+            bsr     tunetick            ; The fanfare plays itself out
             addq.w  #1,endtimer
             cmp.w   #WINWAIT,endtimer   ; Savour it...
             blt.s   .out
             bra.s   nextlevel           ; ...then a harder farm
 .losing:
+            bsr     tunetick            ; ...and so does the lament
             addq.w  #1,endtimer
             cmp.w   #ENDWAIT,endtimer   ; Let the loss land...
             blt.s   .out
@@ -870,11 +878,8 @@ endtick:
 nextlevel:
             clr.w   won
             clr.w   endtimer
-            cmp.w   #MAXLEVEL,level     ; The last row repeats forever
-            bge.s   .capped
-            addq.w  #1,level
-.capped:
-            bsr     applylevel
+            addq.w  #1,level            ; The COUNT is honest forever;
+            bsr     applylevel          ;   only the table row clamps
             move.w  #5,unpenned         ; Five empty pens again
             lea     pentab,a2
             moveq   #5-1,d6
@@ -890,11 +895,16 @@ nextlevel:
             bsr     drawfarmyard
             bsr     drawflock
             bsr     drawscore
+            bsr     drawlevel
             bsr     newsheep
             rts
 
 applylevel:
             move.w  level,d0
+            cmp.w   #MAXLEVEL,d0        ; Past the table's edge the
+            ble.s   .inrange            ;   last field repeats
+            moveq   #MAXLEVEL,d0
+.inrange:
             subq.w  #1,d0
             mulu    #16,d0              ; 16 bytes a row
             lea     leveltab,a0
@@ -950,8 +960,8 @@ tunetick:
             rts
 .next:
             move.l  jinglep,a0
-            move.w  (a0)+,d0            ; Period (0 = rest, -1 = loop)
-            bmi.s   .loop
+            move.w  (a0)+,d0            ; Period (0 = rest, -1 = loop,
+            bmi.s   .marker             ;   -2 = played once, now stop)
             move.w  (a0)+,d2            ; Frames
             move.w  d2,jingletimer
             move.l  a0,jinglep
@@ -963,10 +973,65 @@ tunetick:
 .rest:
             move.w  #$0001,DMACON(a5)   ; Silence is a note too
             rts
-.loop:
-            lea     jingle,a0
+.marker:
+            cmp.w   #-1,d0
+            bne.s   .halt               ; -2: stay silent (jinglep still
+            lea     jingle,a0           ;   points here, so it stays put)
             move.l  a0,jinglep
+.halt:      rts
+
+;══════════════════════════════════════════════════════════════
+; BLINKPROMPT / DRAWLEVEL — the last yard of finish
+;
+; PRESS FIRE under the logo, winking on a 32-frame beat; the
+; level on the HUD so "I died on four" has a four. Both reuse
+; the glyph stamper the score has used since Unit 10 — a HUD
+; is one routine and a font, applied with intent.
+;══════════════════════════════════════════════════════════════
+
+blinkprompt:
+            move.w  framecnt,d0
+            and.w   #32,d0              ; 32 frames on, 32 off
+            beq.s   .show
+            moveq   #15,d0              ; Quench it: clear the strip
+            move.w  #PROMPT_ROW,d1
+            moveq   #10,d2
+            moveq   #8,d3
+            bra     rectclear
+.show:
+            lea     prompttab,a3
+            moveq   #9-1,d6
+.glyph:
+            moveq   #0,d0
+            move.b  (a3)+,d0            ; Byte column
+            moveq   #0,d1
+            move.b  (a3)+,d1            ; Glyph index
+            lsl.w   #3,d1               ; * 8 bytes
+            lea     promptfont,a2
+            adda.w  d1,a2
+            move.w  #PROMPT_ROW,d1
+            bsr     drawglyph
+            dbf     d6,.glyph
             rts
+
+drawlevel:
+            lea     promptfont+6*8,a2   ; The L
+            moveq   #19,d0
+            move.w  #ROW_HUD+4,d1
+            bsr     drawglyph
+            move.w  level,d2
+            cmp.w   #9,d2               ; The DIGIT caps at nine;
+            ble.s   .have               ;   level itself never does
+            moveq   #9,d2
+.have:
+            lea     digitfont,a2
+            add.w   d2,d2
+            add.w   d2,d2
+            add.w   d2,d2               ; digit * 8
+            adda.w  d2,a2
+            moveq   #20,d0
+            move.w  #ROW_HUD+4,d1
+            bra     drawglyph
 
 ;══════════════════════════════════════════════════════════════
 ; SETPOS — pack screen (x, y) into one sprite's POS/CTL
@@ -1261,6 +1326,9 @@ trypen:
             subq.w  #1,unpenned         ; A full fold ends the level
             bne.s   .out
             move.w  #1,won
+            lea     winsting,a0         ; Queue the fanfare for endtick
+            move.l  a0,jinglep
+            clr.w   jingletimer
             cmp.w   #FLOCK_SIZE,lives   ; The whole flock, nobody lost?
             bne.s   .out
             add.w   #SHEPHERD_BONUS,score
@@ -1940,6 +2008,30 @@ titletab:
             dc.w    27,120,1,8
             dc.w    28,128,1,12
             dc.w    -1
+
+promptfont: ; P R E S F I L — one byte per row, eight rows each
+            dc.b    %11111100,%11000110,%11000110,%11111100,%11000000,%11000000,%11000000,0  ; P
+            dc.b    %11111100,%11000110,%11000110,%11111100,%11011000,%11001100,%11000110,0  ; R
+            dc.b    %11111110,%11000000,%11000000,%11111100,%11000000,%11000000,%11111110,0  ; E
+            dc.b    %01111110,%11000000,%11000000,%01111100,%00000110,%00000110,%11111100,0  ; S
+            dc.b    %11111110,%11000000,%11000000,%11111100,%11000000,%11000000,%11000000,0  ; F
+            dc.b    %01111110,%00011000,%00011000,%00011000,%00011000,%00011000,%01111110,0  ; I
+            dc.b    %11000000,%11000000,%11000000,%11000000,%11000000,%11000000,%11111110,0  ; L
+            even
+
+prompttab:  ; (byte column, glyph index) — PRESS FIRE
+            dc.b    15,0, 16,1, 17,2, 18,3, 19,3
+            dc.b    21,4, 22,5, 23,1, 24,2
+            even
+
+; The endings' voices: a short rest first, so the pen chime or
+; the last squelch can finish saying its piece.
+winsting:   dc.w    0,24
+            dc.w    NOTE_C,7, NOTE_E,7, NOTE_G,7, NOTE_C/2,22
+            dc.w    -2
+losesting:  dc.w    0,20
+            dc.w    NOTE_E,12, NOTE_D,12, NOTE_C,12, NOTE_C*2,30
+            dc.w    -2
 
 ; Baa Baa Black Sheep, one phrase at a time: period, frames.
 ; 0 period = a rest; -1 = back to the top.
