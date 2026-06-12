@@ -1,0 +1,85 @@
+{
+  "image_dir": "commodore-64/assembly/starfield/unit-17",
+  "machine": "commodore-64",
+  "captures": [
+    {
+      "id": "step-01-wave",
+      "prg": "steps/step-01.prg",
+      "medium": "image",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 60
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 10
+        },
+        {
+          "hold": "left"
+        },
+        {
+          "wait": 44
+        },
+        {
+          "release": "left"
+        },
+        {
+          "hold": "fire"
+        },
+        {
+          "record_audio": "wave-run.wav"
+        },
+        {
+          "wait": 320
+        },
+        {
+          "stop_audio": true
+        },
+        {
+          "screenshot": "step-01-wave-a.png"
+        },
+        {
+          "wait": 10
+        },
+        {
+          "screenshot": "step-01-wave-b.png"
+        },
+        {
+          "release": "fire"
+        }
+      ],
+      "caption": "Park the ship in the enemies' lane and hold fire: kills bank up, the tenth flips the W readout to 2 with a chirp over the explosion, and from there every enemy falls twice as fast.",
+      "alt": "Mid-game: the white ship near the bottom holding its column, green enemies falling, the score and lives readouts at the corners and a white W wave readout at the top centre."
+    },
+    {
+      "id": "step-02-jingle",
+      "prg": "steps/step-02.prg",
+      "medium": "audio",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "record_audio": "jingle.wav"
+        },
+        {
+          "wait": 800
+        },
+        {
+          "stop_audio": true
+        },
+        {
+          "screenshot": "step-02-title.png"
+        }
+      ],
+      "caption": "The title screen, no longer silent: Twinkle Twinkle, Little Star on SID voice 1, looping under the scrolling starfield until fire is pressed.",
+      "alt": "The STARFIELD title screen with PRESS FIRE below it and stars drifting past."
+    }
+  ]
+}

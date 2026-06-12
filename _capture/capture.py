@@ -200,6 +200,14 @@ def expand_timeline_c64(timeline: list[dict], image_dir: Path) -> list[dict]:
                         "path": str(image_dir / action["record_audio"])})
         elif action.get("stop_audio"):
             out.append({"action": "stop_audio_recording"})
+        elif "poke" in action:
+            # Capture-setup write to CPU memory, as on the Spectrum path:
+            # reach a state quickly, then exercise the *real* game logic.
+            # Address accepts int or "0x.." string.
+            addr = action["poke"]
+            addr = int(addr, 0) if isinstance(addr, str) else int(addr)
+            out.append({"action": "poke_byte", "addr": addr,
+                        "value": int(action["value"]) & 0xFF})
         else:
             sys.exit(f"Unknown C64 timeline action: {action!r}")
     return out
