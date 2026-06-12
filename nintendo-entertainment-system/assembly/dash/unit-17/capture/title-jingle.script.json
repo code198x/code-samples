@@ -1,0 +1,1 @@
+[{"action": "run_frames", "frames": 70}, {"action": "start_audio_recording", "path": "/tmp/dash-jingle-long.wav"}, {"action": "run_frames", "frames": 900}, {"action": "stop_audio_recording"}]
