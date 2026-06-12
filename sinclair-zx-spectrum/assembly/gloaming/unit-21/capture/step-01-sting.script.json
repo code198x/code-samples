@@ -1,0 +1,92 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-21/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34047,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34048,
+  "value": 16
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34049,
+  "value": 11
+ },
+ {
+  "action": "start_audio_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-21/sting-nightfall.wav"
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "stop_audio_recording"
+ }
+]

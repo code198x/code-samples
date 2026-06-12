@@ -1,0 +1,58 @@
+{
+  "machine": "sinclair-zx-spectrum",
+  "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-21",
+  "captures": [
+    { "id": "step-01-chime",
+      "program": "steps/step-01.asm",
+      "comment": "The dusk chime plays the moment the title comes up, so record from boot: two bell notes, high then low, then the title waits in silence.",
+      "timeline": [
+        {"record_audio": "chime-dusk.wav"},
+        {"wait": 60},
+        {"stop_audio": true}
+      ] },
+    { "id": "step-01-won",
+      "program": "steps/step-01.asm",
+      "comment": "Engineer the last lamp: poke lit_count to 7 (with the first seven pips and the other seven lamps shown lit, so the screen tells the same story), freeze the draught's timer, then walk left twice and down nine to (13,20) and light the eighth for real — the genuine win path plays the fanfare. Screenshot after it ends.",
+      "timeline": [
+        {"wait": 60},
+        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 10},
+        {"poke": "0x84FE", "value": 7},
+        {"poke": "0x8504", "value": 255},
+        {"poke": "0x580C", "value": 112},
+        {"poke": "0x580D", "value": 112},
+        {"poke": "0x580E", "value": 112},
+        {"poke": "0x580F", "value": 112},
+        {"poke": "0x5810", "value": 112},
+        {"poke": "0x5811", "value": 112},
+        {"poke": "0x5812", "value": 112},
+        {"poke": "0x5864", "value": 70},
+        {"poke": "0x587B", "value": 70},
+        {"poke": "0x58E9", "value": 70},
+        {"poke": "0x58F6", "value": 70},
+        {"poke": "0x59E6", "value": 70},
+        {"poke": "0x59F9", "value": 70},
+        {"poke": "0x5A92", "value": 70},
+        {"hold": "O"}, {"wait": 2}, {"release": "O"}, {"wait": 2},
+        {"hold": "A"}, {"wait": 8}, {"release": "A"}, {"wait": 2},
+        {"record_audio": "fanfare-held.wav"},
+        {"hold": "A"}, {"wait": 2}, {"release": "A"},
+        {"wait": 110},
+        {"stop_audio": true},
+        {"screenshot": "step-01-won.png"}
+      ] },
+    { "id": "step-01-sting",
+      "program": "steps/step-01.asm",
+      "comment": "Unit 19's engineered loss, now with a voice: one life, the draught parked on the cell to the right, one step drives the genuine lose path and the nightfall sting.",
+      "timeline": [
+        {"wait": 60},
+        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 10},
+        {"poke": "0x84FF", "value": 1},
+        {"poke": "0x8500", "value": 16},
+        {"poke": "0x8501", "value": 11},
+        {"record_audio": "sting-nightfall.wav"},
+        {"hold": "P"}, {"wait": 2}, {"release": "P"},
+        {"wait": 60},
+        {"stop_audio": true}
+      ] }
+  ]
+}

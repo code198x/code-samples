@@ -1,0 +1,221 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-21/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34046,
+  "value": 7
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34052,
+  "value": 255
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22540,
+  "value": 112
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22541,
+  "value": 112
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22542,
+  "value": 112
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22543,
+  "value": 112
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22544,
+  "value": 112
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22545,
+  "value": 112
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22546,
+  "value": 112
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22628,
+  "value": 70
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22651,
+  "value": 70
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22761,
+  "value": 70
+ },
+ {
+  "action": "poke_byte",
+  "addr": 22774,
+  "value": 70
+ },
+ {
+  "action": "poke_byte",
+  "addr": 23014,
+  "value": 70
+ },
+ {
+  "action": "poke_byte",
+  "addr": 23033,
+  "value": 70
+ },
+ {
+  "action": "poke_byte",
+  "addr": 23186,
+  "value": 70
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "A",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "A",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "start_audio_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-21/fanfare-held.wav"
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "A",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "A",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 110
+ },
+ {
+  "action": "stop_audio_recording"
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-21/step-01-won.png"
+ }
+]
