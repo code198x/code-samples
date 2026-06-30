@@ -1,0 +1,9 @@
+{ "machine":"sinclair-zx-spectrum","image_dir":"foundations/numbers-and-bits/unit-03",
+  "captures":[
+    {"id":"step-01-minus-one","program":"steps/step-01.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-01-minus-one.png"}]},
+    {"id":"step-02-minus-five","program":"steps/step-02.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-02-minus-five.png"}]},
+    {"id":"step-03-wraps-to-zero","program":"steps/step-03.bas",
+     "timeline":[{"wait":50},{"screenshot":"step-03-wraps-to-zero.png"}]}
+  ]}
