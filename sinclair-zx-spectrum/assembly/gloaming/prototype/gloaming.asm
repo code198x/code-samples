@@ -14,7 +14,7 @@ LAMP_LIT    equ     %01000110
 WALL_BIT    equ     3
 
 DRAUGHT_ATTR  equ   %01000101
-DRAUGHT_SPEED equ   8
+NUM_DUSKS     equ   8               ; dusk_table entries; deeper dusks hold the last
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
 
 PIP_UNLIT   equ     %00101000
@@ -99,13 +99,14 @@ title_step:
             in      a, (c)
             bit     0, a
             ret     nz
-            call    init_game
+            call    init_run
             ld      a, STATE_PLAY
             ld      (game_state), a
             ret
 
 ; ----------------------------------------------------------------------------
-; end_step — WIN/LOSE: after the lock, SPACE returns to the title.
+; end_step — after the lock, SPACE moves on. A held dusk continues the
+; run — the night deepens; only NIGHT FALLS returns to the title.
 ; ----------------------------------------------------------------------------
 end_step:
             ld      a, (input_lock)
@@ -119,11 +120,21 @@ end_step:
             in      a, (c)
             bit     0, a
             ret     nz
+            ld      a, (game_state)
+            cp      STATE_WIN
+            jr      z, .deeper
             call    draw_title_screen
             call    chime_dusk
             ld      a, LOCK
             ld      (input_lock), a
             ld      a, STATE_TITLE
+            ld      (game_state), a
+            ret
+.deeper:
+            ld      hl, dusk
+            inc     (hl)
+            call    init_game
+            ld      a, STATE_PLAY
             ld      (game_state), a
             ret
 
@@ -147,11 +158,18 @@ play_step:
             ld      (game_state), a
             ret
 
+; A run is a night: dusk 0, full lives. Each held dusk re-enters
+; init_game with dusk bumped — the square relights, the lives carry.
+init_run:
+            xor     a
+            ld      (dusk), a
+            ld      a, LIVES
+            ld      (lives), a
+            ; fall through into the per-dusk setup
+
 init_game:
             xor     a
             ld      (lit_count), a
-            ld      a, LIVES
-            ld      (lives), a
             ld      a, START_COL
             ld      (lamp_col), a
             ld      a, START_ROW
@@ -160,7 +178,19 @@ init_game:
             ld      (draught_col), a
             ld      a, DRAUGHT_ROW0
             ld      (draught_row), a
-            ld      a, DRAUGHT_SPEED
+            ; the night deepens: the wisp's pace comes from the dusk
+            ; table, deeper dusks holding the last entry
+            ld      a, (dusk)
+            cp      NUM_DUSKS
+            jr      c, .dpace
+            ld      a, NUM_DUSKS - 1
+.dpace:
+            ld      e, a
+            ld      d, 0
+            ld      hl, dusk_table
+            add     hl, de
+            ld      a, (hl)
+            ld      (dusk_speed), a
             ld      (draught_timer), a
             xor     a
             ld      (player_timer), a
@@ -500,7 +530,7 @@ draught_step:
             dec     a
             ld      (draught_timer), a
             ret     nz
-            ld      a, DRAUGHT_SPEED
+            ld      a, (dusk_speed)
             ld      (draught_timer), a
 
             ; the lamplighter's flame is the first candidate...
@@ -660,7 +690,7 @@ lose_life:
             ld      (draught_col), a
             ld      a, DRAUGHT_ROW0
             ld      (draught_row), a
-            ld      a, DRAUGHT_SPEED
+            ld      a, (dusk_speed)
             ld      (draught_timer), a
             call    save_draught
             call    draw_draught
@@ -958,6 +988,12 @@ game_state:
 input_lock:
             defb    0
 
+dusk_table:
+            ; the wisp's pace per dusk (frames between steps) — the
+            ; night deepens as data, not code. Dusk 1 is gentle on
+            ; purpose: the hunt must be readable before it's a threat.
+            defb    16, 13, 11, 9, 8, 7, 6, 5
+
 wall_ramp:
             ; The square warms in the brief's vocabulary (§6): the stone
             ; stays dusk-blue; the lamplight catches the mortar first
@@ -1003,9 +1039,13 @@ draught_col:
 draught_row:
             defb    DRAUGHT_ROW0
 draught_timer:
-            defb    DRAUGHT_SPEED
+            defb    16
 player_timer:
             defb    0
+dusk:
+            defb    0
+dusk_speed:
+            defb    16
 seek_col:
             defb    0
 seek_row:
