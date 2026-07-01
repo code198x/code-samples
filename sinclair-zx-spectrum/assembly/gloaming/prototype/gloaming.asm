@@ -160,9 +160,6 @@ init_game:
             ld      (draught_col), a
             ld      a, DRAUGHT_ROW0
             ld      (draught_row), a
-            ld      a, 1
-            ld      (draught_dx), a
-            ld      (draught_dy), a
             ld      a, DRAUGHT_SPEED
             ld      (draught_timer), a
             xor     a
@@ -474,7 +471,29 @@ player_step:
             ret
 
 ; ----------------------------------------------------------------------------
-; draught_step.
+; manhattan — distance from the draught to cell (C = col, B = row) -> A.
+; ----------------------------------------------------------------------------
+manhattan:
+            ld      a, (draught_col)
+            sub     c
+            jp      p, .dc
+            neg
+.dc:
+            ld      d, a
+            ld      a, (draught_row)
+            sub     b
+            jp      p, .dr
+            neg
+.dr:
+            add     a, d
+            ret
+
+; ----------------------------------------------------------------------------
+; draught_step — the wisp is the dark, and the dark seeks the light.
+; Every DRAUGHT_SPEED frames it steps one cell toward the nearest light
+; source: a lit lamp, or the lamplighter's own flame. Walls don't stop
+; the night — it drifts straight through the stone. One rule, read as
+; intent: the lesson of Namco's ghost AI in Pac-Man.
 ; ----------------------------------------------------------------------------
 draught_step:
             ld      a, (draught_timer)
@@ -484,43 +503,105 @@ draught_step:
             ld      a, DRAUGHT_SPEED
             ld      (draught_timer), a
 
-            ld      a, (draught_col)
-            ld      b, a
-            ld      a, (draught_dx)
-            add     a, b
+            ; the lamplighter's flame is the first candidate...
+            ld      a, (lamp_col)
             ld      c, a
-            ld      a, (draught_row)
+            ld      (seek_col), a
+            ld      a, (lamp_row)
             ld      b, a
-            call    wall_at
-            jr      z, .hok
-            ld      a, (draught_dx)
-            neg
-            ld      (draught_dx), a
-.hok:
-            ld      a, (draught_row)
-            ld      b, a
-            ld      a, (draught_dy)
-            add     a, b
-            ld      b, a
-            ld      a, (draught_col)
+            ld      (seek_row), a
+            call    manhattan
+            ld      (seek_best), a
+
+            ; ...then every lit lamp, keeping the nearest
+            ld      hl, lamp_data
+.scan:
+            ld      a, (hl)
+            cp      $FF
+            jr      z, .chase
             ld      c, a
-            call    wall_at
-            jr      z, .vok
-            ld      a, (draught_dy)
-            neg
-            ld      (draught_dy), a
-.vok:
+            inc     hl
+            ld      b, (hl)
+            inc     hl
+            push    hl
+            push    bc
+            call    attr_addr_cr
+            ld      a, (hl)
+            pop     bc
+            cp      LAMP_LIT
+            jr      nz, .dnext      ; unlit lamps cast no light
+            call    manhattan
+            ld      hl, seek_best
+            cp      (hl)
+            jr      nc, .dnext      ; not nearer — keep the current prey
+            ld      (hl), a
+            ld      a, c
+            ld      (seek_col), a
+            ld      a, b
+            ld      (seek_row), a
+.dnext:
+            pop     hl
+            jr      .scan
+
+.chase:
+            ; step one cell along the axis with the greater distance
+            ; (ties go sideways) — the night is 4-connected, like the
+            ; lamplighter
             ld      a, (draught_col)
-            ld      b, a
-            ld      a, (draught_dx)
-            add     a, b
             ld      (dtcol), a
             ld      a, (draught_row)
-            ld      b, a
-            ld      a, (draught_dy)
-            add     a, b
             ld      (dtrow), a
 
+            ld      a, (seek_col)
+            ld      hl, draught_col
+            sub     (hl)
+            jp      p, .absc
+            neg
+.absc:
+            ld      d, a            ; D = |dc|
+            ld      a, (seek_row)
+            ld      hl, draught_row
+            sub     (hl)
+            jp      p, .absr
+            neg
+.absr:
+            cp      d               ; |dr| vs |dc|
+            jr      z, .tie
+            jr      c, .horiz
+            jr      .vert
+.tie:
+            ld      a, d
+            or      a
+            ret     z               ; already on the light
+            jr      .horiz
+.horiz:
+            ld      a, (seek_col)
+            ld      hl, draught_col
+            cp      (hl)
+            jr      c, .hleft
+            ld      a, (hl)
+            inc     a
+            ld      (dtcol), a
+            jr      .contact
+.hleft:
+            ld      a, (hl)
+            dec     a
+            ld      (dtcol), a
+            jr      .contact
+.vert:
+            ld      a, (seek_row)
+            ld      hl, draught_row
+            cp      (hl)
+            jr      c, .vup
+            ld      a, (hl)
+            inc     a
+            ld      (dtrow), a
+            jr      .contact
+.vup:
+            ld      a, (hl)
+            dec     a
+            ld      (dtrow), a
+.contact:
             ld      a, (dtcol)
             ld      hl, lamp_col
             cp      (hl)
@@ -570,6 +651,19 @@ lose_life:
             ld      (lamp_row), a
             call    save_under
             call    draw_lamp
+            ; the taking costs the night its reach — the wisp recoils to
+            ; the far corner, so every life buys a whole fresh chase
+            ; (leaving it beside the respawn made a catch strip every
+            ; life in seconds once the draught learnt to hunt)
+            call    restore_draught
+            ld      a, DRAUGHT_COL0
+            ld      (draught_col), a
+            ld      a, DRAUGHT_ROW0
+            ld      (draught_row), a
+            ld      a, DRAUGHT_SPEED
+            ld      (draught_timer), a
+            call    save_draught
+            call    draw_draught
             ret
 .gone:
             call    draw_lose_screen
@@ -908,13 +1002,15 @@ draught_col:
             defb    DRAUGHT_COL0
 draught_row:
             defb    DRAUGHT_ROW0
-draught_dx:
-            defb    1
-draught_dy:
-            defb    1
 draught_timer:
             defb    DRAUGHT_SPEED
 player_timer:
+            defb    0
+seek_col:
+            defb    0
+seek_row:
+            defb    0
+seek_best:
             defb    0
 dtcol:
             defb    0
