@@ -7,6 +7,8 @@
             org     32768
 
 COBBLE      equ     %00000001
+GLOW        equ     %00000110       ; pool-warmed cobble — ground the light holds
+DARK        equ     %00000000       ; the night made solid — the player cannot pass
 WALL        equ     %00001111
 LAMP_ATTR   equ     %01000111
 LAMP_UNLIT  equ     %00000101
@@ -207,10 +209,18 @@ init_game:
             ld      a, (hl)
             ld      (dusk_speed), a
             ld      (draught_timer), a
+            ; the tendril reaches further as the night deepens
+            ld      hl, dusk_lentab
+            add     hl, de
+            ld      a, (hl)
+            ld      (tendril_max), a
             xor     a
             ld      (player_timer), a
+            ld      (tendril_len), a
+            ld      (tendril_head), a
 
             call    clear_bitmap
+            call    fill_ground
             ld      hl, $5800
             ld      de, $5801
             ld      (hl), COBBLE
@@ -496,6 +506,10 @@ player_step:
             ld      c, a
             call    wall_at
             ret     nz
+            ; the solid night blocks too — you cannot walk into the dark
+            ld      a, (hl)
+            cp      DARK
+            ret     z
 
             ld      a, (tcol)
             ld      hl, draught_col
@@ -523,9 +537,138 @@ player_step:
             call    light_pip
             call    blip_lit
             call    warm_walls
+            call    recompute_pools
 .pdrawn:
             call    draw_lamp
             ret
+
+; ----------------------------------------------------------------------------
+; recompute_pools — the lamps cast their light. Every glow cell dies back
+; to bare cobble, then every LIT lamp warms its eight neighbours. Called
+; after any light or snuff. Both movers are restored to the screen first
+; so cell truth is readable, and re-saved after — their under-buffers
+; stay honest through the recolour.
+; ----------------------------------------------------------------------------
+; ----------------------------------------------------------------------------
+; fill_ground — the cobble stipple (brief §6). Not decoration: the
+; stipple is what makes ground-state changes visible. Glow recolours
+; these pixels warm; the dark (ink = paper = black) swallows them —
+; a void in the stipple field reads as ground the night has taken.
+; ----------------------------------------------------------------------------
+fill_ground:
+            ld      b, 1                ; rows 1-23 (row 0 is the HUD)
+.fgr:
+            ld      c, 0
+.fgc:
+            push    bc
+            call    scr_addr_cr
+            ld      de, cobble_tex
+            ld      b, 8
+.fgb:
+            ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .fgb
+            pop     bc
+            inc     c
+            ld      a, c
+            cp      32
+            jr      c, .fgc
+            inc     b
+            ld      a, b
+            cp      24
+            jr      c, .fgr
+            ret
+
+cobble_tex:
+            defb    %10000010
+            defb    %00000000
+            defb    %00001000
+            defb    %00000000
+            defb    %00100001
+            defb    %00000000
+            defb    %00010000
+            defb    %00000000
+
+recompute_pools:
+            call    restore_under
+            call    restore_draught
+            ld      hl, $5820           ; rows 1-23 (row 0 is the HUD)
+            ld      bc, 736
+.rp1:
+            ld      a, (hl)
+            cp      GLOW
+            jr      nz, .rp1n
+            ld      (hl), COBBLE
+.rp1n:
+            inc     hl
+            dec     bc
+            ld      a, b
+            or      c
+            jr      nz, .rp1
+            ld      hl, lamp_data
+.rp2:
+            ld      a, (hl)
+            cp      $FF
+            jr      z, .rpdone
+            ld      c, a
+            inc     hl
+            ld      b, (hl)
+            inc     hl
+            push    hl
+            push    bc
+            call    attr_addr_cr
+            ld      a, (hl)
+            pop     bc
+            cp      LAMP_LIT
+            jr      nz, .rp2n
+            call    glow_ring
+.rp2n:
+            pop     hl
+            jr      .rp2
+.rpdone:
+            call    save_under
+            call    save_draught
+            call    draw_lamp
+            call    draw_draught
+            ret
+
+; glow_ring — warm the eight cells around lamp (C = col, B = row) where
+; they are bare cobble. Pools never take walls, posts, or the dark.
+glow_ring:
+            ld      hl, ring_offsets
+            ld      e, 8
+.gr:
+            push    hl
+            push    de
+            push    bc
+            ld      a, (hl)
+            add     a, c
+            ld      c, a
+            inc     hl
+            ld      a, (hl)
+            add     a, b
+            ld      b, a
+            call    attr_addr_cr
+            ld      a, (hl)
+            cp      COBBLE
+            jr      nz, .grn
+            ld      (hl), GLOW
+.grn:
+            pop     bc
+            pop     de
+            pop     hl
+            inc     hl
+            inc     hl
+            dec     e
+            jr      nz, .gr
+            ret
+
+ring_offsets:
+            defb    -1, -1,  0, -1,  1, -1
+            defb    -1,  0,          1,  0
+            defb    -1,  1,  0,  1,  1,  1
 
 ; ----------------------------------------------------------------------------
 ; manhattan — distance from the draught to cell (C = col, B = row) -> A.
@@ -672,6 +815,21 @@ draught_step:
 
 .dmove:
             call    restore_draught
+            ; the tendril: night pools where the wisp has walked. Only
+            ; bare cobble is taken — pools and posts resist the dark.
+            ld      a, (draught_col)
+            ld      c, a
+            ld      a, (draught_row)
+            ld      b, a
+            push    bc
+            call    attr_addr_cr
+            pop     bc
+            ld      a, (hl)
+            cp      COBBLE
+            jr      nz, .notake
+            ld      (hl), DARK
+            call    tendril_push
+.notake:
             ld      a, (dtcol)
             ld      (draught_col), a
             ld      a, (dtrow)
@@ -685,8 +843,74 @@ draught_step:
             call    unlight_pip
             call    blip_snuff
             call    warm_walls
+            call    recompute_pools
 .nosnuff:
             call    draw_draught
+            ret
+
+; ----------------------------------------------------------------------------
+; tendril_push — record darkened cell (C = col, B = row) in the tendril
+; ring. When the ring is full the oldest cell releases back to bare
+; cobble first — the night cannot hold ground beyond its reach, so the
+; tendril can never permanently wall the square off.
+; ----------------------------------------------------------------------------
+tendril_push:
+            ld      a, (tendril_len)
+            ld      hl, tendril_max
+            cp      (hl)
+            jr      c, .tgrow
+            ; full: release the oldest cell (the slot head points at)
+            push    bc
+            ld      a, (tendril_head)
+            add     a, a
+            ld      e, a
+            ld      d, 0
+            ld      hl, tendril_buf
+            add     hl, de
+            ld      c, (hl)
+            inc     hl
+            ld      b, (hl)
+            ; if the wisp itself is crossing that cell, mend its saved
+            ; ground instead of the screen
+            ld      a, (draught_col)
+            cp      c
+            jr      nz, .trel
+            ld      a, (draught_row)
+            cp      b
+            jr      nz, .trel
+            ld      a, COBBLE
+            ld      (under_draught + 8), a
+            jr      .treld
+.trel:
+            call    attr_addr_cr
+            ld      a, (hl)
+            cp      DARK
+            jr      nz, .treld
+            ld      (hl), COBBLE
+.treld:
+            pop     bc
+            jr      .tstore
+.tgrow:
+            inc     a
+            ld      (tendril_len), a
+.tstore:
+            ld      a, (tendril_head)
+            add     a, a
+            ld      e, a
+            ld      d, 0
+            ld      hl, tendril_buf
+            add     hl, de
+            ld      (hl), c
+            inc     hl
+            ld      (hl), b
+            ld      a, (tendril_head)
+            inc     a
+            ld      hl, tendril_max
+            cp      (hl)
+            jr      c, .tadv
+            xor     a
+.tadv:
+            ld      (tendril_head), a
             ret
 
 lose_life:
@@ -1024,6 +1248,11 @@ dusk_table:
             ; last watch should be the climax, not the ceiling.
             defb    16, 13, 11, 9, 9
 
+dusk_lentab:
+            ; the tendril's reach per watch (cells of night held) — the
+            ; second axis of the deepening
+            defb    6, 9, 12, 15, 18
+
 wall_ramp:
             ; The square warms in the brief's vocabulary (§6): the stone
             ; stays dusk-blue; the lamplight catches the mortar first
@@ -1082,6 +1311,15 @@ seek_row:
             defb    0
 seek_best:
             defb    0
+tendril_head:
+            defb    0
+tendril_len:
+            defb    0
+tendril_max:
+            defb    6
+tendril_buf:
+            defb    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+            defb    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 dtcol:
             defb    0
 dtrow:
