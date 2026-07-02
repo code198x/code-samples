@@ -804,7 +804,7 @@ print_char:
             ret
 
 ; ----------------------------------------------------------------------------
-; light_pip / unlight_pip / draw_pips / draw_lives.
+; light_pip / draw_pips / draw_lives.
 ; ----------------------------------------------------------------------------
 light_pip:
             ld      a, (lit_count)
@@ -815,17 +815,6 @@ light_pip:
             ld      hl, PIP_BASE
             add     hl, de
             ld      (hl), PIP_LIT
-            ret
-
-unlight_pip:
-            ld      a, (lit_count)
-            dec     a
-            ld      (lit_count), a
-            ld      e, a
-            ld      d, 0
-            ld      hl, PIP_BASE
-            add     hl, de
-            ld      (hl), PIP_UNLIT
             ret
 
 draw_pips:

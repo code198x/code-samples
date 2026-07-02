@@ -503,7 +503,7 @@ LOSE_LIFE17 = drop(LOSE_LIFE19, "            call    sting_nightfall\n")
 
 PRINT_BLOCK = cut(DASH + "\n; print_string / print_char.", "\n\n" + DASH + "\n; light_pip")
 
-LIGHT_PIP = cut("\nlight_pip:", "\nunlight_pip:").lstrip("\n")
+LIGHT_PIP = cut("\nlight_pip:", "\ndraw_pips:").lstrip("\n")
 DRAW_PIPS = cut("draw_pips:", "\ndraw_lives:")
 DRAW_LIVES = cut("draw_lives:", "\n\n" + DASH + "\n; draw_lamps")
 

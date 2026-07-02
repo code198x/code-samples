@@ -50,8 +50,8 @@ subtraction (no pools/tendril/queue/watches/dawn/tune). Its own suite:
 | `m1-sting.script.json` | Loss gate: one life, one step → NIGHT FALLS |
 | `m1-probe.script.json` | Menace: idle player hunted to NIGHT FALLS at pace 16 |
 
-m1 addresses (2026-07-02): `lit_count` $8616, `lives` $8617,
-`best_lives` $8618, `draught_col` $8619, `draught_row` $861A,
-`draught_timer` $861B. The boot chime blocks ~2s — openings wait 160
+m1 addresses (2026-07-02, post `unlight_pip` strip): `lit_count` $8605,
+`lives` $8606, `best_lives` $8607, `draught_col` $8608,
+`draught_row` $8609, `draught_timer` $860A. The boot chime blocks ~2s — openings wait 160
 frames before the Space tap; the plain title polls every frame, so
 short taps are safe everywhere in m1.
