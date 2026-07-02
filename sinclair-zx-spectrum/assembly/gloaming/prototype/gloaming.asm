@@ -14,7 +14,8 @@ LAMP_LIT    equ     %01000110
 WALL_BIT    equ     3
 
 DRAUGHT_ATTR  equ   %01000101
-NUM_DUSKS     equ   8               ; dusk_table entries; deeper dusks hold the last
+NUM_DUSKS     equ   5               ; the night is five watches long; hold them all
+                                    ; and the dawn breaks
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
 
 PIP_UNLIT   equ     %00101000
@@ -41,8 +42,10 @@ SPEAKER     equ     %00010000
 
 STATE_TITLE equ     0
 STATE_PLAY  equ     1
-STATE_WIN   equ     2
+STATE_WIN   equ     2               ; a dusk held — the night deepens
 STATE_LOSE  equ     3
+STATE_DAWN  equ     4               ; the fifth dusk held — morning, the true win
+DAWN_COL    equ     10
 LOCK        equ     25              ; input-lock frames after entering a screen
 
 START_COL   equ     15
@@ -150,11 +153,23 @@ play_step:
             ld      a, (lit_count)
             cp      NUM_LAMPS
             ret     nz
+            ; the eighth lamp: is this the last watch of the night?
+            ld      a, (dusk)
+            cp      NUM_DUSKS - 1
+            jr      z, .thedawn
             call    draw_win_screen
             call    fanfare_held
             ld      a, LOCK
             ld      (input_lock), a
             ld      a, STATE_WIN
+            ld      (game_state), a
+            ret
+.thedawn:
+            call    draw_dawn_screen
+            call    fanfare_held
+            ld      a, LOCK
+            ld      (input_lock), a
+            ld      a, STATE_DAWN
             ld      (game_state), a
             ret
 
@@ -357,6 +372,18 @@ draw_win_screen:
             ld      hl, win_text
             ld      b, MSG_ROW
             ld      c, WIN_COL
+            call    print_string
+            ld      hl, prompt_text
+            ld      b, CONT_ROW
+            ld      c, PROMPT_COL
+            call    print_string
+            ret
+
+draw_dawn_screen:
+            call    restore_under
+            ld      hl, dawn_text
+            ld      b, MSG_ROW
+            ld      c, DAWN_COL
             call    print_string
             ld      hl, prompt_text
             ld      b, CONT_ROW
@@ -992,7 +1019,10 @@ dusk_table:
             ; the wisp's pace per dusk (frames between steps) — the
             ; night deepens as data, not code. Dusk 1 is gentle on
             ; purpose: the hunt must be readable before it's a threat.
-            defb    16, 13, 11, 9, 8, 7, 6, 5
+            ; The final watch is pace 9, not 8 — playtested: 8 is the
+            ; human wall ("damn near impossible"), 9 is beatable. The
+            ; last watch should be the climax, not the ceiling.
+            defb    16, 13, 11, 9, 9
 
 wall_ramp:
             ; The square warms in the brief's vocabulary (§6): the stone
@@ -1103,6 +1133,9 @@ win_text:
             defb    $FF
 lose_text:
             defb    "NIGHT FALLS"
+            defb    $FF
+dawn_text:
+            defb    "DAWN BREAKS"
             defb    $FF
 
             end     start
