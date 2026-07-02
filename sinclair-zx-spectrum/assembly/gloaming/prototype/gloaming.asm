@@ -52,8 +52,7 @@ LOCK        equ     25              ; input-lock frames after entering a screen
 
 START_COL   equ     15
 START_ROW   equ     11
-DRAUGHT_COL0 equ    18
-DRAUGHT_ROW0 equ    3
+GATHER      equ     120             ; frames the dark gathers before its first step
 
 KEYS_OP     equ     $DFFE
 KEYS_Q      equ     $FBFE
@@ -191,10 +190,21 @@ init_game:
             ld      (lamp_col), a
             ld      a, START_ROW
             ld      (lamp_row), a
-            ld      a, DRAUGHT_COL0
+            ; the dark probes from a new quarter each watch
+            ld      a, (dusk)
+            and     3
+            add     a, a
+            ld      e, a
+            ld      d, 0
+            ld      hl, corner_tab
+            add     hl, de
+            ld      a, (hl)
             ld      (draught_col), a
-            ld      a, DRAUGHT_ROW0
+            ld      (draught_home_col), a
+            inc     hl
+            ld      a, (hl)
             ld      (draught_row), a
+            ld      (draught_home_row), a
             ; the night deepens: the wisp's pace comes from the dusk
             ; table, deeper dusks holding the last entry
             ld      a, (dusk)
@@ -208,6 +218,9 @@ init_game:
             add     hl, de
             ld      a, (hl)
             ld      (dusk_speed), a
+            ; ...but it gathers before the first step — a beat to read
+            ; the square before the hunt begins
+            ld      a, GATHER
             ld      (draught_timer), a
             ; the tendril reaches further as the night deepens
             ld      hl, dusk_lentab
@@ -227,6 +240,7 @@ init_game:
             ld      bc, 767
             ldir
             call    warm_walls
+            call    paint_buildings
             call    fill_walls
             call    draw_pips
             call    draw_lives
@@ -1005,6 +1019,60 @@ tendril_push:
             ret
 
 ; ----------------------------------------------------------------------------
+; paint_buildings — interior buildings for routing (brief §6 layout).
+; Rectangles from bldg_data (col, row, width, height); the wall
+; attribute makes them solid to the player, and fill_walls bricks them.
+; The wisp ghosts through — you walk around what the night ignores.
+; ----------------------------------------------------------------------------
+paint_buildings:
+            ld      hl, bldg_data
+.pb:
+            ld      a, (hl)
+            cp      $FF
+            ret     z
+            ld      c, a                ; col
+            inc     hl
+            ld      b, (hl)             ; row
+            inc     hl
+            ld      d, (hl)             ; width
+            inc     hl
+            ld      e, (hl)             ; height
+            inc     hl
+            push    hl
+.pbrow:
+            push    bc
+            push    de
+.pbcol:
+            push    bc
+            push    de
+            call    attr_addr_cr
+            ld      (hl), WALL
+            pop     de
+            pop     bc
+            inc     c
+            dec     d
+            jr      nz, .pbcol
+            pop     de
+            pop     bc
+            inc     b
+            dec     e
+            jr      nz, .pbrow
+            pop     hl
+            jr      .pb
+
+bldg_data:
+            defb    5, 5, 4, 3
+            defb    23, 5, 4, 3
+            defb    $FF
+
+corner_tab:
+            ; where the dark enters, per watch (NE, SE, SW, NW)
+            defb    28, 4
+            defb    28, 19
+            defb    3, 19
+            defb    3, 4
+
+; ----------------------------------------------------------------------------
 ; tendril_claimed — does any ring slot other than head hold (C, B)?
 ; Z set if claimed. Only called with the ring full, so every slot holds
 ; a real cell.
@@ -1105,9 +1173,9 @@ lose_life:
             ; (leaving it beside the respawn made a catch strip every
             ; life in seconds once the draught learnt to hunt)
             call    restore_draught
-            ld      a, DRAUGHT_COL0
+            ld      a, (draught_home_col)
             ld      (draught_col), a
-            ld      a, DRAUGHT_ROW0
+            ld      a, (draught_home_row)
             ld      (draught_row), a
             ld      a, (dusk_speed)
             ld      (draught_timer), a
@@ -1462,9 +1530,13 @@ lives:
             defb    LIVES
 
 draught_col:
-            defb    DRAUGHT_COL0
+            defb    28
 draught_row:
-            defb    DRAUGHT_ROW0
+            defb    4
+draught_home_col:
+            defb    28
+draught_home_row:
+            defb    4
 draught_timer:
             defb    16
 player_timer:
