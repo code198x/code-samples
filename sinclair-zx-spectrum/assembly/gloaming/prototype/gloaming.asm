@@ -53,6 +53,8 @@ LOCK        equ     25              ; input-lock frames after entering a screen
 START_COL   equ     15
 START_ROW   equ     11
 GATHER      equ     120             ; frames the dark gathers before its first step
+WREST       equ     48              ; frames it rests at home after a withdrawal —
+                                    ; the snuff window holds even when home is close
 
 KEYS_OP     equ     $DFFE
 KEYS_Q      equ     $FBFE
@@ -787,9 +789,11 @@ draught_step:
             ld      hl, draught_row
             cp      (hl)
             jr      nz, .whome
-            xor     a                   ; home — the hunt resumes
+            xor     a                   ; home — rest, then the hunt resumes
             ld      (draught_mode), a
-            jr      .hunt
+            ld      a, WREST
+            ld      (draught_timer), a
+            ret
 .whome:
             ld      a, (draught_home_col)
             ld      (seek_col), a
