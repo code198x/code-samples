@@ -9,51 +9,80 @@ WALL        equ     %00001111       ; PAPER blue (1), INK white (7) — pale sto
 
 start:
             ; --- the border goes black — the night beyond the square ---
+            ; Port $FE bits 0-2 set the BORDER colour. A = 0 = black.
             ld      a, 0
             out     ($FE), a
 
-            ; --- wash the whole grid in cobbles ---
-            ld      hl, $5800       ; first attribute cell
-            ld      de, $5801       ; one cell forward
-            ld      (hl), COBBLE    ; seed the cascade
-            ld      bc, 767         ; the remaining cells
+            ; --- wipe the canvas ---
+            ; The bitmap ($4000-$57FF) is the pixel layer; whatever was on
+            ; screen before us still lives there. Zero it so only our
+            ; attribute colours show.
+            call    clear_bitmap
+
+            ; --- wash in the cobbles ---
+            ; Seed the first attribute cell, point DE one cell ahead, and
+            ; let LDIR cascade the byte through all 768 cells.
+            ld      hl, $5800
+            ld      de, $5801
+            ld      (hl), COBBLE
+            ld      bc, 767
             ldir
 
-            ; --- top and bottom walls ---
-            ; Top row: 32 cells from $5800.
-            ld      hl, $5800
-            ld      b, 32
-.top:
-            ld      (hl), WALL
-            inc     hl
-            djnz    .top
+            call    paint_walls
 
-            ; Bottom row: 32 cells from $5800 + 23*32 = $5AE0.
+forever:
+            jr      forever
+
+; ----------------------------------------------------------------------------
+; paint_walls — the square's edge, one attribute write per cell.
+; ----------------------------------------------------------------------------
+paint_walls:
+            ld      c, WALL         ; the byte every wall cell gets
+
+            ; the top wall: row 1 is 32 cells in a row from $5820
+            ; (row 0 is kept back — it becomes the HUD later)
+            ld      hl, $5820
+            ld      b, 32
+.wt:
+            ld      (hl), c
+            inc     hl
+            djnz    .wt
+
+            ; the bottom wall: row 23, 32 cells from $5AE0
             ld      hl, $5AE0
             ld      b, 32
-.bottom:
-            ld      (hl), WALL
+.wb:
+            ld      (hl), c
             inc     hl
-            djnz    .bottom
+            djnz    .wb
 
-            ; --- left and right walls ---
-            ; Walk all 24 rows, writing the first cell (col 0) and the
-            ; last cell (col 31) of each.
-            ld      hl, $5800
-            ld      b, 24
-.sides:
-            ld      (hl), WALL      ; col 0 of this row
+            ; the side walls: column 0 and column 31 of rows 1-23.
+            ; Write the row's first cell, hop 31 cells to its last,
+            ; then step a full row (32) down — 23 times.
+            ld      hl, $5820
+            ld      b, 23
+.ws:
+            ld      (hl), c
             push    hl
             ld      de, 31
             add     hl, de
-            ld      (hl), WALL      ; col 31 of this row
+            ld      (hl), c
             pop     hl
             ld      de, 32
-            add     hl, de          ; advance to the next row
-            djnz    .sides
+            add     hl, de
+            djnz    .ws
+            ret
 
-.loop:
-            halt
-            jr      .loop
+; ----------------------------------------------------------------------------
+; clear_bitmap — zero the pixel layer, $4000-$57FF, with the same
+; seed-and-cascade LDIR idiom the cobble wash uses.
+; ----------------------------------------------------------------------------
+clear_bitmap:
+            ld      hl, $4000
+            ld      de, $4001
+            ld      (hl), 0
+            ld      bc, 6143
+            ldir
+            ret
 
             end     start
