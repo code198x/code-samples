@@ -1,0 +1,17 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/prototype/gloaming.sna"
+ },
+ {
+  "action": "start_audio_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/prototype/capture/artefacts/title-bells.wav"
+ },
+ {
+  "action": "run_frames",
+  "frames": 500
+ },
+ {
+  "action": "stop_audio_recording"
+ }
+]
