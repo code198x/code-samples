@@ -1486,8 +1486,12 @@ dusk_table:
 
 dusk_lentab:
             ; the tendril's reach per watch (cells of night held) — the
-            ; second axis of the deepening
-            defb    6, 9, 12, 15, 18
+            ; second axis of the deepening. Front-loading reach made
+            ; watch 1 brutal once the buildings turned lanes into doors
+            ; (playtested: a practised player lost at watch 2) — the
+            ; opening teaches the mechanic, the deep watches punish
+            ; with it.
+            defb    3, 6, 9, 13, 18
 
 wall_ramp:
             ; The square warms in the brief's vocabulary (§6): the stone
