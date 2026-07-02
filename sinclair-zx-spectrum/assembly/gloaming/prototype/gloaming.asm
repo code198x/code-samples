@@ -231,6 +231,7 @@ init_game:
             ld      (player_timer), a
             ld      (tendril_len), a
             ld      (tendril_head), a
+            ld      (draught_mode), a
 
             call    clear_bitmap
             call    fill_ground
@@ -771,6 +772,31 @@ draught_step:
             ld      a, (dusk_speed)
             ld      (draught_timer), a
 
+            ; withdrawing? after a snuff the night carries its prize
+            ; home before hunting again — every snuff buys the
+            ; lamplighter a window, and the hunt re-enters from a
+            ; quarter he can plan against
+            ld      a, (draught_mode)
+            or      a
+            jr      z, .hunt
+            ld      a, (draught_home_col)
+            ld      hl, draught_col
+            cp      (hl)
+            jr      nz, .whome
+            ld      a, (draught_home_row)
+            ld      hl, draught_row
+            cp      (hl)
+            jr      nz, .whome
+            xor     a                   ; home — the hunt resumes
+            ld      (draught_mode), a
+            jr      .hunt
+.whome:
+            ld      a, (draught_home_col)
+            ld      (seek_col), a
+            ld      a, (draught_home_row)
+            ld      (seek_row), a
+            jp      .chase
+.hunt:
             ; the lamplighter's flame is the first candidate...
             ld      a, (lamp_col)
             ld      c, a
@@ -922,6 +948,8 @@ draught_step:
             call    blip_snuff
             call    warm_walls
             call    recompute_pools
+            ld      a, 1                ; the prize is taken — withdraw
+            ld      (draught_mode), a
 .nosnuff:
             call    draw_draught
             ret
@@ -1179,6 +1207,8 @@ lose_life:
             ld      (draught_row), a
             ld      a, (dusk_speed)
             ld      (draught_timer), a
+            xor     a                   ; already home — hunt on arrival
+            ld      (draught_mode), a
             call    save_draught
             call    draw_draught
             ret
@@ -1541,6 +1571,8 @@ draught_home_col:
             defb    28
 draught_home_row:
             defb    4
+draught_mode:
+            defb    0               ; 0 = hunting, 1 = withdrawing home
 draught_timer:
             defb    16
 player_timer:
