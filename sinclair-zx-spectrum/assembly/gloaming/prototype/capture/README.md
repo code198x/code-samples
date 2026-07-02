@@ -38,3 +38,20 @@ the title's 25-frame input lock and starts an unwanted run.
 
 Human capstone: unassisted title-to-DAWN-BREAKS run completed by Steve,
 2026-07-02 — the gate's human half.
+
+## Module-1 cut (`gloaming-m1.asm`)
+
+The tiny-first-game cut, derived 2026-07-02 from the full prototype by
+subtraction (no pools/tendril/queue/watches/dawn/tune). Its own suite:
+
+| Script | Proves |
+|---|---|
+| `m1-won.script.json` | Win gate: eighth lamp → THE NIGHT IS HELD (final), Space → title with the best-lives pip row |
+| `m1-sting.script.json` | Loss gate: one life, one step → NIGHT FALLS |
+| `m1-probe.script.json` | Menace: idle player hunted to NIGHT FALLS at pace 16 |
+
+m1 addresses (2026-07-02): `lit_count` $8616, `lives` $8617,
+`best_lives` $8618, `draught_col` $8619, `draught_row` $861A,
+`draught_timer` $861B. The boot chime blocks ~2s — openings wait 160
+frames before the Space tap; the plain title polls every frame, so
+short taps are safe everywhere in m1.
