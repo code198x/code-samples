@@ -1,0 +1,22 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/prototype/skeleton/unit-04-pulse.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 50
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/prototype/skeleton/capture/artefacts/u04-pulse-a.png"
+ },
+ {
+  "action": "run_frames",
+  "frames": 12
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/prototype/skeleton/capture/artefacts/u04-pulse-b.png"
+ }
+]
