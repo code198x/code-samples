@@ -1,98 +1,161 @@
-; Gloaming — Unit 2: The Lamplighter
+; Gloaming — Unit 2: The Cobbles and the Brick
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-01 fills the figure's cell solid — proof the INC H row-walk lands right.
+; Textures: 8 bytes per cell — cobble stipple on the ground, brick on the walls.
 
             org     32768
 
 COBBLE      equ     %00000001       ; PAPER black (0), INK blue (1) — dark ground
 WALL        equ     %00001111       ; PAPER blue (1), INK white (7) — pale stone
-LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black (0), INK white (7) — the figure
-
-; --- where the lamplighter stands: a cell named by (column 0-31, row 0-23) ---
-LAMP_COL    equ     15
-LAMP_ROW    equ     11
-
-; The screen splits top/middle/bottom into THIRDS of 8 character rows. The top
-; pixel-row of a cell lives at $4000 + third*$0800 + (row-within-third)*32 + col.
-THIRD       equ     LAMP_ROW / 8
-CHARROW     equ     LAMP_ROW - THIRD * 8
-LAMP_SCR    equ     $4000 + THIRD * $0800 + CHARROW * 32 + LAMP_COL
-
-; The attribute cell for the same (col,row) is the simpler linear address.
-LAMP_ATTR_ADDR equ  $5800 + LAMP_ROW * 32 + LAMP_COL
 
 start:
             ; --- the border goes black — the night beyond the square ---
+            ; Port $FE bits 0-2 set the BORDER colour. A = 0 = black.
             ld      a, 0
             out     ($FE), a
 
-            ; --- wash the whole grid in cobbles ---
+            ; --- wipe the canvas ---
+            ; The bitmap ($4000-$57FF) is the pixel layer; whatever was on
+            ; screen before us still lives there. Zero it so only our
+            ; attribute colours show.
+            call    clear_bitmap
+
+            ; --- texture the ground ---
+            ; Blit the cobble stipple into every cell's bitmap, rows 1-23.
+            ; The attributes will colour these pixels in a moment.
+            call    fill_ground
+
+            ; --- wash in the cobbles ---
+            ; Seed the first attribute cell, point DE one cell ahead, and
+            ; let LDIR cascade the byte through all 768 cells.
             ld      hl, $5800
             ld      de, $5801
             ld      (hl), COBBLE
             ld      bc, 767
             ldir
 
-            ; --- top and bottom walls ---
-            ld      hl, $5800
-            ld      b, 32
-.top:
-            ld      (hl), WALL
-            inc     hl
-            djnz    .top
+            call    paint_walls
 
+forever:
+            jr      forever
+
+; ----------------------------------------------------------------------------
+; paint_walls — the square's edge, one attribute write per cell.
+; ----------------------------------------------------------------------------
+paint_walls:
+            ld      c, WALL         ; the byte every wall cell gets
+
+            ; the top wall: row 1 is 32 cells in a row from $5820
+            ; (row 0 is kept back — it becomes the HUD later)
+            ld      hl, $5820
+            ld      b, 32
+.wt:
+            ld      (hl), c
+            inc     hl
+            djnz    .wt
+
+            ; the bottom wall: row 23, 32 cells from $5AE0
             ld      hl, $5AE0
             ld      b, 32
-.bottom:
-            ld      (hl), WALL
+.wb:
+            ld      (hl), c
             inc     hl
-            djnz    .bottom
+            djnz    .wb
 
-            ; --- left and right walls ---
-            ld      hl, $5800
-            ld      b, 24
-.sides:
-            ld      (hl), WALL
+            ; the side walls: column 0 and column 31 of rows 1-23.
+            ; Write the row's first cell, hop 31 cells to its last,
+            ; then step a full row (32) down — 23 times.
+            ld      hl, $5820
+            ld      b, 23
+.ws:
+            ld      (hl), c
             push    hl
             ld      de, 31
             add     hl, de
-            ld      (hl), WALL
+            ld      (hl), c
             pop     hl
             ld      de, 32
             add     hl, de
-            djnz    .sides
+            djnz    .ws
+            ret
 
-            ; --- give the figure's cell a warm colour so its pixels read ---
-            ld      hl, LAMP_ATTR_ADDR
-            ld      (hl), LAMP_ATTR
+; ----------------------------------------------------------------------------
+; clear_bitmap — zero the pixel layer, $4000-$57FF, with the same
+; seed-and-cascade LDIR idiom the cobble wash uses.
+; ----------------------------------------------------------------------------
+clear_bitmap:
+            ld      hl, $4000
+            ld      de, $4001
+            ld      (hl), 0
+            ld      bc, 6143
+            ldir
+            ret
 
-            ; --- fill the cell solid: walk its eight rows with INC H ---
-            ; HL walks the screen rows (INC H = down one row, +256).
-            ; DE walks the eight bytes (INC DE = next row of the block).
-            ld      hl, LAMP_SCR    ; top pixel-row of his cell
-            ld      de, lamplighter ; the eight bytes
-            ld      b, 8            ; eight rows
-.draw:
+; ----------------------------------------------------------------------------
+; fill_ground — the cobble stipple. Not decoration: the stipple is what
+; makes ground-state changes visible later, when the game starts
+; recolouring these pixels. Rows 1-23 (row 0 is the HUD).
+; ----------------------------------------------------------------------------
+fill_ground:
+            ld      b, 1                ; rows 1-23 (row 0 is the HUD)
+.fgr:
+            ld      c, 0
+.fgc:
+            ld      de, cobble_tex
+            call    blit_tex
+            inc     c
+            ld      a, c
+            cp      32
+            jr      c, .fgc
+            inc     b
+            ld      a, b
+            cp      24
+            jr      c, .fgr
+            ret
+
+; blit_tex — write the 8-byte texture at DE into cell (C, B)'s bitmap.
+; scr_addr_cr finds the cell's first pixel row; INC H steps down the
+; other seven, 256 bytes apart.
+blit_tex:
+            push    bc
+            call    scr_addr_cr
+            ld      b, 8
+.bt:
             ld      a, (de)
             ld      (hl), a
             inc     de
-            inc     h               ; next screen row down (+256)
-            djnz    .draw
+            inc     h
+            djnz    .bt
+            pop     bc
+            ret
 
-.loop:
-            halt
-            jr      .loop
+cobble_tex:
+            defb    %10000010
+            defb    %00000000
+            defb    %00001000
+            defb    %00000000
+            defb    %00100001
+            defb    %00000000
+            defb    %00010000
+            defb    %00000000
 
-; Eight bytes, one per pixel row. Solid for now — every pixel lit — so the
-; whole cell fills white. Step 2 replaces these with the figure's shape.
-lamplighter:
-            defb    %11111111
-            defb    %11111111
-            defb    %11111111
-            defb    %11111111
-            defb    %11111111
-            defb    %11111111
-            defb    %11111111
-            defb    %11111111
+; ----------------------------------------------------------------------------
+; scr_addr_cr — HL = bitmap address of cell (C, B)'s first pixel row.
+; The row's top two bits pick the third of the screen (H), its bottom
+; three become L's top bits, and the column fills L's low five.
+; ----------------------------------------------------------------------------
+
+scr_addr_cr:
+            ld      a, b
+            and     %00011000       ; the third (row bits 4-3) ...
+            or      %01000000       ; ... under the screen base $40xx
+            ld      h, a
+            ld      a, b
+            and     %00000111       ; the char row within the third ...
+            rrca                    ; ... rotated into bits 7-5
+            rrca
+            rrca
+            or      c               ; the column in bits 4-0
+            ld      l, a
+            ret
 
             end     start
