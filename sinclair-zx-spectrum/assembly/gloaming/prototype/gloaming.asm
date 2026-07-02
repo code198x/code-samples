@@ -869,8 +869,10 @@ draught_step:
 
 .dmove:
             call    restore_draught
-            ; the tendril: night pools where the wisp has walked. Only
-            ; bare cobble is taken — pools and posts resist the dark.
+            ; the tendril: night pools where the wisp has walked. Ground
+            ; and spilt light are both taken (the pool heals on release);
+            ; posts and stone are not. Re-walking its own trail refreshes
+            ; the night's claim, so the tendril never gaps mid-vein.
             ld      a, (draught_col)
             ld      c, a
             ld      a, (draught_row)
@@ -879,11 +881,17 @@ draught_step:
             call    attr_addr_cr
             pop     bc
             ld      a, (hl)
+            cp      DARK
+            jr      z, .retake
             cp      COBBLE
+            jr      z, .take
+            cp      GLOW
             jr      nz, .notake
+.take:
             ld      (hl), DARK
             ld      de, mist_tex
             call    blit_tex
+.retake:
             call    tendril_push
 .notake:
             ld      a, (dtcol)
@@ -926,6 +934,10 @@ tendril_push:
             ld      c, (hl)
             inc     hl
             ld      b, (hl)
+            ; a newer ring entry may still claim this cell (the wisp
+            ; re-walks its own trail) — then the night keeps it
+            call    tendril_claimed
+            jr      z, .treld
             ; if the wisp itself is crossing that cell, mend its saved
             ; ground instead of the screen
             ld      a, (draught_col)
@@ -934,16 +946,19 @@ tendril_push:
             ld      a, (draught_row)
             cp      b
             jr      nz, .trel
-            ; mend the wisp's saved ground: attr byte and stipple both
-            push    hl
+            ; mend the wisp's saved ground: stipple, and glow if a lit
+            ; lamp still pools this cell — the light heals behind the dark
             push    bc
             ld      hl, cobble_tex
             ld      de, under_draught
             ld      bc, 8
             ldir
             pop     bc
-            pop     hl
+            call    pooled_at
             ld      a, COBBLE
+            jr      nz, .tsetu
+            ld      a, GLOW
+.tsetu:
             ld      (under_draught + 8), a
             jr      .treld
 .trel:
@@ -953,7 +968,14 @@ tendril_push:
             ld      a, (hl)
             cp      DARK
             jr      nz, .treld
-            ld      (hl), COBBLE
+            push    hl
+            call    pooled_at
+            pop     hl
+            ld      a, COBBLE
+            jr      nz, .tset
+            ld      a, GLOW
+.tset:
+            ld      (hl), a
             ld      de, cobble_tex
             call    blit_tex
 .treld:
@@ -980,6 +1002,83 @@ tendril_push:
             xor     a
 .tadv:
             ld      (tendril_head), a
+            ret
+
+; ----------------------------------------------------------------------------
+; tendril_claimed — does any ring slot other than head hold (C, B)?
+; Z set if claimed. Only called with the ring full, so every slot holds
+; a real cell.
+; ----------------------------------------------------------------------------
+tendril_claimed:
+            ld      hl, tendril_buf
+            ld      e, 0
+.tc:
+            ld      a, (tendril_head)
+            cp      e
+            jr      z, .tcn             ; the slot being released — skip
+            ld      a, (hl)
+            cp      c
+            jr      nz, .tcn
+            inc     hl
+            ld      a, (hl)
+            dec     hl
+            cp      b
+            jr      nz, .tcn
+            xor     a                   ; Z — a newer claim holds it
+            ret
+.tcn:
+            inc     hl
+            inc     hl
+            inc     e
+            ld      a, (tendril_max)
+            cp      e
+            jr      nz, .tc
+            or      a                   ; NZ (max is never 0) — free
+            ret
+
+; ----------------------------------------------------------------------------
+; pooled_at — is cell (C, B) within one cell of a LIT lamp? Z if so.
+; The light heals: released tendril ground inside a live pool returns
+; to glow, not bare cobble.
+; ----------------------------------------------------------------------------
+pooled_at:
+            ld      hl, lamp_data
+.pa:
+            ld      a, (hl)
+            cp      $FF
+            jr      z, .pano
+            ld      e, a                ; lamp col
+            inc     hl
+            ld      d, (hl)             ; lamp row
+            inc     hl
+            ld      a, e
+            sub     c
+            jp      p, .pac
+            neg
+.pac:
+            cp      2
+            jr      nc, .pa
+            ld      a, d
+            sub     b
+            jp      p, .par
+            neg
+.par:
+            cp      2
+            jr      nc, .pa
+            push    hl
+            push    bc
+            ld      c, e
+            ld      b, d
+            call    attr_addr_cr
+            ld      a, (hl)
+            pop     bc
+            pop     hl
+            cp      LAMP_LIT
+            jr      nz, .pa
+            xor     a                   ; Z — pooled by a lit lamp
+            ret
+.pano:
+            or      1                   ; NZ — bare ground
             ret
 
 lose_life:
