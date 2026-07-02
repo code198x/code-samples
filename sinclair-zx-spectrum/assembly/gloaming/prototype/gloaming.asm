@@ -234,6 +234,7 @@ init_game:
             ld      (tendril_len), a
             ld      (tendril_head), a
             ld      (draught_mode), a
+            ld      (lit_qcount), a
 
             call    clear_bitmap
             call    fill_ground
@@ -552,6 +553,15 @@ player_step:
             jr      nz, .pdrawn
             ld      a, LAMP_LIT
             ld      (under_lamp + 8), a
+            ; record the lighting order — the night bears its grudges
+            ; oldest-first (lamp_col/lamp_row are the lamplighter's
+            ; position, and he is standing on the lamp)
+            ld      a, (lamp_col)
+            ld      c, a
+            ld      a, (lamp_row)
+            ld      b, a
+            call    lamp_index_at
+            call    lit_push
             call    light_pip
             call    blip_lit
             call    warm_walls
@@ -742,21 +752,81 @@ ring_offsets:
             defb    -1,  1,  0,  1,  1,  1
 
 ; ----------------------------------------------------------------------------
-; manhattan — distance from the draught to cell (C = col, B = row) -> A.
+; lamp_index_at — which lamp_data entry sits at (C = col, B = row)?
+; Returns the index in A ($FF if none — callers only ask about cells
+; they know hold a lamp).
 ; ----------------------------------------------------------------------------
-manhattan:
-            ld      a, (draught_col)
-            sub     c
-            jp      p, .dc
-            neg
-.dc:
+lamp_index_at:
+            ld      hl, lamp_data
+            ld      e, 0
+.lia:
+            ld      a, (hl)
+            cp      $FF
+            ret     z
+            cp      c
+            jr      nz, .lian
+            inc     hl
+            ld      a, (hl)
+            dec     hl
+            cp      b
+            jr      nz, .lian
+            ld      a, e
+            ret
+.lian:
+            inc     hl
+            inc     hl
+            inc     e
+            jr      .lia
+
+; lit_push — append lamp index (A) to the lit-order queue.
+lit_push:
+            ld      e, a
+            ld      a, (lit_qcount)
             ld      d, a
-            ld      a, (draught_row)
-            sub     b
-            jp      p, .dr
-            neg
-.dr:
-            add     a, d
+            inc     a
+            ld      (lit_qcount), a
+            ld      a, d
+            ld      hl, lit_queue
+            add     a, l
+            ld      l, a
+            jr      nc, .lp
+            inc     h
+.lp:
+            ld      (hl), e
+            ret
+
+; lit_remove — take lamp index (A) out of the lit-order queue,
+; closing the gap.
+lit_remove:
+            ld      e, a
+            ld      hl, lit_queue
+            ld      a, (lit_qcount)
+            ld      d, a
+            or      a
+            ret     z
+.lr:
+            ld      a, (hl)
+            cp      e
+            jr      z, .lrfound
+            inc     hl
+            dec     d
+            jr      nz, .lr
+            ret
+.lrfound:
+            dec     d
+            jr      z, .lrlast
+.lrshift:
+            inc     hl
+            ld      a, (hl)
+            dec     hl
+            ld      (hl), a
+            inc     hl
+            dec     d
+            jr      nz, .lrshift
+.lrlast:
+            ld      a, (lit_qcount)
+            dec     a
+            ld      (lit_qcount), a
             ret
 
 ; ----------------------------------------------------------------------------
@@ -801,45 +871,30 @@ draught_step:
             ld      (seek_row), a
             jp      .chase
 .hunt:
-            ; the lamplighter's flame is the first candidate...
+            ; the oldest flame is the night's grievance — it reclaims
+            ; the ground it lost first. With nothing lit, it hunts the
+            ; lamplighter's own flame: light your first lamp and the
+            ; hunt turns away from you.
+            ld      a, (lit_qcount)
+            or      a
+            jr      nz, .oldest
             ld      a, (lamp_col)
-            ld      c, a
             ld      (seek_col), a
             ld      a, (lamp_row)
-            ld      b, a
             ld      (seek_row), a
-            call    manhattan
-            ld      (seek_best), a
-
-            ; ...then every lit lamp, keeping the nearest
+            jr      .chase
+.oldest:
+            ld      a, (lit_queue)
+            add     a, a
+            ld      e, a
+            ld      d, 0
             ld      hl, lamp_data
-.scan:
+            add     hl, de
             ld      a, (hl)
-            cp      $FF
-            jr      z, .chase
-            ld      c, a
-            inc     hl
-            ld      b, (hl)
-            inc     hl
-            push    hl
-            push    bc
-            call    attr_addr_cr
-            ld      a, (hl)
-            pop     bc
-            cp      LAMP_LIT
-            jr      nz, .dnext      ; unlit lamps cast no light
-            call    manhattan
-            ld      hl, seek_best
-            cp      (hl)
-            jr      nc, .dnext      ; not nearer — keep the current prey
-            ld      (hl), a
-            ld      a, c
             ld      (seek_col), a
-            ld      a, b
+            inc     hl
+            ld      a, (hl)
             ld      (seek_row), a
-.dnext:
-            pop     hl
-            jr      .scan
 
 .chase:
             ; step one cell along the axis with the greater distance
@@ -948,6 +1003,13 @@ draught_step:
             jr      nz, .nosnuff
             ld      a, LAMP_UNLIT
             ld      (under_draught + 8), a
+            ; the grievance is settled — off the lit-order queue
+            ld      a, (draught_col)
+            ld      c, a
+            ld      a, (draught_row)
+            ld      b, a
+            call    lamp_index_at
+            call    lit_remove
             call    unlight_pip
             call    blip_snuff
             call    warm_walls
@@ -1589,7 +1651,9 @@ seek_col:
             defb    0
 seek_row:
             defb    0
-seek_best:
+lit_queue:
+            defb    0, 0, 0, 0, 0, 0, 0, 0
+lit_qcount:
             defb    0
 tendril_head:
             defb    0
