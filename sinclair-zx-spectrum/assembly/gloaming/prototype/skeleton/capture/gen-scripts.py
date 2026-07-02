@@ -65,9 +65,14 @@ SCRIPTS["unit-03"] = [load("unit-03"), run(20), shot("u03-lamplighter")]
 SCRIPTS["unit-04"] = [load("unit-04"), run(50), shot("u04-steady-a"),
                       run(100), shot("u04-steady-b")]
 # the probe cell's ink pixels are invisible over an empty bitmap; a
-# 12-frame gap always crosses a paper-bit boundary of the counting attr
+# 12-frame gap always crosses a paper-bit boundary of the counting attr.
+# The video is the real proof: three seconds of the heartbeat, watched.
 SCRIPTS["unit-04-pulse"] = [load("unit-04-pulse"), run(50), shot("u04-pulse-a"),
-                            run(12), shot("u04-pulse-b")]
+                            run(12), shot("u04-pulse-b"),
+                            {"action": "start_video_recording",
+                             "path": str(ART / "u04-pulse.mp4")},
+                            run(150),
+                            {"action": "stop_video_recording"}]
 
 # Phase B — movement done honestly (the detour run)
 SCRIPTS["unit-05"] = [load("unit-05"), run(20), shot("u05-idle"),

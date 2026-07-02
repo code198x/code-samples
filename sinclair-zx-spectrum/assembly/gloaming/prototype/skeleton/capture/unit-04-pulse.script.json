@@ -18,5 +18,16 @@
  {
   "action": "save_screenshot",
   "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/prototype/skeleton/capture/artefacts/u04-pulse-b.png"
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/prototype/skeleton/capture/artefacts/u04-pulse.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 150
+ },
+ {
+  "action": "stop_video_recording"
  }
 ]
