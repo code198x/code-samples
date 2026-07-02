@@ -8,7 +8,7 @@
 
 COBBLE      equ     %00000001
 GLOW        equ     %00000110       ; pool-warmed cobble — ground the light holds
-DARK        equ     %00000000       ; the night made solid — the player cannot pass
+DARK        equ     %01000001       ; the night made solid — bright-blue mist, impassable
 WALL        equ     %00001111
 LAMP_ATTR   equ     %01000111
 LAMP_UNLIT  equ     %00000101
@@ -227,6 +227,7 @@ init_game:
             ld      bc, 767
             ldir
             call    warm_walls
+            call    fill_walls
             call    draw_pips
             call    draw_lives
             call    draw_lamps
@@ -560,17 +561,8 @@ fill_ground:
 .fgr:
             ld      c, 0
 .fgc:
-            push    bc
-            call    scr_addr_cr
             ld      de, cobble_tex
-            ld      b, 8
-.fgb:
-            ld      a, (de)
-            ld      (hl), a
-            inc     de
-            inc     h
-            djnz    .fgb
-            pop     bc
+            call    blit_tex
             inc     c
             ld      a, c
             cp      32
@@ -579,6 +571,46 @@ fill_ground:
             ld      a, b
             cp      24
             jr      c, .fgr
+            ret
+
+; fill_walls — brickwork (brief §6: "reads as built, solid"). Driven by
+; the wall attribute bit, so any future interior buildings get their
+; brick for free. Runs at init while the ramp's blue holds the bit.
+fill_walls:
+            ld      b, 1
+.fwr:
+            ld      c, 0
+.fwc:
+            push    bc
+            call    attr_addr_cr
+            bit     WALL_BIT, (hl)
+            pop     bc
+            jr      z, .fwn
+            ld      de, brick_tex
+            call    blit_tex
+.fwn:
+            inc     c
+            ld      a, c
+            cp      32
+            jr      c, .fwc
+            inc     b
+            ld      a, b
+            cp      24
+            jr      c, .fwr
+            ret
+
+; blit_tex — write the 8-byte texture at DE into cell (C, B)'s bitmap.
+blit_tex:
+            push    bc
+            call    scr_addr_cr
+            ld      b, 8
+.bt:
+            ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .bt
+            pop     bc
             ret
 
 cobble_tex:
@@ -590,6 +622,28 @@ cobble_tex:
             defb    %00000000
             defb    %00010000
             defb    %00000000
+
+mist_tex:
+            ; the solid night — dense, swirling, unmistakably *there*
+            defb    %01101100
+            defb    %11011011
+            defb    %00110110
+            defb    %01101101
+            defb    %11011010
+            defb    %10110110
+            defb    %01101011
+            defb    %11010110
+
+brick_tex:
+            ; mortar courses with staggered verticals — dusk-lit stone
+            defb    %00001000
+            defb    %00001000
+            defb    %00001000
+            defb    %11111111
+            defb    %10000000
+            defb    %10000000
+            defb    %10000000
+            defb    %11111111
 
 recompute_pools:
             call    restore_under
@@ -828,6 +882,8 @@ draught_step:
             cp      COBBLE
             jr      nz, .notake
             ld      (hl), DARK
+            ld      de, mist_tex
+            call    blit_tex
             call    tendril_push
 .notake:
             ld      a, (dtcol)
@@ -878,15 +934,28 @@ tendril_push:
             ld      a, (draught_row)
             cp      b
             jr      nz, .trel
+            ; mend the wisp's saved ground: attr byte and stipple both
+            push    hl
+            push    bc
+            ld      hl, cobble_tex
+            ld      de, under_draught
+            ld      bc, 8
+            ldir
+            pop     bc
+            pop     hl
             ld      a, COBBLE
             ld      (under_draught + 8), a
             jr      .treld
 .trel:
+            push    bc
             call    attr_addr_cr
+            pop     bc
             ld      a, (hl)
             cp      DARK
             jr      nz, .treld
             ld      (hl), COBBLE
+            ld      de, cobble_tex
+            call    blit_tex
 .treld:
             pop     bc
             jr      .tstore
