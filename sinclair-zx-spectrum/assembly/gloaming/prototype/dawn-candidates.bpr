@@ -1,0 +1,29 @@
+; Three dawn-phrase candidates, one grammar move each. Audition, vote,
+; mutate the winner.
+
+phrase dawn_answer       ; the bookend — dusk's falling bell, reversed
+  C5 400ms               ; where dusk ended, the ground note
+  rest 8
+  E5 300ms               ; the answer rises the motif
+  rest 4
+  G5 550ms               ; and opens into morning
+
+phrase dawn_bloom        ; stepwise sunrise — climbs by step, not arpeggio
+  C5 170ms
+  rest 2
+  D5 170ms
+  rest 2
+  E5 170ms
+  rest 2
+  G5 220ms
+  rest 3
+  C6 700ms               ; the sun clears the roofline
+
+phrase dawn_amen         ; the plagal cadence — the night lets go
+  F5 260ms               ; the held breath
+  rest 3
+  E5 260ms               ; released
+  rest 6
+  C5 320ms               ; ground regained
+  rest 4
+  C6 650ms               ; morning, wide open
