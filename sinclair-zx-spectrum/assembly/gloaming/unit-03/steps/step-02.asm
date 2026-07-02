@@ -7,6 +7,7 @@
 COBBLE      equ     %00000001       ; PAPER black (0), INK blue (1) — dark ground
 WALL        equ     %00001111       ; PAPER blue (1), INK white (7) — pale stone
 WALL_BIT    equ     3               ; the attribute bit that says "this is wall"
+LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black, INK white — his own light
 
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
@@ -244,7 +245,12 @@ pos_bc:
             ret
 
 draw_lamp:
-            ; his shape, eight bytes down the cell like any texture
+            ; his colour first: the cell's attribute becomes his own —
+            ; bright white on the black, his own light about him
+            call    pos_bc
+            call    attr_addr_cr
+            ld      (hl), LAMP_ATTR
+            ; then his shape, eight bytes down the cell like any texture
             call    pos_bc
             call    scr_addr_cr
             ld      de, lamplighter
