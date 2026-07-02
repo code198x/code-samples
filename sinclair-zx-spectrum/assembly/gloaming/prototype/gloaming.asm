@@ -168,7 +168,10 @@ play_step:
             ld      (game_state), a
             ret
 .thedawn:
+            ld      a, NUM_DUSKS        ; the whole night held — the row fills
+            ld      (best_dusk), a
             call    draw_dawn_screen
+            call    dawn_sweep
             call    fanfare_held
             ld      a, LOCK
             ld      (input_lock), a
@@ -394,6 +397,24 @@ draw_title_screen:
             ld      b, PROMPT_ROW
             ld      c, PROMPT_COL
             call    print_string
+            ; your longest night — one pip per watch survived, best run,
+            ; read in lamps as ever (no digits). It survives the loop
+            ; back to the title: the go-again hook.
+            ld      hl, $5800 + 11 * 32 + 13
+            ld      b, NUM_DUSKS
+            ld      a, (best_dusk)
+            ld      c, a
+.tpip:
+            ld      a, PIP_UNLIT
+            inc     c
+            dec     c
+            jr      z, .tpcold
+            ld      a, PIP_LIT
+            dec     c
+.tpcold:
+            ld      (hl), a
+            inc     hl
+            djnz    .tpip
             ret
 
 draw_win_screen:
@@ -750,6 +771,51 @@ ring_offsets:
             defb    -1, -1,  0, -1,  1, -1
             defb    -1,  0,          1,  0
             defb    -1,  1,  0,  1,  1,  1
+
+; ----------------------------------------------------------------------------
+; dawn_sweep — morning enters from the sky: row by row the ground
+; warms to gold and the night's mist burns off (dark cells get their
+; stipple back). Walls, lamps, text, and the two figures are left to
+; the palettes they already wear. Blocking, like the fanfare — the
+; ending is allowed a second of ceremony.
+; ----------------------------------------------------------------------------
+dawn_sweep:
+            ld      b, 1
+.dsr:
+            halt
+            halt
+            ld      c, 0
+.dsc:
+            push    bc
+            call    attr_addr_cr
+            ld      a, (hl)
+            cp      DARK
+            jr      nz, .dsn1
+            pop     bc
+            push    bc
+            push    hl
+            ld      de, cobble_tex
+            call    blit_tex
+            pop     hl
+            jr      .dsset
+.dsn1:
+            cp      COBBLE
+            jr      z, .dsset
+            cp      GLOW
+            jr      nz, .dsnext
+.dsset:
+            ld      (hl), GLOW
+.dsnext:
+            pop     bc
+            inc     c
+            ld      a, c
+            cp      32
+            jr      c, .dsc
+            inc     b
+            ld      a, b
+            cp      24
+            jr      c, .dsr
+            ret
 
 ; ----------------------------------------------------------------------------
 ; lamp_index_at — which lamp_data entry sits at (C = col, B = row)?
@@ -1279,6 +1345,13 @@ lose_life:
             call    draw_draught
             ret
 .gone:
+            ; a watch survived is a watch earned, even on a lost night
+            ld      a, (dusk)
+            ld      hl, best_dusk
+            cp      (hl)
+            jr      c, .gkeep
+            ld      (hl), a
+.gkeep:
             call    draw_lose_screen
             call    sting_nightfall
             ld      a, LOCK
@@ -1655,6 +1728,8 @@ lit_queue:
             defb    0, 0, 0, 0, 0, 0, 0, 0
 lit_qcount:
             defb    0
+best_dusk:
+            defb    0               ; watches survived, best run — never reset in play
 tendril_head:
             defb    0
 tendril_len:
