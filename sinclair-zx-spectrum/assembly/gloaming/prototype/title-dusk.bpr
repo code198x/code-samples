@@ -1,0 +1,23 @@
+; Title-screen loop — dusk bells (the "faster" variant, chosen 2026-07-02).
+; Cold tolls on A4 (the routine's floor — the dark note), the E5→C5 dusk
+; motif as a lamp lit far off, a small warm rise, D5 left hanging so the
+; loop leans back into the toll. Split into cells at integration; poll the
+; keyboard between calls. Audition: build198x beeper title-dusk.bpr --repeat 3
+
+phrase title_dusk
+  A4 300ms                ; the toll — cold ground
+  rest 10
+  A4 300ms
+  rest 13
+  E5 220ms                ; the dusk motif, a lamp far off
+  rest 4
+  C5 300ms
+  rest 13
+  A4 300ms                ; the toll returns
+  rest 10
+  C5 180ms                ; a small warmth kindles
+  rest 3
+  E5 180ms
+  rest 4
+  D5 400ms                ; left hanging — leans back into the dark
+  rest 16

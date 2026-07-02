@@ -1,0 +1,11 @@
+; The lamp blips (chosen 2026-07-02 from the diagnostic spread — the
+; brief's "rising beeper blip", finally rising). Lighting quotes the dawn
+; motif at blip speed; snuffing falls the same third an octave below.
+
+phrase blip_lit          ; a rising third — the lamp catches
+  C6 22ms
+  E6 30ms
+
+phrase blip_snuff        ; the third falls, an octave down — cold again
+  E5 22ms
+  C5 30ms

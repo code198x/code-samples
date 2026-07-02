@@ -1,0 +1,11 @@
+; The dawn phrase (chosen 2026-07-02 from three candidates, auditioned in
+; sequence with fanfare_held). chime_dusk's falling bell reversed — the
+; motif rises, then G5 leans on the dominant so the fanfare's C answers
+; it. Plays with the dawn sweep, before fanfare_held.
+
+phrase chime_dawn        ; dusk's bell answered — light returns
+  C5 400ms               ; where dusk ended, the ground note
+  rest 8
+  E5 300ms               ; the answer rises the motif
+  rest 4
+  G5 550ms               ; opens toward morning — the fanfare completes it
