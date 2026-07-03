@@ -257,6 +257,7 @@ player_step:
             ld      a, LAMP_LIT
             ld      (under_lamp + 8), a
             call    light_pip
+            call    warm_walls
 .pdrawn:
             call    draw_lamp
             ret
