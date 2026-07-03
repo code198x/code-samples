@@ -2,21 +2,48 @@
   "machine": "sinclair-zx-spectrum",
   "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-10",
   "captures": [
-    { "id": "step-01-glow",
+    { "id": "step-01-fence",
       "program": "steps/step-01.asm",
       "timeline": [
-        {"wait": 20}, {"hold": "A"}, {"wait": 9}, {"release": "A"},
-        {"hold": "P"}, {"wait": 4}, {"release": "P"},
-        {"wait": 6}, {"screenshot": "step-01-glow.png"}
+        {"wait": 60},
+        {"record_video": "step-01-fence.mp4"},
+        {"wait": 20},
+        {"hold": "A"}, {"wait": 70}, {"release": "A"},
+        {"wait": 25},
+        {"screenshot": "step-01-fence.png"},
+        {"stop_video": true}
       ] },
-    { "id": "step-01-light",
-      "program": "steps/step-01.asm",
+    { "id": "step-02-south",
+      "program": "steps/step-02.asm",
       "timeline": [
-        {"wait": 15}, {"record_video": "step-01-light.mp4"},
-        {"hold": "A"}, {"wait": 9}, {"release": "A"},
-        {"wait": 4},
-        {"hold": "P"}, {"wait": 4}, {"release": "P"},
-        {"wait": 12}, {"stop_video": true}
+        {"wait": 60},
+        {"hold": "A"}, {"wait": 85}, {"release": "A"},
+        {"wait": 10},
+        {"screenshot": "step-02-south.png"}
+      ] },
+    { "id": "step-02-edge",
+      "program": "steps/step-02.asm",
+      "timeline": [
+        {"wait": 60},
+        {"hold": "P"}, {"wait": 115}, {"release": "P"},
+        {"wait": 10},
+        {"screenshot": "step-02-edge.png"}
+      ] },
+    { "id": "step-02-perimeter",
+      "program": "steps/step-02.asm",
+      "timeline": [
+        {"wait": 60},
+        {"record_video": "step-02-perimeter.mp4"},
+        {"wait": 25},
+        {"hold": "P"}, {"wait": 110}, {"release": "P"},
+        {"wait": 10},
+        {"hold": "A"}, {"wait": 85}, {"release": "A"},
+        {"wait": 10},
+        {"hold": "O"}, {"wait": 210}, {"release": "O"},
+        {"wait": 10},
+        {"hold": "Q"}, {"wait": 145}, {"release": "Q"},
+        {"wait": 30},
+        {"stop_video": true}
       ] }
   ]
 }

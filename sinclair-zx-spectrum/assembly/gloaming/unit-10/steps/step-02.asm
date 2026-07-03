@@ -220,20 +220,6 @@ player_step:
             call    wall_at
             ret     nz
 
-            ; Scaffold (route skeleton): a numeric edge clamp so the detour
-            ; cannot walk the lamplighter off the map — past the map's edge
-            ; the address sums leave screen memory for the system's own. The
-            ; walls take this job in unit 9; unit 10 retires the numbers.
-            ld      a, (trow)
-            cp      2
-            ret     c
-            cp      23
-            ret     nc
-            ld      a, (tcol)
-            cp      1
-            ret     c
-            cp      31
-            ret     nc
             ; --- commit: restore, step, save, draw — in that order ---
             call    restore_under
             ld      a, (tcol)
