@@ -38,6 +38,8 @@ STATE_PLAY  equ     1
 STATE_WIN   equ     2               ; the night is held — the game is won
 STATE_LOSE  equ     3               ; night falls — the game is lost
 
+SPEAKER     equ     %00010000       ; port $FE bit 4 — the beeper's one bit
+
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
@@ -148,6 +150,7 @@ play_step:
             cp      NUM_LAMPS
             ret     nz
             call    draw_win_screen
+            call    fanfare_held
             ld      a, STATE_WIN
             ld      (game_state), a
             ret
@@ -199,6 +202,84 @@ warm_walls:
             add     hl, de
             djnz    .ws
             ret
+
+; ----------------------------------------------------------------------------
+; The beeper. One bit on port $FE: set it, wait, clear it, wait — a
+; square wave by hand. C is the half-period (pitch: bigger is lower),
+; B the number of cycles (duration). DI while it sounds: the 50 Hz
+; interrupt would stretch random half-periods and buzz the tone.
+; ----------------------------------------------------------------------------
+beep:
+            di
+.bcyc:
+            ld      a, SPEAKER
+            out     ($FE), a
+            ld      a, c
+.bd1:
+            dec     a
+            jr      nz, .bd1
+            xor     a
+            out     ($FE), a
+            ld      a, c
+.bd2:
+            dec     a
+            jr      nz, .bd2
+            djnz    .bcyc
+            ei
+            ret
+
+blip_lit:                           ; a rising third — the lamp catches
+            ld      b, $17          ; C6
+            ld      c, $67
+            call    beep
+            ld      b, $28          ; E6
+            ld      c, $51
+            jp      beep
+
+; rest — B frames of silence. Musical time rides the heartbeat: the
+; gaps between notes are counted in HALTs, not busy-loops.
+rest:
+            halt
+            djnz    rest
+            ret
+
+fanfare_held:                       ; THE NIGHT IS HELD — a rising run
+            ld      b, $83          ; C5
+            ld      c, $CF
+            call    beep
+            ld      b, 3
+            call    rest
+            ld      b, $A5          ; E5
+            ld      c, $A4
+            call    beep
+            ld      b, 3
+            call    rest
+            ld      b, $C4          ; G5
+            ld      c, $8A
+            call    beep
+            ld      b, 3
+            call    rest
+            ld      b, $FF          ; C6, held — B only counts to 255,
+            ld      c, $67
+            call    beep
+            ld      b, $FF          ; so hold it by sounding it twice
+            ld      c, $67
+            jp      beep
+
+sting_nightfall:                    ; NIGHT FALLS — two steps down, then dark
+            ld      b, $53          ; E5
+            ld      c, $A4
+            call    beep
+            ld      b, 4
+            call    rest
+            ld      b, $49          ; D5
+            ld      c, $B8
+            call    beep
+            ld      b, 4
+            call    rest
+            ld      b, $DC          ; A4, long — the night settles on it
+            ld      c, $F7
+            jp      beep
 
 ; ----------------------------------------------------------------------------
 ; Screens.
@@ -357,6 +438,7 @@ player_step:
             ld      a, LAMP_LIT
             ld      (under_lamp + 8), a
             call    light_pip
+            call    blip_lit
             call    warm_walls
 .pdrawn:
             call    draw_lamp
@@ -634,6 +716,7 @@ lose_life:
             ret
 .gone:
             call    draw_lose_screen
+            call    sting_nightfall
             ld      a, STATE_LOSE
             ld      (game_state), a
             ret
