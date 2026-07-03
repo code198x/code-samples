@@ -1,0 +1,93 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-20/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 220
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "SPACE",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 5
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "SPACE",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 1020
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-20/step-01-loop.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 170
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-20/step-01-fallen-prompt.png"
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "SPACE",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 15
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "SPACE",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 200
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-20/step-01-returned.png"
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]
