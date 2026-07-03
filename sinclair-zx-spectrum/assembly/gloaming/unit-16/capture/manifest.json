@@ -2,15 +2,41 @@
   "machine": "sinclair-zx-spectrum",
   "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-16",
   "captures": [
-    { "id": "step-01-title",
-      "program": "steps/step-01.asm",
-      "timeline": [ {"wait": 30}, {"screenshot": "step-01-title.png"} ] },
-    { "id": "step-01-start",
+    { "id": "step-01-gathered",
       "program": "steps/step-01.asm",
       "timeline": [
-        {"wait": 25}, {"record_video": "step-01-start.mp4"},
-        {"hold": "Space"}, {"wait": 4}, {"release": "Space"},
-        {"wait": 45}, {"stop_video": true}
+        {"wait": 60},
+        {"screenshot": "step-01-gathered.png"}
+      ] },
+    { "id": "step-02-tangle",
+      "program": "steps/step-02.asm",
+      "timeline": [
+        {"wait": 60},
+        {"record_video": "step-02-tangle.mp4"},
+        {"wait": 20},
+        {"hold": "P"}, {"wait": 59}, {"release": "P"},
+        {"wait": 165},
+        {"wait": 30},
+        {"screenshot": "step-02-covered.png"},
+        {"hold": "O"}, {"wait": 80}, {"release": "O"},
+        {"wait": 45},
+        {"screenshot": "step-02-phantom.png"},
+        {"stop_video": true}
+      ] },
+    { "id": "step-03-hunt",
+      "program": "steps/step-03.asm",
+      "timeline": [
+        {"wait": 60},
+        {"record_video": "step-03-hunt.mp4"},
+        {"wait": 20},
+        {"hold": "P"}, {"wait": 59}, {"release": "P"},
+        {"wait": 160},
+        {"hold": "Q"}, {"wait": 25}, {"release": "Q"},
+        {"wait": 10},
+        {"screenshot": "step-03-pinned.png"},
+        {"hold": "O"}, {"wait": 80}, {"release": "O"},
+        {"wait": 50},
+        {"stop_video": true}
       ] }
   ]
 }

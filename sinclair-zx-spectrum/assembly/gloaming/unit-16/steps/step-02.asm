@@ -12,6 +12,11 @@ LAMP_UNLIT  equ     %00000101       ; cold cyan INK on black PAPER — bit 3
                                     ; clear, so a lamp reads as floor
 LAMP_LIT    equ     %01000110       ; BRIGHT yellow INK on black — a held flame
 
+DRAUGHT_ATTR  equ   %01000101       ; the wisp: BRIGHT cyan on black — cold light
+DRAUGHT_SPEED equ   16              ; frames between the wisp's steps
+DRAUGHT_COL0  equ   28              ; the corner the dark enters from
+DRAUGHT_ROW0  equ   4
+
 PIP_UNLIT   equ     %00101000       ; a cold pip: cyan PAPER, a solid block
 PIP_LIT     equ     %01110000       ; a warm pip: BRIGHT yellow PAPER
 PIP_BASE    equ     $5800 + 12      ; row 0, column 12 — the HUD ledge,
@@ -30,6 +35,7 @@ STATE_WIN   equ     2               ; the night is held — the game is won
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
+GATHER      equ     120             ; frames the dark gathers before its first step
 
 KEYS_OP     equ     $DFFE           ; half-row P O I U Y — bits 1 and 0
 KEYS_Q      equ     $FBFE           ; half-row Q W E R T — bit 0 is Q
@@ -49,6 +55,15 @@ start:
             ld      (lamp_col), a
             ld      a, START_ROW
             ld      (lamp_row), a
+            ; --- and, in the far corner, something else ---
+            ld      a, DRAUGHT_COL0
+            ld      (draught_col), a
+            ld      a, DRAUGHT_ROW0
+            ld      (draught_row), a
+            ; the dark gathers before its first step — a beat to read
+            ; the square before the hunt begins
+            ld      a, GATHER
+            ld      (draught_timer), a
             xor     a
             ld      (player_timer), a
 
@@ -84,6 +99,8 @@ start:
             ; save what he is about to stand on, BEFORE the first draw
             call    save_under
             call    draw_lamp
+            call    save_draught
+            call    draw_draught
             ld      a, STATE_PLAY
             ld      (game_state), a
 
@@ -109,6 +126,7 @@ main_loop:
 ; play_step — one beat of the game: ask the keyboard.
 play_step:
             call    player_step
+            call    draught_step
             ; the win check, at the only beat the count can have changed
             ld      a, (lit_count)
             cp      NUM_LAMPS
@@ -386,6 +404,96 @@ brick_tex:
             defb    %10000000
             defb    %11111111
 
+; ----------------------------------------------------------------------------
+; draught_step — the hunt. One rule: step one cell along the axis with
+; the greater distance to the lamplighter (ties go sideways). No walls,
+; no vetoes — the wisp is not of the town, and stone means nothing to it.
+; ----------------------------------------------------------------------------
+draught_step:
+            ld      a, (draught_timer)
+            dec     a
+            ld      (draught_timer), a
+            ret     nz
+            ld      a, DRAUGHT_SPEED
+            ld      (draught_timer), a
+
+            ; the dark hunts the lamplighter's own flame
+            ld      a, (lamp_col)
+            ld      (seek_col), a
+            ld      a, (lamp_row)
+            ld      (seek_row), a
+
+.chase:
+            ; step one cell along the axis with the greater distance
+            ; (ties go sideways) — the night is 4-connected, like the
+            ; lamplighter
+            ld      a, (draught_col)
+            ld      (dtcol), a
+            ld      a, (draught_row)
+            ld      (dtrow), a
+
+            ld      a, (seek_col)
+            ld      hl, draught_col
+            sub     (hl)
+            jp      p, .absc
+            neg
+.absc:
+            ld      d, a            ; D = |dc|
+            ld      a, (seek_row)
+            ld      hl, draught_row
+            sub     (hl)
+            jp      p, .absr
+            neg
+.absr:
+            cp      d               ; |dr| vs |dc|
+            jr      z, .tie
+            jr      c, .horiz
+            jr      .vert
+.tie:
+            ld      a, d
+            or      a
+            ret     z               ; already on the light
+            jr      .horiz
+.horiz:
+            ld      a, (seek_col)
+            ld      hl, draught_col
+            cp      (hl)
+            jr      c, .hleft
+            ld      a, (hl)
+            inc     a
+            ld      (dtcol), a
+            jr      .contact
+.hleft:
+            ld      a, (hl)
+            dec     a
+            ld      (dtcol), a
+            jr      .contact
+.vert:
+            ld      a, (seek_row)
+            ld      hl, draught_row
+            cp      (hl)
+            jr      c, .vup
+            ld      a, (hl)
+            inc     a
+            ld      (dtrow), a
+            jr      .contact
+.vup:
+            ld      a, (hl)
+            dec     a
+            ld      (dtrow), a
+.contact:
+            ; (nothing here yet — the wisp's touch is free, and it will
+            ; walk straight onto him. watch what that does to the buffers)
+.dmove:
+            call    restore_draught
+            ld      a, (dtcol)
+            ld      (draught_col), a
+            ld      a, (dtrow)
+            ld      (draught_row), a
+            call    save_draught
+            call    draw_draught
+            ret
+
 ; paint_buildings — walk the rectangle table: each entry is col, row,
 ; width, height; $FF ends the list. Every cell inside a rectangle gets
 ; the WALL attribute — and because fill_walls textures by the wall bit,
@@ -660,6 +768,68 @@ draw_lamp:
             ret
 
 ; ----------------------------------------------------------------------------
+; The draught's save / restore / draw — the lamplighter's engine, twice.
+; Same loops, same nine-byte contract, its own buffer and its own
+; position: two movers can share a world but never a buffer.
+; ----------------------------------------------------------------------------
+dpos_bc:
+            ld      a, (draught_row)
+            ld      b, a
+            ld      a, (draught_col)
+            ld      c, a
+            ret
+
+save_draught:
+            call    dpos_bc
+            call    scr_addr_cr
+            ld      de, under_draught
+            ld      b, 8
+.sd:
+            ld      a, (hl)
+            ld      (de), a
+            inc     de
+            inc     h
+            djnz    .sd
+            call    dpos_bc
+            call    attr_addr_cr
+            ld      a, (hl)
+            ld      (under_draught + 8), a
+            ret
+
+restore_draught:
+            call    dpos_bc
+            call    scr_addr_cr
+            ld      de, under_draught
+            ld      b, 8
+.rd:
+            ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .rd
+            call    dpos_bc
+            call    attr_addr_cr
+            ld      a, (under_draught + 8)
+            ld      (hl), a
+            ret
+
+draw_draught:
+            call    dpos_bc
+            call    attr_addr_cr
+            ld      (hl), DRAUGHT_ATTR
+            call    dpos_bc
+            call    scr_addr_cr
+            ld      de, draught_glyph
+            ld      b, 8
+.dd:
+            ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .dd
+            ret
+
+; ----------------------------------------------------------------------------
 ; Data.
 ; ----------------------------------------------------------------------------
 
@@ -704,10 +874,27 @@ trow:
 
 lit_count:
             defb    0
+
+draught_col:
+            defb    28
+draught_row:
+            defb    4
+draught_timer:
+            defb    16
 player_timer:
+            defb    0
+seek_col:
+            defb    0
+seek_row:
+            defb    0
+dtcol:
+            defb    0
+dtrow:
             defb    0
 
 under_lamp:
+            defb    0, 0, 0, 0, 0, 0, 0, 0, 0
+under_draught:
             defb    0, 0, 0, 0, 0, 0, 0, 0, 0
 
 lamplighter:
@@ -729,6 +916,16 @@ lantern:
             defb    %01111110
             defb    %01111110
             defb    %00111100
+
+draught_glyph:
+            defb    %00000000
+            defb    %00111100
+            defb    %01111110
+            defb    %11111111
+            defb    %11111111
+            defb    %01111110
+            defb    %00111100
+            defb    %00000000
 
 win_text:
             defb    "THE NIGHT IS HELD"
