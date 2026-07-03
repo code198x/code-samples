@@ -2,11 +2,48 @@
   "machine": "sinclair-zx-spectrum",
   "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-08",
   "captures": [
-    { "id": "step-01-corner",
+    { "id": "step-01-marker",
       "program": "steps/step-01.asm",
-      "timeline": [ {"wait": 20}, {"hold": "P"}, {"wait": 20}, {"release": "P"}, {"hold": "Q"}, {"wait": 16}, {"release": "Q"}, {"wait": 5}, {"screenshot": "step-01-corner.png"} ] },
-    { "id": "step-01-roam",
+      "timeline": [
+        {"wait": 60},
+        {"screenshot": "step-01-marker.png"}
+      ] },
+    { "id": "step-01-crossing",
       "program": "steps/step-01.asm",
-      "timeline": [ {"wait": 12}, {"record_video": "step-01-roam.mp4"}, {"hold": "P"}, {"wait": 18}, {"release": "P"}, {"hold": "Q"}, {"wait": 14}, {"release": "Q"}, {"wait": 8}, {"stop_video": true} ] }
+      "timeline": [
+        {"wait": 60},
+        {"record_video": "step-01-crossing.mp4"},
+        {"wait": 25},
+        {"hold": "O"}, {"wait": 32}, {"release": "O"},
+        {"wait": 30},
+        {"screenshot": "step-01-survived.png"},
+        {"stop_video": true}
+      ] },
+    { "id": "step-02-no-gouge",
+      "program": "steps/step-02.asm",
+      "timeline": [
+        {"wait": 60},
+        {"hold": "P"}, {"wait": 45}, {"release": "P"},
+        {"wait": 10},
+        {"hold": "A"}, {"wait": 31}, {"release": "A"},
+        {"wait": 10},
+        {"screenshot": "step-02-no-gouge.png"}
+      ] },
+    { "id": "step-02-clean-lap",
+      "program": "steps/step-02.asm",
+      "timeline": [
+        {"wait": 60},
+        {"record_video": "step-02-clean-lap.mp4"},
+        {"wait": 25},
+        {"hold": "P"}, {"wait": 45}, {"release": "P"},
+        {"wait": 10},
+        {"hold": "A"}, {"wait": 31}, {"release": "A"},
+        {"wait": 10},
+        {"hold": "O"}, {"wait": 45}, {"release": "O"},
+        {"wait": 10},
+        {"hold": "Q"}, {"wait": 31}, {"release": "Q"},
+        {"wait": 35},
+        {"stop_video": true}
+      ] }
   ]
 }

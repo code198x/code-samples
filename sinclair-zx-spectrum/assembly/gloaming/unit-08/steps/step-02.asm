@@ -11,7 +11,6 @@ LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black, INK white — his own
 
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
-MARKER      equ     %00110110       ; a bright yellow-on-yellow cell (this step only)
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
 
 KEYS_OP     equ     $DFFE           ; half-row P O I U Y — bits 1 and 0
@@ -59,10 +58,6 @@ start:
             ; Now that the wall cells are painted, fill_walls can read the
             ; map back and lay brick wherever the wall bit is set.
             call    fill_walls
-            ; a marker on the floor (this step only): one loud cell in his
-            ; path, to prove that passage now leaves things standing
-            ld      hl, $5800 + 11*32 + 12
-            ld      (hl), MARKER
             ; save what he is about to stand on, BEFORE the first draw
             call    save_under
             call    draw_lamp
