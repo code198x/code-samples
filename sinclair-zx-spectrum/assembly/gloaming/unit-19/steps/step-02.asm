@@ -34,11 +34,17 @@ WIN_COL     equ     7               ; centres the seventeen characters
 FONT        equ     $3C00           ; the ROM font, addressed so that
                                     ; ASCII x 8 lands on the right glyph
 
+STATE_TITLE equ     0
 STATE_PLAY  equ     1
 STATE_WIN   equ     2               ; the night is held — the game is won
 STATE_LOSE  equ     3               ; night falls — the game is lost
 
 SPEAKER     equ     %00010000       ; port $FE bit 4 — the beeper's one bit
+
+TITLE_COL   equ     12              ; GLOAMING, centred
+PROMPT_COL  equ     10              ; PRESS SPACE, centred
+TITLE_ROW   equ     8
+PROMPT_ROW  equ     14
 
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
@@ -48,12 +54,77 @@ GATHER      equ     120             ; frames the dark gathers before its first s
 KEYS_OP     equ     $DFFE           ; half-row P O I U Y — bits 1 and 0
 KEYS_Q      equ     $FBFE           ; half-row Q W E R T — bit 0 is Q
 KEYS_A      equ     $FDFE           ; half-row A S D F G — bit 0 is A
+KEYS_SPACE  equ     $7FFE           ; half-row SPACE SYM M N B — bit 0
 
 start:
             ; --- the border goes black — the night beyond the square ---
             ; Port $FE bits 0-2 set the BORDER colour. A = 0 = black.
             ld      a, 0
             out     ($FE), a
+            ld      a, STATE_TITLE
+            ld      (game_state), a
+            call    draw_title_screen
+            im      1
+            ei
+            call    chime_dusk          ; after EI — the rests need the interrupt
+
+main_loop:
+            halt
+            ; the dispatch: each state names what a frame means — the
+            ; title listens for a beginning, PLAY beats the game forward,
+            ; WIN and LOSE hold the screen exactly as it stands
+            ld      a, (game_state)
+            cp      STATE_TITLE
+            jr      z, .do_title
+            cp      STATE_PLAY
+            jr      z, .do_play
+            jr      main_loop
+.do_title:
+            call    title_step
+            jr      main_loop
+.do_play:
+            call    play_step
+            jr      main_loop
+
+; ----------------------------------------------------------------------------
+; title_step — SPACE starts a fresh game.
+; ----------------------------------------------------------------------------
+title_step:
+            ld      bc, KEYS_SPACE
+            in      a, (c)
+            bit     0, a
+            ret     nz
+            call    init_game
+            ld      a, STATE_PLAY
+            ld      (game_state), a
+            ret
+
+; play_step — one beat of the game: ask the keyboard.
+play_step:
+            call    player_step
+            ; contact can end the game mid-frame — if it did, stop here
+            ld      a, (game_state)
+            cp      STATE_PLAY
+            ret     nz
+            call    draught_step
+            ld      a, (game_state)
+            cp      STATE_PLAY
+            ret     nz
+            ; the win check, at the only beat the count can have changed
+            ld      a, (lit_count)
+            cp      NUM_LAMPS
+            ret     nz
+            call    draw_win_screen
+            call    fanfare_held
+            ld      a, STATE_WIN
+            ld      (game_state), a
+            ret
+
+; ----------------------------------------------------------------------------
+; init_game — everything a fresh night needs, gathered from what was
+; the boot sequence. Beginning is a callable thing now.
+; ----------------------------------------------------------------------------
+init_game:
             xor     a
             ld      (lit_count), a
             ld      a, LIVES
@@ -112,47 +183,6 @@ start:
             call    draw_lamp
             call    save_draught
             call    draw_draught
-            ld      a, STATE_PLAY
-            ld      (game_state), a
-
-            ; --- start the heartbeat ---
-            ; IM 1: every 50 Hz frame interrupt calls the ROM's handler.
-            ; EI: let it. HALT then sleeps until the next frame arrives,
-            ; so the loop below beats exactly once per frame.
-            im      1
-            ei
-
-main_loop:
-            halt
-            ; the state gate: only PLAY beats the game forward — any
-            ; other state leaves the screen exactly as it stands
-            ld      a, (game_state)
-            cp      STATE_PLAY
-            jr      z, .do_play
-            jr      main_loop           ; WIN or LOSE — the screen holds
-.do_play:
-            call    play_step
-            jr      main_loop
-
-; play_step — one beat of the game: ask the keyboard.
-play_step:
-            call    player_step
-            ; contact can end the game mid-frame — if it did, stop here
-            ld      a, (game_state)
-            cp      STATE_PLAY
-            ret     nz
-            call    draught_step
-            ld      a, (game_state)
-            cp      STATE_PLAY
-            ret     nz
-            ; the win check, at the only beat the count can have changed
-            ld      a, (lit_count)
-            cp      NUM_LAMPS
-            ret     nz
-            call    draw_win_screen
-            call    fanfare_held
-            ld      a, STATE_WIN
-            ld      (game_state), a
             ret
 
 ; ----------------------------------------------------------------------------
@@ -236,6 +266,26 @@ blip_lit:                           ; a rising third — the lamp catches
             ld      c, $51
             jp      beep
 
+chime_dusk:                         ; two cold tolls, then the motif far off
+            ld      b, $84          ; A4
+            ld      c, $F7
+            call    beep
+            ld      b, 10
+            call    rest
+            ld      b, $84          ; A4
+            ld      c, $F7
+            call    beep
+            ld      b, 13
+            call    rest
+            ld      b, $92          ; E5
+            ld      c, $A4
+            call    beep
+            ld      b, 4
+            call    rest
+            ld      b, $9D          ; C5
+            ld      c, $CF
+            jp      beep
+
 ; rest — B frames of silence. Musical time rides the heartbeat: the
 ; gaps between notes are counted in HALTs, not busy-loops.
 rest:
@@ -287,6 +337,26 @@ sting_nightfall:                    ; NIGHT FALLS — two steps down, then dark
 
 ; draw_win_screen — lift the lamplighter off the board (restore his
 ; cell: the eighth lamp, lit, comes out of the buffer), then say it.
+; draw_title_screen — sparse and suggestive: a black void, the name,
+; the invitation. Everything else is left to the imagination, which
+; is both the aesthetic and the budget.
+draw_title_screen:
+            call    clear_bitmap
+            ld      hl, $5800
+            ld      de, $5801
+            ld      (hl), %00000000
+            ld      bc, 767
+            ldir
+            ld      hl, title_text
+            ld      b, TITLE_ROW
+            ld      c, TITLE_COL
+            call    print_string
+            ld      hl, prompt_text
+            ld      b, PROMPT_ROW
+            ld      c, PROMPT_COL
+            call    print_string
+            ret
+
 draw_win_screen:
             call    restore_under
             ld      hl, win_text
@@ -1027,7 +1097,7 @@ draw_draught:
 ; ----------------------------------------------------------------------------
 
 game_state:
-            defb    STATE_PLAY
+            defb    STATE_TITLE
 
 wall_ramp:
             ; The square warms in the game's own vocabulary: the stone
@@ -1121,6 +1191,13 @@ draught_glyph:
             defb    %01111110
             defb    %00111100
             defb    %00000000
+
+title_text:
+            defb    "GLOAMING"
+            defb    $FF
+prompt_text:
+            defb    "PRESS SPACE"
+            defb    $FF
 
 win_text:
             defb    "THE NIGHT IS HELD"

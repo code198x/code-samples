@@ -1,0 +1,17 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-19/steps/step-01.sna"
+ },
+ {
+  "action": "start_audio_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-19/step-01-chime.wav"
+ },
+ {
+  "action": "run_frames",
+  "frames": 220
+ },
+ {
+  "action": "stop_audio_recording"
+ }
+]
