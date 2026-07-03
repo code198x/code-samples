@@ -5,7 +5,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 10
+  "frames": 50
  },
  {
   "action": "start_video_recording",
