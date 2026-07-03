@@ -142,10 +142,9 @@ player_step:
             ld      a, (lamp_row)
             ld      (trow), a
 
-            ; The held-key gate: one combined answer — is ANY direction key
-            ; down? Active-low reads flip under CPL so a pressed key becomes
-            ; a 1, and OR gathers the three half-rows into one byte. Then
-            ; the countdown: a step only when the timer reaches zero.
+            ; The held-key gate: the first press steps at once, then one
+            ; step every PLAYER_REPEAT frames. Releasing every direction
+            ; key re-arms the instant first step, so taps stay crisp.
             ld      bc, KEYS_OP
             in      a, (c)
             cpl
@@ -163,6 +162,8 @@ player_step:
             and     %00000001
             or      e
             jr      nz, .held
+            xor     a
+            ld      (player_timer), a
             ret
 .held:
             ld      a, (player_timer)

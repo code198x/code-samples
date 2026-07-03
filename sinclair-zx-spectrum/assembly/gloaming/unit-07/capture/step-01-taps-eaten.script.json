@@ -1,0 +1,179 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-07/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 50
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-07/step-01-taps-eaten.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 2
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-07/step-01-taps-end.png"
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]
