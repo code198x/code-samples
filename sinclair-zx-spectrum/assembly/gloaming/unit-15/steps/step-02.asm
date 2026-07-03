@@ -18,6 +18,15 @@ PIP_BASE    equ     $5800 + 12      ; row 0, column 12 — the HUD ledge,
                                     ; eight cells, centred over the square
 NUM_LAMPS   equ     8
 
+MSG_ATTR    equ     %01000111       ; message text: bright white on black
+MSG_ROW     equ     11
+WIN_COL     equ     7               ; centres the seventeen characters
+FONT        equ     $3C00           ; the ROM font, addressed so that
+                                    ; ASCII x 8 lands on the right glyph
+
+STATE_PLAY  equ     1
+STATE_WIN   equ     2               ; the night is held — the game is won
+
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
@@ -75,6 +84,8 @@ start:
             ; save what he is about to stand on, BEFORE the first draw
             call    save_under
             call    draw_lamp
+            ld      a, STATE_PLAY
+            ld      (game_state), a
 
             ; --- start the heartbeat ---
             ; IM 1: every 50 Hz frame interrupt calls the ROM's handler.
@@ -85,12 +96,26 @@ start:
 
 main_loop:
             halt
+            ; the state gate: only PLAY beats the game forward — any
+            ; other state leaves the screen exactly as it stands
+            ld      a, (game_state)
+            cp      STATE_PLAY
+            jr      z, .do_play
+            jr      main_loop           ; WIN or LOSE — the screen holds
+.do_play:
             call    play_step
             jr      main_loop
 
 ; play_step — one beat of the game: ask the keyboard.
 play_step:
             call    player_step
+            ; the win check, at the only beat the count can have changed
+            ld      a, (lit_count)
+            cp      NUM_LAMPS
+            ret     nz
+            call    draw_win_screen
+            ld      a, STATE_WIN
+            ld      (game_state), a
             ret
 
 ; ----------------------------------------------------------------------------
@@ -139,6 +164,20 @@ warm_walls:
             ld      de, 32
             add     hl, de
             djnz    .ws
+            ret
+
+; ----------------------------------------------------------------------------
+; Screens.
+; ----------------------------------------------------------------------------
+
+; draw_win_screen — lift the lamplighter off the board (restore his
+; cell: the eighth lamp, lit, comes out of the buffer), then say it.
+draw_win_screen:
+            call    restore_under
+            ld      hl, win_text
+            ld      b, MSG_ROW
+            ld      c, WIN_COL
+            call    print_string
             ret
 
 ; ----------------------------------------------------------------------------
@@ -393,6 +432,49 @@ bldg_data:
             defb    $FF
 
 ; ----------------------------------------------------------------------------
+; print_string / print_char — the machine's own letters. The Spectrum
+; keeps its font in ROM: eight bytes per character, and FONT is chosen
+; so that ASCII code x 8 + FONT is the glyph's address. Each character
+; is drawn like any cell: attribute first, eight rows down the cell.
+; ----------------------------------------------------------------------------
+print_string:
+.ps:
+            ld      a, (hl)
+            cp      $FF
+            ret     z
+            push    hl
+            push    bc
+            call    print_char
+            pop     bc
+            pop     hl
+            inc     hl
+            inc     c
+            jr      .ps
+
+print_char:
+            ld      l, a
+            ld      h, 0
+            add     hl, hl
+            add     hl, hl
+            add     hl, hl
+            ld      de, FONT
+            add     hl, de
+            ex      de, hl
+            push    de
+            call    attr_addr_cr
+            ld      (hl), MSG_ATTR
+            call    scr_addr_cr
+            pop     de
+            ld      b, 8
+.pc:
+            ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .pc
+            ret
+
+; ----------------------------------------------------------------------------
 ; light_pip / draw_pips.
 ; ----------------------------------------------------------------------------
 
@@ -581,6 +663,9 @@ draw_lamp:
 ; Data.
 ; ----------------------------------------------------------------------------
 
+game_state:
+            defb    STATE_PLAY
+
 wall_ramp:
             ; The square warms in the game's own vocabulary: the stone
             ; stays dusk-blue; the lamplight catches the mortar first
@@ -644,5 +729,9 @@ lantern:
             defb    %01111110
             defb    %01111110
             defb    %00111100
+
+win_text:
+            defb    "THE NIGHT IS HELD"
+            defb    $FF
 
             end     start
