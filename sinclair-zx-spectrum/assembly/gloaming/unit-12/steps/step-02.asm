@@ -231,16 +231,16 @@ player_step:
             ld      a, (trow)
             ld      (lamp_row), a
             call    save_under
-            call    draw_lamp
-            ; light it, the obvious way (this step only): if he's standing
-            ; on an unlit lamp, paint the cell's attribute lit — on screen
+            ; light it where it lives: while he covers the lamp, its truth
+            ; is the buffer — rewrite the saved attribute, and restore will
+            ; paint the lamp back lit when he leaves
             ld      a, (under_lamp + 8)
             cp      LAMP_UNLIT
-            jr      nz, .plit
-            call    pos_bc
-            call    attr_addr_cr
-            ld      (hl), LAMP_LIT
-.plit:
+            jr      nz, .pdrawn
+            ld      a, LAMP_LIT
+            ld      (under_lamp + 8), a
+.pdrawn:
+            call    draw_lamp
             ret
 
 ; ----------------------------------------------------------------------------
