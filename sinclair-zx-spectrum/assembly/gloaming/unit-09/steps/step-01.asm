@@ -1,119 +1,231 @@
-; Gloaming — Unit 9: The Lamps
+; Gloaming — Unit 9: Walls
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-01 scatters lamps from a (col,row) data table; he crosses them unharmed.
+; Collision is a bit-test on the attribute; buildings are rectangle data.
 
             org     32768
 
-COBBLE      equ     %00000001       ; PAPER black, INK blue — floor
-WALL        equ     %00001111       ; PAPER blue, INK white — solid
-LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black, INK white — the figure
-LAMP_UNLIT  equ     %00000101       ; PAPER black, INK cyan, no bright — a cold, unlit lamp
-WALL_BIT    equ     3
+COBBLE      equ     %00000001       ; PAPER black (0), INK blue (1) — dark ground
+WALL        equ     %00001111       ; PAPER blue (1), INK white (7) — pale stone
+WALL_BIT    equ     3               ; the attribute bit that says "this is wall"
+LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black, INK white — his own light
 
-START_COL   equ     15
+START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
+PLAYER_REPEAT equ   6               ; frames between steps while a key is held
 
-KEYS_OP     equ     $DFFE
-KEYS_Q      equ     $FBFE
-KEYS_A      equ     $FDFE
+KEYS_OP     equ     $DFFE           ; half-row P O I U Y — bits 1 and 0
+KEYS_Q      equ     $FBFE           ; half-row Q W E R T — bit 0 is Q
+KEYS_A      equ     $FDFE           ; half-row A S D F G — bit 0 is A
 
-; ============================================================================
-; SETUP — runs once.
-; ============================================================================
 start:
-            ld      a, 0            ; border black
+            ; --- the border goes black — the night beyond the square ---
+            ; Port $FE bits 0-2 set the BORDER colour. A = 0 = black.
+            ld      a, 0
             out     ($FE), a
 
-            ld      hl, $5800       ; wash the grid in cobbles
+            ; --- place the lamplighter ---
+            ; His position is data. Everything that draws him reads it.
+            ld      a, START_COL
+            ld      (lamp_col), a
+            ld      a, START_ROW
+            ld      (lamp_row), a
+            xor     a
+            ld      (player_timer), a
+
+            ; --- wipe the canvas ---
+            ; The bitmap ($4000-$57FF) is the pixel layer; whatever was on
+            ; screen before us still lives there. Zero it so only our
+            ; attribute colours show.
+            call    clear_bitmap
+
+            ; --- texture the ground ---
+            ; Blit the cobble stipple into every cell's bitmap, rows 1-23.
+            ; The attributes will colour these pixels in a moment.
+            call    fill_ground
+
+            ; --- wash in the cobbles ---
+            ; Seed the first attribute cell, point DE one cell ahead, and
+            ; let LDIR cascade the byte through all 768 cells.
+            ld      hl, $5800
             ld      de, $5801
             ld      (hl), COBBLE
             ld      bc, 767
             ldir
 
-            ld      hl, $5800       ; wall frame — top row
-            ld      b, 32
-.top:
-            ld      (hl), WALL
-            inc     hl
-            djnz    .top
+            call    paint_walls
+            call    paint_buildings
 
-            ld      hl, $5AE0       ; bottom row
-            ld      b, 32
-.bottom:
-            ld      (hl), WALL
-            inc     hl
-            djnz    .bottom
-
-            ld      hl, $5800       ; left and right columns
-            ld      b, 24
-.sides:
-            ld      (hl), WALL
-            push    hl
-            ld      de, 31
-            add     hl, de
-            ld      (hl), WALL
-            pop     hl
-            ld      de, 32
-            add     hl, de
-            djnz    .sides
-
-            call    draw_lamps      ; place the lamps from the table
-            call    save_under      ; then the lamplighter, on top
+            ; --- brick the walls ---
+            ; Now that the wall cells are painted, fill_walls can read the
+            ; map back and lay brick wherever the wall bit is set.
+            call    fill_walls
+            ; save what he is about to stand on, BEFORE the first draw
+            call    save_under
             call    draw_lamp
 
-; ============================================================================
-; THE HEARTBEAT — QAOP movement (Unit 8), unchanged.
-; ============================================================================
+            ; --- start the heartbeat ---
+            ; IM 1: every 50 Hz frame interrupt calls the ROM's handler.
+            ; EI: let it. HALT then sleeps until the next frame arrives,
+            ; so the loop below beats exactly once per frame.
             im      1
             ei
 
-game_loop:
+main_loop:
             halt
+            call    play_step
+            jr      main_loop
 
+; play_step — one beat of the game: ask the keyboard.
+play_step:
+            call    player_step
+            ret
+
+; ----------------------------------------------------------------------------
+; paint_walls — the square's edge, one attribute write per cell.
+; ----------------------------------------------------------------------------
+paint_walls:
+            ld      c, WALL         ; the byte every wall cell gets
+
+            ; the top wall: row 1 is 32 cells in a row from $5820
+            ; (row 0 is kept back — it becomes the HUD later)
+            ld      hl, $5820
+            ld      b, 32
+.wt:
+            ld      (hl), c
+            inc     hl
+            djnz    .wt
+
+            ; the bottom wall: row 23, 32 cells from $5AE0
+            ld      hl, $5AE0
+            ld      b, 32
+.wb:
+            ld      (hl), c
+            inc     hl
+            djnz    .wb
+
+            ; the side walls: column 0 and column 31 of rows 1-23.
+            ; Write the row's first cell, hop 31 cells to its last,
+            ; then step a full row (32) down — 23 times.
+            ld      hl, $5820
+            ld      b, 23
+.ws:
+            ld      (hl), c
+            push    hl
+            ld      de, 31
+            add     hl, de
+            ld      (hl), c
+            pop     hl
+            ld      de, 32
+            add     hl, de
+            djnz    .ws
+            ret
+
+; ----------------------------------------------------------------------------
+; clear_bitmap — zero the pixel layer, $4000-$57FF, with the same
+; seed-and-cascade LDIR idiom the cobble wash uses.
+; ----------------------------------------------------------------------------
+clear_bitmap:
+            ld      hl, $4000
+            ld      de, $4001
+            ld      (hl), 0
+            ld      bc, 6143
+            ldir
+            ret
+
+; ----------------------------------------------------------------------------
+; player_step — the keys become movement. Each direction key edits a
+; TARGET position (tcol, trow) — a proposal, not yet a move — so it
+; can be vetoed before it becomes real. Then the move commits: leave
+; the old cell, take the new one, draw.
+; ----------------------------------------------------------------------------
+player_step:
+            ; --- propose: the target starts where he stands ---
             ld      a, (lamp_col)
             ld      (tcol), a
             ld      a, (lamp_row)
             ld      (trow), a
 
+            ; The held-key gate: the first press steps at once, then one
+            ; step every PLAYER_REPEAT frames. Releasing every direction
+            ; key re-arms the instant first step, so taps stay crisp.
             ld      bc, KEYS_OP
             in      a, (c)
-            bit     1, a
-            jr      z, .left
-            bit     0, a
-            jr      z, .right
+            cpl
+            and     %00000011
+            ld      e, a
             ld      bc, KEYS_Q
             in      a, (c)
-            bit     0, a
-            jr      z, .up
+            cpl
+            and     %00000001
+            or      e
+            ld      e, a
             ld      bc, KEYS_A
             in      a, (c)
-            bit     0, a
-            jr      z, .down
-            jr      game_loop
+            cpl
+            and     %00000001
+            or      e
+            jr      nz, .held
+            xor     a
+            ld      (player_timer), a
+            ret
+.held:
+            ld      a, (player_timer)
+            or      a
+            jr      z, .stepnow
+            dec     a
+            ld      (player_timer), a
+            ret
+.stepnow:
+            ld      a, PLAYER_REPEAT
+            ld      (player_timer), a
 
-.left:
+            ld      bc, KEYS_OP
+            in      a, (c)
+            bit     1, a            ; O — a zero bit is a pressed key
+            jr      z, .pleft
+            bit     0, a            ; P, same half-row
+            jr      z, .pright
+            ld      bc, KEYS_Q
+            in      a, (c)
+            bit     0, a            ; Q
+            jr      z, .pup
+            ld      bc, KEYS_A
+            in      a, (c)
+            bit     0, a            ; A
+            jr      z, .pdown
+            ret                     ; nothing held — nothing to do
+
+.pleft:
             ld      hl, tcol
             dec     (hl)
-            jr      .try
-.right:
+            jr      .pmove
+.pright:
             ld      hl, tcol
             inc     (hl)
-            jr      .try
-.up:
+            jr      .pmove
+.pup:
             ld      hl, trow
             dec     (hl)
-            jr      .try
-.down:
+            jr      .pmove
+.pdown:
             ld      hl, trow
             inc     (hl)
-.try:
+.pmove:
+            ; Scaffold (route skeleton): a numeric edge clamp so the detour
+            ; cannot walk the lamplighter off the map — past the map's edge
+            ; the address sums leave screen memory for the system's own. The
+            ; walls take this job in unit 9; unit 10 retires the numbers.
             ld      a, (trow)
-            ld      b, a
+            cp      2
+            ret     c
+            cp      23
+            ret     nc
             ld      a, (tcol)
-            ld      c, a
-            call    wall_at
-            jr      nz, game_loop
-
+            cp      1
+            ret     c
+            cp      31
+            ret     nc
+            ; --- commit: restore, step, save, draw — in that order ---
             call    restore_under
             ld      a, (tcol)
             ld      (lamp_col), a
@@ -121,61 +233,160 @@ game_loop:
             ld      (lamp_row), a
             call    save_under
             call    draw_lamp
-            jr      game_loop
+            ret
 
 ; ----------------------------------------------------------------------------
-; draw_lamps — walk the table, drawing an unlit lantern at each (col,row).
-;   Table is column,row pairs, ended by a column of $FF.
+; fill_ground — the cobble stipple. Not decoration: the stipple is what
+; makes ground-state changes visible later, when the game starts
+; recolouring these pixels. Rows 1-23 (row 0 is the HUD).
 ; ----------------------------------------------------------------------------
-draw_lamps:
-            ld      hl, lamp_data
-.next:
-            ld      a, (hl)         ; column
-            cp      $FF
-            ret     z               ; $FF column → end of table
-            ld      c, a
-            inc     hl
-            ld      b, (hl)         ; row
-            inc     hl
-            push    hl              ; keep the table pointer
-            call    draw_lantern    ; draw at (B=row, C=col)
-            pop     hl
-            jr      .next
+fill_ground:
+            ld      b, 1                ; rows 1-23 (row 0 is the HUD)
+.fgr:
+            ld      c, 0
+.fgc:
+            ld      de, cobble_tex
+            call    blit_tex
+            inc     c
+            ld      a, c
+            cp      32
+            jr      c, .fgc
+            inc     b
+            ld      a, b
+            cp      24
+            jr      c, .fgr
+            ret
 
-; ----------------------------------------------------------------------------
-; draw_lantern — B=row, C=col. Stamp an unlit lantern into the cell.
-; ----------------------------------------------------------------------------
-draw_lantern:
-            call    attr_addr_cr    ; HL = attribute, BC preserved
-            ld      (hl), LAMP_UNLIT
-            call    scr_addr_cr     ; HL = screen, BC preserved
-            ld      de, lantern
+; fill_walls — brickwork. Driven by the wall attribute bit, so anything
+; painted as wall — now or later in the game — gets its brick for free:
+; the map itself decides where the brick goes.
+fill_walls:
+            ld      b, 1
+.fwr:
+            ld      c, 0
+.fwc:
+            push    bc
+            call    attr_addr_cr
+            bit     WALL_BIT, (hl)
+            pop     bc
+            jr      z, .fwn
+            ld      de, brick_tex
+            call    blit_tex
+.fwn:
+            inc     c
+            ld      a, c
+            cp      32
+            jr      c, .fwc
+            inc     b
+            ld      a, b
+            cp      24
+            jr      c, .fwr
+            ret
+
+; blit_tex — write the 8-byte texture at DE into cell (C, B)'s bitmap.
+; scr_addr_cr finds the cell's first pixel row; INC H steps down the
+; other seven, 256 bytes apart.
+blit_tex:
+            push    bc
+            call    scr_addr_cr
             ld      b, 8
-.dlt:
+.bt:
             ld      a, (de)
             ld      (hl), a
             inc     de
             inc     h
-            djnz    .dlt
+            djnz    .bt
+            pop     bc
             ret
 
+cobble_tex:
+            defb    %10000010
+            defb    %00000000
+            defb    %00001000
+            defb    %00000000
+            defb    %00100001
+            defb    %00000000
+            defb    %00010000
+            defb    %00000000
+
+brick_tex:
+            ; mortar courses with staggered verticals — dusk-lit stone
+            defb    %00001000
+            defb    %00001000
+            defb    %00001000
+            defb    %11111111
+            defb    %10000000
+            defb    %10000000
+            defb    %10000000
+            defb    %11111111
+
+; paint_buildings — walk the rectangle table: each entry is col, row,
+; width, height; $FF ends the list. Every cell inside a rectangle gets
+; the WALL attribute — and because fill_walls textures by the wall bit,
+; the brickwork arrives without another line of drawing code.
+paint_buildings:
+            ld      hl, bldg_data
+.pb:
+            ld      a, (hl)
+            cp      $FF
+            ret     z
+            ld      c, a                ; col
+            inc     hl
+            ld      b, (hl)             ; row
+            inc     hl
+            ld      d, (hl)             ; width
+            inc     hl
+            ld      e, (hl)             ; height
+            inc     hl
+            push    hl
+.pbrow:
+            push    bc
+            push    de
+.pbcol:
+            push    bc
+            push    de
+            call    attr_addr_cr
+            ld      (hl), WALL
+            pop     de
+            pop     bc
+            inc     c
+            dec     d
+            jr      nz, .pbcol
+            pop     de
+            pop     bc
+            inc     b
+            dec     e
+            jr      nz, .pbrow
+            pop     hl
+            jr      .pb
+
+bldg_data:
+            defb    5, 5, 4, 3
+            defb    23, 5, 4, 3
+            defb    $FF
+
 ; ----------------------------------------------------------------------------
-; scr_addr_cr / attr_addr_cr / wall_at / pos_bc  (Unit 8).
+; scr_addr_cr — HL = bitmap address of cell (C, B)'s first pixel row.
+; The row's top two bits pick the third of the screen (H), its bottom
+; three become L's top bits, and the column fills L's low five.
 ; ----------------------------------------------------------------------------
+
 scr_addr_cr:
             ld      a, b
-            and     %00011000
-            or      %01000000
+            and     %00011000       ; the third (row bits 4-3) ...
+            or      %01000000       ; ... under the screen base $40xx
             ld      h, a
             ld      a, b
-            and     %00000111
+            and     %00000111       ; the char row within the third ...
+            rrca                    ; ... rotated into bits 7-5
             rrca
             rrca
-            rrca
-            or      c
+            or      c               ; the column in bits 4-0
             ld      l, a
             ret
 
+; attr_addr_cr — HL = attribute address of cell (C, B):
+; $5800 + row*32 + col, the row shifted up five times.
 attr_addr_cr:
             ld      a, b
             ld      l, a
@@ -193,11 +404,11 @@ attr_addr_cr:
             add     hl, de
             ret
 
-wall_at:
-            call    attr_addr_cr
-            bit     WALL_BIT, (hl)
-            ret
+; ----------------------------------------------------------------------------
+; The lamplighter's save / restore / draw.
+; ----------------------------------------------------------------------------
 
+; pos_bc — the lamplighter's cell into (C, B), read fresh from the data.
 pos_bc:
             ld      a, (lamp_row)
             ld      b, a
@@ -205,10 +416,9 @@ pos_bc:
             ld      c, a
             ret
 
-; ----------------------------------------------------------------------------
-; save_under / restore_under / draw_lamp  (Unit 8) — protect whatever is under
-;   him, lamps included.
-; ----------------------------------------------------------------------------
+; save_under — copy the nine bytes of his cell into the buffer: eight
+; bitmap rows, then the attribute. Runs as he ARRIVES, before the
+; draw — so the buffer always holds true ground, never him.
 save_under:
             call    pos_bc
             call    scr_addr_cr
@@ -226,6 +436,9 @@ save_under:
             ld      (under_lamp + 8), a
             ret
 
+; restore_under — the same nine bytes back the other way: the ground
+; returns exactly as it was. Runs as he LEAVES, while the position
+; still points at the old cell.
 restore_under:
             call    pos_bc
             call    scr_addr_cr
@@ -244,9 +457,12 @@ restore_under:
             ret
 
 draw_lamp:
+            ; his colour first: the cell's attribute becomes his own —
+            ; bright white on the black, his own light about him
             call    pos_bc
             call    attr_addr_cr
             ld      (hl), LAMP_ATTR
+            ; then his shape, eight bytes down the cell like any texture
             call    pos_bc
             call    scr_addr_cr
             ld      de, lamplighter
@@ -260,18 +476,8 @@ draw_lamp:
             ret
 
 ; ----------------------------------------------------------------------------
-; Level data, state, buffer, and shapes.
+; Data.
 ; ----------------------------------------------------------------------------
-lamp_data:
-            defb    4, 3            ; column, row
-            defb    27, 3
-            defb    9, 7
-            defb    22, 7
-            defb    6, 15
-            defb    25, 15
-            defb    13, 20
-            defb    18, 20
-            defb    $FF             ; end of table
 
 lamp_col:
             defb    START_COL
@@ -281,28 +487,20 @@ tcol:
             defb    0
 trow:
             defb    0
+player_timer:
+            defb    0
 
 under_lamp:
             defb    0, 0, 0, 0, 0, 0, 0, 0, 0
 
 lamplighter:
-            defb    %00111100       ; ..XXXX..   head
-            defb    %00111100       ; ..XXXX..   head
-            defb    %00011000       ; ...XX...   neck
-            defb    %01111110       ; .XXXXXX.   arms
-            defb    %00011000       ; ...XX...   body
-            defb    %00011000       ; ...XX...   body
-            defb    %00100100       ; ..X..X..   legs
-            defb    %01000010       ; .X....X.   feet
-
-lantern:
-            defb    %00011000       ; ...XX...   handle top
-            defb    %00100100       ; ..X..X..   handle loop
-            defb    %01111110       ; .XXXXXX.   cap
-            defb    %01111110       ; .XXXXXX.   glass
-            defb    %01011010       ; .X.XX.X.   glass panes
-            defb    %01111110       ; .XXXXXX.   glass
-            defb    %01111110       ; .XXXXXX.   base
-            defb    %00111100       ; ..XXXX..   foot
+            defb    %00111100
+            defb    %00111100
+            defb    %00011000
+            defb    %01111110
+            defb    %00011000
+            defb    %00011000
+            defb    %00100100
+            defb    %01000010
 
             end     start

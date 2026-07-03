@@ -53,6 +53,7 @@ start:
             ldir
 
             call    paint_walls
+            call    paint_buildings
 
             ; --- brick the walls ---
             ; Now that the wall cells are painted, fill_walls can read the
@@ -210,6 +211,15 @@ player_step:
             ld      hl, trow
             inc     (hl)
 .pmove:
+            ; The veto: ask the target cell's attribute whether it's wall.
+            ; NZ means brick — the proposal dies here and he stays put.
+            ld      a, (trow)
+            ld      b, a
+            ld      a, (tcol)
+            ld      c, a
+            call    wall_at
+            ret     nz
+
             ; Scaffold (route skeleton): a numeric edge clamp so the detour
             ; cannot walk the lamplighter off the map — past the map's edge
             ; the address sums leave screen memory for the system's own. The
@@ -319,6 +329,51 @@ brick_tex:
             defb    %10000000
             defb    %11111111
 
+; paint_buildings — walk the rectangle table: each entry is col, row,
+; width, height; $FF ends the list. Every cell inside a rectangle gets
+; the WALL attribute — and because fill_walls textures by the wall bit,
+; the brickwork arrives without another line of drawing code.
+paint_buildings:
+            ld      hl, bldg_data
+.pb:
+            ld      a, (hl)
+            cp      $FF
+            ret     z
+            ld      c, a                ; col
+            inc     hl
+            ld      b, (hl)             ; row
+            inc     hl
+            ld      d, (hl)             ; width
+            inc     hl
+            ld      e, (hl)             ; height
+            inc     hl
+            push    hl
+.pbrow:
+            push    bc
+            push    de
+.pbcol:
+            push    bc
+            push    de
+            call    attr_addr_cr
+            ld      (hl), WALL
+            pop     de
+            pop     bc
+            inc     c
+            dec     d
+            jr      nz, .pbcol
+            pop     de
+            pop     bc
+            inc     b
+            dec     e
+            jr      nz, .pbrow
+            pop     hl
+            jr      .pb
+
+bldg_data:
+            defb    5, 5, 4, 3
+            defb    23, 5, 4, 3
+            defb    $FF
+
 ; ----------------------------------------------------------------------------
 ; scr_addr_cr — HL = bitmap address of cell (C, B)'s first pixel row.
 ; The row's top two bits pick the third of the screen (H), its bottom
@@ -356,6 +411,14 @@ attr_addr_cr:
             ld      e, a
             ld      d, 0
             add     hl, de
+            ret
+
+; wall_at — is cell (C, B) wall? The answer is already on the screen:
+; every wall cell's attribute has WALL_BIT set, so one bit-test of
+; attribute memory is the whole collision system. NZ = wall.
+wall_at:
+            call    attr_addr_cr
+            bit     WALL_BIT, (hl)
             ret
 
 ; ----------------------------------------------------------------------------
