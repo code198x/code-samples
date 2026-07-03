@@ -2,21 +2,29 @@
   "machine": "sinclair-zx-spectrum",
   "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-05",
   "captures": [
-    { "id": "step-01-walked",
+    { "id": "step-01-idle",
+      "program": "steps/step-01.asm",
+      "timeline": [ {"wait": 50}, {"screenshot": "step-01-idle.png"} ] },
+    { "id": "step-01-glow",
       "program": "steps/step-01.asm",
       "timeline": [
-        {"wait": 20}, {"hold": "P"}, {"wait": 10}, {"release": "P"},
-        {"wait": 5}, {"screenshot": "step-01-walked.png"}
+        {"wait": 50}, {"hold": "O"}, {"wait": 10},
+        {"screenshot": "step-01-glow.png"}, {"release": "O"}
       ] },
-    { "id": "step-02-walk",
+    { "id": "step-02-any-key",
       "program": "steps/step-02.asm",
       "timeline": [
+        {"wait": 50},
+        {"record_video": "step-02-any-key.mp4"},
+        {"wait": 25},
+        {"hold": "O"}, {"wait": 35}, {"release": "O"},
         {"wait": 20},
-        {"record_video": "step-02-walk.mp4"},
-        {"hold": "P"}, {"wait": 10}, {"release": "P"},
-        {"wait": 10},
-        {"hold": "O"}, {"wait": 10}, {"release": "O"},
-        {"wait": 10},
+        {"hold": "Q"}, {"wait": 35}, {"release": "Q"},
+        {"wait": 20},
+        {"hold": "A"}, {"wait": 35}, {"release": "A"},
+        {"wait": 20},
+        {"hold": "P"}, {"wait": 35}, {"release": "P"},
+        {"wait": 25},
         {"stop_video": true}
       ] }
   ]
