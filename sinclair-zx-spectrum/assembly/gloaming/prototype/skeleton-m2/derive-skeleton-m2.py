@@ -461,6 +461,10 @@ t = drop(t,
          "            defb    0\n"
          "dusk_speed:\n"
          "            defb    16\n")
+# with a single watch, lives are set once per game — m1's constant-count
+# repaint is honest again; the carried-lives fix (2026-07-03) belongs to
+# unit 6, where init_game first re-runs mid-run
+t = swap(t, cut(M2, "draw_lives:", "\n.dlv:"), cut(M1, "draw_lives:", "\n.dlv:"))
 T[5] = t
 
 # ---- unit 4: the convergence swap — oldest grudge back to nearest light --

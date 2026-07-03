@@ -27,9 +27,9 @@ address, and code changes shift the variable block. After any edit to
 pasmonext --sna gloaming.asm gloaming.sna gloaming.sym
 ```
 
-Addresses as checked in (2026-07-02): `lit_count` $8A02, `lives` $8A03,
-`draught_col` $8A04, `draught_row` $8A05, `draught_timer` $8A09,
-`dusk` $8A0B.
+Addresses as checked in (2026-07-03, post draw_lives fix): `lit_count` $8A04, `lives` $8A05,
+`draught_col` $8A06, `draught_row` $8A07, `draught_timer` $8A0B,
+`dusk` $8A0D.
 
 **Input timing:** Space taps on the *title* hold 30 frames (the dusk
 bells poll between cells — a short press can fall inside a bell).

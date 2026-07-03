@@ -39,12 +39,12 @@
  },
  {
   "action": "poke_byte",
-  "addr": 35298,
+  "addr": 35300,
   "value": 2
  },
  {
   "action": "poke_byte",
-  "addr": 35290,
+  "addr": 35292,
   "value": 1
  },
  {

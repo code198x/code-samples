@@ -1558,8 +1558,12 @@ draw_pips:
             ret
 
 draw_lives:
+            ; read the CARRIED lives, not the constant — a run's lives
+            ; survive the watches, and the row must say so (a full-row
+            ; repaint each watch was the deepening's one visible lie)
             ld      hl, LIFE_BASE
-            ld      b, LIVES
+            ld      a, (lives)
+            ld      b, a
             ld      a, LIFE_PIP
 .dlv:
             ld      (hl), a

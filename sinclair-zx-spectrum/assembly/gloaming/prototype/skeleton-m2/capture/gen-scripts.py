@@ -137,8 +137,12 @@ SCRIPTS["unit-05"] = ([load("unit-05")] + OPEN_CHIME
                          run(180), shot("u05-snuffed")])
 
 # unit 6 — the held screen becomes an interstitial: the night deepens,
-# and the dark probes watch 2 from a new quarter (SE)
-SCRIPTS["unit-06"] = (engineered_eighth("unit-06", [])
+# the dark probes watch 2 from a new quarter (SE), and the carried
+# lives survive the redraw (lose_life's state: lives 2, third pip dark)
+SCRIPTS["unit-06"] = (engineered_eighth(
+                          "unit-06",
+                          [poke(sym("unit-06", "lives"), 2),
+                           poke(0x5800 + 28 + 2, 0x01)])
                       + [run(250), shot("u06-held")]
                       + space(4)
                       + [run(80), shot("u06-deeper")])
