@@ -12,6 +12,12 @@ LAMP_UNLIT  equ     %00000101       ; cold cyan INK on black PAPER — bit 3
                                     ; clear, so a lamp reads as floor
 LAMP_LIT    equ     %01000110       ; BRIGHT yellow INK on black — a held flame
 
+PIP_UNLIT   equ     %00101000       ; a cold pip: cyan PAPER, a solid block
+PIP_LIT     equ     %01110000       ; a warm pip: BRIGHT yellow PAPER
+PIP_BASE    equ     $5800 + 12      ; row 0, column 12 — the HUD ledge,
+                                    ; eight cells, centred over the square
+NUM_LAMPS   equ     8
+
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
@@ -25,6 +31,8 @@ start:
             ; Port $FE bits 0-2 set the BORDER colour. A = 0 = black.
             ld      a, 0
             out     ($FE), a
+            xor     a
+            ld      (lit_count), a
 
             ; --- place the lamplighter ---
             ; His position is data. Everything that draws him reads it.
@@ -62,6 +70,7 @@ start:
             ; Now that the wall cells are painted, fill_walls can read the
             ; map back and lay brick wherever the wall bit is set.
             call    fill_walls
+            call    draw_pips
             call    draw_lamps
             ; save what he is about to stand on, BEFORE the first draw
             call    save_under
@@ -239,6 +248,7 @@ player_step:
             jr      nz, .pdrawn
             ld      a, LAMP_LIT
             ld      (under_lamp + 8), a
+            call    light_pip
 .pdrawn:
             call    draw_lamp
             ret
@@ -372,6 +382,37 @@ bldg_data:
             defb    5, 5, 4, 3
             defb    23, 5, 4, 3
             defb    $FF
+
+; ----------------------------------------------------------------------------
+; light_pip / draw_pips.
+; ----------------------------------------------------------------------------
+
+; light_pip — warm the next pip along and count the lamp. lit_count is
+; the index of the pip to light AND the number of lamps lit so far —
+; read it for the address, then step it.
+light_pip:
+            ld      a, (lit_count)
+            ld      e, a
+            ld      d, 0
+            inc     a
+            ld      (lit_count), a
+            ld      hl, PIP_BASE
+            add     hl, de
+            ld      (hl), PIP_LIT
+            ret
+
+; draw_pips — the tally row: one cell per lamp on the HUD ledge, all
+; cold to start. A pip is pure attribute — no glyph, just a block of
+; PAPER — so the row costs eight bytes of screen and no bitmap at all.
+draw_pips:
+            ld      hl, PIP_BASE
+            ld      b, NUM_LAMPS
+            ld      a, PIP_UNLIT
+.dp:
+            ld      (hl), a
+            inc     hl
+            djnz    .dp
+            ret
 
 ; ----------------------------------------------------------------------------
 ; draw_lamps — walk the position table: col, row pairs, $FF to finish.
@@ -549,6 +590,9 @@ lamp_row:
 tcol:
             defb    0
 trow:
+            defb    0
+
+lit_count:
             defb    0
 player_timer:
             defb    0
