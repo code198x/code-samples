@@ -2,22 +2,34 @@
   "machine": "sinclair-zx-spectrum",
   "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-11",
   "captures": [
-    { "id": "step-01-tally",
+    { "id": "step-01-lantern",
       "program": "steps/step-01.asm",
       "timeline": [
-        {"wait": 20}, {"hold": "A"}, {"wait": 9}, {"release": "A"},
-        {"hold": "P"}, {"wait": 3}, {"release": "P"},
-        {"hold": "O"}, {"wait": 6}, {"release": "O"},
-        {"wait": 6}, {"screenshot": "step-01-tally.png"}
+        {"wait": 60},
+        {"screenshot": "step-01-lantern.png"}
       ] },
-    { "id": "step-01-fill",
-      "program": "steps/step-01.asm",
+    { "id": "step-02-lanterns",
+      "program": "steps/step-02.asm",
       "timeline": [
-        {"wait": 12}, {"record_video": "step-01-fill.mp4"},
-        {"hold": "A"}, {"wait": 9}, {"release": "A"}, {"wait": 3},
-        {"hold": "P"}, {"wait": 3}, {"release": "P"}, {"wait": 3},
-        {"hold": "O"}, {"wait": 6}, {"release": "O"},
-        {"wait": 10}, {"stop_video": true}
+        {"wait": 60},
+        {"screenshot": "step-02-lanterns.png"}
+      ] },
+    { "id": "step-02-cross",
+      "program": "steps/step-02.asm",
+      "timeline": [
+        {"wait": 60},
+        {"record_video": "step-02-cross.mp4"},
+        {"wait": 25},
+        {"hold": "A"}, {"wait": 60}, {"release": "A"},
+        {"wait": 10},
+        {"hold": "O"}, {"wait": 10}, {"release": "O"},
+        {"wait": 20},
+        {"screenshot": "step-02-stand.png"},
+        {"wait": 5},
+        {"hold": "O"}, {"wait": 10}, {"release": "O"},
+        {"wait": 25},
+        {"screenshot": "step-02-passed.png"},
+        {"stop_video": true}
       ] }
   ]
 }

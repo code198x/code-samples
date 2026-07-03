@@ -1,15 +1,19 @@
 [
  {
   "action": "load_snapshot",
-  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-11/steps/step-01.sna"
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-11/steps/step-02.sna"
  },
  {
   "action": "run_frames",
-  "frames": 12
+  "frames": 60
  },
  {
   "action": "start_video_recording",
-  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-11/step-01-fill.mp4"
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-11/step-02-cross.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 25
  },
  {
   "action": "input",
@@ -24,7 +28,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 9
+  "frames": 60
  },
  {
   "action": "input",
@@ -32,66 +36,6 @@
    {
     "Key": {
      "name": "A",
-     "pressed": false
-    }
-   }
-  ]
- },
- {
-  "action": "run_frames",
-  "frames": 3
- },
- {
-  "action": "input",
-  "events": [
-   {
-    "Key": {
-     "name": "P",
-     "pressed": true
-    }
-   }
-  ]
- },
- {
-  "action": "run_frames",
-  "frames": 3
- },
- {
-  "action": "input",
-  "events": [
-   {
-    "Key": {
-     "name": "P",
-     "pressed": false
-    }
-   }
-  ]
- },
- {
-  "action": "run_frames",
-  "frames": 3
- },
- {
-  "action": "input",
-  "events": [
-   {
-    "Key": {
-     "name": "O",
-     "pressed": true
-    }
-   }
-  ]
- },
- {
-  "action": "run_frames",
-  "frames": 6
- },
- {
-  "action": "input",
-  "events": [
-   {
-    "Key": {
-     "name": "O",
      "pressed": false
     }
    }
@@ -100,6 +44,78 @@
  {
   "action": "run_frames",
   "frames": 10
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 20
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-11/step-02-stand.png"
+ },
+ {
+  "action": "run_frames",
+  "frames": 5
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "O",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 25
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-11/step-02-passed.png"
  },
  {
   "action": "stop_video_recording"

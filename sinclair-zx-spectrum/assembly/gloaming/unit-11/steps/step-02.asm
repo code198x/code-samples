@@ -8,6 +8,8 @@ COBBLE      equ     %00000001       ; PAPER black (0), INK blue (1) — dark gro
 WALL        equ     %00001111       ; PAPER blue (1), INK white (7) — pale stone
 WALL_BIT    equ     3               ; the attribute bit that says "this is wall"
 LAMP_ATTR   equ     %01000111       ; BRIGHT, PAPER black, INK white — his own light
+LAMP_UNLIT  equ     %00000101       ; cold cyan INK on black PAPER — bit 3
+                                    ; clear, so a lamp reads as floor
 
 START_COL   equ     15              ; where the lamplighter begins
 START_ROW   equ     11
@@ -59,6 +61,7 @@ start:
             ; Now that the wall cells are painted, fill_walls can read the
             ; map back and lay brick wherever the wall bit is set.
             call    fill_walls
+            call    draw_lamps
             ; save what he is about to stand on, BEFORE the first draw
             call    save_under
             call    draw_lamp
@@ -361,6 +364,42 @@ bldg_data:
             defb    $FF
 
 ; ----------------------------------------------------------------------------
+; draw_lamps — walk the position table: col, row pairs, $FF to finish.
+; Placement is data; the drawing code neither knows nor cares how many
+; lamps the town has tonight.
+; ----------------------------------------------------------------------------
+draw_lamps:
+            ld      hl, lamp_data
+.next:
+            ld      a, (hl)
+            cp      $FF
+            ret     z
+            ld      c, a
+            inc     hl
+            ld      b, (hl)
+            inc     hl
+            push    hl
+            call    draw_lantern
+            pop     hl
+            jr      .next
+
+; draw_lantern — an unlit lamp into cell (C, B): cold cyan attribute,
+; then the lantern glyph down the cell like any texture.
+draw_lantern:
+            call    attr_addr_cr
+            ld      (hl), LAMP_UNLIT
+            call    scr_addr_cr
+            ld      de, lantern
+            ld      b, 8
+.dlt:
+            ld      a, (de)
+            ld      (hl), a
+            inc     de
+            inc     h
+            djnz    .dlt
+            ret
+
+; ----------------------------------------------------------------------------
 ; scr_addr_cr — HL = bitmap address of cell (C, B)'s first pixel row.
 ; The row's top two bits pick the third of the screen (H), its bottom
 ; three become L's top bits, and the column fills L's low five.
@@ -482,6 +521,17 @@ draw_lamp:
 ; Data.
 ; ----------------------------------------------------------------------------
 
+lamp_data:
+            defb    4, 3
+            defb    27, 3
+            defb    9, 7
+            defb    22, 7
+            defb    6, 15
+            defb    25, 15
+            defb    13, 20
+            defb    18, 20
+            defb    $FF
+
 lamp_col:
             defb    START_COL
 lamp_row:
@@ -505,5 +555,15 @@ lamplighter:
             defb    %00011000
             defb    %00100100
             defb    %01000010
+
+lantern:
+            defb    %00011000
+            defb    %00100100
+            defb    %01111110
+            defb    %01111110
+            defb    %01011010
+            defb    %01111110
+            defb    %01111110
+            defb    %00111100
 
             end     start
