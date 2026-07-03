@@ -1,6 +1,6 @@
-; Gloaming — route skeleton (module 2), unit 09: Your Longest Night
-; What deserves to survive changed: the best row counts watches now, not lives.
-; Method: subset of gloaming.asm, derived by reverse subtraction.
+; Gloaming — route skeleton (module 2), unit 08: The Dusk Bells
+; A title tune that yields the keyboard — and the snuff finds its voice.
+; Method: subset of gloaming.asm, plus m1 text carried verbatim from gloaming-m1.asm (best-lives; dusk chime below unit 8).
 
             org     32768
 
@@ -168,6 +168,13 @@ play_step:
             ld      a, (dusk)
             cp      NUM_DUSKS - 1
             jr      z, .thedawn
+            ; the night is held — the lives you kept are the score
+            ld      a, (lives)
+            ld      hl, best_lives
+            cp      (hl)
+            jr      c, .nobest
+            ld      (hl), a
+.nobest:
             call    draw_win_screen
             call    fanfare_held
             ld      a, LOCK
@@ -176,8 +183,6 @@ play_step:
             ld      (game_state), a
             ret
 .thedawn:
-            ld      a, NUM_DUSKS        ; the whole night held — the row fills
-            ld      (best_dusk), a
             call    draw_dawn_screen
             call    dawn_sweep
             call    fanfare_held
@@ -496,12 +501,12 @@ draw_title_screen:
             ld      b, PROMPT_ROW
             ld      c, PROMPT_COL
             call    print_string
-            ; your longest night — one pip per watch survived, best run,
-            ; read in lamps as ever (no digits). It survives the loop
-            ; back to the title: the go-again hook.
-            ld      hl, $5800 + 11 * 32 + 13
-            ld      b, NUM_DUSKS
-            ld      a, (best_dusk)
+            ; your best night — the lives you kept on your finest win,
+            ; read in lamps (no digits). It survives the loop back to
+            ; the title: the go-again hook.
+            ld      hl, $5800 + 11 * 32 + 14
+            ld      b, LIVES
+            ld      a, (best_lives)
             ld      c, a
 .tpip:
             ld      a, PIP_UNLIT
@@ -1444,13 +1449,6 @@ lose_life:
             call    draw_draught
             ret
 .gone:
-            ; a watch survived is a watch earned, even on a lost night
-            ld      a, (dusk)
-            ld      hl, best_dusk
-            cp      (hl)
-            jr      c, .gkeep
-            ld      (hl), a
-.gkeep:
             call    draw_lose_screen
             call    sting_nightfall
             ld      a, LOCK
@@ -1804,6 +1802,8 @@ lit_count:
             defb    0
 lives:
             defb    LIVES
+best_lives:
+            defb    0               ; lives kept on the finest win — never reset
 
 draught_col:
             defb    28
@@ -1831,8 +1831,6 @@ lit_queue:
             defb    0, 0, 0, 0, 0, 0, 0, 0
 lit_qcount:
             defb    0
-best_dusk:
-            defb    0               ; watches survived, best run — never reset in play
 tendril_head:
             defb    0
 tendril_len:

@@ -1,12 +1,14 @@
-; Gloaming — route skeleton (module 2), unit 09: Your Longest Night
-; What deserves to survive changed: the best row counts watches now, not lives.
-; Method: subset of gloaming.asm, derived by reverse subtraction.
+; Gloaming — Module 1: the tiny first game (derived cut)
+; Derived 2026-07-02 from the proven prototype (gloaming.asm) by
+; subtraction: no pools, no tendril, no grudge queue, no watches, no
+; dawn, no title tune. What remains is the tiny game the plan promises:
+; a textured square, tamed movement, buildings, eight lamps, and a
+; draught that hunts YOU — one dusk, held or fallen. The full night is
+; Module 2 (The Long Night), built from the file this one was cut from.
 
             org     32768
 
 COBBLE      equ     %00000001
-GLOW        equ     %00000110       ; pool-warmed cobble — ground the light holds
-DARK        equ     %01000001       ; the night made solid — bright-blue mist, impassable
 WALL        equ     %00001111
 LAMP_ATTR   equ     %01000111
 LAMP_UNLIT  equ     %00000101
@@ -14,8 +16,9 @@ LAMP_LIT    equ     %01000110
 WALL_BIT    equ     3
 
 DRAUGHT_ATTR  equ   %01000101
-NUM_DUSKS     equ   5               ; the night is five watches long; hold them all
-                                    ; and the dawn breaks
+DRAUGHT_SPEED equ   16              ; frames between the wisp's steps
+DRAUGHT_COL0  equ   28              ; the corner the dark enters from
+DRAUGHT_ROW0  equ   4
 PLAYER_REPEAT equ   6               ; frames between steps while a key is held
 
 PIP_UNLIT   equ     %00101000
@@ -42,17 +45,13 @@ SPEAKER     equ     %00010000
 
 STATE_TITLE equ     0
 STATE_PLAY  equ     1
-STATE_WIN   equ     2               ; a dusk held — the night deepens
+STATE_WIN   equ     2               ; the night is held — the game is won
 STATE_LOSE  equ     3
-STATE_DAWN  equ     4               ; the fifth dusk held — morning, the true win
-DAWN_COL    equ     10
 LOCK        equ     25              ; input-lock frames after entering a screen
 
 START_COL   equ     15
 START_ROW   equ     11
 GATHER      equ     120             ; frames the dark gathers before its first step
-WREST       equ     48              ; frames it rests at home after a withdrawal —
-                                    ; the snuff window holds even when home is close
 
 KEYS_OP     equ     $DFFE
 KEYS_Q      equ     $FBFE
@@ -69,8 +68,8 @@ start:
             ld      (game_state), a
             call    draw_title_screen   ; no startup lock — nothing to debounce yet
             im      1
-            ei                          ; the tune's rests need the interrupt;
-                                        ; the first toll plays from title_step
+            ei
+            call    chime_dusk          ; after EI — the rests need the interrupt
 
 main_loop:
             halt
@@ -89,9 +88,7 @@ main_loop:
             jr      main_loop
 
 ; ----------------------------------------------------------------------------
-; title_step — after the lock, SPACE starts a fresh game. While SPACE is
-; up, one cell of the title tune plays per pass — the poll sits between
-; cells, so a keypress waits at most one cell of the dusk bells.
+; title_step — after the lock, SPACE starts a fresh game.
 ; ----------------------------------------------------------------------------
 title_step:
             ld      a, (input_lock)
@@ -101,24 +98,17 @@ title_step:
             ld      (input_lock), a
             ret
 .tready:
-            ld      a, (title_key_seen) ; a press the tune's rests latched
-            or      a
-            jr      nz, .tstart
             ld      bc, KEYS_SPACE
             in      a, (c)
             bit     0, a
-            jp      nz, title_tune      ; no key — the bells toll on
-.tstart:
-            xor     a
-            ld      (title_key_seen), a
-            call    init_run
+            ret     nz
+            call    init_game
             ld      a, STATE_PLAY
             ld      (game_state), a
             ret
 
 ; ----------------------------------------------------------------------------
-; end_step — after the lock, SPACE moves on. A held dusk continues the
-; run — the night deepens; only NIGHT FALLS returns to the title.
+; end_step — WIN or LOSE: after the lock, SPACE returns to the title.
 ; ----------------------------------------------------------------------------
 end_step:
             ld      a, (input_lock)
@@ -132,23 +122,11 @@ end_step:
             in      a, (c)
             bit     0, a
             ret     nz
-            ld      a, (game_state)
-            cp      STATE_WIN
-            jr      z, .deeper
             call    draw_title_screen
-            xor     a                   ; the dusk bells start from the toll
-            ld      (title_music_step), a
-            ld      (title_key_seen), a ; and any stale press is forgotten
+            call    chime_dusk
             ld      a, LOCK
             ld      (input_lock), a
             ld      a, STATE_TITLE
-            ld      (game_state), a
-            ret
-.deeper:
-            ld      hl, dusk
-            inc     (hl)
-            call    init_game
-            ld      a, STATE_PLAY
             ld      (game_state), a
             ret
 
@@ -164,10 +142,13 @@ play_step:
             ld      a, (lit_count)
             cp      NUM_LAMPS
             ret     nz
-            ; the eighth lamp: is this the last watch of the night?
-            ld      a, (dusk)
-            cp      NUM_DUSKS - 1
-            jr      z, .thedawn
+            ; the night is held — the lives you kept are the score
+            ld      a, (lives)
+            ld      hl, best_lives
+            cp      (hl)
+            jr      c, .nobest
+            ld      (hl), a
+.nobest:
             call    draw_win_screen
             call    fanfare_held
             ld      a, LOCK
@@ -175,77 +156,26 @@ play_step:
             ld      a, STATE_WIN
             ld      (game_state), a
             ret
-.thedawn:
-            ld      a, NUM_DUSKS        ; the whole night held — the row fills
-            ld      (best_dusk), a
-            call    draw_dawn_screen
-            call    dawn_sweep
-            call    fanfare_held
-            ld      a, LOCK
-            ld      (input_lock), a
-            ld      a, STATE_DAWN
-            ld      (game_state), a
-            ret
-
-; A run is a night: dusk 0, full lives. Each held dusk re-enters
-; init_game with dusk bumped — the square relights, the lives carry.
-init_run:
-            xor     a
-            ld      (dusk), a
-            ld      a, LIVES
-            ld      (lives), a
-            ; fall through into the per-dusk setup
 
 init_game:
             xor     a
             ld      (lit_count), a
+            ld      a, LIVES
+            ld      (lives), a
             ld      a, START_COL
             ld      (lamp_col), a
             ld      a, START_ROW
             ld      (lamp_row), a
-            ; the dark probes from a new quarter each watch
-            ld      a, (dusk)
-            and     3
-            add     a, a
-            ld      e, a
-            ld      d, 0
-            ld      hl, corner_tab
-            add     hl, de
-            ld      a, (hl)
+            ld      a, DRAUGHT_COL0
             ld      (draught_col), a
-            ld      (draught_home_col), a
-            inc     hl
-            ld      a, (hl)
+            ld      a, DRAUGHT_ROW0
             ld      (draught_row), a
-            ld      (draught_home_row), a
-            ; the night deepens: the wisp's pace comes from the dusk
-            ; table, deeper dusks holding the last entry
-            ld      a, (dusk)
-            cp      NUM_DUSKS
-            jr      c, .dpace
-            ld      a, NUM_DUSKS - 1
-.dpace:
-            ld      e, a
-            ld      d, 0
-            ld      hl, dusk_table
-            add     hl, de
-            ld      a, (hl)
-            ld      (dusk_speed), a
-            ; ...but it gathers before the first step — a beat to read
+            ; the dark gathers before its first step — a beat to read
             ; the square before the hunt begins
             ld      a, GATHER
             ld      (draught_timer), a
-            ; the tendril reaches further as the night deepens
-            ld      hl, dusk_lentab
-            add     hl, de
-            ld      a, (hl)
-            ld      (tendril_max), a
             xor     a
             ld      (player_timer), a
-            ld      (tendril_len), a
-            ld      (tendril_head), a
-            ld      (draught_mode), a
-            ld      (lit_qcount), a
 
             call    clear_bitmap
             call    fill_ground
@@ -326,120 +256,30 @@ blip_lit:                           ; a rising third — the lamp catches
             ld      c, $51
             jp      beep
 
-blip_snuff:                         ; the third falls, an octave down — cold again
-            ld      b, $0F          ; E5
-            ld      c, $A4
-            call    beep
-            ld      b, $10          ; C5
-            ld      c, $CF
-            jp      beep
-
-; ----------------------------------------------------------------------------
-; The phrases — beeps in a row, with rests. No tables, no driver: each
-; phrase is straight-line code, and the shape carries the meaning. A rest
-; is B frames of silence (HALT needs interrupts on, so phrases play after
-; EI). Authored as .bpr notation beside this file; regenerate with
-; `build198x beeper` — the tool emits phrases, never these routines.
-; ----------------------------------------------------------------------------
-rest:
-            halt
-            djnz    rest
-            ret
-
-; ----------------------------------------------------------------------------
-; The title tune — dusk bells (title-dusk.bpr), one note per step.
-; title_step plays one step per pass with the SPACE poll between, and
-; title_rest polls every frame of silence, latching a press into
-; title_key_seen — a tap can land inside a note, never inside a rest.
-; The last step leaves D5 hanging; the wrap back to the toll resolves it.
-; ----------------------------------------------------------------------------
-title_tune:
-            ld      a, (title_music_step)
-            ld      b, a                ; the step to play now
-            inc     a
-            and     7                   ; eight steps, then the toll again
-            ld      (title_music_step), a
-            ld      a, b
-            add     a, a
-            ld      hl, .steps
-            ld      e, a
-            ld      d, 0
-            add     hl, de
-            ld      a, (hl)
-            inc     hl
-            ld      h, (hl)
-            ld      l, a
-            jp      (hl)
-.steps:
-            defw    .toll_a, .toll_b, .motif_e, .motif_c
-            defw    .toll_c, .warm_c, .warm_e, .hang_d
-.toll_a:                            ; the toll — cold ground
+chime_dusk:                         ; two cold tolls, then the motif far off
             ld      b, $84          ; A4
             ld      c, $F7
             call    beep
             ld      b, 10
-            jp      title_rest
-.toll_b:
+            call    rest
             ld      b, $84          ; A4
             ld      c, $F7
             call    beep
             ld      b, 13
-            jp      title_rest
-.motif_e:                           ; the dusk motif, a lamp far off
+            call    rest
             ld      b, $92          ; E5
             ld      c, $A4
             call    beep
             ld      b, 4
-            jp      title_rest
-.motif_c:
+            call    rest
             ld      b, $9D          ; C5
             ld      c, $CF
-            call    beep
-            ld      b, 13
-            jp      title_rest
-.toll_c:                            ; the toll returns
-            ld      b, $84          ; A4
-            ld      c, $F7
-            call    beep
-            ld      b, 10
-            jp      title_rest
-.warm_c:                            ; a small warmth kindles
-            ld      b, $5E          ; C5
-            ld      c, $CF
-            call    beep
-            ld      b, 3
-            jp      title_rest
-.warm_e:
-            ld      b, $77          ; E5
-            ld      c, $A4
-            call    beep
-            ld      b, 4
-            jp      title_rest
-.hang_d:                            ; left hanging — leans back into the dark
-            ld      b, $EC          ; D5
-            ld      c, $B8
-            call    beep
-            ld      b, 16
-            jp      title_rest
+            jp      beep
 
-; title_rest — the tune's silence, listening. Same shape as rest, but
-; each frame polls SPACE; a press latches title_key_seen and cuts the
-; rest short so title_step can act on it next pass.
-title_rest:
+rest:
             halt
-            push    bc
-            ld      bc, KEYS_SPACE
-            in      a, (c)
-            pop     bc
-            bit     0, a
-            jr      z, .heard
-            djnz    title_rest
+            djnz    rest
             ret
-.heard:
-            ld      a, 1
-            ld      (title_key_seen), a
-            ret
-
 fanfare_held:                       ; THE NIGHT IS HELD — a rising run
             ld      b, $83          ; C5
             ld      c, $CF
@@ -496,12 +336,12 @@ draw_title_screen:
             ld      b, PROMPT_ROW
             ld      c, PROMPT_COL
             call    print_string
-            ; your longest night — one pip per watch survived, best run,
-            ; read in lamps as ever (no digits). It survives the loop
-            ; back to the title: the go-again hook.
-            ld      hl, $5800 + 11 * 32 + 13
-            ld      b, NUM_DUSKS
-            ld      a, (best_dusk)
+            ; your best night — the lives you kept on your finest win,
+            ; read in lamps (no digits). It survives the loop back to
+            ; the title: the go-again hook.
+            ld      hl, $5800 + 11 * 32 + 14
+            ld      b, LIVES
+            ld      a, (best_lives)
             ld      c, a
 .tpip:
             ld      a, PIP_UNLIT
@@ -521,18 +361,6 @@ draw_win_screen:
             ld      hl, win_text
             ld      b, MSG_ROW
             ld      c, WIN_COL
-            call    print_string
-            ld      hl, prompt_text
-            ld      b, CONT_ROW
-            ld      c, PROMPT_COL
-            call    print_string
-            ret
-
-draw_dawn_screen:
-            call    restore_under
-            ld      hl, dawn_text
-            ld      b, MSG_ROW
-            ld      c, DAWN_COL
             call    print_string
             ld      hl, prompt_text
             ld      b, CONT_ROW
@@ -645,10 +473,6 @@ player_step:
             ld      c, a
             call    wall_at
             ret     nz
-            ; the solid night blocks too — you cannot walk into the dark
-            ld      a, (hl)
-            cp      DARK
-            ret     z
 
             ld      a, (tcol)
             ld      hl, draught_col
@@ -673,30 +497,13 @@ player_step:
             jr      nz, .pdrawn
             ld      a, LAMP_LIT
             ld      (under_lamp + 8), a
-            ; record the lighting order — the night bears its grudges
-            ; oldest-first (lamp_col/lamp_row are the lamplighter's
-            ; position, and he is standing on the lamp)
-            ld      a, (lamp_col)
-            ld      c, a
-            ld      a, (lamp_row)
-            ld      b, a
-            call    lamp_index_at
-            call    lit_push
             call    light_pip
             call    blip_lit
             call    warm_walls
-            call    recompute_pools
 .pdrawn:
             call    draw_lamp
             ret
 
-; ----------------------------------------------------------------------------
-; recompute_pools — the lamps cast their light. Every glow cell dies back
-; to bare cobble, then every LIT lamp warms its eight neighbours. Called
-; after any light or snuff. Both movers are restored to the screen first
-; so cell truth is readable, and re-saved after — their under-buffers
-; stay honest through the recolour.
-; ----------------------------------------------------------------------------
 ; ----------------------------------------------------------------------------
 ; fill_ground — the cobble stipple (brief §6). Not decoration: the
 ; stipple is what makes ground-state changes visible. Glow recolours
@@ -770,17 +577,6 @@ cobble_tex:
             defb    %00010000
             defb    %00000000
 
-mist_tex:
-            ; the solid night — dense, swirling, unmistakably *there*
-            defb    %01101100
-            defb    %11011011
-            defb    %00110110
-            defb    %01101101
-            defb    %11011010
-            defb    %10110110
-            defb    %01101011
-            defb    %11010110
-
 brick_tex:
             ; mortar courses with staggered verticals — dusk-lit stone
             defb    %00001000
@@ -791,274 +587,18 @@ brick_tex:
             defb    %10000000
             defb    %10000000
             defb    %11111111
-
-recompute_pools:
-            call    restore_under
-            call    restore_draught
-            ld      hl, $5820           ; rows 1-23 (row 0 is the HUD)
-            ld      bc, 736
-.rp1:
-            ld      a, (hl)
-            cp      GLOW
-            jr      nz, .rp1n
-            ld      (hl), COBBLE
-.rp1n:
-            inc     hl
-            dec     bc
-            ld      a, b
-            or      c
-            jr      nz, .rp1
-            ld      hl, lamp_data
-.rp2:
-            ld      a, (hl)
-            cp      $FF
-            jr      z, .rpdone
-            ld      c, a
-            inc     hl
-            ld      b, (hl)
-            inc     hl
-            push    hl
-            push    bc
-            call    attr_addr_cr
-            ld      a, (hl)
-            pop     bc
-            cp      LAMP_LIT
-            jr      nz, .rp2n
-            call    glow_ring
-.rp2n:
-            pop     hl
-            jr      .rp2
-.rpdone:
-            call    save_under
-            call    save_draught
-            call    draw_lamp
-            call    draw_draught
-            ret
-
-; glow_ring — warm the eight cells around lamp (C = col, B = row) where
-; they are bare cobble. Pools never take walls, posts, or the dark.
-glow_ring:
-            ld      hl, ring_offsets
-            ld      e, 8
-.gr:
-            push    hl
-            push    de
-            push    bc
-            ld      a, (hl)
-            add     a, c
-            ld      c, a
-            inc     hl
-            ld      a, (hl)
-            add     a, b
-            ld      b, a
-            call    attr_addr_cr
-            ld      a, (hl)
-            cp      COBBLE
-            jr      nz, .grn
-            ld      (hl), GLOW
-.grn:
-            pop     bc
-            pop     de
-            pop     hl
-            inc     hl
-            inc     hl
-            dec     e
-            jr      nz, .gr
-            ret
-
-ring_offsets:
-            defb    -1, -1,  0, -1,  1, -1
-            defb    -1,  0,          1,  0
-            defb    -1,  1,  0,  1,  1,  1
-
-; ----------------------------------------------------------------------------
-; dawn_sweep — morning enters from the sky: row by row the ground
-; warms to gold and the night's mist burns off (dark cells get their
-; stipple back). Walls, lamps, text, and the two figures are left to
-; the palettes they already wear. Blocking, like the fanfare — the
-; ending is allowed a second of ceremony.
-; ----------------------------------------------------------------------------
-dawn_sweep:
-            ld      b, 1
-.dsr:
-            halt
-            halt
-            ld      c, 0
-.dsc:
-            push    bc
-            call    attr_addr_cr
-            ld      a, (hl)
-            cp      DARK
-            jr      nz, .dsn1
-            pop     bc
-            push    bc
-            push    hl
-            ld      de, cobble_tex
-            call    blit_tex
-            pop     hl
-            jr      .dsset
-.dsn1:
-            cp      COBBLE
-            jr      z, .dsset
-            cp      GLOW
-            jr      nz, .dsnext
-.dsset:
-            ld      (hl), GLOW
-.dsnext:
-            pop     bc
-            inc     c
-            ld      a, c
-            cp      32
-            jr      c, .dsc
-            inc     b
-            ld      a, b
-            cp      24
-            jr      c, .dsr
-            ret
-
-; ----------------------------------------------------------------------------
-; lamp_index_at — which lamp_data entry sits at (C = col, B = row)?
-; Returns the index in A ($FF if none — callers only ask about cells
-; they know hold a lamp).
-; ----------------------------------------------------------------------------
-lamp_index_at:
-            ld      hl, lamp_data
-            ld      e, 0
-.lia:
-            ld      a, (hl)
-            cp      $FF
-            ret     z
-            cp      c
-            jr      nz, .lian
-            inc     hl
-            ld      a, (hl)
-            dec     hl
-            cp      b
-            jr      nz, .lian
-            ld      a, e
-            ret
-.lian:
-            inc     hl
-            inc     hl
-            inc     e
-            jr      .lia
-
-; lit_push — append lamp index (A) to the lit-order queue.
-lit_push:
-            ld      e, a
-            ld      a, (lit_qcount)
-            ld      d, a
-            inc     a
-            ld      (lit_qcount), a
-            ld      a, d
-            ld      hl, lit_queue
-            add     a, l
-            ld      l, a
-            jr      nc, .lp
-            inc     h
-.lp:
-            ld      (hl), e
-            ret
-
-; lit_remove — take lamp index (A) out of the lit-order queue,
-; closing the gap.
-lit_remove:
-            ld      e, a
-            ld      hl, lit_queue
-            ld      a, (lit_qcount)
-            ld      d, a
-            or      a
-            ret     z
-.lr:
-            ld      a, (hl)
-            cp      e
-            jr      z, .lrfound
-            inc     hl
-            dec     d
-            jr      nz, .lr
-            ret
-.lrfound:
-            dec     d
-            jr      z, .lrlast
-.lrshift:
-            inc     hl
-            ld      a, (hl)
-            dec     hl
-            ld      (hl), a
-            inc     hl
-            dec     d
-            jr      nz, .lrshift
-.lrlast:
-            ld      a, (lit_qcount)
-            dec     a
-            ld      (lit_qcount), a
-            ret
-
-; ----------------------------------------------------------------------------
-; draught_step — the wisp is the dark, and the dark seeks the light.
-; Every DRAUGHT_SPEED frames it steps one cell toward the nearest light
-; source: a lit lamp, or the lamplighter's own flame. Walls don't stop
-; the night — it drifts straight through the stone. One rule, read as
-; intent: the lesson of Namco's ghost AI in Pac-Man.
-; ----------------------------------------------------------------------------
 draught_step:
             ld      a, (draught_timer)
             dec     a
             ld      (draught_timer), a
             ret     nz
-            ld      a, (dusk_speed)
+            ld      a, DRAUGHT_SPEED
             ld      (draught_timer), a
 
-            ; withdrawing? after a snuff the night carries its prize
-            ; home before hunting again — every snuff buys the
-            ; lamplighter a window, and the hunt re-enters from a
-            ; quarter he can plan against
-            ld      a, (draught_mode)
-            or      a
-            jr      z, .hunt
-            ld      a, (draught_home_col)
-            ld      hl, draught_col
-            cp      (hl)
-            jr      nz, .whome
-            ld      a, (draught_home_row)
-            ld      hl, draught_row
-            cp      (hl)
-            jr      nz, .whome
-            xor     a                   ; home — rest, then the hunt resumes
-            ld      (draught_mode), a
-            ld      a, WREST
-            ld      (draught_timer), a
-            ret
-.whome:
-            ld      a, (draught_home_col)
-            ld      (seek_col), a
-            ld      a, (draught_home_row)
-            ld      (seek_row), a
-            jp      .chase
-.hunt:
-            ; the oldest flame is the night's grievance — it reclaims
-            ; the ground it lost first. With nothing lit, it hunts the
-            ; lamplighter's own flame: light your first lamp and the
-            ; hunt turns away from you.
-            ld      a, (lit_qcount)
-            or      a
-            jr      nz, .oldest
+            ; the dark hunts the lamplighter's own flame
             ld      a, (lamp_col)
             ld      (seek_col), a
             ld      a, (lamp_row)
-            ld      (seek_row), a
-            jr      .chase
-.oldest:
-            ld      a, (lit_queue)
-            add     a, a
-            ld      e, a
-            ld      d, 0
-            ld      hl, lamp_data
-            add     hl, de
-            ld      a, (hl)
-            ld      (seek_col), a
-            inc     hl
-            ld      a, (hl)
             ld      (seek_row), a
 
 .chase:
@@ -1133,156 +673,13 @@ draught_step:
 
 .dmove:
             call    restore_draught
-            ; the tendril: night pools where the wisp has walked. Ground
-            ; and spilt light are both taken (the pool heals on release);
-            ; posts and stone are not. Re-walking its own trail refreshes
-            ; the night's claim, so the tendril never gaps mid-vein.
-            ld      a, (draught_col)
-            ld      c, a
-            ld      a, (draught_row)
-            ld      b, a
-            push    bc
-            call    attr_addr_cr
-            pop     bc
-            ld      a, (hl)
-            cp      DARK
-            jr      z, .retake
-            cp      COBBLE
-            jr      z, .take
-            cp      GLOW
-            jr      nz, .notake
-.take:
-            ld      (hl), DARK
-            ld      de, mist_tex
-            call    blit_tex
-.retake:
-            call    tendril_push
-.notake:
             ld      a, (dtcol)
             ld      (draught_col), a
             ld      a, (dtrow)
             ld      (draught_row), a
             call    save_draught
-            ld      a, (under_draught + 8)
-            cp      LAMP_LIT
-            jr      nz, .nosnuff
-            ld      a, LAMP_UNLIT
-            ld      (under_draught + 8), a
-            ; the grievance is settled — off the lit-order queue
-            ld      a, (draught_col)
-            ld      c, a
-            ld      a, (draught_row)
-            ld      b, a
-            call    lamp_index_at
-            call    lit_remove
-            call    unlight_pip
-            call    blip_snuff
-            call    warm_walls
-            call    recompute_pools
-            ld      a, 1                ; the prize is taken — withdraw
-            ld      (draught_mode), a
-.nosnuff:
             call    draw_draught
             ret
-
-; ----------------------------------------------------------------------------
-; tendril_push — record darkened cell (C = col, B = row) in the tendril
-; ring. When the ring is full the oldest cell releases back to bare
-; cobble first — the night cannot hold ground beyond its reach, so the
-; tendril can never permanently wall the square off.
-; ----------------------------------------------------------------------------
-tendril_push:
-            ld      a, (tendril_len)
-            ld      hl, tendril_max
-            cp      (hl)
-            jr      c, .tgrow
-            ; full: release the oldest cell (the slot head points at)
-            push    bc
-            ld      a, (tendril_head)
-            add     a, a
-            ld      e, a
-            ld      d, 0
-            ld      hl, tendril_buf
-            add     hl, de
-            ld      c, (hl)
-            inc     hl
-            ld      b, (hl)
-            ; a newer ring entry may still claim this cell (the wisp
-            ; re-walks its own trail) — then the night keeps it
-            call    tendril_claimed
-            jr      z, .treld
-            ; if the wisp itself is crossing that cell, mend its saved
-            ; ground instead of the screen
-            ld      a, (draught_col)
-            cp      c
-            jr      nz, .trel
-            ld      a, (draught_row)
-            cp      b
-            jr      nz, .trel
-            ; mend the wisp's saved ground: stipple, and glow if a lit
-            ; lamp still pools this cell — the light heals behind the dark
-            push    bc
-            ld      hl, cobble_tex
-            ld      de, under_draught
-            ld      bc, 8
-            ldir
-            pop     bc
-            call    pooled_at
-            ld      a, COBBLE
-            jr      nz, .tsetu
-            ld      a, GLOW
-.tsetu:
-            ld      (under_draught + 8), a
-            jr      .treld
-.trel:
-            push    bc
-            call    attr_addr_cr
-            pop     bc
-            ld      a, (hl)
-            cp      DARK
-            jr      nz, .treld
-            push    hl
-            call    pooled_at
-            pop     hl
-            ld      a, COBBLE
-            jr      nz, .tset
-            ld      a, GLOW
-.tset:
-            ld      (hl), a
-            ld      de, cobble_tex
-            call    blit_tex
-.treld:
-            pop     bc
-            jr      .tstore
-.tgrow:
-            inc     a
-            ld      (tendril_len), a
-.tstore:
-            ld      a, (tendril_head)
-            add     a, a
-            ld      e, a
-            ld      d, 0
-            ld      hl, tendril_buf
-            add     hl, de
-            ld      (hl), c
-            inc     hl
-            ld      (hl), b
-            ld      a, (tendril_head)
-            inc     a
-            ld      hl, tendril_max
-            cp      (hl)
-            jr      c, .tadv
-            xor     a
-.tadv:
-            ld      (tendril_head), a
-            ret
-
-; ----------------------------------------------------------------------------
-; paint_buildings — interior buildings for routing (brief §6 layout).
-; Rectangles from bldg_data (col, row, width, height); the wall
-; attribute makes them solid to the player, and fill_walls bricks them.
-; The wisp ghosts through — you walk around what the night ignores.
-; ----------------------------------------------------------------------------
 paint_buildings:
             ld      hl, bldg_data
 .pb:
@@ -1324,90 +721,6 @@ bldg_data:
             defb    23, 5, 4, 3
             defb    $FF
 
-corner_tab:
-            ; where the dark enters, per watch (NE, SE, SW, NW)
-            defb    28, 4
-            defb    28, 19
-            defb    3, 19
-            defb    3, 4
-
-; ----------------------------------------------------------------------------
-; tendril_claimed — does any ring slot other than head hold (C, B)?
-; Z set if claimed. Only called with the ring full, so every slot holds
-; a real cell.
-; ----------------------------------------------------------------------------
-tendril_claimed:
-            ld      hl, tendril_buf
-            ld      e, 0
-.tc:
-            ld      a, (tendril_head)
-            cp      e
-            jr      z, .tcn             ; the slot being released — skip
-            ld      a, (hl)
-            cp      c
-            jr      nz, .tcn
-            inc     hl
-            ld      a, (hl)
-            dec     hl
-            cp      b
-            jr      nz, .tcn
-            xor     a                   ; Z — a newer claim holds it
-            ret
-.tcn:
-            inc     hl
-            inc     hl
-            inc     e
-            ld      a, (tendril_max)
-            cp      e
-            jr      nz, .tc
-            or      a                   ; NZ (max is never 0) — free
-            ret
-
-; ----------------------------------------------------------------------------
-; pooled_at — is cell (C, B) within one cell of a LIT lamp? Z if so.
-; The light heals: released tendril ground inside a live pool returns
-; to glow, not bare cobble.
-; ----------------------------------------------------------------------------
-pooled_at:
-            ld      hl, lamp_data
-.pa:
-            ld      a, (hl)
-            cp      $FF
-            jr      z, .pano
-            ld      e, a                ; lamp col
-            inc     hl
-            ld      d, (hl)             ; lamp row
-            inc     hl
-            ld      a, e
-            sub     c
-            jp      p, .pac
-            neg
-.pac:
-            cp      2
-            jr      nc, .pa
-            ld      a, d
-            sub     b
-            jp      p, .par
-            neg
-.par:
-            cp      2
-            jr      nc, .pa
-            push    hl
-            push    bc
-            ld      c, e
-            ld      b, d
-            call    attr_addr_cr
-            ld      a, (hl)
-            pop     bc
-            pop     hl
-            cp      LAMP_LIT
-            jr      nz, .pa
-            xor     a                   ; Z — pooled by a lit lamp
-            ret
-.pano:
-            or      1                   ; NZ — bare ground
-            ret
-
 lose_life:
             ld      a, (lives)
             dec     a
@@ -1432,25 +745,16 @@ lose_life:
             ; (leaving it beside the respawn made a catch strip every
             ; life in seconds once the draught learnt to hunt)
             call    restore_draught
-            ld      a, (draught_home_col)
+            ld      a, DRAUGHT_COL0
             ld      (draught_col), a
-            ld      a, (draught_home_row)
+            ld      a, DRAUGHT_ROW0
             ld      (draught_row), a
-            ld      a, (dusk_speed)
+            ld      a, DRAUGHT_SPEED
             ld      (draught_timer), a
-            xor     a                   ; already home — hunt on arrival
-            ld      (draught_mode), a
             call    save_draught
             call    draw_draught
             ret
 .gone:
-            ; a watch survived is a watch earned, even on a lost night
-            ld      a, (dusk)
-            ld      hl, best_dusk
-            cp      (hl)
-            jr      c, .gkeep
-            ld      (hl), a
-.gkeep:
             call    draw_lose_screen
             call    sting_nightfall
             ld      a, LOCK
@@ -1500,7 +804,7 @@ print_char:
             ret
 
 ; ----------------------------------------------------------------------------
-; light_pip / unlight_pip / draw_pips / draw_lives.
+; light_pip / draw_pips / draw_lives.
 ; ----------------------------------------------------------------------------
 light_pip:
             ld      a, (lit_count)
@@ -1511,17 +815,6 @@ light_pip:
             ld      hl, PIP_BASE
             add     hl, de
             ld      (hl), PIP_LIT
-            ret
-
-unlight_pip:
-            ld      a, (lit_count)
-            dec     a
-            ld      (lit_count), a
-            ld      e, a
-            ld      d, 0
-            ld      hl, PIP_BASE
-            add     hl, de
-            ld      (hl), PIP_UNLIT
             ret
 
 draw_pips:
@@ -1742,29 +1035,6 @@ game_state:
             defb    STATE_TITLE
 input_lock:
             defb    0
-title_music_step:
-            defb    0               ; which step of the title tune plays next
-title_key_seen:
-            defb    0               ; SPACE latched by title_rest mid-tune
-
-dusk_table:
-            ; the wisp's pace per dusk (frames between steps) — the
-            ; night deepens as data, not code. Dusk 1 is gentle on
-            ; purpose: the hunt must be readable before it's a threat.
-            ; The final watch is pace 9, not 8 — playtested: 8 is the
-            ; human wall ("damn near impossible"), 9 is beatable. The
-            ; last watch should be the climax, not the ceiling.
-            defb    16, 13, 11, 9, 9
-
-dusk_lentab:
-            ; the tendril's reach per watch (cells of night held) — the
-            ; second axis of the deepening. Front-loading reach made
-            ; watch 1 brutal once the buildings turned lanes into doors
-            ; (playtested: a practised player lost at watch 2) — the
-            ; opening teaches the mechanic, the deep watches punish
-            ; with it.
-            defb    3, 6, 9, 13, 18
-
 wall_ramp:
             ; The square warms in the brief's vocabulary (§6): the stone
             ; stays dusk-blue; the lamplight catches the mortar first
@@ -1804,44 +1074,21 @@ lit_count:
             defb    0
 lives:
             defb    LIVES
+best_lives:
+            defb    0               ; lives kept on the finest win — never reset
 
 draught_col:
             defb    28
 draught_row:
             defb    4
-draught_home_col:
-            defb    28
-draught_home_row:
-            defb    4
-draught_mode:
-            defb    0               ; 0 = hunting, 1 = withdrawing home
 draught_timer:
             defb    16
 player_timer:
             defb    0
-dusk:
-            defb    0
-dusk_speed:
-            defb    16
 seek_col:
             defb    0
 seek_row:
             defb    0
-lit_queue:
-            defb    0, 0, 0, 0, 0, 0, 0, 0
-lit_qcount:
-            defb    0
-best_dusk:
-            defb    0               ; watches survived, best run — never reset in play
-tendril_head:
-            defb    0
-tendril_len:
-            defb    0
-tendril_max:
-            defb    6
-tendril_buf:
-            defb    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-            defb    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 dtcol:
             defb    0
 dtrow:
@@ -1893,9 +1140,6 @@ win_text:
             defb    $FF
 lose_text:
             defb    "NIGHT FALLS"
-            defb    $FF
-dawn_text:
-            defb    "DAWN BREAKS"
             defb    $FF
 
             end     start
