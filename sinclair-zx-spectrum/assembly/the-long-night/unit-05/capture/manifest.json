@@ -1,0 +1,237 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/the-long-night/unit-05",
+ "captures": [
+  {
+   "id": "step-01-grudge",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "record_video": "step-01-grudge.mp4"
+    },
+    {
+     "wait": 360
+    },
+    {
+     "screenshot": "step-01-grudge.png"
+    },
+    {
+     "wait": 180
+    },
+    {
+     "screenshot": "step-01-snuffed.png"
+    },
+    {
+     "stop_video": true
+    }
+   ]
+  }
+ ]
+}

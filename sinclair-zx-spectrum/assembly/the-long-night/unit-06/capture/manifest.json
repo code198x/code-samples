@@ -1,0 +1,733 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/the-long-night/unit-06",
+ "captures": [
+  {
+   "id": "step-01-deeper",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "poke": 34976,
+     "value": 7
+    },
+    {
+     "poke": 34984,
+     "value": 255
+    },
+    {
+     "poke": 34977,
+     "value": 2
+    },
+    {
+     "poke": 22558,
+     "value": 1
+    },
+    {
+     "poke": 22540,
+     "value": 112
+    },
+    {
+     "poke": 22541,
+     "value": 112
+    },
+    {
+     "poke": 22542,
+     "value": 112
+    },
+    {
+     "poke": 22543,
+     "value": 112
+    },
+    {
+     "poke": 22544,
+     "value": 112
+    },
+    {
+     "poke": 22545,
+     "value": 112
+    },
+    {
+     "poke": 22546,
+     "value": 112
+    },
+    {
+     "poke": 22628,
+     "value": 70
+    },
+    {
+     "poke": 22651,
+     "value": 70
+    },
+    {
+     "poke": 22761,
+     "value": 70
+    },
+    {
+     "poke": 22774,
+     "value": 70
+    },
+    {
+     "poke": 23014,
+     "value": 70
+    },
+    {
+     "poke": 23033,
+     "value": 70
+    },
+    {
+     "poke": 23186,
+     "value": 70
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "wait": 250
+    },
+    {
+     "screenshot": "step-01-held.png"
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 80
+    },
+    {
+     "screenshot": "step-01-lie.png"
+    }
+   ]
+  },
+  {
+   "id": "step-02-corner",
+   "program": "steps/step-02.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "poke": 35036,
+     "value": 7
+    },
+    {
+     "poke": 35044,
+     "value": 255
+    },
+    {
+     "poke": 22540,
+     "value": 112
+    },
+    {
+     "poke": 22541,
+     "value": 112
+    },
+    {
+     "poke": 22542,
+     "value": 112
+    },
+    {
+     "poke": 22543,
+     "value": 112
+    },
+    {
+     "poke": 22544,
+     "value": 112
+    },
+    {
+     "poke": 22545,
+     "value": 112
+    },
+    {
+     "poke": 22546,
+     "value": 112
+    },
+    {
+     "poke": 22628,
+     "value": 70
+    },
+    {
+     "poke": 22651,
+     "value": 70
+    },
+    {
+     "poke": 22761,
+     "value": 70
+    },
+    {
+     "poke": 22774,
+     "value": 70
+    },
+    {
+     "poke": 23014,
+     "value": 70
+    },
+    {
+     "poke": 23033,
+     "value": 70
+    },
+    {
+     "poke": 23186,
+     "value": 70
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "wait": 250
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 80
+    },
+    {
+     "screenshot": "step-02-corner.png"
+    }
+   ]
+  },
+  {
+   "id": "step-03-carried",
+   "program": "steps/step-03.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "poke": 35038,
+     "value": 7
+    },
+    {
+     "poke": 35046,
+     "value": 255
+    },
+    {
+     "poke": 35039,
+     "value": 2
+    },
+    {
+     "poke": 22558,
+     "value": 1
+    },
+    {
+     "poke": 22540,
+     "value": 112
+    },
+    {
+     "poke": 22541,
+     "value": 112
+    },
+    {
+     "poke": 22542,
+     "value": 112
+    },
+    {
+     "poke": 22543,
+     "value": 112
+    },
+    {
+     "poke": 22544,
+     "value": 112
+    },
+    {
+     "poke": 22545,
+     "value": 112
+    },
+    {
+     "poke": 22546,
+     "value": 112
+    },
+    {
+     "poke": 22628,
+     "value": 70
+    },
+    {
+     "poke": 22651,
+     "value": 70
+    },
+    {
+     "poke": 22761,
+     "value": 70
+    },
+    {
+     "poke": 22774,
+     "value": 70
+    },
+    {
+     "poke": 23014,
+     "value": 70
+    },
+    {
+     "poke": 23033,
+     "value": 70
+    },
+    {
+     "poke": 23186,
+     "value": 70
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "wait": 250
+    },
+    {
+     "screenshot": "step-03-held.png"
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 80
+    },
+    {
+     "screenshot": "step-03-carried.png"
+    }
+   ]
+  }
+ ]
+}

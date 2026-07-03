@@ -1,0 +1,92 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/code-samples/sinclair-zx-spectrum/assembly/the-long-night/unit-09/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35300,
+  "value": 2
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35292,
+  "value": 1
+ },
+ {
+  "action": "run_frames",
+  "frames": 520
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/website/public/images/sinclair-zx-spectrum/assembly/the-long-night/unit-09/step-01-nightfalls.png"
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 40
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/website/public/images/sinclair-zx-spectrum/assembly/the-long-night/unit-09/step-01-longest.png"
+ }
+]

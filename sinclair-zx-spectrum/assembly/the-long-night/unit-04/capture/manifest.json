@@ -1,0 +1,378 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/the-long-night/unit-04",
+ "captures": [
+  {
+   "id": "step-01-vein",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "wait": 150
+    },
+    {
+     "record_video": "step-01-vein.mp4"
+    },
+    {
+     "wait": 105
+    },
+    {
+     "screenshot": "step-01-vein.png"
+    },
+    {
+     "wait": 60
+    },
+    {
+     "screenshot": "step-01-released.png"
+    },
+    {
+     "wait": 320
+    },
+    {
+     "stop_video": true
+    },
+    {
+     "screenshot": "step-01-crossed.png"
+    }
+   ]
+  },
+  {
+   "id": "step-02-mended",
+   "program": "steps/step-02.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "wait": 640
+    },
+    {
+     "screenshot": "step-02-mended.png"
+    }
+   ]
+  },
+  {
+   "id": "step-03-takes-glow",
+   "program": "steps/step-03.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "wait": 115
+    },
+    {
+     "screenshot": "step-03-takes-glow.png"
+    },
+    {
+     "wait": 100
+    },
+    {
+     "screenshot": "step-03-after.png"
+    }
+   ]
+  }
+ ]
+}

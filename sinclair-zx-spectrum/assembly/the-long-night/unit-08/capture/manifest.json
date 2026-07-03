@@ -1,0 +1,327 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/the-long-night/unit-08",
+ "captures": [
+  {
+   "id": "step-01-bells",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 30
+    },
+    {
+     "record_audio": "step-01-bells.wav"
+    },
+    {
+     "wait": 500
+    },
+    {
+     "stop_audio": true
+    },
+    {
+     "screenshot": "step-01-title.png"
+    }
+   ]
+  },
+  {
+   "id": "step-03-snuff",
+   "program": "steps/step-03.asm",
+   "timeline": [
+    {
+     "wait": 60
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "wait": 60
+    },
+    {
+     "record_audio": "step-03-snuff.wav"
+    },
+    {
+     "wait": 220
+    },
+    {
+     "stop_audio": true
+    },
+    {
+     "screenshot": "step-03-snuffed.png"
+    }
+   ]
+  }
+ ]
+}

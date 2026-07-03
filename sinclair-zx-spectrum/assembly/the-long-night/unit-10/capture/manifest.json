@@ -1,0 +1,254 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/the-long-night/unit-10",
+ "captures": [
+  {
+   "id": "step-01-dawnphrase",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 60
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "poke": 35332,
+     "value": 7
+    },
+    {
+     "poke": 35339,
+     "value": 255
+    },
+    {
+     "poke": 35341,
+     "value": 4
+    },
+    {
+     "poke": 22540,
+     "value": 112
+    },
+    {
+     "poke": 22541,
+     "value": 112
+    },
+    {
+     "poke": 22542,
+     "value": 112
+    },
+    {
+     "poke": 22543,
+     "value": 112
+    },
+    {
+     "poke": 22544,
+     "value": 112
+    },
+    {
+     "poke": 22545,
+     "value": 112
+    },
+    {
+     "poke": 22546,
+     "value": 112
+    },
+    {
+     "poke": 22628,
+     "value": 70
+    },
+    {
+     "poke": 22651,
+     "value": 70
+    },
+    {
+     "poke": 22761,
+     "value": 70
+    },
+    {
+     "poke": 22774,
+     "value": 70
+    },
+    {
+     "poke": 23014,
+     "value": 70
+    },
+    {
+     "poke": 23033,
+     "value": 70
+    },
+    {
+     "poke": 23186,
+     "value": 70
+    },
+    {
+     "record_audio": "step-01-dawnphrase.wav"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "wait": 420
+    },
+    {
+     "stop_audio": true
+    },
+    {
+     "screenshot": "step-01-dawn.png"
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 40
+    },
+    {
+     "screenshot": "step-01-morning.png"
+    }
+   ]
+  }
+ ]
+}

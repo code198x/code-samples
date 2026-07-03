@@ -1,0 +1,612 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/the-long-night/unit-01",
+ "captures": [
+  {
+   "id": "step-01-guards",
+   "program": "steps/step-01.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "record_video": "step-01-turned.mp4"
+    },
+    {
+     "wait": 60
+    },
+    {
+     "screenshot": "step-01-turned.png"
+    },
+    {
+     "wait": 170
+    },
+    {
+     "screenshot": "step-01-guards.png"
+    },
+    {
+     "stop_video": true
+    }
+   ]
+  },
+  {
+   "id": "step-02-undone",
+   "program": "steps/step-02.asm",
+   "timeline": [
+    {
+     "wait": 160
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "record_video": "step-02-undone.mp4"
+    },
+    {
+     "wait": 170
+    },
+    {
+     "screenshot": "step-02-snuffed.png"
+    },
+    {
+     "wait": 110
+    },
+    {
+     "screenshot": "step-02-hunts.png"
+    },
+    {
+     "stop_video": true
+    }
+   ]
+  }
+ ]
+}

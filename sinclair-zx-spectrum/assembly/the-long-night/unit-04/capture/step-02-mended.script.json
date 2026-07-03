@@ -1,0 +1,48 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/code-samples/sinclair-zx-spectrum/assembly/the-long-night/unit-04/steps/step-02.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 160
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 10
+ },
+ {
+  "action": "run_frames",
+  "frames": 640
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/website/public/images/sinclair-zx-spectrum/assembly/the-long-night/unit-04/step-02-mended.png"
+ }
+]

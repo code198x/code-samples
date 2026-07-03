@@ -1,0 +1,25 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/code-samples/sinclair-zx-spectrum/assembly/the-long-night/unit-08/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "start_audio_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/website/public/images/sinclair-zx-spectrum/assembly/the-long-night/unit-08/step-01-bells.wav"
+ },
+ {
+  "action": "run_frames",
+  "frames": 500
+ },
+ {
+  "action": "stop_audio_recording"
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/.worktrees/gloaming-m2/website/public/images/sinclair-zx-spectrum/assembly/the-long-night/unit-08/step-01-title.png"
+ }
+]
