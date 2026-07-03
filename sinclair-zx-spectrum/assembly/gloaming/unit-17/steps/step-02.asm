@@ -618,6 +618,19 @@ lose_life:
             ld      (lamp_row), a
             call    save_under
             call    draw_lamp
+            ; the taking costs the night its reach — the wisp recoils to
+            ; the far corner, so every life buys a whole fresh chase
+            ; (leaving it beside the respawn made a catch strip every
+            ; life in seconds once the draught learnt to hunt)
+            call    restore_draught
+            ld      a, DRAUGHT_COL0
+            ld      (draught_col), a
+            ld      a, DRAUGHT_ROW0
+            ld      (draught_row), a
+            ld      a, DRAUGHT_SPEED
+            ld      (draught_timer), a
+            call    save_draught
+            call    draw_draught
             ret
 .gone:
             call    draw_lose_screen

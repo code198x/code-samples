@@ -2,24 +2,30 @@
   "machine": "sinclair-zx-spectrum",
   "image_dir": "sinclair-zx-spectrum/assembly/gloaming/unit-17",
   "captures": [
-    { "id": "step-01-lit",
+    { "id": "step-01-stripmine",
       "program": "steps/step-01.asm",
       "timeline": [
-        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 30},
-        {"hold": "A"}, {"wait": 9}, {"release": "A"}, {"wait": 2},
-        {"hold": "P"}, {"wait": 3}, {"release": "P"}, {"wait": 2},
-        {"hold": "O"}, {"wait": 5}, {"release": "O"}, {"wait": 6},
-        {"screenshot": "step-01-lit.png"}
+        {"wait": 60},
+        {"record_video": "step-01-stripmine.mp4"},
+        {"wait": 388},
+        {"screenshot": "step-01-stripped.png"},
+        {"wait": 42},
+        {"screenshot": "step-01-fallen.png"},
+        {"wait": 15},
+        {"stop_video": true}
       ] },
-    { "id": "step-01-blips",
-      "program": "steps/step-01.asm",
+    { "id": "step-02-nightfalls",
+      "program": "steps/step-02.asm",
       "timeline": [
-        {"hold": "Space"}, {"wait": 4}, {"release": "Space"}, {"wait": 30},
-        {"record_audio": "lamp-blips.wav"},
-        {"hold": "A"}, {"wait": 9}, {"release": "A"}, {"wait": 6},
-        {"hold": "P"}, {"wait": 3}, {"release": "P"}, {"wait": 12},
-        {"hold": "O"}, {"wait": 5}, {"release": "O"}, {"wait": 12},
-        {"stop_audio": true}
+        {"wait": 60},
+        {"record_video": "step-02-nightfalls.mp4"},
+        {"wait": 400},
+        {"screenshot": "step-02-lifelost.png"},
+        {"wait": 320},
+        {"wait": 340},
+        {"screenshot": "step-02-nightfalls.png"},
+        {"wait": 15},
+        {"stop_video": true}
       ] }
   ]
 }

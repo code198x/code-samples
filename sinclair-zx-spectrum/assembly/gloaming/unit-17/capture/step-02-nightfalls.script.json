@@ -1,0 +1,41 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-17/steps/step-02.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-17/step-02-nightfalls.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 400
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-17/step-02-lifelost.png"
+ },
+ {
+  "action": "run_frames",
+  "frames": 320
+ },
+ {
+  "action": "run_frames",
+  "frames": 340
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/worktrees/gloaming-m1/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-17/step-02-nightfalls.png"
+ },
+ {
+  "action": "run_frames",
+  "frames": 15
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]
