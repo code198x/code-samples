@@ -185,7 +185,8 @@ player_step:
             ret     c
             cp      31
             ret     nc
-            ; --- commit: the target becomes his position, and he's drawn ---
+            ; --- commit: erase where he was, move, draw where he is ---
+            call    erase_lamp
             ld      a, (tcol)
             ld      (lamp_col), a
             ld      a, (trow)
@@ -327,6 +328,24 @@ pos_bc:
             ld      b, a
             ld      a, (lamp_col)
             ld      c, a
+            ret
+
+; erase_lamp — the naive erase: blank the cell the lamplighter leaves.
+; Zero its eight bitmap bytes, repaint it ground colour. The cell is
+; clean — and whatever the floor had there is gone with him.
+; (Detour: watch what it does to the cobbles.)
+erase_lamp:
+            call    pos_bc
+            call    scr_addr_cr
+            ld      b, 8
+            xor     a
+.el:
+            ld      (hl), a
+            inc     h
+            djnz    .el
+            call    pos_bc
+            call    attr_addr_cr
+            ld      (hl), COBBLE
             ret
 
 draw_lamp:
