@@ -13,10 +13,11 @@ field (default `commodore-64`):
 
   * `commodore-64`       — assemble `.asm` → `.prg` with local ACME, load with
                            `--load`, type RUN at the cold-boot prompt.
-  * `sinclair-zx-spectrum` — assemble `.asm` → `.sna` with pasmonext in the
-                           `sinclair-zx-spectrum` Docker image (then load the
-                           snapshot), or load a `.bas` text program directly
-                           with `load_basic_program`.
+  * `sinclair-zx-spectrum` — assemble `.asm` → `.sna` with Asm198x
+                           (`--dialect pasmonext --sna`; proven byte-identical
+                           to the retired Docker pasmonext across the full
+                           corpus, 2026-07-02), or load a `.bas` text program
+                           directly with `load_basic_program`.
 
 Why a manifest (and why it is WASM-aware):
     Each capture names a runnable program (assembled from a `step-NN.asm`, or
@@ -79,7 +80,22 @@ EMU_ENV = {
     "commodore-amiga": "EMU198X_AMIGA",
     "commodore-amiga-blitz": "EMU198X_AMIGA",
 }
+# Retired from the .sna build path 2026-07-02 (Asm198x cut-over); still pulled
+# by ensure_tap below — the one legacy consumer, which leaves with the old
+# course's unit-20 manifest at the module-1 atomic swap.
 SPECTRUM_IMAGE = "ghcr.io/code198x/sinclair-zx-spectrum:latest"
+
+# Asm198x — the family assembler; the Spectrum build path since 2026-07-02.
+ASM198X_ENV = "ASM198X"
+ASM198X_DEFAULT = "/Users/stevehill/Projects/198x/Asm198x/asm198x/target/release/asm198x"
+
+
+def resolve_asm198x() -> str:
+    cand = os.environ.get(ASM198X_ENV) or ASM198X_DEFAULT
+    if not Path(cand).exists():
+        sys.exit(f"asm198x not found at {cand} — build it "
+                 f"(cargo build --release in Asm198x/asm198x) or set ${ASM198X_ENV}")
+    return cand
 
 # AMOS (Commodore Amiga) capture: there is no host build — the learner's ASCII
 # AMOS source is *typed* into the AMOS Pro editor via `type_string`, then run
@@ -255,9 +271,8 @@ def run_c64(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
 # --------------------------------------------------------------------------
 
 def ensure_sna(asm_or_sna: Path) -> Path:
-    """Return a .sna path, assembling the matching .asm with pasmonext (Docker)
-    if needed. The .sna is written next to the .asm so it sits inside the
-    /code-samples mount."""
+    """Return a .sna path, assembling the matching .asm with Asm198x's
+    pasmonext dialect if needed. The .sna is written next to the .asm."""
     if asm_or_sna.suffix == ".sna":
         sna = asm_or_sna
         asm = asm_or_sna.with_suffix(".asm")
@@ -268,12 +283,9 @@ def ensure_sna(asm_or_sna: Path) -> Path:
         stale = (not sna.exists()) or sna.stat().st_mtime < asm.stat().st_mtime
         if stale:
             subprocess.run(
-                ["docker", "run", "--rm",
-                 "-v", f"{CODE_SAMPLES}:/code-samples",
-                 SPECTRUM_IMAGE,
-                 "pasmonext", "--sna",
-                 container_path(asm), container_path(sna)],
-                check=True)
+                [resolve_asm198x(), "--dialect", "pasmonext", "--sna",
+                 str(asm), "-o", str(sna)],
+                check=True, stdout=subprocess.DEVNULL)
     if not sna.exists():
         sys.exit(f"No program to run: {sna}")
     return sna
@@ -282,7 +294,12 @@ def ensure_sna(asm_or_sna: Path) -> Path:
 def ensure_tap(asm_or_tap: Path) -> Path:
     """Return a .tap path, assembling the matching .asm with `pasmonext
     --tapbas` (a real tape image with an auto-running BASIC loader) if needed.
-    Written next to the .asm so it sits inside the /code-samples mount."""
+    Written next to the .asm so it sits inside the /code-samples mount.
+
+    LEGACY — the last Docker-image consumer. Its only caller is the old
+    course's unit-20 tape manifest, which the module-1 rebuild replaces; if
+    tape mastering returns it's a Build198x/Asm198x seam question, not a
+    reason to keep the image (decision: code198x-dev-tooling-migration.md)."""
     if asm_or_tap.suffix == ".tap":
         tap = asm_or_tap
         asm = asm_or_tap.with_suffix(".asm")
