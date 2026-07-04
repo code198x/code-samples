@@ -1,0 +1,161 @@
+---
+title: "The Keep's Gold"
+description: "Three rooms you can wander, and nothing to do in them. Scatter gold through the keep, let the thief lift each coin as he steps on it, and make the last one matter: collect them all and the keep stands."
+pubDate: 2026-07-04
+game: 2
+unit: 9
+tags: ["assembly", "z80", "game-loop", "collectibles", "win-state"]
+---
+
+import CodeFromFile from "@components/CodeFromFile.astro";
+import CodeDiff from "@components/CodeDiff.astro";
+import Figure from "@components/Figure.astro";
+import VideoPlayer from "@components/VideoPlayer.astro";
+
+You have a keep. Three rooms, joined by doorways, a hooded thief who walks them and cannot pass through walls. It is a *place* — but it is not yet a *game*, because there is nothing in it to want. You can wander the Hall, thread the Gallery's gap, circle the Vault's altar, and then… wander back. A place you can leave exactly as you found it is a room, not a level.
+
+This unit gives the keep a **point**. Gold — coins scattered through the rooms — and a reason to move: lift every one, and the keep is yours. It is the oldest bargain in games, the one *Atic Atac* and a hundred others struck: here is treasure, here is somewhere to carry it from, now go. And with the gold comes the shape every finished game needs — a **win**: a state the keep can reach where the playing stops and the flourish plays.
+
+## What you'll see by the end
+
+<Figure src="/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-09/step-01-gold.png" alt="The Hall, bare stone and four pillars, with the hooded thief near the centre and two yellow coins glinting on the right — one high, one low. The east doorway stands open in the right-hand wall." caption="The same Hall as last unit, with something to want in it: two coins on the right, a counter quietly waiting on six. Walk onto a coin and it lifts with a chime; lift the last and the keep stands." />
+
+Two coins glint in the Hall, more in the rooms beyond — six in all. Walk the thief onto one and it is gone: a bright *ting*, and the counter drops. Clear all six and the screen turns black to tell you so — **THE KEEP STANDS** — then hands you back to the title to do it again. A goal, a tally, an ending: the parts that turn walking into playing.
+
+## Gold is a glyph you can stand on
+
+You have placed tiles in the room map before — walls, torches-to-come, the chalk you leave. Gold is one more, `G`, a coin drawn in plain yellow. The difference is in its *attribute*: where a wall is bright (and so reads as solid to `wall_at`), gold is dim — walkable — so the thief steps **onto** it rather than into it:
+
+```
+GOLD_ATTR   equ     %00000110         ; yellow ink, no BRIGHT -> walkable gold
+```
+
+Drop a few into the room maps like any other letter:
+
+```
+            defb    "#.........................G....#"   ; a coin on the right
+```
+
+## Lift it as you step
+
+Every successful move already ends the same way: the thief lands on a new cell, and we save what's beneath him and draw him on top. Collecting is one question asked at that moment — *is the cell I just stepped onto gold?* — and if so, we lift it:
+
+```
+collect_gold:
+            call    cell_state_addr  ; the map cell under the thief
+            ld      a, (hl)
+            cp      'G'
+            ret     nz               ; not gold — nothing to do
+            ld      (hl), '.'        ; taken — floor from now on
+            call    draw_floor_cell  ; repaint the cell empty
+            call    sfx_pickup       ; a bright two-blip chime
+            ld      hl, gold_remaining
+            dec     (hl)             ; one fewer to find
+            ret
+```
+
+We change the coin **in the map**, not just on screen — `G` becomes `.` — so it stays gone when the room is redrawn, and so `save_under` grabs floor, not treasure, as the thief moves off. The coin is lifted once and for all.
+
+## The last coin matters
+
+A counter you can drive to zero is a game waiting for an ending. `collect_gold` ticks `gold_remaining` down; when it reaches zero, the keep is clear, and we raise a flag — `won` — that the main loop is watching:
+
+```
+            dec     (hl)
+            ld      a, (hl)
+            or      a
+            call    z, win           ; the last coin — the keep stands
+```
+
+That flag is the hinge of the whole program. Until now the loop has done one thing forever: read the keys, move the thief, repeat. Now it is a small **state machine** — the same title → play → win → title shape you built in your first game, brought to the keep:
+
+```
+main_title:
+            call    show_title       ; the name, and PRESS SPACE
+            call    new_game         ; reset the rooms, place the gold
+.game_loop:
+            halt
+            ld      a, (won)
+            or      a
+            jr      nz, .won         ; cleared? -> the flourish
+            call    player_step
+            jr      .game_loop
+.won:
+            call    show_win         ; THE KEEP STANDS
+            jr      main_title       ; round again
+```
+
+`new_game` copies the room templates back into working memory — so the gold you lifted last time returns — resets the counter to six, and stands the thief at the door. The keep is replayable because every game begins by rebuilding it.
+
+## Milestone — a goal and a win
+
+Gold is a walkable glyph you lift by stepping on it; a counter tracks how many
+remain; and the loop that only ever *played* now knows how to *end* — the last
+coin raises the win flag, the flourish plays, and the title returns for another
+run. Two steps: first the gold and the collecting, then the win that makes it mean
+something.
+
+<CodeDiff
+  before="sinclair-zx-spectrum/assembly/shadowkeep/unit-09/steps/step-00.asm"
+  after="sinclair-zx-spectrum/assembly/shadowkeep/unit-09/steps/step-01.asm"
+  lang="z80"
+  title="Step 1: gold in the rooms, and lifting it as you step"
+  context={3}
+/>
+
+<CodeDiff
+  before="sinclair-zx-spectrum/assembly/shadowkeep/unit-09/steps/step-01.asm"
+  after="sinclair-zx-spectrum/assembly/shadowkeep/unit-09/steps/step-02.asm"
+  lang="z80"
+  title="Step 2: the last coin wins — a title -> play -> win -> title loop"
+  context={3}
+/>
+
+<details>
+<summary>The complete program</summary>
+<CodeFromFile src="sinclair-zx-spectrum/assembly/shadowkeep/unit-09/steps/step-02.asm" lang="z80" />
+</details>
+
+Collect the Hall's two coins, cross to the Gallery and the Vault for the rest, and lift the sixth:
+
+<VideoPlayer
+  src="/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-09/step-02-clear.mp4"
+  caption="Six coins across three rooms, each lifting with a chime and dropping the tally, until the last turns the screen to THE KEEP STANDS. A place became a level the moment there was something to clear from it."
+  autoplay={true}
+  loop={true}
+/>
+
+## Try this: a coin behind the altar
+
+Move a `G` in the Vault map to a cell hemmed in by the altar's stone, or tuck one in a pillar's shadow in the Hall. The keep is only cleared when *every* coin is lifted, so a coin you have to work to reach is a small puzzle — the beginning of designing a level, not just filling a room.
+
+## Try this: change the reward
+
+`sfx_pickup` is two quick blips. Make the chime yours: a single low *thunk* for a heavy coin, or three rising blips for a richer prize. The sound a game makes when you succeed is half of why success feels good — spend a minute making yours feel good.
+
+## Try this: count up, not down
+
+We count `gold_remaining` **down** to zero. Flip it: count coins **collected** up, and win when the total equals the number you placed. The same game, a different feeling — a score that grows rather than a debt that shrinks. Which one suits a treasure hunt?
+
+## When it's wrong, see why
+
+- **The coin vanishes but comes back.** You repainted the screen but not the map — the redraw put the `G` back. Change the map cell to `.` as well; that is what makes it *gone*.
+- **You win the instant you touch one coin.** The counter is starting at 1, or `dec` runs before the count is set. `gold_remaining` must be reset to the full count in `new_game`, before the loop begins.
+- **The thief walks straight over gold without lifting it.** `collect_gold` isn't called after a move, or it's checking the old cell. It has to run once the thief has landed on the new cell, reading *that* cell's contents.
+- **Second game has no gold.** `new_game` isn't copying the templates back — the working rooms still hold the floors you left. Rebuild the rooms every game and the treasure returns.
+- **The coin is solid — the thief stops dead at it.** `GOLD_ATTR` has its BRIGHT bit set, so `wall_at` reads it as wall. Gold must be dim to be walkable.
+
+## Before and after
+
+You began with three rooms and nothing to do in them, and finished with a keep that can be *cleared* — six coins to lift, a tally that falls, and a black screen with two words that mean you did it. Nothing exotic did the work: a walkable glyph, a question asked after each step, a counter, and a flag the loop watches. That flag is the important thing. It turned a walk that never ended into a game that can — and a game that can end is a game you can win.
+
+## What you've learnt
+
+- **A collectible is a walkable tile you lift on contact.** Change it in the map, not just on screen, and it stays lifted.
+- **A goal is a counter with an ending.** Track what remains; when it hits zero, the game is won.
+- **A win is a state, not a moment.** A flag the loop watches, turning play into title → play → win → title — the shape every finished game shares.
+- **Replayable means rebuilt.** Every new game copies the keep back from its templates, so the treasure — and the challenge — return.
+
+## What's next
+
+The keep can be cleared, but nothing stops you. You can take all the time in the world, walk any route, never lose a thing — and a game you cannot lose is only half a game. In **Unit 10, "Something in the Dark,"** the keep stops being empty: a second figure moves in it, walking a slow patrol of its own. It cannot hurt you yet — first we simply give it a body and a route. But the coins are about to get harder to reach.
