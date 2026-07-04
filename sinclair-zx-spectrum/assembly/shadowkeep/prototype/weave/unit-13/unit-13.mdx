@@ -1,0 +1,135 @@
+---
+title: "Light and Shadow"
+description: "The keep is a finished game — but lit like a warehouse, every cell the same cold blue. Hang a torch and let the dithering you met in Unit 2 become lighting: pick each floor cell's shade by its distance from the flame, so a pool of light fades into the dark."
+pubDate: 2026-07-04
+game: 2
+unit: 13
+tags: ["assembly", "z80", "lighting", "dithering", "atmosphere"]
+---
+
+import CodeFromFile from "@components/CodeFromFile.astro";
+import CodeDiff from "@components/CodeDiff.astro";
+import Figure from "@components/Figure.astro";
+import VideoPlayer from "@components/VideoPlayer.astro";
+
+The keep is a *game* now. You want the gold, the Wardens threaten it, and every run ends in THE KEEP STANDS or THE KEEP SLEEPS. Everything that makes it play is in place. What is missing is everything that makes it a *place* — because it is lit like an office, every cell the same even blue, no dark corners, no sense of nightfall. From here on we stop adding mechanics and start adding **atmosphere**, and atmosphere starts with light. This unit hangs a torch in each room and lets it throw a pool of light into the gloom the Wardens patrol.
+
+You have made light before — but not this way, and the difference is the lesson. In *The Long Night*, every lamp you lit warmed a pool around it: you made light by **recolouring attributes**, cobble turning to glow. That is one of the two ways this machine makes light, and you own it cold. Here is the other, and it could hardly be more different: not colour, but **density**. Back in Unit 2 you learned that dither density is shade — sparse pixels read light, dense read dark. Lighting is *choosing that density by distance from a flame*: close to the torch, sparse and bright; far, dense and near-black. The keep has no glow attributes to spare — its walls are already cold stone, its cells already spent on shape — so it lights the only way left to it: in the bitmap. Two independent routes to the same feeling, and a real Spectrum artist keeps both on the bench.
+
+## What you'll see by the end
+
+<Figure src="/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-13/step-01-lit.png" alt="The Hall lit by a single torch set in the top wall: a bright pool of light fans out below the flame and fades through deepening shades of slate to near-black in the corners. The hooded thief stands in the shadow, the pale Warden pacing its column, two coins glinting on the right." caption="One torch in the top wall, and the floor lights itself: a pool of near-blue under the flame, thickening through slate to near-black in the corners. The same game as last unit — the same coins, the same Warden — now with somewhere dark to be." />
+
+A torch burns in the top wall, and the floor beneath it is *lit* — nearly all blue, the stone catching the flame. Step away and the dither thickens: half-and-half slate, then darker, then the far corners almost black. The thief, the Warden, the coins all move through the gradient; nothing about the game changed, but the keep became a place with a dark in it. Same rooms as last unit; an entirely different place to be in.
+
+## A torch is a glyph
+
+A torch is just another tile in the palette — `T`, a yellow flame in its sconce — placed in the room map like any wall, and clear of the coins and the Wardens' routes:
+
+```
+            defb    "###############T################"   ; the Hall's top wall
+```
+
+It's drawn **bright**, so `wall_at` already treats it as solid stone — a fixture on the wall, not something you walk through. When a room is drawn, we first find its torch:
+
+```
+find_torch:
+            ; ... scan the room map for 'T', record (torch_col, torch_row) ...
+            ; ... or NO_TORCH if the room has none ...
+```
+
+## Distance becomes shade
+
+For each floor cell, how lit it is depends on how far it sits from that flame. We measure the distance — the larger of the row gap and the column gap, which gives a neat square-ish pool — halve it, and clamp it to give a shade from 0 (right by the flame) to 4 (deep dark):
+
+```
+shade_for_cell:                     ; row in B, column in C -> shade 0..4 in A
+            ; ... |row - torch_row| and |col - torch_col| ...
+            ; ... A = the larger of the two (the distance) ...
+            srl     a               ; distance / 2 — a gentle falloff
+            cp      MAX_SHADE + 1
+            jr      c, .sf_done
+            ld      a, MAX_SHADE     ; clamp to the darkest
+.sf_done:
+            ret
+```
+
+And the five shades are five floor tiles, the same blue and black at thickening densities — `shade0` nearly all blue, `shade2` the half-and-half slate from Unit 2, `shade4` nearly all black.
+
+## Lighting as the room draws
+
+`draw_room` now does the choosing as it paints. A floor cell is shaded by distance; a wall, torch, coin or Warden is drawn as before. And the same choice powers one more thing: when a coin is lifted, the cell it leaves is repainted with its *lit* shade, not flat floor — so the treasure vanishes into the lighting it sat in, seamlessly:
+
+```
+.room_col:
+            ld      a, (hl)          ; the glyph here
+            cp      '.'
+            jr      nz, .not_floor
+            call    shade_for_cell   ; floor: pick a shade by distance
+            ; ... point tile_ptr at shade_tiles[shade] ...
+            call    draw_tile
+```
+
+The light is **baked** — worked out once, when the room is drawn. The torch doesn't move, so the pool doesn't either. And it costs nothing as the thief walks: his save-and-restore already preserves whatever's beneath him, lit shade and all — and so does the Warden's. Both figures move through the gradient and leave it untouched.
+
+## Milestone — light the keep
+
+`find_torch` scans each room's map for a `T`; `shade_for_cell` turns a floor cell's
+distance from that flame into a shade 0–4; and `draw_room` now picks a floor tile
+from a five-step density ramp as it paints, walls and torches flat. The collect
+repaint is lit too, so lifted coins vanish into the gradient. The light is baked
+once — and the thief's and Warden's save/restore carry each shade for free.
+
+<CodeDiff
+  before="sinclair-zx-spectrum/assembly/shadowkeep/unit-13/steps/step-00.asm"
+  after="sinclair-zx-spectrum/assembly/shadowkeep/unit-13/steps/step-01.asm"
+  lang="z80"
+  title="Step 1: a torch glyph, distance-to-shade, and a five-step floor ramp"
+  context={3}
+/>
+
+<details>
+<summary>The complete program</summary>
+<CodeFromFile src="sinclair-zx-spectrum/assembly/shadowkeep/unit-13/steps/step-01.asm" lang="z80" />
+</details>
+
+Stand in the lit pool under the Hall's torch, then walk down into the dark — the floor thickens to shadow around you, and the gradient closes behind you untouched, the Warden pacing through it all the while:
+
+<VideoPlayer
+  src="/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-13/step-01-into-dark.mp4"
+  caption="From the bright pool under the torch, down into the deepening slate and back up. The light is a real space the thief moves through — and his save/restore lays each shade back as he steps off, so the gradient is never smeared. Baked light, carried for free." />
+
+## Try this: move the flame
+
+Shift the `T` in a room map to a side wall, or into a corner. The pool moves with it — the lit area is wherever the torch is, computed fresh. Light is data now: you place a flame by typing a letter, and the room lights itself around it. (Keep it clear of a Warden's route, or you will light the danger and not the gold.)
+
+## Try this: a brighter, wider torch
+
+The falloff is `srl a` — distance halved. Change it: `srl a` twice (distance / 4) makes a *huge* soft pool that barely reaches dark; remove the `srl` entirely (distance itself) and the light collapses to a tight, harsh ring. One shift instruction is the difference between a candle and a bonfire — and next unit but one, that one byte becomes a per-room dial.
+
+## Try this: light the walls too
+
+Only floor is shaded here; the walls stay uniformly lit. Extend the idea: give `#` a shade ramp of its own and shade walls by distance to the torch as well. The far walls sink into the dark with the floor, and the pool becomes a true bubble of light in a black room — a big step toward Knight Lore's gloom.
+
+## When it's wrong, see why
+
+- **The whole floor is darkest.** No torch was found — check the room map contains a `T`, and that `find_torch` runs before the draw. `NO_TORCH` means everything clamps to shade 4.
+- **The pool is the wrong shape or off-centre.** `shade_for_cell` mixed up rows and columns, or isn't taking the larger of the two gaps. Distance is `max(|dr|, |dc|)`.
+- **Floor cells are solid / the thief is trapped.** A shade tile was given a bright attribute. All five shades share `FLOOR_ATTR` (dim); only the *pattern* changes, so they stay walkable.
+- **A lifted coin leaves a flat pale patch.** The collect repaint isn't using `shade_for_cell` — it's laying plain floor into a shaded room. Repaint the lifted cell with its distance-shade.
+- **The lit area is a hard-edged block.** That's the square (Chebyshev) distance showing its corners. It's fine, and true to the machine; for a rounder pool, sum the gaps (a diamond) or their squares (a circle, more maths).
+
+## Before and after
+
+You started with a finished game lit like a warehouse — every cell the same flat blue — and finished with rooms that have a pool of light and a dark to step into. Nothing new drew the change: it's the dither-is-shade idea from Unit 2, with the density now *chosen by distance from a flame*. A torch is a glyph you type into the map; the light bakes itself as the room paints; and both movers carry each shade beneath them without a line of extra code. The keep stopped being evenly lit and started having somewhere to hide — the first real stroke of atmosphere, over a game that was already whole.
+
+## What you've learnt
+
+- **Light is dither density chosen by distance.** The shading technique from Unit 2, driven by how far a cell is from a flame — no new drawing, only a new choice.
+- **A light source is data.** A glyph in the map; place it, move it, and the room re-lights around it.
+- **Bake what doesn't change.** Static light is computed once as the room draws, costing nothing per frame — and both figures' save/restore carry the shade for free.
+- **Falloff is a feel knob.** How fast light fades — one shift — sets whether the keep feels candle-lit or floodlit.
+
+## What's next
+
+The keep has light and dark now, but its rooms are bare — stone, pillars, and not much else. A place you believe in has *things* in it: an altar, a statue, banners, a scatter of rubble. In **Unit 14, "Furnishings,"** we add decorative objects — scenery the thief walks past, not into — that turn a lit room into a room with a story. Atmosphere is light *and* the things the light falls on.
