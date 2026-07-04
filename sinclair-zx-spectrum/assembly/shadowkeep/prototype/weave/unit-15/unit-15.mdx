@@ -1,0 +1,122 @@
+---
+title: "Mood through Constraint"
+description: "The lighting engine is built; now compose with it. Give each room its own falloff — one byte — so the Hall reads as a broad lit chamber and the Vault as a near-black crypt lit only at the altar. Same two colours, same dither; restraint is the technique."
+pubDate: 2026-07-04
+game: 2
+unit: 15
+tags: ["assembly", "z80", "atmosphere", "lighting", "design"]
+---
+
+import CodeFromFile from "@components/CodeFromFile.astro";
+import CodeDiff from "@components/CodeDiff.astro";
+import Figure from "@components/Figure.astro";
+import VideoPlayer from "@components/VideoPlayer.astro";
+
+The keep is lit and furnished — but every room is lit the *same*. A grand hall and a burial crypt should not feel alike, and atmosphere is as much about restraint as addition. This unit stops adding features and starts **composing** with the ones we have. The whole palette is still two colours a cell and a ramp of dither; the art is in how we use the limit.
+
+The lever is a single byte per room: how fast its light fades.
+
+## What you'll see by the end
+
+<Figure src="/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-15/step-01-vault.png" alt="The Vault as a crypt: a flame burns on the central altar, throwing a small, tight pool of light over the stone immediately around it; the rest of the room falls away into near-black, the coins and the Warden faint shapes in the dark, the hooded thief approaching from below." caption="The Vault as a crypt: one flame on the altar, a tight pocket of light, and beyond it near-black — the dither thickening cell by cell until the walls are swallowed. The coins glint, the Warden paces, all in the dark. One byte of falloff makes this room of the same engine that lights the Hall like an open chamber." />
+
+The Vault, now: a single flame on the altar, a tight pocket of light around it, and beyond that *darkness* — the dither thickening to near-black across the floor, the walls swallowed. The coins and the Warden are faint shapes down in the gloom, the thief drawn toward the only light there is. Step back into the Hall and it's the opposite: a wide, even glow, an open and unthreatening room. Two rooms, one lighting engine, two completely different feelings.
+
+## One byte of mood
+
+Back in Unit 13 every room halved the distance to get its shade (`distance >> 1`). The new idea is to make that shift a property of the *room* — its **falloff**:
+
+```
+room_falloff:
+            defb    2               ; Hall    — distance >> 2: a broad, soft pool
+            defb    1               ; Gallery — distance >> 1: medium
+            defb    0               ; Vault   — distance     : a tight pool, deep dark
+```
+
+A bigger shift makes distance grow slowly, so the light reaches far — a generous, well-lit room. A shift of zero lets distance count cell-for-cell, so the light collapses to a tight ring and everything past it is black. `shade_for_cell` just reads the current room's falloff and shifts by it:
+
+```
+            ld      a, (current_room)
+            ; ... index room_falloff ...
+            ld      b, (hl)         ; B = this room's falloff
+            ld      a, e            ; A = distance to the torch
+.sf_shift:
+            dec     b
+            jr      z, .sf_clamp
+            srl     a               ; shift by falloff, then clamp
+            jr      .sf_shift
+```
+
+That's the entire mechanism. The Hall is welcoming and the Vault is oppressive because of one number each.
+
+## Composing the dark
+
+Mood isn't only the falloff — it's *where the light is*. The Hall's torch sits high in a wall, washing the room; the Vault has **no wall torch at all**. Its only flame is on the altar itself:
+
+```
+            defb    "#.............#T##.............#"   ; a flame set in the altar
+```
+
+So in the Vault the light is born at the thing you're meant to look at, falls off at once (falloff 0), and leaves the rest to the dark. The eye has nowhere to go but the altar — and the coins and the Warden you must read there are half-swallowed by the black, which is exactly the tension a crypt should have. That's composition: not "make it bright" or "make it dark", but *put the one light where it means something and let the constraint do the rest*. The Spectrum's two-colour cell, which looked like a limitation in Unit 1, is now the instrument.
+
+## Milestone — a mood per room
+
+The shift that used to be fixed (`distance >> 1` everywhere) becomes a per-room
+**falloff** byte: `shade_for_cell` reads the current room's falloff and shifts the
+distance by that many places. A big shift reaches far (the Hall, falloff 2); a shift
+of zero collapses the light to a tight ring (the Vault, falloff 0, its only flame on
+the altar). The whole composition is one number per room.
+
+<CodeDiff
+  before="sinclair-zx-spectrum/assembly/shadowkeep/unit-15/steps/step-00.asm"
+  after="sinclair-zx-spectrum/assembly/shadowkeep/unit-15/steps/step-01.asm"
+  lang="z80"
+  title="Step 1: a per-room falloff byte drives the shade ramp"
+  context={3}
+/>
+
+<details>
+<summary>The complete program</summary>
+<CodeFromFile src="sinclair-zx-spectrum/assembly/shadowkeep/unit-15/steps/step-01.asm" lang="z80" />
+</details>
+
+Walk the keep end to end and feel the rooms change under you — the broad light of the Hall, the medium Gallery, and the tight, fearful pocket of the Vault where the thief steps from black into a ring of altar-light:
+
+<VideoPlayer
+  src="/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-15/step-01-mood.mp4"
+  caption="East out of the broadly-lit Hall, through the Gallery's medium pool, and up into the Vault — where the light collapses to a tight ring on the altar and the thief stands in the dark below it. Same lighting engine in every room; only the falloff byte changes. Restraint is the technique." />
+
+## Try this: re-light a room
+
+Change a room's `room_falloff` and watch its character flip. Give the Hall a `0` and the welcoming chamber becomes a cramped, shadowed box. Give the Vault a `3` and the crypt floods with light and loses all its menace. You're not redrawing anything — you're tuning a feeling with a single digit.
+
+## Try this: a pitch-black room with one candle
+
+Build a small room, no wall torches, a single `T` in a far corner, falloff `0`. Almost the whole room is black; one corner glows. Drop a coin or a doorway *just* at the edge of the light, so the player has to step into the dark on faith to reach it. Darkness you have to enter is one of the oldest tricks in the genre.
+
+## Try this: contrast by neighbour
+
+Put a bright room next to a dark one and a dark next to bright. Walking from the lit Hall into the black Vault *feels* darker than the Vault would on its own, because your eye arrives expecting light. Mood is relative — you compose the journey, not just the room.
+
+## When it's wrong, see why
+
+- **Every room looks the same.** `shade_for_cell` isn't reading `room_falloff` for the current room — check the index is `current_room` and the shift loop runs that many times.
+- **A room is all black.** Its falloff is low *and* its torch is far from the floor (or missing). With falloff 0 the light barely reaches; make sure there's a flame where you want the pool.
+- **A room is flatly bright.** Falloff is too high for the room's size, so even the far corners clamp to the lightest shades. Lower it, or move the torch.
+- **The thief gets darker/lighter as he moves — flickering.** Shade is baked per *draw*, not per frame; if it flickers, something is redrawing the room every frame. It should only redraw on entry.
+- **The pool is square, not round.** Still the Chebyshev distance — fine and characterful. Sum the axes for a diamond, or their squares for a circle, if you want softer pools.
+
+## Before and after
+
+You started with a keep where every room was lit alike and finished with three rooms that *feel* different — the Hall open and welcoming, the Vault a tight, fearful crypt — without adding a thing. The lighting engine is exactly Unit 13's; the change is one falloff byte per room and the choice of where each flame sits. That's composition: not more features but restraint, using the Spectrum's two-colour cell and a dither ramp — the same limit that looked like a wall in Unit 1 — as the instrument. The keep stopped being uniformly lit and started having moods.
+
+## What you've learnt
+
+- **Mood is a parameter.** One byte of falloff per room turns the same lighting engine into welcoming, neutral, or fearful — composition, not new code.
+- **Place the light with intent.** Where the flame sits, and how fast it fades, decides where the eye goes. In the Vault the light is the altar; everything else is permission to be dark.
+- **The constraint is the vocabulary.** Two colours a cell and a dither ramp — the same limit that defined Unit 1 — is enough to make a room feel like somewhere. Restraint, not richness.
+- **Atmosphere is relative.** Rooms read against their neighbours; you compose the walk through the keep, not just each screen.
+
+## What's next
+
+Each room can now hold a mood — but they were composed one at a time. In **Unit 16, "A Keep with Character,"** we pull back and treat the *whole keep* as one composition: a room can hold more than one flame, each floor cell lit by its nearest, so the three chambers read as parts of a single place with a single atmosphere. It's the unit that turns "rooms with lighting" into "a keep you believe in" — the close of the Mood and Light sub-arc.
