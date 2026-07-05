@@ -1,6 +1,6 @@
-; Shadowkeep — Unit 11: Join the Sleepers
+; Shadowkeep — Unit 10: Something in the Dark
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-00 = Unit 10's end: a Warden patrols the Hall, but cannot yet harm you.
+; step-02 sets the Warden walking — a deterministic patrol up and down its column.
 
             org     32768
 

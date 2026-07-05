@@ -1,6 +1,6 @@
-; Shadowkeep — Unit 11: Join the Sleepers
+; Shadowkeep — Unit 12: A Warden for Every Room
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-00 = Unit 10's end: a Warden patrols the Hall, but cannot yet harm you.
+; step-02 gives every room its own Warden, instantiated from a table on entry.
 
             org     32768
 
@@ -15,6 +15,8 @@ WARDEN_COL0 equ     26                ; the Hall's gold column
 WARDEN_ROW0 equ     11
 WARDEN_SPEED equ    10                ; frames between patrol steps
 WARDEN_GATHER equ   50                ; a beat before it begins to move
+AXIS_HORIZ  equ     0                 ; the Warden varies its column (walks a row)
+AXIS_VERT   equ     1                 ; the Warden varies its row (walks a column)
 WALL_BIT    equ     6
 
 START_COL   equ     15
@@ -42,11 +44,15 @@ main_title:
             or      a
             jr      nz, .won
             call    player_step
-            ld      a, (current_room)
+            call    warden_step      ; every room has its Warden now
+            ld      a, (caught)
             or      a
-            call    z, warden_step   ; the Warden haunts the Hall (room 0)
+            jr      nz, .lost
             call    mark_step
             jr      .game_loop
+.lost:
+            call    show_lose        ; "THE KEEP SLEEPS", the sting, wait for SPACE
+            jr      main_title
 .won:
             call    show_win         ; "THE KEEP STANDS", flourish, wait for SPACE
             jr      main_title       ; round again
@@ -70,6 +76,7 @@ new_game:
             xor     a
             ld      (current_room), a
             ld      (won), a
+            ld      (caught), a
             ld      a, TOTAL_GOLD
             ld      (gold_remaining), a
             ld      a, START_COL
@@ -80,14 +87,7 @@ new_game:
             call    draw_room
             call    save_under
             call    draw_thief
-            ld      a, WARDEN_COL0
-            ld      (warden_col), a
-            ld      a, WARDEN_ROW0
-            ld      (warden_row), a
-            ld      a, -1
-            ld      (warden_dir), a
-            ld      a, WARDEN_GATHER
-            ld      (warden_timer), a
+            call    warden_enter     ; this room's Warden, from the table
             call    save_warden
             call    draw_warden
             ret
@@ -329,9 +329,7 @@ check_exit:
             call    draw_room
             call    save_under
             call    draw_thief
-            ld      a, (current_room)
-            or      a
-            ret     nz               ; the Warden is only in the Hall
+            call    warden_enter     ; this room's Warden, clear of the entry cell
             call    save_warden
             call    draw_warden
             ret
@@ -478,12 +476,38 @@ warden_step:
             ret     nz
             ld      a, WARDEN_SPEED
             ld      (warden_timer), a
+            ; propose the next cell along the patrol axis, in the current dir
+            ld      a, (warden_axis)
+            or      a
+            jr      nz, .ws_vert
+.ws_horiz:
+            ld      a, (warden_row)
+            ld      b, a             ; B = row (fixed)
+            ld      a, (warden_dir)
+            ld      hl, warden_col
+            add     a, (hl)
+            ld      c, a             ; C = next col
+            jr      .ws_have
+.ws_vert:
             ld      a, (warden_col)
-            ld      c, a             ; C = column (fixed)
+            ld      c, a             ; C = col (fixed)
             ld      a, (warden_dir)
             ld      hl, warden_row
             add     a, (hl)
             ld      b, a             ; B = next row
+.ws_have:
+            ld      a, b             ; the thief there? caught — check BEFORE
+            ld      hl, thief_row    ; wall_at, because his own cell reads as wall
+            cp      (hl)
+            jr      nz, .ws_wall
+            ld      a, c
+            ld      hl, thief_col
+            cp      (hl)
+            jr      nz, .ws_wall
+            ld      a, 1
+            ld      (caught), a
+            ret
+.ws_wall:
             push    bc
             call    wall_at
             pop     bc
@@ -493,14 +517,52 @@ warden_step:
             ld      (warden_dir), a
             ret
 .ws_commit:
-            push    bc               ; keep the proposed row — restore heals the OLD cell
+            push    bc               ; keep the proposed (row B, col C)
             call    restore_warden
             pop     bc
+            ld      a, c
+            ld      (warden_col), a
             ld      a, b
             ld      (warden_row), a
             call    save_warden      ; photograph the new cell's ground
             call    draw_warden
             ret
+
+; ----------------------------------------------------------------------------
+; warden_enter — instantiate the current room's Warden from warden_table: place
+; it at the route-start (chosen clear of the entry cell), set its axis, and start
+; its gather. Called on new_game and on every room change. A second mover is a
+; table entry — like the torches and the gold.
+; ----------------------------------------------------------------------------
+warden_enter:
+            ld      a, (current_room)
+            add     a, a
+            add     a, a             ; * 4 bytes per table row
+            ld      e, a
+            ld      d, 0
+            ld      hl, warden_table
+            add     hl, de
+            ld      a, (hl)
+            ld      (warden_col), a
+            inc     hl
+            ld      a, (hl)
+            ld      (warden_row), a
+            inc     hl
+            ld      a, (hl)
+            ld      (warden_dir), a
+            inc     hl
+            ld      a, (hl)
+            ld      (warden_axis), a
+            ld      a, WARDEN_GATHER
+            ld      (warden_timer), a
+            ret
+
+; warden_table — one row per room: start col, start row, dir (+1/-1), axis.
+; Each route crosses that room's gold and starts clear of the entry cell.
+warden_table:
+            defb    WARDEN_COL0, WARDEN_ROW0, -1, AXIS_VERT   ; Hall — the gold's column
+            defb    24, 15, -1, AXIS_VERT                     ; Gallery — column 24, lower chamber
+            defb    15, 20, -1, AXIS_HORIZ                    ; Vault — row 20, between the coins
 
 ; ----------------------------------------------------------------------------
 ; The gold — the keep's goal. Step onto a coin and it lifts: the map cell turns
@@ -707,6 +769,56 @@ str_won:
             defb    "THE KEEP STANDS", 0
 str_again:
             defb    "PRESS SPACE TO RETURN", 0
+
+; ----------------------------------------------------------------------------
+; show_lose — the mirror of show_win. Black screen, the words, the freezing
+; sting, then wait for SPACE (and release) to return to the title.
+; ----------------------------------------------------------------------------
+show_lose:
+            di
+            call    clear_screen
+            ld      hl, str_lost
+            ld      b, 9
+            ld      c, 8
+            call    print_string
+            ld      hl, str_again
+            ld      b, 15
+            ld      c, 5
+            call    print_string
+            call    sfx_caught
+.slo_wait:
+            ld      bc, KEYS_SPACE
+            in      a, (c)
+            bit     0, a
+            jr      nz, .slo_wait
+.slo_rel:
+            ld      bc, KEYS_SPACE
+            in      a, (c)
+            bit     0, a
+            jr      z, .slo_rel
+            ret
+
+; sfx_caught — the plunge into stasis: a quick fall, then a deep, long toll as
+; the stone closes over you. The opposite of the win flourish.
+sfx_caught:
+            ld      c, 16
+.sca_fall:
+            ld      b, 5
+            push    bc
+            call    beep
+            pop     bc
+            ld      a, c
+            add     a, 7
+            ld      c, a
+            cp      100
+            jr      c, .sca_fall
+            ld      b, 60
+            ld      c, 130
+            call    beep
+            ret
+
+str_lost:
+            defb    "THE KEEP SLEEPS", 0
 
 scr_addr_cr:
             ld      a, b
@@ -918,8 +1030,12 @@ warden_row:
             defb    WARDEN_ROW0
 warden_dir:
             defb    -1
+warden_axis:
+            defb    AXIS_VERT
 warden_timer:
             defb    WARDEN_GATHER
+caught:
+            defb    0
 
 room0_state:
             defs    768

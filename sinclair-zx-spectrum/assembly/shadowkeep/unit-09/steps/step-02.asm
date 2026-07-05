@@ -1,6 +1,6 @@
-; Shadowkeep — Unit 11: Join the Sleepers
+; Shadowkeep — Unit 9: The Keep's Gold
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-00 = Unit 10's end: a Warden patrols the Hall, but cannot yet harm you.
+; step-02 makes the last coin win: THE KEEP STANDS, in a title -> play -> win loop.
 
             org     32768
 
@@ -10,11 +10,6 @@ MARK_ATTR   equ     %00001111
 THIEF       equ     %01001010
 GOLD_ATTR   equ     %00000110         ; yellow ink, no BRIGHT -> walkable gold
 TOTAL_GOLD  equ     6
-WARDEN      equ     %01000101         ; BRIGHT cyan on black — the sentinel
-WARDEN_COL0 equ     26                ; the Hall's gold column
-WARDEN_ROW0 equ     11
-WARDEN_SPEED equ    10                ; frames between patrol steps
-WARDEN_GATHER equ   50                ; a beat before it begins to move
 WALL_BIT    equ     6
 
 START_COL   equ     15
@@ -42,9 +37,6 @@ main_title:
             or      a
             jr      nz, .won
             call    player_step
-            ld      a, (current_room)
-            or      a
-            call    z, warden_step   ; the Warden haunts the Hall (room 0)
             call    mark_step
             jr      .game_loop
 .won:
@@ -80,16 +72,6 @@ new_game:
             call    draw_room
             call    save_under
             call    draw_thief
-            ld      a, WARDEN_COL0
-            ld      (warden_col), a
-            ld      a, WARDEN_ROW0
-            ld      (warden_row), a
-            ld      a, -1
-            ld      (warden_dir), a
-            ld      a, WARDEN_GATHER
-            ld      (warden_timer), a
-            call    save_warden
-            call    draw_warden
             ret
 
 mark_step:
@@ -329,11 +311,6 @@ check_exit:
             call    draw_room
             call    save_under
             call    draw_thief
-            ld      a, (current_room)
-            or      a
-            ret     nz               ; the Warden is only in the Hall
-            call    save_warden
-            call    draw_warden
             ret
 
 pos_bc:
@@ -391,115 +368,6 @@ draw_thief:
             inc     de
             inc     h
             djnz    .thief_row
-            ret
-
-; ----------------------------------------------------------------------------
-; The Warden — something shares the keep. A second mover, drawn exactly like the
-; thief: a private under-buffer and its own save / draw, a spectral hooded
-; sentinel. First we simply give it a body (it neither moves nor harms yet).
-; ----------------------------------------------------------------------------
-wpos_bc:
-            ld      a, (warden_row)
-            ld      b, a
-            ld      a, (warden_col)
-            ld      c, a
-            ret
-
-save_warden:
-            call    wpos_bc
-            call    scr_addr_cr
-            ld      de, under_warden
-            ld      b, 8
-.svw_row:
-            ld      a, (hl)
-            ld      (de), a
-            inc     de
-            inc     h
-            djnz    .svw_row
-            call    wpos_bc
-            call    attr_addr_cr
-            ld      a, (hl)
-            ld      (under_warden + 8), a
-            ret
-
-draw_warden:
-            call    wpos_bc
-            call    attr_addr_cr
-            ld      (hl), WARDEN
-            call    wpos_bc
-            call    scr_addr_cr
-            ld      de, warden_glyph
-            ld      b, 8
-.drw_row:
-            ld      a, (de)
-            ld      (hl), a
-            inc     de
-            inc     h
-            djnz    .drw_row
-            ret
-
-; A spectral hooded sentinel: a cowl with dark eye-slits over a robe that frays
-; at the hem. Cold, faceless, unmistakably a figure.
-warden_glyph:
-            defb    %00111100
-            defb    %01111110
-            defb    %01100110
-            defb    %01111110
-            defb    %00111100
-            defb    %01111110
-            defb    %01111110
-            defb    %01011010
-
-restore_warden:
-            call    wpos_bc
-            call    scr_addr_cr
-            ld      de, under_warden
-            ld      b, 8
-.rsw_row:
-            ld      a, (de)
-            ld      (hl), a
-            inc     de
-            inc     h
-            djnz    .rsw_row
-            call    wpos_bc
-            call    attr_addr_cr
-            ld      a, (under_warden + 8)
-            ld      (hl), a
-            ret
-
-; warden_step — the patrol. Walks its column one cell every WARDEN_SPEED frames,
-; after a WARDEN_GATHER beat, reversing at walls. Deterministic: a route you learn
-; and time. It reads the thief's cell as a wall (his attribute has WALL_BIT set),
-; so it turns aside at him for now — the catch is Unit 11.
-warden_step:
-            ld      a, (warden_timer)
-            dec     a
-            ld      (warden_timer), a
-            ret     nz
-            ld      a, WARDEN_SPEED
-            ld      (warden_timer), a
-            ld      a, (warden_col)
-            ld      c, a             ; C = column (fixed)
-            ld      a, (warden_dir)
-            ld      hl, warden_row
-            add     a, (hl)
-            ld      b, a             ; B = next row
-            push    bc
-            call    wall_at
-            pop     bc
-            jr      z, .ws_commit    ; floor ahead — step onto it
-            ld      a, (warden_dir)  ; wall ahead — reverse, wait a beat
-            neg
-            ld      (warden_dir), a
-            ret
-.ws_commit:
-            push    bc               ; keep the proposed row — restore heals the OLD cell
-            call    restore_warden
-            pop     bc
-            ld      a, b
-            ld      (warden_row), a
-            call    save_warden      ; photograph the new cell's ground
-            call    draw_warden
             ret
 
 ; ----------------------------------------------------------------------------
@@ -910,16 +778,6 @@ gold_remaining:
             defb    TOTAL_GOLD
 won:
             defb    0
-under_warden:
-            defb    0, 0, 0, 0, 0, 0, 0, 0, 0
-warden_col:
-            defb    WARDEN_COL0
-warden_row:
-            defb    WARDEN_ROW0
-warden_dir:
-            defb    -1
-warden_timer:
-            defb    WARDEN_GATHER
 
 room0_state:
             defs    768

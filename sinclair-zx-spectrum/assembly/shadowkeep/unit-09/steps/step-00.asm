@@ -1,6 +1,6 @@
-; Shadowkeep — Unit 9: Light and Shadow
+; Shadowkeep — Unit 9: The Keep's Gold
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-00 = Unit 8's end: three rooms, flatly lit.
+; step-00 = Unit 8's end: three rooms you can explore, but nothing to seek.
 
             org     32768
 

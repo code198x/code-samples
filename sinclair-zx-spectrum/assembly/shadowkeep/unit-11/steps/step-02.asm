@@ -1,6 +1,6 @@
 ; Shadowkeep — Unit 11: Join the Sleepers
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-00 = Unit 10's end: a Warden patrols the Hall, but cannot yet harm you.
+; step-02 gives the loss a face: THE KEEP SLEEPS, and a plunge-then-lock sting.
 
             org     32768
 
@@ -44,9 +44,17 @@ main_title:
             call    player_step
             ld      a, (current_room)
             or      a
-            call    z, warden_step   ; the Warden haunts the Hall (room 0)
+            jr      nz, .skip_warden ; the Warden haunts the Hall (room 0)
+            call    warden_step      ; it may step onto the thief
+            ld      a, (caught)
+            or      a
+            jr      nz, .lost
+.skip_warden:
             call    mark_step
             jr      .game_loop
+.lost:
+            call    show_lose        ; "THE KEEP SLEEPS", the sting, wait for SPACE
+            jr      main_title
 .won:
             call    show_win         ; "THE KEEP STANDS", flourish, wait for SPACE
             jr      main_title       ; round again
@@ -70,6 +78,7 @@ new_game:
             xor     a
             ld      (current_room), a
             ld      (won), a
+            ld      (caught), a
             ld      a, TOTAL_GOLD
             ld      (gold_remaining), a
             ld      a, START_COL
@@ -484,6 +493,18 @@ warden_step:
             ld      hl, warden_row
             add     a, (hl)
             ld      b, a             ; B = next row
+            ld      a, b             ; the thief there? caught — check BEFORE
+            ld      hl, thief_row    ; wall_at, because his own cell reads as wall
+            cp      (hl)
+            jr      nz, .ws_wall
+            ld      a, c
+            ld      hl, thief_col
+            cp      (hl)
+            jr      nz, .ws_wall
+            ld      a, 1
+            ld      (caught), a
+            ret
+.ws_wall:
             push    bc
             call    wall_at
             pop     bc
@@ -708,6 +729,56 @@ str_won:
 str_again:
             defb    "PRESS SPACE TO RETURN", 0
 
+; ----------------------------------------------------------------------------
+; show_lose — the mirror of show_win. Black screen, the words, the freezing
+; sting, then wait for SPACE (and release) to return to the title.
+; ----------------------------------------------------------------------------
+show_lose:
+            di
+            call    clear_screen
+            ld      hl, str_lost
+            ld      b, 9
+            ld      c, 8
+            call    print_string
+            ld      hl, str_again
+            ld      b, 15
+            ld      c, 5
+            call    print_string
+            call    sfx_caught
+.slo_wait:
+            ld      bc, KEYS_SPACE
+            in      a, (c)
+            bit     0, a
+            jr      nz, .slo_wait
+.slo_rel:
+            ld      bc, KEYS_SPACE
+            in      a, (c)
+            bit     0, a
+            jr      z, .slo_rel
+            ret
+
+; sfx_caught — the plunge into stasis: a quick fall, then a deep, long toll as
+; the stone closes over you. The opposite of the win flourish.
+sfx_caught:
+            ld      c, 16
+.sca_fall:
+            ld      b, 5
+            push    bc
+            call    beep
+            pop     bc
+            ld      a, c
+            add     a, 7
+            ld      c, a
+            cp      100
+            jr      c, .sca_fall
+            ld      b, 60
+            ld      c, 130
+            call    beep
+            ret
+
+str_lost:
+            defb    "THE KEEP SLEEPS", 0
+
 scr_addr_cr:
             ld      a, b
             and     %00011000
@@ -920,6 +991,8 @@ warden_dir:
             defb    -1
 warden_timer:
             defb    WARDEN_GATHER
+caught:
+            defb    0
 
 room0_state:
             defs    768

@@ -1,21 +1,20 @@
-; Shadowkeep — Unit 9: Light and Shadow
+; Shadowkeep — Unit 9: The Keep's Gold
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-01 hangs a torch in each room and shades the floor by distance from the flame.
+; step-01 scatters gold through the rooms and lets the thief collect it.
 
             org     32768
 
 WALL_ATTR   equ     %01001000
-FLOOR_ATTR  equ     %00001000       ; the shade ramp all share this (PAPER 1, INK 0); only the pattern differs
-TORCH_ATTR  equ     %01001110       ; BRIGHT, PAPER 1 (blue), INK 6 (yellow) — a lit sconce (solid)
+FLOOR_ATTR  equ     %00001000
 MARK_ATTR   equ     %00001111
 THIEF       equ     %01001010
+GOLD_ATTR   equ     %00000110         ; yellow ink, no BRIGHT -> walkable gold
+TOTAL_GOLD  equ     6
 WALL_BIT    equ     6
 
 START_COL   equ     15
 START_ROW   equ     11
 NO_EXIT     equ     $FF
-NO_TORCH    equ     $FF
-MAX_SHADE   equ     4
 
 KEYS_OP     equ     $DFFE
 KEYS_Q      equ     $FBFE
@@ -45,6 +44,8 @@ start:
             ld      (thief_col), a
             ld      a, START_ROW
             ld      (thief_row), a
+            ld      a, TOTAL_GOLD
+            ld      (gold_remaining), a
 
             call    draw_room
             call    save_under
@@ -109,84 +110,7 @@ room_entry_addr:
             add     hl, de
             ret
 
-; ----------------------------------------------------------------------------
-; find_torch — scan the current room's map for 'T', remember where it is (or
-; NO_TORCH if the room is unlit).
-; ----------------------------------------------------------------------------
-find_torch:
-            ld      a, NO_TORCH
-            ld      (torch_col), a
-            ld      (torch_row), a
-            call    room_entry_addr
-            ld      a, (hl)
-            inc     hl
-            ld      h, (hl)
-            ld      l, a
-            ld      b, 0
-.ft_row:
-            ld      c, 0
-.ft_col:
-            ld      a, (hl)
-            cp      'T'
-            jr      nz, .ft_skip
-            ld      a, c
-            ld      (torch_col), a
-            ld      a, b
-            ld      (torch_row), a
-.ft_skip:
-            inc     hl
-            inc     c
-            ld      a, c
-            cp      32
-            jr      nz, .ft_col
-            inc     b
-            ld      a, b
-            cp      24
-            jr      nz, .ft_row
-            ret
-
-; ----------------------------------------------------------------------------
-; shade_for_cell — row in B, column in C. Returns a shade 0..4 in A: the
-; Chebyshev distance to the torch, halved and clamped. Near the flame = 0
-; (lightest); far away = 4 (darkest). No torch = darkest everywhere.
-; ----------------------------------------------------------------------------
-shade_for_cell:
-            ld      a, (torch_col)
-            cp      NO_TORCH
-            jr      z, .sf_dark
-            ld      a, b
-            ld      hl, torch_row
-            sub     (hl)
-            jr      nc, .sf_rpos
-            neg
-.sf_rpos:
-            ld      d, a            ; |row - torch_row|
-            ld      a, c
-            ld      hl, torch_col
-            sub     (hl)
-            jr      nc, .sf_cpos
-            neg
-.sf_cpos:
-            cp      d               ; A = |dc|; max(|dc|, |dr|)
-            jr      nc, .sf_max
-            ld      a, d
-.sf_max:
-            srl     a               ; distance / 2
-            cp      MAX_SHADE + 1
-            jr      c, .sf_done
-            ld      a, MAX_SHADE
-.sf_done:
-            ret
-.sf_dark:
-            ld      a, MAX_SHADE
-            ret
-
-; ----------------------------------------------------------------------------
-; draw_room — now lights as it draws. A floor cell ('.') is shaded by distance
-; to the torch; everything else (wall, torch, chalk) is drawn flat.
-; ----------------------------------------------------------------------------
 draw_room:
-            call    find_torch
             call    room_entry_addr
             ld      a, (hl)
             inc     hl
@@ -199,27 +123,8 @@ draw_room:
 .room_col:
             ld      hl, (map_ptr)
             ld      a, (hl)
-            cp      '.'
-            jr      nz, .not_floor
-
-            call    shade_for_cell      ; A = shade 0..4
-            add     a, a                ; index the pointer table
-            ld      e, a
-            ld      d, 0
-            ld      hl, shade_tiles
-            add     hl, de
-            ld      e, (hl)
-            inc     hl
-            ld      d, (hl)
-            ld      (tile_ptr), de
-            ld      a, FLOOR_ATTR
-            ld      (tile_attr), a
-            call    draw_tile
-            jr      .cell_done
-.not_floor:
             call    lookup_tile
             call    draw_tile
-.cell_done:
             ld      hl, (map_ptr)
             inc     hl
             ld      (map_ptr), hl
@@ -320,6 +225,7 @@ player_step:
             ld      (thief_col), a
             ld      a, (trow)
             ld      (thief_row), a
+            call    collect_gold     ; the new cell might be gold — lift it first
             call    save_under
             call    draw_thief
             call    check_exit
@@ -449,6 +355,75 @@ draw_thief:
             djnz    .thief_row
             ret
 
+; ----------------------------------------------------------------------------
+; The gold — the keep's goal. Step onto a coin and it lifts: the map cell turns
+; to floor (gone for good), the cell repaints as plain floor (no lighting yet),
+; a chime sounds, and the counter ticks down.
+; ----------------------------------------------------------------------------
+collect_gold:
+            call    cell_state_addr  ; HL -> map cell at the thief's position
+            ld      a, (hl)
+            cp      'G'
+            ret     nz
+            ld      (hl), '.'        ; the gold is taken — floor from now on
+            call    pos_bc           ; B = row, C = col
+            call    draw_floor_cell  ; repaint the cell as plain floor
+            call    sfx_pickup
+            ld      hl, gold_remaining
+            dec     (hl)
+            ret
+
+; draw_floor_cell — paint the floor tile at (row B, col C). Lighting (Unit 13)
+; will replace this with a shade chosen by distance from the nearest torch.
+draw_floor_cell:
+            ld      hl, floor_tile
+            ld      (tile_ptr), hl
+            ld      a, FLOOR_ATTR
+            ld      (tile_attr), a
+            call    draw_tile
+            ret
+
+; ----------------------------------------------------------------------------
+; beep — the one tone primitive (the tiny game's blip, reused). B = cycles,
+; C = the delay between speaker toggles (the pitch; larger C = lower).
+; ----------------------------------------------------------------------------
+beep:
+.bp_cycle:
+            ld      a, %00010000
+            out     ($FE), a
+            ld      e, c
+.bp_hi:
+            dec     e
+            jr      nz, .bp_hi
+            xor     a
+            out     ($FE), a
+            ld      e, c
+.bp_lo:
+            dec     e
+            jr      nz, .bp_lo
+            djnz    .bp_cycle
+            ret
+
+; sfx_pickup — a bright two-blip chime: the sound of gold.
+sfx_pickup:
+            ld      b, 8
+            ld      c, 20
+            call    beep
+            ld      b, 8
+            ld      c, 14
+            call    beep
+            ret
+
+gold_tile:
+            defb    %00000000
+            defb    %00111100
+            defb    %01111110
+            defb    %01111110
+            defb    %01111110
+            defb    %01111110
+            defb    %00111100
+            defb    %00000000
+
 scr_addr_cr:
             ld      a, b
             and     %00011000
@@ -480,49 +455,41 @@ attr_addr_cr:
             add     hl, de
             ret
 
-; ----------------------------------------------------------------------------
-; Palette — '.' is handled by the lighting path, so its entry here is only a
-; fallback; '#', 'T' and '+' are looked up as normal.
-; ----------------------------------------------------------------------------
 palette:
             defb    '.'
-            defw    shade2_tile
+            defw    floor_tile
             defb    FLOOR_ATTR
             defb    '#'
             defw    wall_tile
             defb    WALL_ATTR
-            defb    'T'
-            defw    torch_tile
-            defb    TORCH_ATTR
             defb    '+'
             defw    mark_tile
             defb    MARK_ATTR
+            defb    'G'
+            defw    gold_tile
+            defb    GOLD_ATTR
 
-; The shade ramp: lightest (lit) to darkest (deep shadow), all blue/black dither.
-shade_tiles:
-            defw    shade0_tile
-            defw    shade1_tile
-            defw    shade2_tile
-            defw    shade3_tile
-            defw    shade4_tile
-
+; ----------------------------------------------------------------------------
+; The keep: three rooms. Hall -east-> Gallery -north-> Vault, and back.
+;   entry: map ptr, North, South, East, West
+; ----------------------------------------------------------------------------
 rooms:
             defw    room0_state
-            defb    NO_EXIT, NO_EXIT, 1, NO_EXIT
+            defb    NO_EXIT, NO_EXIT, 1, NO_EXIT      ; Hall: east -> Gallery
             defw    room1_state
-            defb    2, NO_EXIT, NO_EXIT, 0
+            defb    2, NO_EXIT, NO_EXIT, 0            ; Gallery: north -> Vault, west -> Hall
             defw    room2_state
-            defb    NO_EXIT, 1, NO_EXIT, NO_EXIT
+            defb    NO_EXIT, 1, NO_EXIT, NO_EXIT      ; Vault: south -> Gallery
 
-; The Great Hall — a torch ('T') set in the top wall, column 15.
+; The Great Hall — four pillars, east door at row 11.
 room0_template:
-            defb    "###############T################"
+            defb    "################################"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#..............................#"
+            defb    "#.........................G....#"
             defb    "#..............................#"
             defb    "#........##..........##........#"
             defb    "#........##..........##........#"
@@ -536,12 +503,13 @@ room0_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#..............................#"
+            defb    "#.........................G....#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "################################"
 
-; The Gallery — a torch low on the south wall.
+; The Gallery — a dividing wall with one gap (column 15). West door (row 11)
+; back to the Hall; north door (column 15) up to the Vault.
 room1_template:
             defb    "###############.################"
             defb    "#..............................#"
@@ -554,7 +522,7 @@ room1_template:
             defb    "###############.################"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "...............................#"
+            defb    "........................G......#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -563,14 +531,15 @@ room1_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
+            defb    "#.......................G......#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "###############T################"
+            defb    "################################"
 
-; The Vault — a torch in the top wall above the altar.
+; The Vault — a great altar of stone in the middle, south door (column 15)
+; down to the Gallery.
 room2_template:
-            defb    "###############T################"
+            defb    "################################"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -590,33 +559,12 @@ room2_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#..............................#"
+            defb    "#.........G.........G..........#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "###############.################"
 
-; ----------------------------------------------------------------------------
-; The five shades of floor — same blue/black, denser and darker each step.
-; ----------------------------------------------------------------------------
-shade0_tile:                        ; lit — nearly all blue
-            defb    %00000000
-            defb    %00100010
-            defb    %00000000
-            defb    %00000000
-            defb    %00000000
-            defb    %10001000
-            defb    %00000000
-            defb    %00000000
-shade1_tile:
-            defb    %00100010
-            defb    %00000000
-            defb    %10001000
-            defb    %00000000
-            defb    %00100010
-            defb    %00000000
-            defb    %10001000
-            defb    %00000000
-shade2_tile:                        ; the half-and-half slate from Unit 2
+floor_tile:
             defb    %10101010
             defb    %01010101
             defb    %10101010
@@ -625,24 +573,6 @@ shade2_tile:                        ; the half-and-half slate from Unit 2
             defb    %01010101
             defb    %10101010
             defb    %01010101
-shade3_tile:
-            defb    %10101010
-            defb    %11111111
-            defb    %01010101
-            defb    %11111111
-            defb    %10101010
-            defb    %11111111
-            defb    %01010101
-            defb    %11111111
-shade4_tile:                        ; deep shadow — nearly all black
-            defb    %11111111
-            defb    %11101110
-            defb    %11111111
-            defb    %10111011
-            defb    %11111111
-            defb    %11101110
-            defb    %11111111
-            defb    %10111011
 
 wall_tile:
             defb    %00010001
@@ -653,16 +583,6 @@ wall_tile:
             defb    %00000000
             defb    %01000100
             defb    %00000000
-
-torch_tile:                         ; a flame in its sconce
-            defb    %00010000
-            defb    %00111000
-            defb    %00111000
-            defb    %01111100
-            defb    %01111100
-            defb    %01111100
-            defb    %00111000
-            defb    %00010000
 
 mark_tile:
             defb    %00000000
@@ -686,10 +606,6 @@ thief:
 
 current_room:
             defb    0
-torch_col:
-            defb    NO_TORCH
-torch_row:
-            defb    NO_TORCH
 thief_col:
             defb    START_COL
 thief_row:
@@ -706,6 +622,8 @@ tile_attr:
             defb    0
 under_thief:
             defb    0, 0, 0, 0, 0, 0, 0, 0, 0
+gold_remaining:
+            defb    TOTAL_GOLD
 
 room0_state:
             defs    768

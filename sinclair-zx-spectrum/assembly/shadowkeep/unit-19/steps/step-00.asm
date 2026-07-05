@@ -1,12 +1,18 @@
-; Shadowkeep — Unit 11: Join the Sleepers
+; Shadowkeep — Unit 19: Stand or Sleep
 ; Cumulative build; every step runs on its own. Narrative: the unit page.
-; step-00 = Unit 10's end: a Warden patrols the Hall, but cannot yet harm you.
+; step-00 = Unit 18's end: the whole game, its title bare above the keep.
 
             org     32768
 
 WALL_ATTR   equ     %01001000
 FLOOR_ATTR  equ     %00001000
 MARK_ATTR   equ     %00001111
+TORCH_ATTR  equ     %01001110         ; BRIGHT, blue paper, yellow ink — a lit sconce
+STATUE_ATTR equ     %01001111         ; BRIGHT white on blue — pale stone (solid)
+BANNER_ATTR equ     %01001011         ; BRIGHT magenta on blue — a hanging (solid)
+RUBBLE_ATTR equ     %00001000         ; dim, like floor — walkable broken stone
+MAX_SHADE   equ     4
+MAX_TORCHES equ     4
 THIEF       equ     %01001010
 GOLD_ATTR   equ     %00000110         ; yellow ink, no BRIGHT -> walkable gold
 TOTAL_GOLD  equ     6
@@ -15,6 +21,8 @@ WARDEN_COL0 equ     26                ; the Hall's gold column
 WARDEN_ROW0 equ     11
 WARDEN_SPEED equ    10                ; frames between patrol steps
 WARDEN_GATHER equ   50                ; a beat before it begins to move
+AXIS_HORIZ  equ     0                 ; the Warden varies its column (walks a row)
+AXIS_VERT   equ     1                 ; the Warden varies its row (walks a column)
 WALL_BIT    equ     6
 
 START_COL   equ     15
@@ -42,11 +50,15 @@ main_title:
             or      a
             jr      nz, .won
             call    player_step
-            ld      a, (current_room)
+            call    warden_step      ; every room has its Warden now
+            ld      a, (caught)
             or      a
-            call    z, warden_step   ; the Warden haunts the Hall (room 0)
+            jr      nz, .lost
             call    mark_step
             jr      .game_loop
+.lost:
+            call    show_lose        ; "THE KEEP SLEEPS", the sting, wait for SPACE
+            jr      main_title
 .won:
             call    show_win         ; "THE KEEP STANDS", flourish, wait for SPACE
             jr      main_title       ; round again
@@ -70,6 +82,7 @@ new_game:
             xor     a
             ld      (current_room), a
             ld      (won), a
+            ld      (caught), a
             ld      a, TOTAL_GOLD
             ld      (gold_remaining), a
             ld      a, START_COL
@@ -80,14 +93,7 @@ new_game:
             call    draw_room
             call    save_under
             call    draw_thief
-            ld      a, WARDEN_COL0
-            ld      (warden_col), a
-            ld      a, WARDEN_ROW0
-            ld      (warden_row), a
-            ld      a, -1
-            ld      (warden_dir), a
-            ld      a, WARDEN_GATHER
-            ld      (warden_timer), a
+            call    warden_enter     ; this room's Warden, from the table
             call    save_warden
             call    draw_warden
             ret
@@ -143,7 +149,129 @@ room_entry_addr:
             add     hl, de
             ret
 
+
+; ----------------------------------------------------------------------------
+; find_torch — scan the current room's map for 'T', remember where it is (or
+; NO_TORCH if the room is unlit).
+; ----------------------------------------------------------------------------
+; find_torches — collect every 'T' in the current room (up to MAX_TORCHES) into
+; torch_list as (col, row) pairs; torch_count says how many.
+find_torches:
+            xor     a
+            ld      (torch_count), a
+            call    room_entry_addr
+            ld      a, (hl)
+            inc     hl
+            ld      h, (hl)
+            ld      l, a
+            ld      b, 0
+.fr_row:
+            ld      c, 0
+.fr_col:
+            ld      a, (hl)
+            cp      'T'
+            jr      nz, .fr_skip
+            ld      a, (torch_count)
+            cp      MAX_TORCHES
+            jr      nc, .fr_skip
+            push    hl
+            add     a, a            ; count * 2
+            ld      e, a
+            ld      d, 0
+            ld      hl, torch_list
+            add     hl, de
+            ld      (hl), c         ; column
+            inc     hl
+            ld      (hl), b         ; row
+            pop     hl
+            ld      a, (torch_count)
+            inc     a
+            ld      (torch_count), a
+.fr_skip:
+            inc     hl
+            inc     c
+            ld      a, c
+            cp      32
+            jr      nz, .fr_col
+            inc     b
+            ld      a, b
+            cp      24
+            jr      nz, .fr_row
+            ret
+
+; ----------------------------------------------------------------------------
+; shade_for_cell — row in B, column in C. Returns a shade 0..4 in A: the
+; Chebyshev distance to the torch, halved and clamped. Near the flame = 0
+; (lightest); far away = 4 (darkest). No torch = darkest everywhere.
+; ----------------------------------------------------------------------------
+shade_for_cell:
+            push    bc
+            ld      a, b
+            ld      (cell_row), a
+            ld      a, c
+            ld      (cell_col), a
+            ld      a, (torch_count)
+            or      a
+            jr      z, .sf_dark
+            ld      a, 255
+            ld      (min_dist), a
+            ld      hl, torch_list
+            ld      a, (torch_count)
+            ld      b, a            ; loop count
+.sf_loop:
+            ld      a, (cell_col)
+            sub     (hl)            ; - torch col
+            jr      nc, .sf_dc
+            neg
+.sf_dc:
+            ld      d, a            ; |dc|
+            inc     hl              ; -> torch row
+            ld      a, (cell_row)
+            sub     (hl)
+            jr      nc, .sf_dr
+            neg
+.sf_dr:
+            inc     hl              ; -> next torch pair
+            cp      d               ; A = |dr|; take the larger
+            jr      nc, .sf_mx
+            ld      a, d
+.sf_mx:
+            ld      e, a            ; this torch's distance
+            ld      a, (min_dist)
+            cp      e
+            jr      c, .sf_keep     ; min already smaller
+            ld      a, e
+            ld      (min_dist), a
+.sf_keep:
+            djnz    .sf_loop
+
+            ld      a, (current_room)
+            ld      c, a
+            ld      b, 0
+            ld      hl, room_falloff
+            add     hl, bc
+            ld      b, (hl)
+            ld      a, (min_dist)
+            inc     b
+.sf_shift:
+            dec     b
+            jr      z, .sf_clamp
+            srl     a
+            jr      .sf_shift
+.sf_clamp:
+            cp      MAX_SHADE + 1
+            jr      c, .sf_done
+            ld      a, MAX_SHADE
+.sf_done:
+            pop     bc
+            ret
+.sf_dark:
+            ld      a, MAX_SHADE
+            pop     bc
+            ret
+
 draw_room:
+            call    find_torches
             call    room_entry_addr
             ld      a, (hl)
             inc     hl
@@ -156,8 +284,26 @@ draw_room:
 .room_col:
             ld      hl, (map_ptr)
             ld      a, (hl)
+            cp      '.'
+            jr      nz, .not_floor
+            call    shade_for_cell
+            add     a, a
+            ld      e, a
+            ld      d, 0
+            ld      hl, shade_tiles
+            add     hl, de
+            ld      e, (hl)
+            inc     hl
+            ld      d, (hl)
+            ld      (tile_ptr), de
+            ld      a, FLOOR_ATTR
+            ld      (tile_attr), a
+            call    draw_tile
+            jr      .cell_done
+.not_floor:
             call    lookup_tile
             call    draw_tile
+.cell_done:
             ld      hl, (map_ptr)
             inc     hl
             ld      (map_ptr), hl
@@ -261,6 +407,7 @@ player_step:
             call    collect_gold     ; the new cell might be gold — lift it first
             call    save_under
             call    draw_thief
+            call    sfx_step
             call    check_exit
             ret
 
@@ -326,12 +473,11 @@ check_exit:
             ld      a, 1
             ld      (thief_row), a
 .enter:
+            call    sfx_door
             call    draw_room
             call    save_under
             call    draw_thief
-            ld      a, (current_room)
-            or      a
-            ret     nz               ; the Warden is only in the Hall
+            call    warden_enter     ; this room's Warden, clear of the entry cell
             call    save_warden
             call    draw_warden
             ret
@@ -478,12 +624,38 @@ warden_step:
             ret     nz
             ld      a, WARDEN_SPEED
             ld      (warden_timer), a
+            ; propose the next cell along the patrol axis, in the current dir
+            ld      a, (warden_axis)
+            or      a
+            jr      nz, .ws_vert
+.ws_horiz:
+            ld      a, (warden_row)
+            ld      b, a             ; B = row (fixed)
+            ld      a, (warden_dir)
+            ld      hl, warden_col
+            add     a, (hl)
+            ld      c, a             ; C = next col
+            jr      .ws_have
+.ws_vert:
             ld      a, (warden_col)
-            ld      c, a             ; C = column (fixed)
+            ld      c, a             ; C = col (fixed)
             ld      a, (warden_dir)
             ld      hl, warden_row
             add     a, (hl)
             ld      b, a             ; B = next row
+.ws_have:
+            ld      a, b             ; the thief there? caught — check BEFORE
+            ld      hl, thief_row    ; wall_at, because his own cell reads as wall
+            cp      (hl)
+            jr      nz, .ws_wall
+            ld      a, c
+            ld      hl, thief_col
+            cp      (hl)
+            jr      nz, .ws_wall
+            ld      a, 1
+            ld      (caught), a
+            ret
+.ws_wall:
             push    bc
             call    wall_at
             pop     bc
@@ -493,14 +665,52 @@ warden_step:
             ld      (warden_dir), a
             ret
 .ws_commit:
-            push    bc               ; keep the proposed row — restore heals the OLD cell
+            push    bc               ; keep the proposed (row B, col C)
             call    restore_warden
             pop     bc
+            ld      a, c
+            ld      (warden_col), a
             ld      a, b
             ld      (warden_row), a
             call    save_warden      ; photograph the new cell's ground
             call    draw_warden
             ret
+
+; ----------------------------------------------------------------------------
+; warden_enter — instantiate the current room's Warden from warden_table: place
+; it at the route-start (chosen clear of the entry cell), set its axis, and start
+; its gather. Called on new_game and on every room change. A second mover is a
+; table entry — like the torches and the gold.
+; ----------------------------------------------------------------------------
+warden_enter:
+            ld      a, (current_room)
+            add     a, a
+            add     a, a             ; * 4 bytes per table row
+            ld      e, a
+            ld      d, 0
+            ld      hl, warden_table
+            add     hl, de
+            ld      a, (hl)
+            ld      (warden_col), a
+            inc     hl
+            ld      a, (hl)
+            ld      (warden_row), a
+            inc     hl
+            ld      a, (hl)
+            ld      (warden_dir), a
+            inc     hl
+            ld      a, (hl)
+            ld      (warden_axis), a
+            ld      a, WARDEN_GATHER
+            ld      (warden_timer), a
+            ret
+
+; warden_table — one row per room: start col, start row, dir (+1/-1), axis.
+; Each route crosses that room's gold and starts clear of the entry cell.
+warden_table:
+            defb    WARDEN_COL0, WARDEN_ROW0, -1, AXIS_VERT   ; Hall — the gold's column
+            defb    24, 15, -1, AXIS_VERT                     ; Gallery — column 24, lower chamber
+            defb    15, 20, -1, AXIS_HORIZ                    ; Vault — row 20, between the coins
 
 ; ----------------------------------------------------------------------------
 ; The gold — the keep's goal. Step onto a coin and it lifts: the map cell turns
@@ -526,8 +736,16 @@ collect_gold:
 ; draw_floor_cell — paint the floor tile at (row B, col C). Lighting (Unit 13)
 ; will replace this with a shade chosen by distance from the nearest torch.
 draw_floor_cell:
-            ld      hl, floor_tile
-            ld      (tile_ptr), hl
+            call    shade_for_cell
+            add     a, a
+            ld      e, a
+            ld      d, 0
+            ld      hl, shade_tiles
+            add     hl, de
+            ld      e, (hl)
+            inc     hl
+            ld      d, (hl)
+            ld      (tile_ptr), de
             ld      a, FLOOR_ATTR
             ld      (tile_attr), a
             call    draw_tile
@@ -564,6 +782,80 @@ sfx_pickup:
             call    beep
             ret
 
+; sfx_step — a footfall: short and low, gone almost before you notice it. Played
+; under every successful move.
+sfx_step:
+            ld      b, 5
+            ld      c, 90
+            call    beep
+            ret
+
+; sfx_door — a creak: a tone that falls in pitch as it plays, so the note groans
+; downward — a heavy door swinging on its hinges.
+sfx_door:
+            ld      c, 36            ; start higher
+.sd_sweep:
+            ld      b, 3
+            push    bc
+            call    beep
+            pop     bc
+            inc     c                ; lower the pitch a little
+            inc     c
+            ld      a, c
+            cp      130              ; until it has groaned down low
+            jr      c, .sd_sweep
+            ret
+
+; ----------------------------------------------------------------------------
+; The music player — a note-table interpreter for the title theme.
+; play_note — C = pitch (beep delay), D = duration in chunks. A note is the beep
+; primitive run for D fixed-size chunks, so a note can be long though one beep's
+; cycle count is a single byte.
+; ----------------------------------------------------------------------------
+play_note:
+.pn_loop:
+            ld      b, 24            ; one chunk = 24 square-wave cycles
+            push    de
+            call    beep             ; B cycles at pitch C
+            pop     de
+            dec     d
+            jr      nz, .pn_loop
+            ret
+
+; rest_chunks — D chunks of silence, timed to roughly match a note chunk so rests
+; sit in the rhythm.
+rest_chunks:
+.rc_loop:
+            ld      b, 24
+.rc_inner:
+            ld      e, 75
+.rc_wait:
+            dec     e
+            jr      nz, .rc_wait
+            djnz    .rc_inner
+            dec     d
+            jr      nz, .rc_loop
+            ret
+
+; The theme — a short, solemn phrase in D minor. Pitch values are beep delay
+; constants (larger = lower); durations are chunk counts. One voice, no harmony:
+; the melody carries the whole mood by itself.
+theme:
+            defb    75, 8            ; D5
+            defb    63, 8            ; F5
+            defb    50, 8            ; A5
+            defb    50, 12           ; A5 (held)
+            defb    56, 8            ; G5
+            defb    63, 8            ; F5
+            defb    66, 8            ; E5
+            defb    75, 16           ; D5 (resolve)
+            defb    0,  6            ; breath
+            defb    56, 8            ; G5
+            defb    63, 8            ; F5
+            defb    50, 8            ; A5
+            defb    75, 16           ; D5 (home)
+            defb    $FF              ; end
+
 gold_tile:
             defb    %00000000
             defb    %00111100
@@ -572,6 +864,106 @@ gold_tile:
             defb    %01111110
             defb    %01111110
             defb    %00111100
+            defb    %00000000
+
+; One byte of mood per room: how slowly its light fades.
+room_falloff:
+            defb    2                   ; Hall — broad, soft pool
+            defb    1                   ; Gallery — medium
+            defb    0                   ; Vault — tight pool, deep dark
+
+; The shade ramp: lightest (lit) to darkest (deep shadow), all blue/black dither.
+shade_tiles:
+            defw    shade0_tile
+            defw    shade1_tile
+            defw    shade2_tile
+            defw    shade3_tile
+            defw    shade4_tile
+
+shade0_tile:                        ; lit — nearly all blue
+            defb    %00000000
+            defb    %00100010
+            defb    %00000000
+            defb    %00000000
+            defb    %00000000
+            defb    %10001000
+            defb    %00000000
+            defb    %00000000
+shade1_tile:
+            defb    %00100010
+            defb    %00000000
+            defb    %10001000
+            defb    %00000000
+            defb    %00100010
+            defb    %00000000
+            defb    %10001000
+            defb    %00000000
+shade2_tile:                        ; the half-and-half slate from Unit 2
+            defb    %10101010
+            defb    %01010101
+            defb    %10101010
+            defb    %01010101
+            defb    %10101010
+            defb    %01010101
+            defb    %10101010
+            defb    %01010101
+shade3_tile:
+            defb    %10101010
+            defb    %11111111
+            defb    %01010101
+            defb    %11111111
+            defb    %10101010
+            defb    %11111111
+            defb    %01010101
+            defb    %11111111
+shade4_tile:                        ; deep shadow — nearly all black
+            defb    %11111111
+            defb    %11101110
+            defb    %11111111
+            defb    %10111011
+            defb    %11111111
+            defb    %11101110
+            defb    %11111111
+            defb    %10111011
+
+torch_tile:                         ; a flame in its sconce
+            defb    %00010000
+            defb    %00111000
+            defb    %00111000
+            defb    %01111100
+            defb    %01111100
+            defb    %01111100
+            defb    %00111000
+            defb    %00010000
+
+statue_tile:
+            defb    %00111100
+            defb    %01111110
+            defb    %00111100
+            defb    %00011000
+            defb    %00011000
+            defb    %00111100
+            defb    %01111110
+            defb    %01111110
+
+banner_tile:
+            defb    %01111110
+            defb    %01111110
+            defb    %01011010
+            defb    %01011010
+            defb    %01111110
+            defb    %01111110
+            defb    %00111100
+            defb    %00011000
+
+rubble_tile:
+            defb    %00000000
+            defb    %01100000
+            defb    %01100000
+            defb    %00000110
+            defb    %00000110
+            defb    %00011000
+            defb    %00011000
             defb    %00000000
 
 ; ----------------------------------------------------------------------------
@@ -590,16 +982,38 @@ show_title:
             ld      b, 16
             ld      c, 6
             call    print_string
-.tt_wait:
+.tt_tune:
+            ld      hl, theme
+.tt_note:
             ld      bc, KEYS_SPACE
             in      a, (c)
             bit     0, a
-            jr      nz, .tt_wait
-.tt_rel:
-            ld      bc, KEYS_SPACE
+            jr      z, .tt_pressed   ; SPACE down -> leave
+            ld      a, (hl)
+            inc     hl
+            cp      $FF
+            jr      z, .tt_tune      ; end of tune -> loop it
+            ld      c, a
+            ld      a, (hl)
+            inc     hl
+            ld      d, a
+            ld      a, c
+            or      a
+            jr      z, .tt_rest
+            push    hl
+            call    play_note
+            pop     hl
+            jr      .tt_note
+.tt_rest:
+            push    hl
+            call    rest_chunks
+            pop     hl
+            jr      .tt_note
+.tt_pressed:
+            ld      bc, KEYS_SPACE   ; debounce: wait for release
             in      a, (c)
             bit     0, a
-            jr      z, .tt_rel
+            jr      z, .tt_pressed
             ret
 
 ; show_win — the keep is cleared. Black screen, the words, the flourish, then
@@ -708,6 +1122,56 @@ str_won:
 str_again:
             defb    "PRESS SPACE TO RETURN", 0
 
+; ----------------------------------------------------------------------------
+; show_lose — the mirror of show_win. Black screen, the words, the freezing
+; sting, then wait for SPACE (and release) to return to the title.
+; ----------------------------------------------------------------------------
+show_lose:
+            di
+            call    clear_screen
+            ld      hl, str_lost
+            ld      b, 9
+            ld      c, 8
+            call    print_string
+            ld      hl, str_again
+            ld      b, 15
+            ld      c, 5
+            call    print_string
+            call    sfx_caught
+.slo_wait:
+            ld      bc, KEYS_SPACE
+            in      a, (c)
+            bit     0, a
+            jr      nz, .slo_wait
+.slo_rel:
+            ld      bc, KEYS_SPACE
+            in      a, (c)
+            bit     0, a
+            jr      z, .slo_rel
+            ret
+
+; sfx_caught — the plunge into stasis: a quick fall, then a deep, long toll as
+; the stone closes over you. The opposite of the win flourish.
+sfx_caught:
+            ld      c, 16
+.sca_fall:
+            ld      b, 5
+            push    bc
+            call    beep
+            pop     bc
+            ld      a, c
+            add     a, 7
+            ld      c, a
+            cp      100
+            jr      c, .sca_fall
+            ld      b, 60
+            ld      c, 130
+            call    beep
+            ret
+
+str_lost:
+            defb    "THE KEEP SLEEPS", 0
+
 scr_addr_cr:
             ld      a, b
             and     %00011000
@@ -752,6 +1216,18 @@ palette:
             defb    'G'
             defw    gold_tile
             defb    GOLD_ATTR
+            defb    'T'
+            defw    torch_tile
+            defb    TORCH_ATTR
+            defb    'S'
+            defw    statue_tile
+            defb    STATUE_ATTR
+            defb    'B'
+            defw    banner_tile
+            defb    BANNER_ATTR
+            defb    'o'
+            defw    rubble_tile
+            defb    RUBBLE_ATTR
 
 ; ----------------------------------------------------------------------------
 ; The keep: three rooms. Hall -east-> Gallery -north-> Vault, and back.
@@ -767,15 +1243,15 @@ rooms:
 
 ; The Great Hall — four pillars, east door at row 11.
 room0_template:
-            defb    "################################"
+            defb    "###############T################"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
+            defb    "B..............S...............B"
+            defb    "#.............ooo.........G....#"
             defb    "#..............................#"
-            defb    "#.........................G....#"
-            defb    "#..............................#"
-            defb    "#........##..........##........#"
+            defb    "T........##..........##........T"
             defb    "#........##..........##........#"
             defb    "#..............................#"
             defb    "#..............................."
@@ -799,7 +1275,7 @@ room1_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#..............................#"
+            defb    "#..............................T"
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
@@ -810,15 +1286,15 @@ room1_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
+            defb    "B..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#..............................#"
-            defb    "#..............................#"
+            defb    "#........................ooo...#"
             defb    "#..............................#"
             defb    "#.......................G......#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "################################"
+            defb    "###############T################"
 
 ; The Vault — a great altar of stone in the middle, south door (column 15)
 ; down to the Gallery.
@@ -833,7 +1309,7 @@ room2_template:
             defb    "#..............................#"
             defb    "#..............................#"
             defb    "#..............................#"
-            defb    "#.............####.............#"
+            defb    "#.............#T##.............#"
             defb    "#.............####.............#"
             defb    "#.............####.............#"
             defb    "#.............####.............#"
@@ -918,8 +1394,22 @@ warden_row:
             defb    WARDEN_ROW0
 warden_dir:
             defb    -1
+warden_axis:
+            defb    AXIS_VERT
 warden_timer:
             defb    WARDEN_GATHER
+caught:
+            defb    0
+torch_count:
+            defb    0
+cell_row:
+            defb    0
+cell_col:
+            defb    0
+min_dist:
+            defb    0
+torch_list:
+            defs    MAX_TORCHES * 2
 
 room0_state:
             defs    768
