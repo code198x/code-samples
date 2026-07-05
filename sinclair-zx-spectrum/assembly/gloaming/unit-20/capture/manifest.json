@@ -45,6 +45,34 @@
         {"screenshot": "step-02-title.png"},
         {"wait": 10},
         {"stop_video": true}
+      ] },
+    { "id": "step-03-tie-stolen",
+      "program": "steps/step-02.asm",
+      "comment": "The shipped build on the tie: the 8th lamp lit on the last life as the wisp lands the same frame. draught_step resolves the catch before the win is asked, so a won game reads NIGHT FALLS. (Pokes are step-02's own addresses.)",
+      "timeline": [
+        {"wait": 220},
+        {"hold": "SPACE"}, {"wait": 8}, {"release": "SPACE"},
+        {"wait": 60},
+        {"poke": "0x8601", "value": 15}, {"poke": "0x8602", "value": 11},
+        {"poke": "0x8608", "value": 14}, {"poke": "0x8609", "value": 11},
+        {"poke": "0x860A", "value": 1},
+        {"poke": "0x8605", "value": 8}, {"poke": "0x8606", "value": 1},
+        {"wait": 90},
+        {"screenshot": "step-03-tie-stolen.png"}
+      ] },
+    { "id": "step-03-tie-held",
+      "program": "steps/step-03.asm",
+      "comment": "The corrected build, identical tie: the win check now runs before the wisp's move, so lighting the last lamp holds the night this instant and the win is kept. (Pokes are step-03's own addresses, shifted +8 by the fix's code.)",
+      "timeline": [
+        {"wait": 220},
+        {"hold": "SPACE"}, {"wait": 8}, {"release": "SPACE"},
+        {"wait": 60},
+        {"poke": "0x8609", "value": 15}, {"poke": "0x860A", "value": 11},
+        {"poke": "0x8610", "value": 14}, {"poke": "0x8611", "value": 11},
+        {"poke": "0x8612", "value": 1},
+        {"poke": "0x860D", "value": 8}, {"poke": "0x860E", "value": 1},
+        {"wait": 90},
+        {"screenshot": "step-03-tie-held.png"}
       ] }
   ]
 }

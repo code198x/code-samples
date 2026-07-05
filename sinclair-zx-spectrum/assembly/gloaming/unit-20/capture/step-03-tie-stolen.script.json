@@ -1,0 +1,83 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/gloaming/unit-20/steps/step-02.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 220
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "SPACE",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "SPACE",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 60
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34305,
+  "value": 15
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34306,
+  "value": 11
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34312,
+  "value": 14
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34313,
+  "value": 11
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34314,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34309,
+  "value": 8
+ },
+ {
+  "action": "poke_byte",
+  "addr": 34310,
+  "value": 1
+ },
+ {
+  "action": "run_frames",
+  "frames": 90
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/gloaming/unit-20/step-03-tie-stolen.png"
+ }
+]
