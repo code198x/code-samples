@@ -1,0 +1,134 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-19/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 120
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 40
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 40
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36929,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 37330,
+  "value": 71
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36911,
+  "value": 19
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36912,
+  "value": 11
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36940,
+  "value": 20
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36941,
+  "value": 10
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36942,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36943,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36944,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36910,
+  "value": 0
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36930,
+  "value": 0
+ },
+ {
+  "action": "poke_byte",
+  "addr": 36945,
+  "value": 0
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 1
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "P",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 70
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-19/step-02-tie-slept.png"
+ }
+]

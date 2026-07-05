@@ -270,6 +270,30 @@
      "stop_video": true
     }
    ]
-  }
+  },
+  { "id": "step-02-tie-slept", "program": "steps/step-01.asm",
+    "comment": "Shipped build on the tie: the last coin lifted (player_step) as a Warden lands the same frame (warden_step). The loop tests caught before it re-tests won, so a completed theft reads THE KEEP SLEEPS. Poked: a last coin at row 11 col 20, a Warden set to land there next frame, the thief one step west, then P held one frame.",
+    "timeline": [
+      {"wait":120},{"hold":"Space"},{"wait":40},{"release":"Space"},{"wait":40},
+      {"poke":"0x9041","value":1},{"poke":"0x91D2","value":71},
+      {"poke":"0x902F","value":19},{"poke":"0x9030","value":11},
+      {"poke":"0x904C","value":20},{"poke":"0x904D","value":10},
+      {"poke":"0x904E","value":1},{"poke":"0x904F","value":1},{"poke":"0x9050","value":1},
+      {"poke":"0x902E","value":0},{"poke":"0x9042","value":0},{"poke":"0x9051","value":0},
+      {"hold":"P"},{"wait":1},{"release":"P"},{"wait":70},
+      {"screenshot":"step-02-tie-slept.png"}
+    ] },
+  { "id": "step-02-tie-stands", "program": "steps/step-02.asm",
+    "comment": "Corrected build, identical tie: the loop now tests won before caught, so a theft completed the same frame the Warden lands still reads THE KEEP STANDS. step-02 shares step-01's addresses -- the fix is a reorder, not new bytes.",
+    "timeline": [
+      {"wait":120},{"hold":"Space"},{"wait":40},{"release":"Space"},{"wait":40},
+      {"poke":"0x9041","value":1},{"poke":"0x91D2","value":71},
+      {"poke":"0x902F","value":19},{"poke":"0x9030","value":11},
+      {"poke":"0x904C","value":20},{"poke":"0x904D","value":10},
+      {"poke":"0x904E","value":1},{"poke":"0x904F","value":1},{"poke":"0x9050","value":1},
+      {"poke":"0x902E","value":0},{"poke":"0x9042","value":0},{"poke":"0x9051","value":0},
+      {"hold":"P"},{"wait":1},{"release":"P"},{"wait":70},
+      {"screenshot":"step-02-tie-stands.png"}
+    ] }
  ]
 }
