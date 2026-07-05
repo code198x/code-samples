@@ -1,0 +1,38 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-18",
+ "captures": [
+  {
+   "id": "step-01-title",
+   "program": "steps/step-01.asm",
+   "comment": "The title, the theme looping beneath it (no SPACE \u2014 we stay on the title).",
+   "timeline": [
+    {
+     "wait": 40
+    },
+    {
+     "screenshot": "step-01-title.png"
+    }
+   ]
+  },
+  {
+   "id": "step-01-theme",
+   "program": "steps/step-01.asm",
+   "comment": "Record the looping D-minor title theme.",
+   "timeline": [
+    {
+     "wait": 30
+    },
+    {
+     "record_audio": "step-01-theme.wav"
+    },
+    {
+     "wait": 320
+    },
+    {
+     "stop_audio": true
+    }
+   ]
+  }
+ ]
+}

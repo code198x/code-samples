@@ -5,10 +5,10 @@
  },
  {
   "action": "run_frames",
-  "frames": 14
+  "frames": 40
  },
  {
   "action": "save_screenshot",
-  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-09/step-01-lit.png"
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-09/step-01-gold.png"
  }
 ]

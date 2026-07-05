@@ -5,18 +5,14 @@
  },
  {
   "action": "run_frames",
-  "frames": 60
- },
- {
-  "action": "start_audio_recording",
-  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-13/step-01-footsteps.wav"
+  "frames": 40
  },
  {
   "action": "input",
   "events": [
    {
     "Key": {
-     "name": "P",
+     "name": "Space",
      "pressed": true
     }
    }
@@ -24,14 +20,14 @@
  },
  {
   "action": "run_frames",
-  "frames": 12
+  "frames": 10
  },
  {
   "action": "input",
   "events": [
    {
     "Key": {
-     "name": "P",
+     "name": "Space",
      "pressed": false
     }
    }
@@ -39,9 +35,10 @@
  },
  {
   "action": "run_frames",
-  "frames": 4
+  "frames": 24
  },
  {
-  "action": "stop_audio_recording"
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-13/step-01-lit.png"
  }
 ]

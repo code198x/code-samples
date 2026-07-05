@@ -1,19 +1,41 @@
 [
  {
   "action": "load_snapshot",
-  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-10/steps/step-01.sna"
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-11/steps/step-02.sna"
  },
  {
   "action": "run_frames",
-  "frames": 14
+  "frames": 40
  },
  {
-  "action": "start_video_recording",
-  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-10/step-01-around-and-over.mp4"
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
  },
  {
   "action": "run_frames",
   "frames": 10
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 24
  },
  {
   "action": "input",
@@ -28,7 +50,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 12
+  "frames": 1
  },
  {
   "action": "input",
@@ -42,40 +64,6 @@
   ]
  },
  {
-  "action": "run_frames",
-  "frames": 10
- },
- {
-  "action": "input",
-  "events": [
-   {
-    "Key": {
-     "name": "O",
-     "pressed": true
-    }
-   }
-  ]
- },
- {
-  "action": "run_frames",
-  "frames": 10
- },
- {
-  "action": "input",
-  "events": [
-   {
-    "Key": {
-     "name": "O",
-     "pressed": false
-    }
-   }
-  ]
- },
- {
-  "action": "run_frames",
-  "frames": 8
- },
- {
   "action": "input",
   "events": [
    {
@@ -88,7 +76,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 14
+  "frames": 11
  },
  {
   "action": "input",
@@ -103,9 +91,10 @@
  },
  {
   "action": "run_frames",
-  "frames": 8
+  "frames": 62
  },
  {
-  "action": "stop_video_recording"
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-11/step-02-keep-sleeps.png"
  }
 ]

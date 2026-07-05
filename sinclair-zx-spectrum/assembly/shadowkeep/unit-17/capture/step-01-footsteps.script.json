@@ -1,19 +1,45 @@
 [
  {
   "action": "load_snapshot",
-  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-09/steps/step-01.sna"
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/shadowkeep/unit-17/steps/step-01.sna"
  },
  {
   "action": "run_frames",
-  "frames": 14
+  "frames": 40
  },
  {
-  "action": "start_video_recording",
-  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-09/step-01-into-dark.mp4"
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
  },
  {
   "action": "run_frames",
-  "frames": 18
+  "frames": 10
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 24
+ },
+ {
+  "action": "start_audio_recording",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-17/step-01-footsteps.wav"
  },
  {
   "action": "input",
@@ -28,7 +54,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 16
+  "frames": 8
  },
  {
   "action": "input",
@@ -43,7 +69,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 12
+  "frames": 10
  },
  {
   "action": "input",
@@ -58,7 +84,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 16
+  "frames": 8
  },
  {
   "action": "input",
@@ -76,6 +102,6 @@
   "frames": 10
  },
  {
-  "action": "stop_video_recording"
+  "action": "stop_audio_recording"
  }
 ]

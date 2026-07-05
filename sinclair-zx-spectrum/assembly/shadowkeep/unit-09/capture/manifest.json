@@ -1,12 +1,227 @@
-{ "machine":"sinclair-zx-spectrum","image_dir":"sinclair-zx-spectrum/assembly/shadowkeep/unit-09",
-  "captures":[
-    {"id":"step-01-lit","program":"steps/step-01.asm",
-     "timeline":[{"wait":14},{"screenshot":"step-01-lit.png"}]},
-    {"id":"step-01-into-dark","program":"steps/step-01.asm",
-     "comment":"From the lit pool under the torch, walk straight down into deepening shadow — the baked gradient is a real space, and the thief carries each shade intact as he passes.",
-     "timeline":[{"wait":14},{"record_video":"step-01-into-dark.mp4"},
-       {"wait":18},
-       {"hold":"A"},{"wait":16},{"release":"A"},{"wait":12},
-       {"hold":"Q"},{"wait":16},{"release":"Q"},{"wait":10},
-       {"stop_video":true}]}
-  ]}
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-09",
+ "captures": [
+  {
+   "id": "step-01-gold",
+   "program": "steps/step-01.asm",
+   "comment": "step-01 boots straight into play (no title yet); the Hall with its two coins.",
+   "timeline": [
+    {
+     "wait": 40
+    },
+    {
+     "screenshot": "step-01-gold.png"
+    }
+   ]
+  },
+  {
+   "id": "step-02-clear",
+   "program": "steps/step-02.asm",
+   "comment": "All six coins across three rooms -> THE KEEP STANDS.",
+   "timeline": [
+    {
+     "wait": 40
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 24
+    },
+    {
+     "record_video": "step-02-clear.mp4"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 11
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 14
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 22
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 23
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 20
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 22
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 2
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 70
+    },
+    {
+     "stop_video": true
+    }
+   ]
+  }
+ ]
+}

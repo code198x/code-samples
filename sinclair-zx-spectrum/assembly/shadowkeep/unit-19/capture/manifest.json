@@ -1,171 +1,33 @@
 {
  "machine": "sinclair-zx-spectrum",
- "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-12",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-19",
  "captures": [
   {
-   "id": "step-02-vault",
-   "program": "steps/step-02.asm",
-   "comment": "The Vault, its own Warden pacing the row between the two coins.",
+   "id": "step-01-title",
+   "program": "steps/step-01.asm",
+   "comment": "The title crowned with stone battlements, the theme looping.",
    "timeline": [
     {
      "wait": 40
     },
     {
-     "hold": "Space"
-    },
-    {
-     "wait": 10
-    },
-    {
-     "release": "Space"
-    },
-    {
-     "wait": 24
-    },
-    {
-     "hold": "A"
-    },
-    {
-     "wait": 9
-    },
-    {
-     "release": "A"
-    },
-    {
-     "hold": "P"
-    },
-    {
-     "wait": 11
-    },
-    {
-     "release": "P"
-    },
-    {
-     "hold": "O"
-    },
-    {
-     "wait": 1
-    },
-    {
-     "release": "O"
-    },
-    {
-     "hold": "Q"
-    },
-    {
-     "wait": 14
-    },
-    {
-     "release": "Q"
-    },
-    {
-     "hold": "P"
-    },
-    {
-     "wait": 1
-    },
-    {
-     "release": "P"
-    },
-    {
-     "hold": "P"
-    },
-    {
-     "wait": 1
-    },
-    {
-     "release": "P"
-    },
-    {
-     "hold": "A"
-    },
-    {
-     "wait": 5
-    },
-    {
-     "release": "A"
-    },
-    {
-     "hold": "P"
-    },
-    {
-     "wait": 4
-    },
-    {
-     "release": "P"
-    },
-    {
-     "wait": 22
-    },
-    {
-     "hold": "P"
-    },
-    {
-     "wait": 23
-    },
-    {
-     "release": "P"
-    },
-    {
-     "hold": "O"
-    },
-    {
-     "wait": 1
-    },
-    {
-     "release": "O"
-    },
-    {
-     "hold": "A"
-    },
-    {
-     "wait": 9
-    },
-    {
-     "release": "A"
-    },
-    {
-     "hold": "P"
-    },
-    {
-     "wait": 1
-    },
-    {
-     "release": "P"
-    },
-    {
-     "hold": "O"
-    },
-    {
-     "wait": 9
-    },
-    {
-     "release": "O"
-    },
-    {
-     "hold": "Q"
-    },
-    {
-     "wait": 20
-    },
-    {
-     "release": "Q"
-    },
-    {
-     "wait": 22
-    },
-    {
-     "screenshot": "step-02-vault.png"
+     "screenshot": "step-01-title.png"
     }
    ]
   },
   {
-   "id": "step-02-clear",
-   "program": "steps/step-02.asm",
-   "comment": "All six contested coins, all three guarded rooms -> THE KEEP STANDS.",
+   "id": "step-01-both-endings",
+   "program": "steps/step-01.asm",
+   "comment": "A win read to THE KEEP STANDS, back to the title, then a run caught -> THE KEEP SLEEPS.",
    "timeline": [
     {
-     "wait": 40
+     "wait": 60
+    },
+    {
+     "record_video": "step-01-both-endings.mp4"
+    },
+    {
+     "wait": 30
     },
     {
      "hold": "Space"
@@ -178,9 +40,6 @@
     },
     {
      "wait": 24
-    },
-    {
-     "record_video": "step-02-clear.mp4"
     },
     {
      "hold": "A"
@@ -358,6 +217,51 @@
     },
     {
      "release": "Q"
+    },
+    {
+     "wait": 60
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 24
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 11
+    },
+    {
+     "release": "P"
     },
     {
      "wait": 70

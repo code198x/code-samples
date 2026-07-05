@@ -5,7 +5,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 24
+  "frames": 40
  },
  {
   "action": "input",
@@ -20,7 +20,7 @@
  },
  {
   "action": "run_frames",
-  "frames": 14
+  "frames": 10
  },
  {
   "action": "input",
@@ -35,19 +35,10 @@
  },
  {
   "action": "run_frames",
-  "frames": 90
- },
- {
-  "action": "poke_byte",
-  "addr": 36510,
-  "value": 1
- },
- {
-  "action": "run_frames",
-  "frames": 40
+  "frames": 24
  },
  {
   "action": "save_screenshot",
-  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-16/step-01-win.png"
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/shadowkeep/unit-16/step-01-hall.png"
  }
 ]

@@ -1,0 +1,123 @@
+{
+ "machine": "sinclair-zx-spectrum",
+ "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-17",
+ "captures": [
+  {
+   "id": "step-01-hall",
+   "program": "steps/step-01.asm",
+   "comment": "The Hall, unchanged on screen; everything new here is heard.",
+   "timeline": [
+    {
+     "wait": 40
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 24
+    },
+    {
+     "screenshot": "step-01-hall.png"
+    }
+   ]
+  },
+  {
+   "id": "step-01-footsteps",
+   "program": "steps/step-01.asm",
+   "comment": "Walk the Hall floor (no doorway), recording the footfall under each step.",
+   "timeline": [
+    {
+     "wait": 40
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 24
+    },
+    {
+     "record_audio": "step-01-footsteps.wav"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 8
+    },
+    {
+     "release": "A"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 8
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "stop_audio": true
+    }
+   ]
+  },
+  {
+   "id": "step-01-door",
+   "program": "steps/step-01.asm",
+   "comment": "Cross the Hall's east door, recording the creak as the room flicks.",
+   "timeline": [
+    {
+     "wait": 40
+    },
+    {
+     "hold": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 24
+    },
+    {
+     "record_audio": "step-01-door.wav"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 16
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "stop_audio": true
+    }
+   ]
+  }
+ ]
+}

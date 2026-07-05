@@ -3,30 +3,322 @@
  "image_dir": "sinclair-zx-spectrum/assembly/shadowkeep/unit-15",
  "captures": [
   {
-   "id": "step-01-theme",
+   "id": "step-01-vault",
    "program": "steps/step-01.asm",
-   "comment": "Record from the cold open: the D-minor theme plays once as the keep comes up, then the game loop takes over.",
+   "comment": "The Vault as a crypt: one altar flame, a tight pool, the rest near-black.",
    "timeline": [
     {
-     "record_audio": "step-01-theme.wav"
+     "wait": 40
     },
     {
-     "wait": 140
+     "hold": "Space"
     },
     {
-     "stop_audio": true
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 24
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 11
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 14
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 22
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 23
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 20
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 22
+    },
+    {
+     "screenshot": "step-01-vault.png"
     }
    ]
   },
   {
-   "id": "step-01-hall",
+   "id": "step-01-mood",
    "program": "steps/step-01.asm",
+   "comment": "Broad Hall -> medium Gallery -> tight crypt Vault; the falloff changing under you.",
    "timeline": [
     {
-     "wait": 480
+     "wait": 40
     },
     {
-     "screenshot": "step-01-hall.png"
+     "hold": "Space"
+    },
+    {
+     "wait": 10
+    },
+    {
+     "release": "Space"
+    },
+    {
+     "wait": 24
+    },
+    {
+     "record_video": "step-01-mood.mp4"
+    },
+    {
+     "wait": 30
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 11
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 14
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 5
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 4
+    },
+    {
+     "release": "P"
+    },
+    {
+     "wait": 25
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 23
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "A"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "A"
+    },
+    {
+     "hold": "P"
+    },
+    {
+     "wait": 1
+    },
+    {
+     "release": "P"
+    },
+    {
+     "hold": "O"
+    },
+    {
+     "wait": 9
+    },
+    {
+     "release": "O"
+    },
+    {
+     "hold": "Q"
+    },
+    {
+     "wait": 20
+    },
+    {
+     "release": "Q"
+    },
+    {
+     "wait": 52
+    },
+    {
+     "stop_video": true
     }
    ]
   }
