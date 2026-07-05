@@ -249,6 +249,24 @@
      "screenshot": "step-01-morning.png"
     }
    ]
-  }
+  },
+  { "id": "step-02-dawn-denied", "program": "steps/step-01.asm",
+    "comment": "Shipped build, fifth watch (dusk 4), last life: the eighth lamp lit as the wisp lands the same frame. draught_step resolves the catch before the dawn is asked, so the whole night held reads NIGHT FALLS -- dawn denied. (step-01 addresses.)",
+    "timeline": [
+      {"wait":120},{"hold":"Space"},{"wait":40},{"release":"Space"},{"wait":80},
+      {"poke":"0x8A0D","value":4},{"poke":"0x8A04","value":8},{"poke":"0x8A05","value":1},
+      {"poke":"0x8A00","value":15},{"poke":"0x8A01","value":11},
+      {"poke":"0x8A06","value":14},{"poke":"0x8A07","value":11},{"poke":"0x8A0B","value":1},
+      {"wait":120},{"screenshot":"step-02-dawn-denied.png"}
+    ] },
+  { "id": "step-02-dawn", "program": "steps/step-02.asm",
+    "comment": "Corrected build, identical tie: the win check runs before the wisp's move, so completing the fifth watch reaches STATE_DAWN before the catch -- DAWN, the whole night held. (step-02 addresses, shifted +0xB by the fix.)",
+    "timeline": [
+      {"wait":120},{"hold":"Space"},{"wait":40},{"release":"Space"},{"wait":80},
+      {"poke":"0x8A18","value":4},{"poke":"0x8A0F","value":8},{"poke":"0x8A10","value":1},
+      {"poke":"0x8A0B","value":15},{"poke":"0x8A0C","value":11},
+      {"poke":"0x8A11","value":14},{"poke":"0x8A12","value":11},{"poke":"0x8A16","value":1},
+      {"wait":120},{"screenshot":"step-02-dawn.png"}
+    ] }
  ]
 }

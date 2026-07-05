@@ -1,0 +1,88 @@
+[
+ {
+  "action": "load_snapshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/code-samples/sinclair-zx-spectrum/assembly/the-long-night/unit-10/steps/step-01.sna"
+ },
+ {
+  "action": "run_frames",
+  "frames": 120
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 40
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Key": {
+     "name": "Space",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 80
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35341,
+  "value": 4
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35332,
+  "value": 8
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35333,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35328,
+  "value": 15
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35329,
+  "value": 11
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35334,
+  "value": 14
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35335,
+  "value": 11
+ },
+ {
+  "action": "poke_byte",
+  "addr": 35339,
+  "value": 1
+ },
+ {
+  "action": "run_frames",
+  "frames": 120
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/sinclair-zx-spectrum/assembly/the-long-night/unit-10/step-02-dawn-denied.png"
+ }
+]
