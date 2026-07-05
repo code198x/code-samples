@@ -80,6 +80,54 @@
       ],
       "caption": "The title screen, no longer silent: Twinkle Twinkle, Little Star on SID voice 1, looping under the scrolling starfield until fire is pressed.",
       "alt": "The STARFIELD title screen with PRESS FIRE below it and stars drifting past."
+    },
+    {
+      "id": "step-03-spread",
+      "prg": "steps/step-03.prg",
+      "medium": "image",
+      "timeline": [
+        {"boot_run": true},
+        {"wait": 90},
+        {"press": "fire", "frames": 4},
+        {"wait": 40},
+        {"screenshot": "step-03-spread.png"}
+      ],
+      "caption": "The LFSR spawn: the three enemies scatter across the whole field, past the old X=175 ceiling too. No single column to park under, no right-side corner to hide in.",
+      "alt": "Three green enemies at widely different X positions across the screen, the white ship near the bottom."
+    },
+    {
+      "id": "step-03-park-shipped",
+      "prg": "steps/step-02.prg",
+      "medium": "image",
+      "timeline": [
+        {"boot_run": true},
+        {"wait": 90},
+        {"press": "fire", "frames": 4},
+        {"wait": 10},
+        {"hold": "fire"},
+        {"wait": 1400},
+        {"screenshot": "step-03-park-shipped.png"},
+        {"release": "fire"}
+      ],
+      "caption": "The shipped game, half a minute of parking and holding fire: three lives still, untouched. Enemies keep to their narrow lane and never reach a ship that simply sits and shoots. The turret park.",
+      "alt": "The ship sitting near the bottom centre, three lives shown, green enemies drifting in a lane away from it."
+    },
+    {
+      "id": "step-03-park-fixed",
+      "prg": "steps/step-03.prg",
+      "medium": "image",
+      "timeline": [
+        {"boot_run": true},
+        {"wait": 90},
+        {"press": "fire", "frames": 4},
+        {"wait": 10},
+        {"hold": "fire"},
+        {"wait": 1400},
+        {"screenshot": "step-03-park-fixed.png"},
+        {"release": "fire"}
+      ],
+      "caption": "The fixed game, the same half-minute of parking and holding fire: a life already gone, and the enemies bearing down on the ship's column from across the field. Sitting still is no longer safe — the game can be lost.",
+      "alt": "The ship near the bottom centre with green enemies converging on its column from above, the lives readout down to 2."
     }
   ]
 }
