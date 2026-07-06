@@ -1039,7 +1039,9 @@ init_game_screen:
     sta PPUADDR
     lda #$22
     sta PPUADDR
-    lda #DIGIT_ZERO
+    lda #DIGIT_ZERO         ; score starts "000" (three tiles; the NMI keeps it)
+    sta PPUDATA
+    sta PPUDATA
     sta PPUDATA
 
     lda #$20
@@ -1201,10 +1203,41 @@ nmi:
     sta PPUADDR
     lda #$22
     sta PPUADDR
+    ; Score is three decimal digits (a byte, 0-255). Unlike the level digit it
+    ; is NOT capped: the player's number tells the truth. Split into hundreds,
+    ; tens and units by repeated subtraction; each +DIGIT_ZERO indexes tiles 5-14.
     lda score
+    ldx #0                  ; hundreds
+@score_h:
+    cmp #100
+    bcc @score_h_done
+    sbc #100                ; carry set by the cmp above
+    inx
+    bne @score_h            ; x stays < 3 — an always-taken loop-back
+@score_h_done:
+    pha                     ; stash the tens+units remainder
+    txa
     clc
     adc #DIGIT_ZERO
-    sta PPUDATA
+    sta PPUDATA             ; hundreds -> $2022
+    pla
+    ldx #0                  ; tens
+@score_t:
+    cmp #10
+    bcc @score_t_done
+    sbc #10
+    inx
+    bne @score_t
+@score_t_done:
+    pha                     ; stash units
+    txa
+    clc
+    adc #DIGIT_ZERO
+    sta PPUDATA             ; tens -> $2023
+    pla
+    clc
+    adc #DIGIT_ZERO
+    sta PPUDATA             ; units -> $2024
 
     lda #$20
     sta PPUADDR
