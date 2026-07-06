@@ -60,6 +60,7 @@ OBSTACLE_TILE  = 2
 OBSTACLE_SPEED = 2
 GROUND_TILE    = 3
 COIN_TILE      = 4
+WALL_TILE      = 29             ; brick — reads as built (jump it), not scenery
 DIGIT_ZERO     = 5
 SPIKE_TILE     = 15
 START_LIVES    = 3
@@ -1014,13 +1015,14 @@ init_game_screen:
     dex
     bne @write_platform
 
-    ; Wall tiles
+    ; Wall tiles — brick, so the coin behind it reads as "hop the wall",
+    ; not "the coin is walled off". Two tiles wide, two tall.
     bit PPUSTATUS
     lda #$23
     sta PPUADDR
     lda #$16
     sta PPUADDR
-    lda #GROUND_TILE
+    lda #WALL_TILE
     sta PPUDATA
     sta PPUDATA
 
@@ -1029,7 +1031,7 @@ init_game_screen:
     sta PPUADDR
     lda #$36
     sta PPUADDR
-    lda #GROUND_TILE
+    lda #WALL_TILE
     sta PPUDATA
     sta PPUDATA
 
@@ -1589,5 +1591,10 @@ level_rows_hi:
 ; Tile 28: Letter L
 .byte $80,$80,$80,$80,$80,$80,$F8,$00
 .byte $80,$80,$80,$80,$80,$80,$F8,$00
+
+; Tile 29: Brick wall — mortar courses in running bond, so the wall reads as
+;          built (something you hop onto) rather than smooth ground you can't pass.
+.byte %11111111,%11111111,%11110111,%00000000,%11111111,%11111111,%01111110,%00000000
+.byte %11111111,%11111111,%11110111,%00000000,%11111111,%11111111,%01111110,%00000000
 
 .res 8192 - 480, $00
