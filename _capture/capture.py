@@ -8,8 +8,8 @@ is *saved next to the manifest* (the honesty artifact: read the script and
 see exactly how the state was reached and what input was injected), then run
 against a cold-booted machine. Media lands in the website's public image dir.
 
-Two machines are supported, chosen by the manifest's top-level `"machine"`
-field (default `commodore-64`):
+Machines are chosen by the manifest's top-level `"machine"` field (default
+`commodore-64`):
 
   * `commodore-64`       — assemble `.asm` → `.prg` with local ACME, load with
                            `--load`, type RUN at the cold-boot prompt.
@@ -18,6 +18,17 @@ field (default `commodore-64`):
                            to the retired Docker pasmonext across the full
                            corpus, 2026-07-02), or load a `.bas` text program
                            directly with `load_basic_program`.
+  * `commodore-amiga`      — AMOS Pro: type the unit's ASCII source into the
+                           editor, run with F1 (prepared work disk, no host build).
+  * `commodore-amiga-blitz` — Blitz BASIC 2: type into Ted, compile-and-run.
+  * `commodore-amiga-asm`  — assembly: build the unit's `.asm` → KS1.x hunkexe
+                           → bootable `.adf` (vasm + xdftool via the
+                           commodore-amiga Docker image), boot it headless on a
+                           bare A500/KS1.3, and drive the port-2 joystick from
+                           the timeline. Joystick actions: `{"joy": "up",
+                           "frames": N}` (tap-hold-release), `{"joy_hold": "fire"}`
+                           / `{"joy_release": "fire"}`. Names: up, down, left,
+                           right, fire.
 
 Why a manifest (and why it is WASM-aware):
     Each capture names a runnable program (assembled from a `step-NN.asm`, or
@@ -71,14 +82,17 @@ EMU_DEFAULTS = {
     "commodore-64": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-c64",
     "sinclair-zx-spectrum": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-spectrum",
     "commodore-amiga": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
-    # Blitz BASIC 2 runs on the same Amiga binary; only the disk/editor differs.
+    # Blitz BASIC 2 and the assembly track run on the same Amiga binary; only
+    # the disk (and, for asm, the absence of an editor) differs.
     "commodore-amiga-blitz": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
+    "commodore-amiga-asm": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
 }
 EMU_ENV = {
     "commodore-64": "EMU198X_C64",
     "sinclair-zx-spectrum": "EMU198X_SPECTRUM",
     "commodore-amiga": "EMU198X_AMIGA",
     "commodore-amiga-blitz": "EMU198X_AMIGA",
+    "commodore-amiga-asm": "EMU198X_AMIGA",
 }
 # Retired from the .sna build path 2026-07-02 (Asm198x cut-over); still pulled
 # by ensure_tap below — the one legacy consumer, which leaves with the old
@@ -119,6 +133,19 @@ BLITZ_MODEL = "a500-plus"
 BLITZ_BOOT_FRAMES = 2100   # frames to reach the Ted editor (with the startup requester up)
 BLITZ_TYPE_SETTLE = 30     # frames after typing, before the compile-and-run trigger
 RAMIGA_RAW = "raw-67"      # right-Amiga qualifier (the menu command-key modifier)
+
+# Assembly (Commodore Amiga) capture: unlike AMOS and Blitz there IS a host
+# build. The unit's single .asm is assembled to a Kickstart-1.x hunkexe and
+# mastered into a bootable ADF whose startup-sequence runs it — exactly what the
+# unit Makefile does (vasm -> hunkexe -> xdftool, both via the commodore-amiga
+# Docker image). The disk boots headless on a bare A500 / KS1.3 straight into the
+# game (at its title, waiting for fire); the manifest timeline drives the port-2
+# joystick with the same joy/joy_hold/joy_release vocabulary AMOS uses. No editor
+# and no typing: the program IS the disk.
+AMIGA_ASM_IMAGE = "ghcr.io/code198x/commodore-amiga:latest"
+AMIGA_ASM_KICKSTART = str(Path.home() / ".emu198x/roms/commodore-amiga/kick13.rom")
+AMIGA_ASM_MODEL = "a500"
+AMIGA_ASM_BOOT_FRAMES = 1600   # frames for KS1.3 to boot the ADF and reach the game
 
 
 def resolve_emu(machine: str, arg: str | None) -> str:
@@ -534,6 +561,76 @@ def run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
                 frame_screenshot(image_dir / action["screenshot"])
 
 
+def ensure_amiga_adf(asm: Path) -> Path:
+    """Return a bootable .adf for a unit's Amiga assembly program, building it
+    from the .asm the way the unit Makefile does — vasm to a KS1.x hunkexe, then
+    xdftool masters a bootable OFS disk whose startup-sequence runs it, both via
+    the commodore-amiga Docker image — whenever the .adf is missing or older than
+    the source. The exe and .adf are written next to the .asm; on this track they
+    are committed deliverables (a learner grabs the disk without a toolchain), so
+    unlike the C64 .prg they are never auto-removed."""
+    if asm.suffix != ".asm":
+        sys.exit(f"Amiga assembly capture needs a .asm program, got {asm}")
+    if not asm.exists():
+        sys.exit(f"No program to build: {asm}")
+    exe = asm.with_suffix("")           # flock.asm -> flock
+    adf = asm.with_suffix(".adf")       # flock.asm -> flock.adf
+    stale = (not adf.exists()) or adf.stat().st_mtime < asm.stat().st_mtime
+    if stale:
+        unit = asm.parent
+        mount = ["-v", f"{unit}:/code", "-w", "/code"]
+        subprocess.run(
+            ["docker", "run", "--rm", *mount, AMIGA_ASM_IMAGE,
+             "vasmm68k_mot", "-Fhunkexe", "-kick1hunks", "-nosym",
+             "-o", exe.name, asm.name],
+            check=True, stdout=subprocess.DEVNULL)
+        master = (
+            f"echo '{exe.name}' > startup-sequence && rm -f {adf.name} && "
+            f"xdftool {adf.name} create + format '{exe.name.capitalize()}' ofs "
+            f"+ boot install boot1x && "
+            f"xdftool {adf.name} + makedir s + write startup-sequence s/startup-sequence && "
+            f"xdftool {adf.name} + write {exe.name} + protect {exe.name} +e && "
+            f"rm startup-sequence")
+        subprocess.run(
+            ["docker", "run", "--rm", *mount, AMIGA_ASM_IMAGE, "bash", "-c", master],
+            check=True, stdout=subprocess.DEVNULL)
+    if not adf.exists():
+        sys.exit(f"ADF build produced nothing: {adf}")
+    return adf
+
+
+def run_amiga_asm(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
+    """Boot each capture's assembled ADF on a bare A500 (KS1.3) and drive the
+    port-2 joystick from its timeline. There is no host editor: the unit's .asm
+    is built into a bootable disk whose startup-sequence runs it, so the machine
+    comes up already in the game — at its title, waiting for fire. `kickstart`,
+    `model`, and `boot_frames` may be overridden per manifest."""
+    kickstart = manifest.get("kickstart", AMIGA_ASM_KICKSTART)
+    model = manifest.get("model", AMIGA_ASM_MODEL)
+    boot_frames = int(manifest.get("boot_frames", AMIGA_ASM_BOOT_FRAMES))
+    if not Path(kickstart).exists():
+        sys.exit(f"Amiga assembly capture needs a Kickstart ROM: {kickstart}")
+
+    for cap in manifest["captures"]:
+        cap_id = cap["id"]
+        adf = ensure_amiga_adf((unit_dir / cap["program"]).resolve())
+
+        script = [{"action": "run_frames", "frames": boot_frames}]
+        script += expand_timeline_amiga(cap["timeline"], image_dir)
+
+        script_path = capture_dir / f"{cap_id}.script.json"
+        script_path.write_text(json.dumps(script, indent=1) + "\n")
+
+        result = subprocess.run(
+            [emu, "--headless", "--kickstart", kickstart, "--model", model,
+             "--disk", str(adf), "--script", str(script_path)],
+            capture_output=True, text=True)
+        report_capture(cap, result)
+        for action in cap["timeline"]:
+            if "screenshot" in action:
+                frame_screenshot(image_dir / action["screenshot"])
+
+
 def _blitz_compile_run() -> list[dict]:
     """Compiler menu COMPILE/RUN, via its command key right-Amiga+X."""
     return [
@@ -684,6 +781,8 @@ def main() -> None:
         run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     elif machine == "commodore-amiga-blitz":
         run_blitz(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
+    elif machine == "commodore-amiga-asm":
+        run_amiga_asm(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     else:
         run_spectrum(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
 
