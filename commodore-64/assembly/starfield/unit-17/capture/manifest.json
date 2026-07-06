@@ -86,11 +86,22 @@
       "prg": "steps/step-03.prg",
       "medium": "image",
       "timeline": [
-        {"boot_run": true},
-        {"wait": 90},
-        {"press": "fire", "frames": 4},
-        {"wait": 40},
-        {"screenshot": "step-03-spread.png"}
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 90
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 40
+        },
+        {
+          "screenshot": "step-03-spread.png"
+        }
       ],
       "caption": "The LFSR spawn: the three enemies scatter across the whole field, past the old X=175 ceiling too. No single column to park under, no right-side corner to hide in.",
       "alt": "Three green enemies at widely different X positions across the screen, the white ship near the bottom."
@@ -100,14 +111,31 @@
       "prg": "steps/step-02.prg",
       "medium": "image",
       "timeline": [
-        {"boot_run": true},
-        {"wait": 90},
-        {"press": "fire", "frames": 4},
-        {"wait": 10},
-        {"hold": "fire"},
-        {"wait": 1400},
-        {"screenshot": "step-03-park-shipped.png"},
-        {"release": "fire"}
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 90
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 10
+        },
+        {
+          "hold": "fire"
+        },
+        {
+          "wait": 1400
+        },
+        {
+          "screenshot": "step-03-park-shipped.png"
+        },
+        {
+          "release": "fire"
+        }
       ],
       "caption": "The shipped game, half a minute of parking and holding fire: three lives still, untouched. Enemies keep to their narrow lane and never reach a ship that simply sits and shoots. The turret park.",
       "alt": "The ship sitting near the bottom centre, three lives shown, green enemies drifting in a lane away from it."
@@ -117,17 +145,174 @@
       "prg": "steps/step-03.prg",
       "medium": "image",
       "timeline": [
-        {"boot_run": true},
-        {"wait": 90},
-        {"press": "fire", "frames": 4},
-        {"wait": 10},
-        {"hold": "fire"},
-        {"wait": 1400},
-        {"screenshot": "step-03-park-fixed.png"},
-        {"release": "fire"}
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 90
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 10
+        },
+        {
+          "hold": "fire"
+        },
+        {
+          "wait": 1400
+        },
+        {
+          "screenshot": "step-03-park-fixed.png"
+        },
+        {
+          "release": "fire"
+        }
       ],
-      "caption": "The fixed game, the same half-minute of parking and holding fire: a life already gone, and the enemies bearing down on the ship's column from across the field. Sitting still is no longer safe — the game can be lost.",
+      "caption": "The fixed game, the same half-minute of parking and holding fire: a life already gone, and the enemies bearing down on the ship's column from across the field. Sitting still is no longer safe \u2014 the game can be lost.",
       "alt": "The ship near the bottom centre with green enemies converging on its column from above, the lives readout down to 2."
+    },
+    {
+      "id": "step-04-start",
+      "prg": "steps/step-04.prg",
+      "medium": "image",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 90
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 60
+        },
+        {
+          "screenshot": "step-04-start.png"
+        }
+      ],
+      "caption": "The opening wave: three enemies, the LFSR scattering them across the field. Where the curve begins.",
+      "alt": "Three green enemies spread across the screen, the white ship near the bottom, score 0000."
+    },
+    {
+      "id": "step-04-swarm",
+      "prg": "steps/step-04.prg",
+      "medium": "image",
+      "timeline": [
+        {
+          "boot_run": true
+        },
+        {
+          "wait": 90
+        },
+        {
+          "press": "fire",
+          "frames": 4
+        },
+        {
+          "wait": 20
+        },
+        {
+          "hold": "fire"
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "poke": "0x002d",
+          "value": 9
+        },
+        {
+          "wait": 48
+        },
+        {
+          "release": "fire"
+        },
+        {
+          "screenshot": "step-04-swarm.png"
+        }
+      ],
+      "caption": "Nine waves later: six enemies on screen (the free sprites 5-7 pressed in), the hunt tightened, the score four digits deep. The curve kept bending long after the lanes stopped quickening.",
+      "alt": "Six green enemies spread across the field homing on the ship, the wave readout at W9, score 0016."
     }
   ]
 }
