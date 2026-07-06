@@ -462,6 +462,12 @@ steer:
             add.w   #STEP,sheepy
             bra.s   .stepped
 .notdown:
+            ; On the far bank (above the water), the crossing IS the aim:
+            ; no sidestep to a neighbour's pen. The bridge serves pen 2;
+            ; the rest want a ferry dropped under them. She can still step
+            ; back DOWN into the stream to re-line-up.
+            cmp.w   #STREAM_TOP,sheepy  ; Above the water?
+            blt     .done               ;   then left/right are locked
             btst    #9,d0               ; Left?
             beq.s   .notleft
             sub.w   #STEP,sheepx
