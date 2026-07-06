@@ -500,6 +500,18 @@ def expand_timeline_amiga(timeline: list[dict], image_dir: Path) -> list[dict]:
             out.append(_amos_joy(action["joy_hold"], True, int(action.get("port", AMOS_JOY_PORT))))
         elif "joy_release" in action:
             out.append(_amos_joy(action["joy_release"], False, int(action.get("port", AMOS_JOY_PORT))))
+        elif "poke" in action:
+            # Capture-setup write to CPU-visible memory (binary-dispatched
+            # poke_byte, which the Amiga wires through its debug target). Used
+            # the same way the C64/Spectrum paths use it: reach a genuine game
+            # state cheaply — e.g. set `lives` to 1 so one real drowning drives
+            # the honest lose path. Addresses are the running program's runtime
+            # addresses; for an assembly game they are the loaded hunk's (a
+            # relocated .asm), so they hold only for the current build.
+            addr = action["poke"]
+            addr = int(addr, 0) if isinstance(addr, str) else int(addr)
+            out.append({"action": "poke_byte", "addr": addr,
+                        "value": int(action["value"]) & 0xFF})
         elif "screenshot" in action:
             out.append({"action": "save_screenshot",
                         "path": str(image_dir / action["screenshot"])})

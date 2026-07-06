@@ -1,0 +1,61 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 1600
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Button": {
+     "port": 2,
+     "name": "fire",
+     "pressed": true
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 4
+ },
+ {
+  "action": "input",
+  "events": [
+   {
+    "Button": {
+     "port": 2,
+     "name": "fire",
+     "pressed": false
+    }
+   }
+  ]
+ },
+ {
+  "action": "run_frames",
+  "frames": 40
+ },
+ {
+  "action": "poke_byte",
+  "addr": 101345,
+  "value": 1
+ },
+ {
+  "action": "poke_byte",
+  "addr": 100441,
+  "value": 50
+ },
+ {
+  "action": "poke_byte",
+  "addr": 100443,
+  "value": 60
+ },
+ {
+  "action": "run_frames",
+  "frames": 24
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/Users/stevehill/Projects/198x/Code198x/website/public/images/commodore-amiga/assembly/flock/unit-18/loss.png"
+ }
+]

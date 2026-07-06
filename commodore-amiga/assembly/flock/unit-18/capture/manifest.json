@@ -1,0 +1,19 @@
+{
+  "machine": "commodore-amiga-asm",
+  "image_dir": "commodore-amiga/assembly/flock/unit-18",
+  "captures": [
+    {
+      "id": "loss",
+      "program": "flock.asm",
+      "timeline": [
+        { "joy": "fire", "frames": 4 },
+        { "wait": 40 },
+        { "poke": 101345, "value": 1 },
+        { "poke": 100441, "value": 50 },
+        { "poke": 100443, "value": 60 },
+        { "wait": 24 },
+        { "screenshot": "loss.png" }
+      ]
+    }
+  ]
+}
