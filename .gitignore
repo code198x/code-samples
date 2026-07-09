@@ -12,10 +12,13 @@ build/
 commodore-amiga/**/signal
 commodore-amiga/**/hop
 
-# Emulator files
+# Emulator and capture outputs
 *.vsf
 *.vfl
+*.sna
+*.sym
 vice.log
+**/capture/artefacts/
 
 # OS files
 .DS_Store
