@@ -18,6 +18,12 @@ Machines are chosen by the manifest's top-level `"machine"` field (default
                            to the retired Docker pasmonext across the full
                            corpus, 2026-07-02), or load a `.bas` text program
                            directly with `load_basic_program`.
+  * `nintendo-entertainment-system` — assemble+link `.asm` → `.nes` iNES ROM
+                           with Asm198x (`--dialect ca65`, which emits the ROM
+                           directly — no external nes.cfg; verified
+                           byte-identical to the ca65+ld65 build), load via
+                           `--rom`, run from power-on. Controller 1 from the
+                           timeline: up/down/left/right/a/b/select/start.
   * `commodore-amiga`      — AMOS Pro: type the unit's ASCII source into the
                            editor, run with F1 (prepared work disk, no host build).
   * `commodore-amiga-blitz` — Blitz BASIC 2: type into Ted, compile-and-run.
@@ -78,18 +84,21 @@ BOOT_SETTLE_FRAMES = 30
 CODE_SAMPLES = Path(__file__).resolve().parents[1]   # the code-samples repo
 REPO_ROOT = Path(__file__).resolve().parents[2]      # the Code198x container
 
+# Binary paths are the emu198x/ workspace target dir (Emu198x/emu198x/target).
 EMU_DEFAULTS = {
-    "commodore-64": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-c64",
-    "sinclair-zx-spectrum": "/Users/stevehill/Projects/198x/Emu198x/target/debug/emu198x-spectrum",
-    "commodore-amiga": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
+    "commodore-64": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/debug/emu198x-c64",
+    "sinclair-zx-spectrum": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/debug/emu198x-spectrum",
+    "nintendo-entertainment-system": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-nes",
+    "commodore-amiga": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-amiga",
     # Blitz BASIC 2 and the assembly track run on the same Amiga binary; only
     # the disk (and, for asm, the absence of an editor) differs.
-    "commodore-amiga-blitz": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
-    "commodore-amiga-asm": "/Users/stevehill/Projects/198x/Emu198x/target/release/emu198x-amiga",
+    "commodore-amiga-blitz": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-amiga",
+    "commodore-amiga-asm": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-amiga",
 }
 EMU_ENV = {
     "commodore-64": "EMU198X_C64",
     "sinclair-zx-spectrum": "EMU198X_SPECTRUM",
+    "nintendo-entertainment-system": "EMU198X_NES",
     "commodore-amiga": "EMU198X_AMIGA",
     "commodore-amiga-blitz": "EMU198X_AMIGA",
     "commodore-amiga-asm": "EMU198X_AMIGA",
@@ -457,6 +466,117 @@ def run_spectrum(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
 
 
 # --------------------------------------------------------------------------
+# Nintendo Entertainment System
+# --------------------------------------------------------------------------
+
+# The NES is read on two controller ports: 1 (controller 1) and 2
+# (controller 2). Button names match the runtime's table (input.rs):
+# a, b, select, start, up, down, left, right. Captures drive controller 1.
+NES_PAD_PORT = 1
+
+
+def nes_button_event(name: str, pressed: bool, port: int = NES_PAD_PORT) -> dict:
+    return {"Button": {"port": port, "name": name, "pressed": pressed}}
+
+
+def ensure_nes(asm_or_nes: Path) -> Path:
+    """Return a `.nes` path, assembling+linking the matching `.asm` with
+    Asm198x's ca65 dialect if needed. The ca65 dialect emits an iNES ROM
+    directly (its own bounded ld65 config — no external nes.cfg), verified
+    byte-identical to the ca65+ld65 Docker build. The `.nes` is written next
+    to the `.asm`."""
+    if asm_or_nes.suffix == ".nes":
+        nes = asm_or_nes
+        asm = asm_or_nes.with_suffix(".asm")
+    else:
+        asm = asm_or_nes
+        nes = asm_or_nes.with_suffix(".nes")
+    if asm.exists():
+        stale = (not nes.exists()) or nes.stat().st_mtime < asm.stat().st_mtime
+        if stale:
+            subprocess.run(
+                [resolve_asm198x(), "--dialect", "ca65", str(asm), "-o", str(nes)],
+                check=True, stdout=subprocess.DEVNULL)
+    if not nes.exists():
+        sys.exit(f"No program to run: {nes}")
+    return nes
+
+
+def expand_timeline_nes(timeline: list[dict], image_dir: Path) -> list[dict]:
+    out: list[dict] = []
+    for action in timeline:
+        if "wait" in action:
+            out.append({"action": "run_frames", "frames": int(action["wait"])})
+        elif "press" in action:
+            # Tap a pad button: down, hold `frames`, up. {"press": "a", "frames": 4}
+            name = action["press"]
+            port = int(action.get("port", NES_PAD_PORT))
+            out.append({"action": "input", "events": [nes_button_event(name, True, port)]})
+            out.append({"action": "run_frames", "frames": int(action.get("frames", 4))})
+            out.append({"action": "input", "events": [nes_button_event(name, False, port)]})
+        elif "hold" in action:
+            out.append({"action": "input",
+                        "events": [nes_button_event(action["hold"], True,
+                                                    int(action.get("port", NES_PAD_PORT)))]})
+        elif "release" in action:
+            out.append({"action": "input",
+                        "events": [nes_button_event(action["release"], False,
+                                                    int(action.get("port", NES_PAD_PORT)))]})
+        elif "poke" in action:
+            # Capture-setup write to CPU memory to reach a state cheaply, as on
+            # the other machines. Address accepts int or "0x.." string.
+            addr = action["poke"]
+            addr = int(addr, 0) if isinstance(addr, str) else int(addr)
+            out.append({"action": "poke_byte", "addr": addr,
+                        "value": int(action["value"]) & 0xFF})
+        elif "screenshot" in action:
+            out.append({"action": "save_screenshot",
+                        "path": str(image_dir / action["screenshot"])})
+        elif "record_video" in action:
+            out.append({"action": "start_video_recording",
+                        "path": str(image_dir / action["record_video"])})
+        elif action.get("stop_video"):
+            out.append({"action": "stop_video_recording"})
+        elif "record_audio" in action:
+            out.append({"action": "start_audio_recording",
+                        "path": str(image_dir / action["record_audio"])})
+        elif action.get("stop_audio"):
+            out.append({"action": "stop_audio_recording"})
+        else:
+            sys.exit(f"Unknown NES timeline action: {action!r}")
+    return out
+
+
+def run_nes(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
+    """Boot each capture's `.nes` on a cold NES and drive controller 1 from its
+    timeline. The cartridge loads via `--rom`; the program runs from power-on
+    (no editor, no RUN). The `.nes` is built from the unit's `.asm` with Asm198x."""
+    built: list[Path] = []
+    for cap in manifest["captures"]:
+        cap_id = cap["id"]
+        program_ref = (unit_dir / cap["program"]).resolve()
+        if program_ref.suffix in (".asm", ".nes"):
+            program = ensure_nes(program_ref)
+            if program_ref.suffix == ".asm":
+                built.append(program)
+        else:
+            sys.exit(f"Unsupported NES program: {program_ref}")
+
+        script = expand_timeline_nes(cap["timeline"], image_dir)
+        script_path = capture_dir / f"{cap_id}.script.json"
+        script_path.write_text(json.dumps(script, indent=1) + "\n")
+
+        result = subprocess.run(
+            [emu, "--headless", "--script", str(script_path), "--rom", str(program)],
+            capture_output=True, text=True)
+        report_capture(cap, result)
+    if not keep_build:
+        for nes in built:
+            if nes.exists():
+                nes.unlink()
+
+
+# --------------------------------------------------------------------------
 # Commodore Amiga — AMOS Professional
 # --------------------------------------------------------------------------
 
@@ -789,6 +909,8 @@ def main() -> None:
 
     if machine == "commodore-64":
         run_c64(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
+    elif machine == "nintendo-entertainment-system":
+        run_nes(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     elif machine == "commodore-amiga":
         run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     elif machine == "commodore-amiga-blitz":
