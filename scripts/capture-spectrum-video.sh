@@ -55,7 +55,7 @@ done
 GAME_NAME="${GAME_DIR#game-*-}"
 SNA_BASENAME="$GAME_NAME"
 
-EMU198X="${EMU198X:-/Users/stevehill/Projects/198x/Emu198x}"
+EMU198X="${EMU198X:-/Users/stevehill/Projects/198x/Emu198x/emu198x}"
 EMU198X_BIN="${EMU198X_BIN:-$EMU198X/target/release/emu198x-spectrum}"
 SPECTRUM_ROM="${SPECTRUM_ROM:-$HOME/.emu198x/roms/sinclair-zx-spectrum-48k/48.rom}"
 CODE198X="${CODE198X:-/Users/stevehill/Projects/198x/Code198x}"
