@@ -11,8 +11,10 @@ against a cold-booted machine. Media lands in the website's public image dir.
 Machines are chosen by the manifest's top-level `"machine"` field (default
 `commodore-64`):
 
-  * `commodore-64`       — assemble `.asm` → `.prg` with local ACME, load with
-                           `--load`, type RUN at the cold-boot prompt.
+  * `commodore-64`       — assemble `.asm` → `.prg` with Asm198x
+                           (`--dialect acme --prg`; proven byte-identical to
+                           standalone ACME across the corpus, 2026-07-09), load
+                           with `--load`, type RUN at the cold-boot prompt.
   * `sinclair-zx-spectrum` — assemble `.asm` → `.sna` with Asm198x
                            (`--dialect pasmonext --sna`; proven byte-identical
                            to the retired Docker pasmonext across the full
@@ -266,7 +268,11 @@ def expand_timeline_c64(timeline: list[dict], image_dir: Path) -> list[dict]:
 
 
 def ensure_prg(asm_or_prg: Path) -> Path:
-    """Return a .prg path, assembling the matching .asm with ACME if needed."""
+    """Return a .prg path, assembling the matching .asm with Asm198x's acme
+    dialect if needed (`--dialect acme --prg`, which prepends the 2-byte load
+    address). Proven byte-identical to standalone ACME across the full C64
+    corpus — 143/143 standalone programs, 0 differences (2026-07-09). The .prg
+    is written next to the .asm."""
     if asm_or_prg.suffix == ".prg":
         prg = asm_or_prg
         asm = asm_or_prg.with_suffix(".asm")
@@ -276,8 +282,9 @@ def ensure_prg(asm_or_prg: Path) -> Path:
     if asm.exists():
         stale = (not prg.exists()) or prg.stat().st_mtime < asm.stat().st_mtime
         if stale:
-            subprocess.run(["acme", "-f", "cbm", "-o", str(prg), str(asm)],
-                           check=True, cwd=asm.parent)
+            subprocess.run(
+                [resolve_asm198x(), "--dialect", "acme", "--prg", str(asm), "-o", str(prg)],
+                check=True, stdout=subprocess.DEVNULL)
     if not prg.exists():
         sys.exit(f"No program to run: {prg}")
     return prg
