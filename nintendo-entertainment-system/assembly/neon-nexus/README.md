@@ -25,7 +25,7 @@ Or use the provided Docker container:
 
 ```bash
 docker run --rm -v "$(pwd):/workspace" -w /workspace \
-  ghcr.io/code198x/nintendo-nes:latest \
+  ghcr.io/code198x/nintendo-entertainment-system:latest \
   sh -c "ca65 nexus.asm -o nexus.o && ld65 -C nes.cfg nexus.o -o nexus.nes"
 ```
 
