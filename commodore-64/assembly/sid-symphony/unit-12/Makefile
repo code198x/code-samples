@@ -1,15 +1,16 @@
-# Commodore 64 Makefile
-IMAGE = code198x/commodore-64
-SRC   = symphony.asm
-OUT   = symphony.prg
+# Commodore 64 Makefile — built with Asm198x
+ASM ?= asm198x
+SRC  = symphony.asm
+OUT  = symphony.prg
 
 .PHONY: all run clean
 
+# Asm198x's acme dialect emits a .prg (2-byte load address prepended).
+# Byte-identical to the retired ACME Docker build (verified 2026-07-09).
 all: $(OUT)
 
 $(OUT): $(SRC)
-	docker run --rm -v "$(PWD)":/code -w /code $(IMAGE) \
-		acme -f cbm -o $(OUT) $(SRC)
+	$(ASM) --dialect acme --prg $(SRC) -o $(OUT)
 
 run: $(OUT)
 	x64sc $(OUT)
