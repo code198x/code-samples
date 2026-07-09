@@ -1,4 +1,4 @@
-{ "machine": "commodore-amiga",
+{ "machine": "commodore-amiga-amos",
   "image_dir": "commodore-amiga/amos/meet-amos/unit-01",
   "captures": [
     { "id": "hello", "program": "hello.amos",

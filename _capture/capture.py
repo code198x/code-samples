@@ -26,7 +26,7 @@ Machines are chosen by the manifest's top-level `"machine"` field (default
                            byte-identical to the ca65+ld65 build), load via
                            `--rom`, run from power-on. Controller 1 from the
                            timeline: up/down/left/right/a/b/select/start.
-  * `commodore-amiga`      — AMOS Pro: type the unit's ASCII source into the
+  * `commodore-amiga-amos` — AMOS Pro: type the unit's ASCII source into the
                            editor, run with F1 (prepared work disk, no host build).
   * `commodore-amiga-blitz` — Blitz BASIC 2: type into Ted, compile-and-run.
   * `commodore-amiga-asm`  — assembly: build the unit's `.asm` → KS1.x hunkexe
@@ -91,7 +91,7 @@ EMU_DEFAULTS = {
     "commodore-64": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/debug/emu198x-c64",
     "sinclair-zx-spectrum": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/debug/emu198x-spectrum",
     "nintendo-entertainment-system": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-nes",
-    "commodore-amiga": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-amiga",
+    "commodore-amiga-amos": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-amiga",
     # Blitz BASIC 2 and the assembly track run on the same Amiga binary; only
     # the disk (and, for asm, the absence of an editor) differs.
     "commodore-amiga-blitz": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-amiga",
@@ -101,7 +101,7 @@ EMU_ENV = {
     "commodore-64": "EMU198X_C64",
     "sinclair-zx-spectrum": "EMU198X_SPECTRUM",
     "nintendo-entertainment-system": "EMU198X_NES",
-    "commodore-amiga": "EMU198X_AMIGA",
+    "commodore-amiga-amos": "EMU198X_AMIGA",
     "commodore-amiga-blitz": "EMU198X_AMIGA",
     "commodore-amiga-asm": "EMU198X_AMIGA",
 }
@@ -657,7 +657,7 @@ def expand_timeline_amiga(timeline: list[dict], image_dir: Path) -> list[dict]:
     return out
 
 
-def run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
+def run_amos(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
     """Type each capture's ASCII AMOS source into AMOS Pro and run it (F1).
 
     No host build: the source is typed via `type_string`. The work disk is a
@@ -918,8 +918,8 @@ def main() -> None:
         run_c64(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     elif machine == "nintendo-entertainment-system":
         run_nes(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
-    elif machine == "commodore-amiga":
-        run_amiga(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
+    elif machine == "commodore-amiga-amos":
+        run_amos(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     elif machine == "commodore-amiga-blitz":
         run_blitz(manifest, capture_dir, unit_dir, image_dir, emu, args.keep_build)
     elif machine == "commodore-amiga-asm":
