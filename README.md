@@ -1,100 +1,72 @@
-# Code Like It's 198x - Code Samples
+# Code198x code samples
 
-Complete, working code samples for learning retro game development across classic platforms.
+Working source code, assets, capture helpers, and sample projects for Code198x curriculum units.
 
-## Platforms
+This repo is code-first support for the website catalogues. Do not treat this README as the module/status source of truth; current module and unit availability lives in the website repo under `src/content/modules/` and `src/content/units/`.
 
-| Platform | Game | Units | Description |
-|----------|------|-------|-------------|
-| [Commodore 64](commodore-64/game-01-starfield/) | Starfield | 128 | Single-screen space shooter |
-| [ZX Spectrum](sinclair-zx-spectrum/game-01-shadowkeep/) | Shadowkeep | 128 | Top-down maze explorer |
-| [Commodore Amiga](commodore-amiga/game-01-exodus/) | Exodus | 128 | Terrain puzzle with Blitter |
-| [NES](nintendo-entertainment-system/game-01-dash/) | Dash | 128 | Side-scrolling runner |
+## Current layout
 
-## Structure
-
-```
+```text
 code-samples/
 ├── commodore-64/
-│   └── game-01-starfield/
-│       ├── README.md           # Game overview
-│       └── unit-01..16/
-│           ├── README.md       # Unit documentation
-│           ├── starfield.asm   # Assembly source
-│           └── starfield.prg   # Compiled executable
+│   ├── basic/
+│   └── assembly/
+│       ├── meet-the-machine/
+│       ├── sid-symphony/
+│       └── starfield/
 ├── sinclair-zx-spectrum/
-│   └── game-01-shadowkeep/
+│   ├── basic/
+│   ├── assembly/
+│   │   ├── meet-the-machine/
+│   │   ├── gloaming/
+│   │   ├── the-long-night/
+│   │   └── shadowkeep/
+│   ├── assets/
+│   ├── patterns/
+│   ├── tools/
+│   └── tests/
 ├── commodore-amiga/
-│   └── game-01-exodus/
-└── nintendo-entertainment-system/
-    └── game-01-dash/
+│   ├── amos/
+│   ├── blitz/
+│   └── assembly/
+├── nintendo-entertainment-system/
+│   └── assembly/
+│       ├── meet-the-machine/
+│       ├── dash/
+│       └── neon-nexus/
+├── foundations/
+├── _capture/
+└── scripts/
 ```
 
-## Building
+Additional platform folders exist for emerging or reference sample work. Check the platform folder before assuming a sample path is part of the published curriculum.
 
-### Using Docker (Recommended)
+## Relationship to the website
 
-Each platform has a Docker container with all required tools:
+- Website module catalogue: `../website/src/content/modules/`
+- Website unit catalogue: `../website/src/content/units/`
+- Published pages/routes: `../website/src/pages/`
 
-```bash
-# Commodore 64 (ACME assembler)
-docker run --rm -v "$(pwd):/workspace" -w /workspace \
-  ghcr.io/code198x/commodore-64:latest \
-  acme -f cbm -o symphony.prg symphony.asm
+When adding or moving samples, update the relevant website catalogue or unit references in the same change if the sample is learner-facing.
 
-# ZX Spectrum (pasmonext assembler)
-docker run --rm -v "$(pwd):/workspace" -w /workspace \
-  ghcr.io/code198x/sinclair-zx-spectrum:latest \
-  pasmonext --tapbas inkwar.asm inkwar.tap
+## Building samples
 
-# Commodore Amiga (vasm assembler)
-docker run --rm -v "$(pwd):/workspace" -w /workspace \
-  ghcr.io/code198x/commodore-amiga:latest \
-  vasmm68k_mot -Fhunkexe -o hop hop.asm
+Build commands are platform- and module-specific. Prefer the commands in the sample directory or the corresponding website unit.
 
-# NES (cc65 toolchain)
-docker run --rm -v "$(pwd):/workspace" -w /workspace \
-  ghcr.io/code198x/nintendo-nes:latest \
-  sh -c "ca65 nexus.asm -o nexus.o && ld65 -C nes.cfg nexus.o -o nexus.nes"
-```
+Current toolchain direction:
 
-### Native Installation
+- **C64 6502** — ACME-compatible sources; Asm198x support exists for curriculum-compatible paths.
+- **ZX Spectrum Z80** — Spectrum assembly builds use Asm198x/pasmo-compatible flows; the old Spectrum dev-container repo is retired.
+- **NES 6502** — ca65/ld65-compatible sources and linked `.nes` outputs.
+- **Amiga** — AMOS, Blitz, and 68000/vasm-style assembly samples, depending on module.
+- **Assets/media** — Build198x owns reusable conversion and packaging tools as they graduate from sample-local scripts.
 
-| Platform | Assembler | Install |
-|----------|-----------|---------|
-| C64 | [ACME](https://sourceforge.net/projects/acme-crossass/) | `brew install acme` |
-| ZX Spectrum | [pasmo](https://pasmo.speccy.org/) | `brew install pasmo` |
-| Amiga | [vasm](http://sun.hasenbraten.de/vasm/) | Build from source |
-| NES | [cc65](https://cc65.github.io/) | `brew install cc65` |
+Use each sample's `README.md`, Makefile, or script as the local authority for exact commands.
 
-## Running
+## Captures and verification
 
-| Platform | Emulator | Command |
-|----------|----------|---------|
-| C64 | [VICE](https://vice-emu.sourceforge.io/) | `x64sc symphony.prg` |
-| ZX Spectrum | [Fuse](http://fuse-emulator.sourceforge.net/) | `fuse inkwar.tap` |
-| Amiga | [FS-UAE](https://fs-uae.net/) | Load via Workbench |
-| NES | [Mesen](https://www.mesen.ca/) | Open `nexus.nes` |
-
-## Learning Path
-
-Each game progresses through 16 units, building features incrementally:
-
-1. **Units 1-4**: Display setup, basic graphics, input handling
-2. **Units 5-8**: Game objects, movement, core mechanics
-3. **Units 9-12**: Scoring, sound, game states
-4. **Units 13-16**: Polish, difficulty, high scores, final release
-
-See each game's README for detailed unit breakdowns and learning objectives.
-
-## CI/CD
-
-All code is automatically built and verified on every push via GitHub Actions. Build status reflects whether all assembly files compile successfully across all platforms.
-
-## Website
-
-https://code198x.com
+This repo contains sample-local capture and test support where needed, but not every sample has the same level of automation. If a workflow depends on emulator screenshots, audio, scripts, or MCP, prefer the documented Emu198x capture path for that platform.
 
 ## Licence
 
-Educational use - see main website repository for full licence information.
+Educational use; see the project website and individual source headers where present.
