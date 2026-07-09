@@ -1,21 +1,20 @@
-# NES Makefile
-IMAGE = ghcr.io/code198x/nintendo-nes
-SRC   = dash.asm
-CFG   = nes.cfg
-OBJ   = dash.o
-ROM   = dash.nes
+# NES Makefile — built with Asm198x
+ASM ?= asm198x
+SRC  = dash.asm
+ROM  = dash.nes
 
-.PHONY: all clean
+.PHONY: all run clean
 
+# Asm198x's ca65 dialect assembles and links to an iNES ROM in one step — its
+# own bounded ld65 config, no external nes.cfg. Byte-identical to the retired
+# ca65 + ld65 Docker build (verified 2026-07-09).
 all: $(ROM)
 
-$(OBJ): $(SRC)
-	docker run --rm -v "$(PWD)":/code -w /code $(IMAGE) \
-		ca65 $(SRC) -o $(OBJ)
+$(ROM): $(SRC)
+	$(ASM) --dialect ca65 $(SRC) -o $(ROM)
 
-$(ROM): $(OBJ) $(CFG)
-	docker run --rm -v "$(PWD)":/code -w /code $(IMAGE) \
-		ld65 -C $(CFG) $(OBJ) -o $(ROM)
+run: $(ROM)
+	fceux $(ROM)
 
 clean:
-	rm -f $(OBJ) $(ROM)
+	rm -f $(ROM)
