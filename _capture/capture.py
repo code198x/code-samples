@@ -122,6 +122,18 @@ def resolve_asm198x() -> str:
                  f"(cargo build --release in Asm198x/asm198x) or set ${ASM198X_ENV}")
     return cand
 
+# Build198x — the family's media master; the Amiga ADF build path since 2026-07-10.
+BUILD198X_ENV = "BUILD198X"
+BUILD198X_DEFAULT = "/Users/stevehill/Projects/198x/Build198x/build198x/target/release/build198x"
+
+
+def resolve_build198x() -> str:
+    cand = os.environ.get(BUILD198X_ENV) or BUILD198X_DEFAULT
+    if not Path(cand).exists():
+        sys.exit(f"build198x not found at {cand} — build it "
+                 f"(cargo build --release in Build198x/build198x) or set ${BUILD198X_ENV}")
+    return cand
+
 # AMOS (Commodore Amiga) capture: there is no host build — the learner's ASCII
 # AMOS source is *typed* into the AMOS Pro editor via `type_string`, then run
 # with F1. The work disk is a prepared AMOS Pro System ADF whose startup loads
@@ -146,14 +158,13 @@ BLITZ_TYPE_SETTLE = 30     # frames after typing, before the compile-and-run tri
 RAMIGA_RAW = "raw-67"      # right-Amiga qualifier (the menu command-key modifier)
 
 # Assembly (Commodore Amiga) capture: unlike AMOS and Blitz there IS a host
-# build. The unit's single .asm is assembled to a Kickstart-1.x hunkexe and
-# mastered into a bootable ADF whose startup-sequence runs it — exactly what the
-# unit Makefile does (vasm -> hunkexe -> xdftool, both via the commodore-amiga
-# Docker image). The disk boots headless on a bare A500 / KS1.3 straight into the
-# game (at its title, waiting for fire); the manifest timeline drives the port-2
-# joystick with the same joy/joy_hold/joy_release vocabulary AMOS uses. No editor
-# and no typing: the program IS the disk.
-AMIGA_ASM_IMAGE = "ghcr.io/code198x/commodore-amiga:latest"
+# build. The unit's single .asm is assembled to a Kickstart-1.x hunkexe
+# (Asm198x) and mastered into a bootable ADF whose startup-sequence runs it
+# (Build198x) — no Docker; the `commodore-amiga` image is retired. The disk
+# boots headless on a bare A500 / KS1.3 straight into the game (at its title,
+# waiting for fire); the manifest timeline drives the port-2 joystick with the
+# same joy/joy_hold/joy_release vocabulary AMOS uses. No editor and no typing:
+# the program IS the disk.
 AMIGA_ASM_KICKSTART = str(Path.home() / ".emu198x/roms/commodore-amiga/kick13.rom")
 AMIGA_ASM_MODEL = "a500"
 AMIGA_ASM_BOOT_FRAMES = 1600   # frames for KS1.3 to boot the ADF and reach the game
@@ -702,16 +713,15 @@ def run_amos(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
 
 def ensure_amiga_adf(asm: Path) -> Path:
     """Return a bootable .adf for a unit's Amiga assembly program, building it
-    from the .asm in two halves: Asm198x assembles the KS1.x hunk executable
-    (`--dialect vasm --exe`, loadable-image-identical to the retired Docker
-    vasm — proven across the corpus 2026-07-10), then xdftool masters a bootable
-    OFS disk whose startup-sequence runs it. The mastering half is still the
-    `commodore-amiga` Docker image, pending the Build198x ADF master
-    ([`demand-gate-adf-master`]); the assemble half no longer needs Docker.
-    Rebuilds whenever the .adf is missing or older than the source. The exe and
-    .adf are written next to the .asm; on this track they are committed
-    deliverables (a learner grabs the disk without a toolchain), so unlike the
-    C64 .prg they are never auto-removed."""
+    from the .asm in two family-tool halves, no Docker: Asm198x assembles the
+    KS1.x hunk executable (`--dialect vasm --exe`, loadable-image-identical to
+    the retired Docker vasm — proven across the corpus 2026-07-10), then
+    `build198x adf` masters a bootable OFS disk whose startup-sequence runs it
+    (the retired `commodore-amiga` Docker xdftool step; deterministic — the .adf
+    is byte-stable across runs). Rebuilds whenever the .adf is missing or older
+    than the source. The exe and .adf are written next to the .asm; on this
+    track they are committed deliverables (a learner grabs the disk without a
+    toolchain), so unlike the C64 .prg they are never auto-removed."""
     if asm.suffix != ".asm":
         sys.exit(f"Amiga assembly capture needs a .asm program, got {asm}")
     if not asm.exists():
@@ -720,22 +730,14 @@ def ensure_amiga_adf(asm: Path) -> Path:
     adf = asm.with_suffix(".adf")       # flock.asm -> flock.adf
     stale = (not adf.exists()) or adf.stat().st_mtime < asm.stat().st_mtime
     if stale:
-        unit = asm.parent
-        mount = ["-v", f"{unit}:/code", "-w", "/code"]
-        # Assemble half — Asm198x (local, no Docker). Emits the KS1.x hunkexe.
+        # Assemble half — Asm198x emits the KS1.x hunkexe.
         subprocess.run(
             [resolve_asm198x(), "--dialect", "vasm", "--exe", str(asm), "-o", str(exe)],
             check=True, stdout=subprocess.DEVNULL)
-        # Master half — xdftool via the Docker image (until Build198x lands).
-        master = (
-            f"echo '{exe.name}' > startup-sequence && rm -f {adf.name} && "
-            f"xdftool {adf.name} create + format '{exe.name.capitalize()}' ofs "
-            f"+ boot install boot1x && "
-            f"xdftool {adf.name} + makedir s + write startup-sequence s/startup-sequence && "
-            f"xdftool {adf.name} + write {exe.name} + protect {exe.name} +e && "
-            f"rm startup-sequence")
+        # Master half — Build198x writes the bootable OFS disk (name/volume
+        # default to the exe basename, as the retired xdftool step did).
         subprocess.run(
-            ["docker", "run", "--rm", *mount, AMIGA_ASM_IMAGE, "bash", "-c", master],
+            [resolve_build198x(), "adf", str(exe), "-o", str(adf)],
             check=True, stdout=subprocess.DEVNULL)
     if not adf.exists():
         sys.exit(f"ADF build produced nothing: {adf}")
