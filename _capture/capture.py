@@ -702,12 +702,16 @@ def run_amos(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
 
 def ensure_amiga_adf(asm: Path) -> Path:
     """Return a bootable .adf for a unit's Amiga assembly program, building it
-    from the .asm the way the unit Makefile does — vasm to a KS1.x hunkexe, then
-    xdftool masters a bootable OFS disk whose startup-sequence runs it, both via
-    the commodore-amiga Docker image — whenever the .adf is missing or older than
-    the source. The exe and .adf are written next to the .asm; on this track they
-    are committed deliverables (a learner grabs the disk without a toolchain), so
-    unlike the C64 .prg they are never auto-removed."""
+    from the .asm in two halves: Asm198x assembles the KS1.x hunk executable
+    (`--dialect vasm --exe`, loadable-image-identical to the retired Docker
+    vasm — proven across the corpus 2026-07-10), then xdftool masters a bootable
+    OFS disk whose startup-sequence runs it. The mastering half is still the
+    `commodore-amiga` Docker image, pending the Build198x ADF master
+    ([`demand-gate-adf-master`]); the assemble half no longer needs Docker.
+    Rebuilds whenever the .adf is missing or older than the source. The exe and
+    .adf are written next to the .asm; on this track they are committed
+    deliverables (a learner grabs the disk without a toolchain), so unlike the
+    C64 .prg they are never auto-removed."""
     if asm.suffix != ".asm":
         sys.exit(f"Amiga assembly capture needs a .asm program, got {asm}")
     if not asm.exists():
@@ -718,11 +722,11 @@ def ensure_amiga_adf(asm: Path) -> Path:
     if stale:
         unit = asm.parent
         mount = ["-v", f"{unit}:/code", "-w", "/code"]
+        # Assemble half — Asm198x (local, no Docker). Emits the KS1.x hunkexe.
         subprocess.run(
-            ["docker", "run", "--rm", *mount, AMIGA_ASM_IMAGE,
-             "vasmm68k_mot", "-Fhunkexe", "-kick1hunks", "-nosym",
-             "-o", exe.name, asm.name],
+            [resolve_asm198x(), "--dialect", "vasm", "--exe", str(asm), "-o", str(exe)],
             check=True, stdout=subprocess.DEVNULL)
+        # Master half — xdftool via the Docker image (until Build198x lands).
         master = (
             f"echo '{exe.name}' > startup-sequence && rm -f {adf.name} && "
             f"xdftool {adf.name} create + format '{exe.name.capitalize()}' ofs "
