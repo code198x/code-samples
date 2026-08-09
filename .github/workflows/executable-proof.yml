@@ -1,0 +1,66 @@
+name: Executable Curriculum Proof
+
+on:
+  pull_request:
+    paths:
+      - "_capture/verify.py"
+      - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
+      - ".github/workflows/executable-proof.yml"
+  push:
+    branches: [main, master]
+    paths:
+      - "_capture/verify.py"
+      - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
+      - ".github/workflows/executable-proof.yml"
+  workflow_dispatch:
+
+jobs:
+  amiga-copper-public:
+    name: Amiga Copper public proof
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code198x samples
+        uses: actions/checkout@v7
+
+      - name: Read locked revisions
+        id: lock
+        shell: bash
+        run: |
+          LOCK=commodore-amiga/assembly/meet-the-machine/unit-07/capture/proof.lock.json
+          echo "asm=$(jq -r '.repositories.asm198x.revision' "$LOCK")" >> "$GITHUB_OUTPUT"
+          echo "build=$(jq -r '.repositories.build198x.revision' "$LOCK")" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout Asm198x
+        uses: actions/checkout@v7
+        with:
+          repository: asm198x/asm198x
+          ref: ${{ steps.lock.outputs.asm }}
+          path: _family/Asm198x/asm198x
+
+      - name: Checkout Build198x
+        uses: actions/checkout@v7
+        with:
+          repository: build198x/build198x
+          ref: ${{ steps.lock.outputs.build }}
+          path: _family/Build198x/build198x
+
+      - name: Build locked family tools
+        run: |
+          cargo build --release --manifest-path _family/Asm198x/asm198x/Cargo.toml -p asm198x
+          cargo build --release --manifest-path _family/Build198x/build198x/Cargo.toml -p build198x
+
+      - name: Verify redistributable stages
+        env:
+          ROOT198X: ${{ github.workspace }}/_family
+          ASM198X: ${{ github.workspace }}/_family/Asm198x/asm198x/target/release/asm198x
+          BUILD198X: ${{ github.workspace }}/_family/Build198x/build198x/target/release/build198x
+        run: |
+          python3 _capture/verify.py \
+            commodore-amiga/assembly/meet-the-machine/unit-07/capture/manifest.json \
+            --public --report build/proofs/amiga-copper-public.json
+
+      - name: Upload evidence report
+        uses: actions/upload-artifact@v7
+        with:
+          name: amiga-copper-public-proof
+          path: build/proofs/amiga-copper-public.json

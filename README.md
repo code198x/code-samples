@@ -67,6 +67,23 @@ Use each sample's `README.md`, Makefile, or script as the local authority for ex
 
 This repo contains sample-local capture and test support where needed, but not every sample has the same level of automation. If a workflow depends on emulator screenshots, audio, scripts, or MCP, prefer the documented Emu198x capture path for that platform.
 
+### Executable curriculum proofs
+
+Versioned proof manifests connect selected lessons to primary evidence and the
+exact Asm198x, Build198x, and Emu198x revisions that produced their runnable
+artefacts. The first proof is Amiga assembly “Colour and the Copper”:
+
+```bash
+python3 _capture/verify.py \
+  commodore-amiga/assembly/meet-the-machine/unit-07/capture/manifest.json \
+  --public
+```
+
+Public mode verifies the cited evidence, executable, deterministic ADF, and
+structure without requiring copyrighted firmware. Full mode additionally needs
+`EMU198X_AMIGA_KICKSTART` to name a legally obtained, recognised Kickstart 1.3
+ROM and asserts the exact Emu198x frame.
+
 ## Licence
 
 Educational use; see the project website and individual source headers where present.
