@@ -35,7 +35,7 @@
     "executable": "copper",
     "executable_sha256": "ab843a7f3bfdd33ff45b09583ccb233ed9b41bf00124ec0910e4923b86335708",
     "media": "copper.adf",
-    "media_sha256": "f3a9509660879dc2d257f365cd00075009f8478d4315ae449f1d8d1d6ecc1ae8"
+    "media_sha256": "b8bf53def413effe34e0a4f23e25f78a12d194b0e6f64d315f8e70235a32af7f"
   },
   "firmware": {
     "environment": "EMU198X_AMIGA_KICKSTART",
@@ -47,7 +47,23 @@
   "execution": {
     "model": "a500",
     "frames": 1600,
-    "frame_dimensions": [768, 576],
-    "frame_png_sha256": "b1287160519a1a7af60a9c96f611d830d4e2d8d4f86578d9023ffa909f1a2f1f"
-  }
+    "frame_dimensions": [
+      768,
+      576
+    ],
+    "frame_png_sha256": "0ec5f2d369bba527d2dfa3cbd5340e36d40cd6de45df3fdf741b5dbac85c998e"
+  },
+  "relock_history": [
+    {
+      "date": "2026-08-11",
+      "was": {
+        "build198x": "3eb707330979312e3e740721a1d6134f6a6ec572",
+        "emu198x": "970caaa3fa2ec711c6a27d6a4b49b135934a15ec",
+        "media_sha256": "f3a9509660879dc2d257f365cd00075009f8478d4315ae449f1d8d1d6ecc1ae8",
+        "frame_png_sha256": "b1287160519a1a7af60a9c96f611d830d4e2d8d4f86578d9023ffa909f1a2f1f"
+      },
+      "why": "Two independent, deliberate upstream changes. Build198x 1f06f83 fixed the ADF file-header protection field, which this disk had as 0x0d \u2014 active-low RWED, so read, write and delete were all DENIED. KS1.3 ignores those bits so the disk still booted and the frame is byte-identical either way; KS2.0+ enforces them, which is the boot that fix repaired. Only two bytes of the ADF change: the protection field and the block checksum that follows from it. Separately, Emu198x 4d6b00d9 'Correct Amiga Copper horizontal comparison' and the programmable-HBLANK work moved where a Copper colour change lands at the right edge: 236 pixels of 442,368 (0.05%), all in the last 18 columns, blue nibble 8 becoming nibble F.",
+      "verification": "Both old revisions were rebuilt from clean checkouts and reproduce the previous hashes exactly, so nothing was broken \u2014 the lock was stale, not the tools. The ADF change was proven not to affect the frame by rendering both disks on both emulator revisions."
+    }
+  ]
 }

@@ -7,11 +7,11 @@
     },
     "build198x": {
       "url": "https://github.com/build198x/build198x.git",
-      "revision": "3eb707330979312e3e740721a1d6134f6a6ec572"
+      "revision": "f2b34172b550dee1ad201eb8e5a4259323c002a1"
     },
     "emu198x": {
       "url": "https://github.com/emu198x/emu198x.git",
-      "revision": "970caaa3fa2ec711c6a27d6a4b49b135934a15ec"
+      "revision": "5ec7efce2e6aee914975c37f21a87223ea71d19a"
     }
   }
 }
