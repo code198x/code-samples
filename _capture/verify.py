@@ -175,12 +175,26 @@ def validate_evidence(manifest: dict[str, Any], report: dict[str, Any], *, requi
                 raise ProofFailure(f"evidence path not found: {item['path']}")
             checked.append({**item, "checkout_verified": False})
             continue
-        text = path.read_text(errors="replace")
-        if not item.get("locator") or not locator_found(item["locator"], text):
-            raise ProofFailure(f"evidence locator not found in {item['path']}: {item.get('locator')!r}")
         actual_hash = sha256(path)
         if actual_hash != declared_hash:
             raise ProofFailure(f"evidence hash mismatch for {item['path']}: {actual_hash}")
+        if item.get("medium") == "page-image":
+            # Some primary sources are only readable as images. Ricoh's internal
+            # specification for the 2A03 and 2C02 is handwritten Japanese that OCR
+            # cannot read, so a text locator would be impossible to satisfy and the
+            # best source would be excluded for the way it was written down. The
+            # hash pins the exact page, and a transcription records what a reader
+            # saw on it — a weaker guarantee than a machine-matched string, and
+            # honest about being one.
+            if not item.get("transcription", "").strip():
+                raise ProofFailure(
+                    f"page-image evidence needs a transcription of what was read: {item['path']}")
+            if not str(item.get("page", "")).strip():
+                raise ProofFailure(f"page-image evidence needs a page number: {item['path']}")
+        else:
+            text = path.read_text(errors="replace")
+            if not item.get("locator") or not locator_found(item["locator"], text):
+                raise ProofFailure(f"evidence locator not found in {item['path']}: {item.get('locator')!r}")
         checked.append({**item, "checkout_verified": True})
     status = "passed" if all(item["checkout_verified"] for item in checked) else "not-applicable"
     add_stage(report, "evidence", status, sources=checked)

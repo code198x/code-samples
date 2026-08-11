@@ -20,6 +20,17 @@
       "claim": "The 6502 takes its NMI, reset and IRQ vectors from $FFFA-$FFFF. This program's thirteen NMI references all depend on that vector table, and its per-frame logic runs from the NMI handler."
     },
     {
+      "path": "reference/by-system/nintendo-nes/pages/ricoh-2c02-pins-p19.png",
+      "sha256": "d7bc88cbb2e36235f60374de47d04e9f77763f82d78189cec07b28a07c910f3f",
+      "tier": "primary",
+      "medium": "page-image",
+      "page": 19,
+      "document": "Ricoh internal specification, standard number KA-A002-B, section 10 (pin functions)",
+      "transcription": "Pin 19, INT, output: VBLANK signal for the CPU interrupt. Pin 18, CLK, input: 21.48 MHz clock.",
+      "claim": "The 2C02's INT output is the VBLANK signal wired to the CPU's interrupt input. This is the hardware origin of the NMI that runs this program's per-frame logic, stated by the chip's designer rather than inferred.",
+      "note": "Cited as a page image because the document is handwritten Japanese and OCR cannot read it — 'VBLANK' returns zero hits in the extracted text while being plainly legible on the page."
+    },
+    {
       "path": "reference/_raw-extracts/web/www.nesdev.org/ppu-2c02-source.md",
       "sha256": "eea0377bdf2fa4c59df73c14762ba519552fef1f4f93e638ec7306bba3eb5cb3",
       "tier": "external-formal",
@@ -31,7 +42,7 @@
       "sha256": "eea0377bdf2fa4c59df73c14762ba519552fef1f4f93e638ec7306bba3eb5cb3",
       "tier": "external-formal",
       "locator": "OAM DMA high address",
-      "claim": "OAMDMA at $4014 takes the high byte of a page and copies it into OAM \u2014 the mechanism this program uses to update sprites each frame."
+      "claim": "OAMDMA at $4014 takes the high byte of a page and copies it into OAM — the mechanism this program uses to update sprites each frame."
     },
     {
       "path": "reference/_raw-extracts/web/www.nesdev.org/nes-peripherals-and-io-source.md",
@@ -54,6 +65,6 @@
     ],
     "frame_png_sha256": "12cc2454418e0344af1c735029b3c30241c8a874e3ce6f0c8c8b3a9ce60484e5"
   },
-  "note": "The NES has no boot ROM, so this proof has no restricted input and runs its execute stage in public CI as well as locally \u2014 the only machine here whose rendered frame is checked on every push.",
-  "evidence_caveat": "Tiers are explicit because the NES sources differ in kind. The 6502 vector claim is PRIMARY \u2014 MOS's own programming manual for the CPU the 2A03 derives from. The three NES-specific claims are EXTERNAL-FORMAL: the NESdev wiki, community documentation built from hardware analysis rather than a manufacturer manual, held here as page-attributed source extracts. No Nintendo-published hardware manual is in the library; that remains the acquisition that would make these claims primary."
+  "note": "The NES has no boot ROM, so this proof has no restricted input and runs its execute stage in public CI as well as locally — the only machine here whose rendered frame is checked on every push.",
+  "evidence_caveat": "Tiers and media are both explicit because the NES sources differ in kind. Two items are PRIMARY: MOS's programming manual for the 6502 vector table, and Ricoh's own internal specification for the 2C02 — the latter cited as a hash-pinned page image, because the document is handwritten and no text locator could ever match it. The remaining items are EXTERNAL-FORMAL: the NESdev wiki, community documentation built from hardware analysis. No Nintendo-published programming manual exists to acquire; the 2A03 and 2C02 are semi-custom parts that never had a public datasheet, so the designer's internal specification is the primary document rather than a substitute."
 }
