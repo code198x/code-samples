@@ -122,7 +122,13 @@ def locator_found(locator: str, text: str) -> bool:
     words = locator.split()
     if not words:
         return False
-    return re.search(r"\s+".join(re.escape(w) for w in words), text) is not None
+    pattern = r"\s+".join(re.escape(w) for w in words)
+    if re.search(pattern, text):
+        return True
+    # Markdown-sourced evidence escapes punctuation the page does not contain —
+    # the NESdev extracts write register addresses as "\$2006". Retry against a
+    # de-escaped copy so a locator matches the text rather than its encoding.
+    return re.search(pattern, re.sub(r"\\([^A-Za-z0-9\s])", r"\1", text)) is not None
 
 
 def add_stage(report: dict[str, Any], name: str, status: str, **details: Any) -> None:
