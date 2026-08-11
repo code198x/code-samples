@@ -5,12 +5,14 @@ on:
     paths:
       - "_capture/verify.py"
       - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
+      - "sinclair-zx-spectrum/assembly/gloaming/unit-19/**"
       - ".github/workflows/executable-proof.yml"
   push:
     branches: [main, master]
     paths:
       - "_capture/verify.py"
       - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
+      - "sinclair-zx-spectrum/assembly/gloaming/unit-19/**"
       - ".github/workflows/executable-proof.yml"
   workflow_dispatch:
 
@@ -64,3 +66,44 @@ jobs:
         with:
           name: amiga-copper-public-proof
           path: build/proofs/amiga-copper-public.json
+
+  # The Spectrum chain is shorter: Asm198x emits a runnable 48K snapshot
+  # directly, so there is no media-mastering stage and no Build198x checkout.
+  spectrum-gloaming-public:
+    name: Spectrum Gloaming title public proof
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code198x samples
+        uses: actions/checkout@v7
+
+      - name: Read locked revisions
+        id: lock
+        shell: bash
+        run: |
+          LOCK=sinclair-zx-spectrum/assembly/gloaming/unit-19/capture/proof.lock.json
+          echo "asm=$(jq -r '.repositories.asm198x.revision' "$LOCK")" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout Asm198x
+        uses: actions/checkout@v7
+        with:
+          repository: asm198x/asm198x
+          ref: ${{ steps.lock.outputs.asm }}
+          path: _family/Asm198x/asm198x
+
+      - name: Build locked family tools
+        run: cargo build --release --manifest-path _family/Asm198x/asm198x/Cargo.toml -p asm198x
+
+      - name: Verify redistributable stages
+        env:
+          ROOT198X: ${{ github.workspace }}/_family
+          ASM198X: ${{ github.workspace }}/_family/Asm198x/asm198x/target/release/asm198x
+        run: |
+          python3 _capture/verify.py \
+            sinclair-zx-spectrum/assembly/gloaming/unit-19/capture/proof.manifest.json \
+            --public --report build/proofs/spectrum-gloaming-public.json
+
+      - name: Upload evidence report
+        uses: actions/upload-artifact@v7
+        with:
+          name: spectrum-gloaming-public-proof
+          path: build/proofs/spectrum-gloaming-public.json
