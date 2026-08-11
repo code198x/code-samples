@@ -158,13 +158,42 @@ def git_revision(path: Path) -> dict[str, Any]:
     return {"available": revision.returncode == 0, "revision": revision.stdout.strip(), "dirty": bool(dirty.stdout.strip())}
 
 
-def verify_locked_revision(name: str, repo: Path, lock: dict[str, Any], report: dict[str, Any]) -> None:
+def repo_for_binary(binary: Path | None) -> Path | None:
+    """The git checkout a built tool came out of, if it came out of one.
+
+    `target/release/<tool>` sits inside its own checkout, so walking up from
+    the binary finds the revision that actually produced it.
+    """
+    if binary is None:
+        return None
+    for parent in binary.resolve().parents:
+        if (parent / ".git").exists():
+            return parent
+    return None
+
+
+def verify_locked_revision(name: str, repo: Path, lock: dict[str, Any], report: dict[str, Any],
+                           *, binary: Path | None = None) -> None:
+    """Check the locked revision against the checkout that built the tool.
+
+    Falling back to the sibling checkout measures the wrong thing whenever the
+    tool is supplied from elsewhere: a proof run against an explicitly-provided
+    binary would be judged on whatever revision a neighbouring working tree
+    happened to be sitting at, which for a repo under active development is
+    both unrelated to the run and changing under it.
+    """
+    source = "sibling-checkout"
+    from_binary = repo_for_binary(binary)
+    if from_binary is not None:
+        repo, source = from_binary, "binary"
     actual = git_revision(repo)
     expected = lock["repositories"][name]["revision"]
-    actual.update(expected_revision=expected, matches_lock=actual.get("revision") == expected)
+    actual.update(expected_revision=expected, matches_lock=actual.get("revision") == expected,
+                  revision_source=source, checkout=str(repo))
     report["repositories"][name] = actual
     if actual["available"] and not actual["matches_lock"]:
-        raise ProofFailure(f"{name} is at {actual.get('revision')}, proof locks {expected}")
+        raise ProofFailure(
+            f"{name} is at {actual.get('revision')} (from {source} {repo}), proof locks {expected}")
 
 
 def main() -> int:
@@ -197,14 +226,25 @@ def main() -> int:
             raise ProofFailure("unsupported proof lock schema")
         spec = MACHINES[manifest["machine"]]
         report["repositories"]["code_samples"] = git_revision(CODE_SAMPLES)
-        verify_locked_revision("asm198x", UMBRELLA / "Asm198x/asm198x", lock, report)
+
+        # Resolve every tool before judging any revision, so each lock is
+        # checked against the checkout that built the binary being run.
+        asm = tool_path("asm198x", "ASM198X", Path("Asm198x/asm198x/target/release/asm198x"), args.tool_root)
+        build = None
         if spec["masters_media"]:
-            verify_locked_revision("build198x", UMBRELLA / "Build198x/build198x", lock, report)
+            build = tool_path("build198x", "BUILD198X", Path("Build198x/build198x/target/release/build198x"), args.tool_root)
+        emu = None
         if args.full:
-            verify_locked_revision("emu198x", UMBRELLA / "Emu198x/emu198x", lock, report)
+            emu_name, emu_env, emu_rel = spec["emulator"]
+            emu = tool_path(emu_name, emu_env, Path(emu_rel), args.tool_root)
+
+        verify_locked_revision("asm198x", UMBRELLA / "Asm198x/asm198x", lock, report, binary=asm)
+        if build is not None:
+            verify_locked_revision("build198x", UMBRELLA / "Build198x/build198x", lock, report, binary=build)
+        if emu is not None:
+            verify_locked_revision("emu198x", UMBRELLA / "Emu198x/emu198x", lock, report, binary=emu)
         add_stage(report, "revision-lock", "passed", lock=str(lock_path.relative_to(CODE_SAMPLES)))
 
-        asm = tool_path("asm198x", "ASM198X", Path("Asm198x/asm198x/target/release/asm198x"), args.tool_root)
         work = Path(tempfile.mkdtemp(prefix="198x-proof-"))
         source = (manifest_path.parent.parent / manifest["program"]).resolve()
         executable = work / manifest["build"]["executable"]
@@ -225,7 +265,6 @@ def main() -> int:
 
         media_a = executable
         if spec["masters_media"]:
-            build = tool_path("build198x", "BUILD198X", Path("Build198x/build198x/target/release/build198x"), args.tool_root)
             media_a = work / manifest["build"]["media"]
             media_b = work / f"second-{manifest['build']['media']}"
             for output in (media_a, media_b):
@@ -274,8 +313,6 @@ def main() -> int:
             firmware_hash = sha256(firmware_path)
             if firmware_hash not in firmware["accepted_sha256"]:
                 raise ProofFailure(f"unrecognised firmware hash: {firmware_hash}")
-            emu_name, emu_env, emu_rel = spec["emulator"]
-            emu = tool_path(emu_name, emu_env, Path(emu_rel), args.tool_root)
             screenshot, script = work / "frame.png", work / "proof.script.json"
             steps: list[dict[str, Any]] = []
             if not spec["masters_media"]:
