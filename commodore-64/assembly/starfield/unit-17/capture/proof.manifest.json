@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "id": "commodore-64-assembly-starfield-unit-17-the-curve",
+  "machine": "commodore-64-asm",
+  "lesson": {
+    "platform": "commodore-64",
+    "track": "assembly",
+    "module": "starfield",
+    "unit": 17,
+    "title": "The Curve"
+  },
+  "program": "steps/step-04.asm",
+  "lock": "proof.lock.json",
+  "evidence": [
+    {
+      "path": "reference/by-system/commodore-c64/1983-commodore-64-programmers-reference-guide.txt",
+      "sha256": "653b2a40570698330bda2162a57aa2e769cc7e86b5ba6979a008dad1e975ac2e",
+      "locator": "The raster register is found in the VIC-II chip at location 53266",
+      "claim": "The VIC-II raster register at $D012 is what this program reads to time the display."
+    },
+    {
+      "path": "reference/by-system/commodore-c64/1983-inside-the-commodore-64.txt",
+      "sha256": "e8726f30e4d5f7b6f1f56e24ce5f948490a7266658ac64978c01233418ccff26",
+      "locator": "the screen memory location is set to $0400",
+      "claim": "Screen memory sits at $0400 after power-on, which is where this program writes characters."
+    },
+    {
+      "path": "reference/by-system/commodore-c64/1983-inside-the-commodore-64.txt",
+      "sha256": "e8726f30e4d5f7b6f1f56e24ce5f948490a7266658ac64978c01233418ccff26",
+      "locator": "The 1000 bytes of color memory starts at 55296",
+      "claim": "Colour RAM is a separate 1000-byte region at $D800, written independently of screen memory."
+    },
+    {
+      "path": "reference/by-system/commodore-c64/1983-commodore-64-programmers-reference-guide.txt",
+      "sha256": "653b2a40570698330bda2162a57aa2e769cc7e86b5ba6979a008dad1e975ac2e",
+      "locator": "locations from 54272 to 54296",
+      "claim": "The SID occupies $D400 upwards, the registers this program's title jingle drives."
+    }
+  ],
+  "build": {
+    "executable": "starfield-17.prg",
+    "executable_sha256": "fb4e7fc3e25509d160f8c6880d000be177fda0560e185c64cfdb1bb24481a6d8",
+    "load_address": 2049
+  },
+  "firmware": {
+    "roms": [
+      {
+        "path": "~/.emu198x/roms/commodore-c64/kernal.rom",
+        "accepted_sha256": [
+          "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721"
+        ]
+      },
+      {
+        "path": "~/.emu198x/roms/commodore-c64/basic.rom",
+        "accepted_sha256": [
+          "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d"
+        ]
+      },
+      {
+        "path": "~/.emu198x/roms/commodore-c64/chargen.rom",
+        "accepted_sha256": [
+          "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
+        ]
+      }
+    ],
+    "guidance": "Supply legally obtained C64 KERNAL, BASIC and character ROMs at the paths above. No ROM is ever copied into the report.",
+    "note": "Three ROMs, so no single hash pins the machine. As with the Spectrum, emu198x-c64 resolves these itself rather than taking them as arguments, so the proof verifies the ROMs the emulator will load. See emu198x/emu198x#842."
+  },
+  "execution": {
+    "model": null,
+    "frames": 200,
+    "boot_max_frames": 300,
+    "frame_dimensions": [
+      416,
+      312
+    ],
+    "frame_png_sha256": "174bfee0f544589ec73a0d768938c578e4cde7deff8e49be8a4ef38843f7b104"
+  }
+}

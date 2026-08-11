@@ -32,17 +32,35 @@ MACHINES = {
         "emit": "--exe",
         "masters_media": True,
         "emulator": ("emu198x-amiga", "EMU198X_AMIGA", "Emu198x/emu198x/target/release/emu198x-amiga"),
+        "load": "cli-disk",       # bootable medium handed to the emulator
+        "model_flag": "--model",
+        "boot": None,             # Kickstart boots the disk unaided
     },
     "sinclair-zx-spectrum-asm": {
         "dialect": "pasmonext",
         "emit": "--sna",
         "masters_media": False,
         "emulator": ("emu198x-spectrum", "EMU198X_SPECTRUM", "Emu198x/emu198x/target/release/emu198x-spectrum"),
+        "load": "script-snapshot",  # snapshot restores a running machine
+        "model_flag": "--machine",
+        "boot": None,
+    },
+    "commodore-64-asm": {
+        "dialect": "acme",
+        "emit": "--prg",
+        "masters_media": False,
+        "emulator": ("emu198x-c64", "EMU198X_C64", "Emu198x/emu198x/target/release/emu198x-c64"),
+        "load": "cli-load",       # PRG injected, but nothing starts it
+        "model_flag": None,
+        "boot": "type-run",       # so the proof must reach READY. and type RUN
     },
 }
 
 # A 48K .sna is a 27-byte register header followed by the full 48K of RAM.
 SNA_48K_BYTES = 27 + 49152
+
+# Cold-boot RUN timing, matching _capture/capture.py's type_run().
+KEY_DOWN_FRAMES, KEY_UP_FRAMES, BOOT_SETTLE_FRAMES = 4, 3, 30
 
 
 class ProofFailure(RuntimeError):
@@ -282,52 +300,95 @@ def main() -> int:
             add_stage(report, "master-media", "passed", sha256=media_hash, bytes=len(adf), deterministic=True)
         else:
             # No mastering step: the assembler emitted the runnable artefact, so
-            # check it is structurally the snapshot the emulator expects.
-            if executable.stat().st_size != SNA_48K_BYTES:
-                raise ProofFailure(
-                    f"48K snapshot is {executable.stat().st_size} bytes, expected {SNA_48K_BYTES}")
+            # check it is structurally what the emulator expects.
+            size = executable.stat().st_size
+            detail: dict[str, Any] = {}
+            if spec["emit"] == "--sna":
+                if size != SNA_48K_BYTES:
+                    raise ProofFailure(f"48K snapshot is {size} bytes, expected {SNA_48K_BYTES}")
+                detail = {"snapshot_bytes": size}
+            elif spec["emit"] == "--prg":
+                # A PRG opens with its little-endian load address; $0801 is the
+                # BASIC start, which is what makes RUN the right way to launch it.
+                if size < 3:
+                    raise ProofFailure(f"PRG is {size} bytes, too short to hold a load address")
+                head = executable.read_bytes()[:2]
+                load_address = head[0] | (head[1] << 8)
+                expected = manifest["build"].get("load_address")
+                if expected is not None and load_address != expected:
+                    raise ProofFailure(
+                        f"PRG loads at ${load_address:04X}, manifest expects ${expected:04X}")
+                detail = {"prg_bytes": size, "load_address": f"${load_address:04X}"}
             add_stage(report, "master-media", "not-applicable",
-                      reason="assembler emits the runnable snapshot directly",
-                      snapshot_bytes=SNA_48K_BYTES)
+                      reason="assembler emits the runnable artefact directly", **detail)
 
         firmware = manifest["firmware"]
         if not args.full:
-            add_stage(report, "execute", "skipped-restricted-input",
-                      requirement=firmware.get("environment") or firmware["resolved_path"])
+            requirement = (firmware.get("environment")
+                           or firmware.get("resolved_path")
+                           or ", ".join(r["path"] for r in firmware.get("roms", []))
+                           or "firmware")
+            add_stage(report, "execute", "skipped-restricted-input", requirement=requirement)
             report["result"] = "passed-public"
         else:
             # The Amiga takes its Kickstart from an environment variable and is
             # passed it explicitly. emu198x-spectrum has no --rom flag: it
             # resolves the ROM itself from a fixed path, so the proof verifies
             # the ROM the emulator *will* load rather than handing one over.
+            wanted: list[tuple[Path, list[str]]] = []
             if "environment" in firmware:
                 firmware_value = os.environ.get(firmware["environment"])
                 if not firmware_value:
                     raise ProofFailure(f"full proof requires {firmware['environment']}")
-                firmware_path = Path(firmware_value).expanduser().resolve()
+                wanted.append((Path(firmware_value).expanduser().resolve(),
+                               firmware["accepted_sha256"]))
+            elif "roms" in firmware:
+                # The C64 boots from three ROMs, so one hash cannot pin the machine.
+                for rom in firmware["roms"]:
+                    wanted.append((Path(rom["path"]).expanduser().resolve(),
+                                   rom["accepted_sha256"]))
             else:
-                firmware_path = Path(firmware["resolved_path"]).expanduser().resolve()
-                if not firmware_path.is_file():
-                    raise ProofFailure(
-                        f"full proof requires the ROM the emulator resolves: {firmware_path}")
-            firmware_hash = sha256(firmware_path)
-            if firmware_hash not in firmware["accepted_sha256"]:
-                raise ProofFailure(f"unrecognised firmware hash: {firmware_hash}")
+                wanted.append((Path(firmware["resolved_path"]).expanduser().resolve(),
+                               firmware["accepted_sha256"]))
+            checked = []
+            for fw_path, accepted in wanted:
+                if not fw_path.is_file():
+                    raise ProofFailure(f"full proof requires firmware at {fw_path}")
+                fw_hash = sha256(fw_path)
+                if fw_hash not in accepted:
+                    raise ProofFailure(f"unrecognised firmware hash for {fw_path.name}: {fw_hash}")
+                checked.append({"name": fw_path.name, "sha256": fw_hash})
+            firmware_path = wanted[0][0]
+            firmware_hash = checked[0]["sha256"]
             screenshot, script = work / "frame.png", work / "proof.script.json"
             steps: list[dict[str, Any]] = []
-            if not spec["masters_media"]:
+            if spec["load"] == "script-snapshot":
                 steps.append({"action": "load_snapshot", "path": str(media_a)})
+            if spec["boot"] == "type-run":
+                # A PRG is only injected, never started. Wait for READY. and
+                # type RUN, exactly as the capture pipeline does.
+                steps.append({"action": "wait_for_boot",
+                              "max_frames": manifest["execution"].get("boot_max_frames", 300)})
+                for ch in ("R", "U", "N", "RETURN"):
+                    steps.append({"action": "input", "events": [{"Key": {"name": ch, "pressed": True}}]})
+                    steps.append({"action": "run_frames", "frames": KEY_DOWN_FRAMES})
+                    steps.append({"action": "input", "events": [{"Key": {"name": ch, "pressed": False}}]})
+                    steps.append({"action": "run_frames", "frames": KEY_UP_FRAMES})
+                steps.append({"action": "run_frames", "frames": BOOT_SETTLE_FRAMES})
             steps += [
                 {"action": "run_frames", "frames": manifest["execution"]["frames"]},
                 {"action": "save_screenshot", "path": str(screenshot)},
             ]
             script.write_text(json.dumps(steps, indent=2) + "\n")
-            if spec["masters_media"]:
-                argv = [str(emu), "--headless", "--kickstart", str(firmware_path), "--model",
-                        manifest["execution"]["model"], "--disk", str(media_a), "--script", str(script)]
-            else:
-                argv = [str(emu), "--headless", "--machine", manifest["execution"]["model"],
-                        "--script", str(script)]
+
+            argv = [str(emu), "--headless"]
+            if spec["load"] == "cli-disk":
+                argv += ["--kickstart", str(firmware_path), "--disk", str(media_a)]
+            elif spec["load"] == "cli-load":
+                argv += ["--load", str(media_a)]
+            if spec["model_flag"]:
+                argv += [spec["model_flag"], manifest["execution"]["model"]]
+            argv += ["--script", str(script)]
             result = run(argv)
             if result.returncode:
                 raise ProofFailure(f"Emu198x failed:\n{result.stderr}")
