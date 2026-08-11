@@ -5,14 +5,16 @@ on:
     paths:
       - "_capture/verify.py"
       - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
-      - "sinclair-zx-spectrum/assembly/gloaming/unit-19/**"
+      - "sinclair-zx-spectrum/assembly/**/capture/proof.*.json"
+      - "sinclair-zx-spectrum/assembly/**/*.asm"
       - ".github/workflows/executable-proof.yml"
   push:
     branches: [main, master]
     paths:
       - "_capture/verify.py"
       - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
-      - "sinclair-zx-spectrum/assembly/gloaming/unit-19/**"
+      - "sinclair-zx-spectrum/assembly/**/capture/proof.*.json"
+      - "sinclair-zx-spectrum/assembly/**/*.asm"
       - ".github/workflows/executable-proof.yml"
   workflow_dispatch:
 
@@ -69,9 +71,26 @@ jobs:
 
   # The Spectrum chain is shorter: Asm198x emits a runnable 48K snapshot
   # directly, so there is no media-mastering stage and no Build198x checkout.
-  spectrum-gloaming-public:
-    name: Spectrum Gloaming title public proof
+  # One matrix leg per proof, so adding a unit is one line rather than a job.
+  spectrum-public:
+    name: Spectrum ${{ matrix.proof.name }} public proof
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        proof:
+          - name: meet-the-machine no-safety-net
+            dir: sinclair-zx-spectrum/assembly/meet-the-machine/unit-16
+            id: spectrum-meet-the-machine-16
+          - name: Gloaming title
+            dir: sinclair-zx-spectrum/assembly/gloaming/unit-19
+            id: spectrum-gloaming-19
+          - name: The Long Night title
+            dir: sinclair-zx-spectrum/assembly/the-long-night/unit-10
+            id: spectrum-the-long-night-10
+          - name: Shadowkeep title
+            dir: sinclair-zx-spectrum/assembly/shadowkeep/unit-19
+            id: spectrum-shadowkeep-19
     steps:
       - name: Checkout Code198x samples
         uses: actions/checkout@v7
@@ -80,7 +99,7 @@ jobs:
         id: lock
         shell: bash
         run: |
-          LOCK=sinclair-zx-spectrum/assembly/gloaming/unit-19/capture/proof.lock.json
+          LOCK=${{ matrix.proof.dir }}/capture/proof.lock.json
           echo "asm=$(jq -r '.repositories.asm198x.revision' "$LOCK")" >> "$GITHUB_OUTPUT"
 
       - name: Checkout Asm198x
@@ -99,11 +118,11 @@ jobs:
           ASM198X: ${{ github.workspace }}/_family/Asm198x/asm198x/target/release/asm198x
         run: |
           python3 _capture/verify.py \
-            sinclair-zx-spectrum/assembly/gloaming/unit-19/capture/proof.manifest.json \
-            --public --report build/proofs/spectrum-gloaming-public.json
+            ${{ matrix.proof.dir }}/capture/proof.manifest.json \
+            --public --report build/proofs/${{ matrix.proof.id }}.json
 
       - name: Upload evidence report
         uses: actions/upload-artifact@v7
         with:
-          name: spectrum-gloaming-public-proof
-          path: build/proofs/spectrum-gloaming-public.json
+          name: ${{ matrix.proof.id }}-proof
+          path: build/proofs/${{ matrix.proof.id }}.json

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "id": "sinclair-zx-spectrum-assembly-meet-the-machine-unit-16-no-safety-net",
+  "machine": "sinclair-zx-spectrum-asm",
+  "lesson": {
+    "platform": "sinclair-zx-spectrum",
+    "track": "assembly",
+    "module": "meet-the-machine",
+    "unit": 16,
+    "title": "No Safety Net"
+  },
+  "program": "no-safety-net.asm",
+  "lock": "proof.lock.json",
+  "evidence": [
+    {
+      "path": "reference/by-system/sinclair-zx-spectrum/the-guide-to-the-spectrum-rom-hilderbay.txt",
+      "sha256": "c687b453d3bb88c0b54d66b76fb02b28667f0163f10a633e2b1403e12cbce95d",
+      "locator": "consists of 768 bytes starting at 22528",
+      "claim": "The attribute area is 768 bytes at $5800, one byte per character cell."
+    }
+  ],
+  "build": {
+    "executable": "meet-the-machine-16.sna",
+    "executable_sha256": "80ecfa7a1eb1f0f1f2930ac597f82b8e8c1eb8dec2532e062a9ea5fa8ebfec2e"
+  },
+  "firmware": {
+    "resolved_path": "~/.emu198x/roms/sinclair-zx-spectrum-48k/48.rom",
+    "accepted_sha256": [
+      "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07"
+    ],
+    "guidance": "Supply a legally obtained ZX Spectrum 48K ROM at the path above. The ROM is never copied into the report.",
+    "note": "emu198x-spectrum has no --rom flag and resolves the ROM from this path itself, so the proof verifies the ROM the emulator will load rather than passing one. See emu198x/emu198x#842."
+  },
+  "execution": {
+    "model": "spectrum_48k",
+    "frames": 100,
+    "frame_dimensions": [
+      352,
+      296
+    ],
+    "frame_png_sha256": "c54a7849688c2875108b113e39a1c96e63019f76eec9dcc2719fd6ef0bff2f8c"
+  }
+}

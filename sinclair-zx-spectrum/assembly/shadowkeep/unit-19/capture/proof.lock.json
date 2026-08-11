@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "repositories": {
+    "asm198x": {
+      "url": "https://github.com/asm198x/asm198x.git",
+      "revision": "9fdeec572067ec54b98e638192b3301e336da4ca"
+    },
+    "emu198x": {
+      "url": "https://github.com/emu198x/emu198x.git",
+      "revision": "5ec7efce2e6aee914975c37f21a87223ea71d19a"
+    }
+  }
+}

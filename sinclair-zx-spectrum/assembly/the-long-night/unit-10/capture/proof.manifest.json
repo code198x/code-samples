@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "sinclair-zx-spectrum-assembly-the-long-night-unit-10-title",
+  "machine": "sinclair-zx-spectrum-asm",
+  "lesson": {
+    "platform": "sinclair-zx-spectrum",
+    "track": "assembly",
+    "module": "the-long-night",
+    "unit": 10,
+    "title": "The Long Night title"
+  },
+  "program": "steps/step-02.asm",
+  "lock": "proof.lock.json",
+  "evidence": [
+    {
+      "path": "reference/by-system/sinclair-zx-spectrum/40-best-machine-code-routines-for-the-zx-spectrum-hewson.txt",
+      "sha256": "5dcc6f8a87471109cede62a61eb7bfe7fbeb14a38e583095a9b613957dade282",
+      "locator": "the display file occupies locations 16384 to 22527",
+      "claim": "The display file is the pixel layer at $4000-$57FF, addressed directly by this program."
+    },
+    {
+      "path": "reference/by-system/sinclair-zx-spectrum/the-guide-to-the-spectrum-rom-hilderbay.txt",
+      "sha256": "c687b453d3bb88c0b54d66b76fb02b28667f0163f10a633e2b1403e12cbce95d",
+      "locator": "consists of 768 bytes starting at 22528",
+      "claim": "The attribute area is 768 bytes at $5800, one byte per character cell."
+    },
+    {
+      "path": "reference/by-system/sinclair-zx-spectrum/understanding-your-spectrum-melbourne-house.txt",
+      "sha256": "a3581098bc2775a91ff18072cb519fe9e6bb3808cf2254d5c0760c859fb90453",
+      "locator": "port 254 controls the colour of",
+      "claim": "The border colour is set by writing port 254, which is what this program's OUT to $FE does."
+    },
+    {
+      "path": "reference/by-system/sinclair-zx-spectrum/sinclair-zx-spectrum-plus-2-manual.txt",
+      "sha256": "5d456962151d93067a74fb04576b48c6dce3ce7664676fcbf183c715b52629b7",
+      "locator": "256 less than address of character set",
+      "claim": "The ROM character set is reached through CHARS, which holds an address 256 below it \u2014 the basis of the $3C00 font addressing here."
+    }
+  ],
+  "build": {
+    "executable": "the-long-night-10.sna",
+    "executable_sha256": "2fd5c2a3c5c81aecce37e0209460b954284b96e9f758d246361e9edb8207ec05"
+  },
+  "firmware": {
+    "resolved_path": "~/.emu198x/roms/sinclair-zx-spectrum-48k/48.rom",
+    "accepted_sha256": [
+      "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07"
+    ],
+    "guidance": "Supply a legally obtained ZX Spectrum 48K ROM at the path above. The ROM is never copied into the report.",
+    "note": "emu198x-spectrum has no --rom flag and resolves the ROM from this path itself, so the proof verifies the ROM the emulator will load rather than passing one. See emu198x/emu198x#842."
+  },
+  "execution": {
+    "model": "spectrum_48k",
+    "frames": 100,
+    "frame_dimensions": [
+      352,
+      296
+    ],
+    "frame_png_sha256": "decc41bbb1b11f6497faeaf901505c23bcc2f51481fcf1ac1abd4396e72ba89c"
+  }
+}
