@@ -9,6 +9,8 @@ on:
       - "sinclair-zx-spectrum/assembly/**/*.asm"
       - "commodore-64/assembly/**/capture/proof.*.json"
       - "commodore-64/assembly/**/*.asm"
+      - "nintendo-entertainment-system/assembly/**/capture/proof.*.json"
+      - "nintendo-entertainment-system/assembly/**/*.asm"
       - ".github/workflows/executable-proof.yml"
   push:
     branches: [main, master]
@@ -19,6 +21,8 @@ on:
       - "sinclair-zx-spectrum/assembly/**/*.asm"
       - "commodore-64/assembly/**/capture/proof.*.json"
       - "commodore-64/assembly/**/*.asm"
+      - "nintendo-entertainment-system/assembly/**/capture/proof.*.json"
+      - "nintendo-entertainment-system/assembly/**/*.asm"
       - ".github/workflows/executable-proof.yml"
   workflow_dispatch:
 
@@ -167,6 +171,66 @@ jobs:
         env:
           ROOT198X: ${{ github.workspace }}/_family
           ASM198X: ${{ github.workspace }}/_family/Asm198x/asm198x/target/release/asm198x
+        run: |
+          python3 _capture/verify.py \
+            ${{ matrix.proof.dir }}/capture/proof.manifest.json \
+            --public --report build/proofs/${{ matrix.proof.id }}.json
+
+      - name: Upload evidence report
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.proof.id }}-proof
+          path: build/proofs/${{ matrix.proof.id }}.json
+
+  # The NES has no boot ROM, so this proof has nothing restricted to withhold:
+  # its execute stage runs here, and CI compares the rendered frame on every
+  # push. The other three machines can only reach their redistributable stages.
+  nes-public:
+    name: NES ${{ matrix.proof.name }} proof (executes)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        proof:
+          - name: Dash
+            dir: nintendo-entertainment-system/assembly/dash/unit-17
+            id: nes-dash-17
+    steps:
+      - name: Checkout Code198x samples
+        uses: actions/checkout@v7
+
+      - name: Read locked revisions
+        id: lock
+        shell: bash
+        run: |
+          LOCK=${{ matrix.proof.dir }}/capture/proof.lock.json
+          echo "asm=$(jq -r '.repositories.asm198x.revision' "$LOCK")" >> "$GITHUB_OUTPUT"
+          echo "emu=$(jq -r '.repositories.emu198x.revision' "$LOCK")" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout Asm198x
+        uses: actions/checkout@v7
+        with:
+          repository: asm198x/asm198x
+          ref: ${{ steps.lock.outputs.asm }}
+          path: _family/Asm198x/asm198x
+
+      - name: Checkout Emu198x
+        uses: actions/checkout@v7
+        with:
+          repository: emu198x/emu198x
+          ref: ${{ steps.lock.outputs.emu }}
+          path: _family/Emu198x/emu198x
+
+      - name: Build locked family tools
+        run: |
+          cargo build --release --manifest-path _family/Asm198x/asm198x/Cargo.toml -p asm198x
+          cargo build --release --manifest-path _family/Emu198x/emu198x/Cargo.toml -p emu198x-nes
+
+      - name: Verify the whole chain, execution included
+        env:
+          ROOT198X: ${{ github.workspace }}/_family
+          ASM198X: ${{ github.workspace }}/_family/Asm198x/asm198x/target/release/asm198x
+          EMU198X_NES: ${{ github.workspace }}/_family/Emu198x/emu198x/target/release/emu198x-nes
         run: |
           python3 _capture/verify.py \
             ${{ matrix.proof.dir }}/capture/proof.manifest.json \

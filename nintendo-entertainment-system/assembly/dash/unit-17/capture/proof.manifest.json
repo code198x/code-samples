@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "nintendo-nes-assembly-dash-unit-17",
+  "machine": "nintendo-nes-asm",
+  "lesson": {
+    "platform": "nintendo-entertainment-system",
+    "track": "assembly",
+    "module": "dash",
+    "unit": 17,
+    "title": "Dash"
+  },
+  "program": "dash.asm",
+  "lock": "proof.lock.json",
+  "evidence": [
+    {
+      "path": "reference/by-topic/ppu-2c02/ppu-2c02-reference.md",
+      "sha256": "085559a9b153fce94b31fb44d290882e22e7912b784f8948fe0001d62010a750",
+      "tier": "derived",
+      "locator": "write to `$3456` is the same as a write to `$2006`",
+      "claim": "The PPU register ports mirror every 8 bytes across $2000-$3FFF, which is why this program's writes to $2006/$2007 are the canonical addresses rather than the only ones."
+    },
+    {
+      "path": "reference/by-topic/ppu-2c02/ppu-2c02-reference.md",
+      "sha256": "085559a9b153fce94b31fb44d290882e22e7912b784f8948fe0001d62010a750",
+      "tier": "derived",
+      "locator": "DMA port at `$4014`",
+      "claim": "Sprite data reaches OAM through the DMA port at $4014, the mechanism this program uses to update its sprites each frame."
+    },
+    {
+      "path": "reference/by-topic/ppu-2c02/ppu-2c02-reference.md",
+      "sha256": "085559a9b153fce94b31fb44d290882e22e7912b784f8948fe0001d62010a750",
+      "tier": "derived",
+      "locator": "256 \u00d7 240",
+      "claim": "The PPU renders 256x240, which is the frame dimension this proof compares."
+    }
+  ],
+  "build": {
+    "executable": "dash.nes",
+    "executable_sha256": "c465a1cb9ec03f9f06a696c88e5eaca51b95d5a91b7925f79601348d507928c2"
+  },
+  "execution": {
+    "model": null,
+    "frames": 180,
+    "frame_dimensions": [
+      256,
+      240
+    ],
+    "frame_png_sha256": "12cc2454418e0344af1c735029b3c30241c8a874e3ce6f0c8c8b3a9ce60484e5"
+  },
+  "note": "The NES has no boot ROM, so this proof has no restricted input and runs its execute stage in public CI as well as locally \u2014 the only machine here whose rendered frame is checked on every push.",
+  "evidence_caveat": "\u26a0 ALL EVIDENCE HERE IS DERIVED, NOT PRIMARY. Every other proof in this repo cites a period manual held in reference/by-system/. The NES has none: its by-system directory holds only this library's own authored .md references and a 587-character stub. Citing our own writing is materially weaker than citing Nintendo or a period book, and this proof should be re-grounded when a primary NES source is acquired. The tier field on each item records the distinction."
+}

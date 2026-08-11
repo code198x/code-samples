@@ -54,7 +54,22 @@ MACHINES = {
         "model_flag": None,
         "boot": "type-run",       # so the proof must reach READY. and type RUN
     },
+    "nintendo-nes-asm": {
+        "dialect": "ca65",
+        "emit": None,             # the ca65 dialect self-links; no emit flag
+        "masters_media": False,
+        "emulator": ("emu198x-nes", "EMU198X_NES", "Emu198x/emu198x/target/release/emu198x-nes"),
+        "load": "cli-rom",        # cartridge runs from power-on
+        "model_flag": None,
+        "boot": None,
+        "needs_firmware": False,  # no boot ROM exists to supply
+    },
 }
+
+# Only machines with a boot ROM need restricted input; the NES has none, so its
+# proof can execute anywhere rather than stopping at the redistributable stages.
+for _spec in MACHINES.values():
+    _spec.setdefault("needs_firmware", True)
 
 # A 48K .sna is a 27-byte register header followed by the full 48K of RAM.
 SNA_48K_BYTES = 27 + 49152
@@ -119,7 +134,9 @@ def add_stage(report: dict[str, Any], name: str, status: str, **details: Any) ->
 def validate_manifest(manifest: dict[str, Any], manifest_path: Path) -> None:
     if manifest.get("schema_version") != 1:
         raise ProofFailure(f"unsupported schema_version: {manifest.get('schema_version')!r}")
-    required = {"id", "machine", "lesson", "program", "evidence", "build", "firmware", "execution"}
+    required = {"id", "machine", "lesson", "program", "evidence", "build", "execution"}
+    if MACHINES.get(manifest.get("machine"), {}).get("needs_firmware", True):
+        required.add("firmware")
     missing = sorted(required - manifest.keys())
     if missing:
         raise ProofFailure(f"manifest missing fields: {', '.join(missing)}")
@@ -251,8 +268,11 @@ def main() -> int:
         build = None
         if spec["masters_media"]:
             build = tool_path("build198x", "BUILD198X", Path("Build198x/build198x/target/release/build198x"), args.tool_root)
+        # A machine with no boot ROM has no restricted input, so its execute
+        # stage runs in public mode too — and therefore needs its emulator.
+        will_execute = args.full or not spec["needs_firmware"]
         emu = None
-        if args.full:
+        if will_execute:
             emu_name, emu_env, emu_rel = spec["emulator"]
             emu = tool_path(emu_name, emu_env, Path(emu_rel), args.tool_root)
 
@@ -269,8 +289,9 @@ def main() -> int:
         second = work / f"second-{manifest['build']['executable']}"
 
         # Assemble twice from clean: the hash is only a claim if it repeats.
+        emit_flag = [spec["emit"]] if spec["emit"] else []
         for output in (executable, second):
-            result = run([str(asm), "--dialect", spec["dialect"], spec["emit"], str(source), "-o", str(output)])
+            result = run([str(asm), "--dialect", spec["dialect"], *emit_flag, str(source), "-o", str(output)])
             if result.returncode:
                 raise ProofFailure(f"Asm198x failed:\n{result.stderr}")
         if executable.read_bytes() != second.read_bytes():
@@ -307,6 +328,12 @@ def main() -> int:
                 if size != SNA_48K_BYTES:
                     raise ProofFailure(f"48K snapshot is {size} bytes, expected {SNA_48K_BYTES}")
                 detail = {"snapshot_bytes": size}
+            elif spec["dialect"] == "ca65":
+                head = executable.read_bytes()[:8]
+                if head[:4] != b"NES\x1a":
+                    raise ProofFailure("not an iNES ROM: missing NES$1A magic")
+                detail = {"ines_bytes": size, "prg_banks": head[4], "chr_banks": head[5],
+                          "mapper": (head[6] >> 4) | (head[7] & 0xF0)}
             elif spec["emit"] == "--prg":
                 # A PRG opens with its little-endian load address; $0801 is the
                 # BASIC start, which is what makes RUN the right way to launch it.
@@ -322,8 +349,11 @@ def main() -> int:
             add_stage(report, "master-media", "not-applicable",
                       reason="assembler emits the runnable artefact directly", **detail)
 
-        firmware = manifest["firmware"]
-        if not args.full:
+        firmware = manifest.get("firmware", {})
+        # Execution is withheld from a public run only because firmware cannot be
+        # redistributed. A machine with no boot ROM has nothing to withhold, so
+        # its proof runs the whole chain everywhere — including CI.
+        if not will_execute:
             requirement = (firmware.get("environment")
                            or firmware.get("resolved_path")
                            or ", ".join(r["path"] for r in firmware.get("roms", []))
@@ -336,7 +366,9 @@ def main() -> int:
             # resolves the ROM itself from a fixed path, so the proof verifies
             # the ROM the emulator *will* load rather than handing one over.
             wanted: list[tuple[Path, list[str]]] = []
-            if "environment" in firmware:
+            if not spec["needs_firmware"]:
+                pass  # nothing to pin: the machine has no boot ROM
+            elif "environment" in firmware:
                 firmware_value = os.environ.get(firmware["environment"])
                 if not firmware_value:
                     raise ProofFailure(f"full proof requires {firmware['environment']}")
@@ -358,8 +390,8 @@ def main() -> int:
                 if fw_hash not in accepted:
                     raise ProofFailure(f"unrecognised firmware hash for {fw_path.name}: {fw_hash}")
                 checked.append({"name": fw_path.name, "sha256": fw_hash})
-            firmware_path = wanted[0][0]
-            firmware_hash = checked[0]["sha256"]
+            firmware_path = wanted[0][0] if wanted else None
+            firmware_hash = checked[0]["sha256"] if checked else None
             screenshot, script = work / "frame.png", work / "proof.script.json"
             steps: list[dict[str, Any]] = []
             if spec["load"] == "script-snapshot":
@@ -386,6 +418,8 @@ def main() -> int:
                 argv += ["--kickstart", str(firmware_path), "--disk", str(media_a)]
             elif spec["load"] == "cli-load":
                 argv += ["--load", str(media_a)]
+            elif spec["load"] == "cli-rom":
+                argv += ["--rom", str(media_a)]
             if spec["model_flag"]:
                 argv += [spec["model_flag"], manifest["execution"]["model"]]
             argv += ["--script", str(script)]
@@ -398,6 +432,7 @@ def main() -> int:
             if dimensions != manifest["execution"]["frame_dimensions"]:
                 raise ProofFailure(f"frame dimensions mismatch: {dimensions}")
             add_stage(report, "execute", "passed", firmware_sha256=firmware_hash,
+                      firmware=checked or None,
                       frame_png_sha256=frame_hash, frame_dimensions=dimensions)
             report["result"] = "passed"
     except (OSError, KeyError, ValueError, json.JSONDecodeError, ProofFailure) as exc:
