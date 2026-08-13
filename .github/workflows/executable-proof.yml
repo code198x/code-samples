@@ -224,7 +224,7 @@ jobs:
       - name: Build locked family tools
         run: |
           cargo build --release --manifest-path _family/Asm198x/asm198x/Cargo.toml -p asm198x
-          cargo build --release --manifest-path _family/Emu198x/emu198x/Cargo.toml -p emu198x-nes
+          cargo build --release --manifest-path _family/Emu198x/emu198x/Cargo.toml -p emu198x-nes --no-default-features
 
       - name: Verify the whole chain, execution included
         env:
