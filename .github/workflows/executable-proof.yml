@@ -221,6 +221,11 @@ jobs:
           ref: ${{ steps.lock.outputs.emu }}
           path: _family/Emu198x/emu198x
 
+      - name: Install Emu198x Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libasound2-dev libudev-dev pkg-config
+
       - name: Build locked family tools
         run: |
           cargo build --release --manifest-path _family/Asm198x/asm198x/Cargo.toml -p asm198x
