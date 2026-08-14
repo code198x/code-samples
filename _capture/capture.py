@@ -30,9 +30,11 @@ Machines are chosen by the manifest's top-level `"machine"` field (default
                            editor, run with F1 (prepared work disk, no host build).
   * `commodore-amiga-blitz` — Blitz BASIC 2: type into Ted, compile-and-run.
   * `commodore-amiga-asm`  — assembly: build the unit's `.asm` → KS1.x hunkexe
-                           → bootable `.adf` (vasm + xdftool via the
-                           commodore-amiga Docker image), boot it headless on a
-                           bare A500/KS1.3, and drive the port-2 joystick from
+                           → bootable `.adf` (Asm198x `--dialect vasm --exe`,
+                           then Build198x for the disk image; the
+                           commodore-amiga Docker image is retired), boot it
+                           headless on a bare A500/KS1.3, and drive the
+                           port-2 joystick from
                            the timeline. Joystick actions: `{"joy": "up",
                            "frames": N}` (tap-hold-release), `{"joy_hold": "fire"}`
                            / `{"joy_release": "fire"}`. Names: up, down, left,
@@ -83,7 +85,6 @@ KEY_DOWN_FRAMES = 4
 KEY_UP_FRAMES = 3
 BOOT_SETTLE_FRAMES = 30
 
-CODE_SAMPLES = Path(__file__).resolve().parents[1]   # the code-samples repo
 REPO_ROOT = Path(__file__).resolve().parents[2]      # the Code198x container
 
 # Binary paths are the emu198x/ workspace target dir (Emu198x/emu198x/target).
@@ -105,10 +106,6 @@ EMU_ENV = {
     "commodore-amiga-blitz": "EMU198X_AMIGA",
     "commodore-amiga-asm": "EMU198X_AMIGA",
 }
-# Retired from the .sna build path 2026-07-02 (Asm198x cut-over); still pulled
-# by ensure_tap below — the one legacy consumer, which leaves with the old
-# course's unit-20 manifest at the module-1 atomic swap.
-SPECTRUM_IMAGE = "ghcr.io/code198x/sinclair-zx-spectrum:latest"
 
 # Asm198x — the family assembler; the Spectrum build path since 2026-07-02.
 ASM198X_ENV = "ASM198X"
@@ -176,11 +173,6 @@ def resolve_emu(machine: str, arg: str | None) -> str:
         sys.exit(f"Emu198x binary not found for {machine}: {cand}\n"
                  f"Pass --emu PATH or set {EMU_ENV[machine]}.")
     return cand
-
-
-def container_path(host: Path) -> str:
-    """Translate a host path under code-samples to its /code-samples mount path."""
-    return "/code-samples/" + str(host.resolve().relative_to(CODE_SAMPLES))
 
 
 def frame_screenshot(path: Path, border: int = 24) -> None:
@@ -345,35 +337,6 @@ def ensure_sna(asm_or_sna: Path) -> Path:
     return sna
 
 
-def ensure_tap(asm_or_tap: Path) -> Path:
-    """Return a .tap path, assembling the matching .asm with `pasmonext
-    --tapbas` (a real tape image with an auto-running BASIC loader) if needed.
-    Written next to the .asm so it sits inside the /code-samples mount.
-
-    LEGACY — the last Docker-image consumer. Its only caller is the old
-    course's unit-20 tape manifest, which the module-1 rebuild replaces; if
-    tape mastering returns it's a Build198x/Asm198x seam question, not a
-    reason to keep the image (decision: code198x-dev-tooling-migration.md)."""
-    if asm_or_tap.suffix == ".tap":
-        tap = asm_or_tap
-        asm = asm_or_tap.with_suffix(".asm")
-    else:
-        asm = asm_or_tap
-        tap = asm_or_tap.with_suffix(".tap")
-    if asm.exists():
-        stale = (not tap.exists()) or tap.stat().st_mtime < asm.stat().st_mtime
-        if stale:
-            subprocess.run(
-                ["docker", "run", "--rm",
-                 "-v", f"{CODE_SAMPLES}:/code-samples",
-                 SPECTRUM_IMAGE,
-                 "pasmonext", "--tapbas",
-                 container_path(asm), container_path(tap)],
-                check=True)
-    if not tap.exists():
-        sys.exit(f"No program to run: {tap}")
-    return tap
-
 
 TAPE_SLOT = "tape-1"
 
@@ -454,11 +417,15 @@ def run_spectrum(manifest, capture_dir, unit_dir, image_dir, emu, keep_build):
     for cap in manifest["captures"]:
         cap_id = cap["id"]
         program_ref = (unit_dir / cap["program"]).resolve()
-        tape = cap.get("load") == "tape"
-        if tape and program_ref.suffix in (".asm", ".tap"):
-            program = ensure_tap(program_ref)        # real tape image (--tapbas)
-            if program_ref.suffix == ".asm":
-                built.append(program)
+        if program_ref.suffix == ".tap":
+            # An existing tape image, loaded for real through the ROM loader by
+            # {"autoload": N}. Mastering a .tap FROM a .asm is no longer done
+            # here: that was the last Docker consumer, and if tape mastering
+            # returns it is a Build198x/Asm198x seam question rather than a
+            # reason to keep an image (198x/decisions/code198x-dev-tooling-migration.md).
+            program = program_ref
+            if not program.exists():
+                sys.exit(f"No program to run: {program}")
         elif program_ref.suffix in (".asm", ".sna"):
             program = ensure_sna(program_ref)
             if program_ref.suffix == ".asm":
