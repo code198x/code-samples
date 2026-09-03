@@ -1,0 +1,533 @@
+[
+ {
+  "action": "wait_for_boot",
+  "max_frames": 800
+ },
+ {
+  "action": "press_key",
+  "key": "Enter",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "start_video_recording",
+  "path": "/private/tmp/claude-501/-Users-stevehill-Projects-198x/19be2bfa-ae21-4e5b-b9b3-362e96dbfc81/scratchpad/caps/rebuilt.mp4"
+ },
+ {
+  "action": "type_string",
+  "text": "10",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "B",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "0:",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "C"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "0:",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "X"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "7:",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "V",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "20",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "P",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "I"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "5,4;\"HELLO, CRASH! LIVE 2026\"\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "30",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "P",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "I"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "8,6;\"CODE LIKE IT'S 198X\"\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "40",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "P",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "I"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "12,2;\"BEDROOM CODING, BROUGHT BACK\"\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "50",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "P",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "I"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "16,10;\"CODE198X.COM\"\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "60",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "L",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "t=0\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "70",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "F",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "c=0",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "F"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "31\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "80",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "L",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "k=c+t-7*",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "R",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "((c+t)/7)\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "90",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "O",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "22528+64+c,72+8*k:",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "O",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "22528+640+c,72+8*k\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "100",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "O",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "22528+160+c,65+k:",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "O",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "22528+256+c,65+k\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "110",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "O",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "22528+384+c,65+k:",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "O",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "22528+512+c,65+k\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "120",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "N",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "c\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "130",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "L",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "t=t+1:",
+  "hold_frames": 3,
+  "settle_frames": 8
+ },
+ {
+  "action": "press_key",
+  "key": "G",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "70\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "press_key",
+  "key": "R",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "run_frames",
+  "frames": 700
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]
