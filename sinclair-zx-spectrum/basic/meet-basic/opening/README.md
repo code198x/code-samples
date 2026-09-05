@@ -1,6 +1,6 @@
 # Meet BASIC: opening checkpoints
 
-Draft implementation of the agreed A1/A2 authoring slice. These files are separate
+Draft implementation of the agreed A1–A3 authoring slice. These files are separate
 from the current `meet-basic/unit-NN` samples so existing lessons keep their meaning.
 Publishing identities will be assigned with the curriculum route migration.
 
@@ -13,6 +13,8 @@ Publishing identities will be assigned with the curriculum route migration.
 | A2 step 1 | Replace 10/15 with assignment and output | `Hello, Sam`, `from the Spectrum` |
 | A2 step 2 | Change the assigned name | `Hello, Jo`, `from the Spectrum` |
 | A2 step 3 | Change the recovered program | `Hello, Alex`, `from the Spectrum` |
+| A3 step 1 | Replace assignment with input | Greeting uses the supplied name |
+| A3 step 2 | Ask for two more words | Supplied words form a sentence |
 
 Every `.bas` is a complete listing. Learners enter only the changed lines between
 checkpoints. The verification code is authoring tooling, not code learners must
@@ -45,6 +47,23 @@ The existing capture runner remains the route for normal content capture manifes
 this small driver supplies the keyboard/save round trip that direct source loading
 cannot demonstrate.
 
+## Reproduce the input checks
+
+```sh
+python3 verification/verify_input.py --emulator /path/to/emu198x-spectrum --output /tmp/meet-basic-input
+```
+
+This separate run starts with A2's last greeting and enters only changed or added
+lines for A3. It checks two names in the first checkpoint, two sets of story words,
+empty answers and long answers in the second. It checks each prompt and compares
+complete output rows, including spaces and wrapping, followed by the completion
+report. This verifies six scenarios with 20 named prompt/output checks. It neither
+loads BASIC directly into RAM nor verifies saving or native desktop interaction.
+
+[input-results.json](verification/input-results.json) records the passing run on
+5 September 2026, with input-check source and binary hashes. The story and long-answer
+captures were visually inspected. The normal story capture is used in the A3 draft.
+
 ## Recorded evidence and limits
 
 On 5 September 2026, all 16 named checks passed using a local debug binary reporting
@@ -68,6 +87,6 @@ A snapshot must not be presented as if it were a BASIC tape save.
 
 Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second
 edition (Sinclair Research, 1983): chapters 1–2 for keyboard/editor/program behaviour,
-chapter 7 for variable naming, chapter 20 pp. 141–145 for tape storage. Emu198x's
+chapter 7 for variable naming, chapter 15 for input prompts and text layout, chapter 20 pp. 141–145 for tape storage. Emu198x's
 Spectrum UI keyboard map supplies host key mappings; these still need a native
 interface check. Runtime observations above are separate evidence.

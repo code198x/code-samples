@@ -1,0 +1,663 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.21.0"
+    }
+  },
+  "configuration": "Spectrum 48K; ROM keyboard entry; MCP",
+  "limits": "No native GUI, original hardware or other emulator verified; no tape check in this run.",
+  "binary_sha256": "49d7bcf91c4a06592bbeb10e6d7abbd0c511c113809ac2bdf38fe0940e8ce390",
+  "source_sha256": {
+    "unit-02/steps/step-03.bas": "16e1d156e3ae64b4dfc1513c746ce6edff2fe88bf6f4f669163cefd7363c5f91",
+    "unit-03/steps/step-01.bas": "30cf984f85ec03b0e09f30ed3094e15152913f2afaeb920504ee3421539cf1a5",
+    "unit-03/steps/step-02.bas": "213a621b09c05c738d54d267fa4b1282d4a7caa4dbf30fcfb82d97cd95aa89e1"
+  },
+  "checks": [
+    {
+      "check": "unit-03-step-01-case-1-waiting-Your-name",
+      "expected": [
+        "Your name"
+      ],
+      "screen": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Your name \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-01-case-1",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "Hello, Sam",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 20:1"
+      ]
+    },
+    {
+      "check": "unit-03-step-01-case-2-waiting-Your-name",
+      "expected": [
+        "Your name"
+      ],
+      "screen": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Your name \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-01-case-2",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "Hello, Ada",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 20:1"
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-1-waiting-Your-name",
+      "expected": [
+        "Your name"
+      ],
+      "screen": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Your name \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-1-waiting-Describing-word",
+      "expected": [
+        "Describing word"
+      ],
+      "screen": [
+        "Hello, Sam",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Describing word \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-1-waiting-Animal",
+      "expected": [
+        "Animal"
+      ],
+      "screen": [
+        "Hello, Sam",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Animal \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-1",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "Hello, Sam",
+        "from the Spectrum",
+        "Sam met the sleepy dragon",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 50:1"
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-2-waiting-Your-name",
+      "expected": [
+        "Your name"
+      ],
+      "screen": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Your name \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-2-waiting-Describing-word",
+      "expected": [
+        "Describing word"
+      ],
+      "screen": [
+        "Hello, Jo",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Describing word \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-2-waiting-Animal",
+      "expected": [
+        "Animal"
+      ],
+      "screen": [
+        "Hello, Jo",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Animal \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-2",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "Hello, Jo",
+        "from the Spectrum",
+        "Jo met the enormous owl",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 50:1"
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-3-waiting-Your-name",
+      "expected": [
+        "Your name"
+      ],
+      "screen": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Your name \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-3-waiting-Describing-word",
+      "expected": [
+        "Describing word"
+      ],
+      "screen": [
+        "Hello,",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Describing word \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-3-waiting-Animal",
+      "expected": [
+        "Animal"
+      ],
+      "screen": [
+        "Hello,",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Animal \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-3",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "Hello,",
+        "from the Spectrum",
+        " met the",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 50:1"
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-4-waiting-Your-name",
+      "expected": [
+        "Your name"
+      ],
+      "screen": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Your name \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-4-waiting-Describing-word",
+      "expected": [
+        "Describing word"
+      ],
+      "screen": [
+        "Hello, Alexandertheexplorer",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Describing word \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-4-waiting-Animal",
+      "expected": [
+        "Animal"
+      ],
+      "screen": [
+        "Hello, Alexandertheexplorer",
+        "from the Spectrum",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Animal \"L\""
+      ]
+    },
+    {
+      "check": "unit-03-step-02-case-4",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "Hello, Alexandertheexplorer",
+        "from the Spectrum",
+        "Alexandertheexplorer met the ext",
+        "raordinarily hippopotamus",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 50:1"
+      ]
+    }
+  ]
+}

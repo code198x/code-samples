@@ -92,7 +92,7 @@ class Spectrum:
             self.text(words.pop(0))
         command = words.pop(0)
         self.key({'PRINT': 'p', 'LET': 'l', 'RUN': 'r', 'LIST': 'k',
-                  'SAVE': 's', 'LOAD': 'j'}[command])
+                  'SAVE': 's', 'LOAD': 'j', 'INPUT': 'i'}[command])
         self.text(' '.join(words))
         self.enter()
 
@@ -195,7 +195,7 @@ def main():
                   'limits': 'No native GUI, original hardware or other emulator verified.',
                   'tape_sha256': hashlib.sha256((args.output / 'greeting.tap').read_bytes()).hexdigest(),
                   'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-                                    for p in sorted(ROOT.glob('unit-*/steps/*.bas'))},
+                                    for p in sorted(list(ROOT.glob('unit-01/steps/*.bas')) + list(ROOT.glob('unit-02/steps/*.bas')))},
                   'checks': first_checks + machine.evidence}
         (args.output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
     finally:
