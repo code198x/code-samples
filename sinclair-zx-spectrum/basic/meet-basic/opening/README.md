@@ -1,6 +1,6 @@
 # Meet BASIC: opening checkpoints
 
-Draft implementation of the agreed A1–A3 authoring slice. These files are separate
+Draft implementation of the agreed A1–A4 authoring slice. These files are separate
 from the current `meet-basic/unit-NN` samples so existing lessons keep their meaning.
 Publishing identities will be assigned with the curriculum route migration.
 
@@ -15,6 +15,8 @@ Publishing identities will be assigned with the curriculum route migration.
 | A2 step 3 | Change the recovered program | `Hello, Alex`, `from the Spectrum` |
 | A3 step 1 | Replace assignment with input | Greeting uses the supplied name |
 | A3 step 2 | Ask for two more words | Supplied words form a sentence |
+| A4 step 1 | Ask for a place and reuse the animal | A setting, meeting and request |
+| A4 step 2 | Remove the greeting; clear and arrange output | A titled story with deliberate spacing |
 
 Every `.bas` is a complete listing. Learners enter only the changed lines between
 checkpoints. The verification code is authoring tooling, not code learners must
@@ -77,16 +79,41 @@ hardware, other model, other emulator, fresh installation or native GUI has been
 verified. Emulator source was inspected at `8bdfb0e998927cf5e338c2e5f05ab88f29a34c21`;
 that is a source-inspection reference, not a claim about this binary's build commit.
 
-**Publication blocker:** [Emu198x #1446](https://github.com/emu198x/emu198x/issues/1446)
-requests desktop export of recorded BASIC SAVE data. MCP export and fresh-process
-reload work, but the desktop workflow is incomplete. The A2 draft must gain
-checked file-selection, export, close/reopen and load instructions before publishing.
-A snapshot must not be presented as if it were a BASIC tape save.
+## Reproduce the finished-story checks
+
+```sh
+python3 verification/verify_story.py --emulator /path/to/emu198x-spectrum --output /tmp/meet-basic-story
+python3 verification/verify_named_story.py --emulator /path/to/emu198x-spectrum --greeting /tmp/meet-basic-evidence/greeting.tap --story /tmp/meet-basic-story/story.tap --output /tmp/meet-basic-named-story
+```
+
+The story driver enters the A3 listing through the ROM editor, then applies only
+A4's additions, replacements and numbered-line deletions. It compares complete
+output rows for both checkpoints, changed answers, empty answers and long answers,
+including wrapping and unused rows. It saves `story`, exports it and runs the
+recovered program with new answers in a fresh emulator process.
+[story-results.json](verification/story-results.json) records the passing run,
+source and binary hashes, and observations.
+
+The named-load driver combines the two real SAVE captures from these commands,
+retaining their bytes with the greeting first. It types `LOAD "story"`, starts
+tape playback, and checks that the recovered program produces the finished story.
+[named-story-results.json](verification/named-story-results.json) records the
+passing check and input hashes. This exercises named loading, not the native
+file picker or a physical cassette.
+
+## Reader acceptance and publication
+
+Steve reports testing and approving revised A1–A3, including native host-keyboard
+operation. Desktop tape export is implemented in
+[Emu198x PR #1447](https://github.com/emu198x/emu198x/pull/1447); the revised A2
+describes that route. Host Keyboard mode is in
+[PR #1448](https://github.com/emu198x/emu198x/pull/1448). A4 awaits reader review.
+Publication still requires the coordinated curriculum route/catalogue migration.
 
 ## Source basis
 
 Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second
 edition (Sinclair Research, 1983): chapters 1–2 for keyboard/editor/program behaviour,
-chapter 7 for variable naming, chapter 15 for input prompts and text layout, chapter 20 pp. 141–145 for tape storage. Emu198x's
-Spectrum UI keyboard map supplies host key mappings; these still need a native
-interface check. Runtime observations above are separate evidence.
+chapter 7 for variable naming, chapter 15 (including p. 103) for input prompts, text layout and CLS, chapter 20 pp. 141–145 for tape storage. Emu198x's
+Spectrum UI keyboard map supplies host key mappings; native use has user-reported
+acceptance for A1–A3. Runtime observations above are separate evidence.

@@ -92,7 +92,7 @@ class Spectrum:
             self.text(words.pop(0))
         command = words.pop(0)
         self.key({'PRINT': 'p', 'LET': 'l', 'RUN': 'r', 'LIST': 'k',
-                  'SAVE': 's', 'LOAD': 'j', 'INPUT': 'i'}[command])
+                  'SAVE': 's', 'LOAD': 'j', 'INPUT': 'i', 'CLS': 'v'}[command])
         self.text(' '.join(words))
         self.enter()
 
