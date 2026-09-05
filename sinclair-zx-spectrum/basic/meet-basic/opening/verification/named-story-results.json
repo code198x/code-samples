@@ -1,0 +1,203 @@
+{
+  "status": "passed",
+  "configuration": "Spectrum 48K; MCP; named ROM LOAD from a combined TAP",
+  "limits": "Two existing ROM SAVE captures concatenated for this test; native menus and original hardware not exercised.",
+  "binary_sha256": "cfb9302b9ea38499acf5b47b7664bbe4bd63eefb9c2de2973c5eccca45a7fb7e",
+  "greeting_sha256": "895da06c937c94d0c04fb1a6c822701d891f66e7e81fb2b4da17342099dea71b",
+  "story_sha256": "8ef6832cc818e922cbc80d7ff79e07456c9dd2ee095faa0c8d3894ba0b41f51d",
+  "combined_sha256": "9b6120c8ee6017b92bd179dad0435948483e06206cb1a1c49f5dc177050b2b50",
+  "checks": [
+    {
+      "check": "named-load-complete",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "",
+        "Program: greeting",
+        "Program: story",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 0:1"
+      ]
+    },
+    {
+      "check": "named-story-prompt-Your-name",
+      "expected": [
+        "Your name"
+      ],
+      "screen": [
+        "Use short answers",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Your name \"L\""
+      ]
+    },
+    {
+      "check": "named-story-prompt-Describing-word",
+      "expected": [
+        "Describing word"
+      ],
+      "screen": [
+        "Use short answers",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Describing word \"L\""
+      ]
+    },
+    {
+      "check": "named-story-prompt-Animal",
+      "expected": [
+        "Animal"
+      ],
+      "screen": [
+        "Use short answers",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Animal \"L\""
+      ]
+    },
+    {
+      "check": "named-story-prompt-Place-like-moon-cave",
+      "expected": [
+        "Place like moon cave"
+      ],
+      "screen": [
+        "Use short answers",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Place like moon cave \"L\""
+      ]
+    },
+    {
+      "check": "named-story",
+      "expected": [
+        "0 OK"
+      ],
+      "screen": [
+        "AN UNEXPECTED PICNIC",
+        "",
+        "In the moon cave",
+        "Sam met the sleepy dragon",
+        "",
+        "The dragon",
+        "asked for a biscuit",
+        "",
+        "THE END",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0 OK, 80:1"
+      ]
+    }
+  ]
+}
