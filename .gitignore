@@ -24,6 +24,10 @@ vice.log
 .DS_Store
 Thumbs.db
 
+# Python bytecode from the capture tools
+__pycache__/
+*.pyc
+
 # Editor files
 *.swp
 *~
