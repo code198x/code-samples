@@ -14,7 +14,7 @@ class Spectrum(opening.Spectrum):
  def statement(self,line):
   normal={'PRINT':'p','LET':'l','RUN':'r','SAVE':'s','LOAD':'j','INPUT':'i','CLS':'v','IF':'u','GO TO':'g','GO SUB':'h','RETURN':'y','BORDER':'b','FOR':'f','NEXT':'n','PAUSE':'m'}
   symbol={'THEN':'g','<>':'w','STOP':'a','AT':'i','TO':'f'}
-  extended={'INKEY$':'n'};shifted={'PAPER':'c','INK':'x','BEEP':'z','BRIGHT':'b'}
+  extended={'INKEY$':'n','LEN':'k','VAL':'j'};shifted={'PAPER':'c','INK':'x','BEEP':'z','BRIGHT':'b'}
   tokens=sorted([*normal,*symbol,*extended,*shifted],key=len,reverse=True)
   for part in re.split(r'("[^"]*"|'+ '|'.join(re.escape(t) for t in tokens)+')',line):
    if part in normal:self.key(normal[part])
@@ -42,7 +42,7 @@ class Spectrum(opening.Spectrum):
  def close(self):super().close()
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--emulator',required=True);p.add_argument('--output',required=True,type=Path);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True);evidence=[]
- sources=sorted((ROOT/'steps').glob('*.bas'))
+ sources=[ROOT/'steps'/f'step-{i:02}.bas' for i in range(1,4)]
  for i,path in enumerate(sources,1):
   m=Spectrum(a.emulator,a.output)
   try:

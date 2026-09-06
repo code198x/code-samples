@@ -8,6 +8,7 @@ Stock 48K ZX Spectrum, Sinclair BASIC, 50 Hz display configuration. The verifica
 
 - `steps/step-01.bas`: one red rectangle, with its digit printed above it.
 - `steps/step-02.bas`: four panels, each with one persistent digit. A drawing routine selects the panel's coordinates, colours and note.
+- `steps/step-04.bas`: a later-stage test driver for fixed `"22"` playback, held-q exit and release hand-off. It reads one subsequent key without judging it; it is not the player-response game.
 - `steps/step-03.bas`: press 1–4 to try the associated cue. Brightness and an asterisk indicate activation; q ends the program. Release one key before pressing another. No sequence is stored or judged yet.
 
 Start with an empty program. The steps are complete listings; they do not depend on a menu, engine or earlier program in memory. The later lesson-writing pass will explain their changes through smaller runnable stages where necessary.
@@ -57,3 +58,19 @@ python3 verification/pause.py --emulator /path/to/emu198x-spectrum --output /tmp
 ```
 
 The committed active preview comes from the supplementary fresh-tape run. Capture waits for a second consecutive active screen-memory observation so the displayed frame has time to include the asterisk. The main evidence's label checks are screen-memory observations, not a claim that every raster frame was visually inspected.
+
+## Playback policy
+
+For the opening implementation, allow `PAUSE 10` to be shortened by a key. Keep the complete note and resting repaint; do not claim a fixed frame deadline. This follows the approved brief's permitted-interruption option and needs reconsideration if the renderer, target or note lengths change.
+
+[Playback checks](verification/results/playback-playback.json) exercised fixed `314`, `22` and `1234`, plus `22` with no input, two-frame tapping, a held 2 and held q. The active marker disappeared between the repeated cues for 26 sampled frames without interference and 18 under tapping/holding (0.52 and 0.36 seconds at 50 Hz). These are screen-memory observations, not measurements of a fully repainted raster. [Audio windows](verification/results/playback-audio-separation.json) show two distinct sustained tones with approximately 0.54 seconds between their detected windows under interference. No listening judgement is implied.
+
+Holding q from the first active marker exited after 22 observed frames (about 0.44 seconds), after that cue completed. The prototype checks q between cues: a short tap entirely inside a cue may be missed. Instructions therefore say **hold q to finish** during WATCH. The held playback key must be released before YOUR TURN accepts a fresh key; the checks confirmed that 2 did not become a response and a subsequent 3 was read. The test driver does not yet validate or judge responses.
+
+```sh
+python3 verification/playback.py --emulator /path/to/emu198x-spectrum --output /tmp/bright-spark-playback
+python3 verification/audio_separation.py /tmp/bright-spark-playback
+python3 verification/pitches.py /tmp/bright-spark-playback/1234-none.wav --output /tmp/bright-spark-playback/pitches.json
+```
+
+The original runner still checks steps 1–3. The separate playback runner owns step 4 and deliberately replaces its sequence with fixed test strings. The approved full game's response comparison, growth, score, replay and ending remain to build.
