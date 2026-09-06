@@ -52,3 +52,10 @@ This is MCP execution on the 48K configuration. It does not verify native host
 keyboard events, menu use, speakers, other emulator models or original hardware.
 Host/Original mode instructions were checked against the v0.22.0 mapping source;
 the target key chords were executed. Reader testing of the new lessons is pending.
+
+## Finishing the game
+
+Units 7–8 add random secrets, colour, short sounds and another round. Their
+complete checkpoints and the remaining module are covered by the
+[completion verification](../completion-verification/README.md). The checks
+above retain their original units 5–6 scope.
