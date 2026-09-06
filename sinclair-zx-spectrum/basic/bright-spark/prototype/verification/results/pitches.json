@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "method": "10 ms RMS windows identify four sustained tones; positive mean crossings estimate pitch in their middle. Signal check, not listening. Tolerance 25 Hz for these short windows.",
+  "notes": [
+    {
+      "start_seconds": 0.29,
+      "end_seconds": 0.45,
+      "estimated_hz": 266.6666666666667,
+      "expected_hz_approximately": 261.6
+    },
+    {
+      "start_seconds": 1.67,
+      "end_seconds": 1.82,
+      "estimated_hz": 327.27272727272725,
+      "expected_hz_approximately": 329.6
+    },
+    {
+      "start_seconds": 3.02,
+      "end_seconds": 3.18,
+      "estimated_hz": 391.6666666666667,
+      "expected_hz_approximately": 392
+    },
+    {
+      "start_seconds": 4.38,
+      "end_seconds": 4.54,
+      "estimated_hz": 525.0,
+      "expected_hz_approximately": 523.3
+    }
+  ]
+}

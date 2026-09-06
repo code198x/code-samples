@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "method": "RMS over 10 ms windows in emulated 16-bit mono audio; sustained bursts above 5000 RMS lasting at least 50 ms. This counts notes, not subjective listening.",
+  "checks": [
+    {
+      "case": "held",
+      "expected_cues": 1,
+      "observed_tone_bursts": [
+        {
+          "start": 0.3,
+          "end": 0.46
+        }
+      ]
+    },
+    {
+      "case": "released-and-pressed-again",
+      "expected_cues": 2,
+      "observed_tone_bursts": [
+        {
+          "start": 0.31,
+          "end": 0.47000000000000003
+        },
+        {
+          "start": 1.69,
+          "end": 1.84
+        }
+      ]
+    }
+  ]
+}
