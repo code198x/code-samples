@@ -66,7 +66,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     m = Spectrum(args.emulator, args.output)
     previous = ''
-    sources = sorted(ROOT.glob('unit-*/steps/*.bas'))
+    sources = sorted(p for p in ROOT.glob('unit-*/steps/*.bas') if p.parent.parent.name in ('unit-05', 'unit-06'))
     try:
         for path in sources:
             source = path.read_text()

@@ -1,0 +1,83 @@
+{
+  "status": "passed",
+  "method": "Positive zero crossings in short sustained-note windows from the verified MCP input sequence. Not listening, exact pitch measurement, or native audio output verification.",
+  "captures": [
+    {
+      "file": "unit-08-step-02-feedback.wav",
+      "sha256": "090985d2b27d37cd38be6dea24f17098d212383cc801e6cae094a7d3921a5dbf",
+      "notes": [
+        {
+          "window_seconds": [
+            0.41,
+            0.47
+          ],
+          "estimated_hz": 266.6666666666667,
+          "expected_hz_approximately": 261.6
+        },
+        {
+          "window_seconds": [
+            1.5,
+            1.56
+          ],
+          "estimated_hz": 133.33333333333334,
+          "expected_hz_approximately": 130.8
+        },
+        {
+          "window_seconds": [
+            2.56,
+            2.62
+          ],
+          "estimated_hz": 533.3333333333334,
+          "expected_hz_approximately": 523.3
+        }
+      ],
+      "peak": 26261
+    },
+    {
+      "file": "unit-08-step-03-feedback.wav",
+      "sha256": "50fdfebab89da19afab4f8324a9351ba46feee77e9cb1725664e2264c57b3043",
+      "notes": [
+        {
+          "window_seconds": [
+            0.41,
+            0.47
+          ],
+          "estimated_hz": 266.6666666666667,
+          "expected_hz_approximately": 261.6
+        },
+        {
+          "window_seconds": [
+            1.5,
+            1.56
+          ],
+          "estimated_hz": 133.33333333333334,
+          "expected_hz_approximately": 130.8
+        },
+        {
+          "window_seconds": [
+            2.56,
+            2.62
+          ],
+          "estimated_hz": 533.3333333333334,
+          "expected_hz_approximately": 523.3
+        }
+      ],
+      "peak": 26261
+    },
+    {
+      "file": "unit-10-step-03-cue.wav",
+      "sha256": "859dbd7a1dba7bf7f65025f400aa54d25a7d84227a5c2c02f16d1f7a911756d1",
+      "notes": [
+        {
+          "window_seconds": [
+            1.92,
+            1.95
+          ],
+          "estimated_hz": 266.6666666666667,
+          "expected_hz_approximately": 261.6
+        }
+      ],
+      "peak": 26192
+    }
+  ]
+}
