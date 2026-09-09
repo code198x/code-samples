@@ -1,0 +1,13 @@
+{
+  "check": "All flight, rendering, terrain, resource and result lines have identical stored token bytes; the prior line 850 is now 860, preceded only by the release guard at 850.",
+  "before_tape_sha256": "c74759c50dd32b7ce1a28907306a76d7a89bc0f4f84902b375020df26d9beec8",
+  "after_tape_sha256": "7d30a14623277481bc4c69665e282bc51b26f3841f86ac0ce6cebab27163aafd",
+  "sources": {
+    "step-06.bas": "dc72378b86607b34dd85de5bc893a2b47ab4ec46427038812942b9b071bc526a",
+    "step-05.bas": "8742fb6775847ed98f25510e287070ae8ce9721f711ab2167cf34667e49cc604",
+    "step-04.bas": "991136c930e82b61ae9232ef548400ba0249875352b75c303d86eca208b1e51a",
+    "step-01.bas": "a0ebb3d95ddafca4b75f63b8e0f1deec9d8a1955393c5a2ede1e5fbd1e61c7ea",
+    "step-03.bas": "4ddc8921086a8a2fff0196203e9a03607b5f2941843eceda6131e549715ee094",
+    "step-02.bas": "e3ffaa58afcc6e161ec6dad97a49c81cfa6162191544b9e327d0ccf6cf786eac"
+  }
+}

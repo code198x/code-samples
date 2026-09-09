@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "fresh-final-tape-launch-contact-quit",
+    "ascending-side-contact",
+    "opposing-steering-cancels",
+    "off-right-pad-edge",
+    "held-right-clamp-and-upper-boundary",
+    "empty-tank-continues-falling-with-thrust-held"
+  ],
+  "method": "Fresh final tape, ROM test-only line edits, MCP keyboard events and read-only variable inspection. Test edits are never saved."
+}

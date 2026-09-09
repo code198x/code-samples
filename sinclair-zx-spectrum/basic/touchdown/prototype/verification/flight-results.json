@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "safe-landing-from-fixed-start-with-combined-steering-and-thrust",
+    "held-retry-waits-for-release-and-resets-state",
+    "uncontrolled-terrain-crash",
+    "hard-pad",
+    "safe-pad-left-edge",
+    "safe-pad-right-edge",
+    "off-pad",
+    "empty-tank-coast",
+    "fast-fall",
+    "held-left-and-thrust-clamps",
+    "checkpoint-4-launch-contact-retry-menu",
+    "checkpoint-5-launch-contact-retry-menu",
+    "checkpoint-6-launch-contact-retry-menu"
+  ],
+  "source_sha256": "0bb5fce151e38ec74a96317994853388b0d64f925a3cae013f11a7847e3d7aa8",
+  "configuration": "Emu198x Spectrum 0.22.1; 48K PAL ROM; MCP keyboard events; no game-state writes",
+  "limits": "Scripted controls and declared test-only starting conditions; subjective play and original hardware remain separate."
+}

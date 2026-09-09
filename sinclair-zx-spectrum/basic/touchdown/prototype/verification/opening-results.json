@@ -1,0 +1,17 @@
+[
+  {
+    "stage": 1,
+    "result": "Contact.",
+    "sha256": "a0ebb3d95ddafca4b75f63b8e0f1deec9d8a1955393c5a2ede1e5fbd1e61c7ea"
+  },
+  {
+    "stage": 2,
+    "result": "Too fast!",
+    "sha256": "e3ffaa58afcc6e161ec6dad97a49c81cfa6162191544b9e327d0ccf6cf786eac"
+  },
+  {
+    "stage": 3,
+    "result": "Too fast!",
+    "sha256": "4ddc8921086a8a2fff0196203e9a03607b5f2941843eceda6131e549715ee094"
+  }
+]
