@@ -4,7 +4,7 @@ import argparse,importlib.util,json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('spark',ROOT.parents[1]/'bright-spark/opening/verification/completion.py');mod=importlib.util.module_from_spec(s);s.loader.exec_module(mod)
-p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--tape',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
+p=argparse.ArgumentParser();p.add_argument('--paper-paddle',action='store_true');p.add_argument('--emulator',required=True);p.add_argument('--tape',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
 m=mod.Spectrum(a.emulator,a.output)
 def key(k,b):m.call('input',events=[{'Key':{'name':k,'pressed':b}}])
 try:
@@ -15,7 +15,12 @@ try:
   m.frames(1);rows=m.screen()
   assert not any('Miss.' in r for r in rows),(frame,score,rows)
   balls=[(r,c) for r in range(3,20) for c in range(3,30) if rows[r][c]=='o']
-  paddle=[r for r in range(3,20) if rows[r][2]=='I']
+  if a.paper_paddle:
+   attrs=[]
+   for offset in range(0,513,256):
+    attrs+=m.call('memory_read',addr=22528+3*32+2+offset,len=min(256,513-offset))['bytes']
+   paddle=[r for r in range(3,20) if ((attrs[(r-3)*32]>>3)&7)==6]
+  else:paddle=[r for r in range(3,20) if rows[r][2]=='I']
   if not balls or len(paddle)!=3:continue
   y,x=balls[0]
   if last and (y,x)!=last:
