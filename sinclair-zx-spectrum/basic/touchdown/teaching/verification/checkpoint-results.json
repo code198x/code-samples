@@ -1,0 +1,244 @@
+[
+  {
+    "checkpoint": "01-step-01",
+    "source_sha256": "9cd70e9c83ecdec250935167b86dedb02a7d306b96998d39cdfab5eaf8683dc6",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit"
+    ]
+  },
+  {
+    "checkpoint": "02-step-01",
+    "source_sha256": "da3190885b0a0dfa448c934e17e80c3f8045b8ae5d2bf36545ad0838d7fd286a",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit"
+    ]
+  },
+  {
+    "checkpoint": "03-step-01",
+    "source_sha256": "11625b9c125c95acadc1020baaa94f5e6b734e2a2649c79b54e853bd48533f81",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 302,
+      "landing_speed": 4,
+      "fuel_remaining": null,
+      "minimum_fuel": 45
+    }
+  },
+  {
+    "checkpoint": "04-step-01",
+    "source_sha256": "f7da5ebb017ea5fe18f6c37b1e6cf4fccde78e3df2d3f658038df001de5680f7",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 450,
+      "landing_speed": 4,
+      "fuel_remaining": null,
+      "minimum_fuel": 45
+    }
+  },
+  {
+    "checkpoint": "05-step-01",
+    "source_sha256": "70463e96ad3c3fd02be7341d450507f52ec7956cc6e2265c7f5948537698b1eb",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 498,
+      "landing_speed": 4,
+      "fuel_remaining": 27,
+      "minimum_fuel": 27
+    }
+  },
+  {
+    "checkpoint": "06-step-01",
+    "source_sha256": "8d13518d80e63305f7ba8920c026264c65639b611e710aa763e41de5cb27c43e",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 568,
+      "landing_speed": 4,
+      "fuel_remaining": 27,
+      "minimum_fuel": 27
+    }
+  },
+  {
+    "checkpoint": "07-step-01",
+    "source_sha256": "10a42c86e0ff981cbf90eefca2d03285c716d45e476773ec14ce3f34537a84a5",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 746,
+      "landing_speed": 8,
+      "fuel_remaining": 26,
+      "minimum_fuel": 26
+    }
+  },
+  {
+    "checkpoint": "08-step-01",
+    "source_sha256": "c8645586abbdbcd4ef1ad3174b90ab4d1885afd1ab17af66e8a273be7e88d02e",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 762,
+      "landing_speed": 4,
+      "fuel_remaining": 26,
+      "minimum_fuel": 26
+    }
+  },
+  {
+    "checkpoint": "09-step-01",
+    "source_sha256": "6347358f75537b7b3c52e07cb63fd04b306a7a46dbf19b30020cefe0a58eb346",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 762,
+      "landing_speed": 4,
+      "fuel_remaining": 26,
+      "minimum_fuel": 26
+    }
+  },
+  {
+    "checkpoint": "09-step-02",
+    "source_sha256": "4705bb042ee703f97f13832c8a3867bdb5eead2967a0943db04eef76761be492",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 822,
+      "landing_speed": 8,
+      "fuel_remaining": 26,
+      "minimum_fuel": 26
+    }
+  },
+  {
+    "checkpoint": "09-step-03",
+    "source_sha256": "b631957b891f14b866710119db19c023ca40dbfd80d4719d86b29c42292613a3",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 1048,
+      "landing_speed": 4,
+      "fuel_remaining": 20,
+      "minimum_fuel": 20
+    }
+  },
+  {
+    "checkpoint": "09-step-04",
+    "source_sha256": "8768f278f06e1d8671f56c38556de3dbcdf64a1c5e22a80d1e782b357fe220b2",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 1048,
+      "landing_speed": 4,
+      "fuel_remaining": 20,
+      "minimum_fuel": 20
+    }
+  },
+  {
+    "checkpoint": "10-step-01",
+    "source_sha256": "3ee9d3231d9d2f6a12c10636a840205eb742974679c6a0fcdeca372c94d4c15b",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 1046,
+      "landing_speed": 8,
+      "fuel_remaining": 22,
+      "minimum_fuel": 22
+    }
+  },
+  {
+    "checkpoint": "10-step-02",
+    "source_sha256": "72f8dfe33aa46e607f2f1ea2236272b12047f509f9cbe4e940c1453460177964",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 1040,
+      "landing_speed": 4,
+      "fuel_remaining": 20,
+      "minimum_fuel": 20
+    }
+  },
+  {
+    "checkpoint": "11-step-01",
+    "source_sha256": "ad53103745a2691372e1b3f98b575c355ead9fcfc33f6567ec02e5a44edb394d",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 1020,
+      "landing_speed": 8,
+      "fuel_remaining": 21,
+      "minimum_fuel": 21
+    }
+  },
+  {
+    "checkpoint": "11-step-02",
+    "source_sha256": "dc72378b86607b34dd85de5bc893a2b47ab4ec46427038812942b9b071bc526a",
+    "checks": [
+      "ROM line admission",
+      "uncontrolled contact",
+      "stop or release-gated quit",
+      "safe approach using keyboard events only"
+    ],
+    "safe_approach": {
+      "frames_to_result": 1022,
+      "landing_speed": 8,
+      "fuel_remaining": 21,
+      "minimum_fuel": 21
+    }
+  }
+]
