@@ -1,0 +1,14 @@
+{
+  "emulator": "Emu198x Spectrum 0.22.1",
+  "target": "48K PAL, configured ROM",
+  "teaching_tape_sha256": "6fe8a6b9a57798fcbfd5e2db235bb6535e7a33be9d1df79eca4815ced9475668",
+  "prototype_tape_sha256": "7d30a14623277481bc4c69665e282bc51b26f3841f86ac0ce6cebab27163aafd",
+  "stored_program_bytes_equal": true,
+  "stored_program_length": 3071,
+  "final_source_bytes_equal": true,
+  "captures": {
+    "practice-pad-landed.png": "1a365de5eee9eacc3f617c4cd14d4554c411e880652a20062bb878ef573fe037",
+    "combined-input.png": "3a03a77bdcd5ed2f43e9313ae5b0811784e801444c5a4a21c4e18884d35a1288",
+    "final-landed.png": "6a562d6ecb2347e167e63df8a0916bbcf209c06aea39cb9bc43119e16bc67d04"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "check": "Held Q waits for release before returning to BASIC; following SAVE succeeds without stray input",
+  "source_sha256": "dc72378b86607b34dd85de5bc893a2b47ab4ec46427038812942b9b071bc526a",
+  "tape_sha256": "7d30a14623277481bc4c69665e282bc51b26f3841f86ac0ce6cebab27163aafd"
+}

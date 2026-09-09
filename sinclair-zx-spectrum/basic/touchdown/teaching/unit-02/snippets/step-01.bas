@@ -1,0 +1,6 @@
+20 LET y=400: LET r=4: LET v=0
+40 PRINT AT 0,1;"TOUCHDOWN: GRAVITY"
+95 LET v=v+2
+96 IF v>60 THEN LET v=60
+125 PRINT AT 1,1;"Pos: ";ny;"  ";AT 1,16;"Speed: ";v;"  "
+160 PAUSE 2: GO TO 95

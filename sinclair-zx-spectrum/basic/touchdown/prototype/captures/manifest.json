@@ -1,0 +1,16 @@
+{
+  "source": "../steps/step-06.bas",
+  "source_sha256": "dc72378b86607b34dd85de5bc893a2b47ab4ec46427038812942b9b071bc526a",
+  "tape_sha256": "7d30a14623277481bc4c69665e282bc51b26f3841f86ac0ce6cebab27163aafd",
+  "emulator": "Emu198x Spectrum 0.22.1",
+  "configuration": "48K PAL, lawfully configured ROM",
+  "method": "Fresh named tape load, RUN via ROM keyboard entry; title after 300 further frames; S held for 3 frames, then 200 frames to flight. No injected state or source edits.",
+  "files": [
+    "title.png",
+    "flight.png"
+  ],
+  "successful_approach_capture": {
+    "file": "safe-landing.png",
+    "method": "Scripted O/P/Space approach recorded in verification/flight-history.json, without state writes. Captured before the quit-only correction; stored flight code equivalence is recorded in verification/quit-equivalence.json."
+  }
+}

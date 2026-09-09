@@ -1,0 +1,51 @@
+10 BORDER 0: PAPER 0: INK 7: BRIGHT 1: CLS
+50 PRINT AT 3,9;"TOUCHDOWN"
+60 PRINT AT 6,2;"SPACE: brake your fall"
+70 PRINT AT 8,2;"Thrust uses fuel."
+80 PRINT AT 10,2;"Safe speed: 0 to 12"
+90 PRINT AT 12,2;"Empty tank? You still coast."
+100 PRINT AT 15,2;"S launches. Q quits."
+110 GO SUB 800: IF k$="q" THEN GO TO 850
+120 CLS: GO SUB 600
+130 LET x=24: LET y=400: LET v=0: LET fuel=45: LET r=4: LET burn=0
+140 PRINT AT r,x;"A"
+150 PRINT AT 0,1;"FUEL       SPEED       MAX 12"
+160 PRINT AT 1,1;"SPACE THRUST  Q QUIT"
+200 LET k$=INKEY$: IF k$="q" THEN GO TO 850
+260 LET burn=0
+270 IF k$=" " AND fuel>0 THEN LET burn=1: LET fuel=fuel-1
+280 LET v=v+2-6*burn
+290 IF v>60 THEN LET v=60
+300 IF v<-30 THEN LET v=-30
+310 LET ny=y+v: LET contact=0: LET limit=1900
+330 IF ny>=limit THEN LET contact=1
+340 IF contact=1 THEN LET ny=limit
+350 IF ny<300 THEN LET ny=300: LET v=0
+360 LET nr=INT (ny/100)
+370 PRINT AT 0,6;fuel;"  ";AT 0,19;v;"   "
+375 LET a$="A": IF burn=1 THEN LET a$="*"
+380 PRINT AT r,x;" ";AT nr,x;a$
+390 LET y=ny: LET r=nr
+400 IF contact=1 THEN GO TO 700
+410 PAUSE 2: GO TO 200
+600 FOR c=0 TO 31
+610 FOR j=20 TO 21: PRINT PAPER 4;INK 0;AT j,c;" ";: NEXT j
+620 PRINT PAPER 4;INK 0;AT 20,c;"#"
+630 NEXT c
+650 RETURN
+700 PRINT AT r,x;"A"
+710 LET m$="Too fast!"
+720 IF v>=0 THEN IF v<=12 THEN LET m$="Safe landing!"
+740 PRINT AT 2,1;m$;"    "
+770 PRINT AT 1,1;"R retries. Q quits.            "
+780 IF INKEY$<>"" THEN GO TO 780
+790 LET k$=INKEY$: IF k$<>"r" AND k$<>"q" THEN GO TO 790
+795 IF INKEY$<>"" THEN GO TO 795
+796 IF k$="q" THEN GO TO 850
+797 GO TO 120
+800 IF INKEY$<>"" THEN GO TO 800
+810 LET k$=INKEY$: IF k$<>"s" AND k$<>"q" THEN GO TO 810
+820 IF INKEY$<>"" THEN GO TO 820
+830 RETURN
+850 IF INKEY$<>"" THEN GO TO 850
+860 PAPER 0: INK 7: CLS: PRINT "Finished.": STOP

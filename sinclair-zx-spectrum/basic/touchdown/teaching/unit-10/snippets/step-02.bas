@@ -1,0 +1,3 @@
+40 FOR c=0 TO 15: READ b: POKE USR "a"+c,b: NEXT c
+380 PRINT AT r,x;" ";AT nr,nx;CHR$ (144+burn)
+9010 DATA 24,60,60,126,90,66,0,0,24,60,60,126,90,66,24,36

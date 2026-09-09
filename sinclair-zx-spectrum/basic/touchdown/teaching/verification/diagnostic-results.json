@@ -1,0 +1,46 @@
+{
+  "source_sha256": "87cae260a7cd683b36fb51ebc1305ed19a8f937008d80be41c72e9aad99c0d4d",
+  "combinations": [
+    {
+      "left": false,
+      "right": false,
+      "thrust": false
+    },
+    {
+      "left": false,
+      "right": false,
+      "thrust": true
+    },
+    {
+      "left": false,
+      "right": true,
+      "thrust": false
+    },
+    {
+      "left": false,
+      "right": true,
+      "thrust": true
+    },
+    {
+      "left": true,
+      "right": false,
+      "thrust": false
+    },
+    {
+      "left": true,
+      "right": false,
+      "thrust": true
+    },
+    {
+      "left": true,
+      "right": true,
+      "thrust": false
+    },
+    {
+      "left": true,
+      "right": true,
+      "thrust": true
+    }
+  ],
+  "release_and_quit": "passed"
+}
