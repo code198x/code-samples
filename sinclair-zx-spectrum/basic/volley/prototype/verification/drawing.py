@@ -54,6 +54,8 @@ def measure(stage,held=None):
 try:
  m.call('load_media',slot='tape-1',kind='tape',path=str(a.baseline_tape));m.statement('LOAD "volley"');m.call('media_transport',slot='tape-1',transport='start');tick(6000);assert has('0 OK')
  previous=source(6)
+ # Re-enter the baseline too: the supplied tape may predate entry-format changes.
+ edit(list(previous.values()))
  measure(6)
  for stage in [7,8]:
   current=source(stage)

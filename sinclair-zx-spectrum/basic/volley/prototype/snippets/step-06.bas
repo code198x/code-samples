@@ -1,0 +1,17 @@
+15 PRINTAT5,3;"A up   Z down";AT7,3;"Q quits. Keep the rally going.";AT9,3;"S to serve": GO SUB800: CLS
+25 LETp=9: LETscore=0
+30 PRINTAT0,1;"VOLLEY   Returns: ";score
+106 IFk$="q" THENGO TO900
+620 LETdx=1: LETnx=4: LETscore=score+1: PRINTAT0,19;score
+700 PRINTAT21,1;"Miss. R retry, Q quit."
+710 IFINKEY$<>"" THENGO TO710
+720 LETk$=INKEY$: IFk$="q" THENGO TO900
+730 IFk$<>"r" THENGO TO720
+740 IFINKEY$<>"" THENGO TO740
+750 GO TO10
+800 IFINKEY$<>"" THENGO TO800
+810 LETk$=INKEY$: IFk$="q" THENGO TO900
+820 IFk$<>"s" THENGO TO810
+830 IFINKEY$<>"" THENGO TO830
+840 RETURN
+900 PRINTAT21,1;"Finished.                    ": STOP
