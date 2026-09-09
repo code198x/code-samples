@@ -1,0 +1,37 @@
+{
+  "rule": "Readable source hashes are before_sha256; ROM-entry-normalised hashes are after_sha256. Suppress keyword display spacing only at the entry boundary; preserve strings and compound token names.",
+  "sources": {
+    "step-01.bas": {
+      "before_sha256": "a492751eff85767e63f754c434fb6a9929f7d95041102f184135b66dda8a42aa",
+      "after_sha256": "d21259a684626f2bf223d36d19ab9174ff96ee6a82abe06428f9e7e66acd45a7"
+    },
+    "step-02.bas": {
+      "before_sha256": "f19cfc870e59ef42d8b9ee0f95ce7c25c15a5bd0d61c1eca7650f0ce508bb8be",
+      "after_sha256": "c755c69fd5fe6ea7f0ed3be21a91e2d7d7e5a8abc57f42726d68504f83aa5487"
+    },
+    "step-03.bas": {
+      "before_sha256": "f600472bcb0287c7b18930e3c7876ca75db018f3d48f8eaf2eca6b4bbc12956f",
+      "after_sha256": "0ac6cbd919b7679a1a23f4e178ea7e2836065ef9d672073a880939dfe71c02dc"
+    },
+    "step-04.bas": {
+      "before_sha256": "f242920c42dac360cc83e56632835971ec5facbcecd8e95a7816ffaab15cbecc",
+      "after_sha256": "0058902b511a7fd34c7f28986d5502bc793b0bf41e47ff8ac473e1ce237ca831"
+    },
+    "step-05.bas": {
+      "before_sha256": "d32f75d39d2958546dcef7f0cb7f7cbc4bdc624b269b402e7f174eafce524a19",
+      "after_sha256": "10afb0112f38b8237a5763902b434bd3a635e61268c5e31fc6dc73f64d343c12"
+    },
+    "step-06.bas": {
+      "before_sha256": "8e58cde84db781fc710c24954b29c4f55aaeedbd678b4b287f753a8b74b7320e",
+      "after_sha256": "ef7d69089fdc3bdfc8140dfd608b07531d03bdff7ac65a0e96ca1ad811882cf1"
+    },
+    "step-07.bas": {
+      "before_sha256": "974e33e41e99aae56e0c88406c87db9e86dab55709b09f50fc893af12a23fb0d",
+      "after_sha256": "402cd4f38ef7bff9adffd0ca1cedc3b04b89c4a90e90ec713173d2e0519e5da7"
+    },
+    "step-08.bas": {
+      "before_sha256": "bc198839e1b0b32586f47a979e925daed3fafc04ec46458edad98264f643d3b7",
+      "after_sha256": "12ba5139c6224d5dea70fdfc29c36fe0b939b9d0b2d58f1dfbc268a2cc4ea5c5"
+    }
+  }
+}

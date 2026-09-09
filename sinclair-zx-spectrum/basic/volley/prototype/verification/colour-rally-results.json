@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "method": "One-frame screen observation and automated predictive paddle input, pristine ROM-loaded tape",
+  "returns": [
+    {
+      "score": 1,
+      "frame": 285,
+      "paddle_top": 17
+    },
+    {
+      "score": 2,
+      "frame": 555,
+      "paddle_top": 6
+    },
+    {
+      "score": 3,
+      "frame": 823,
+      "paddle_top": 10
+    },
+    {
+      "score": 4,
+      "frame": 1090,
+      "paddle_top": 14
+    },
+    {
+      "score": 5,
+      "frame": 1360,
+      "paddle_top": 3
+    },
+    {
+      "score": 6,
+      "frame": 1631,
+      "paddle_top": 14
+    },
+    {
+      "score": 7,
+      "frame": 1898,
+      "paddle_top": 10
+    },
+    {
+      "score": 8,
+      "frame": 2166,
+      "paddle_top": 6
+    }
+  ],
+  "observed_frames_between_drawn_positions": {
+    "min": 5,
+    "max": 76,
+    "mean": 5.346534653465347
+  },
+  "limits": "Automated interception demonstrates a sustained rally, not human responsiveness or enjoyment. Frame intervals include drawing and input; not a fixed-rate guarantee.",
+  "tape_sha256": "ab34cf887605011d8e87e7637a8a4668de5a35bb5df0059f38e8a26267fd7846",
+  "paddle_observation": "Yellow PAPER attribute cells read from screen memory"
+}

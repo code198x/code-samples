@@ -1,0 +1,9 @@
+{
+  "court.png": {
+    "source": "steps/step-08.bas",
+    "source_sha256": "bc198839e1b0b32586f47a979e925daed3fafc04ec46458edad98264f643d3b7",
+    "configuration": "Emu198x Spectrum 0.22.1, 48K ROM, PAL, ROM source editing",
+    "experiment": "ROM edit 110 PAUSE 0 holds the first drawn ball for inspection. Restored to PAUSE 2 before tape export.",
+    "claim": "Colour and layout inspection only, not a motion or flicker measurement."
+  }
+}
