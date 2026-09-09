@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "method": "Fresh processes; PAUSE 50; both runs advance 12 frames after RUN entry, with x held during frames 11\u201312 in the interrupted case. Counts include BASIC execution and PRINT, not just the PAUSE statement.",
+  "checks": [
+    {
+      "interrupt": false,
+      "frames_after_run_enter": 56
+    },
+    {
+      "interrupt": true,
+      "frames_after_run_enter": 12
+    }
+  ]
+}

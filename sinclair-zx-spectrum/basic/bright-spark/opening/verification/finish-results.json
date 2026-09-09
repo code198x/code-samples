@@ -1,0 +1,270 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.22.1"
+    }
+  },
+  "checks": [
+    {
+      "name": "title-screen",
+      "transitions": []
+    },
+    {
+      "name": "short-cap-and-fresh-repeated-taps",
+      "transitions": [
+        {
+          "frame": 73,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 89,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 216,
+          "panel": 2,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 232,
+          "panel": null,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 255,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 271,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 297,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 313,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 346,
+          "panel": 2,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 362,
+          "panel": null,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 411,
+          "panel": 2,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 427,
+          "panel": null,
+          "phase": "YOUR TURN"
+        }
+      ]
+    },
+    {
+      "name": "held-replay-release-and-final-playback-quit",
+      "transitions": [
+        {
+          "frame": 73,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 89,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 216,
+          "panel": 2,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 232,
+          "panel": null,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 255,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 271,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 297,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 313,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 346,
+          "panel": 2,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 362,
+          "panel": null,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 411,
+          "panel": 2,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 427,
+          "panel": null,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 631,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 647,
+          "panel": null,
+          "phase": "WATCH"
+        }
+      ],
+      "q_exit_frames": 25
+    },
+    {
+      "name": "alternate-note-shorter-cue",
+      "transitions": [
+        {
+          "frame": 72,
+          "panel": 3,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 86,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 119,
+          "panel": 3,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 132,
+          "panel": null,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 156,
+          "panel": 3,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 169,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 196,
+          "panel": 3,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 210,
+          "panel": null,
+          "phase": "WATCH"
+        }
+      ]
+    },
+    {
+      "name": "named-final-first-round-failure",
+      "transitions": [
+        {
+          "frame": 74,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 90,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 123,
+          "panel": 3,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 139,
+          "panel": null,
+          "phase": "YOUR TURN"
+        }
+      ]
+    },
+    {
+      "name": "named-final-replay-quit",
+      "transitions": [
+        {
+          "frame": 74,
+          "panel": 2,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 90,
+          "panel": null,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 123,
+          "panel": 3,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 139,
+          "panel": null,
+          "phase": "YOUR TURN"
+        },
+        {
+          "frame": 247,
+          "panel": 4,
+          "phase": "WATCH"
+        },
+        {
+          "frame": 263,
+          "panel": null,
+          "phase": "WATCH"
+        }
+      ]
+    }
+  ],
+  "final_source_sha256": "93cb34a7089d82417571462b03988dde43a4a9dfedb19335160fa8f72f8cc399",
+  "input_tape_sha256": "7a5bd879208e1618c09db8f5cafb48dd91a9da77baa141a10af2cff45d45c4b6",
+  "final_tape_sha256": "7a5bd879208e1618c09db8f5cafb48dd91a9da77baa141a10af2cff45d45c4b6",
+  "method": "Named ROM load of completion-run tape; pristine export as spark16; declared ROM edits for cap=2, repeated-digit input and note/duration experiments; final fresh-process LOAD spark16, play, replay and quit.",
+  "limits": "No native host events or subjective listening; alternate audio capture demonstrates execution only."
+}

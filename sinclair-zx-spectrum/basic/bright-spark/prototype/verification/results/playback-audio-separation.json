@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "method": "10 ms RMS windows above 5000 for at least 50 ms identify sustained tones. Signal measurement, not listening.",
+  "checks": [
+    {
+      "file": "22-none.wav",
+      "tone_windows_seconds": [
+        [
+          0.65,
+          0.81
+        ],
+        [
+          1.5,
+          1.6600000000000001
+        ]
+      ]
+    },
+    {
+      "file": "22-tapping.wav",
+      "tone_windows_seconds": [
+        [
+          0.65,
+          0.81
+        ],
+        [
+          1.35,
+          1.5
+        ]
+      ]
+    },
+    {
+      "file": "22-held.wav",
+      "tone_windows_seconds": [
+        [
+          0.65,
+          0.81
+        ],
+        [
+          1.35,
+          1.51
+        ]
+      ]
+    },
+    {
+      "file": "22-quit.wav",
+      "tone_windows_seconds": [
+        [
+          0.65,
+          0.81
+        ]
+      ]
+    }
+  ]
+}

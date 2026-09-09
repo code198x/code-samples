@@ -1,0 +1,3 @@
+280 LET s$="314"
+290 PRINT AT 18,0;"Order: ";s$
+330 STOP

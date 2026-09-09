@@ -1,0 +1,288 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.22.1"
+    }
+  },
+  "sources": {
+    "unit-01/steps/step-01.bas": "a57faa1e9989d1347aab724a1680d96353e4e4ae806a9ae4eb4a3ac4d2f5c301",
+    "unit-01/steps/step-02.bas": "c327344a22777b6e5b4212dbceb42ab6649a2171dd0267499a59cfa44719b81d",
+    "unit-01/steps/step-03.bas": "ca584676ef767f3a41fbeb7dc3ae0404bb1e133ce4834435425a766b1e41633d",
+    "unit-01/steps/step-04.bas": "fa4fe1eb26432b8c41af1e41808a92fea866c2c21c5835ae6f125f2d01ca951a",
+    "unit-02/steps/step-01.bas": "c94721330c1e6b5a4cf704922cf223390a42807eb54527c4ea463522bb10edb9",
+    "unit-02/steps/step-02.bas": "fc6ede3b2688a9bd5fc1d16b0a9f76a12ae1088d66b68a54f3a7b4221f917625",
+    "unit-02/steps/step-03.bas": "9efb6c3d047ea752be53dfd2ef2ae7070a8cf7a422e91da10326e144f3563ee3"
+  },
+  "checks": [
+    {
+      "check": "unit-01-step-01",
+      "expected": [
+        "BRIGHT SPARK",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "9 STOP statement, 140:1"
+      ]
+    },
+    {
+      "check": "unit-01-step-02",
+      "expected": [
+        "BRIGHT SPARK",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "9 STOP statement, 160:1"
+      ]
+    },
+    {
+      "check": "unit-01-step-03",
+      "expected": [
+        "BRIGHT SPARK",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "9 STOP statement, 150:1"
+      ]
+    },
+    {
+      "check": "unit-01-step-04",
+      "expected": [
+        "BRIGHT SPARK",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Four choices: 1, 2, 3, 4.",
+        "",
+        "",
+        "9 STOP statement, 290:1"
+      ]
+    },
+    {
+      "check": "unit-02-step-01",
+      "expected": [
+        "BRIGHT SPARK",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "                       *",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panel 2.",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "unit-02-step-02",
+      "expected": [
+        "BRIGHT SPARK",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panel 2.",
+        "",
+        "",
+        "9 STOP statement, 320:1"
+      ]
+    },
+    {
+      "check": "unit-02-step-03",
+      "expected": [
+        "BRIGHT SPARK",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "single-cue-restored",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "",
+        "",
+        "9 STOP statement, 320:1"
+      ]
+    }
+  ],
+  "limits": "ROM entry and MCP display checks; no native keyboard or listening acceptance."
+}

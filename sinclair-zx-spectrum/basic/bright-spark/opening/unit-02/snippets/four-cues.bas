@@ -1,0 +1,5 @@
+280 PRINT AT 20,0;"Watch panels 1 to 4."
+300 FOR p=1 TO 4
+310 GO SUB 900
+320 NEXT p
+330 STOP

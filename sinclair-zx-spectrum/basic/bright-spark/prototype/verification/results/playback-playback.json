@@ -1,0 +1,171 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.22.1"
+    }
+  },
+  "source_sha256": "1b7a1d3bec93aad4ed7f87628eca0f7fe8e194a92717ba731962c64b51e14ab4",
+  "method": "ROM key entry; one screen-memory observation per advanced frame; key events injected through MCP. Rest gaps measure absent active marker, not completed raster repaint. Tapping alternates two frames down/two up. Held input released only after playback.",
+  "checks": [
+    {
+      "sequence": "314",
+      "input": "none",
+      "transitions": [
+        {
+          "frame": 31,
+          "panel": 3
+        },
+        {
+          "frame": 47,
+          "panel": null
+        },
+        {
+          "frame": 74,
+          "panel": 1
+        },
+        {
+          "frame": 90,
+          "panel": null
+        },
+        {
+          "frame": 117,
+          "panel": 4
+        },
+        {
+          "frame": 133,
+          "panel": null
+        }
+      ],
+      "frames_to_exit_after_q": null
+    },
+    {
+      "sequence": "22",
+      "input": "none",
+      "transitions": [
+        {
+          "frame": 31,
+          "panel": 2
+        },
+        {
+          "frame": 47,
+          "panel": null
+        },
+        {
+          "frame": 73,
+          "panel": 2
+        },
+        {
+          "frame": 89,
+          "panel": null
+        }
+      ],
+      "frames_to_exit_after_q": null
+    },
+    {
+      "sequence": "1234",
+      "input": "none",
+      "transitions": [
+        {
+          "frame": 30,
+          "panel": 1
+        },
+        {
+          "frame": 46,
+          "panel": null
+        },
+        {
+          "frame": 73,
+          "panel": 2
+        },
+        {
+          "frame": 89,
+          "panel": null
+        },
+        {
+          "frame": 117,
+          "panel": 3
+        },
+        {
+          "frame": 133,
+          "panel": null
+        },
+        {
+          "frame": 161,
+          "panel": 4
+        },
+        {
+          "frame": 177,
+          "panel": null
+        }
+      ],
+      "frames_to_exit_after_q": null
+    },
+    {
+      "sequence": "22",
+      "input": "tapping",
+      "transitions": [
+        {
+          "frame": 31,
+          "panel": 2
+        },
+        {
+          "frame": 47,
+          "panel": null
+        },
+        {
+          "frame": 65,
+          "panel": 2
+        },
+        {
+          "frame": 82,
+          "panel": null
+        }
+      ],
+      "frames_to_exit_after_q": null
+    },
+    {
+      "sequence": "22",
+      "input": "held",
+      "transitions": [
+        {
+          "frame": 31,
+          "panel": 2
+        },
+        {
+          "frame": 47,
+          "panel": null
+        },
+        {
+          "frame": 65,
+          "panel": 2
+        },
+        {
+          "frame": 82,
+          "panel": null
+        }
+      ],
+      "frames_to_exit_after_q": null
+    },
+    {
+      "sequence": "22",
+      "input": "quit",
+      "transitions": [
+        {
+          "frame": 31,
+          "panel": 2
+        },
+        {
+          "frame": 47,
+          "panel": null
+        }
+      ],
+      "frames_to_exit_after_q": 22
+    }
+  ]
+}

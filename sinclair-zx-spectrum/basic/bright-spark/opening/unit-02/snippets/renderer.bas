@@ -1,0 +1,24 @@
+500 LET pr=3
+510 LET pc=2
+520 LET colour=2
+530 LET inkcol=7
+550 IF p=2 THEN LET pc=18
+560 IF p=2 THEN LET colour=1
+580 IF p=3 THEN LET pr=12
+590 IF p=3 THEN LET colour=4
+600 IF p=3 THEN LET inkcol=0
+620 IF p=4 THEN LET pr=12
+630 IF p=4 THEN LET pc=18
+640 IF p=4 THEN LET colour=6
+650 IF p=4 THEN LET inkcol=0
+670 PAPER colour
+680 INK inkcol
+690 BRIGHT lit
+700 FOR r=pr TO pr+5
+710 PRINT AT r,pc;"            "
+720 NEXT r
+770 IF lit=1 THEN PRINT AT pr+2,pc+5;"*"
+780 PAPER 0
+790 INK 7
+800 BRIGHT 0
+810 RETURN

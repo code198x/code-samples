@@ -1,0 +1,122 @@
+10 BORDER 0
+20 PAPER 0
+30 INK 7
+40 CLS
+50 PRINT "BRIGHT SPARK"
+55 GO TO 2000
+100 LET lit=0
+110 FOR p=1 TO 4
+120 GO SUB 500
+130 NEXT p
+240 PRINT AT 2,7;"1"
+250 PRINT AT 2,23;"2"
+260 PRINT AT 11,7;"3"
+270 PRINT AT 11,23;"4"
+275 PRINT AT 20,0;"1-4 choose. Hold q to quit."
+280 LET s$=""
+285 LET done=0
+287 LET cap=16
+290 GO TO 980
+500 LET pr=3
+510 LET pc=2
+520 LET colour=2
+530 LET inkcol=7
+540 LET note=0
+550 IF p=2 THEN LET pc=18
+560 IF p=2 THEN LET colour=1
+570 IF p=2 THEN LET note=4
+580 IF p=3 THEN LET pr=12
+590 IF p=3 THEN LET colour=4
+600 IF p=3 THEN LET inkcol=0
+610 IF p=3 THEN LET note=7
+620 IF p=4 THEN LET pr=12
+630 IF p=4 THEN LET pc=18
+640 IF p=4 THEN LET colour=6
+650 IF p=4 THEN LET inkcol=0
+660 IF p=4 THEN LET note=12
+670 PAPER colour
+680 INK inkcol
+690 BRIGHT lit
+700 FOR r=pr TO pr+5
+710 PRINT AT r,pc;"            "
+720 NEXT r
+770 IF lit=1 THEN PRINT AT pr+2,pc+5;"*"
+780 PAPER 0
+790 INK 7
+800 BRIGHT 0
+810 RETURN
+900 LET lit=1
+910 GO SUB 500
+920 BEEP 0.15,note
+930 LET lit=0
+940 GO SUB 500
+950 PAUSE 10
+960 RETURN
+980 LET s$=s$+STR$ (INT (RND*4)+1)
+990 PRINT AT 19,0;"Rounds completed: ";done
+1000 PRINT AT 18,0;"WATCH                         "
+1010 FOR i=1 TO LEN s$
+1020 IF INKEY$="q" THEN GO TO 1900
+1030 LET p=VAL s$(i)
+1040 GO SUB 900
+1050 NEXT i
+1060 IF INKEY$="q" THEN GO TO 1900
+1070 PRINT AT 18,0;"Release the keys.              "
+1080 GO SUB 1600
+1090 PRINT AT 18,0;"YOUR TURN                     "
+1100 FOR i=1 TO LEN s$
+1110 GO SUB 1500
+1120 GO SUB 900
+1130 GO SUB 1600
+1140 IF k$<>s$(i) THEN GO TO 1800
+1150 NEXT i
+1160 LET done=done+1
+1170 IF done=cap THEN GO TO 1850
+1180 GO TO 980
+1500 LET k$=INKEY$
+1510 IF k$="" THEN GO TO 1500
+1520 IF k$="q" THEN GO TO 1900
+1530 IF k$<"1" THEN GO TO 1580
+1540 IF k$>"4" THEN GO TO 1580
+1550 LET p=VAL k$
+1560 RETURN
+1580 GO SUB 1600
+1590 GO TO 1500
+1600 LET a$=INKEY$
+1610 IF a$="q" THEN GO TO 1900
+1620 IF a$<>"" THEN GO TO 1600
+1630 RETURN
+1800 PRINT AT 18,0;"Different choice.             "
+1810 BEEP 0.1,-12
+1820 PRINT AT 19,0;"Rounds completed: ";done
+1830 GO TO 2200
+1850 PRINT AT 18,0;"Challenge complete.           "
+1860 PRINT AT 19,0;"Rounds completed: ";done
+1870 GO TO 2200
+1900 PRINT AT 18,0;"Finished. RUN to try again.     "
+1910 PRINT AT 21,0;"                               "
+1920 STOP
+2000 PRINT AT 3,0;"Watch the order of the signals."
+2010 PRINT AT 5,0;"Repeat it with keys 1 to 4."
+2020 PRINT AT 7,0;"Wait for each cue to finish."
+2030 PRINT AT 9,0;"Each round adds one choice."
+2040 PRINT AT 11,0;"Complete 16 rounds to finish."
+2050 PRINT AT 13,0;"Hold q to quit, even in WATCH."
+2060 PRINT AT 15,0;"Release keys, then s to start."
+2070 GO SUB 1600
+2080 LET k$=INKEY$
+2090 IF k$="" THEN GO TO 2080
+2100 IF k$="q" THEN GO TO 1900
+2110 IF k$<>"s" THEN GO TO 2070
+2120 GO SUB 1600
+2130 CLS
+2140 PRINT "BRIGHT SPARK"
+2150 GO TO 100
+2200 GO SUB 1600
+2210 PRINT AT 21,0;"r replay, q quit."
+2220 LET k$=INKEY$
+2230 IF k$="" THEN GO TO 2220
+2240 IF k$="q" THEN GO TO 1900
+2250 IF k$<>"r" THEN GO TO 2200
+2260 GO SUB 1600
+2270 GO TO 2130

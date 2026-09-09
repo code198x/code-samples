@@ -1,0 +1,261 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.22.1"
+    }
+  },
+  "configuration": "48K Spectrum, 50 Hz, ROM key entry and sequential line edits",
+  "binary_sha256": "b00b64c2c4a047b146be18717ccb6ed14f1e43d80530fa36012ac56ecb7c10cd",
+  "sources": {
+    "unit-02/steps/step-03.bas": "9efb6c3d047ea752be53dfd2ef2ae7070a8cf7a422e91da10326e144f3563ee3",
+    "unit-03/steps/step-01.bas": "c650a9ac17103bd1deb33cf57ba142e5a5e49e09554cd3b72b5a5ee11a04290d",
+    "unit-03/steps/step-02.bas": "8261ea24aed6f420ddaab0792423d826ed7693e104c46df39f855fdcd7474afd",
+    "unit-03/steps/step-03.bas": "d06d1c1d8b06b21d98b0eba0be8d5bab8b678e1ff9c7ab6a6e09426f543b5a9a"
+  },
+  "checks": [
+    {
+      "check": "unit-02-steps-step-03",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "unit-03-steps-step-01",
+      "expected": [
+        "Order: 314",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Order: 314",
+        "",
+        "",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "unit-03-steps-step-02",
+      "expected": [
+        "Order: 314",
+        "Length: 3",
+        "First: 3",
+        "Last: 4",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Order: 314",
+        "Length: 3",
+        "First: 3",
+        "Last: 4",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "unit-03-steps-step-03",
+      "expected": [
+        "Order: 3142",
+        "Length: 4",
+        "First: 3",
+        "Last: 2",
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Order: 3142",
+        "Length: 4",
+        "First: 3",
+        "Last: 2",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "rerun-resets-order",
+      "expected": [
+        "Order: 3142",
+        "Length: 4"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Order: 3142",
+        "Length: 4",
+        "First: 3",
+        "Last: 2",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "append-experiment",
+      "expected": [
+        "Order: 3144",
+        "Length: 4",
+        "Last: 4"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Order: 3144",
+        "Length: 4",
+        "First: 3",
+        "Last: 4",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "restored-checkpoint",
+      "expected": [
+        "Order: 3142",
+        "Last: 2"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Order: 3142",
+        "Length: 4",
+        "First: 3",
+        "Last: 2",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    }
+  ],
+  "limits": "Emulator execution; no original hardware or native keyboard acceptance."
+}
