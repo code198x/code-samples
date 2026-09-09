@@ -1,5 +1,5 @@
 {
-  "rule": "Remove literal spaces immediately after keywords outside quoted strings; retain GO TO and GO SUB token names.",
+  "rule": "Readable source hashes are before_sha256; ROM-entry-normalised hashes are after_sha256. Suppress keyword display spacing only at the entry boundary; preserve strings and compound token names.",
   "sources": {
     "step-01.bas": {
       "before_sha256": "a492751eff85767e63f754c434fb6a9929f7d95041102f184135b66dda8a42aa",

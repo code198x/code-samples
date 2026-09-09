@@ -54,7 +54,9 @@ The blue playfield is the permanent PAPER setting. Walls, paddle and score use t
 
 ## Token spacing
 
-Sinclair BASIC tokens supply their own displayed spacing. These entry sources deliberately omit literal spaces after keywords: `PRINT"Hello"` needs no Space key after PRINT. Quoted spaces remain meaningful, and `GO TO` / `GO SUB` remain compound token names. The Volley-specific entry helper applies the same rule to test edits. `verification/spacing.py` checks the stored tape program rather than relying on the appearance of LIST; `spacing-source-map.json` connects the earlier execution hashes to these formatting-only source changes.
+Listings retain readable spacing, such as `PRINT AT y,x;"o"`. Sinclair BASIC tokens supply that spacing when displayed; it is not an instruction to press Space after a keyword. The entry helper strips redundant post-keyword spaces only when converting a listing into ROM keystrokes. Quoted spaces remain meaningful, and `GO TO` / `GO SUB` remain compound token names.
+
+`verification/spacing.py` checks the stored tape program, while `spacing-source-map.json` maps readable source hashes to the verified normalised entry hashes. Restoring readable sources does not change the keystrokes or the corrected tape.
 
 ## Lesson drafts
 

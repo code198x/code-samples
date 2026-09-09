@@ -1,4 +1,4 @@
-125 IFk$="a" THENIFp>3 THENPRINTATp+2,2;" ": LETp=p-1: PRINTPAPER6;ATp,2;" "
-126 IFk$="z" THENIFp<17 THENPRINTATp,2;" ": LETp=p+1: PRINTPAPER6;ATp+2,2;" "
-248 PRINTATy,x;" ";ATny,nx;"o"
-300 GO TO105
+125 IF k$="a" THEN IF p>3 THEN PRINT AT p+2,2;" ": LET p=p-1: PRINT PAPER 6;AT p,2;" "
+126 IF k$="z" THEN IF p<17 THEN PRINT AT p,2;" ": LET p=p+1: PRINT PAPER 6;AT p+2,2;" "
+248 PRINT AT y,x;" ";AT ny,nx;"o"
+300 GO TO 105
