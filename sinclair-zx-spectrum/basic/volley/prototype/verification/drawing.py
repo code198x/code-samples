@@ -3,9 +3,9 @@
 import argparse,hashlib,importlib.util,json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-s=importlib.util.spec_from_file_location('spark',ROOT.parents[1]/'bright-spark/opening/verification/completion.py');mod=importlib.util.module_from_spec(s);s.loader.exec_module(mod)
+from entry import Spectrum
 p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--baseline-tape',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
-m=mod.Spectrum(a.emulator,a.output);checks=[];measurements=[]
+m=Spectrum(a.emulator,a.output);checks=[];measurements=[]
 def tick(n=1):m.frames(n)
 def key(k,b):m.call('input',events=[{'Key':{'name':k,'pressed':b}}])
 def has(s):return any(s in r for r in m.screen())
@@ -87,7 +87,7 @@ try:
  m.call('save_screenshot',path=str(a.output/'court.png'))
  m.key('caps','space');tick(30);edit([previous[110]])
  m.statement('SAVE "volley"');m.enter();tick(6000);assert has('0 OK');tape=a.output/'volley.tap';m.call('save_tape',path=str(tape))
- m.close();m=mod.Spectrum(a.emulator,a.output)
+ m.close();m=Spectrum(a.emulator,a.output)
  m.call('load_media',slot='tape-1',kind='tape',path=str(tape));m.statement('LOAD "volley"');m.call('media_transport',slot='tape-1',transport='start');tick(6000);assert has('0 OK')
  run();serve();wait('Miss.');key('r',True);tick(40);assert has('Miss.');key('r',False);wait('S to serve');quit();record('fresh-colour-tape-play-retry-quit')
  old=next(x for x in measurements if x['stage']==7 and not x['held']);new=next(x for x in measurements if x['stage']==8 and not x['held'])

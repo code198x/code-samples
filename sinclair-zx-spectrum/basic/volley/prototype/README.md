@@ -51,3 +51,7 @@ Step 7 keeps the original erase-first loop so the effect of the next change can 
 The blue playfield is the permanent PAPER setting. Walls, paddle and score use temporary PRINT colours; clearing a moving object therefore restores blue. This is rendering order and selective drawing, not double buffering or pixel scrolling. Fewer operations can also change the cadence.
 
 `verification/drawing.py` loads the maintained monochrome tape, applies the actual ROM edits for stages 7–8, samples ball presence, checks colour restoration and contact boundaries, and exports the final tape for a fresh-process play/retry/quit check. Its optional diagnostic capture uses a declared temporary PAUSE 0; that edit is removed before export. Run `verification/rally.py --paper-paddle` for the coloured version's automated rally. These checks distinguish screen-memory sampling from human flicker perception.
+
+## Token spacing
+
+Sinclair BASIC tokens supply their own displayed spacing. These entry sources deliberately omit literal spaces after keywords: `PRINT"Hello"` needs no Space key after PRINT. Quoted spaces remain meaningful, and `GO TO` / `GO SUB` remain compound token names. The Volley-specific entry helper applies the same rule to test edits. `verification/spacing.py` checks the stored tape program rather than relying on the appearance of LIST; `spacing-source-map.json` connects the earlier execution hashes to these formatting-only source changes.

@@ -3,11 +3,10 @@
 import argparse, hashlib, importlib.util, json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-spec=importlib.util.spec_from_file_location('spark', ROOT.parents[1]/'bright-spark/opening/verification/completion.py')
-spark=importlib.util.module_from_spec(spec);spec.loader.exec_module(spark)
+from entry import Spectrum
 p=argparse.ArgumentParser();p.add_argument('--start-stage',type=int,choices=[1,6],default=1);p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True)
 a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
-m=spark.Spectrum(a.emulator,a.output);previous={};checks=[]
+m=Spectrum(a.emulator,a.output);previous={};checks=[]
 def tick(n=1):m.frames(n)
 def key(k,down):m.call('input',events=[{'Key':{'name':k,'pressed':down}}])
 def has(s):return any(s in row for row in m.screen())
@@ -62,7 +61,7 @@ try:
  edit([previous[20],previous[25],'260'])
  m.statement('SAVE "volley"');m.enter();tick(12000);assert has('0 OK')
  tape=a.output/'volley.tap';m.call('save_tape',path=str(tape));record('saved')
- m.close();m=spark.Spectrum(a.emulator,a.output)
+ m.close();m=Spectrum(a.emulator,a.output)
  m.call('load_media',slot='tape-1',kind='tape',path=str(tape));m.statement('LOAD "volley"');m.call('media_transport',slot='tape-1',transport='start');tick(12000);assert has('0 OK')
  run();wait('S to serve');serve();wait('Miss.');key('r',True);tick(10);key('r',False);wait('S to serve');stop();assert has('Finished.');record('fresh-load-play-retry-quit')
  (a.output/'results.json').write_text(json.dumps({'status':'passed','start_stage':a.start_stage,'server':m.server,'sources':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'steps').glob('*.bas') if a.start_stage==1 or p.name=='step-06.bas'},'checks':checks,'limits':'ROM entry and MCP input; no native keyboard, original hardware or independent human playtesting. Silent prototype.'},indent=2)+'\n')

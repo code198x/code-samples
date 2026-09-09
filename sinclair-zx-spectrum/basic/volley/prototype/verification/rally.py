@@ -3,9 +3,9 @@
 import argparse,importlib.util,json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-s=importlib.util.spec_from_file_location('spark',ROOT.parents[1]/'bright-spark/opening/verification/completion.py');mod=importlib.util.module_from_spec(s);s.loader.exec_module(mod)
+from entry import Spectrum
 p=argparse.ArgumentParser();p.add_argument('--paper-paddle',action='store_true');p.add_argument('--emulator',required=True);p.add_argument('--tape',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
-m=mod.Spectrum(a.emulator,a.output)
+m=Spectrum(a.emulator,a.output)
 def key(k,b):m.call('input',events=[{'Key':{'name':k,'pressed':b}}])
 try:
  m.call('load_media',slot='tape-1',kind='tape',path=str(a.tape));m.statement('LOAD "volley"');m.call('media_transport',slot='tape-1',transport='start');m.frames(6000)

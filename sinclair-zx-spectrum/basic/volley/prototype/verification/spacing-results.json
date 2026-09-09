@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checks": [
+    "No literal spaces immediately after stored keyword tokens outside strings",
+    "Tokenised program identical apart from unquoted spaces, preserving numeric payloads and strings",
+    "Fresh tape load, run, serve, miss, held retry and quit"
+  ],
+  "old_program_bytes": 1841,
+  "new_program_bytes": 1698,
+  "source_sha256": "12ba5139c6224d5dea70fdfc29c36fe0b939b9d0b2d58f1dfbc268a2cc4ea5c5",
+  "input_tape_sha256": "ab34cf887605011d8e87e7637a8a4668de5a35bb5df0059f38e8a26267fd7846",
+  "tape_sha256": "1a1d85af8c21f946b3c51121e3f9e6ef43d31140dde70aa6e55ad18b625f71bd",
+  "configuration": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.22.1"
+    }
+  }
+}
