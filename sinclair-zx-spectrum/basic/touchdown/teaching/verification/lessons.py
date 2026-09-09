@@ -35,5 +35,5 @@ assert len(diagnostic['combinations']) == 8
 if args.website:
     assert json.loads((args.website / 'src/drafts/touchdown/roster.json').read_text()) == roster
     for item in roster:
-        assert (args.website / f"src/drafts/touchdown/{item['slug']}.mdx").is_file()
+        assert (args.website / f"src/content/curriculum/sinclair-zx-spectrum/basic/touchdown/{item['slug']}.mdx").is_file()
 print('PASS 16 checkpoints, 11 lesson endpoints, exact edits/snippets, source hashes and diagnostic')
