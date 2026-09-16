@@ -1,6 +1,6 @@
 # Sonar prototype
 
-Six checkpoints of the proposed replacement Sonar course. Target: stock 48K ZX Spectrum, PAL, Sinclair BASIC. The existing published Sonar lessons are unchanged.
+Six checkpoints of the proposed replacement Sonar course. Target: stock 48K ZX Spectrum, PAL, Sinclair BASIC. The investigation is retained alongside the approved replacement teaching sequence in `../teaching/`.
 
 | Source | What runs |
 |---|---|
@@ -25,7 +25,7 @@ The `>` marker identifies the latest probe without depending on colour. Unknown 
 
 ## Accepted banded game
 
-`experiments/distance-bands.bas` changes one rule from stage 6: a probe reveals `N` for 1–2 steps, `M` for 3–4, or `F` for 5 or more. A direct hit still shows `*`. Steps mean row difference plus column difference. The legend remains above the board; old clues, distinct-probe counting, random rounds and controls are unchanged. The array stores the revealed band (1, 2 or 3), rather than the exact distance. This is the accepted game endpoint after human play. Its source path remains stable for the verification records; teaching checkpoints are still to be derived.
+`experiments/distance-bands.bas` changes one rule from stage 6: a probe reveals `N` for 1–2 steps, `M` for 3–4, or `F` for 5 or more. A direct hit still shows `*`. Steps mean row difference plus column difference. The legend remains above the board; old clues, distinct-probe counting, random rounds and controls are unchanged. The array stores the revealed band (1, 2 or 3), rather than the exact distance. This is the accepted game endpoint after human play. Its source path remains stable for the verification records; the derived and executed teaching checkpoints live in `../teaching/`.
 
 Load `sonar-bands.tap` with the same emulator command as above. The agreed default remains 8×8; a larger board is an optional extension. More probes alone are not evidence of a better game.
 

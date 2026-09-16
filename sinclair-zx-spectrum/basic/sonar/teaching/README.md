@@ -1,6 +1,6 @@
 # Sonar teaching checkpoints
 
-Eleven runnable states for the nine-lesson draft sequence. The game is one hidden target on an 8×8 grid, with near (1–2), medium (3–4) and far (5+) readings. Zero is a hit. This is Sinclair BASIC for a stock 48K ZX Spectrum, PAL.
+Eleven runnable states for the approved nine-lesson sequence. The game is one hidden target on an 8×8 grid, with near (1–2), medium (3–4) and far (5+) readings. Zero is a hit. This is Sinclair BASIC for a stock 48K ZX Spectrum, PAL.
 
 | Lesson | Checkpoints |
 |---|---|
@@ -32,6 +32,6 @@ The runner enters source changes through ROM keyboard events, executes every sta
 
 `verification/results.json` retains emulator/ROM identities, source hashes and the checks. These pass for all eleven states, including both input prompts, invalid/long input, band boundaries, all 64 remembered clues, repeated probes, display reconstruction, fixed and random retries, and final fresh loading. The inspected captures and their source mapping live in `captures/`. Source equivalence and scripted execution do not establish beginner comprehension or original-hardware compatibility.
 
-The lesson drafts and local browser preview live in the website repository under `src/drafts/sonar/`. They remain outside the public content collections. See the documentation repository's `platforms/sinclair-zx-spectrum/games/sonar/lessons.md` for the authoring and review status.
+The approved lessons live in the website repository under `src/content/curriculum/sinclair-zx-spectrum/basic/sonar/`. Publication checks and the review record remain with the website. See the documentation repository's `platforms/sinclair-zx-spectrum/games/sonar/lessons.md` for the authoring and review status.
 
 The original program and character graphics use the samples repository's MIT licence. Hardware/language sources: Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second edition (Sinclair Research, 1983), chapters 4–5, 7–9, 11–12, 15–16 and 20. The band rule is a game design, not a physical sonar simulation.
