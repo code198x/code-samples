@@ -1,0 +1,33 @@
+{
+  "tape_sha256": "2c9a634914bd9b32da25733c8e521e3f9e7e8e32de019e33e2b3f21809f6ba8a",
+  "measurements": [
+    {
+      "action": "walk",
+      "frames": 26,
+      "seconds_at_50hz": 0.52
+    },
+    {
+      "action": "push",
+      "frames": 37,
+      "seconds_at_50hz": 0.74
+    }
+  ],
+  "method": "Three-frame press, then one-frame samples until the BASIC input loop is reached with the expected move count. One walk and one push from the initial room. Includes drawing and command processing; excludes tape loading. Not native host latency.",
+  "baseline": {
+    "source_sha256": "f89a51f322b3a8943fc6979a4410a32b103b61d6ac15ee3a08d0abbdcca12651",
+    "tape_sha256": "1771219d21bba96e91d49bfb536fee17e425794303767954d0a60f99946e6379",
+    "measurements": [
+      {
+        "action": "walk",
+        "frames": 78,
+        "seconds_at_50hz": 1.56
+      },
+      {
+        "action": "push",
+        "frames": 88,
+        "seconds_at_50hz": 1.76
+      }
+    ]
+  },
+  "source_sha256": "582ff1a0824bf781f6d1c4223f37dbdd502e60f5200ca92add10181d8a1269cf"
+}

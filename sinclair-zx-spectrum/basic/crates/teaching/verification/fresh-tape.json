@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "source_sha256": "b3b1b21c666652056dc0bb4d7b08cb4681aeddc9ce00c88e416a4db1ed6c3f25",
+  "tape_sha256": "712f652a4aef8205211f685fb3747b092afbbca059eb564c3f102f20147aa790",
+  "checks": [
+    "single-program-ROM-recording-preserves-header-and-payload",
+    "default-LOAD-autostarts-and-rebuilds-graphics",
+    "stored-program-equals-final-checkpoint",
+    "all-three-rooms-new-game-and-exit"
+  ],
+  "limits": "Headless ROM keyboard events; native GOALS cue review is separate."
+}

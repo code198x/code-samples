@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "sources": {
+    "tile": "c1025534c6eab77396d1b965cb98ef50e06a6c69caf2e96177282e54973b04ae",
+    "walk": "dccf0732775ea5fd845d437af0f8c8616c50f5f61db9703917975a28803989ac"
+  },
+  "checks": [
+    "one-row-byte-edit-changes-exactly-one-pixel-and-restores",
+    "wall-palette-change-leaves-world-and-collision-unchanged"
+  ],
+  "setup": "Declared ROM edit to DATA 7200, restored; palette variable changed through a direct BASIC command, restored. No game-state injection."
+}
