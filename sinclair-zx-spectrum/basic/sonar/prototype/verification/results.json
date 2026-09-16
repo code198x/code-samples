@@ -1,0 +1,581 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "configuration": "Stock 48K ZX Spectrum, PAL, configured 16 KiB ROM; MCP keyboard events",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "sources": {
+    "steps/step-01.bas": "3be8f6b4344850a39411a7a403c0b32d245384158e410a7e184406f8ae6240aa",
+    "steps/step-02.bas": "c92b920285d5d7d8558e80ea26795897e3701f9b6c407f81ab320c0f4b7a95fc",
+    "steps/step-03.bas": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba"
+  },
+  "tapes": [
+    {
+      "stage": 1,
+      "file": "sonar1.tap",
+      "sha256": "0dbd78ed6a9c30ee9b0051d8d62c6c95ccddd8377f02219feeb01163505959cf"
+    },
+    {
+      "stage": 2,
+      "file": "sonar2.tap",
+      "sha256": "0f1c8383ce27568f338583c94f355aaca09fc1674a517856f54faec2bcad8e99"
+    },
+    {
+      "stage": 3,
+      "file": "sonar3.tap",
+      "sha256": "3ab739e732652662339595877d72872b313e9cb9ec6897139eb9a2981d1b31d3"
+    }
+  ],
+  "checks": [
+    {
+      "check": "visible-target-two-digit-layout"
+    },
+    {
+      "check": "ROM-save-sonar1"
+    },
+    {
+      "check": "fresh-process-autoload-sonar1"
+    },
+    {
+      "check": "fixed-target-hit-and-miss-with-long-input-recovery"
+    },
+    {
+      "check": "stage-2-quit-row"
+    },
+    {
+      "check": "stage-2-quit-column-uppercase"
+    },
+    {
+      "check": "ROM-save-sonar2"
+    },
+    {
+      "check": "fresh-process-autoload-sonar2"
+    },
+    {
+      "check": "worked-example",
+      "probe": [
+        1,
+        2
+      ],
+      "target": [
+        3,
+        6
+      ],
+      "distance": 6
+    },
+    {
+      "check": "all-64-cells-fixed-target",
+      "target": [
+        3,
+        6
+      ],
+      "probes": [
+        [
+          1,
+          1,
+          7
+        ],
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          1,
+          4,
+          4
+        ],
+        [
+          1,
+          5,
+          3
+        ],
+        [
+          1,
+          6,
+          2
+        ],
+        [
+          1,
+          7,
+          3
+        ],
+        [
+          1,
+          8,
+          4
+        ],
+        [
+          2,
+          1,
+          6
+        ],
+        [
+          2,
+          2,
+          5
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          3
+        ],
+        [
+          2,
+          5,
+          2
+        ],
+        [
+          2,
+          6,
+          1
+        ],
+        [
+          2,
+          7,
+          2
+        ],
+        [
+          2,
+          8,
+          3
+        ],
+        [
+          3,
+          1,
+          5
+        ],
+        [
+          3,
+          2,
+          4
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          3,
+          5,
+          1
+        ],
+        [
+          3,
+          6,
+          0
+        ],
+        [
+          3,
+          7,
+          1
+        ],
+        [
+          3,
+          8,
+          2
+        ],
+        [
+          4,
+          1,
+          6
+        ],
+        [
+          4,
+          2,
+          5
+        ],
+        [
+          4,
+          3,
+          4
+        ],
+        [
+          4,
+          4,
+          3
+        ],
+        [
+          4,
+          5,
+          2
+        ],
+        [
+          4,
+          6,
+          1
+        ],
+        [
+          4,
+          7,
+          2
+        ],
+        [
+          4,
+          8,
+          3
+        ],
+        [
+          5,
+          1,
+          7
+        ],
+        [
+          5,
+          2,
+          6
+        ],
+        [
+          5,
+          3,
+          5
+        ],
+        [
+          5,
+          4,
+          4
+        ],
+        [
+          5,
+          5,
+          3
+        ],
+        [
+          5,
+          6,
+          2
+        ],
+        [
+          5,
+          7,
+          3
+        ],
+        [
+          5,
+          8,
+          4
+        ],
+        [
+          6,
+          1,
+          8
+        ],
+        [
+          6,
+          2,
+          7
+        ],
+        [
+          6,
+          3,
+          6
+        ],
+        [
+          6,
+          4,
+          5
+        ],
+        [
+          6,
+          5,
+          4
+        ],
+        [
+          6,
+          6,
+          3
+        ],
+        [
+          6,
+          7,
+          4
+        ],
+        [
+          6,
+          8,
+          5
+        ],
+        [
+          7,
+          1,
+          9
+        ],
+        [
+          7,
+          2,
+          8
+        ],
+        [
+          7,
+          3,
+          7
+        ],
+        [
+          7,
+          4,
+          6
+        ],
+        [
+          7,
+          5,
+          5
+        ],
+        [
+          7,
+          6,
+          4
+        ],
+        [
+          7,
+          7,
+          5
+        ],
+        [
+          7,
+          8,
+          6
+        ],
+        [
+          8,
+          1,
+          10
+        ],
+        [
+          8,
+          2,
+          9
+        ],
+        [
+          8,
+          3,
+          8
+        ],
+        [
+          8,
+          4,
+          7
+        ],
+        [
+          8,
+          5,
+          6
+        ],
+        [
+          8,
+          6,
+          5
+        ],
+        [
+          8,
+          7,
+          6
+        ],
+        [
+          8,
+          8,
+          7
+        ]
+      ]
+    },
+    {
+      "check": "repeated-probe-same-distance"
+    },
+    {
+      "check": "reject-row",
+      "input": ""
+    },
+    {
+      "check": "reject-row",
+      "input": "0"
+    },
+    {
+      "check": "reject-row",
+      "input": "9"
+    },
+    {
+      "check": "reject-row",
+      "input": "-1"
+    },
+    {
+      "check": "reject-row",
+      "input": "1.5"
+    },
+    {
+      "check": "reject-row",
+      "input": "x"
+    },
+    {
+      "check": "reject-row",
+      "input": "18"
+    },
+    {
+      "check": "reject-row",
+      "input": "1+1"
+    },
+    {
+      "check": "reject-row",
+      "input": " 2"
+    },
+    {
+      "check": "reject-row",
+      "input": "2 "
+    },
+    {
+      "check": "reject-row",
+      "input": "\""
+    },
+    {
+      "check": "reject-row",
+      "input": "1111111111111111111111111111111111111111"
+    },
+    {
+      "check": "reject-row",
+      "input": "11111111111111111111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "check": "reject-column",
+      "input": ""
+    },
+    {
+      "check": "reject-column",
+      "input": "0"
+    },
+    {
+      "check": "reject-column",
+      "input": "9"
+    },
+    {
+      "check": "reject-column",
+      "input": "-1"
+    },
+    {
+      "check": "reject-column",
+      "input": "1.5"
+    },
+    {
+      "check": "reject-column",
+      "input": "x"
+    },
+    {
+      "check": "reject-column",
+      "input": "18"
+    },
+    {
+      "check": "reject-column",
+      "input": "1+1"
+    },
+    {
+      "check": "reject-column",
+      "input": " 2"
+    },
+    {
+      "check": "reject-column",
+      "input": "2 "
+    },
+    {
+      "check": "reject-column",
+      "input": "\""
+    },
+    {
+      "check": "reject-column",
+      "input": "1111111111111111111111111111111111111111"
+    },
+    {
+      "check": "reject-column",
+      "input": "11111111111111111111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "check": "valid-hit-after-rejected-input"
+    },
+    {
+      "check": "stage-3-quit-row"
+    },
+    {
+      "check": "stage-3-quit-column-uppercase"
+    },
+    {
+      "check": "edited-corner-target",
+      "line": "20 LET tr = 1: LET tc = 1",
+      "probes": [
+        [
+          8,
+          8,
+          14
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "check": "edited-corner-target",
+      "line": "20 LET tr = 8: LET tc = 8",
+      "probes": [
+        [
+          1,
+          1,
+          14
+        ],
+        [
+          8,
+          8,
+          0
+        ]
+      ]
+    },
+    {
+      "check": "two-clue-shortcut",
+      "probes": [
+        [
+          1,
+          1,
+          7
+        ],
+        [
+          1,
+          8,
+          4
+        ],
+        [
+          3,
+          6,
+          0
+        ]
+      ],
+      "interpretation": "Scripted coordinate deduction, not human play evidence"
+    },
+    {
+      "check": "ROM-save-sonar3"
+    },
+    {
+      "check": "fresh-process-autoload-sonar3"
+    }
+  ],
+  "limits": "Stages 1\u20133 only. Latest probe only; no array, distinct-probe count, random target, replay menu or sound. No native host-event, human play or original-hardware acceptance."
+}

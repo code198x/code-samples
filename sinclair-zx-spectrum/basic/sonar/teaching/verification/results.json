@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "configuration": "48K Spectrum PAL; source entered through ROM keyboard events",
+  "sources": {
+    "unit-01/steps/step-01.bas": "c0f4f4f4d1e075005bf47817a3a268f28e88ebe007b670d6857a0c627049cece",
+    "unit-01/steps/step-02.bas": "a4e4f8af50153791ad3a29149533e441fc9b8329e961519ac84b6d6bcaa684f1",
+    "unit-02/steps/step-01.bas": "dda44e54fd3cdf6670d04cb5163ac576df7f5645856a00cc1ee36699e32a8834",
+    "unit-02/steps/step-02.bas": "c92b920285d5d7d8558e80ea26795897e3701f9b6c407f81ab320c0f4b7a95fc",
+    "unit-03/steps/step-01.bas": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
+    "unit-04/steps/step-01.bas": "cd71f50b00b0a6af6d24740aca5bc6b6b4c689bbfe1b404964e5abf799dc4362",
+    "unit-05/steps/step-01.bas": "e56c2efc3efbab4f6aaf9a2bf296cc970491f5d2735c2ecb0fc5e1059ba855ae",
+    "unit-05/steps/step-02.bas": "c5e8ffc841f52e94f28db65f825a35440809b191b00e4f37238482452ba90487",
+    "unit-06/steps/step-01.bas": "dd97472e4480776deff78462a581676cb684721ba22d12da7677a78f2e86501a",
+    "unit-07/steps/step-01.bas": "ee68e3ac26a47445860e167d39b112610ca2261b60d90f478b5dd16363c20fad",
+    "unit-08/steps/step-01.bas": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b"
+  },
+  "tape_sha256": "7ac0b36db63d2abcb302b3a5652a33aa462b804721fcdf2d2e76ccb205bda5a8",
+  "checks": [
+    {
+      "check": "row"
+    },
+    {
+      "check": "board"
+    },
+    {
+      "check": "row-input"
+    },
+    {
+      "check": "probe"
+    },
+    {
+      "check": "distance"
+    },
+    {
+      "check": "bands"
+    },
+    {
+      "check": "array-lab"
+    },
+    {
+      "check": "memory"
+    },
+    {
+      "check": "count"
+    },
+    {
+      "check": "round"
+    },
+    {
+      "check": "random"
+    },
+    {
+      "check": "fresh-load-play-retry-exit"
+    },
+    {
+      "check": "stored-program-identical-to-accepted-game",
+      "baseline_sha256": "919bcf2e2864852a3a79c7c7ab4a8a586b0456ed1c94494a6aea25328e4d0fc1"
+    }
+  ],
+  "limits": "Scripted execution and inspected captures. No new human play, audio or original-hardware claim."
+}

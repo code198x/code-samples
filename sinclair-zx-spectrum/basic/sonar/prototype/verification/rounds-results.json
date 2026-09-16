@@ -1,0 +1,387 @@
+{
+  "status": "passed",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "configuration": "Stock 48K ZX Spectrum, PAL; ROM entry and MCP keyboard events",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "sources": {
+    "steps/step-04.bas": "15c054870f928cf22df643555b89e0176c0d79cb394a8ee86fd91a6fdd9a7912",
+    "steps/step-05.bas": "1cfa2f57cd5bbccf3b9e0b4c91b99ea2041565ea73e5206c0687e8eb308da67f",
+    "steps/step-06.bas": "838715cb058f7d226d3725dc27379224b373651009ce6988e40fa92cc8f74f21"
+  },
+  "tapes": [
+    {
+      "stage": 4,
+      "file": "sonar4.tap",
+      "sha256": "577899af7ef4767006d1ced784668be147ff550533909a142a478ef8d3d51f93"
+    },
+    {
+      "stage": 5,
+      "file": "sonar5.tap",
+      "sha256": "4854fba3bb6a342eebb06669002d3afd1e8d4076991034c8ded02121ce6f8ecd"
+    },
+    {
+      "stage": 6,
+      "file": "sonar6.tap",
+      "sha256": "c395cf5c140866974b710f4da249d98b4b024b60711a4bbb73b2b4a638fe67c9"
+    }
+  ],
+  "checks": [
+    {
+      "check": "repeated-and-consecutive-probes-preserve-count"
+    },
+    {
+      "check": "invalid-input-preserves-history-count-target-and-selected-row"
+    },
+    {
+      "check": "repeated-hit-counted-once"
+    },
+    {
+      "check": "CLS-and-full-redraw-from-array-without-state-change"
+    },
+    {
+      "check": "all-64-clues-retained-and-counted-once"
+    },
+    {
+      "check": "RUN-clears-complete-probe-history"
+    },
+    {
+      "check": "stage-4-quit-column"
+    },
+    {
+      "check": "stage-4-ROM-save-fresh-load-play-exit"
+    },
+    {
+      "check": "invalid-retry-retains-winning-board-and-count"
+    },
+    {
+      "check": "three-fixed-site-retries-no-state-leaks"
+    },
+    {
+      "check": "invalid-title-and-title-quit"
+    },
+    {
+      "check": "fixed-round-quit-row-and-column"
+    },
+    {
+      "check": "stage-5-ROM-save-fresh-load-play-retry-exit"
+    },
+    {
+      "check": "twelve-random-rounds-range-counts-retries",
+      "rounds": [
+        {
+          "target": [
+            1,
+            8
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              7
+            ],
+            [
+              1,
+              8,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            1,
+            1
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            1,
+            2
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              8,
+              6
+            ],
+            [
+              1,
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            3,
+            6
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              7
+            ],
+            [
+              1,
+              8,
+              4
+            ],
+            [
+              3,
+              6,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            6,
+            7
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              11
+            ],
+            [
+              1,
+              8,
+              6
+            ],
+            [
+              6,
+              7,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            5,
+            3
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              6
+            ],
+            [
+              1,
+              8,
+              9
+            ],
+            [
+              5,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            1,
+            2
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              8,
+              6
+            ],
+            [
+              1,
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            7,
+            2
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              7
+            ],
+            [
+              1,
+              8,
+              12
+            ],
+            [
+              7,
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            3,
+            2
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              3
+            ],
+            [
+              1,
+              8,
+              8
+            ],
+            [
+              3,
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            3,
+            8
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              9
+            ],
+            [
+              1,
+              8,
+              2
+            ],
+            [
+              3,
+              8,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            5,
+            3
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              6
+            ],
+            [
+              1,
+              8,
+              9
+            ],
+            [
+              5,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "target": [
+            5,
+            8
+          ],
+          "probes": [
+            [
+              1,
+              1,
+              11
+            ],
+            [
+              1,
+              8,
+              4
+            ],
+            [
+              5,
+              8,
+              0
+            ]
+          ]
+        }
+      ],
+      "limitation": "Observed rounds do not establish uniformity or human replay value."
+    },
+    {
+      "check": "stage-6-ROM-save-fresh-load-play-retry-exit"
+    }
+  ],
+  "limits": "No new native host-keyboard, original-hardware or human replay-value acceptance. No audio added.",
+  "original_run_sources": {
+    "steps/step-04.bas": "15c054870f928cf22df643555b89e0176c0d79cb394a8ee86fd91a6fdd9a7912",
+    "steps/step-05.bas": "e803cbcc6aa1df1846dc87feef6127d04c9d3c0e0648605f263bb46ea7c70713",
+    "steps/step-06.bas": "94bd11b32cdd32511b709e77b140329e28f53b182497123681a585d4f44d502d"
+  },
+  "title_copy_followup": [
+    {
+      "stage": 5,
+      "prior_source_sha256": "e803cbcc6aa1df1846dc87feef6127d04c9d3c0e0648605f263bb46ea7c70713",
+      "source_sha256": "1cfa2f57cd5bbccf3b9e0b4c91b99ea2041565ea73e5206c0687e8eb308da67f",
+      "changed_program_lines": [
+        5060
+      ],
+      "line": "5060 PRINT AT 13, 1; \"Old clues stay. > marks latest.\"",
+      "checks": [
+        "ROM-entered copy change; all other stored program bytes identical",
+        "instructions capture",
+        "play, discovery, retry and exit",
+        "ROM save and fresh-load play, retry and exit"
+      ]
+    },
+    {
+      "stage": 6,
+      "prior_source_sha256": "94bd11b32cdd32511b709e77b140329e28f53b182497123681a585d4f44d502d",
+      "source_sha256": "838715cb058f7d226d3725dc27379224b373651009ce6988e40fa92cc8f74f21",
+      "changed_program_lines": [
+        5060
+      ],
+      "line": "5060 PRINT AT 13, 1; \"Old clues stay. > marks latest.\"",
+      "checks": [
+        "ROM-entered copy change; all other stored program bytes identical",
+        "instructions capture",
+        "play, discovery, retry and exit",
+        "ROM save and fresh-load play, retry and exit"
+      ]
+    }
+  ]
+}
