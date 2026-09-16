@@ -1,0 +1,72 @@
+{
+  "source_sha256": "6eed652fb5e9fa6600002b11d72ea35b70c77183861e18d75173326acab04bbf",
+  "configuration": "48K ZX Spectrum PAL; ROM keyboard entry and read-only observation",
+  "visually_inspected": true,
+  "captures": [
+    {
+      "file": "instructions.png",
+      "sha256": "8a86ad85be7bd38268b060cc11afc17c907e04b6d0398f7944c9dcf2563f2436",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "room.png",
+      "sha256": "7c8f10a6d6ab677e333e9b98674c1a7f18081224a7a3f9e89f5ad3ea55dbbdb8",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "first-push.png",
+      "sha256": "1b653ccbba8ed468e91828f53251dc23e39efeb7c4108c430d3e05385ecd2a14",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "solved.png",
+      "sha256": "b41abc5616c4064b71b7b2e1355c1e03f0e735874ab8aaccbceb75c4e815a094",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "player-on-target.png",
+      "sha256": "3a4ab33a7c0130c0efa16b898aee8aec78a2d4d704193e40fd957791719d8eb6",
+      "fixture": "declared target-preservation fixture"
+    },
+    {
+      "file": "room-2.png",
+      "sha256": "c4ae0b5ef507d060be5ded48ec8895fc9c8fd8766ed1923d85308ee36ea4e2f2",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "room-2-trap.png",
+      "sha256": "2e1d16c633a603ec083252796860e8501913a655f46a7aecfdad9ddd25f140ea",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "room-2-solved.png",
+      "sha256": "c5c537d8163c010ea334d63c13e1d35765d34080f15da30840118e06c097724a",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "room-3.png",
+      "sha256": "7eb9c812e9d9203a1367f5b6797e95e44d4f48be2f6b8bb3abb7cd442ef0d131",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "room-3-space-made.png",
+      "sha256": "0be2be3db942203a813eaf3d43621de0df766e3acde1c09b104a6c5377414e69",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "room-3-one-delivered.png",
+      "sha256": "0b8e4b795f8f83e0af14358dc9ee4abe7d4191128012c288c37ed66f10f1206f",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "room-3-solved.png",
+      "sha256": "d22825291d8c226ec761b2a09b1a368f229d514823e77ff2dfa80183c625c57e",
+      "fixture": "original three-room program"
+    },
+    {
+      "file": "new-game.png",
+      "sha256": "7c8f10a6d6ab677e333e9b98674c1a7f18081224a7a3f9e89f5ad3ea55dbbdb8",
+      "fixture": "original three-room program"
+    }
+  ]
+}

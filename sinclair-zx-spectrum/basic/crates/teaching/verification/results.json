@@ -1,0 +1,135 @@
+{
+  "status": "passed",
+  "configuration": "48K ZX Spectrum PAL; ROM entry and tape save/load; read-only observations",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "prototype_sha256": "6eed652fb5e9fa6600002b11d72ea35b70c77183861e18d75173326acab04bbf",
+  "checkpoints": [
+    {
+      "name": "tile",
+      "source": "unit-01/steps/step-01.bas",
+      "sha256": "c1025534c6eab77396d1b965cb98ef50e06a6c69caf2e96177282e54973b04ae",
+      "status": "passed"
+    },
+    {
+      "name": "palette",
+      "source": "unit-02/steps/step-01.bas",
+      "sha256": "c0080b3f8de6fa08f81da6f709bebb3d7245b5f4ce2413cca52a4d519171d940",
+      "status": "passed"
+    },
+    {
+      "name": "room",
+      "source": "unit-02/steps/step-02.bas",
+      "sha256": "a57a5e7e9e1d03bc3fa1e945a856117b635656ec0fe1d117e35f4f748d306a9a",
+      "status": "passed"
+    },
+    {
+      "name": "player",
+      "source": "unit-02/steps/step-03.bas",
+      "sha256": "0bb1e384e021634dc28438158fc92bf67e7c68d5129afaa2edc81f2e9b70d816",
+      "status": "passed"
+    },
+    {
+      "name": "walk",
+      "source": "unit-03/steps/step-01.bas",
+      "sha256": "dccf0732775ea5fd845d437af0f8c8616c50f5f61db9703917975a28803989ac",
+      "status": "passed"
+    },
+    {
+      "name": "push",
+      "source": "unit-04/steps/step-01.bas",
+      "sha256": "95c67c0d1fb7825ecfd3caec87245fa1daa1a0f5dd8792f497d747beceef543d",
+      "status": "passed"
+    },
+    {
+      "name": "targets",
+      "source": "unit-05/steps/step-01.bas",
+      "sha256": "6be8c3ba815f7f32697a184f2e5ac2694dac2acfab9ff9524d8eff546f53d888",
+      "status": "passed"
+    },
+    {
+      "name": "counter",
+      "source": "unit-06/steps/step-01.bas",
+      "sha256": "6f79095b07dc1ac9231521c531d0c1a58ec8ff78a07d7dcf8bd47a433bd5e40a",
+      "status": "passed"
+    },
+    {
+      "name": "complete",
+      "source": "unit-06/steps/step-02.bas",
+      "sha256": "bd858504b1c4a4609cb37915704bec7fe96eec7d509946ec69e9ee91af54e4ee",
+      "status": "passed"
+    },
+    {
+      "name": "loader",
+      "source": "unit-07/steps/step-01.bas",
+      "sha256": "47ebd03e7ded60bfe28319a61fe96d0535dee6f07b26b3f79d14deb22bd541e7",
+      "status": "passed"
+    },
+    {
+      "name": "validation",
+      "source": "unit-08/steps/step-01.bas",
+      "sha256": "f0ed96fee254f1a981d7ab3a3f651521c8ce1aeef4aecb89445b8f6a6da3531a",
+      "status": "passed"
+    },
+    {
+      "name": "two-rooms",
+      "source": "unit-09/steps/step-01.bas",
+      "sha256": "52e6fb97be235d801b7b32271d2f7e8e236c9590e78c98c3dfefd3510eae0fd3",
+      "status": "passed"
+    },
+    {
+      "name": "three-rooms",
+      "source": "unit-10/steps/step-01.bas",
+      "sha256": "b3b1b21c666652056dc0bb4d7b08cb4681aeddc9ce00c88e416a4db1ed6c3f25",
+      "status": "passed"
+    }
+  ],
+  "checks": [
+    "packaged-default-LOAD-three-rooms-new-game-exit"
+  ],
+  "trace": [
+    "i",
+    "l",
+    "k",
+    "l",
+    "i",
+    "i",
+    "l",
+    "i",
+    "j",
+    "k",
+    "j",
+    "i",
+    "i",
+    "j",
+    "i",
+    "l",
+    "j",
+    "i",
+    "l",
+    "i",
+    "i",
+    "k",
+    "l",
+    "l",
+    "k",
+    "j",
+    "k",
+    "j",
+    "i",
+    "i"
+  ],
+  "trace_scope": "Packaged final fresh-load run; checkpoint and fixture inputs are defined in verify.py, boundaries.py and graphics.py.",
+  "limits": "No original hardware or learner-comprehension claim. All checkpoints completed before packaging; this fresh-load run completes the tape check. GOALS cue awaits native review.",
+  "tape_sha256": "712f652a4aef8205211f685fb3747b092afbbca059eb564c3f102f20147aa790"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_sha256": "95c67c0d1fb7825ecfd3caec87245fa1daa1a0f5dd8792f497d747beceef543d",
+  "checks": [
+    "adjacent-crates-blocked-without-mutation",
+    "push-beyond-array-edge-rejected-before-index"
+  ],
+  "setup": "Declared ROM-entered replacements for lines 60,70,80; originals restored and stored bytes compared."
+}
