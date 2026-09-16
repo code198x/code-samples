@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "stage": 5,
+      "prior_source_sha256": "e803cbcc6aa1df1846dc87feef6127d04c9d3c0e0648605f263bb46ea7c70713",
+      "source_sha256": "1cfa2f57cd5bbccf3b9e0b4c91b99ea2041565ea73e5206c0687e8eb308da67f",
+      "changed_program_lines": [
+        5060
+      ],
+      "line": "5060 PRINT AT 13, 1; \"Old clues stay. > marks latest.\"",
+      "checks": [
+        "ROM-entered copy change; all other stored program bytes identical",
+        "instructions capture",
+        "play, discovery, retry and exit",
+        "ROM save and fresh-load play, retry and exit"
+      ]
+    },
+    {
+      "stage": 6,
+      "prior_source_sha256": "94bd11b32cdd32511b709e77b140329e28f53b182497123681a585d4f44d502d",
+      "source_sha256": "838715cb058f7d226d3725dc27379224b373651009ce6988e40fa92cc8f74f21",
+      "changed_program_lines": [
+        5060
+      ],
+      "line": "5060 PRINT AT 13, 1; \"Old clues stay. > marks latest.\"",
+      "checks": [
+        "ROM-entered copy change; all other stored program bytes identical",
+        "instructions capture",
+        "play, discovery, retry and exit",
+        "ROM save and fresh-load play, retry and exit"
+      ]
+    }
+  ]
+}

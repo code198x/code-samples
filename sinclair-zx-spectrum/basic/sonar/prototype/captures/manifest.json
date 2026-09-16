@@ -1,0 +1,66 @@
+{
+  "server": {
+    "name": "emu198x-spectrum",
+    "version": "0.25.0"
+  },
+  "configuration": "Stock 48K ZX Spectrum, PAL, configured 16 KiB ROM; MCP keyboard events",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "captures": [
+    {
+      "file": "stage-01-layout.png",
+      "sha256": "097069abe409cda5ae711b6624dfc2755d58c8fa736a0483348e850d25e4ad6d",
+      "source": "steps/step-01.bas",
+      "source_sha256": "3be8f6b4344850a39411a7a403c0b32d245384158e410a7e184406f8ae6240aa",
+      "test_only_line_edit": null
+    },
+    {
+      "file": "stage-02-hit.png",
+      "sha256": "74674d34ad2c2643cf79e477c370eee017b05ac77faab07010a16440f2528d35",
+      "source": "steps/step-02.bas",
+      "source_sha256": "c92b920285d5d7d8558e80ea26795897e3701f9b6c407f81ab320c0f4b7a95fc",
+      "test_only_line_edit": null
+    },
+    {
+      "file": "stage-02-opening.png",
+      "sha256": "ead26590ca05e623ae822813851deab7513c3bb0a3003ca4d279ea7e951d64c6",
+      "source": "steps/step-02.bas",
+      "source_sha256": "c92b920285d5d7d8558e80ea26795897e3701f9b6c407f81ab320c0f4b7a95fc",
+      "test_only_line_edit": null
+    },
+    {
+      "file": "stage-03-distance-14-target-1.png",
+      "sha256": "643fa94f92ec54df4ff2b3ead959a17cf79a209f95582dfec3e30bd22f885ba7",
+      "source": "steps/step-03.bas",
+      "source_sha256": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
+      "test_only_line_edit": "20 LET tr = 1: LET tc = 1"
+    },
+    {
+      "file": "stage-03-distance-14-target-8.png",
+      "sha256": "3312dc672dee62e65fce3881b3f18d5595325d04e5f346adcf57375169e4029e",
+      "source": "steps/step-03.bas",
+      "source_sha256": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
+      "test_only_line_edit": "20 LET tr = 8: LET tc = 8"
+    },
+    {
+      "file": "stage-03-found.png",
+      "sha256": "d65551e3bc2fd6ad7afeb436a158e5190e19e2a39831e6b6b945c4689a13a08f",
+      "source": "steps/step-03.bas",
+      "source_sha256": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
+      "test_only_line_edit": null
+    },
+    {
+      "file": "stage-03-opening.png",
+      "sha256": "452ab486c4220416bd1008dc579d7d4bfcfb2592c947be4d47f081657ea04cf8",
+      "source": "steps/step-03.bas",
+      "source_sha256": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
+      "test_only_line_edit": null
+    },
+    {
+      "file": "stage-03-worked-example.png",
+      "sha256": "b4eefc7f45129548b20fcec301a01a2ccb25203ee67942dea4dd3879b9fcffe1",
+      "source": "steps/step-03.bas",
+      "source_sha256": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
+      "test_only_line_edit": null
+    }
+  ]
+}

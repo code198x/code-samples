@@ -1,0 +1,73 @@
+{
+  "server": {
+    "name": "emu198x-spectrum",
+    "version": "0.25.0"
+  },
+  "configuration": "Stock 48K ZX Spectrum, PAL; ROM entry and MCP keyboard events",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "captures": [
+    {
+      "file": "stage-04-all-cells.png",
+      "sha256": "736084eef99f6d24d747d36e275c16978c93e918b14c4401b7187d3ba1ee97d8",
+      "source": "steps/step-04.bas",
+      "source_sha256": "15c054870f928cf22df643555b89e0176c0d79cb394a8ee86fd91a6fdd9a7912",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    },
+    {
+      "file": "stage-04-redrawn.png",
+      "sha256": "9dd71a348aa3faa63cdf3921d1f1e29c942400c2389171b15aae399dd987e81f",
+      "source": "steps/step-04.bas",
+      "source_sha256": "15c054870f928cf22df643555b89e0176c0d79cb394a8ee86fd91a6fdd9a7912",
+      "setup": "Direct ROM CLS, GO SUB 1000 after STOP; no state writes"
+    },
+    {
+      "file": "stage-04-remembered.png",
+      "sha256": "3fe414244e9d3055f4012747a8e024521b8a53b19f8a9338fab504bc95c727be",
+      "source": "steps/step-04.bas",
+      "source_sha256": "15c054870f928cf22df643555b89e0176c0d79cb394a8ee86fd91a6fdd9a7912",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    },
+    {
+      "file": "stage-05-found.png",
+      "sha256": "a8674ef20ee86bb3ab06a58d0e4d0f8ddfeccd78d7f2a02d068523b4817dd8c8",
+      "source": "steps/step-05.bas",
+      "source_sha256": "1cfa2f57cd5bbccf3b9e0b4c91b99ea2041565ea73e5206c0687e8eb308da67f",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    },
+    {
+      "file": "stage-05-instructions.png",
+      "sha256": "0969215b45adcad361caf6edc74e1028203ca4f0543c185e0dcd42c1fb605f61",
+      "source": "steps/step-05.bas",
+      "source_sha256": "1cfa2f57cd5bbccf3b9e0b4c91b99ea2041565ea73e5206c0687e8eb308da67f",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    },
+    {
+      "file": "stage-05-new-round.png",
+      "sha256": "8a31d74cc103583d7f5f7255c88888a95e40dc8580e72ecc822b8843e479c9af",
+      "source": "steps/step-05.bas",
+      "source_sha256": "1cfa2f57cd5bbccf3b9e0b4c91b99ea2041565ea73e5206c0687e8eb308da67f",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    },
+    {
+      "file": "stage-06-found.png",
+      "sha256": "f9bd60fec9f2c3cf65547722dba7d6d0a50875004414dea23c0dfa62e49d0169",
+      "source": "steps/step-06.bas",
+      "source_sha256": "838715cb058f7d226d3725dc27379224b373651009ce6988e40fa92cc8f74f21",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    },
+    {
+      "file": "stage-06-instructions.png",
+      "sha256": "ba5d0a5cefd6b64fdf001d2ba79c8a06a54a8d272a48d33a2ca5d3527b6cc56e",
+      "source": "steps/step-06.bas",
+      "source_sha256": "838715cb058f7d226d3725dc27379224b373651009ce6988e40fa92cc8f74f21",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    },
+    {
+      "file": "stage-06-new-round.png",
+      "sha256": "44c37f1eedc22e9ad38aa7735b0672de388c4109db3595a50bba5893250a71fb",
+      "source": "steps/step-06.bas",
+      "source_sha256": "838715cb058f7d226d3725dc27379224b373651009ce6988e40fa92cc8f74f21",
+      "setup": "ROM-loaded maintained checkpoint; keyboard inputs"
+    }
+  ]
+}

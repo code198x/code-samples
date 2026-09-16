@@ -1,0 +1,105 @@
+{
+  "configuration": "48K Spectrum PAL; source entered through ROM keyboard events",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "captures": [
+    {
+      "file": "array-lab.png",
+      "sha256": "91f106e34df7dd261c1ef4c5b8e7ce9b39b528dfa7f942267c7dc90bfe95d923",
+      "source": "unit-05/steps/step-01.bas",
+      "source_sha256": "e56c2efc3efbab4f6aaf9a2bf296cc970491f5d2735c2ecb0fc5e1059ba855ae",
+      "sequence": "verification/verify.py: array-lab"
+    },
+    {
+      "file": "bands.png",
+      "sha256": "175e7c998d079e6b81dd883859d2ba85cdb3c72f81c36f1285a87fa6a4011978",
+      "source": "unit-04/steps/step-01.bas",
+      "source_sha256": "cd71f50b00b0a6af6d24740aca5bc6b6b4c689bbfe1b404964e5abf799dc4362",
+      "sequence": "verification/verify.py: bands"
+    },
+    {
+      "file": "board.png",
+      "sha256": "7574742a38cfe463301747dad40629aa86f7c1c091d3d43fa2f9c4bf281c752c",
+      "source": "unit-01/steps/step-02.bas",
+      "source_sha256": "a4e4f8af50153791ad3a29149533e441fc9b8329e961519ac84b6d6bcaa684f1",
+      "sequence": "verification/verify.py: board"
+    },
+    {
+      "file": "count.png",
+      "sha256": "455d0376762502d93e9d6b96d57905b167d888b066d5fd0060456be5efd815d4",
+      "source": "unit-06/steps/step-01.bas",
+      "source_sha256": "dd97472e4480776deff78462a581676cb684721ba22d12da7677a78f2e86501a",
+      "sequence": "verification/verify.py: count"
+    },
+    {
+      "file": "distance.png",
+      "sha256": "cf897c0b5ca1f6faa2022b4f9bf427b895970fc0a90b70fa8cd4f4380bc2e015",
+      "source": "unit-03/steps/step-01.bas",
+      "source_sha256": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
+      "sequence": "verification/verify.py: distance"
+    },
+    {
+      "file": "final-found.png",
+      "sha256": "b1976aa612f7a8bf69ffa8243ae6a4f3b56249485bc4c09ba3bc0d9f9b504c32",
+      "source": "unit-08/steps/step-01.bas",
+      "source_sha256": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b",
+      "sequence": "verification/verify.py: final-found"
+    },
+    {
+      "file": "memory.png",
+      "sha256": "d3a440cc887ace51414ebabdfcfad3e724047aa790de06e130ce72b088b6ff55",
+      "source": "unit-05/steps/step-02.bas",
+      "source_sha256": "c5e8ffc841f52e94f28db65f825a35440809b191b00e4f37238482452ba90487",
+      "sequence": "verification/verify.py: memory"
+    },
+    {
+      "file": "probe.png",
+      "sha256": "96e6f7e25068bf6bf337388b15e50e0af71e0cbfca92dbef46f9f872f9d4d0d1",
+      "source": "unit-02/steps/step-02.bas",
+      "source_sha256": "c92b920285d5d7d8558e80ea26795897e3701f9b6c407f81ab320c0f4b7a95fc",
+      "sequence": "verification/verify.py: probe"
+    },
+    {
+      "file": "random-instructions.png",
+      "sha256": "db6d060f1da3687484ce5f60363472f06e239a6ee0d660233ab3867d63600601",
+      "source": "unit-08/steps/step-01.bas",
+      "source_sha256": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b",
+      "sequence": "verification/verify.py: random-instructions"
+    },
+    {
+      "file": "random.png",
+      "sha256": "ee0f9259ca00bb9c43b1958a7ccc0bb2f84aae92b353f31a2c4431d5223b698c",
+      "source": "unit-08/steps/step-01.bas",
+      "source_sha256": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b",
+      "sequence": "verification/verify.py: random"
+    },
+    {
+      "file": "round-instructions.png",
+      "sha256": "db6d060f1da3687484ce5f60363472f06e239a6ee0d660233ab3867d63600601",
+      "source": "unit-07/steps/step-01.bas",
+      "source_sha256": "ee68e3ac26a47445860e167d39b112610ca2261b60d90f478b5dd16363c20fad",
+      "sequence": "verification/verify.py: round-instructions"
+    },
+    {
+      "file": "round.png",
+      "sha256": "3423ce4f4b55c9031ca628ca284ed6161725553bfc0fcd5fce49eb7a77a7edef",
+      "source": "unit-07/steps/step-01.bas",
+      "source_sha256": "ee68e3ac26a47445860e167d39b112610ca2261b60d90f478b5dd16363c20fad",
+      "sequence": "verification/verify.py: round"
+    },
+    {
+      "file": "row-input.png",
+      "sha256": "80ef05acff2075474b7997c8fa479600f7d5cdfe0ec14b035b08f4e8120fd473",
+      "source": "unit-02/steps/step-01.bas",
+      "source_sha256": "dda44e54fd3cdf6670d04cb5163ac576df7f5645856a00cc1ee36699e32a8834",
+      "sequence": "verification/verify.py: row-input"
+    },
+    {
+      "file": "row.png",
+      "sha256": "5d47550340e949672f542f144d55b3b280fc48805c0d8198e45b82658055a6bd",
+      "source": "unit-01/steps/step-01.bas",
+      "source_sha256": "c0f4f4f4d1e075005bf47817a3a268f28e88ebe007b670d6857a0c627049cece",
+      "sequence": "verification/verify.py: row"
+    }
+  ]
+}

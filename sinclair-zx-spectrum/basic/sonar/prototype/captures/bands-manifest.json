@@ -1,0 +1,23 @@
+{
+  "captures": [
+    {
+      "file": "bands-instructions.png",
+      "sha256": "db6d060f1da3687484ce5f60363472f06e239a6ee0d660233ab3867d63600601",
+      "source_sha256": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b",
+      "setup": "Fresh-loaded comparison tape instructions"
+    },
+    {
+      "file": "bands-found.png",
+      "sha256": "29afbed3aed1d22446f97e72f2461234db4ab77c35e354bbdd97282c8b3911e3",
+      "source_sha256": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b",
+      "setup": "Saved comparison tape, random target"
+    },
+    {
+      "file": "bands-boundaries.png",
+      "sha256": "dc0c9bb455f97c7c2e018740f3cb2f47653ec5c307fcd30dc75e01bd526b7c19",
+      "source_sha256": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b",
+      "setup": "ROM-entered target at (1,1), boundary probes and invalid long input"
+    }
+  ],
+  "verification": "../verification/bands-results.json"
+}
