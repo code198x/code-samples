@@ -1,0 +1,5 @@
+{
+  "source_sha256": "b7543f080ea3b9cdd4ad78eaaceebdb267400b792bd0b23962ceb7a343b1ea98",
+  "tape_sha256": "32b3605d670caf07fa3f86813fab8cb8e9881a849c94654cf347866f97caaee1",
+  "entry": "ROM keyboard; SAVE \"drift\" LINE 10; no source injection"
+}

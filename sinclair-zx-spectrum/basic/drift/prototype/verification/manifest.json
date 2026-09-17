@@ -1,0 +1,23 @@
+{
+  "status": "Executed prototype; native playability pending user review",
+  "source_sha256": "b7543f080ea3b9cdd4ad78eaaceebdb267400b792bd0b23962ceb7a343b1ea98",
+  "tape_sha256": "32b3605d670caf07fa3f86813fab8cb8e9881a849c94654cf347866f97caaee1",
+  "tape_blocks": [
+    19,
+    3433
+  ],
+  "checksums": "valid",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "captures": {
+    "arena.png": "b2fa4627c864817bbfd2866d3442b9c5691c78c590f7044418e54a496d9d4046",
+    "crash.png": "5c37a057d4ddb0b304e8dbb2875e843aa52cacdcfbc1a15eae2e670968966777",
+    "docked.png": "9df634517fad0b1df187a6b05d6dfd7eace33ba0818361b6ea583f19117c8163",
+    "instructions.png": "3bc44798e418a6db01ef4a94287ef5e5ab87a5e0b5e1ff605a632efae6e39e5b"
+  },
+  "verification": {
+    "results.json": "054ef6ca5f8ec114f4e2b60b02d77cab31233a8b05a4c68850373fc61e8bb86f",
+    "controls.json": "a998096c61431133a27776e57a98ca2842c7f16cbc4371660dc817330457a4b1",
+    "timing.json": "490a205727f10923eef5acbd07ce67c1dd2fb7c8f16c73e4e932e004d88aa106"
+  }
+}
