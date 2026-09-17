@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "source_sha256": "b7543f080ea3b9cdd4ad78eaaceebdb267400b792bd0b23962ceb7a343b1ea98",
-  "tape_sha256": "32b3605d670caf07fa3f86813fab8cb8e9881a849c94654cf347866f97caaee1",
+  "source_sha256": "c25fa64ce5b99280ed29659f30b6f589f481772f8b1736127031322e2e2b422c",
+  "tape_sha256": "a309de947a53a722bd1d4004ae0e4d398eeae5291bcf15dd2498cb2f7b6774a7",
   "checks": [
     "quit-from-title",
     "held-turn-updates-without-changing-position",

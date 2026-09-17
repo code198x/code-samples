@@ -42,9 +42,21 @@ class Review:
   for name,value in dict(h=h,vx=vx,vy=vy,x=before['x'] if crash else nx,y=before['y'] if crash else ny).items():
    assert abs(after[name]-value)<1e-5,(name,value,after[name],key,before)
   assert (at==4000)==(crash or win),(at,crash,win,after)
+  if at==370:self.hud(after)
   self.trace.append(dict(key=key,x=after['x'],y=after['y'],vx=after['vx'],vy=after['vy'],h=h,crash=crash,win=win))
   self.m.frames(1);self.boundary({4030} if at==4000 else {200})
   return after,crash,win
+ def hud(self,s):
+  rows=self.m.screen()
+  rounded=lambda v:format(int(abs(v)*10+.5)/10,'g')
+  speed=math.hypot(s['vx'],s['vy'])
+  assert 'SPEED '+rounded(speed) in rows[1],(s,rows[1])
+  cue='DOCK OK' if s['vx']*s['vx']+s['vy']*s['vy']<=.16 else 'TOO FAST'
+  assert cue in rows[1],(cue,rows[1])
+  xd='E' if s['vx']>.001 else ('W' if s['vx']<-.001 else '-')
+  yd='N' if s['vy']>.001 else ('S' if s['vy']<-.001 else '-')
+  assert xd+' '+rounded(s['vx']) in rows[20],rows[20]
+  assert yd+' '+rounded(s['vy']) in rows[20],rows[20]
  def face(self,h):
   while int(state(self.m)['h'])!=h:
    current=int(state(self.m)['h']);key='o' if (h-current)%8<=4 else 'p'
@@ -60,13 +72,14 @@ class Review:
   assert state(self.m)['h']==2;self.record('all-eight-headings-wrap-without-motion')
   for _ in range(4):self.tick(' ')
   old=state(self.m)
+  self.m.call('save_screenshot',path=str(self.out/'velocity.png'))
   for _ in range(6):self.tick()
   assert abs(state(self.m)['vx']-old['vx'])<1e-8;self.record('released-thrust-preserves-both-velocity-components')
   for _ in range(4):self.tick('o')
   assert abs(state(self.m)['vx']-old['vx'])<1e-8;self.record('rotation-preserves-existing-velocity')
   for _ in range(4):self.tick(' ')
   assert math.hypot(state(self.m)['vx'],state(self.m)['vy'])<1e-6;self.record('opposite-burn-cancels-momentum')
-  self.reset();self.record('restart-restores-position-heading-and-velocity')
+  self.reset();self.hud(state(self.m));self.record('restart-restores-position-heading-and-velocity');self.record('speed-direction-and-exact-docking-cue-match-velocity')
   self.face(1)
   for _ in range(20):self.tick(' ')
   assert abs(math.hypot(state(self.m)['vx'],state(self.m)['vy'])-3)<1e-6;self.record('repeated-burn-reaches-speed-cap')
