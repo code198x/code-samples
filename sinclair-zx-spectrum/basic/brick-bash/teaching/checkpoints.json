@@ -1,0 +1,56 @@
+[
+  {
+    "name": "unit-01",
+    "unit": 1,
+    "source": "unit-01/brick-bash.bas",
+    "kind": "drawing"
+  },
+  {
+    "name": "unit-02",
+    "unit": 2,
+    "source": "unit-02/brick-bash.bas",
+    "kind": "game"
+  },
+  {
+    "name": "unit-03",
+    "unit": 3,
+    "source": "unit-03/brick-bash.bas",
+    "kind": "game"
+  },
+  {
+    "name": "unit-04",
+    "unit": 4,
+    "source": "unit-04/brick-bash.bas",
+    "kind": "game"
+  },
+  {
+    "name": "unit-05",
+    "unit": 5,
+    "source": "unit-05/brick-bash.bas",
+    "kind": "game"
+  },
+  {
+    "name": "unit-06",
+    "unit": 6,
+    "source": "unit-06/brick-bash.bas",
+    "kind": "inspector"
+  },
+  {
+    "name": "unit-07",
+    "unit": 7,
+    "source": "unit-07/brick-bash.bas",
+    "kind": "game"
+  },
+  {
+    "name": "unit-08",
+    "unit": 8,
+    "source": "unit-08/brick-bash.bas",
+    "kind": "game"
+  },
+  {
+    "name": "unit-09",
+    "unit": 9,
+    "source": "unit-09/brick-bash.bas",
+    "kind": "game"
+  }
+]

@@ -1,0 +1,22 @@
+100 LET alive = 1: LET left = 1: LET p = 14: LET x = 127: LET y = 40
+300 IF k$ = " " THEN LET served = 1: PRINT AT 1,2; "Clear every brick.": GO TO 350
+390 IF ny >= 32 THEN GO TO 440
+440 LET tx = nx: LET ty = y: GO SUB 2000
+450 IF hit = 1 THEN LET dx = -dx: LET nx = x: GO SUB 2500
+460 LET tx = nx: LET ty = ny: GO SUB 2000
+470 IF hit = 1 THEN LET dy = -dy: LET ny = y: GO SUB 2500
+480 IF left = 0 THEN LET e$ = "Brick cleared! Nicely done.": GO TO 4000
+1010 PRINT AT 0,2; INK 5; "BRICK BASH"; AT 0,21; INK 7; "BRICKS 1"
+1040 PRINT AT 8,24; INK 5; b$
+2000 LET hit = 0
+2010 IF alive = 0 THEN RETURN
+2020 IF tx + 1 < 192 OR tx > 215 OR ty + 1 < 104 OR ty > 111 THEN RETURN
+2030 LET hit = 1: RETURN
+2500 LET alive = 0: LET left = 0
+2510 PRINT AT 8,24; "   "; AT 0,28; INK 7; left; " "
+2520 RETURN
+7000 RESTORE 7200: FOR j = 0 TO 47: READ v: POKE USR "a" + j,v: NEXT j
+7010 LET b$ = CHR$ 144 + CHR$ 145 + CHR$ 146
+7200 DATA 127,255,255,255,255,255,255,127
+7210 DATA 255,255,255,255,255,255,255,255
+7220 DATA 254,255,255,255,255,255,255,254

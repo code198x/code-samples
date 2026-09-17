@@ -1,0 +1,161 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "name": "unit-06",
+    "unit": 6,
+    "source": "unit-06/brick-bash.bas",
+    "kind": "inspector"
+  },
+  "source_sha256": "410f7eb1c3e8211fbd94cc55fd4c8045d532af91e821960c7864a29b8125904e",
+  "tape_sha256": "eeb6bfd2d083fb9044b262c742a658af1cb74e7d964d6edd65e1ad8397e6f9b4",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "checks": [
+    "fresh-tape-and-ROM-stored-listing",
+    "probe-bounds-gaps-single-pixel-overlap-and-removed-bricks",
+    "inspector-exit"
+  ],
+  "events": [],
+  "trace": [
+    {
+      "probe": [
+        30,
+        136
+      ],
+      "hit": 0,
+      "row": 1,
+      "column": 0,
+      "left": 18
+    },
+    {
+      "probe": [
+        31,
+        136
+      ],
+      "hit": 1,
+      "row": 1,
+      "column": 1,
+      "left": 17
+    },
+    {
+      "probe": [
+        31,
+        136
+      ],
+      "hit": 0,
+      "row": 1,
+      "column": 1,
+      "left": 17
+    },
+    {
+      "probe": [
+        56,
+        136
+      ],
+      "hit": 0,
+      "row": 1,
+      "column": 1,
+      "left": 17
+    },
+    {
+      "probe": [
+        32,
+        134
+      ],
+      "hit": 0,
+      "row": 1,
+      "column": 1,
+      "left": 17
+    },
+    {
+      "probe": [
+        64,
+        135
+      ],
+      "hit": 1,
+      "row": 1,
+      "column": 2,
+      "left": 16
+    },
+    {
+      "probe": [
+        192,
+        104
+      ],
+      "hit": 1,
+      "row": 3,
+      "column": 6,
+      "left": 15
+    },
+    {
+      "probe": [
+        215,
+        111
+      ],
+      "hit": 0,
+      "row": 3,
+      "column": 6,
+      "left": 15
+    },
+    {
+      "probe": [
+        216,
+        104
+      ],
+      "hit": 0,
+      "row": 3,
+      "column": 6,
+      "left": 15
+    },
+    {
+      "probe": [
+        0,
+        0
+      ],
+      "hit": 0,
+      "row": 9,
+      "column": 0,
+      "left": 15
+    },
+    {
+      "probe": [
+        255,
+        175
+      ],
+      "hit": 0,
+      "row": -1,
+      "column": 8,
+      "left": 15
+    },
+    {
+      "probe": [
+        32,
+        144
+      ],
+      "hit": 0,
+      "row": 0,
+      "column": 1,
+      "left": 15
+    },
+    {
+      "probe": [
+        32,
+        120
+      ],
+      "hit": 1,
+      "row": 2,
+      "column": 1,
+      "left": 14
+    }
+  ],
+  "method": "Fresh ROM tape load; keyboard only; read-only state and bitmap checks. Inspector coordinates are entered through its INPUT prompts, not injected."
+}

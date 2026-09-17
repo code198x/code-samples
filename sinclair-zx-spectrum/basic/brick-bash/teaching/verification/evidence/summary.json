@@ -1,0 +1,172 @@
+{
+  "status": "passed",
+  "checkpoint_count": 9,
+  "execution_checks": 55,
+  "checkpoints": [
+    {
+      "name": "unit-01",
+      "source": "unit-01/brick-bash.bas",
+      "source_sha256": "0da17dd08bc694a64beee89c8cee2678c4846922a5f8797de8fe1839c2c8e6c3",
+      "tape_sha256": "b84dc9d0053ba4e5e6cfa9f93bf278da2dc0db958f53aa1ce6f0c7bce0d1a90d",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "four-distinct-pixels-toggle-off-and-back-without-damage"
+      ],
+      "captures": {
+        "drawing.png": "2dd49be0a086f50501a590fe4b0f60696192468265c9b2be0c5d5a75f8f7e5b7",
+        "erased.png": "67f049e57062eee3bd69eae8a2ec4702ab3aecd63cf1cbf8eb0974ba473725ed"
+      }
+    },
+    {
+      "name": "unit-02",
+      "source": "unit-02/brick-bash.bas",
+      "source_sha256": "f01652e06a04b49fbaf4ac03fae4ed47f9f3efdd67729e151f2a340eafa7fc4e",
+      "tape_sha256": "5ffaa9c993d4eafcfb352777ee50ed2c0b92e40f4ee8c3cd8cc0a9f1fb25117b",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "bottom-or-miss-preserves-last-valid-ball-without-trails",
+        "retry-restores-stage-state",
+        "quit"
+      ],
+      "captures": {
+        "miss.png": "e927e9669b08c5a7fbac17661747949c0a42fa37e0a76880fbe4c8f232be3d9b"
+      }
+    },
+    {
+      "name": "unit-03",
+      "source": "unit-03/brick-bash.bas",
+      "source_sha256": "369bedfa46fd25371477d88936d7079f815c14abb87f833451215a559218e510",
+      "tape_sha256": "5b6e2f4d8e9f7703265530e1c2ddf5f2fa038b8fbfa888f05691d2e973e884d5",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "held-paddle-clamps-and-attached-ball",
+        "bottom-or-miss-preserves-last-valid-ball-without-trails",
+        "retry-restores-stage-state",
+        "quit"
+      ],
+      "captures": {
+        "miss.png": "6b347c8f4447fbdbb721216f32939504c04ddaf6282cb9c8ed50e4005bb00400"
+      }
+    },
+    {
+      "name": "unit-04",
+      "source": "unit-04/brick-bash.bas",
+      "source_sha256": "5a014bb87888b0cab1e4912c83721723926bde264b3532fd7ead63c9552fb921",
+      "tape_sha256": "84ecb1850332249d77ae4368111ef5131998fe185c1963abb9ceaf6352e87d0c",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "held-paddle-clamps-and-attached-ball",
+        "repeated-catches-preserve-horizontal-direction",
+        "bottom-or-miss-preserves-last-valid-ball-without-trails",
+        "retry-restores-stage-state",
+        "quit"
+      ],
+      "captures": {
+        "miss.png": "c38a2565f4c668a974e9e9fec3d1793081dc9273f9510f73346e0847a99c7a8a"
+      }
+    },
+    {
+      "name": "unit-05",
+      "source": "unit-05/brick-bash.bas",
+      "source_sha256": "e4451dc1000495bf8c150a0c6df12c0dbbefc7a55d92a12f916dba358049e330",
+      "tape_sha256": "934037d0301982f5af383eeb5ded6e8ddebfa6d900ead13be5817cc98e098c18",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "held-paddle-clamps-and-attached-ball",
+        "clearance-agrees-with-independent-rectangle-model",
+        "completion-stops-movement",
+        "bottom-or-miss-preserves-last-valid-ball-without-trails",
+        "retry-restores-stage-state",
+        "quit"
+      ],
+      "captures": {
+        "complete.png": "e55316e23607b80115be9f402f2c57b89366f9ace3e18ffe65e59e603083a9fe",
+        "miss.png": "d11159cb44c97b896e4b33cf8817f69e3a01d50b10e258ec76c6dd1de0933068"
+      }
+    },
+    {
+      "name": "unit-06",
+      "source": "unit-06/brick-bash.bas",
+      "source_sha256": "410f7eb1c3e8211fbd94cc55fd4c8045d532af91e821960c7864a29b8125904e",
+      "tape_sha256": "eeb6bfd2d083fb9044b262c742a658af1cb74e7d964d6edd65e1ad8397e6f9b4",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "probe-bounds-gaps-single-pixel-overlap-and-removed-bricks",
+        "inspector-exit"
+      ],
+      "captures": {
+        "inspector.png": "b17d5c1f0bb6bb65d412c9a63f41df998bc531db7999b82d0d3a3cb1d2fd2377"
+      }
+    },
+    {
+      "name": "unit-07",
+      "source": "unit-07/brick-bash.bas",
+      "source_sha256": "fc0348ddde9941d375c78f33b3cde4be5fc4a07cffd05a67ae261cad14c3eb0c",
+      "tape_sha256": "9bf7b3b94c9bcfad664aba4e2612deb5554918e819f00e4fe443617d18ad07f2",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "held-paddle-clamps-and-attached-ball",
+        "clearance-agrees-with-independent-rectangle-model",
+        "completion-stops-movement",
+        "bottom-or-miss-preserves-last-valid-ball-without-trails",
+        "retry-restores-stage-state",
+        "quit"
+      ],
+      "captures": {
+        "complete.png": "b96e6bcc0af55e26811cb3d16bfdcdaecdac2cbf378ade55e838f154a54e46ff",
+        "miss.png": "9b58ab48d53e0009a694d72c0dd86aa1bf77ede722c675ae4b498242d6d01c19"
+      }
+    },
+    {
+      "name": "unit-08",
+      "source": "unit-08/brick-bash.bas",
+      "source_sha256": "81f0cd0bfe028187013a6ee43051d755a04a0131989f25e43a546fdacba2ca43",
+      "tape_sha256": "15aa3507d401309712df900876e6f27d1f895b0fa9c422294783d938f7ed0656",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "held-paddle-clamps-and-attached-ball",
+        "clearance-agrees-with-independent-rectangle-model",
+        "completion-stops-movement",
+        "bottom-or-miss-preserves-last-valid-ball-without-trails",
+        "retry-restores-stage-state",
+        "quit"
+      ],
+      "captures": {
+        "complete.png": "3cb820fb8165d84d3f5dd4b56b15715019235e6fe014630da054b0f1b842c63b",
+        "miss.png": "9b58ab48d53e0009a694d72c0dd86aa1bf77ede722c675ae4b498242d6d01c19"
+      }
+    },
+    {
+      "name": "unit-09",
+      "source": "unit-09/brick-bash.bas",
+      "source_sha256": "db066770a5516c0452d62234f5ddcb48c31a1ba6fbd047e9c14e7430817f362d",
+      "tape_sha256": "b1740ec0100b76aa463b1d9b960599e43bf3b9fd4b7fe5ee98ee646d3d81fca1",
+      "checks": [
+        "fresh-tape-ready-state-and-pixel-art",
+        "held-paddle-clamps-and-attached-ball-without-trails",
+        "miss-freezes-valid-state-without-pixel-trails",
+        "retry-restores-all-eighteen-bricks-and-ready-state",
+        "eighteen-brick-clearance-agrees-with-rectangle-model",
+        "completion-stops-movement",
+        "quit-from-ready"
+      ],
+      "captures": {
+        "complete.png": "3cb820fb8165d84d3f5dd4b56b15715019235e6fe014630da054b0f1b842c63b",
+        "instructions.png": "625bff85321540b44da841d182ece0b059d0ff97a2dfad83677f5c18ffaac3d2",
+        "miss.png": "9b58ab48d53e0009a694d72c0dd86aa1bf77ede722c675ae4b498242d6d01c19",
+        "ready.png": "9f6371a93d1bb3868342f8fe21388a2d56dbe9f668e328f90d2545a1a5b2efe7"
+      }
+    }
+  ],
+  "final_controls": [
+    "quit-from-title",
+    "centre-contact-returns-vertically",
+    "restart-during-flight-restores-ready-state",
+    "left-paddle-edge-one-pixel-overlap-returns--4",
+    "right-paddle-edge-one-pixel-overlap-returns-4",
+    "quit-during-flight",
+    "quit-from-result"
+  ],
+  "source_transitions": "Exact add/replace/delete replay; literal targets present; final source identical to native prototype.",
+  "lookup_arithmetic": "All 45,056 integer positions in the BASIC drawing area agree with independent rectangle scanning; host calculation, not 45,056 emulator probes."
+}

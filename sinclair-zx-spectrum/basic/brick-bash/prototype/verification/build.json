@@ -1,0 +1,5 @@
+{
+  "source_sha256": "db066770a5516c0452d62234f5ddcb48c31a1ba6fbd047e9c14e7430817f362d",
+  "tape_sha256": "b1740ec0100b76aa463b1d9b960599e43bf3b9fd4b7fe5ee98ee646d3d81fca1",
+  "entry": "ROM keyboard; SAVE \"bricks\" LINE 10; no source injection"
+}
