@@ -1,0 +1,2142 @@
+{
+  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "configuration": "Emu198x Spectrum 0.25.0 stock 48K PAL",
+  "checks": [
+    "fresh-ROM-tape-load-source-identity",
+    "title-invalid-key-and-quit",
+    "invalid-keys-preserve-empty-board",
+    "held-key-across-computer-turn-places-once",
+    "occupied-cell-rejected",
+    "unfinished-reset-preserves-starter-and-score",
+    "retained-fork-wins-final-board-visible",
+    "result-input-does-not-score-twice",
+    "completed-replay-alternates-unfinished-restart-does-not",
+    "legal-model-path-1-reason-centre",
+    "legal-model-path-1-reason-block",
+    "legal-model-path-1-win-before-block",
+    "legal-model-path-1-reason-corner",
+    "legal-model-path-1-draw",
+    "legal-model-path-1-O-line-2",
+    "legal-model-path-1-O-line-5",
+    "legal-model-path-1-O-line-6",
+    "legal-model-path-1-X",
+    "legal-model-path-1-O-line-7",
+    "legal-model-path-1-O-line-4",
+    "legal-model-path-1-X-line-6",
+    "legal-model-path-1-O-line-1",
+    "legal-model-path-1-O-line-3",
+    "legal-model-path-1-reason-edge",
+    "legal-model-path-2-reason-centre",
+    "legal-model-path-2-reason-corner",
+    "legal-model-path-2-reason-win",
+    "legal-model-path-2-win-before-block",
+    "legal-model-path-2-reason-block",
+    "legal-model-path-2-O-line-2",
+    "legal-model-path-2-reason-edge",
+    "legal-model-path-2-O-line-7",
+    "legal-model-path-2-O-line-1",
+    "legal-model-path-2-O-line-5",
+    "legal-model-path-2-O-line-4",
+    "quit-after-play-or-result",
+    "quit-from-play",
+    "sixteen-ROM-command-line-diagnostic-winning-lines",
+    "ROM-diagnostic-last-cell-win-precedes-draw",
+    "quit-from-result"
+  ],
+  "trials": [
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        1,
+        2,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "computer": 7,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 6,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        0,
+        2
+      ],
+      "computer": 9,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 6,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        0,
+        2
+      ],
+      "computer": 9,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        0,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        0,
+        2,
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      "computer": 6,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 3,
+      "board": [
+        1,
+        2,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 2,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        2,
+        1,
+        1,
+        2,
+        0,
+        0,
+        2,
+        0
+      ],
+      "computer": 8,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "computer": 6,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 2,
+      "board": [
+        0,
+        1,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 3,
+      "board": [
+        2,
+        1,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        2,
+        1,
+        1,
+        1,
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "computer": 9,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 5,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 3,
+      "board": [
+        2,
+        0,
+        1,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "computer": 7,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        2,
+        1,
+        1,
+        2,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 3,
+      "board": [
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        2,
+        0,
+        1,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 9,
+      "board": [
+        2,
+        0,
+        1,
+        0,
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "computer": 8,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 6,
+      "board": [
+        2,
+        0,
+        1,
+        0,
+        2,
+        1,
+        1,
+        2,
+        1
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 5,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        2,
+        0,
+        2,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        2,
+        2,
+        2,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 2,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 5,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        2,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2,
+        0
+      ],
+      "computer": 8,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 3,
+      "board": [
+        2,
+        1,
+        1,
+        0,
+        1,
+        0,
+        2,
+        2,
+        0
+      ],
+      "computer": 7,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        0,
+        2,
+        2,
+        2
+      ],
+      "computer": 9,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 5,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        2,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2,
+        0
+      ],
+      "computer": 8,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        2,
+        1,
+        2,
+        0,
+        1,
+        0,
+        1,
+        2,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 9,
+      "board": [
+        2,
+        1,
+        2,
+        0,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "computer": 6,
+      "reason": "edge",
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "computer": 7,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "computer": 7,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      "computer": 6,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 6,
+      "board": [
+        1,
+        0,
+        2,
+        2,
+        2,
+        1,
+        1,
+        0,
+        2
+      ],
+      "computer": 9,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        2,
+        2
+      ],
+      "computer": 8,
+      "reason": "edge",
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 2,
+      "board": [
+        2,
+        1,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 3,
+      "board": [
+        2,
+        1,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "computer": 9,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 4,
+      "board": [
+        2,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 9,
+      "board": [
+        2,
+        0,
+        2,
+        1,
+        2,
+        0,
+        0,
+        0,
+        1
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 6,
+      "board": [
+        2,
+        2,
+        2,
+        1,
+        2,
+        1,
+        0,
+        0,
+        1
+      ],
+      "computer": 2,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 7,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 9,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "computer": 8,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 3,
+      "board": [
+        2,
+        2,
+        1,
+        0,
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "computer": 2,
+      "reason": "win",
+      "winner": 2
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 8,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 1,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 9,
+      "board": [
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        1,
+        1
+      ],
+      "computer": 7,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        2,
+        1,
+        0,
+        2,
+        2,
+        0,
+        2,
+        1,
+        1
+      ],
+      "computer": 4,
+      "reason": "win",
+      "winner": 2
+    }
+  ],
+  "direct_memory_writes": false,
+  "diagnostic_setup": "Sixteen separate winning-line fixtures and one full-board last-cell winning fixture use ROM-entered DIM and LET commands after STOP, then GO SUB 3000. No fixture captures are presented as play.",
+  "public_captures": "Fresh tape loading and ordinary legal key-driven rounds only."
+}

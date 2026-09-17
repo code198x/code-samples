@@ -1,0 +1,19 @@
+{
+  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "tape_sha256": "687863bbc7c96f0e798e14a9375ecd11ea01af6e4b92f682cd0ffab7f0c99f1d",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "configuration": "Stock 48K PAL",
+  "entry": "Complete ROM-key entry followed by a fresh tape load and ROM editing of lines 5060 and 8000 to pad their messages. Unchanged stored line bytes verified; re-saved with SAVE \"three\" LINE 10.",
+  "previous_source_sha256": "83839a564b9ef94d2bcf51ecee61fffa879ba59a56d5aecaaf67eb932fb1d927",
+  "previous_tape_sha256": "5186d4a8b4ea5f039a403355458beff4f35f919d3de85ee69d289641f9f245f0"
+}
