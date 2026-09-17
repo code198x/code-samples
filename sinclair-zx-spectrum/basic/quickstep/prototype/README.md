@@ -1,8 +1,8 @@
 # Quickstep — crossing and timing prototype
 
-Stock 48K PAL Sinclair BASIC. Cross three predictable vehicle lanes, pause on the dotted blue strips, and reach the green exit at the top. One screen, original UDG artwork, no machine-code helper and deliberate silence.
+Stock 48K PAL Sinclair BASIC. Cross six predictable vehicle lanes, pause on the central dotted blue strip, and reach the green exit at the top. One screen, original UDG artwork, no machine-code helper and deliberate silence.
 
-The user agreed to prototype this direction after Drift. This is a native play trial, not an approved endpoint or authored lesson sequence.
+The user agreed to prototype this direction after Drift, then found the first board too easy and too small. This revision fills 30 × 18 character cells with two banks of three lanes. This is a native play trial, not an approved endpoint or authored lesson sequence.
 
 ## Play
 
@@ -17,7 +17,7 @@ Hold a movement key to repeat. A recognised short press queues a move; another d
 
 A step first checks the current vehicles, then checks again after due vehicles advance. Enter a clear gap: a vehicle leaving that cell during the same beat does not make it safe to step into yet. Collision uses the full logical rectangles, including transparent artwork corners. Only the centre exit tile wins; the rest of the top strip is safe ground.
 
-The source uses three lane phases and separate countdowns. The middle lane moves left every third update; the others move right every second update. Vehicles wrap at the edges. A 32-frame target spaces update starts. Busy updates can take longer; the game never runs catch-up steps in a burst. The ROM key latch retains recognised presses during drawing, and each beat consumes one command.
+The 15-column, nine-row board has safe ground at the start, halfway point and finish. Each lane carries three two-cell vehicles, leaving three-cell gaps. The six lanes alternate direction and advance every three, four, two, three, four and two updates from top to bottom. Stored phases and separate countdowns make retries deterministic. Vehicles wrap at the edges. A 32-frame target spaces update starts. Busy updates can take longer; the game never runs catch-up steps in a burst. The ROM key latch retains recognised presses during drawing, and each beat consumes one command.
 
 ## Build and verify
 

@@ -1,10 +1,10 @@
 {
   "status": "passed",
-  "source_sha256": "d2d70f181810641e36d141112dce24fe2504044e48ecbcf842d9ccca7405af97",
-  "tape_sha256": "1463185efe5ac720f6ee6ce2bdd0dbe750f7fe13368c793bbf725ec5394c3757",
+  "source_sha256": "18ef52cc1bb9fb2b77851dc160040835ab39b5aa14a4588125e77e4681a3e123",
+  "tape_sha256": "b1320f399aad0757011a4045f569c72992058d88c11a2632a6cadebb5e346398",
   "tape_blocks": [
     19,
-    6306
+    6140
   ],
   "execution_checks": 20,
   "model_checks": [
@@ -32,33 +32,33 @@
     "active-game-quit"
   ],
   "timing": {
-    "median": 39.0,
-    "minimum": 20,
-    "maximum": 68,
-    "samples": 28
+    "median": 46.0,
+    "minimum": 25,
+    "maximum": 99,
+    "samples": 22
   },
   "captures": [
     {
       "name": "instructions",
-      "sha256": "98861aaf7bf9fef5848e077c3e71f2e84fb4210d77277f883871f79d5d07248f",
+      "sha256": "4acb9b9847d747d912749e7a22160235689b525f0fae7ff41e2dd4d6368b4bc8",
       "settling_frames": 2,
       "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
     },
     {
       "name": "arena",
-      "sha256": "89030bf210690570745de6abd7b4304a1afebaaf6385eac91640f594210aca2b",
+      "sha256": "525b3411dd9c4193edeef70606bd47a659470c46f48285ebfe180ddc0f2a1983",
       "settling_frames": 2,
       "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
     },
     {
       "name": "across",
-      "sha256": "b3daa01fa355ee684b0b3d655344003c78d832fd0cbdc59ec551e2397fd24d3b",
+      "sha256": "af11f0fc02b3173e5a0f655fa2b0aa182c9304640b1f90c83b466a6e934d737e",
       "settling_frames": 2,
       "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
     },
     {
       "name": "caught",
-      "sha256": "edae1d90a69e85f38da08da6852f5cd0ff7a64a4fd80d527385754118d99f69a",
+      "sha256": "f3b09cdf4b3bdf40522252a81e4b6fed75bbc668caeb24a6ebb531839d77cad6",
       "settling_frames": 2,
       "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
     }

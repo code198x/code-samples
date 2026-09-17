@@ -8,20 +8,20 @@ sys.path.insert(0,str(ROOT.parents[1]/'tail-chase/prototype/verification'))
 from verify import state,line,sha
 MOVES={'':(0,0),'i':(0,-1),'k':(0,1),'j':(-1,0),'l':(1,0)}
 def occupied(x,y,p):
- if y%2==0:return False
- start=p[(y-1)//2]
- return x in {(start+j)%13 for j in (0,1,7,8)}
+ if y in (0,4,8):return False
+ start=p[y-1 if y<4 else y-2]
+ return x in {(start+j)%15 for j in (0,1,5,6,10,11)}
 def advance(s,key):
  x,y,p,t=s;p=list(p);t=list(t);dx,dy=MOVES[key];nx,ny=x+dx,y+dy
- if not(0<=nx<13 and 0<=ny<7):nx,ny=x,y
+ if not(0<=nx<15 and 0<=ny<9):nx,ny=x,y
  if occupied(nx,ny,p):return s,'blocked'
- for j in range(3):
+ for j in range(6):
   t[j]-=1
-  if not t[j]:t[j]=(2,3,2)[j];p[j]=(p[j]+(1,-1,1)[j])%13
+  if not t[j]:t[j]=(3,4,2,3,4,2)[j];p[j]=(p[j]+(1,-1,1,-1,1,-1)[j])%15
  s=(nx,ny,tuple(p),tuple(t))
- return s,'caught' if occupied(nx,ny,p) else ('win' if (nx,ny)==(6,0) else '')
+ return s,'caught' if occupied(nx,ny,p) else ('win' if (nx,ny)==(7,0) else '')
 def unpack(s):return (int(s['x']),int(s['y']),tuple(s['p']),tuple(s['t']))
-def route(start,goal=lambda s:s[:2]==(6,0)):
+def route(start,goal=lambda s:s[:2]==(7,0)):
  queue=deque([(start,[])]);seen={start}
  while queue:
   s,path=queue.popleft()
@@ -54,7 +54,7 @@ class Review:
   self.m.call('press_key',key='s',hold_frames=4);self.boundary({200});return state(self.m)
  def reset(self):
   self.event('r',True);self.m.frames(1);self.boundary({100});self.event('r',False);self.m.frames(1);self.boundary({200});s=state(self.m)
-  assert s['x']==s['y']==6 and s['steps']==0 and s['p']==[2,8,5] and s['t']==[2,3,2]
+  assert s['x']==7 and s['y']==8 and s['steps']==0 and s['p']==[0,9,11,7,1,10] and s['t']==[3,4,2,3,4,2]
   return s
  def tick(self,key=''):
   self.boundary({291});before=state(self.m);expected,result=advance(unpack(before),key)
@@ -70,14 +70,14 @@ class Review:
   return after,result
  def execute(self):
   self.load();self.start();self.record('fresh-ROM-tape-load-and-stored-source-identity')
-  for _ in range(90):s,result=self.tick();assert not result and s['x']==s['y']==6
+  for _ in range(90):s,result=self.tick();assert not result and s['x']==7 and s['y']==8
   self.record('safe-wait-and-both-direction-wraps-over-90-beats')
   self.reset()
   for _ in range(8):self.tick('j')
   assert state(self.m)['x']==0
   for _ in range(15):self.tick('l')
-  assert state(self.m)['x']==12
-  self.tick('k');assert state(self.m)['y']==6;self.record('horizontal-and-bottom-bounds')
+  assert state(self.m)['x']==14
+  self.tick('k');assert state(self.m)['y']==8;self.record('horizontal-and-bottom-bounds')
   self.reset();path=route(unpack(state(self.m)));print('WIN ROUTE',path,flush=True)
   for key in path:s,result=self.tick(key)
   assert result=='win';self.record('complete-crossing-agrees-with-independent-grid-model')

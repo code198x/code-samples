@@ -27,7 +27,7 @@ class Spectrum(module.Spectrum):
                   'GO TO': 'g', 'GO SUB': 'h', 'RETURN': 'y', 'BORDER': 'b',
                   'PLOT': 'q', 'DRAW': 'w', 'FOR': 'f', 'NEXT': 'n', 'DIM': 'd', 'RANDOMIZE': 't', 'POKE': 'o'}
         symbol = {'THEN': 'g', '<>': 'w', '>=': 'e', '<=': 'q', 'STOP': 'a', 'AT': 'i',
-                  'TO': 'f', 'AND': 'y', 'OR': 'u'}
+                  'TO': 'f', 'STEP': 'd', 'AND': 'y', 'OR': 'u'}
         extended = {'PI': 'm', 'SIN': 'q', 'COS': 'w', 'SQR': 'h', 'LEN': 'k', 'VAL': 'j', 'STR$': 'y', 'INT': 'r', 'ABS': 'g', 'RND': 't', 'INKEY$': 'n', 'USR': 'l', 'CHR$': 'u', 'PEEK': 'o', 'DATA': 'd', 'READ': 'a', 'RESTORE': 's'}
         shifted = {'PAPER': 'c', 'INK': 'x', 'LINE': '3', 'OVER': 'n'}
         tokens = sorted([*normal, *symbol, *extended, *shifted], key=len, reverse=True)

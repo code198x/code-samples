@@ -41,7 +41,8 @@ def step(key=''):
  if key:r.m.call('press_key',key=key,hold_frames=4)
  def finished():
   at=line(r.m)
-  return (4020<=at<=4060) or (at==200 and state(r.m)['steps']>before)
+  # Observe the counter itself: a busy update may pass line 200 between frames.
+  return (4020<=at<=4060) or state(r.m)['steps']>before
  until(finished)
  s=state(r.m)
  print('FRAME STEP',key,unpack(s),s['steps'],line(r.m),flush=True)
@@ -60,12 +61,13 @@ try:
    try:s=state(r.m)
    except (AssertionError,IndexError):continue
    if s['steps']!=previous:previous=s['steps'];observations.append(dict(frame=f,step=previous))
+ assert all(b['step']==a['step']+1 for a,b in zip(observations,observations[1:])), observations
  periods=[b['frame']-a['frame'] for a,b in zip(observations,observations[1:])];assert len(periods)>8
  r.record('ordinary-frame-safe-wait-and-measured-cadence')
  reset();r.event('j',True);r.m.frames(750);r.event('j',False);r.m.frames(120);assert state(r.m)['x']==0;r.record('held-left-repeats-and-clamps')
  # A short press during rendering must survive in the ROM latch until polling resumes.
  reset();until(lambda:line(r.m)==350);r.m.call('press_key',key='j',hold_frames=4)
- until(lambda:line(r.m)==200 and state(r.m)['steps']>=2);assert state(r.m)['x']==5,(state(r.m),line(r.m));r.record('four-frame-tap-during-update-is-retained')
+ until(lambda:line(r.m)==200 and state(r.m)['steps']>=2);assert state(r.m)['x']==6,(state(r.m),line(r.m));r.record('four-frame-tap-during-update-is-retained')
  reset()
  path=route(unpack(state(r.m)));print('NORMAL ROUTE',path,flush=True)
  for key in path:
