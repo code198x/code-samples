@@ -1,0 +1,489 @@
+{
+  "source_sha256": "0006a16d65447802016ae4597d079fa3b28bb6f6365f79b8075404c8a9d19f9b",
+  "configuration": "Emu198x Spectrum 0.25.0, stock 48K PAL",
+  "checks": [
+    "fresh-ROM-load-and-stored-source-identity",
+    "empty-submit-does-not-spend-attempt",
+    "invalid-characters-ignored",
+    "short-submit-preserves-edit",
+    "D-and-ROM-delete-and-empty-delete",
+    "held-digit-enters-once",
+    "fifth-and-sixth-digits-ignored",
+    "four-exact-win-and-reveal",
+    "result-waits-for-replay-or-quit",
+    "replay-resets-history-and-edit",
+    "ten-guess-model-trial-1",
+    "ten-guess-model-trial-2",
+    "ten-guess-model-trial-3",
+    "ten-guess-model-trial-4",
+    "forty-submitted-scores-match-independent-occurrence-model",
+    "quit-from-play",
+    "quit-from-title",
+    "quit-from-result"
+  ],
+  "trials": [
+    {
+      "code": [
+        1,
+        1,
+        2,
+        4
+      ],
+      "guess": "1124",
+      "exact": 4,
+      "other": 0
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "1111",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "2222",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "3333",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "4444",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "5555",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "6666",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "1122",
+      "exact": 0,
+      "other": 1
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "1212",
+      "exact": 0,
+      "other": 1
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "1234",
+      "exact": 0,
+      "other": 2
+    },
+    {
+      "code": [
+        2,
+        3,
+        6,
+        5
+      ],
+      "guess": "6543",
+      "exact": 0,
+      "other": 3
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "1111",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "2222",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "3333",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "4444",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "5555",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "6666",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "1122",
+      "exact": 0,
+      "other": 1
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "1212",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "1234",
+      "exact": 1,
+      "other": 2
+    },
+    {
+      "code": [
+        3,
+        2,
+        4,
+        5
+      ],
+      "guess": "6543",
+      "exact": 1,
+      "other": 2
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "1111",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "2222",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "3333",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "4444",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "5555",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "6666",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "1122",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "1212",
+      "exact": 0,
+      "other": 1
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "1234",
+      "exact": 0,
+      "other": 3
+    },
+    {
+      "code": [
+        4,
+        3,
+        2,
+        6
+      ],
+      "guess": "6543",
+      "exact": 0,
+      "other": 3
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "1111",
+      "exact": 2,
+      "other": 0
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "2222",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "3333",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "4444",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "5555",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "6666",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "1122",
+      "exact": 0,
+      "other": 2
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "1212",
+      "exact": 1,
+      "other": 1
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "1234",
+      "exact": 0,
+      "other": 2
+    },
+    {
+      "code": [
+        5,
+        3,
+        1,
+        1
+      ],
+      "guess": "6543",
+      "exact": 0,
+      "other": 2
+    },
+    {
+      "code": [
+        3,
+        1,
+        6,
+        3
+      ],
+      "guess": "3163",
+      "exact": 4,
+      "other": 0
+    }
+  ],
+  "state_writes": false
+}
