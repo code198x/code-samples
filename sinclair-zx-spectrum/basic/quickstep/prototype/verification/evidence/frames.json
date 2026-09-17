@@ -1,0 +1,143 @@
+{
+  "status": "passed",
+  "source_sha256": "18ef52cc1bb9fb2b77851dc160040835ab39b5aa14a4588125e77e4681a3e123",
+  "tape_sha256": "b1320f399aad0757011a4045f569c72992058d88c11a2632a6cadebb5e346398",
+  "method": "Ordinary run_frames and physical key events; read-only RAM observation; no instruction stepping or injected state",
+  "checks": [
+    "ordinary-frame-safe-wait-and-measured-cadence",
+    "held-left-repeats-and-clamps",
+    "four-frame-tap-during-update-is-retained",
+    "ordinary-frame-complete-crossing",
+    "ordinary-frame-retry-after-win",
+    "ordinary-frame-collision",
+    "ordinary-frame-result-quit",
+    "title-quit",
+    "active-game-quit"
+  ],
+  "timing": {
+    "median": 46.0,
+    "minimum": 25,
+    "maximum": 99,
+    "samples": 22
+  },
+  "observations": [
+    {
+      "frame": 48,
+      "step": 1
+    },
+    {
+      "frame": 107,
+      "step": 2
+    },
+    {
+      "frame": 153,
+      "step": 3
+    },
+    {
+      "frame": 218,
+      "step": 4
+    },
+    {
+      "frame": 244,
+      "step": 5
+    },
+    {
+      "frame": 323,
+      "step": 6
+    },
+    {
+      "frame": 348,
+      "step": 7
+    },
+    {
+      "frame": 428,
+      "step": 8
+    },
+    {
+      "frame": 473,
+      "step": 9
+    },
+    {
+      "frame": 519,
+      "step": 10
+    },
+    {
+      "frame": 544,
+      "step": 11
+    },
+    {
+      "frame": 643,
+      "step": 12
+    },
+    {
+      "frame": 669,
+      "step": 13
+    },
+    {
+      "frame": 728,
+      "step": 14
+    },
+    {
+      "frame": 774,
+      "step": 15
+    },
+    {
+      "frame": 839,
+      "step": 16
+    },
+    {
+      "frame": 865,
+      "step": 17
+    },
+    {
+      "frame": 944,
+      "step": 18
+    },
+    {
+      "frame": 969,
+      "step": 19
+    },
+    {
+      "frame": 1048,
+      "step": 20
+    },
+    {
+      "frame": 1094,
+      "step": 21
+    },
+    {
+      "frame": 1140,
+      "step": 22
+    },
+    {
+      "frame": 1165,
+      "step": 23
+    }
+  ],
+  "captures": [
+    {
+      "name": "instructions",
+      "sha256": "4acb9b9847d747d912749e7a22160235689b525f0fae7ff41e2dd4d6368b4bc8",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    },
+    {
+      "name": "arena",
+      "sha256": "525b3411dd9c4193edeef70606bd47a659470c46f48285ebfe180ddc0f2a1983",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    },
+    {
+      "name": "across",
+      "sha256": "af11f0fc02b3173e5a0f655fa2b0aa182c9304640b1f90c83b466a6e934d737e",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    },
+    {
+      "name": "caught",
+      "sha256": "f3b09cdf4b3bdf40522252a81e4b6fed75bbc668caeb24a6ebb531839d77cad6",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    }
+  ]
+}

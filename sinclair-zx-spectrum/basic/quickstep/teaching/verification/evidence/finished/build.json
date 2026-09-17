@@ -1,0 +1,18 @@
+{
+  "name": "finished",
+  "source": "finished/quickstep.bas",
+  "source_sha256": "18ef52cc1bb9fb2b77851dc160040835ab39b5aa14a4588125e77e4681a3e123",
+  "tape_sha256": "b1320f399aad0757011a4045f569c72992058d88c11a2632a6cadebb5e346398",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"quickstep\" LINE 10; no injection"
+}

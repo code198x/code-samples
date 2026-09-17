@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "name": "lane",
+  "source_sha256": "83a269e7375d015eaa60b31620a8c0368c1d856331a14a34e583534bcbd09942",
+  "tape_sha256": "7862274473e6964295e5bf9e3413500ab85244e071b3f090ae6737dae9f548da",
+  "checks": [
+    "held-key-is-a-single-step",
+    "space-advances-one-lane-step",
+    "ordinary-reset",
+    "ordinary-active-quit"
+  ],
+  "trace": [],
+  "captures": [
+    {
+      "name": "frame-board",
+      "sha256": "fdae420332fba0bcc15cc2aea14a99cf188761b9790277e02fcb7a7c3ecf1866",
+      "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+    }
+  ],
+  "observations": [],
+  "timing": null,
+  "method": "Ordinary run_frames and physical keys; no CPU stepping or injected state"
+}

@@ -1,0 +1,141 @@
+{
+  "status": "passed",
+  "name": "crossing",
+  "source_sha256": "691cf5c1e0f2ad288390869e638fd8d5537b67697a6fbb1282655547588b9b24",
+  "tape_sha256": "b87c59cd8d46394482e96bf625b72a4d3034357322a4142c8a390d89d21595de",
+  "checks": [
+    "ordinary-safe-wait-across-frame-byte-wraps",
+    "polling-only-short-tap-is-missed",
+    "held-left-repeats-and-clamps",
+    "ordinary-complete-crossing-agrees-with-model",
+    "ordinary-retry-after-win",
+    "ordinary-active-quit"
+  ],
+  "trace": [
+    {
+      "key": "i",
+      "before": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "after": [
+        7,
+        1,
+        10,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "i",
+      "before": [
+        7,
+        1,
+        10,
+        1
+      ],
+      "after": [
+        7,
+        0,
+        9,
+        2
+      ],
+      "result": "win"
+    }
+  ],
+  "captures": [
+    {
+      "name": "frame-board",
+      "sha256": "734be9bc1cde17d189297196836c1e6e6f75dc592d6311f2db0ffba3e02e887a",
+      "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+    },
+    {
+      "name": "frame-across",
+      "sha256": "76380ec9582b93ce4b2c61086b9cfc0b1551464e9d7407ed69bc4bf84d4c14d2",
+      "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+    }
+  ],
+  "observations": [
+    {
+      "frame": 35,
+      "step": 1
+    },
+    {
+      "frame": 80,
+      "step": 2
+    },
+    {
+      "frame": 109,
+      "step": 3
+    },
+    {
+      "frame": 154,
+      "step": 4
+    },
+    {
+      "frame": 186,
+      "step": 5
+    },
+    {
+      "frame": 230,
+      "step": 6
+    },
+    {
+      "frame": 263,
+      "step": 7
+    },
+    {
+      "frame": 307,
+      "step": 8
+    },
+    {
+      "frame": 340,
+      "step": 9
+    },
+    {
+      "frame": 384,
+      "step": 10
+    },
+    {
+      "frame": 417,
+      "step": 11
+    },
+    {
+      "frame": 462,
+      "step": 12
+    },
+    {
+      "frame": 495,
+      "step": 13
+    },
+    {
+      "frame": 540,
+      "step": 14
+    },
+    {
+      "frame": 572,
+      "step": 15
+    },
+    {
+      "frame": 617,
+      "step": 16
+    },
+    {
+      "frame": 649,
+      "step": 17
+    },
+    {
+      "frame": 694,
+      "step": 18
+    }
+  ],
+  "timing": {
+    "median": 44,
+    "minimum": 29,
+    "maximum": 45,
+    "samples": 17
+  },
+  "method": "Ordinary run_frames and physical keys; no CPU stepping or injected state"
+}

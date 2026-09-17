@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "name": "board",
+  "source_sha256": "8250430cf4ca837d7cd9b1f4698e12a3cbc6b2d421e8b25b81cfcc54b1752951",
+  "tape_sha256": "85dbc785fb7f957516a4e5d275603b17afb999ca277849f27d47b670e28d875b",
+  "checks": [
+    "fresh-tape-and-stored-source-identity",
+    "static-board-player-and-stop"
+  ],
+  "trace": [],
+  "captures": [
+    {
+      "name": "opening",
+      "sha256": "e77c0a081324ac96154b86035277a333a1b3df96ebfb91189f3d33ac5a14d138",
+      "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+    }
+  ],
+  "method": "Fresh ROM tape; keyboard input; read-only state; CPU boundaries are not timing evidence"
+}

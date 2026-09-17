@@ -1,0 +1,18 @@
+{
+  "name": "six-lanes",
+  "source": "six-lanes/quickstep.bas",
+  "source_sha256": "ff2326e1aa1f34c3b9a9b5d5a49d401be13effeed9c23291094158907bfba301",
+  "tape_sha256": "ad9426de6b607d454283b6a7f335ae041a16dd19a7e321d002cf82fd87c12727",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"quickstep\" LINE 10; no injection"
+}

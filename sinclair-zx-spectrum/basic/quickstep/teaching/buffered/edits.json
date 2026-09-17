@@ -1,0 +1,14 @@
+{
+  "add": [],
+  "replace": [
+    180,
+    291,
+    292
+  ],
+  "delete": [],
+  "enter": [
+    "180 GO SUB 1000: GO SUB 3000: LET dx = 0: LET dy = 0: POKE 23560,0: LET tick = PEEK 23672",
+    "291 LET k$ = INKEY$: IF k$ = \"\" THEN LET k$ = CHR$ (PEEK 23560)",
+    "292 POKE 23560,0: LET dx = 0: LET dy = 0"
+  ]
+}

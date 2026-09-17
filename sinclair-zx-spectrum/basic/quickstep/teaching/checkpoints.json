@@ -1,0 +1,58 @@
+[
+  {
+    "name": "board",
+    "lesson": 1,
+    "source": "board/quickstep.bas",
+    "sha256": "8250430cf4ca837d7cd9b1f4698e12a3cbc6b2d421e8b25b81cfcc54b1752951",
+    "lines": 23
+  },
+  {
+    "name": "walk",
+    "lesson": 2,
+    "source": "walk/quickstep.bas",
+    "sha256": "5fbf80ae7d0db138a1b5572cb678415a0908921b0ea4373f28d25f3bcc5da4be",
+    "lines": 44
+  },
+  {
+    "name": "lane",
+    "lesson": 3,
+    "source": "lane/quickstep.bas",
+    "sha256": "83a269e7375d015eaa60b31620a8c0368c1d856331a14a34e583534bcbd09942",
+    "lines": 70
+  },
+  {
+    "name": "clock",
+    "lesson": 4,
+    "source": "clock/quickstep.bas",
+    "sha256": "fe8dc868422cc9a99f45f56a5a13d42a8f399e4c1f5f9c9e094796a73e16afcf",
+    "lines": 73
+  },
+  {
+    "name": "crossing",
+    "lesson": 5,
+    "source": "crossing/quickstep.bas",
+    "sha256": "691cf5c1e0f2ad288390869e638fd8d5537b67697a6fbb1282655547588b9b24",
+    "lines": 87
+  },
+  {
+    "name": "six-lanes",
+    "lesson": 6,
+    "source": "six-lanes/quickstep.bas",
+    "sha256": "ff2326e1aa1f34c3b9a9b5d5a49d401be13effeed9c23291094158907bfba301",
+    "lines": 93
+  },
+  {
+    "name": "buffered",
+    "lesson": 8,
+    "source": "buffered/quickstep.bas",
+    "sha256": "560ce84e08d7c4e967d7574123278d3f75ec0b2e6579c17af85fcc34456f8324",
+    "lines": 93
+  },
+  {
+    "name": "finished",
+    "lesson": 9,
+    "source": "finished/quickstep.bas",
+    "sha256": "18ef52cc1bb9fb2b77851dc160040835ab39b5aa14a4588125e77e4681a3e123",
+    "lines": 107
+  }
+]

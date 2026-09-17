@@ -1,0 +1,30 @@
+100 LET p = 10: LET d = -1: LET v = 2: LET t = v: DIM a$(30): DIM b$(30)
+110 LET x = 7: LET y = 2: LET steps = 0
+140 FOR j = 0 TO 2: FOR k = 0 TO 3
+150 LET c = 2 * p + 10 * j + k: LET c = c - 30 * INT (c / 30) + 1
+160 LET a$(c) = CHR$ (144 + k): LET b$(c) = CHR$ (148 + k)
+170 NEXT k: NEXT j
+240 IF k$ = " " THEN GO TO 370
+370 LET p = p + d
+380 IF p = 15 THEN LET p = 0
+390 IF p = -1 THEN LET p = 14
+400 IF d = 1 THEN LET a$ = a$(29 TO 30) + a$(1 TO 28): LET b$ = b$(29 TO 30) + b$(1 TO 28)
+410 IF d = -1 THEN LET a$ = a$(3 TO 30) + a$(1 TO 2): LET b$ = b$(3 TO 30) + b$(1 TO 2)
+420 GO SUB 1200: IF y = 1 THEN GO SUB 3000
+440 LET steps = steps + 1
+1080 GO SUB 1200: LET z$ = ">": IF d = -1 THEN LET z$ = "<"
+1081 PRINT AT row,0; PAPER 0; INK ink; z$; AT row,31; z$
+1095 PRINT AT 12,2; PAPER 0; INK 6; "SPACE moves the lane"
+1200 LET row = 4: LET ink = 6: IF d = -1 THEN LET ink = 5
+1210 PRINT AT row,1; PAPER 0; INK ink; a$; AT row+1,1; b$
+1240 RETURN
+3100 IF y = 1 THEN GO SUB 1200: RETURN
+7000 RESTORE 7200: FOR j = 0 TO 103: READ n: POKE USR "a" + j,n: NEXT j
+7200 DATA 0,0,63,127,120,120,120,120
+7210 DATA 0,0,255,255,24,24,24,24
+7220 DATA 0,0,255,255,24,24,24,24
+7230 DATA 0,0,252,254,30,30,30,30
+7240 DATA 127,127,127,127,63,7,7,0
+7250 DATA 255,255,255,255,255,192,192,0
+7260 DATA 255,255,255,255,255,3,3,0
+7270 DATA 254,254,254,254,252,224,224,0
