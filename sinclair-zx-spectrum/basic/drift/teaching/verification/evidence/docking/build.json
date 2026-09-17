@@ -1,0 +1,18 @@
+{
+  "name": "docking",
+  "source": "docking/drift.bas",
+  "source_sha256": "4df340762bcbb10fdfab56baa77789e1b99317c762149e52243fb410dc57305e",
+  "tape_sha256": "a120ce29362bae3fc8ec79ebc9952c373933590d27fccc7075d82fcd06e0c1e1",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"drift\" LINE 10; no injection"
+}

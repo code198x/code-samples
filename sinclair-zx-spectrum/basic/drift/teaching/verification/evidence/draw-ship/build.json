@@ -1,0 +1,18 @@
+{
+  "name": "draw-ship",
+  "source": "draw-ship/drift.bas",
+  "source_sha256": "ce33f6bf67b810f02dde5e278ca1b18f1ec7d17abd951db94387d086fda43035",
+  "tape_sha256": "cc1c061cf6236c0ebd16605ad9dbea7f6ca821fa8f7f34fb1a7024d2a16bcc04",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"drift\" LINE 10; no injection"
+}

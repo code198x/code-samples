@@ -1,0 +1,5 @@
+360 IF x >= 190 AND x <= 210 AND y >= 94 AND y <= 114 AND vx * vx + vy * vy <= .16 THEN LET e$ = "Docked. A soft arrival!": GO TO 4000
+1010 PRINT AT 0,2; INK 5; "DRIFT"; AT 0,19; INK 7; "SOFT DOCK"
+1040 PLOT INK 7;184,88: DRAW INK 7;32,0: DRAW INK 7;0,32: DRAW INK 7;-32,0: DRAW INK 7;0,-32
+1050 PRINT AT 5,23; INK 5; "DOCK"
+6020 IF vx * vx + vy * vy <= .16 THEN PRINT AT 1,17; INK 4; "DOCK OK "

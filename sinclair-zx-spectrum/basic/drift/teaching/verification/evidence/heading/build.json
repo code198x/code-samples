@@ -1,0 +1,18 @@
+{
+  "name": "heading",
+  "source": "heading/drift.bas",
+  "source_sha256": "e62ebcf7df5a0d0873703464be403d0b8b69b60bf481c90d4511d652c2b470db",
+  "tape_sha256": "e68f6a289964bc9a3571c354ac89a9748ab78328a7240f60dacf4a68090bfc5d",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"drift\" LINE 10; no injection"
+}

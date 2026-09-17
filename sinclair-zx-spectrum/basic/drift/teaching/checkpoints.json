@@ -1,0 +1,52 @@
+[
+  {
+    "name": "draw-ship",
+    "source": "draw-ship/drift.bas",
+    "lessons": [
+      1
+    ],
+    "kind": "drawing"
+  },
+  {
+    "name": "heading",
+    "source": "heading/drift.bas",
+    "lessons": [
+      2
+    ],
+    "kind": "heading"
+  },
+  {
+    "name": "flight",
+    "source": "flight/drift.bas",
+    "lessons": [
+      3,
+      4
+    ],
+    "kind": "flight"
+  },
+  {
+    "name": "readout",
+    "source": "readout/drift.bas",
+    "lessons": [
+      5
+    ],
+    "kind": "readout"
+  },
+  {
+    "name": "docking",
+    "source": "docking/drift.bas",
+    "lessons": [
+      6
+    ],
+    "kind": "docking"
+  },
+  {
+    "name": "finished",
+    "source": "finished/drift.bas",
+    "lessons": [
+      7,
+      8
+    ],
+    "kind": "finished"
+  }
+]

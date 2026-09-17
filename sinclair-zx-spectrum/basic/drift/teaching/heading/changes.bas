@@ -1,0 +1,32 @@
+10 GO SUB 7000
+100 LET x = 48: LET y = 56: LET h = 2: LET steps = 0
+110 GO SUB 1000: GO SUB 3000
+200 LET k$ = INKEY$
+210 IF k$ = "q" OR k$ = "Q" THEN GO TO 9000
+220 IF k$ = "r" OR k$ = "R" THEN GO TO 100
+230 GO SUB 3000
+240 IF k$ = "o" OR k$ = "O" THEN LET h = h + 1
+250 IF k$ = "p" OR k$ = "P" THEN LET h = h - 1
+260 IF h = 9 THEN LET h = 1
+270 IF h = 0 THEN LET h = 8
+340 LET steps = steps + 1
+350 GO SUB 3000
+370 GO TO 200
+1000 BORDER 0: PAPER 0: INK 7: CLS
+1010 PRINT AT 0,2; INK 5; "DRIFT"; AT 0,19; INK 7; "HEADING"
+1020 PRINT AT 1,2; "Point somewhere. Stay here."
+1060 PRINT AT 19,2; INK 5; "O/P turn"
+1070 PRINT AT 20,2; INK 7; "Eight headings. One position."
+1080 PRINT AT 21,2; INK 5; "R retry              Q quit";
+3010 PLOT INK 7; OVER 1;px + c(h),py + d(h)
+3020 DRAW INK 7; OVER 1;e(h) - c(h),f(h) - d(h)
+3030 DRAW INK 7; OVER 1;g(h) - e(h),j(h) - f(h)
+3040 DRAW INK 7; OVER 1;c(h) - g(h),d(h) - j(h): RETURN
+7000 DIM a(8): DIM b(8): DIM c(8): DIM d(8): DIM e(8): DIM f(8): DIM g(8): DIM j(8)
+7010 FOR i = 1 TO 8: LET angle = (i - 1) * PI / 4
+7020 LET a(i) = COS angle: LET b(i) = SIN angle
+7030 LET c(i) = INT (5 * a(i) + .5): LET d(i) = INT (5 * b(i) + .5)
+7040 LET e(i) = INT (-3 * a(i) - 3 * b(i) + .5): LET f(i) = INT (-3 * b(i) + 3 * a(i) + .5)
+7050 LET g(i) = INT (-3 * a(i) + 3 * b(i) + .5): LET j(i) = INT (-3 * b(i) - 3 * a(i) + .5)
+7060 NEXT i: RETURN
+9000 PAPER 0: INK 7: PRINT AT 21,0; "Finished. RUN to try again.     ";: STOP

@@ -1,0 +1,224 @@
+{
+  "status": "passed",
+  "checkpoint_count": 6,
+  "lesson_count": 8,
+  "execution_checks": 79,
+  "checkpoints": [
+    {
+      "name": "draw-ship",
+      "lessons": [
+        1
+      ],
+      "source": "draw-ship/drift.bas",
+      "source_sha256": "ce33f6bf67b810f02dde5e278ca1b18f1ec7d17abd951db94387d086fda43035",
+      "tape_sha256": "cc1c061cf6236c0ebd16605ad9dbea7f6ca821fa8f7f34fb1a7024d2a16bcc04",
+      "tape_blocks": [
+        19,
+        525
+      ],
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-lines",
+        "triangle-toggles-off-and-back-without-damaging-arena"
+      ],
+      "normal_frame_checks": [
+        "normal-frame-static-drawing"
+      ],
+      "captures": {
+        "drawing.png": "502d154d8fcdadf946c83b544ffea7ac4a745b5b91df7ebc9c93e035b9bb3b3e"
+      }
+    },
+    {
+      "name": "heading",
+      "lessons": [
+        2
+      ],
+      "source": "heading/drift.bas",
+      "source_sha256": "e62ebcf7df5a0d0873703464be403d0b8b69b60bf481c90d4511d652c2b470db",
+      "tape_sha256": "e68f6a289964bc9a3571c354ac89a9748ab78328a7240f60dacf4a68090bfc5d",
+      "tape_blocks": [
+        19,
+        1803
+      ],
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-lines",
+        "eight-headings-return-to-identical-bitmap",
+        "clockwise-wrap-and-erasure",
+        "heading-and-unused-keys-do-not-move-position",
+        "heading-restart"
+      ],
+      "normal_frame_checks": [
+        "normal-frame-held-turn-and-quit"
+      ],
+      "captures": {
+        "heading.png": "17020f36139ae5a4caf588651a60f9d38cd6cf836b2f259e01de890a441b95f4"
+      }
+    },
+    {
+      "name": "flight",
+      "lessons": [
+        3,
+        4
+      ],
+      "source": "flight/drift.bas",
+      "source_sha256": "a37193af663dca523060dc4805c7c1aac5d5c735d056c8d42a859501d3536b5b",
+      "tape_sha256": "c97d5f5ce42d9260c24fa2cf58f093e4f5da0ea66b9eac52d37d9f9322f41fbe",
+      "tape_blocks": [
+        19,
+        2503
+      ],
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-lines",
+        "thrust-and-coasting-in-two-components",
+        "turning-does-not-turn-velocity",
+        "counterthrust-cancels-equal-burn",
+        "retry-restores-all-motion-state",
+        "resultant-speed-cap",
+        "right-wall-freezes-last-valid-position",
+        "top-wall",
+        "left-wall",
+        "bottom-wall",
+        "slow-target-region-remains-free-flight",
+        "retry-after-transfer"
+      ],
+      "normal_frame_checks": [
+        "normal-frame-thrust-coast-and-flight-quit",
+        "normal-frame-crash-retry-and-quit"
+      ],
+      "captures": {
+        "crash.png": "fba3cf8779070627804c08bae966bcac7e6427e5c111f966e7a4f000f7b73bfe",
+        "flight.png": "59cb70e9d4f22d9ea3e348b8c00cafcd04cc5161c9317c0c6acd94bdefda4dc1"
+      }
+    },
+    {
+      "name": "readout",
+      "lessons": [
+        5
+      ],
+      "source": "readout/drift.bas",
+      "source_sha256": "c4332d10cfff1f86dd831782565b50f1d9330b25c3fea750d0f079e9be0f997e",
+      "tape_sha256": "22c8b056ffd3cbe639c617f70086e80fb9fb6df677de8ed4313755d2ddc5b942",
+      "tape_blocks": [
+        19,
+        3109
+      ],
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-lines",
+        "thrust-and-coasting-in-two-components",
+        "turning-does-not-turn-velocity",
+        "counterthrust-cancels-equal-burn",
+        "retry-restores-all-motion-state",
+        "resultant-speed-cap",
+        "right-wall-freezes-last-valid-position",
+        "top-wall",
+        "left-wall",
+        "bottom-wall",
+        "slow-target-region-remains-free-flight",
+        "readout-values-direction-and-unrounded-speed-cue",
+        "retry-after-transfer"
+      ],
+      "normal_frame_checks": [
+        "normal-frame-thrust-coast-and-flight-quit",
+        "normal-frame-crash-retry-and-quit"
+      ],
+      "captures": {
+        "crash.png": "fba3cf8779070627804c08bae966bcac7e6427e5c111f966e7a4f000f7b73bfe",
+        "velocity.png": "422853bf28670e4975d135e48e6665b670e1ea25093be6b58c6419fc4a1cf87c"
+      }
+    },
+    {
+      "name": "docking",
+      "lessons": [
+        6
+      ],
+      "source": "docking/drift.bas",
+      "source_sha256": "4df340762bcbb10fdfab56baa77789e1b99317c762149e52243fb410dc57305e",
+      "tape_sha256": "a120ce29362bae3fc8ec79ebc9952c373933590d27fccc7075d82fcd06e0c1e1",
+      "tape_blocks": [
+        19,
+        3433
+      ],
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-lines",
+        "thrust-and-coasting-in-two-components",
+        "turning-does-not-turn-velocity",
+        "counterthrust-cancels-equal-burn",
+        "retry-restores-all-motion-state",
+        "resultant-speed-cap",
+        "right-wall-freezes-last-valid-position",
+        "top-wall",
+        "left-wall",
+        "bottom-wall",
+        "two-axis-transfer-and-low-speed-docking",
+        "readout-values-direction-and-unrounded-speed-cue",
+        "retry-after-transfer"
+      ],
+      "normal_frame_checks": [
+        "normal-frame-thrust-coast-and-flight-quit",
+        "normal-frame-crash-retry-and-quit",
+        "normal-frame-two-axis-docking",
+        "normal-frame-docked-result-quit"
+      ],
+      "captures": {
+        "crash.png": "1e0d03b6f413737d2fd62ca57bdba89e6582f7b7db9351425e1315a8cf45a1ac",
+        "docked.png": "28b1fa51f02c2f6eef9fb2c6040b677c8495bdedf17ad17aa44a995772a50e68",
+        "velocity.png": "96cf3b21f84d159a0e95c7e3a5cc82a18fe4ebf9ab77856e88f9924c3d403974"
+      }
+    },
+    {
+      "name": "finished",
+      "lessons": [
+        7,
+        8
+      ],
+      "source": "finished/drift.bas",
+      "source_sha256": "c25fa64ce5b99280ed29659f30b6f589f481772f8b1736127031322e2e2b422c",
+      "tape_sha256": "a309de947a53a722bd1d4004ae0e4d398eeae5291bcf15dd2498cb2f7b6774a7",
+      "tape_blocks": [
+        19,
+        4040
+      ],
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-lines",
+        "thrust-and-coasting-in-two-components",
+        "turning-does-not-turn-velocity",
+        "counterthrust-cancels-equal-burn",
+        "retry-restores-all-motion-state",
+        "resultant-speed-cap",
+        "right-wall-freezes-last-valid-position",
+        "top-wall",
+        "left-wall",
+        "bottom-wall",
+        "two-axis-transfer-and-low-speed-docking",
+        "readout-values-direction-and-unrounded-speed-cue",
+        "retry-after-transfer"
+      ],
+      "normal_frame_checks": [
+        "normal-frame-thrust-coast-and-flight-quit",
+        "normal-frame-crash-retry-and-quit",
+        "normal-frame-two-axis-docking",
+        "normal-frame-docked-result-quit"
+      ],
+      "captures": {
+        "crash.png": "1e0d03b6f413737d2fd62ca57bdba89e6582f7b7db9351425e1315a8cf45a1ac",
+        "docked.png": "28b1fa51f02c2f6eef9fb2c6040b677c8495bdedf17ad17aa44a995772a50e68",
+        "instructions.png": "1d788dabe4ef57497293677e68ad5f16af2c7c252fbbfbb31d8a060da6bfb8fb",
+        "velocity.png": "a6541744ef5069f51c9deb69383e31fb22c5d73a1e96807554ea82b3795b54c9"
+      }
+    }
+  ],
+  "endpoint_checks": {
+    "controls": [
+      "quit-from-title",
+      "held-turn-updates-without-changing-position",
+      "fast-passage-through-dock-does-not-win"
+    ],
+    "timing": [
+      "frame-driven-held-thrust",
+      "frame-driven-coasting",
+      "frame-driven-restart",
+      "frame-driven-crash-and-result-quit"
+    ]
+  },
+  "source_transitions": "Exact add/replace/delete replay; all literal branch targets exist; final listing byte-identical to the accepted native prototype.",
+  "method": "Independent ROM keyboard entry and tape save per checkpoint; fresh tape loads; keyboard-only input; read-only state/bitmap checks; separate ordinary-frame controls and original captures. CPU-stepped state comparisons are not performance measurements."
+}

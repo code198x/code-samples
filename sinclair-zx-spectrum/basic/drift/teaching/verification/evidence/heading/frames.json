@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "source_sha256": "e62ebcf7df5a0d0873703464be403d0b8b69b60bf481c90d4511d652c2b470db",
+  "tape_sha256": "e68f6a289964bc9a3571c354ac89a9748ab78328a7240f60dacf4a68090bfc5d",
+  "checks": [
+    "normal-frame-held-turn-and-quit"
+  ]
+}

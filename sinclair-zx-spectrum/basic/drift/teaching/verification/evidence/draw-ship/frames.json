@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "source_sha256": "ce33f6bf67b810f02dde5e278ca1b18f1ec7d17abd951db94387d086fda43035",
+  "tape_sha256": "cc1c061cf6236c0ebd16605ad9dbea7f6ca821fa8f7f34fb1a7024d2a16bcc04",
+  "checks": [
+    "normal-frame-static-drawing"
+  ]
+}
