@@ -1,0 +1,118 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "unit": 6,
+    "step": 1,
+    "name": "fixed-food",
+    "source": "unit-06/steps/step-01.bas",
+    "add": [
+      380,
+      420,
+      430,
+      440,
+      450,
+      2000,
+      2020,
+      2030,
+      2500,
+      2510,
+      7260
+    ],
+    "replace": [
+      130,
+      300,
+      1020,
+      7000
+    ],
+    "delete": []
+  },
+  "source_sha256": "dbff202a20c5eff201ea9687f237b36abec06272759dee1ea0fb09b2830b441d",
+  "tape_sha256": "e65dd60e46a96f6ca46a548be4edde27b1dfc9abe93ad1c300d1ce076c283287",
+  "checks": [
+    "fresh-tape-and-ROM-stored-listing",
+    "reverse-and-irrelevant-input",
+    "growth-keeps-tail-and-adds-one-head",
+    "one-food-completion-freezes-body",
+    "retry-restores-initial-state",
+    "quit"
+  ],
+  "trace": [
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 1
+    },
+    {
+      "key": "x",
+      "body": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 2
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ]
+      ],
+      "grow": true,
+      "collision": false,
+      "steps": 3
+    }
+  ],
+  "method": "Fresh 48K ROM tape load; keyboard input; read-only state. Diagnostic steps deliberately continue after their single food."
+}

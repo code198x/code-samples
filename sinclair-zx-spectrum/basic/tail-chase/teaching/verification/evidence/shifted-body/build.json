@@ -1,0 +1,18 @@
+{
+  "name": "shifted-body",
+  "source": "unit-04/steps/step-01.bas",
+  "source_sha256": "724e741090bf6847f378c21038c6b66dfdabacddb183470ec1ce00526bbeb280",
+  "tape_sha256": "31ec22060ff2b7b168139b3bc7805b490a08487448b4a204472bc6a593038b8f",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

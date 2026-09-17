@@ -1,0 +1,18 @@
+{
+  "name": "fixed-food",
+  "source": "unit-06/steps/step-01.bas",
+  "source_sha256": "dbff202a20c5eff201ea9687f237b36abec06272759dee1ea0fb09b2830b441d",
+  "tape_sha256": "e65dd60e46a96f6ca46a548be4edde27b1dfc9abe93ad1c300d1ce076c283287",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

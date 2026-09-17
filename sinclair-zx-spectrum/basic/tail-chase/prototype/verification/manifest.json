@@ -1,0 +1,18 @@
+{
+  "status": "accepted prototype",
+  "approval": "Native play: user said \u201cWorks, just fine\u201d.",
+  "configuration": "Emu198x Spectrum; stock 48K PAL; ROM keyboard entry and fresh tape loading; read-only observations",
+  "source_sha256": "6dff71f70efdebd9b4bb84e4e2a8fb97d6f510381f788b39f5bf222117d72162",
+  "tape_sha256": "f2a85017895b317f881f2753e56e67a42e17d0f6f4fb564e57d409d7cbc4cd5c",
+  "tape_block_lengths": [
+    19,
+    4456
+  ],
+  "captures": {
+    "complete.png": "10a8373ae5725e3b18a1739a0a060839dfa3cd165bea57173c35c0129dcfdadd",
+    "instructions.png": "c83e52c9a3cefa82e0e8aeaeac885e3e7d1cea1e1478d822a51dd92c6f4280e0",
+    "self-collision.png": "ba11e598d49a1f74adbb1f3c3a66f80fcec1138da1f0201402f5e6ab870f053e",
+    "wall.png": "7418f37ac0749d1b6fefe7f224a0aadd0cc6a17544664bfdf08a87e667900a7a"
+  },
+  "capture_review": "Title, wall collision, self-collision and completion inspected. Intermediate arena/retry captures omitted because HUD drawing was still in progress."
+}

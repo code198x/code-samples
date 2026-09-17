@@ -1,0 +1,18 @@
+{
+  "name": "arena",
+  "source": "unit-01/steps/step-02.bas",
+  "source_sha256": "ff4742792416dc64abbd84d0f3c715d899a338666c1c15fcda4c6a834453fdd5",
+  "tape_sha256": "44c52d5e478e6d5db8c6056109ccf8f9ecd7b749ca35bf157d1b28d6408bc012",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

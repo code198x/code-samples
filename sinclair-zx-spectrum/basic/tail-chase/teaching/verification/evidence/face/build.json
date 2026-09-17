@@ -1,0 +1,18 @@
+{
+  "name": "face",
+  "source": "unit-01/steps/step-01.bas",
+  "source_sha256": "050fda8177b3f689ad09d9e692530be37e06453472d2ec20eab434ec98c0dced",
+  "tape_sha256": "d1add535488453e79d91d070e0d934dec0e4f9a8654dcea3b8b059378d2a2839",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

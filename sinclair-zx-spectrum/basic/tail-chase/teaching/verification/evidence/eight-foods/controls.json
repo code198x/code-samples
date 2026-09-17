@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "source_sha256": "6dff71f70efdebd9b4bb84e4e2a8fb97d6f510381f788b39f5bf222117d72162",
+  "checks": [
+    "second-key-cannot-replace-queued-turn",
+    "simultaneous-directions-do-not-change-heading",
+    "quit-from-result"
+  ],
+  "method": "ROM-loaded game; held key matrix input; read-only state; no fixtures"
+}

@@ -1,0 +1,1585 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "unit": 4,
+    "step": 1,
+    "name": "shifted-body",
+    "source": "unit-04/steps/step-01.bas",
+    "add": [
+      100,
+      120,
+      300,
+      310,
+      320,
+      340,
+      390,
+      1050,
+      3500,
+      3510,
+      3530,
+      3550,
+      7250
+    ],
+    "replace": [
+      110,
+      170,
+      280,
+      400,
+      3040,
+      4050,
+      7000
+    ],
+    "delete": []
+  },
+  "source_sha256": "724e741090bf6847f378c21038c6b66dfdabacddb183470ec1ce00526bbeb280",
+  "tape_sha256": "31ec22060ff2b7b168139b3bc7805b490a08487448b4a204472bc6a593038b8f",
+  "checks": [
+    "fresh-tape-and-ROM-stored-listing",
+    "reverse-and-irrelevant-input",
+    "four-directions-and-repeated-loops",
+    "departing-tail-entry-and-distinct-body",
+    "FRAMES-low-byte-wrap-during-movement",
+    "wall-rejects-without-changing-body",
+    "retry-restores-initial-state",
+    "quit"
+  ],
+  "trace": [
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 1
+    },
+    {
+      "key": "x",
+      "body": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 2
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 3
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 4
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 5
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 6
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 7
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 8
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 9
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 10
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 11
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 12
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 13
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 14
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 15
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 16
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 17
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 18
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 19
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 20
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 21
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 22
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 23
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 24
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 25
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 26
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 27
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 28
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 29
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 30
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 31
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 32
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 33
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 34
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 35
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 36
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 37
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 38
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 39
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 40
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 41
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 42
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 43
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 44
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 45
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 46
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 47
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 48
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 49
+    },
+    {
+      "key": "l",
+      "body": [
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 50
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 51
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          8,
+          13
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 52
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          8,
+          14
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 53
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          12
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          8,
+          14
+        ],
+        [
+          8,
+          15
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 54
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          13
+        ],
+        [
+          8,
+          14
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          8,
+          16
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 55
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          14
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          8,
+          16
+        ],
+        [
+          8,
+          17
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 56
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          15
+        ],
+        [
+          8,
+          16
+        ],
+        [
+          8,
+          17
+        ],
+        [
+          8,
+          18
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 57
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          16
+        ],
+        [
+          8,
+          17
+        ],
+        [
+          8,
+          18
+        ],
+        [
+          8,
+          19
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 58
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          17
+        ],
+        [
+          8,
+          18
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          8,
+          20
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 59
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          18
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          8,
+          20
+        ],
+        [
+          8,
+          21
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 60
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          19
+        ],
+        [
+          8,
+          20
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          8,
+          22
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 61
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          20
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          8,
+          22
+        ],
+        [
+          8,
+          23
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 62
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          21
+        ],
+        [
+          8,
+          22
+        ],
+        [
+          8,
+          23
+        ],
+        [
+          8,
+          24
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 63
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          21
+        ],
+        [
+          8,
+          22
+        ],
+        [
+          8,
+          23
+        ],
+        [
+          8,
+          24
+        ]
+      ],
+      "grow": false,
+      "collision": true,
+      "steps": 63
+    }
+  ],
+  "method": "Fresh 48K ROM tape load; keyboard input; read-only state. Diagnostic steps deliberately continue after their single food."
+}

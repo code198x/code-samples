@@ -1,0 +1,18 @@
+{
+  "name": "steering",
+  "source": "unit-03/steps/step-01.bas",
+  "source_sha256": "93c72feaf24eb08fbf1b976ac2c7088efa126fb0aa88a99e181263fde1a0645c",
+  "tape_sha256": "9d38eabfa3ced566f264087aa204717882afb4d07662bbd46c46b84e54b70d50",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

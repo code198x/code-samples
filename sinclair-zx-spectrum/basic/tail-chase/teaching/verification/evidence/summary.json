@@ -1,0 +1,182 @@
+{
+  "status": "passed",
+  "checkpoint_count": 12,
+  "checks": 76,
+  "checkpoints": [
+    {
+      "name": "face",
+      "source": "unit-01/steps/step-01.bas",
+      "source_sha256": "050fda8177b3f689ad09d9e692530be37e06453472d2ec20eab434ec98c0dced",
+      "tape_sha256": "d1add535488453e79d91d070e0d934dec0e4f9a8654dcea3b8b059378d2a2839",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "original-UDG-bytes-and-stopped-display"
+      ]
+    },
+    {
+      "name": "arena",
+      "source": "unit-01/steps/step-02.bas",
+      "source_sha256": "ff4742792416dc64abbd84d0f3c715d899a338666c1c15fcda4c6a834453fdd5",
+      "tape_sha256": "44c52d5e478e6d5db8c6056109ccf8f9ecd7b749ca35bf157d1b28d6408bc012",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "original-UDG-bytes-and-stopped-display"
+      ]
+    },
+    {
+      "name": "moving-head",
+      "source": "unit-02/steps/step-01.bas",
+      "source_sha256": "9a7bcd8dbd9e732e82ea9ec0f9d2ae64786397a323e94feaeda4ee5b032166b3",
+      "tape_sha256": "933fec2b4871cf33482e81e276a1473135306e80477df69b00582f6916d2dfa0",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "wall-rejects-without-changing-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "steering",
+      "source": "unit-03/steps/step-01.bas",
+      "source_sha256": "93c72feaf24eb08fbf1b976ac2c7088efa126fb0aa88a99e181263fde1a0645c",
+      "tape_sha256": "9d38eabfa3ced566f264087aa204717882afb4d07662bbd46c46b84e54b70d50",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "four-directions-and-repeated-loops",
+        "FRAMES-low-byte-wrap-during-movement",
+        "wall-rejects-without-changing-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "shifted-body",
+      "source": "unit-04/steps/step-01.bas",
+      "source_sha256": "724e741090bf6847f378c21038c6b66dfdabacddb183470ec1ce00526bbeb280",
+      "tape_sha256": "31ec22060ff2b7b168139b3bc7805b490a08487448b4a204472bc6a593038b8f",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "four-directions-and-repeated-loops",
+        "departing-tail-entry-and-distinct-body",
+        "FRAMES-low-byte-wrap-during-movement",
+        "wall-rejects-without-changing-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "circular-body",
+      "source": "unit-05/steps/step-01.bas",
+      "source_sha256": "d3975cd8c0f05c91470afdce6f0bd1161d5cd902d51d43ab769bc1f52d62dfa3",
+      "tape_sha256": "7de031c84ff5f30b735049c3d25d3f9a8e1436cdb2e00dabddc0be4bb9bb55b0",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "four-directions-and-repeated-loops",
+        "departing-tail-entry-and-distinct-body",
+        "circular-index-wraps",
+        "FRAMES-low-byte-wrap-during-movement",
+        "wall-rejects-without-changing-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "fixed-food",
+      "source": "unit-06/steps/step-01.bas",
+      "source_sha256": "dbff202a20c5eff201ea9687f237b36abec06272759dee1ea0fb09b2830b441d",
+      "tape_sha256": "e65dd60e46a96f6ca46a548be4edde27b1dfc9abe93ad1c300d1ce076c283287",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "growth-keeps-tail-and-adds-one-head",
+        "one-food-completion-freezes-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "fixed-food-body-test",
+      "source": "unit-06/steps/step-02.bas",
+      "source_sha256": "f7733a1c14b6ba5d92310c205ae9166f908438babf97586a453ca82688dfdff7",
+      "tape_sha256": "1aeb2decc524a583a3234cabff25ff73d60b47467e031768d8389d118c5cba0e",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "growth-keeps-tail-and-adds-one-head",
+        "five-cell-self-collision-preserves-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "occupancy",
+      "source": "unit-07/steps/step-01.bas",
+      "source_sha256": "a9b9bad2357c6425841eda8b56bd2aaf066c0c93a471f9b035faef1d2e9f69fe",
+      "tape_sha256": "5ff86745850f24ec5a53614367ad21aa6becf2f1bb8148bd8a48c1120262281a",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "growth-keeps-tail-and-adds-one-head",
+        "one-food-completion-freezes-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "occupancy-body-test",
+      "source": "unit-07/steps/step-02.bas",
+      "source_sha256": "f122d3ba04b55a1ba1874c1e176b17507d94464824a0da406e328cd005acaf3e",
+      "tape_sha256": "afe2220a9061ea7fab404754600942a38f42207e20bede9e8ee57e5800083be8",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "reverse-and-irrelevant-input",
+        "growth-keeps-tail-and-adds-one-head",
+        "five-cell-self-collision-preserves-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "random-food",
+      "source": "unit-08/steps/step-01.bas",
+      "source_sha256": "c186184787b649555672b67838eb0862608574aa6d03dffc1a3f3efab70c93ea",
+      "tape_sha256": "c57c6ab1176cc7595209447bac5014047a8d42f5dc563e6f6b8601a30eb03263",
+      "checks": [
+        "fresh-tape-and-ROM-stored-listing",
+        "growth-keeps-tail-and-adds-one-head",
+        "one-food-completion-freezes-body",
+        "retry-restores-initial-state",
+        "quit"
+      ]
+    },
+    {
+      "name": "eight-foods",
+      "source": "unit-09/steps/step-01.bas",
+      "source_sha256": "6dff71f70efdebd9b4bb84e4e2a8fb97d6f510381f788b39f5bf222117d72162",
+      "tape_sha256": "f2a85017895b317f881f2753e56e67a42e17d0f6f4fb564e57d409d7cbc4cd5c",
+      "checks": [
+        "fresh-tape-title-and-initial-body",
+        "reverse-and-invalid-key-preserve-direction",
+        "continuous-motion-wall-collision-preserves-body",
+        "retry-clears-body-food-and-progress",
+        "reversal-after-turn-rejected",
+        "non-growing-head-can-enter-departing-tail-cell",
+        "self-collision-preserves-body",
+        "eight-random-foods-complete-with-independent-body-and-occupancy-checks",
+        "completion-stops-movement",
+        "quit-during-play",
+        "quit-from-title"
+      ]
+    }
+  ],
+  "final_controls": [
+    "second-key-cannot-replace-queued-turn",
+    "simultaneous-directions-do-not-change-heading",
+    "quit-from-result"
+  ],
+  "source_transitions": "Exact additions, replacements, deletions and snippets replayed; literal branch targets present; final source equals accepted prototype."
+}

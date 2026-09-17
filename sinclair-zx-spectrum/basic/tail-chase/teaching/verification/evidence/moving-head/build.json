@@ -1,0 +1,18 @@
+{
+  "name": "moving-head",
+  "source": "unit-02/steps/step-01.bas",
+  "source_sha256": "9a7bcd8dbd9e732e82ea9ec0f9d2ae64786397a323e94feaeda4ee5b032166b3",
+  "tape_sha256": "933fec2b4871cf33482e81e276a1473135306e80477df69b00582f6916d2dfa0",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}
