@@ -1,0 +1,282 @@
+[
+  {
+    "unit": 1,
+    "step": 1,
+    "name": "face",
+    "source": "unit-01/steps/step-01.bas",
+    "add": [
+      10,
+      20,
+      30,
+      40,
+      7220
+    ],
+    "replace": [],
+    "delete": []
+  },
+  {
+    "unit": 1,
+    "step": 2,
+    "name": "arena",
+    "source": "unit-01/steps/step-02.bas",
+    "add": [
+      1000,
+      1010,
+      1020,
+      1030,
+      1040,
+      1060,
+      1070,
+      1080,
+      3000,
+      3040,
+      3050,
+      7000,
+      7010,
+      7200,
+      9000
+    ],
+    "replace": [
+      10,
+      20,
+      30
+    ],
+    "delete": []
+  },
+  {
+    "unit": 2,
+    "step": 1,
+    "name": "moving-head",
+    "source": "unit-02/steps/step-01.bas",
+    "add": [
+      110,
+      130,
+      140,
+      150,
+      160,
+      170,
+      240,
+      250,
+      260,
+      270,
+      280,
+      290,
+      400,
+      410,
+      460,
+      4000,
+      4010,
+      4020,
+      4030,
+      4040,
+      4050,
+      4060
+    ],
+    "replace": [
+      1070
+    ],
+    "delete": [
+      20,
+      30,
+      40
+    ]
+  },
+  {
+    "unit": 3,
+    "step": 1,
+    "name": "steering",
+    "source": "unit-03/steps/step-01.bas",
+    "add": [
+      180,
+      190,
+      200,
+      210,
+      220,
+      3010,
+      3020,
+      3030,
+      7210,
+      7230,
+      7240
+    ],
+    "replace": [
+      140,
+      270,
+      460,
+      1070,
+      7000
+    ],
+    "delete": [
+      7010
+    ]
+  },
+  {
+    "unit": 4,
+    "step": 1,
+    "name": "shifted-body",
+    "source": "unit-04/steps/step-01.bas",
+    "add": [
+      100,
+      120,
+      300,
+      310,
+      320,
+      340,
+      390,
+      1050,
+      3500,
+      3510,
+      3530,
+      3550,
+      7250
+    ],
+    "replace": [
+      110,
+      170,
+      280,
+      400,
+      3040,
+      4050,
+      7000
+    ],
+    "delete": []
+  },
+  {
+    "unit": 5,
+    "step": 1,
+    "name": "circular-body",
+    "source": "unit-05/steps/step-01.bas",
+    "add": [
+      350,
+      360,
+      3520,
+      3540
+    ],
+    "replace": [
+      100,
+      390,
+      3500,
+      3510,
+      3530
+    ],
+    "delete": []
+  },
+  {
+    "unit": 6,
+    "step": 1,
+    "name": "fixed-food",
+    "source": "unit-06/steps/step-01.bas",
+    "add": [
+      330,
+      380,
+      420,
+      430,
+      440,
+      450,
+      2000,
+      2020,
+      2030,
+      2500,
+      2510,
+      7260
+    ],
+    "replace": [
+      130,
+      300,
+      1020,
+      7000
+    ],
+    "delete": []
+  },
+  {
+    "unit": 6,
+    "step": 2,
+    "name": "fixed-food-body-test",
+    "source": "unit-06/steps/step-02.bas",
+    "add": [],
+    "replace": [
+      440,
+      1020
+    ],
+    "delete": []
+  },
+  {
+    "unit": 7,
+    "step": 1,
+    "name": "occupancy",
+    "source": "unit-07/steps/step-01.bas",
+    "add": [],
+    "replace": [
+      100,
+      120,
+      310,
+      340,
+      400,
+      440,
+      1020
+    ],
+    "delete": [
+      3500,
+      3510,
+      3520,
+      3530,
+      3540,
+      3550
+    ]
+  },
+  {
+    "unit": 7,
+    "step": 2,
+    "name": "occupancy-body-test",
+    "source": "unit-07/steps/step-02.bas",
+    "add": [],
+    "replace": [
+      440,
+      1020
+    ],
+    "delete": []
+  },
+  {
+    "unit": 8,
+    "step": 1,
+    "name": "random-food",
+    "source": "unit-08/steps/step-01.bas",
+    "add": [
+      2010
+    ],
+    "replace": [
+      440,
+      1020,
+      2000
+    ],
+    "delete": []
+  },
+  {
+    "unit": 9,
+    "step": 1,
+    "name": "eight-foods",
+    "source": "unit-09/steps/step-01.bas",
+    "add": [
+      5000,
+      5010,
+      5020,
+      5030,
+      5040,
+      5050,
+      5060,
+      5070,
+      5080,
+      5090,
+      5100,
+      5110,
+      5120
+    ],
+    "replace": [
+      10,
+      440,
+      1020,
+      2500
+    ],
+    "delete": []
+  }
+]

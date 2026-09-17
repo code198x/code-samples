@@ -1,0 +1,18 @@
+{
+  "name": "fixed-food-body-test",
+  "source": "unit-06/steps/step-02.bas",
+  "source_sha256": "f7733a1c14b6ba5d92310c205ae9166f908438babf97586a453ca82688dfdff7",
+  "tape_sha256": "1aeb2decc524a583a3234cabff25ff73d60b47467e031768d8389d118c5cba0e",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

@@ -1,0 +1,188 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "unit": 7,
+    "step": 2,
+    "name": "occupancy-body-test",
+    "source": "unit-07/steps/step-02.bas",
+    "add": [],
+    "replace": [
+      440,
+      1020
+    ],
+    "delete": []
+  },
+  "source_sha256": "f122d3ba04b55a1ba1874c1e176b17507d94464824a0da406e328cd005acaf3e",
+  "tape_sha256": "afe2220a9061ea7fab404754600942a38f42207e20bede9e8ee57e5800083be8",
+  "checks": [
+    "fresh-tape-and-ROM-stored-listing",
+    "reverse-and-irrelevant-input",
+    "growth-keeps-tail-and-adds-one-head",
+    "five-cell-self-collision-preserves-body",
+    "retry-restores-initial-state",
+    "quit"
+  ],
+  "trace": [
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 1
+    },
+    {
+      "key": "x",
+      "body": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 2
+    },
+    {
+      "key": "",
+      "body": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ]
+      ],
+      "grow": true,
+      "collision": false,
+      "steps": 3
+    },
+    {
+      "key": "k",
+      "body": [
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 4
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 5
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": true,
+      "steps": 5
+    }
+  ],
+  "method": "Fresh 48K ROM tape load; keyboard input; read-only state. Diagnostic steps deliberately continue after their single food."
+}

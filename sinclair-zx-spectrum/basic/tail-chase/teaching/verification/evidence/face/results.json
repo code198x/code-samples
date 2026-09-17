@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "unit": 1,
+    "step": 1,
+    "name": "face",
+    "source": "unit-01/steps/step-01.bas",
+    "add": [
+      10,
+      20,
+      30,
+      40,
+      7220
+    ],
+    "replace": [],
+    "delete": []
+  },
+  "source_sha256": "050fda8177b3f689ad09d9e692530be37e06453472d2ec20eab434ec98c0dced",
+  "tape_sha256": "d1add535488453e79d91d070e0d934dec0e4f9a8654dcea3b8b059378d2a2839",
+  "checks": [
+    "fresh-tape-and-ROM-stored-listing",
+    "original-UDG-bytes-and-stopped-display"
+  ],
+  "trace": [],
+  "method": "Fresh 48K ROM tape load; keyboard input; read-only state. Diagnostic steps deliberately continue after their single food."
+}

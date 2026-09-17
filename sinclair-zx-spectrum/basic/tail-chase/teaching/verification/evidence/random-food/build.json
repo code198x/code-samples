@@ -1,0 +1,18 @@
+{
+  "name": "random-food",
+  "source": "unit-08/steps/step-01.bas",
+  "source_sha256": "c186184787b649555672b67838eb0862608574aa6d03dffc1a3f3efab70c93ea",
+  "tape_sha256": "c57c6ab1176cc7595209447bac5014047a8d42f5dc563e6f6b8601a30eb03263",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

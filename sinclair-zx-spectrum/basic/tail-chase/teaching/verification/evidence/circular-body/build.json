@@ -1,0 +1,18 @@
+{
+  "name": "circular-body",
+  "source": "unit-05/steps/step-01.bas",
+  "source_sha256": "d3975cd8c0f05c91470afdce6f0bd1161d5cd902d51d43ab769bc1f52d62dfa3",
+  "tape_sha256": "7de031c84ff5f30b735049c3d25d3f9a8e1436cdb2e00dabddc0be4bb9bb55b0",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "unit": 1,
+    "step": 2,
+    "name": "arena",
+    "source": "unit-01/steps/step-02.bas",
+    "add": [
+      1000,
+      1010,
+      1020,
+      1030,
+      1040,
+      1060,
+      1070,
+      1080,
+      3000,
+      3040,
+      3050,
+      7000,
+      7010,
+      7200,
+      9000
+    ],
+    "replace": [
+      10,
+      20,
+      30
+    ],
+    "delete": []
+  },
+  "source_sha256": "ff4742792416dc64abbd84d0f3c715d899a338666c1c15fcda4c6a834453fdd5",
+  "tape_sha256": "44c52d5e478e6d5db8c6056109ccf8f9ecd7b749ca35bf157d1b28d6408bc012",
+  "checks": [
+    "fresh-tape-and-ROM-stored-listing",
+    "original-UDG-bytes-and-stopped-display"
+  ],
+  "trace": [],
+  "method": "Fresh 48K ROM tape load; keyboard input; read-only state. Diagnostic steps deliberately continue after their single food."
+}

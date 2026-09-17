@@ -1,0 +1,18 @@
+{
+  "name": "eight-foods",
+  "source": "unit-09/steps/step-01.bas",
+  "source_sha256": "6dff71f70efdebd9b4bb84e4e2a8fb97d6f510381f788b39f5bf222117d72162",
+  "tape_sha256": "f2a85017895b317f881f2753e56e67a42e17d0f6f4fb564e57d409d7cbc4cd5c",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"tail\" LINE 10; no injection"
+}

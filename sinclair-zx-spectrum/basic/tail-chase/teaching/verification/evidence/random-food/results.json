@@ -1,0 +1,346 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "unit": 8,
+    "step": 1,
+    "name": "random-food",
+    "source": "unit-08/steps/step-01.bas",
+    "add": [
+      2010
+    ],
+    "replace": [
+      440,
+      1020,
+      2000
+    ],
+    "delete": []
+  },
+  "source_sha256": "c186184787b649555672b67838eb0862608574aa6d03dffc1a3f3efab70c93ea",
+  "tape_sha256": "c57c6ab1176cc7595209447bac5014047a8d42f5dc563e6f6b8601a30eb03263",
+  "checks": [
+    "fresh-tape-and-ROM-stored-listing",
+    "growth-keeps-tail-and-adds-one-head",
+    "one-food-completion-freezes-body",
+    "retry-restores-initial-state",
+    "quit"
+  ],
+  "trace": [
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 1
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 2
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          8,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 3
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          7,
+          9
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 4
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          6,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 5
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          5,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 6
+    },
+    {
+      "key": "i",
+      "body": [
+        [
+          4,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 7
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          3,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 8
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          2,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 9
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 10
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 11
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "grow": false,
+      "collision": false,
+      "steps": 12
+    },
+    {
+      "key": "j",
+      "body": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "grow": true,
+      "collision": false,
+      "steps": 13
+    }
+  ],
+  "method": "Fresh 48K ROM tape load; keyboard input; read-only state. Diagnostic steps deliberately continue after their single food."
+}
