@@ -1,0 +1,17 @@
+{
+  "source_sha256": "db066770a5516c0452d62234f5ddcb48c31a1ba6fbd047e9c14e7430817f362d",
+  "tape_sha256": "b1740ec0100b76aa463b1d9b960599e43bf3b9fd4b7fe5ee98ee646d3d81fca1",
+  "tape_blocks": [
+    19,
+    4456
+  ],
+  "checksums": "valid",
+  "captures": {
+    "instructions.png": "625bff85321540b44da841d182ece0b059d0ff97a2dfad83677f5c18ffaac3d2",
+    "ready.png": "9f6371a93d1bb3868342f8fe21388a2d56dbe9f668e328f90d2545a1a5b2efe7",
+    "miss.png": "9b58ab48d53e0009a694d72c0dd86aa1bf77ede722c675ae4b498242d6d01c19",
+    "complete.png": "3cb820fb8165d84d3f5dd4b56b15715019235e6fe014630da054b0f1b842c63b"
+  },
+  "native_feedback": "That works, it's surprisingly tough",
+  "status": "Native play reported working; difficulty noted. Teaching stages not yet agreed."
+}
