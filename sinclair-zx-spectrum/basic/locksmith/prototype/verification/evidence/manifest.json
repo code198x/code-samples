@@ -1,0 +1,28 @@
+{
+  "configuration": "Stock 48K PAL",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "passed_checks": 18,
+  "scored_guesses": 42,
+  "source_sha256": "0006a16d65447802016ae4597d079fa3b28bb6f6365f79b8075404c8a9d19f9b",
+  "files": {
+    "board.png": "8c0989a0118018a39649dbe0ec891c46d36a17a397b8aea3dc6d795ea5eca394",
+    "build.json": "bd8cfadf06ec0c07b530e3a51e738db02f7da6a5ca6ef65be6a4632d99cc5c16",
+    "history.png": "132f6addd4fc6c136242c7aceba36d1f35a2793240f9bbec6dd3a938af9c5cbb",
+    "locked.png": "623e06f8c2f26e5641fcd2b426138bb24e8375e3e47b597fdd0652271b7e22a7",
+    "locksmith.tap": "dceae14459e5518799a72a846d801aa3f272e50203adbd483900007639ff9008",
+    "open.png": "04e3401eb1459214d33c667357f408a29fbf2e279fa32ab48acded09e14f8d8b",
+    "results.json": "232411eaa382659a57f52481ee6a46100db0e88eb1224a8997893a4156d23117",
+    "stored.json": "f680976e630da4bc7f65432364ae7b0232b34050da3d4b3260144a66e1fa1b10",
+    "title.png": "dac265b87f56ebd3d005314c52b413ea0cc90c8db2a76410b4471e4104462651"
+  },
+  "limits": "Keyboard-driven emulator execution; native play review pending. No original-hardware timing claim."
+}

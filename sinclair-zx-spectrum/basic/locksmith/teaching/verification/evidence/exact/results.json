@@ -1,0 +1,131 @@
+{
+  "name": "exact",
+  "source_sha256": "546b42056621ab30a90bae93badc890713e56ae0c608fe14005882e1915a6526",
+  "checks": [
+    "fresh-ROM-load-stored-line-identity",
+    "empty-enter-keeps-attempt",
+    "non-digits-and-out-of-range-ignored",
+    "short-guess-retained",
+    "D-ROM-delete-and-empty-delete",
+    "held-digit-enters-once",
+    "four-digit-boundary",
+    "ten-known-code-score-cases",
+    "practice-replaces-single-row-without-ending",
+    "active-reset",
+    "practice-code-preserved-on-reset",
+    "quit-from-play"
+  ],
+  "trials": [
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "1111",
+      "exact": 2,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "2222",
+      "exact": 2,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "2211",
+      "exact": 0,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "1212",
+      "exact": 2,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "1234",
+      "exact": 1,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "1112",
+      "exact": 3,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "3456",
+      "exact": 0,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "2111",
+      "exact": 1,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "1222",
+      "exact": 3,
+      "other": null
+    },
+    {
+      "code": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "guess": "1122",
+      "exact": 4,
+      "other": null
+    }
+  ],
+  "state_writes": false
+}

@@ -1,0 +1,18 @@
+{
+  "name": "exact",
+  "source": "exact/locksmith.bas",
+  "source_sha256": "546b42056621ab30a90bae93badc890713e56ae0c608fe14005882e1915a6526",
+  "tape_sha256": "79add3fe2677458bc709d37f94bd925a8cd0d8b9bb2bdebbad4159f39314fe24",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+}

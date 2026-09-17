@@ -1,0 +1,31 @@
+{
+  "source": "Actual keyboard-driven history trial; visible practice code 1122",
+  "trace": [
+    {
+      "guess": "1111",
+      "exact": 2,
+      "other": 0,
+      "candidates": 150
+    },
+    {
+      "guess": "2222",
+      "exact": 2,
+      "other": 0,
+      "candidates": 6
+    },
+    {
+      "guess": "2211",
+      "exact": 0,
+      "other": 4,
+      "candidates": 1
+    }
+  ],
+  "remaining": [
+    [
+      1,
+      1,
+      2,
+      2
+    ]
+  ]
+}

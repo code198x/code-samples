@@ -1,0 +1,18 @@
+{
+  "name": "editor",
+  "source_sha256": "67f09f555fe02ddad3a134645719501e1f196ae29bd80551cd7c1be7f7acd2ab",
+  "checks": [
+    "fresh-ROM-load-stored-line-identity",
+    "empty-enter-keeps-attempt",
+    "non-digits-and-out-of-range-ignored",
+    "short-guess-retained",
+    "D-ROM-delete-and-empty-delete",
+    "held-digit-enters-once",
+    "four-digit-boundary",
+    "complete-editable-guess-without-scoring",
+    "active-reset",
+    "quit-from-play"
+  ],
+  "trials": [],
+  "state_writes": false
+}

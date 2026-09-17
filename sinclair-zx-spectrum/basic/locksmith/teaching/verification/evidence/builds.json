@@ -1,0 +1,128 @@
+[
+  {
+    "name": "board",
+    "source": "board/locksmith.bas",
+    "source_sha256": "a9310e7fb8b22f77907feac2e43cc6a61b569a5428f6cc584f174e86e13619b2",
+    "tape_sha256": "37906a0f7ea8dda493c801c37411f4a6708c3bcbc3527de66373a22d52cae4e3",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.25.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+  },
+  {
+    "name": "editor",
+    "source": "editor/locksmith.bas",
+    "source_sha256": "67f09f555fe02ddad3a134645719501e1f196ae29bd80551cd7c1be7f7acd2ab",
+    "tape_sha256": "54f67a3ecac0abf2f9e3229c58c14eeca740b7f22ef683a0aaf4a528327159e2",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.25.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+  },
+  {
+    "name": "exact",
+    "source": "exact/locksmith.bas",
+    "source_sha256": "546b42056621ab30a90bae93badc890713e56ae0c608fe14005882e1915a6526",
+    "tape_sha256": "79add3fe2677458bc709d37f94bd925a8cd0d8b9bb2bdebbad4159f39314fe24",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.25.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+  },
+  {
+    "name": "clues",
+    "source": "clues/locksmith.bas",
+    "source_sha256": "9d71f356901ea1d89ce99c3581d6b6e7ba0ef62aec838bbff9afb2db07952390",
+    "tape_sha256": "923b4db7b73d83cfd3d6cfb8ffc85d782eb9e1f48cb2973c92d6609616a5cdf8",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.25.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+  },
+  {
+    "name": "history",
+    "source": "history/locksmith.bas",
+    "source_sha256": "24b0b0b81a504d87602b3b880fc0f88d1838d56a404bb07f04a5555dfb69a5a8",
+    "tape_sha256": "75a62762f3dc429dd4976424bf7b5ceca8c3fa9297b88223080e56c0675ddb7f",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.25.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+  },
+  {
+    "name": "round",
+    "source": "round/locksmith.bas",
+    "source_sha256": "e4e33cc6065278f5f9696044db03819b9e06a307d10003bfef8479f8195aa2be",
+    "tape_sha256": "d0edd7c78fb4207d6d02692ca16e1c2ac47b2fc1efb94623e7aba8b18f4dd707",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.25.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+  },
+  {
+    "name": "finished",
+    "source": "finished/locksmith.bas",
+    "source_sha256": "0006a16d65447802016ae4597d079fa3b28bb6f6365f79b8075404c8a9d19f9b",
+    "tape_sha256": "df6d2e2ef18d78be701ca54bd3e6cf303a2e394dc732596a5d71725a4bcb02e7",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.25.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+  }
+]

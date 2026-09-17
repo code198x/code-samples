@@ -1,0 +1,247 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; Emu198x Spectrum 0.25.0",
+  "checkpoints": [
+    {
+      "name": "board",
+      "source_sha256": "a9310e7fb8b22f77907feac2e43cc6a61b569a5428f6cc584f174e86e13619b2",
+      "tape_sha256": "37906a0f7ea8dda493c801c37411f4a6708c3bcbc3527de66373a22d52cae4e3",
+      "checks": [
+        "fresh-ROM-load-stored-line-identity",
+        "static-board-four-empty-cells"
+      ],
+      "scored_guesses": 0,
+      "captures": {
+        "opening.png": "2e6fc4bfdb08a21098b07aceef1c952b0b12fff65556e31bfe89b2f85d2a1e16"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      }
+    },
+    {
+      "name": "editor",
+      "source_sha256": "67f09f555fe02ddad3a134645719501e1f196ae29bd80551cd7c1be7f7acd2ab",
+      "tape_sha256": "54f67a3ecac0abf2f9e3229c58c14eeca740b7f22ef683a0aaf4a528327159e2",
+      "checks": [
+        "fresh-ROM-load-stored-line-identity",
+        "empty-enter-keeps-attempt",
+        "non-digits-and-out-of-range-ignored",
+        "short-guess-retained",
+        "D-ROM-delete-and-empty-delete",
+        "held-digit-enters-once",
+        "four-digit-boundary",
+        "complete-editable-guess-without-scoring",
+        "active-reset",
+        "quit-from-play"
+      ],
+      "scored_guesses": 0,
+      "captures": {
+        "complete.png": "8e1c3863b93d31393e8fbfec292e4fdf06902153db9575ba55112460abab24a4",
+        "opening.png": "8129e569ddb717f02453ae852c63475efdcf9692f1dbc84d7a93c90e6808888c"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      }
+    },
+    {
+      "name": "exact",
+      "source_sha256": "546b42056621ab30a90bae93badc890713e56ae0c608fe14005882e1915a6526",
+      "tape_sha256": "79add3fe2677458bc709d37f94bd925a8cd0d8b9bb2bdebbad4159f39314fe24",
+      "checks": [
+        "fresh-ROM-load-stored-line-identity",
+        "empty-enter-keeps-attempt",
+        "non-digits-and-out-of-range-ignored",
+        "short-guess-retained",
+        "D-ROM-delete-and-empty-delete",
+        "held-digit-enters-once",
+        "four-digit-boundary",
+        "ten-known-code-score-cases",
+        "practice-replaces-single-row-without-ending",
+        "active-reset",
+        "practice-code-preserved-on-reset",
+        "quit-from-play"
+      ],
+      "scored_guesses": 10,
+      "captures": {
+        "opening.png": "11f709d0397c3a92f09360d8c8ed3a6fd1b4a90292b6564818cd6363b2460910",
+        "scored.png": "29ee95575c622cb2ac0ef21ce26f7de645f5b94260510dcb83d2a6732c1ee340"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      }
+    },
+    {
+      "name": "clues",
+      "source_sha256": "9d71f356901ea1d89ce99c3581d6b6e7ba0ef62aec838bbff9afb2db07952390",
+      "tape_sha256": "923b4db7b73d83cfd3d6cfb8ffc85d782eb9e1f48cb2973c92d6609616a5cdf8",
+      "checks": [
+        "fresh-ROM-load-stored-line-identity",
+        "empty-enter-keeps-attempt",
+        "non-digits-and-out-of-range-ignored",
+        "short-guess-retained",
+        "D-ROM-delete-and-empty-delete",
+        "held-digit-enters-once",
+        "four-digit-boundary",
+        "ten-known-code-score-cases",
+        "practice-replaces-single-row-without-ending",
+        "active-reset",
+        "practice-code-preserved-on-reset",
+        "quit-from-play"
+      ],
+      "scored_guesses": 10,
+      "captures": {
+        "opening.png": "49983d0a75510f952f3cac3721aedc99bc2fed80c39e7eed03b400f83f488170",
+        "scored.png": "49b419ccc58f5876fd3f19a553a7a0ca918245346e1d9a7f4c158fce8f730aa5"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      }
+    },
+    {
+      "name": "history",
+      "source_sha256": "24b0b0b81a504d87602b3b880fc0f88d1838d56a404bb07f04a5555dfb69a5a8",
+      "tape_sha256": "75a62762f3dc429dd4976424bf7b5ceca8c3fa9297b88223080e56c0675ddb7f",
+      "checks": [
+        "fresh-ROM-load-stored-line-identity",
+        "empty-enter-keeps-attempt",
+        "non-digits-and-out-of-range-ignored",
+        "short-guess-retained",
+        "D-ROM-delete-and-empty-delete",
+        "held-digit-enters-once",
+        "four-digit-boundary",
+        "ten-history-rows-and-practice-ending",
+        "correct-practice-guess-does-not-end-early",
+        "all-earlier-guesses-retained",
+        "deduction-trace-narrows-to-practice-code",
+        "quit-from-result",
+        "active-reset",
+        "practice-code-preserved-on-reset",
+        "quit-from-play"
+      ],
+      "scored_guesses": 10,
+      "captures": {
+        "complete.png": "c145a13c4f9fc73d571d03040c39aa51f2a58270a547f2de0c2d14aedd11e386",
+        "deduction.png": "0002d505f0b85b65268ee370e355753f0f6ce5eba8086defdf46c41312a6bc57",
+        "opening.png": "97eb21a2e25cb7dc148fdc41d260ad7d7159770ff025ebe2637d55965279b395"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      }
+    },
+    {
+      "name": "round",
+      "source_sha256": "e4e33cc6065278f5f9696044db03819b9e06a307d10003bfef8479f8195aa2be",
+      "tape_sha256": "d0edd7c78fb4207d6d02692ca16e1c2ac47b2fc1efb94623e7aba8b18f4dd707",
+      "checks": [
+        "fresh-ROM-load-stored-line-identity",
+        "empty-enter-keeps-attempt",
+        "non-digits-and-out-of-range-ignored",
+        "short-guess-retained",
+        "D-ROM-delete-and-empty-delete",
+        "held-digit-enters-once",
+        "four-digit-boundary",
+        "random-code-exact-win",
+        "result-replay-resets-board",
+        "ten-guesses-loss-and-independent-score-model",
+        "result-freezes-guess-history",
+        "quit-from-result",
+        "active-reset",
+        "quit-from-play"
+      ],
+      "scored_guesses": 11,
+      "captures": {
+        "locked.png": "75b8f061ddffd3785dea78420f814b383db242db2bce91e08a4b4c8e7c2a0c47",
+        "open.png": "edd0ef5fa29aea185567042f4ff44342c4e53581b3785c18932662a4bbffe783",
+        "opening.png": "8c0989a0118018a39649dbe0ec891c46d36a17a397b8aea3dc6d795ea5eca394"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      }
+    },
+    {
+      "name": "finished",
+      "source_sha256": "0006a16d65447802016ae4597d079fa3b28bb6f6365f79b8075404c8a9d19f9b",
+      "tape_sha256": "df6d2e2ef18d78be701ca54bd3e6cf303a2e394dc732596a5d71725a4bcb02e7",
+      "checks": [
+        "fresh-ROM-load-stored-line-identity",
+        "empty-enter-keeps-attempt",
+        "non-digits-and-out-of-range-ignored",
+        "short-guess-retained",
+        "D-ROM-delete-and-empty-delete",
+        "held-digit-enters-once",
+        "four-digit-boundary",
+        "random-code-exact-win",
+        "result-replay-resets-board",
+        "ten-guesses-loss-and-independent-score-model",
+        "result-freezes-guess-history",
+        "quit-from-result",
+        "quit-from-title",
+        "active-reset",
+        "quit-from-play"
+      ],
+      "scored_guesses": 11,
+      "captures": {
+        "locked.png": "7ae571a6ae31d9c5e4b4b308b7617e291d67fa04f05bf49109e5b88e09093c10",
+        "open.png": "75486307566e82c8ed29383341272d3121d47aa61fb33e8b6acec264637337ad",
+        "opening.png": "8c0989a0118018a39649dbe0ec891c46d36a17a397b8aea3dc6d795ea5eca394",
+        "title.png": "dac265b87f56ebd3d005314c52b413ea0cc90c8db2a76410b4471e4104462651"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      }
+    }
+  ],
+  "execution_checks": 80,
+  "scored_guesses": 52,
+  "final_source_identical": true,
+  "limits": "Native acceptance applies to the final game. Intermediate programs have keyboard-driven emulator execution evidence, not independent learner review or original-hardware timing."
+}

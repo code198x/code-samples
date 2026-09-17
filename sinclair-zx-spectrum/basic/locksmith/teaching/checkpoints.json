@@ -1,0 +1,51 @@
+[
+  {
+    "name": "board",
+    "lesson": 1,
+    "source": "board/locksmith.bas",
+    "sha256": "a9310e7fb8b22f77907feac2e43cc6a61b569a5428f6cc584f174e86e13619b2",
+    "lines": 12
+  },
+  {
+    "name": "editor",
+    "lesson": 2,
+    "source": "editor/locksmith.bas",
+    "sha256": "67f09f555fe02ddad3a134645719501e1f196ae29bd80551cd7c1be7f7acd2ab",
+    "lines": 30
+  },
+  {
+    "name": "exact",
+    "lesson": 3,
+    "source": "exact/locksmith.bas",
+    "sha256": "546b42056621ab30a90bae93badc890713e56ae0c608fe14005882e1915a6526",
+    "lines": 42
+  },
+  {
+    "name": "clues",
+    "lesson": 4,
+    "source": "clues/locksmith.bas",
+    "sha256": "9d71f356901ea1d89ce99c3581d6b6e7ba0ef62aec838bbff9afb2db07952390",
+    "lines": 51
+  },
+  {
+    "name": "history",
+    "lesson": 5,
+    "source": "history/locksmith.bas",
+    "sha256": "24b0b0b81a504d87602b3b880fc0f88d1838d56a404bb07f04a5555dfb69a5a8",
+    "lines": 64
+  },
+  {
+    "name": "round",
+    "lesson": 7,
+    "source": "round/locksmith.bas",
+    "sha256": "e4e33cc6065278f5f9696044db03819b9e06a307d10003bfef8479f8195aa2be",
+    "lines": 68
+  },
+  {
+    "name": "finished",
+    "lesson": 8,
+    "source": "finished/locksmith.bas",
+    "sha256": "0006a16d65447802016ae4597d079fa3b28bb6f6365f79b8075404c8a9d19f9b",
+    "lines": 82
+  }
+]

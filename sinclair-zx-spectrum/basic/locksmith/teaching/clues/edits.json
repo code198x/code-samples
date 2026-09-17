@@ -1,0 +1,37 @@
+{
+  "add": [
+    3030,
+    3040,
+    3050,
+    3060,
+    3070,
+    3080,
+    3090,
+    3100,
+    3110
+  ],
+  "replace": [
+    1030,
+    1040,
+    3000,
+    3120,
+    4020
+  ],
+  "delete": [],
+  "enter": [
+    "1030 PRINT AT 4,1; INK 5; \"TRY\"; AT 4,7; \"CODE\"; AT 4,19; \"EXACT\"; AT 4,26; \"OTHER\"",
+    "1040 PRINT AT 5,1; INK 1; \"-\"; AT 5,7; \". . . .\"; AT 5,21; \".\"; AT 5,28; \".\"",
+    "3000 DIM g(4): LET bulls = 0: LET total = 0",
+    "3030 FOR d = 1 TO 6",
+    "3040 LET cc = 0: LET gc = 0",
+    "3050 FOR i = 1 TO 4",
+    "3060 IF c(i) = d THEN LET cc = cc + 1",
+    "3070 IF g(i) = d THEN LET gc = gc + 1",
+    "3080 NEXT i",
+    "3090 IF cc <= gc THEN LET total = total + cc",
+    "3100 IF gc < cc THEN LET total = total + gc",
+    "3110 NEXT d",
+    "3120 LET cows = total - bulls: RETURN",
+    "4020 PRINT AT 4 + t,21; INK 4; bulls; AT 4 + t,28; INK 6; cows"
+  ]
+}
