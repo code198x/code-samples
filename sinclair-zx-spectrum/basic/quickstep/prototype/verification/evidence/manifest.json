@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "source_sha256": "d2d70f181810641e36d141112dce24fe2504044e48ecbcf842d9ccca7405af97",
+  "tape_sha256": "1463185efe5ac720f6ee6ce2bdd0dbe750f7fe13368c793bbf725ec5394c3757",
+  "tape_blocks": [
+    19,
+    6306
+  ],
+  "execution_checks": 20,
+  "model_checks": [
+    "fresh-ROM-tape-load-and-stored-source-identity",
+    "safe-wait-and-both-direction-wraps-over-90-beats",
+    "horizontal-and-bottom-bounds",
+    "complete-crossing-agrees-with-independent-grid-model",
+    "win-freezes-world",
+    "retry-restores-player-phases-and-counters",
+    "top-boundary-and-exit-requires-centre-cell",
+    "stepping-into-current-hazard-fails",
+    "advancing-hazard-hits-waiting-player",
+    "loss-freezes-world",
+    "quit-from-result-control-flow"
+  ],
+  "normal_frame_checks": [
+    "ordinary-frame-safe-wait-and-measured-cadence",
+    "held-left-repeats-and-clamps",
+    "four-frame-tap-during-update-is-retained",
+    "ordinary-frame-complete-crossing",
+    "ordinary-frame-retry-after-win",
+    "ordinary-frame-collision",
+    "ordinary-frame-result-quit",
+    "title-quit",
+    "active-game-quit"
+  ],
+  "timing": {
+    "median": 39.0,
+    "minimum": 20,
+    "maximum": 68,
+    "samples": 28
+  },
+  "captures": [
+    {
+      "name": "instructions",
+      "sha256": "98861aaf7bf9fef5848e077c3e71f2e84fb4210d77277f883871f79d5d07248f",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    },
+    {
+      "name": "arena",
+      "sha256": "89030bf210690570745de6abd7b4304a1afebaaf6385eac91640f594210aca2b",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    },
+    {
+      "name": "across",
+      "sha256": "b3daa01fa355ee684b0b3d655344003c78d832fd0cbdc59ec551e2397fd24d3b",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    },
+    {
+      "name": "caught",
+      "sha256": "edae1d90a69e85f38da08da6852f5cd0ff7a64a4fd80d527385754118d99f69a",
+      "settling_frames": 2,
+      "method": "Original emitted PNG; top 176 rows checked against RAM bitmap and colour attributes; no image editing."
+    }
+  ],
+  "configuration": "Stock 48K PAL, Emu198x Spectrum 0.25.0",
+  "entry": "ROM keyboard; SAVE \"quickstep\" LINE 10; no source injection",
+  "limits": "CPU-stepped model traces are not timing evidence. Normal-frame commit intervals vary with work. Native user approval and original-hardware measurements remain pending."
+}
