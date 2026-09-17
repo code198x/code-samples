@@ -1,0 +1,18 @@
+{
+  "name": "lane",
+  "source": "lane/quickstep.bas",
+  "source_sha256": "83a269e7375d015eaa60b31620a8c0368c1d856331a14a34e583534bcbd09942",
+  "tape_sha256": "7862274473e6964295e5bf9e3413500ab85244e071b3f090ae6737dae9f548da",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"quickstep\" LINE 10; no injection"
+}

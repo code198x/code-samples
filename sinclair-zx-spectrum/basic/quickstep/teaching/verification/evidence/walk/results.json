@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "name": "walk",
+  "source_sha256": "5fbf80ae7d0db138a1b5572cb678415a0908921b0ea4373f28d25f3bcc5da4be",
+  "tape_sha256": "80a05956eb0a3cc031a1a44926aa46ada5f69d37c1825dbc1360d53d963c4912",
+  "checks": [
+    "fresh-tape-and-stored-source-identity",
+    "held-key-makes-only-one-step",
+    "all-bounds-and-exit-background-restored",
+    "retry-restores-practice-board",
+    "inspection-quit"
+  ],
+  "trace": [],
+  "captures": [
+    {
+      "name": "opening",
+      "sha256": "5343ba76a4bf2736dc259aeecc9e115da891e282fafacb43704a97f83c054b51",
+      "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+    }
+  ],
+  "method": "Fresh ROM tape; keyboard input; read-only state; CPU boundaries are not timing evidence"
+}

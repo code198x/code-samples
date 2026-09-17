@@ -1,0 +1,18 @@
+{
+  "name": "walk",
+  "source": "walk/quickstep.bas",
+  "source_sha256": "5fbf80ae7d0db138a1b5572cb678415a0908921b0ea4373f28d25f3bcc5da4be",
+  "tape_sha256": "80a05956eb0a3cc031a1a44926aa46ada5f69d37c1825dbc1360d53d963c4912",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"quickstep\" LINE 10; no injection"
+}

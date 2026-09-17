@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "name": "clock",
+  "source_sha256": "fe8dc868422cc9a99f45f56a5a13d42a8f399e4c1f5f9c9e094796a73e16afcf",
+  "tape_sha256": "81e945b29bf5ed8ccd0212eb854ce932bc8423829021422cffdef42a3808b2e1",
+  "checks": [
+    "ordinary-safe-wait-across-frame-byte-wraps",
+    "polling-only-short-tap-is-missed",
+    "held-left-repeats-and-clamps",
+    "ordinary-active-quit"
+  ],
+  "trace": [],
+  "captures": [
+    {
+      "name": "frame-board",
+      "sha256": "734be9bc1cde17d189297196836c1e6e6f75dc592d6311f2db0ffba3e02e887a",
+      "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+    }
+  ],
+  "observations": [
+    {
+      "frame": 33,
+      "step": 1
+    },
+    {
+      "frame": 77,
+      "step": 2
+    },
+    {
+      "frame": 109,
+      "step": 3
+    },
+    {
+      "frame": 153,
+      "step": 4
+    },
+    {
+      "frame": 183,
+      "step": 5
+    },
+    {
+      "frame": 227,
+      "step": 6
+    },
+    {
+      "frame": 259,
+      "step": 7
+    },
+    {
+      "frame": 302,
+      "step": 8
+    },
+    {
+      "frame": 334,
+      "step": 9
+    },
+    {
+      "frame": 378,
+      "step": 10
+    },
+    {
+      "frame": 410,
+      "step": 11
+    },
+    {
+      "frame": 457,
+      "step": 12
+    },
+    {
+      "frame": 489,
+      "step": 13
+    },
+    {
+      "frame": 533,
+      "step": 14
+    },
+    {
+      "frame": 564,
+      "step": 15
+    },
+    {
+      "frame": 608,
+      "step": 16
+    },
+    {
+      "frame": 640,
+      "step": 17
+    },
+    {
+      "frame": 684,
+      "step": 18
+    }
+  ],
+  "timing": {
+    "median": 43,
+    "minimum": 30,
+    "maximum": 47,
+    "samples": 17
+  },
+  "method": "Ordinary run_frames and physical keys; no CPU stepping or injected state"
+}

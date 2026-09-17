@@ -1,0 +1,938 @@
+{
+  "status": "passed",
+  "name": "crossing",
+  "source_sha256": "691cf5c1e0f2ad288390869e638fd8d5537b67697a6fbb1282655547588b9b24",
+  "tape_sha256": "b87c59cd8d46394482e96bf625b72a4d3034357322a4142c8a390d89d21595de",
+  "checks": [
+    "fresh-tape-and-stored-source-identity",
+    "countdown-phase-wrap-and-safe-wait",
+    "one-lane-complete-crossing",
+    "old-traffic-contact",
+    "attempted-player-vehicle-swap-is-rejected",
+    "moving-traffic-contact-and-frozen-result",
+    "reset-restores-phase-and-countdown",
+    "active-quit"
+  ],
+  "trace": [
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        9,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        9,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        9,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        9,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        8,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        8,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        8,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        8,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        7,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        7,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        7,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        7,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        6,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        6,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        6,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        6,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        5,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        5,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        5,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        5,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        4,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        4,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        4,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        4,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        3,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        3,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        3,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        3,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        2,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        2,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        2,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        2,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        1,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        1,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        1,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        1,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        0,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        0,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        0,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        0,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        14,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        14,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        14,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        14,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        13,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        13,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        13,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        13,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        12,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        12,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        12,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        12,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        11,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        11,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        11,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        11,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        9,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        9,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        9,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        9,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        8,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        8,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        8,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        8,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        7,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        7,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        7,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        7,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        6,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        6,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        6,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        6,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        5,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "i",
+      "before": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "after": [
+        7,
+        1,
+        10,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "i",
+      "before": [
+        7,
+        1,
+        10,
+        1
+      ],
+      "after": [
+        7,
+        0,
+        9,
+        2
+      ],
+      "result": "win"
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        9,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        9,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        9,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        9,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        8,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        8,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        8,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        8,
+        1
+      ],
+      "after": [
+        7,
+        2,
+        7,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "i",
+      "before": [
+        7,
+        2,
+        7,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        7,
+        2
+      ],
+      "result": "blocked"
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "i",
+      "before": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "after": [
+        7,
+        1,
+        9,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "l",
+      "before": [
+        7,
+        1,
+        9,
+        2
+      ],
+      "after": [
+        8,
+        1,
+        9,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "l",
+      "before": [
+        8,
+        1,
+        9,
+        1
+      ],
+      "after": [
+        8,
+        1,
+        9,
+        1
+      ],
+      "result": "blocked"
+    },
+    {
+      "key": "",
+      "before": [
+        7,
+        2,
+        10,
+        2
+      ],
+      "after": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "i",
+      "before": [
+        7,
+        2,
+        10,
+        1
+      ],
+      "after": [
+        7,
+        1,
+        9,
+        2
+      ],
+      "result": ""
+    },
+    {
+      "key": "l",
+      "before": [
+        7,
+        1,
+        9,
+        2
+      ],
+      "after": [
+        8,
+        1,
+        9,
+        1
+      ],
+      "result": ""
+    },
+    {
+      "key": "",
+      "before": [
+        8,
+        1,
+        9,
+        1
+      ],
+      "after": [
+        8,
+        1,
+        8,
+        2
+      ],
+      "result": "caught"
+    }
+  ],
+  "captures": [
+    {
+      "name": "opening",
+      "sha256": "734be9bc1cde17d189297196836c1e6e6f75dc592d6311f2db0ffba3e02e887a",
+      "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+    }
+  ],
+  "method": "Fresh ROM tape; keyboard input; read-only state; CPU boundaries are not timing evidence"
+}

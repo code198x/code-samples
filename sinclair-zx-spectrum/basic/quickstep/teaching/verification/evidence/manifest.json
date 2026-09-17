@@ -1,0 +1,356 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; Emu198x Spectrum 0.25.0",
+  "checkpoints": [
+    {
+      "name": "board",
+      "source_sha256": "8250430cf4ca837d7cd9b1f4698e12a3cbc6b2d421e8b25b81cfcc54b1752951",
+      "tape_sha256": "85dbc785fb7f957516a4e5d275603b17afb999ca277849f27d47b670e28d875b",
+      "checks": 3,
+      "tape_blocks": [
+        19,
+        1250
+      ],
+      "timing": null,
+      "model_checks": [
+        "fresh-tape-and-stored-source-identity",
+        "static-board-player-and-stop"
+      ],
+      "frame_checks": [
+        "fresh-load-draws-and-stops"
+      ],
+      "captures": [
+        {
+          "name": "opening",
+          "sha256": "e77c0a081324ac96154b86035277a333a1b3df96ebfb91189f3d33ac5a14d138",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-board",
+          "sha256": "e77c0a081324ac96154b86035277a333a1b3df96ebfb91189f3d33ac5a14d138",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    },
+    {
+      "name": "walk",
+      "source_sha256": "5fbf80ae7d0db138a1b5572cb678415a0908921b0ea4373f28d25f3bcc5da4be",
+      "tape_sha256": "80a05956eb0a3cc031a1a44926aa46ada5f69d37c1825dbc1360d53d963c4912",
+      "checks": 8,
+      "tape_blocks": [
+        19,
+        2373
+      ],
+      "timing": null,
+      "model_checks": [
+        "fresh-tape-and-stored-source-identity",
+        "held-key-makes-only-one-step",
+        "all-bounds-and-exit-background-restored",
+        "retry-restores-practice-board",
+        "inspection-quit"
+      ],
+      "frame_checks": [
+        "held-key-is-a-single-step",
+        "ordinary-reset",
+        "ordinary-active-quit"
+      ],
+      "captures": [
+        {
+          "name": "opening",
+          "sha256": "5343ba76a4bf2736dc259aeecc9e115da891e282fafacb43704a97f83c054b51",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-board",
+          "sha256": "5343ba76a4bf2736dc259aeecc9e115da891e282fafacb43704a97f83c054b51",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    },
+    {
+      "name": "lane",
+      "source_sha256": "83a269e7375d015eaa60b31620a8c0368c1d856331a14a34e583534bcbd09942",
+      "tape_sha256": "7862274473e6964295e5bf9e3413500ab85244e071b3f090ae6737dae9f548da",
+      "checks": 11,
+      "tape_blocks": [
+        19,
+        3970
+      ],
+      "timing": null,
+      "model_checks": [
+        "fresh-tape-and-stored-source-identity",
+        "held-key-makes-only-one-step",
+        "all-bounds-and-exit-background-restored",
+        "retry-restores-practice-board",
+        "manual-traffic-completes-wrap",
+        "player-overlay-and-lane-restoration",
+        "inspection-quit"
+      ],
+      "frame_checks": [
+        "held-key-is-a-single-step",
+        "space-advances-one-lane-step",
+        "ordinary-reset",
+        "ordinary-active-quit"
+      ],
+      "captures": [
+        {
+          "name": "opening",
+          "sha256": "fdae420332fba0bcc15cc2aea14a99cf188761b9790277e02fcb7a7c3ecf1866",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "inspected",
+          "sha256": "ab5ce54ad54202c886819ef73aae7527e709bc9288524c52badcf09e5afb16da",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-board",
+          "sha256": "fdae420332fba0bcc15cc2aea14a99cf188761b9790277e02fcb7a7c3ecf1866",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    },
+    {
+      "name": "clock",
+      "source_sha256": "fe8dc868422cc9a99f45f56a5a13d42a8f399e4c1f5f9c9e094796a73e16afcf",
+      "tape_sha256": "81e945b29bf5ed8ccd0212eb854ce932bc8423829021422cffdef42a3808b2e1",
+      "checks": 9,
+      "tape_blocks": [
+        19,
+        4191
+      ],
+      "timing": {
+        "median": 43,
+        "minimum": 30,
+        "maximum": 47,
+        "samples": 17
+      },
+      "model_checks": [
+        "fresh-tape-and-stored-source-identity",
+        "countdown-phase-wrap-and-safe-wait",
+        "timed-input-and-bounds-without-collision",
+        "reset-restores-phase-and-countdown",
+        "active-quit"
+      ],
+      "frame_checks": [
+        "ordinary-safe-wait-across-frame-byte-wraps",
+        "polling-only-short-tap-is-missed",
+        "held-left-repeats-and-clamps",
+        "ordinary-active-quit"
+      ],
+      "captures": [
+        {
+          "name": "opening",
+          "sha256": "734be9bc1cde17d189297196836c1e6e6f75dc592d6311f2db0ffba3e02e887a",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-board",
+          "sha256": "734be9bc1cde17d189297196836c1e6e6f75dc592d6311f2db0ffba3e02e887a",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    },
+    {
+      "name": "crossing",
+      "source_sha256": "691cf5c1e0f2ad288390869e638fd8d5537b67697a6fbb1282655547588b9b24",
+      "tape_sha256": "b87c59cd8d46394482e96bf625b72a4d3034357322a4142c8a390d89d21595de",
+      "checks": 14,
+      "tape_blocks": [
+        19,
+        4825
+      ],
+      "timing": {
+        "median": 44,
+        "minimum": 29,
+        "maximum": 45,
+        "samples": 17
+      },
+      "model_checks": [
+        "fresh-tape-and-stored-source-identity",
+        "countdown-phase-wrap-and-safe-wait",
+        "one-lane-complete-crossing",
+        "old-traffic-contact",
+        "attempted-player-vehicle-swap-is-rejected",
+        "moving-traffic-contact-and-frozen-result",
+        "reset-restores-phase-and-countdown",
+        "active-quit"
+      ],
+      "frame_checks": [
+        "ordinary-safe-wait-across-frame-byte-wraps",
+        "polling-only-short-tap-is-missed",
+        "held-left-repeats-and-clamps",
+        "ordinary-complete-crossing-agrees-with-model",
+        "ordinary-retry-after-win",
+        "ordinary-active-quit"
+      ],
+      "captures": [
+        {
+          "name": "opening",
+          "sha256": "734be9bc1cde17d189297196836c1e6e6f75dc592d6311f2db0ffba3e02e887a",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-board",
+          "sha256": "734be9bc1cde17d189297196836c1e6e6f75dc592d6311f2db0ffba3e02e887a",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-across",
+          "sha256": "76380ec9582b93ce4b2c61086b9cfc0b1551464e9d7407ed69bc4bf84d4c14d2",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    },
+    {
+      "name": "six-lanes",
+      "source_sha256": "ff2326e1aa1f34c3b9a9b5d5a49d401be13effeed9c23291094158907bfba301",
+      "tape_sha256": "ad9426de6b607d454283b6a7f335ae041a16dd19a7e321d002cf82fd87c12727",
+      "checks": 17,
+      "tape_blocks": [
+        19,
+        5473
+      ],
+      "timing": {
+        "median": 46.0,
+        "minimum": 24,
+        "maximum": 101,
+        "samples": 12
+      },
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-source-identity",
+        "safe-wait-and-both-direction-wraps-over-90-beats",
+        "horizontal-and-bottom-bounds",
+        "complete-crossing-agrees-with-independent-grid-model",
+        "win-freezes-world",
+        "retry-restores-player-phases-and-counters",
+        "top-boundary-and-exit-requires-centre-cell",
+        "stepping-into-current-hazard-fails",
+        "advancing-hazard-hits-waiting-player",
+        "loss-freezes-world",
+        "quit-from-result-control-flow"
+      ],
+      "frame_checks": [
+        "ordinary-safe-wait-across-frame-byte-wraps",
+        "polling-only-short-tap-is-missed",
+        "held-left-repeats-and-clamps",
+        "ordinary-complete-crossing-agrees-with-model",
+        "ordinary-retry-after-win",
+        "ordinary-active-quit"
+      ],
+      "captures": [
+        {
+          "name": "frame-board",
+          "sha256": "525b3411dd9c4193edeef70606bd47a659470c46f48285ebfe180ddc0f2a1983",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-across",
+          "sha256": "af11f0fc02b3173e5a0f655fa2b0aa182c9304640b1f90c83b466a6e934d737e",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    },
+    {
+      "name": "buffered",
+      "source_sha256": "560ce84e08d7c4e967d7574123278d3f75ec0b2e6579c17af85fcc34456f8324",
+      "tape_sha256": "a1b8291efb9f4a52decd0ba0ba8238a9a6009d7eb2c412c68152da22ed5a97e5",
+      "checks": 17,
+      "tape_blocks": [
+        19,
+        5550
+      ],
+      "timing": {
+        "median": 47.0,
+        "minimum": 25,
+        "maximum": 102,
+        "samples": 12
+      },
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-source-identity",
+        "safe-wait-and-both-direction-wraps-over-90-beats",
+        "horizontal-and-bottom-bounds",
+        "complete-crossing-agrees-with-independent-grid-model",
+        "win-freezes-world",
+        "retry-restores-player-phases-and-counters",
+        "top-boundary-and-exit-requires-centre-cell",
+        "stepping-into-current-hazard-fails",
+        "advancing-hazard-hits-waiting-player",
+        "loss-freezes-world",
+        "quit-from-result-control-flow"
+      ],
+      "frame_checks": [
+        "ordinary-safe-wait-across-frame-byte-wraps",
+        "short-tap-retained",
+        "held-left-repeats-and-clamps",
+        "ordinary-complete-crossing-agrees-with-model",
+        "ordinary-retry-after-win",
+        "ordinary-active-quit"
+      ],
+      "captures": [
+        {
+          "name": "frame-board",
+          "sha256": "525b3411dd9c4193edeef70606bd47a659470c46f48285ebfe180ddc0f2a1983",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-across",
+          "sha256": "af11f0fc02b3173e5a0f655fa2b0aa182c9304640b1f90c83b466a6e934d737e",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    },
+    {
+      "name": "finished",
+      "source_sha256": "18ef52cc1bb9fb2b77851dc160040835ab39b5aa14a4588125e77e4681a3e123",
+      "tape_sha256": "b1320f399aad0757011a4045f569c72992058d88c11a2632a6cadebb5e346398",
+      "checks": 17,
+      "tape_blocks": [
+        19,
+        6140
+      ],
+      "timing": {
+        "median": 47.0,
+        "minimum": 25,
+        "maximum": 103,
+        "samples": 12
+      },
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-source-identity",
+        "safe-wait-and-both-direction-wraps-over-90-beats",
+        "horizontal-and-bottom-bounds",
+        "complete-crossing-agrees-with-independent-grid-model",
+        "win-freezes-world",
+        "retry-restores-player-phases-and-counters",
+        "top-boundary-and-exit-requires-centre-cell",
+        "stepping-into-current-hazard-fails",
+        "advancing-hazard-hits-waiting-player",
+        "loss-freezes-world",
+        "quit-from-result-control-flow"
+      ],
+      "frame_checks": [
+        "ordinary-safe-wait-across-frame-byte-wraps",
+        "short-tap-retained",
+        "held-left-repeats-and-clamps",
+        "ordinary-complete-crossing-agrees-with-model",
+        "ordinary-retry-after-win",
+        "ordinary-active-quit"
+      ],
+      "captures": [
+        {
+          "name": "frame-board",
+          "sha256": "525b3411dd9c4193edeef70606bd47a659470c46f48285ebfe180ddc0f2a1983",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        },
+        {
+          "name": "frame-across",
+          "sha256": "af11f0fc02b3173e5a0f655fa2b0aa182c9304640b1f90c83b466a6e934d737e",
+          "method": "Original PNG; top 176 rows compared with bitmap and colour RAM"
+        }
+      ]
+    }
+  ],
+  "execution_checks": 96,
+  "final_source_identical": true,
+  "limits": "Native acceptance applies to the unchanged final game. Intermediate programs have automated execution evidence, not independent learner review. CPU statement checks are not timing evidence; captures from ordinary frames do not establish original-hardware performance."
+}

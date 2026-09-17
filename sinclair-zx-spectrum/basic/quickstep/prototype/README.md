@@ -2,7 +2,7 @@
 
 Stock 48K PAL Sinclair BASIC. Cross six predictable vehicle lanes, pause on the central dotted blue strip, and reach the green exit at the top. One screen, original UDG artwork, no machine-code helper and deliberate silence.
 
-The user agreed to prototype this direction after Drift, then found the first board too easy and too small. This revision fills 30 × 18 character cells with two banks of three lanes. The user accepted this six-lane version as the BASIC baseline after native play. Its teaching progression is defined in the docs repository; intermediate source checkpoints and authored lessons remain to be developed. Preserve this source for the deferred performance/assembly comparison.
+The user agreed to prototype this direction after Drift, then found the first board too easy and too small. This revision fills 30 × 18 character cells with two banks of three lanes. The user accepted this six-lane version as the BASIC baseline after native play. Eight [executed teaching checkpoints](../teaching/README.md) now support the ten-lesson progression defined in the docs repository. Full lesson prose remains to be authored. Preserve this source for the deferred performance/assembly comparison.
 
 ## Play
 
