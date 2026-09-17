@@ -1,0 +1,196 @@
+{
+  "status": "passed",
+  "checkpoint": {
+    "name": "heading",
+    "source": "heading/drift.bas",
+    "lessons": [
+      2
+    ],
+    "kind": "heading"
+  },
+  "source_sha256": "e62ebcf7df5a0d0873703464be403d0b8b69b60bf481c90d4511d652c2b470db",
+  "tape_sha256": "e68f6a289964bc9a3571c354ac89a9748ab78328a7240f60dacf4a68090bfc5d",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "checks": [
+    "fresh-ROM-tape-load-and-stored-lines",
+    "eight-headings-return-to-identical-bitmap",
+    "clockwise-wrap-and-erasure",
+    "heading-and-unused-keys-do-not-move-position",
+    "heading-restart"
+  ],
+  "trace": [
+    {
+      "key": "o",
+      "h": 3,
+      "x": 48,
+      "y": 56,
+      "steps": 4,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "o",
+      "h": 4,
+      "x": 48,
+      "y": 56,
+      "steps": 5,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "o",
+      "h": 5,
+      "x": 48,
+      "y": 56,
+      "steps": 6,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "o",
+      "h": 6,
+      "x": 48,
+      "y": 56,
+      "steps": 7,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "o",
+      "h": 7,
+      "x": 48,
+      "y": 56,
+      "steps": 8,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "o",
+      "h": 8,
+      "x": 48,
+      "y": 56,
+      "steps": 9,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "o",
+      "h": 1,
+      "x": 48,
+      "y": 56,
+      "steps": 10,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "o",
+      "h": 2,
+      "x": 48,
+      "y": 56,
+      "steps": 11,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 1,
+      "x": 48,
+      "y": 56,
+      "steps": 12,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 8,
+      "x": 48,
+      "y": 56,
+      "steps": 13,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 7,
+      "x": 48,
+      "y": 56,
+      "steps": 14,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 6,
+      "x": 48,
+      "y": 56,
+      "steps": 15,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 5,
+      "x": 48,
+      "y": 56,
+      "steps": 16,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 4,
+      "x": 48,
+      "y": 56,
+      "steps": 17,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 3,
+      "x": 48,
+      "y": 56,
+      "steps": 18,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "p",
+      "h": 2,
+      "x": 48,
+      "y": 56,
+      "steps": 19,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": " ",
+      "h": 2,
+      "x": 48,
+      "y": 56,
+      "steps": 20,
+      "crash": false,
+      "win": false
+    },
+    {
+      "key": "x",
+      "h": 2,
+      "x": 48,
+      "y": 56,
+      "steps": 21,
+      "crash": false,
+      "win": false
+    }
+  ],
+  "method": "Fresh ROM-saved tape; keyboard input; read-only state and bitmap comparisons; host vector model."
+}

@@ -1,0 +1,24 @@
+{
+  "status": "Accepted BASIC baseline after native docking with speed/direction feedback; six verified teaching checkpoints support eight lessons.",
+  "source_sha256": "c25fa64ce5b99280ed29659f30b6f589f481772f8b1736127031322e2e2b422c",
+  "tape_sha256": "a309de947a53a722bd1d4004ae0e4d398eeae5291bcf15dd2498cb2f7b6774a7",
+  "tape_blocks": [
+    19,
+    4040
+  ],
+  "checksums": "valid",
+  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "captures": {
+    "arena.png": "6243d695f704b197de3ea45735cd026823e805dfef299de581f51c23df0d04c5",
+    "crash.png": "e89498cf8b58c0aa2ce012f16ca880b4bdfb51ba450ec0cebcc26bc4d57ed124",
+    "docked.png": "bc1d4f767b5939092d681a7bac31d74e21a918f154521d88386cfa7c8983ec12",
+    "instructions.png": "1d788dabe4ef57497293677e68ad5f16af2c7c252fbbfbb31d8a060da6bfb8fb",
+    "velocity.png": "42534a2d6cbea6bf950e1dfc7b9946ea83ecf17d096c51630bc4e19ffaac1551"
+  },
+  "verification": {
+    "results.json": "e4d2c117c58af8c9898d92311f4cf9fe598cb07863820db7174360abeb08a50e",
+    "controls.json": "b517acf93c79ce4b834d3f53f6bed0249608011ce6a16432754bc2023795fd93",
+    "timing.json": "8b9c6799bc43ee72b9228d35f40fdd54890a686b240c40a0baf676036a7917d9"
+  }
+}
