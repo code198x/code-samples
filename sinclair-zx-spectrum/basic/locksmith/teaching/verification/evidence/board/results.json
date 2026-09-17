@@ -1,0 +1,10 @@
+{
+  "name": "board",
+  "source_sha256": "a9310e7fb8b22f77907feac2e43cc6a61b569a5428f6cc584f174e86e13619b2",
+  "checks": [
+    "fresh-ROM-load-stored-line-identity",
+    "static-board-four-empty-cells"
+  ],
+  "trials": [],
+  "state_writes": false
+}

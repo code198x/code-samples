@@ -2,7 +2,7 @@
 
 Crack a four-digit code using digits 1–6. Digits may repeat. Ten guesses, one visible history, and two numeric clues: EXACT counts correct digits in their correct positions; OTHER counts correct digits elsewhere. Each occurrence counts once. Clues apply to the whole guess, not individual positions. Repeated guesses consume an attempt.
 
-The user accepted the native trial: “Locksmith is great”. The maintained source includes a subsequent display-only cleanup: clear stale input advice before revealing the code and use a result label that works for one or several attempts. Rules, scoring, controls and difficulty are unchanged. Replacement teaching checkpoints and lessons are not yet authored.
+The user accepted the native trial: “Locksmith is great”. The maintained source includes a subsequent display-only cleanup: clear stale input advice before revealing the code and use a result label that works for one or several attempts. Rules, scoring, controls and difficulty are unchanged. Seven [executed teaching checkpoints](../teaching/README.md) now support nine planned lessons, preserving this final source. Replacement lesson prose remains to be authored.
 
 ## Play
 

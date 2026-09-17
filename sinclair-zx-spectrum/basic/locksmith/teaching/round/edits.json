@@ -1,0 +1,27 @@
+{
+  "add": [
+    210,
+    430,
+    5000,
+    5010
+  ],
+  "replace": [
+    200,
+    1020,
+    1070,
+    5100,
+    5220
+  ],
+  "delete": [],
+  "enter": [
+    "200 RANDOMIZE: DIM c(4)",
+    "210 FOR i = 1 TO 4: LET c(i) = INT (RND * 6) + 1: NEXT i",
+    "430 IF bulls = 4 THEN GO TO 5000",
+    "1020 PRINT AT 2,1; INK 7; \"Digits 1-6. Repeats allowed.\"",
+    "1070 PRINT AT 21,1; \"ENTER: check  R: new  Q: quit\"",
+    "5000 PRINT AT 17,1; INK 4; \"OPEN! Attempts used: \"; t; \"      \"",
+    "5010 GO TO 5200",
+    "5100 PRINT AT 17,1; INK 6; \"LOCKED. Ten tries used.        \"",
+    "5220 PRINT AT 20,1; \"R: new code   Q: quit          \""
+  ]
+}

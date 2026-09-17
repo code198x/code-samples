@@ -1,0 +1,145 @@
+{
+  "name": "finished",
+  "source_sha256": "0006a16d65447802016ae4597d079fa3b28bb6f6365f79b8075404c8a9d19f9b",
+  "checks": [
+    "fresh-ROM-load-stored-line-identity",
+    "empty-enter-keeps-attempt",
+    "non-digits-and-out-of-range-ignored",
+    "short-guess-retained",
+    "D-ROM-delete-and-empty-delete",
+    "held-digit-enters-once",
+    "four-digit-boundary",
+    "random-code-exact-win",
+    "result-replay-resets-board",
+    "ten-guesses-loss-and-independent-score-model",
+    "result-freezes-guess-history",
+    "quit-from-result",
+    "quit-from-title",
+    "active-reset",
+    "quit-from-play"
+  ],
+  "trials": [
+    {
+      "code": [
+        1,
+        3,
+        3,
+        4
+      ],
+      "guess": "1334",
+      "exact": 4,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "1111",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "2222",
+      "exact": 0,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "2211",
+      "exact": 0,
+      "other": 1
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "1212",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "1234",
+      "exact": 2,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "1112",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "3456",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "2111",
+      "exact": 0,
+      "other": 1
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "1222",
+      "exact": 1,
+      "other": 0
+    },
+    {
+      "code": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "guess": "1122",
+      "exact": 1,
+      "other": 0
+    }
+  ],
+  "state_writes": false
+}

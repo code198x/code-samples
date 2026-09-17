@@ -1,0 +1,18 @@
+{
+  "name": "round",
+  "source": "round/locksmith.bas",
+  "source_sha256": "e4e33cc6065278f5f9696044db03819b9e06a307d10003bfef8479f8195aa2be",
+  "tape_sha256": "d0edd7c78fb4207d6d02692ca16e1c2ac47b2fc1efb94623e7aba8b18f4dd707",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"locksmith\" LINE 10; no injection"
+}

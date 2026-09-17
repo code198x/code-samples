@@ -1,0 +1,49 @@
+{
+  "add": [
+    230,
+    250,
+    260,
+    270,
+    280,
+    290,
+    300,
+    310,
+    320,
+    350,
+    360,
+    400,
+    410,
+    1070,
+    2010,
+    8000,
+    9000,
+    9010
+  ],
+  "replace": [
+    240,
+    1060
+  ],
+  "delete": [],
+  "enter": [
+    "230 GO SUB 9000",
+    "240 GO SUB 2000",
+    "250 LET k$ = INKEY$: IF k$ = \"\" THEN GO TO 250",
+    "260 IF k$ = \"q\" OR k$ = \"Q\" THEN GO TO 8000",
+    "270 IF k$ = \"r\" OR k$ = \"R\" THEN GO TO 200",
+    "280 IF k$ = CHR$ 13 THEN GO TO 400",
+    "290 IF k$ = \"d\" OR k$ = \"D\" OR k$ = CHR$ 12 THEN GO TO 350",
+    "300 IF k$ < \"1\" OR k$ > \"6\" THEN GO TO 230",
+    "310 IF LEN g$ = 4 THEN GO TO 230",
+    "320 LET g$ = g$ + k$: GO TO 230",
+    "350 IF LEN g$ > 0 THEN LET g$ = g$( TO LEN g$ - 1)",
+    "360 GO TO 230",
+    "400 IF LEN g$ <> 4 THEN PRINT AT 18,2; INK 6; \"Enter four digits first.     \": GO TO 230",
+    "410 PRINT AT 18,2; INK 4; \"Four digits ready.          \": GO TO 230",
+    "1060 PRINT AT 20,1; INK 7; \"1-6: digits   D: erase\"",
+    "1070 PRINT AT 21,1; \"ENTER: check  R: clear Q: quit\"",
+    "2010 FOR i = 1 TO LEN g$: PRINT AT 17,5 + 2 * i; PAPER 1; INK 7; g$(i): NEXT i",
+    "8000 PAPER 0: INK 7: BRIGHT 0: PRINT AT 21,1; \"LOCKSMITH finished.           \": STOP",
+    "9000 IF INKEY$ <> \"\" THEN GO TO 9000",
+    "9010 RETURN"
+  ]
+}
