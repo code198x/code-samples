@@ -28,6 +28,13 @@ def choose(pop,grain,land,price,policy='expand'):
     plant=min(acres,2*fed,available-feed)
     return trade,feed,plant
 
+def travellers(pop,grain,land,guests,accept):
+    assert 3<=guests<=6
+    fee=6*guests
+    can=grain>=fee+3*(pop+guests)
+    if accept and can:return pop+guests,grain-fee,land,guests,fee
+    return pop,grain,land,0,0
+
 def main():
     checks=[]
     assert plan(60,360,100,8,0,180,100)=={'fed':60,'acres':100,'left':80,'ok':True};checks.append('initial-ledger')
@@ -54,7 +61,29 @@ def main():
         evidence[policy]={'runs':1000,'no_deaths':sum(r['lost']==0 for r in runs),'empty':sum(r['population']==0 for r in runs),'median_population':statistics.median(r['population'] for r in runs),'median_grain':statistics.median(r['grain'] for r in runs),'median_land':statistics.median(r['land'] for r in runs),'example':next(r for r in runs if r['lost']==0)}
     checks.append('3000-seeded-policy-runs-preserve-resources')
     assert evidence['expand']['no_deaths']>evidence['hold']['no_deaths'];checks.append('active-management-can-improve-on-defaults')
+    assert travellers(60,360,100,4,True)==(64,336,100,4,24);checks.append('welcome-cost-and-population')
+    assert travellers(60,360,100,4,False)==(60,360,100,0,0);checks.append('decline-preserves-resources')
+    assert travellers(60,215,100,4,True)==(60,215,100,0,0);checks.append('cannot-welcome-without-food-budget')
+    assert travellers(60,216,100,4,True)==(64,192,100,4,24);checks.append('exact-welcome-and-food-budget')
+    extended={}
+    for policy in ['decline','welcome']:
+        outcomes=[]
+        for seed in range(1000):
+            rng=random.Random(seed);pop,grain,land=60,360,100;visit=rng.randint(3,5);joined=0;lost=0;offers=0
+            for yr in range(1,31):
+                price=rng.randint(6,10)
+                if yr==visit:
+                    guests=rng.randint(3,6);offers+=1
+                    pop,grain,land,admitted,fee=travellers(pop,grain,land,guests,policy=='welcome');joined+=admitted
+                    next_visit=yr+rng.randint(3,5);assert 3<=next_visit-yr<=5;visit=next_visit
+                t,f,a=choose(pop,grain,land,price)
+                pop,grain,land,deaths,newcomers=resolve(pop,grain,land,price,t,f,a,rng.randint(2,5));lost+=deaths
+                assert min(pop,grain,land)>=0
+                if not pop:break
+            outcomes.append((yr,pop,grain,land,joined,lost,offers))
+        extended[policy]={'runs':1000,'completed_30_years':sum(r[0]==30 and r[1]>0 for r in outcomes),'no_deaths':sum(r[5]==0 for r in outcomes),'median_population':statistics.median(r[1] for r in outcomes),'median_grain':statistics.median(r[2] for r in outcomes),'max_food':max(3*r[1] for r in outcomes),'max_land':max(r[3] for r in outcomes)}
+    checks.append('2000-thirty-year-event-runs-preserve-resources')
     out=ROOT/'verification/evidence/model.json'
-    out.write_text(json.dumps({'source_sha256':hashlib.sha256((ROOT/'yearfall.bas').read_bytes()).hexdigest(),'checks':checks,'policies':evidence,'limits':'Python random trials, not Spectrum random sequences, optimal strategy, player success rates or proof that every run is rescuable.'},indent=2)+'\n')
-    print(json.dumps(evidence,indent=2));print('PASS',len(checks),'host model groups')
+    out.write_text(json.dumps({'source_sha256':hashlib.sha256((ROOT/'yearfall.bas').read_bytes()).hexdigest(),'checks':checks,'policies_without_events_10_years':evidence,'extended_30_years':extended,'limits':'Python random trials, not Spectrum random sequences, optimal strategy, player success rates or proof that every run is rescuable.'},indent=2)+'\n')
+    print(json.dumps(extended,indent=2));print('PASS',len(checks),'host model groups')
 if __name__=='__main__':main()

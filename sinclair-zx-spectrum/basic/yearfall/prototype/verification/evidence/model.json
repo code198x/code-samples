@@ -1,5 +1,5 @@
 {
-  "source_sha256": "d6a02782ecaac5a1c6042c969c3c09d18315cd55b51c3ac4fb0a16b169ef32c0",
+  "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
   "checks": [
     "initial-ledger",
     "cannot-sell-unowned-land",
@@ -10,9 +10,14 @@
     "partial-ration-and-no-newcomers",
     "sale-accounted-once",
     "3000-seeded-policy-runs-preserve-resources",
-    "active-management-can-improve-on-defaults"
+    "active-management-can-improve-on-defaults",
+    "welcome-cost-and-population",
+    "decline-preserves-resources",
+    "cannot-welcome-without-food-budget",
+    "exact-welcome-and-food-budget",
+    "2000-thirty-year-event-runs-preserve-resources"
   ],
-  "policies": {
+  "policies_without_events_10_years": {
     "hold": {
       "runs": 1000,
       "no_deaths": 717,
@@ -60,6 +65,26 @@
         "land": 178,
         "lost": 0
       }
+    }
+  },
+  "extended_30_years": {
+    "decline": {
+      "runs": 1000,
+      "completed_30_years": 811,
+      "no_deaths": 811,
+      "median_population": 231.0,
+      "median_grain": 4502.5,
+      "max_food": 693,
+      "max_land": 440
+    },
+    "welcome": {
+      "runs": 1000,
+      "completed_30_years": 644,
+      "no_deaths": 640,
+      "median_population": 291.0,
+      "median_grain": 3731.0,
+      "max_food": 981,
+      "max_land": 624
     }
   },
   "limits": "Python random trials, not Spectrum random sequences, optimal strategy, player success rates or proof that every run is rescuable."

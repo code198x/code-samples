@@ -1,6 +1,7 @@
 10 BORDER 0: PAPER 0: INK 7: CLS
 20 PRINT AT 3,10; INK 6; BRIGHT 1; "YEARFALL"
-30 PRINT AT 6,2; "Ten years. One settlement."
+30 PRINT AT 6,1; "One settlement. Keep it alive."
+35 PRINT AT 7,2; "Review every ten years."
 40 PRINT AT 8,2; "Feed people. Plant a harvest."
 50 PRINT AT 9,2; "Keep grain for a poor year."
 60 PRINT AT 11,2; "Each person needs 3 grain."
@@ -14,7 +15,9 @@
 130 IF k$<>"s" AND k$<>"S" THEN GO TO 110
 140 RANDOMIZE
 200 LET pop=60: LET grain=360: LET land=100: LET yr=1: LET lost=0
-210 LET price=6+INT (RND*5)
+201 LET joined=0: LET visit=3+INT (RND*3)
+210 LET welcome=0: LET admitted=0: LET price=6+INT (RND*5)
+215 IF yr=visit THEN GO TO 7000
 220 LET trade=0: LET feed=3*pop
 230 IF feed>grain THEN LET feed=grain
 240 LET plant=land
@@ -29,7 +32,7 @@
 340 IF k$="f" OR k$="F" THEN LET edit=2: GO SUB 6000: GO TO 270
 350 IF k$="p" OR k$="P" THEN LET edit=3: GO SUB 6000: GO TO 270
 360 IF k$<>" " OR ok=0 THEN GO TO 300
-400 LET oldpop=pop: LET oldgrain=grain: LET oldland=land
+400 LET oldpop=pop-admitted: LET oldgrain=grain+welcome: LET oldland=land
 410 LET land=land+trade: LET grain=left
 420 LET deaths=pop-fed: LET lost=lost+deaths: LET pop=fed
 430 LET crop=2+INT (RND*4): LET harvest=plant*crop: LET grain=grain+harvest
@@ -41,7 +44,7 @@
 510 IF k$="q" OR k$="Q" THEN STOP
 520 IF k$="r" OR k$="R" THEN GO TO 200
 530 IF k$<>" " THEN GO TO 500
-540 IF yr=10 OR pop=0 THEN GO TO 5000
+540 IF yr/10=INT (yr/10) OR pop=0 THEN GO TO 5000
 550 LET yr=yr+1: GO TO 210
 2000 LET fed=INT (feed/3)
 2010 IF fed>pop THEN LET fed=pop
@@ -54,7 +57,7 @@
 2070 IF plant>acres THEN LET ok=0: LET m$="Planting exceeds your land."
 2080 IF acres<0 THEN LET ok=0: LET m$="You cannot sell that much land."
 2090 CLS
-2100 PRINT AT 0,1; INK 6; BRIGHT 1; "YEARFALL"; AT 0,20; "YEAR ";yr;"/10"
+2100 PRINT AT 0,1; INK 6; BRIGHT 1; "YEARFALL"; AT 0,20; "YEAR ";yr
 2110 PRINT AT 2,1; INK 5; "PEOPLE ";pop; AT 2,17; "LAND ";land
 2120 PRINT AT 3,1; INK 5; "GRAIN  ";grain; AT 3,17; "PRICE ";price
 2130 PRINT AT 5,1; INK 4; "PLAN"; AT 5,17; "AMOUNT"; AT 5,25; "COST"
@@ -87,9 +90,10 @@
 4060 PRINT AT 8,1; "Food spent"; AT 8,23;feed
 4070 PRINT AT 9,1; "Seed spent"; AT 9,23;plant
 4080 PRINT AT 10,1; "Harvest added"; AT 10,23;harvest
+4085 PRINT AT 11,1; "Welcome spent"; AT 11,23;welcome
 4090 PRINT AT 12,1; INK 6; "Grain in store"; AT 12,23;grain
 4100 PRINT AT 14,1; "People lost: ";deaths
-4110 PRINT AT 15,1; "Newcomers: ";newcomers
+4110 PRINT AT 15,1; "Growth: ";newcomers;"   Guests: ";admitted
 4120 PRINT AT 16,1; INK 5; "People ";oldpop;" -> ";pop
 4130 PRINT AT 17,1; INK 5; "Land   ";oldland;" -> ";land
 4140 PRINT AT 19,1; "SPACE continues. R restarts."
@@ -102,16 +106,19 @@
 5040 PRINT AT 8,2; "Grain:  ";grain
 5050 PRINT AT 9,2; "Land:   ";land
 5060 PRINT AT 11,2; "People lost over run: ";lost
+5065 PRINT AT 12,2; "Travellers welcomed: ";joined
 5070 LET m$="A settlement still standing."
-5080 IF lost=0 THEN LET m$="Ten years. Nobody starved."
+5080 IF lost=0 THEN LET m$="Nobody has starved."
 5090 IF lost=0 AND grain>=3*pop THEN LET m$="Growing, with grain in reserve."
 5100 IF pop=0 THEN LET m$="The settlement is empty."
 5110 PRINT AT 14,1; INK 6;m$
 5120 IF pop>0 THEN PRINT AT 16,2; "Next year's food: ";3*pop
-5130 PRINT AT 19,2; "R restarts. Q quits."
+5125 IF pop>0 THEN PRINT AT 18,1; INK 5; "C continues ruling."
+5130 PRINT AT 19,1; "R new settlement. Q quits."
 5140 GO SUB 8000
 5150 IF k$="q" OR k$="Q" THEN STOP
 5160 IF k$="r" OR k$="R" THEN GO TO 200
+5165 IF (k$="c" OR k$="C") AND pop>0 THEN GO TO 550
 5170 GO TO 5140
 6000 LET d$="": LET a$="Buy acres"
 6005 IF edit=4 THEN LET a$="Sell acres"
@@ -135,6 +142,31 @@
 6220 IF edit=2 THEN LET feed=value
 6230 IF edit=3 THEN LET plant=value
 6240 RETURN
+7000 LET guests=3+INT (RND*4): LET fee=6*guests: LET food=3*(pop+guests)
+7010 LET can=0: IF grain>=fee+food THEN LET can=1
+7020 CLS: PRINT AT 0,1; INK 6; BRIGHT 1; "YEARFALL"; AT 0,20; "YEAR ";yr
+7030 PRINT AT 2,1; INK 5; "TRAVELLERS AT THE GATE"
+7040 PRINT AT 4,1;guests;" people ask to settle here."
+7050 PRINT AT 6,1; "Welcome costs ";fee;" grain."
+7060 PRINT AT 7,1; "Grain now: ";grain
+7070 PRINT AT 8,1; "After welcome: ";grain-fee
+7080 PRINT AT 10,1; "People: ";pop;" -> ";pop+guests
+7090 PRINT AT 11,1; "Food this year: ";food;" grain"
+7100 PRINT AT 13,1; "They can work this year if fed."
+7110 PRINT AT 14,1; "Each can farm 2 acres."
+7120 PRINT AT 16,1; "Declining costs you nothing."
+7130 IF can=1 THEN PRINT AT 18,1; INK 6; "Y welcome. N decline."
+7140 IF can=0 THEN PRINT AT 18,1; INK 6; "Welcome + food unaffordable."
+7150 IF can=0 THEN PRINT AT 19,1; "N declines."
+7160 PRINT AT 20,1; "R restarts. Q quits."
+7170 GO SUB 8000
+7180 IF k$="q" OR k$="Q" THEN STOP
+7190 IF k$="r" OR k$="R" THEN GO TO 200
+7200 IF k$="n" OR k$="N" THEN GO TO 7240
+7210 IF (k$<>"y" AND k$<>"Y") OR can=0 THEN GO TO 7170
+7220 LET grain=grain-fee: LET pop=pop+guests
+7230 LET welcome=fee: LET admitted=guests: LET joined=joined+guests
+7240 LET visit=yr+3+INT (RND*3): GO TO 220
 8000 IF INKEY$<>"" THEN GO TO 8000
 8010 LET k$=INKEY$
 8020 IF k$="" THEN GO TO 8010

@@ -1,5 +1,5 @@
 {
-  "source_sha256": "d6a02782ecaac5a1c6042c969c3c09d18315cd55b51c3ac4fb0a16b169ef32c0",
+  "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
   "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
   "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200",
   "checks": [
@@ -26,11 +26,22 @@
     "partial-ration-costs-one-person-and-no-newcomers",
     "report-does-not-advance-with-invalid-key",
     "year-state-persists",
-    "ten-year-managed-run-and-every-ledger",
-    "finite-run-summary",
-    "summary-is-stable",
+    "thirty-year-managed-run-and-every-ledger",
+    "decade-summaries-preserve-settlement-and-history",
+    "continue-and-uppercase-continue-advance-one-year",
+    "held-continue-does-not-harvest",
+    "decline-preserves-people-grain-and-land",
+    "welcome-charges-once-and-adds-workers",
+    "event-cost-and-food-preview-match-plan",
+    "held-welcome-is-one-acceptance",
+    "traveller-visits-are-three-to-five-years-apart",
+    "welcome-is-accounted-in-harvest-report",
+    "unaffordable-welcome-and-invalid-keys-preserve-state",
+    "restart-from-offer-clears-history",
+    "quit-from-offer",
     "held-harvest-does-not-skip-report",
     "empty-settlement-ending",
+    "empty-settlement-cannot-continue",
     "quit-ending",
     "uppercase-menu-and-reset",
     "quit-planning",
@@ -66,16 +77,16 @@
         360,
         100
       ],
-      "price": 10,
+      "price": 9,
       "plan": [
         5,
         180,
         105
       ],
-      "yield": 3,
+      "yield": 2,
       "result": [
         63,
-        340,
+        240,
         105,
         0,
         3
@@ -88,16 +99,16 @@
         360,
         100
       ],
-      "price": 6,
+      "price": 8,
       "plan": [
         -10,
         180,
         90
       ],
-      "yield": 3,
+      "yield": 5,
       "result": [
         63,
-        420,
+        620,
         90,
         0,
         3
@@ -110,16 +121,16 @@
         360,
         100
       ],
-      "price": 8,
+      "price": 9,
       "plan": [
         0,
         179,
         100
       ],
-      "yield": 3,
+      "yield": 5,
       "result": [
         59,
-        381,
+        581,
         100,
         1,
         0
@@ -132,17 +143,17 @@
         360,
         100
       ],
-      "price": 6,
+      "price": 8,
       "plan": [
-        11,
+        8,
         180,
-        111
+        108
       ],
-      "yield": 4,
+      "yield": 5,
       "result": [
         63,
-        447,
-        111,
+        548,
+        108,
         0,
         3
       ]
@@ -151,20 +162,20 @@
       "year": 2,
       "start": [
         63,
-        447,
-        111
+        548,
+        108
       ],
-      "price": 10,
+      "price": 7,
       "plan": [
-        13,
+        18,
         189,
-        124
+        126
       ],
-      "yield": 2,
+      "yield": 5,
       "result": [
         66,
-        252,
-        124,
+        737,
+        126,
         0,
         3
       ]
@@ -173,20 +184,20 @@
       "year": 3,
       "start": [
         66,
-        252,
-        124
+        737,
+        126
       ],
-      "price": 10,
+      "price": 8,
       "plan": [
-        -7,
+        6,
         198,
-        117
+        132
       ],
       "yield": 3,
       "result": [
         69,
-        358,
-        117,
+        755,
+        132,
         0,
         3
       ]
@@ -195,20 +206,20 @@
       "year": 4,
       "start": [
         69,
-        358,
-        117
+        755,
+        132
       ],
-      "price": 9,
+      "price": 7,
       "plan": [
-        3,
+        6,
         207,
-        120
+        138
       ],
-      "yield": 4,
+      "yield": 5,
       "result": [
         72,
-        484,
-        120,
+        1058,
+        138,
         0,
         3
       ]
@@ -217,20 +228,20 @@
       "year": 5,
       "start": [
         72,
-        484,
-        120
+        1058,
+        138
       ],
-      "price": 8,
+      "price": 10,
       "plan": [
-        16,
+        6,
         216,
-        136
+        144
       ],
-      "yield": 3,
+      "yield": 4,
       "result": [
         75,
-        412,
-        136,
+        1214,
+        144,
         0,
         3
       ]
@@ -239,20 +250,20 @@
       "year": 6,
       "start": [
         75,
-        412,
-        136
+        1214,
+        144
       ],
-      "price": 10,
+      "price": 6,
       "plan": [
-        4,
+        6,
         225,
-        140
+        150
       ],
       "yield": 5,
       "result": [
         78,
-        707,
-        140,
+        1553,
+        150,
         0,
         3
       ]
@@ -260,43 +271,43 @@
     {
       "year": 7,
       "start": [
-        78,
-        707,
-        140
+        81,
+        1535,
+        150
       ],
-      "price": 9,
+      "price": 7,
       "plan": [
-        16,
-        234,
-        156
+        12,
+        243,
+        162
       ],
       "yield": 2,
       "result": [
-        81,
-        485,
-        156,
+        85,
+        1370,
+        162,
         0,
-        3
+        4
       ]
     },
     {
       "year": 8,
       "start": [
-        81,
-        485,
-        156
-      ],
-      "price": 10,
-      "plan": [
-        6,
-        243,
+        85,
+        1370,
         162
       ],
-      "yield": 3,
+      "price": 8,
+      "plan": [
+        8,
+        255,
+        170
+      ],
+      "yield": 2,
       "result": [
-        85,
-        506,
-        162,
+        89,
+        1221,
+        170,
         0,
         4
       ]
@@ -304,33 +315,11 @@
     {
       "year": 9,
       "start": [
-        85,
-        506,
-        162
-      ],
-      "price": 6,
-      "plan": [
-        8,
-        255,
+        89,
+        1221,
         170
       ],
-      "yield": 3,
-      "result": [
-        89,
-        543,
-        170,
-        0,
-        4
-      ]
-    },
-    {
-      "year": 10,
-      "start": [
-        89,
-        543,
-        170
-      ],
-      "price": 7,
+      "price": 9,
       "plan": [
         8,
         267,
@@ -339,10 +328,560 @@
       "yield": 3,
       "result": [
         93,
-        576,
+        1238,
         178,
         0,
         4
+      ]
+    },
+    {
+      "year": 10,
+      "start": [
+        93,
+        1238,
+        178
+      ],
+      "price": 6,
+      "plan": [
+        8,
+        279,
+        186
+      ],
+      "yield": 3,
+      "result": [
+        97,
+        1283,
+        186,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 11,
+      "start": [
+        101,
+        1259,
+        186
+      ],
+      "price": 8,
+      "plan": [
+        16,
+        303,
+        202
+      ],
+      "yield": 4,
+      "result": [
+        106,
+        1434,
+        202,
+        0,
+        5
+      ]
+    },
+    {
+      "year": 12,
+      "start": [
+        106,
+        1434,
+        202
+      ],
+      "price": 7,
+      "plan": [
+        10,
+        318,
+        212
+      ],
+      "yield": 5,
+      "result": [
+        111,
+        1894,
+        212,
+        0,
+        5
+      ]
+    },
+    {
+      "year": 13,
+      "start": [
+        111,
+        1894,
+        212
+      ],
+      "price": 7,
+      "plan": [
+        10,
+        333,
+        222
+      ],
+      "yield": 2,
+      "result": [
+        116,
+        1713,
+        222,
+        0,
+        5
+      ]
+    },
+    {
+      "year": 14,
+      "start": [
+        116,
+        1713,
+        222
+      ],
+      "price": 8,
+      "plan": [
+        10,
+        348,
+        232
+      ],
+      "yield": 5,
+      "result": [
+        121,
+        2213,
+        232,
+        0,
+        5
+      ]
+    },
+    {
+      "year": 15,
+      "start": [
+        127,
+        2177,
+        232
+      ],
+      "price": 8,
+      "plan": [
+        22,
+        381,
+        254
+      ],
+      "yield": 2,
+      "result": [
+        133,
+        1874,
+        254,
+        0,
+        6
+      ]
+    },
+    {
+      "year": 16,
+      "start": [
+        133,
+        1874,
+        254
+      ],
+      "price": 10,
+      "plan": [
+        12,
+        399,
+        266
+      ],
+      "yield": 5,
+      "result": [
+        139,
+        2419,
+        266,
+        0,
+        6
+      ]
+    },
+    {
+      "year": 17,
+      "start": [
+        139,
+        2419,
+        266
+      ],
+      "price": 7,
+      "plan": [
+        12,
+        417,
+        278
+      ],
+      "yield": 5,
+      "result": [
+        145,
+        3030,
+        278,
+        0,
+        6
+      ]
+    },
+    {
+      "year": 18,
+      "start": [
+        145,
+        3030,
+        278
+      ],
+      "price": 7,
+      "plan": [
+        12,
+        435,
+        290
+      ],
+      "yield": 4,
+      "result": [
+        152,
+        3381,
+        290,
+        0,
+        7
+      ]
+    },
+    {
+      "year": 19,
+      "start": [
+        152,
+        3381,
+        290
+      ],
+      "price": 6,
+      "plan": [
+        14,
+        456,
+        304
+      ],
+      "yield": 3,
+      "result": [
+        159,
+        3449,
+        304,
+        0,
+        7
+      ]
+    },
+    {
+      "year": 20,
+      "start": [
+        162,
+        3431,
+        304
+      ],
+      "price": 7,
+      "plan": [
+        20,
+        486,
+        324
+      ],
+      "yield": 5,
+      "result": [
+        170,
+        4101,
+        324,
+        0,
+        8
+      ]
+    },
+    {
+      "year": 21,
+      "start": [
+        170,
+        4101,
+        324
+      ],
+      "price": 9,
+      "plan": [
+        16,
+        510,
+        340
+      ],
+      "yield": 2,
+      "result": [
+        178,
+        3787,
+        340,
+        0,
+        8
+      ]
+    },
+    {
+      "year": 22,
+      "start": [
+        178,
+        3787,
+        340
+      ],
+      "price": 7,
+      "plan": [
+        16,
+        534,
+        356
+      ],
+      "yield": 3,
+      "result": [
+        186,
+        3853,
+        356,
+        0,
+        8
+      ]
+    },
+    {
+      "year": 23,
+      "start": [
+        186,
+        3853,
+        356
+      ],
+      "price": 8,
+      "plan": [
+        16,
+        558,
+        372
+      ],
+      "yield": 4,
+      "result": [
+        195,
+        4283,
+        372,
+        0,
+        9
+      ]
+    },
+    {
+      "year": 24,
+      "start": [
+        200,
+        4253,
+        372
+      ],
+      "price": 7,
+      "plan": [
+        28,
+        600,
+        400
+      ],
+      "yield": 3,
+      "result": [
+        210,
+        4257,
+        400,
+        0,
+        10
+      ]
+    },
+    {
+      "year": 25,
+      "start": [
+        210,
+        4257,
+        400
+      ],
+      "price": 9,
+      "plan": [
+        20,
+        630,
+        420
+      ],
+      "yield": 3,
+      "result": [
+        220,
+        4287,
+        420,
+        0,
+        10
+      ]
+    },
+    {
+      "year": 26,
+      "start": [
+        220,
+        4287,
+        420
+      ],
+      "price": 9,
+      "plan": [
+        20,
+        660,
+        440
+      ],
+      "yield": 3,
+      "result": [
+        231,
+        4327,
+        440,
+        0,
+        11
+      ]
+    },
+    {
+      "year": 27,
+      "start": [
+        236,
+        4297,
+        440
+      ],
+      "price": 6,
+      "plan": [
+        32,
+        708,
+        472
+      ],
+      "yield": 4,
+      "result": [
+        247,
+        4813,
+        472,
+        0,
+        11
+      ]
+    },
+    {
+      "year": 28,
+      "start": [
+        247,
+        4813,
+        472
+      ],
+      "price": 10,
+      "plan": [
+        22,
+        741,
+        494
+      ],
+      "yield": 4,
+      "result": [
+        259,
+        5334,
+        494,
+        0,
+        12
+      ]
+    },
+    {
+      "year": 29,
+      "start": [
+        259,
+        5334,
+        494
+      ],
+      "price": 6,
+      "plan": [
+        24,
+        777,
+        518
+      ],
+      "yield": 5,
+      "result": [
+        271,
+        6485,
+        518,
+        0,
+        12
+      ]
+    },
+    {
+      "year": 30,
+      "start": [
+        271,
+        6485,
+        518
+      ],
+      "price": 8,
+      "plan": [
+        24,
+        813,
+        542
+      ],
+      "yield": 4,
+      "result": [
+        284,
+        7106,
+        542,
+        0,
+        13
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 8,
+      "plan": [
+        -100,
+        180,
+        0
+      ],
+      "yield": 5,
+      "result": [
+        63,
+        980,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 2,
+      "start": [
+        63,
+        980,
+        0
+      ],
+      "price": 7,
+      "plan": [
+        0,
+        980,
+        0
+      ],
+      "yield": 5,
+      "result": [
+        66,
+        0,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 8,
+      "plan": [
+        -100,
+        180,
+        0
+      ],
+      "yield": 5,
+      "result": [
+        63,
+        980,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 2,
+      "start": [
+        63,
+        980,
+        0
+      ],
+      "price": 7,
+      "plan": [
+        0,
+        980,
+        0
+      ],
+      "yield": 5,
+      "result": [
+        66,
+        0,
+        0,
+        0,
+        3
       ]
     },
     {
@@ -358,7 +897,7 @@
         0,
         0
       ],
-      "yield": 2,
+      "yield": 5,
       "result": [
         0,
         360,
@@ -374,19 +913,147 @@
         360,
         100
       ],
-      "price": 10,
+      "price": 9,
       "plan": [
         0,
         180,
         100
       ],
-      "yield": 4,
+      "yield": 2,
       "result": [
         63,
-        480,
+        280,
         100,
         0,
         3
+      ]
+    }
+  ],
+  "events": [
+    {
+      "year": 3,
+      "guests": 5,
+      "accepted": false,
+      "fee": 30,
+      "before": [
+        66,
+        737,
+        126
+      ],
+      "after": [
+        66,
+        737,
+        126,
+        0,
+        0
+      ]
+    },
+    {
+      "year": 7,
+      "guests": 3,
+      "accepted": true,
+      "fee": 18,
+      "before": [
+        78,
+        1553,
+        150
+      ],
+      "after": [
+        81,
+        1535,
+        150,
+        3,
+        18
+      ]
+    },
+    {
+      "year": 11,
+      "guests": 4,
+      "accepted": true,
+      "fee": 24,
+      "before": [
+        97,
+        1283,
+        186
+      ],
+      "after": [
+        101,
+        1259,
+        186,
+        4,
+        24
+      ]
+    },
+    {
+      "year": 15,
+      "guests": 6,
+      "accepted": true,
+      "fee": 36,
+      "before": [
+        121,
+        2213,
+        232
+      ],
+      "after": [
+        127,
+        2177,
+        232,
+        6,
+        36
+      ]
+    },
+    {
+      "year": 20,
+      "guests": 3,
+      "accepted": true,
+      "fee": 18,
+      "before": [
+        159,
+        3449,
+        304
+      ],
+      "after": [
+        162,
+        3431,
+        304,
+        3,
+        18
+      ]
+    },
+    {
+      "year": 24,
+      "guests": 5,
+      "accepted": true,
+      "fee": 30,
+      "before": [
+        195,
+        4283,
+        372
+      ],
+      "after": [
+        200,
+        4253,
+        372,
+        5,
+        30
+      ]
+    },
+    {
+      "year": 27,
+      "guests": 5,
+      "accepted": true,
+      "fee": 30,
+      "before": [
+        231,
+        4327,
+        440
+      ],
+      "after": [
+        236,
+        4297,
+        440,
+        5,
+        30
       ]
     }
   ],
