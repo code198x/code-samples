@@ -1,0 +1,291 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; executable identities in each checkpoint record",
+  "checkpoints": [
+    {
+      "name": "board",
+      "source_sha256": "256140479571a8e4600aa61fcf0e1033f0c31699812edf41590271a9155a864f",
+      "tape_sha256": "a18fed71fc2d46ddfa1c8006bcf57cf0fa22e1fffe49cc31e2d0e921a9e55ffa",
+      "checks": [
+        "fresh-tape-numbered-board-stop",
+        "stored-line-identity"
+      ],
+      "captures": {
+        "board.png": "ba879becc22e2dba35d2608d0d72707c38961697577af77d938e95a15a9988be"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "place",
+      "source_sha256": "dde1246d203ac9b5c38a7b1ef996704ebaba08a7c2f6f6aedfb83b901e243a28",
+      "tape_sha256": "f450d0918bd9d9b69962fd002e230852f93dfb5e7fddb7c7c51308691b0bd484",
+      "checks": [
+        "fresh-tape-empty-board",
+        "stored-line-identity",
+        "invalid-keys",
+        "held-key-places-once",
+        "occupied-key",
+        "reset",
+        "nine-crosses",
+        "quit"
+      ],
+      "captures": {
+        "board.png": "8b9994f14e1a30f384440dddbf2357a8c7eb4a33c6f46592f93c0a873cf32b65",
+        "marks.png": "d5e1bc24df673b2a1bc2ab460afd2df4ca6f9519eb8006d8de43016817ecae00"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "turns",
+      "source_sha256": "869df1e80e04be9410357898b1105caef8ce5f2f2970f4622fe220595203aa00",
+      "tape_sha256": "99db08ac0f4a22d797f2561edffb73b9beae68b0800ec7f3d8de10c417326ac0",
+      "checks": [
+        "fresh-tape-empty-board",
+        "stored-line-identity",
+        "invalid-keys",
+        "held-key-places-once",
+        "occupied-key",
+        "reset",
+        "alternating-turns-and-stable-ending",
+        "full-board-draw-or-practice-stop",
+        "quit"
+      ],
+      "captures": {
+        "board.png": "bad4eadfccffe6dc7f8f50c2a3a372903e89bced28b934ffa9a0acb9aab28fcf",
+        "draw.png": "8b08f00def9180b7e8dbbbc5edac7189c3bd101256588185f1917964aa787412",
+        "result.png": "fe747e50a50724faa4111a03b4afdab10477aee30c98fda2c7d9fb188dcb5a01"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "results",
+      "source_sha256": "51dd53d9a8fe82249f38f3be653afebfdddf1677f2d1c198ac9693241e532278",
+      "tape_sha256": "32492cb0ad8d4e1581592a7c573674160a0867a59f0af6e5ee43218923cc30b6",
+      "checks": [
+        "fresh-tape-empty-board",
+        "stored-line-identity",
+        "invalid-keys",
+        "held-key-places-once",
+        "occupied-key",
+        "reset",
+        "alternating-turns-and-stable-ending",
+        "full-board-draw-or-practice-stop",
+        "quit",
+        "sixteen-explicit-ROM-diagnostic-winning-lines",
+        "ROM-diagnostic-last-cell-win-before-draw"
+      ],
+      "captures": {
+        "board.png": "bad4eadfccffe6dc7f8f50c2a3a372903e89bced28b934ffa9a0acb9aab28fcf",
+        "draw.png": "2d649a3e5965f82fc7dc243c501465666880f1d6b7d782258fc2fdc0015bebaf",
+        "result.png": "ac0e5f8fe95f715951a101969656f4bf97c80e4cf870ae55a22013d954ce2d6d"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "reply",
+      "source_sha256": "c2881604c306db9f507c8d281d1c78646b99a5bf8e6d878d4889825b6b6bd130",
+      "tape_sha256": "5d2c307ee667c79ba4e01bb7184d4455383069ce95ec7c1f300c7d07db3fc9fa",
+      "checks": [
+        "fresh-tape-empty-board",
+        "stored-line-identity",
+        "invalid-keys",
+        "held-key-places-once",
+        "occupied-key",
+        "reset",
+        "legal-opponent-path-reasons-and-result",
+        "quit",
+        "sixteen-explicit-ROM-diagnostic-winning-lines"
+      ],
+      "captures": {
+        "board.png": "12ae5b8ed02925773d09d05189ec9a85b367b746a17034cce18663b268f290b1",
+        "result.png": "fc8d4f3cdbcd2212707b5a24a283c43d956cfcf3a92a0d64065ec3eb1544e622"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "tactics",
+      "source_sha256": "f689a06905f7be3fa4ac17e346d37f3b89e9e305a8810971e0688b36e6044a28",
+      "tape_sha256": "94331b02158e48841b08cfff0c93af5eebf4f3b285bd4a2c8842bd51e23a7db0",
+      "checks": [
+        "fresh-tape-empty-board",
+        "stored-line-identity",
+        "invalid-keys",
+        "held-key-places-once",
+        "occupied-key",
+        "reset",
+        "legal-opponent-path-reasons-and-result",
+        "lesson-winning-trace-prioritises-win-over-block",
+        "quit",
+        "sixteen-explicit-ROM-diagnostic-winning-lines",
+        "ROM-diagnostic-win-before-block"
+      ],
+      "captures": {
+        "board.png": "12ae5b8ed02925773d09d05189ec9a85b367b746a17034cce18663b268f290b1",
+        "result.png": "d43670de7d262481f681129ed2b7d9802c0c0e883b136e2625776db820a509c1"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "policy",
+      "source_sha256": "ad203e2ab9079c6d81bfff64cb83ec195dec42032a74a850baeb3adfcc36b9b0",
+      "tape_sha256": "90c975c02cded0bdcb035edb1354436022e75a83d088b015a0dca6a80e6b1272",
+      "checks": [
+        "fresh-tape-empty-board",
+        "stored-line-identity",
+        "invalid-keys",
+        "held-key-places-once",
+        "occupied-key",
+        "reset",
+        "legal-opponent-path-reasons-and-result",
+        "lesson-centre-opening-corner-response",
+        "quit",
+        "sixteen-explicit-ROM-diagnostic-winning-lines",
+        "ROM-diagnostic-win-before-block"
+      ],
+      "captures": {
+        "board.png": "12ae5b8ed02925773d09d05189ec9a85b367b746a17034cce18663b268f290b1",
+        "result.png": "8fad4d2e7cc09b8659d5a243994033f786a49e5b0dda63d5ffdfba585749de7f"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "finished",
+      "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+      "tape_sha256": "80efd76abce06293849f8269661cc744cc7953595103778d86d17b7d18493091",
+      "checks": [
+        "fresh-ROM-tape-load-source-identity",
+        "title-invalid-key-and-quit",
+        "invalid-keys-preserve-empty-board",
+        "held-key-across-computer-turn-places-once",
+        "occupied-cell-rejected",
+        "unfinished-reset-preserves-starter-and-score",
+        "retained-fork-wins-final-board-visible",
+        "result-input-does-not-score-twice",
+        "completed-replay-alternates-unfinished-restart-does-not",
+        "legal-model-path-1-reason-centre",
+        "legal-model-path-1-reason-block",
+        "legal-model-path-1-win-before-block",
+        "legal-model-path-1-reason-corner",
+        "legal-model-path-1-draw",
+        "legal-model-path-1-O-line-2",
+        "legal-model-path-1-O-line-5",
+        "legal-model-path-1-O-line-6",
+        "legal-model-path-1-X",
+        "legal-model-path-1-O-line-7",
+        "legal-model-path-1-O-line-4",
+        "legal-model-path-1-X-line-6",
+        "legal-model-path-1-O-line-1",
+        "legal-model-path-1-O-line-3",
+        "legal-model-path-1-reason-edge",
+        "legal-model-path-2-reason-centre",
+        "legal-model-path-2-reason-corner",
+        "legal-model-path-2-reason-win",
+        "legal-model-path-2-win-before-block",
+        "legal-model-path-2-reason-block",
+        "legal-model-path-2-O-line-2",
+        "legal-model-path-2-reason-edge",
+        "legal-model-path-2-O-line-7",
+        "legal-model-path-2-O-line-1",
+        "legal-model-path-2-O-line-5",
+        "legal-model-path-2-O-line-4",
+        "quit-after-play-or-result",
+        "quit-from-play",
+        "sixteen-ROM-command-line-diagnostic-winning-lines",
+        "ROM-diagnostic-last-cell-win-precedes-draw",
+        "quit-from-result"
+      ],
+      "captures": {
+        "board.png": "d32521f70e8917cf2818018b0c869724f8680859886d2ada7803d42aa8cac792",
+        "computer-start.png": "f19fc69ad725b589be6440732b06257f86ea33877404622ee010d182cb7ca323",
+        "draw.png": "d08275f799781df06ef786154637a7980a8790ecd8dfce5e26033414078ae813",
+        "fork.png": "1efd4deeaffc3af962e8b4e333504084fd7c624e1aee8b0b3d94df4a1f707d23",
+        "title.png": "4db7b7f06c2abee587fef0da40098fa21b32c85f6e4f8d136689206c35dfe5dd",
+        "win.png": "4fe6b1eeae8e6f9b9fb6ce9b58a0b07f2398aea73a08890fa7a9e1c60437daee"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    }
+  ],
+  "execution_checks": 101,
+  "final_source_identical": true,
+  "limits": "Native acceptance applies to the final game. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
+}

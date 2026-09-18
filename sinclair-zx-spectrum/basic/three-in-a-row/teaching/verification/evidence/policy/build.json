@@ -1,0 +1,18 @@
+{
+  "name": "policy",
+  "source": "policy/three.bas",
+  "source_sha256": "ad203e2ab9079c6d81bfff64cb83ec195dec42032a74a850baeb3adfcc36b9b0",
+  "tape_sha256": "90c975c02cded0bdcb035edb1354436022e75a83d088b015a0dca6a80e6b1272",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "place",
+  "source_sha256": "dde1246d203ac9b5c38a7b1ef996704ebaba08a7c2f6f6aedfb83b901e243a28",
+  "checks": [
+    "fresh-tape-empty-board",
+    "stored-line-identity",
+    "invalid-keys",
+    "held-key-places-once",
+    "occupied-key",
+    "reset",
+    "nine-crosses",
+    "quit"
+  ],
+  "configuration": "48K PAL; fresh tape load; ordinary key play",
+  "direct_memory_writes": false,
+  "diagnostics": "Winning-line and priority fixtures entered as ordinary DIM/LET after STOP; not public captures."
+}

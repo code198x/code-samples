@@ -1,0 +1,20 @@
+{
+  "name": "tactics",
+  "source_sha256": "f689a06905f7be3fa4ac17e346d37f3b89e9e305a8810971e0688b36e6044a28",
+  "checks": [
+    "fresh-tape-empty-board",
+    "stored-line-identity",
+    "invalid-keys",
+    "held-key-places-once",
+    "occupied-key",
+    "reset",
+    "legal-opponent-path-reasons-and-result",
+    "lesson-winning-trace-prioritises-win-over-block",
+    "quit",
+    "sixteen-explicit-ROM-diagnostic-winning-lines",
+    "ROM-diagnostic-win-before-block"
+  ],
+  "configuration": "48K PAL; fresh tape load; ordinary key play",
+  "direct_memory_writes": false,
+  "diagnostics": "Winning-line and priority fixtures entered as ordinary DIM/LET after STOP; not public captures."
+}

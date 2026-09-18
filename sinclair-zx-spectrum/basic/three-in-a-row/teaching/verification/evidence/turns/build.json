@@ -1,0 +1,18 @@
+{
+  "name": "turns",
+  "source": "turns/three.bas",
+  "source_sha256": "869df1e80e04be9410357898b1105caef8ce5f2f2970f4622fe220595203aa00",
+  "tape_sha256": "99db08ac0f4a22d797f2561edffb73b9beae68b0800ec7f3d8de10c417326ac0",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+}

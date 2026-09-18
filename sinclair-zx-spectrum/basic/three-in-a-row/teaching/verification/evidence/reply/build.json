@@ -1,0 +1,18 @@
+{
+  "name": "reply",
+  "source": "reply/three.bas",
+  "source_sha256": "c2881604c306db9f507c8d281d1c78646b99a5bf8e6d878d4889825b6b6bd130",
+  "tape_sha256": "5d2c307ee667c79ba4e01bb7184d4455383069ce95ec7c1f300c7d07db3fc9fa",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+}

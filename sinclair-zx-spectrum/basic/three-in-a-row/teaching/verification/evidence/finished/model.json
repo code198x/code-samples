@@ -1,0 +1,1211 @@
+{
+  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "method": "All legal human replies; independent line-count policy; no execution or human win-rate claim.",
+  "starters": [
+    {
+      "starter": 1,
+      "terminal_sequences": {
+        "O": 350,
+        "draw": 127,
+        "X": 12
+      },
+      "computer_positions": 247,
+      "priority_counts": {
+        "centre": 8,
+        "block": 78,
+        "win": 125,
+        "corner": 34,
+        "edge": 2
+      },
+      "examples": {
+        "reason-centre": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          }
+        ],
+        "reason-block": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          }
+        ],
+        "win-before-block": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "reason-win": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "O": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "O-line-8": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "reason-corner": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "corner"
+          }
+        ],
+        "draw": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 8,
+            "reason": "player"
+          }
+        ],
+        "draw-line-0": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 8,
+            "reason": "player"
+          }
+        ],
+        "O-line-2": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 6,
+            "reason": "win"
+          }
+        ],
+        "O-line-5": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 3,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 2,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "win"
+          }
+        ],
+        "O-line-6": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 8,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 6,
+            "reason": "win"
+          }
+        ],
+        "X": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 8,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          }
+        ],
+        "X-line-4": [
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 8,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          }
+        ],
+        "O-line-7": [
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 3,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "win"
+          }
+        ],
+        "O-line-4": [
+          {
+            "mark": 1,
+            "cell": 5,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 3,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "win"
+          }
+        ],
+        "X-line-6": [
+          {
+            "mark": 1,
+            "cell": 3,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 9,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          }
+        ],
+        "O-line-1": [
+          {
+            "mark": 1,
+            "cell": 5,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 2,
+            "reason": "win"
+          }
+        ],
+        "O-line-3": [
+          {
+            "mark": 1,
+            "cell": 5,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 3,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "win"
+          }
+        ],
+        "reason-edge": [
+          {
+            "mark": 1,
+            "cell": 5,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 9,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 6,
+            "reason": "edge"
+          }
+        ]
+      }
+    },
+    {
+      "starter": 2,
+      "terminal_sequences": {
+        "O": 80,
+        "draw": 14
+      },
+      "computer_positions": 67,
+      "priority_counts": {
+        "centre": 1,
+        "corner": 13,
+        "win": 41,
+        "block": 6,
+        "edge": 6
+      },
+      "examples": {
+        "reason-centre": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          }
+        ],
+        "reason-corner": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          }
+        ],
+        "reason-win": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "O": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "O-line-8": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "win-before-block": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "win"
+          }
+        ],
+        "reason-block": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          }
+        ],
+        "O-line-2": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 6,
+            "reason": "win"
+          }
+        ],
+        "reason-edge": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "edge"
+          }
+        ],
+        "draw": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "edge"
+          }
+        ],
+        "draw-line-0": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 1,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "edge"
+          }
+        ],
+        "O-line-7": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 3,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 9,
+            "reason": "win"
+          }
+        ],
+        "O-line-1": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 4,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 9,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 3,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 6,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 2,
+            "reason": "win"
+          }
+        ],
+        "O-line-5": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 7,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 9,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 8,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 3,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 2,
+            "reason": "win"
+          }
+        ],
+        "O-line-4": [
+          {
+            "mark": 2,
+            "cell": 5,
+            "reason": "centre"
+          },
+          {
+            "mark": 1,
+            "cell": 8,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 1,
+            "reason": "corner"
+          },
+          {
+            "mark": 1,
+            "cell": 9,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 7,
+            "reason": "block"
+          },
+          {
+            "mark": 1,
+            "cell": 2,
+            "reason": "player"
+          },
+          {
+            "mark": 2,
+            "cell": 4,
+            "reason": "win"
+          }
+        ]
+      }
+    }
+  ]
+}
