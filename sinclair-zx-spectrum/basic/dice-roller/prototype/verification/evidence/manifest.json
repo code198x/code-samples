@@ -1,0 +1,24 @@
+{
+  "configuration": "Stock 48K PAL",
+  "source_sha256": "fafa55c90e8090054e2b24ff87cdb079139df0d1f21b8f3d675b3c270754253d",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": 19,
+  "boundary_fixtures": 2,
+  "files": {
+    "maximum.png": "65eef12eed277f6d3ad41153ef6bda6b35fc960599e2d3b1a0632a9dcfe87ddd",
+    "sample-1200.png": "860c8e9e07ca8585dd82068352fd56da9b2476c504367472e12e0cf98ada21b7",
+    "results.json": "9e497ff8632c430f451ce961998964cfdafe02d121fa44ff0bcd1f9fa6e20897",
+    "sample-300.png": "6153fca9b9a2b7e0194d3e23f106a630c0fc2c3a269c110ec581157f396946f4",
+    "rolling.png": "68802b8ed23dfee05798d3087b653d1ab37327438f67db59b50c23e4eef639b7",
+    "repeat.png": "39fe049df4e8e1a806059c1eb001c4292466864af6d33a7e18a7e96b14f29144",
+    "twelve.png": "87b32327d87498332c738b3841c909627cb138484c9c102a3a71143f7cbd8ec0",
+    "stored.json": "27f338617bfb45ddb73a5c029676ca4f985e203c0ec1400e9f36e195a8e65d54",
+    "stopped.png": "280cf1d9fd159279db4846880b12e137d2b5b9f54fac2356920251cc716a30e5",
+    "added.png": "ed92f396825f440a9ccd9d6bcc6171cb610b495b61b05c39574bb91d2ac7465c",
+    "sample-60.png": "9062b908261e1233240146a0abc3f12640a105c0b91e8a81d91d834b569e28e1",
+    "dice-roller.tap": "c8bdd1f9f3790376f02d0f2581c0f93189d6746c203b2832d3cf77464a3d1095",
+    "sizes.png": "4d77c5e9039d33165ed866ac68658c922cdaaeb35600a31391f1a47659fcfc38",
+    "build.json": "272d528945271001cf077af3e0767e06881a8f5bb2a8660a043432a495074037"
+  },
+  "limits": "Original key-driven emulator captures; read-only memory. Zero/100% bars and the 8400-roll starting total use labelled ordinary ROM setup commands; maximum.png is diagnostic. Native acceptance pending."
+}

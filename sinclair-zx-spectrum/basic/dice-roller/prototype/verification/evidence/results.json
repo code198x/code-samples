@@ -1,0 +1,467 @@
+{
+  "source_sha256": "fafa55c90e8090054e2b24ff87cdb079139df0d1f21b8f3d675b3c270754253d",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "configuration": "Stock 48K PAL; fresh ROM tape and ordinary keys; boundary fixture uses explicit ROM commands",
+  "checks": [
+    "fresh-tape-autostart-stored-identity",
+    "invalid-size-keys-preserve-state",
+    "size-menu-quit-and-run",
+    "twelve-rolls-and-first-result-without-previous",
+    "invalid-result-keys-preserve-counts",
+    "fresh-repeat-keeps-previous-sample",
+    "adding-preserves-counts-and-compares-prior-total",
+    "fresh-repeat-clears-accumulation",
+    "batch-60-and-fixed-chart-scale",
+    "live-chart-updates-during-batch",
+    "batch-300-and-fixed-chart-scale",
+    "batch-1200-and-fixed-chart-scale",
+    "add-to-9600-from-labelled-boundary-fixture",
+    "limit-rejects-add-without-changing-comparison",
+    "stop-retains-partial-counts-and-held-q-does-not-quit",
+    "result-quit",
+    "zero-and-hundred-percent-chart-boundary-fixture",
+    "held-repeat-starts-one-batch",
+    "uppercase-menu-quit"
+  ],
+  "samples": [
+    {
+      "n": 12,
+      "pn": 0,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        3,
+        2,
+        1,
+        3,
+        1
+      ],
+      "p": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 0,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        3,
+        2,
+        1,
+        3,
+        1
+      ],
+      "p": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 0,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        3,
+        2,
+        1,
+        3,
+        1
+      ],
+      "p": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 0,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        3,
+        2,
+        1,
+        3,
+        1
+      ],
+      "p": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 0,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        3,
+        2,
+        1,
+        3,
+        1
+      ],
+      "p": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 12,
+      "b": 12,
+      "done": 12,
+      "t": [
+        3,
+        2,
+        1,
+        0,
+        3,
+        3
+      ],
+      "p": [
+        2,
+        3,
+        2,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "n": 24,
+      "pn": 12,
+      "b": 12,
+      "done": 12,
+      "t": [
+        7,
+        2,
+        8,
+        1,
+        3,
+        3
+      ],
+      "p": [
+        3,
+        2,
+        1,
+        0,
+        3,
+        3
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 24,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        1,
+        1,
+        4,
+        2,
+        2
+      ],
+      "p": [
+        7,
+        2,
+        8,
+        1,
+        3,
+        3
+      ]
+    },
+    {
+      "n": 60,
+      "pn": 12,
+      "b": 60,
+      "done": 60,
+      "t": [
+        10,
+        15,
+        7,
+        6,
+        7,
+        15
+      ],
+      "p": [
+        2,
+        1,
+        1,
+        4,
+        2,
+        2
+      ]
+    },
+    {
+      "n": 300,
+      "pn": 60,
+      "b": 300,
+      "done": 300,
+      "t": [
+        50,
+        50,
+        41,
+        47,
+        66,
+        46
+      ],
+      "p": [
+        10,
+        15,
+        7,
+        6,
+        7,
+        15
+      ]
+    },
+    {
+      "n": 1200,
+      "pn": 300,
+      "b": 1200,
+      "done": 1200,
+      "t": [
+        205,
+        210,
+        188,
+        216,
+        185,
+        196
+      ],
+      "p": [
+        50,
+        50,
+        41,
+        47,
+        66,
+        46
+      ]
+    },
+    {
+      "n": 8400,
+      "pn": 300,
+      "b": 1200,
+      "done": 1200,
+      "t": [
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400
+      ],
+      "p": [
+        50,
+        50,
+        41,
+        47,
+        66,
+        46
+      ]
+    },
+    {
+      "n": 9600,
+      "pn": 8400,
+      "b": 1200,
+      "done": 1200,
+      "t": [
+        1608,
+        1612,
+        1586,
+        1587,
+        1619,
+        1588
+      ],
+      "p": [
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400
+      ]
+    },
+    {
+      "n": 9600,
+      "pn": 8400,
+      "b": 1200,
+      "done": 1200,
+      "t": [
+        1608,
+        1612,
+        1586,
+        1587,
+        1619,
+        1588
+      ],
+      "p": [
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400
+      ]
+    },
+    {
+      "n": 1,
+      "pn": 9600,
+      "b": 1200,
+      "done": 1,
+      "t": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "p": [
+        1608,
+        1612,
+        1586,
+        1587,
+        1619,
+        1588
+      ]
+    },
+    {
+      "n": 1,
+      "pn": 0,
+      "b": 12,
+      "done": 12,
+      "t": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "p": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 0,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        1,
+        3,
+        1,
+        4,
+        1
+      ],
+      "p": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "n": 12,
+      "pn": 12,
+      "b": 12,
+      "done": 12,
+      "t": [
+        2,
+        4,
+        2,
+        2,
+        1,
+        1
+      ],
+      "p": [
+        2,
+        1,
+        3,
+        1,
+        4,
+        1
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "commands": [
+        "LET n=8400: LET b=1200: LET done=1200",
+        "FOR j=1 TO 6: LET t(j)=1400: NEXT j",
+        "GO TO 600"
+      ],
+      "counts": [
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400
+      ]
+    },
+    {
+      "commands": [
+        "LET n=1: LET pn=0: LET b=12: LET done=12",
+        "DIM t(6): DIM p(6): LET t(1)=1",
+        "GO TO 600"
+      ],
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "direct_memory_writes": false
+}
