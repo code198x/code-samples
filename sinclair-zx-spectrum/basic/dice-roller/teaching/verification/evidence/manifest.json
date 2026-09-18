@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; executable identities in each checkpoint record",
+  "checkpoints": [
+    {
+      "name": "roll",
+      "source_sha256": "f7da13bfdc6446a55a5c13aed94c3d849a411b04ec8ae8ef63af5967942cd85d",
+      "tape_sha256": "c47b2be1774f6fc2524222d7c3241d45932a026d9407cc95425471ad153eab93",
+      "checks": [
+        "fresh-tape-autostart-and-token-identity",
+        "twelve-numbered-rolls-in-range",
+        "run-starts-a-fresh-sample"
+      ],
+      "captures": {},
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "tally",
+      "source_sha256": "2bf84f976724d38e0c8e827ada4860a784d605277639951c3acc17ad586c99b8",
+      "tape_sha256": "76515a5cfe0cb7be680dc0afd4d4d8a3ab5b1beba6a5512a539f773243ec59c6",
+      "checks": [
+        "fresh-tape-autostart-and-token-identity",
+        "twelve-rolls-and-exact-accounting",
+        "run-starts-a-fresh-sample"
+      ],
+      "captures": {},
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "shares",
+      "source_sha256": "82b453cfa1826c6bcaafe0499abbfaf2db56a3e837782fad2391a78b4bd4b4b0",
+      "tape_sha256": "40512b7b7047563b1126fc7edab5e2eb2e81c4f16e3cd4fbc5fb8e11e6eb0b4b",
+      "checks": [
+        "fresh-tape-autostart-and-token-identity",
+        "twelve-rolls-and-exact-accounting",
+        "all-six-rounded-percentages",
+        "run-starts-a-fresh-sample"
+      ],
+      "captures": {},
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "live",
+      "source_sha256": "4d7b114ed8f266d19e31d53744624ee62475fa9045c19e3c8e11ca612f9674c2",
+      "tape_sha256": "49cc6cf68c80ea45d15af317525cb5b227252a38cb67770919283fcd8f48a892",
+      "checks": [
+        "live-counts-shares-and-bars-before-completion",
+        "early-stop-keeps-exact-partial-sample",
+        "fresh-tape-autostart-and-token-identity",
+        "twelve-rolls-and-exact-accounting",
+        "complete-live-batch-and-bounded-bars",
+        "run-starts-a-fresh-sample"
+      ],
+      "captures": {},
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "finished",
+      "source_sha256": "fafa55c90e8090054e2b24ff87cdb079139df0d1f21b8f3d675b3c270754253d",
+      "tape_sha256": "c8bdd1f9f3790376f02d0f2581c0f93189d6746c203b2832d3cf77464a3d1095",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "invalid-size-keys-preserve-state",
+        "size-menu-quit-and-run",
+        "twelve-rolls-and-first-result-without-previous",
+        "invalid-result-keys-preserve-counts",
+        "fresh-repeat-keeps-previous-sample",
+        "adding-preserves-counts-and-compares-prior-total",
+        "fresh-repeat-clears-accumulation",
+        "batch-60-and-fixed-chart-scale",
+        "live-chart-updates-during-batch",
+        "batch-300-and-fixed-chart-scale",
+        "batch-1200-and-fixed-chart-scale",
+        "add-to-9600-from-labelled-boundary-fixture",
+        "limit-rejects-add-without-changing-comparison",
+        "stop-retains-partial-counts-and-held-q-does-not-quit",
+        "result-quit",
+        "zero-and-hundred-percent-chart-boundary-fixture",
+        "held-repeat-starts-one-batch",
+        "uppercase-menu-quit"
+      ],
+      "captures": {
+        "added.png": "ed92f396825f440a9ccd9d6bcc6171cb610b495b61b05c39574bb91d2ac7465c",
+        "maximum.png": "65eef12eed277f6d3ad41153ef6bda6b35fc960599e2d3b1a0632a9dcfe87ddd",
+        "repeat.png": "39fe049df4e8e1a806059c1eb001c4292466864af6d33a7e18a7e96b14f29144",
+        "rolling.png": "68802b8ed23dfee05798d3087b653d1ab37327438f67db59b50c23e4eef639b7",
+        "sample-1200.png": "860c8e9e07ca8585dd82068352fd56da9b2476c504367472e12e0cf98ada21b7",
+        "sample-300.png": "6153fca9b9a2b7e0194d3e23f106a630c0fc2c3a269c110ec581157f396946f4",
+        "sample-60.png": "9062b908261e1233240146a0abc3f12640a105c0b91e8a81d91d834b569e28e1",
+        "sizes.png": "4d77c5e9039d33165ed866ac68658c922cdaaeb35600a31391f1a47659fcfc38",
+        "stopped.png": "280cf1d9fd159279db4846880b12e137d2b5b9f54fac2356920251cc716a30e5",
+        "twelve.png": "87b32327d87498332c738b3841c909627cb138484c9c102a3a71143f7cbd8ec0"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    }
+  ],
+  "execution_checks": 35,
+  "final_source_identical": true,
+  "limits": "The final game matches the prototype authorised for teaching. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
+}

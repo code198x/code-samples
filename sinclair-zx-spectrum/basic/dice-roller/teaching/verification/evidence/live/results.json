@@ -1,0 +1,24 @@
+{
+  "source_sha256": "4d7b114ed8f266d19e31d53744624ee62475fa9045c19e3c8e11ca612f9674c2",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": [
+    "live-counts-shares-and-bars-before-completion",
+    "early-stop-keeps-exact-partial-sample",
+    "fresh-tape-autostart-and-token-identity",
+    "twelve-rolls-and-exact-accounting",
+    "complete-live-batch-and-bounded-bars",
+    "run-starts-a-fresh-sample"
+  ],
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "direct_memory_writes": false,
+  "configuration": "Stock 48K PAL; fresh tape; ordinary keys and RUN; no state injection"
+}
