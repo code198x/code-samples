@@ -47,4 +47,4 @@ batch; its maximum-count capture is diagnostic rather than ordinary play. Captur
 once input is ready so a full settled video frame is presented.
 
 Execution is configuration-specific evidence, not original-hardware timing or
-player approval. The prototype is awaiting play review before lesson authoring.
+player approval. The user approved the live prototype; a compact teaching sequence is next.
