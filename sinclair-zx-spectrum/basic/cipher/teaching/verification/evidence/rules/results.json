@@ -1,0 +1,33 @@
+{
+  "source_sha256": "9e66a82de32b722bdf6829a8fcf0a5917645dbad1dd8b3e19433fc0160889222",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "configuration": "Fresh ROM tape on stock 48K PAL",
+  "checks": [
+    "fresh-tape-autostart-stored-identity",
+    "nonletters-ignored",
+    "uppercase-and-repeated-positions",
+    "repeat-preserves-reveal",
+    "duplicate-hit-and-miss-cost-nothing",
+    "pause-invalid-key-and-continue-preserve-state",
+    "win-and-score",
+    "held-next-advances-once-with-score-retained",
+    "seven-misses-reveal-answer",
+    "result-reset",
+    "q-and-r-remain-guesses",
+    "pause-reset",
+    "held-letter-counts-once",
+    "pause-quit"
+  ],
+  "fixtures": [],
+  "direct_memory_writes": false
+}

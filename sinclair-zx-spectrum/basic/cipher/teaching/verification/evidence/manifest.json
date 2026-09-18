@@ -1,0 +1,187 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; executable identities in each checkpoint record",
+  "checkpoints": [
+    {
+      "name": "reveal",
+      "source_sha256": "1fe22c14092dee96145e998e16ca62d3ae4868694f12d8e1c3834d077c7ff2ed",
+      "tape_sha256": "784f0c0983589c00b91ca938c15ca9d19e24ebafa4b833520410ad0932297a93",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "both-matching-positions",
+        "single-and-missing-letter-source-experiments"
+      ],
+      "captures": {
+        "initial.png": "5e2023de715e88e0575080253e36bbc0ea41be17107d240265184e473ddbf377"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "guess",
+      "source_sha256": "b2600c0af1d419f4707bfb3fea95fd1c5dc03504cce97999e4c2a0c85cb8040e",
+      "tape_sha256": "7debc8a2fa3d499244c5547ed5634de4605188bf7c1911381de08591ac063a80",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "nonletters-ignored",
+        "uppercase-and-repeated-positions",
+        "repeat-preserves-reveal",
+        "miss-without-mistake-limit",
+        "held-key-gate",
+        "revealed-word-does-not-end-this-stage",
+        "enter-quits"
+      ],
+      "captures": {
+        "initial.png": "0fd7dd1b112c6f5018d611d5875b6dec9ab2450d2bd7dca5158c5ea4b30842c9",
+        "two-matches.png": "b082172f50ce1b064b0a0c495e658198e8035547bf42a16d44e218031cceb2d4"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "rules",
+      "source_sha256": "9e66a82de32b722bdf6829a8fcf0a5917645dbad1dd8b3e19433fc0160889222",
+      "tape_sha256": "7f0d487edfa79e449b37c0e5239929bf63911ac9a36d75569cca381e95270e35",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "nonletters-ignored",
+        "uppercase-and-repeated-positions",
+        "repeat-preserves-reveal",
+        "duplicate-hit-and-miss-cost-nothing",
+        "pause-invalid-key-and-continue-preserve-state",
+        "win-and-score",
+        "held-next-advances-once-with-score-retained",
+        "seven-misses-reveal-answer",
+        "result-reset",
+        "q-and-r-remain-guesses",
+        "pause-reset",
+        "held-letter-counts-once",
+        "pause-quit"
+      ],
+      "captures": {
+        "initial.png": "0d21b910d1886174e53a0c5621f3b5e9059995ddb802bb76e453240927e20422",
+        "lost.png": "464fefef2a7f4c574ba1f29a7c683eabd4f3928075efdb56d9716ed3b156895d",
+        "miss.png": "2f2f5b96b755b4f425e93f8ba69126a88ddf41cfc733917b915407c9cec0c3f4",
+        "two-matches.png": "c054c10afe9ee0674aebbddc1aa9ba0e52e590eb52c49d1fb76c0fc6a6294dd1",
+        "won.png": "866a34b938aee6ddaa9fcfab97c7e7a94a36974b6d5238c7e4cd2dc23670e52a"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "board",
+      "source_sha256": "c85b4a00846c90a6c999d82e55fe18debba79951600ce246cd5fa133a6cfafaf",
+      "tape_sha256": "4e3f8364c5599d6d7fda3990bf2bee546c993345a56d157e1924a3de2ea958d0",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "nonletters-ignored",
+        "uppercase-and-repeated-positions",
+        "repeat-preserves-reveal",
+        "duplicate-hit-and-miss-cost-nothing",
+        "alphabet-mask-matches-history",
+        "pause-invalid-key-and-continue-preserve-state",
+        "win-and-score",
+        "held-next-advances-once-with-score-retained",
+        "seven-misses-reveal-answer",
+        "result-reset",
+        "q-and-r-remain-guesses",
+        "pause-reset",
+        "held-letter-counts-once",
+        "pause-quit"
+      ],
+      "captures": {
+        "initial.png": "c7f6ab2e17a6e3c84ba1f2ae9571a8866111ee47423269f20e6fe173a84539a1",
+        "lost.png": "11e5e1e066b49358d250f141de657b24fc420a2f9067e539a7985a73454e1f39",
+        "miss.png": "2fb009f8ed2f9ad758e0db20a2f0a03a1c040edb1a0fe03d17bf9b30ff10d0ff",
+        "two-matches.png": "977a20af18eaa1655a1a4fe2464676936414e555c98e1b11c1936a05c1087304",
+        "won.png": "b09410f70b0dd39049fe71f722e12d0d7cac074278a12bb44f8c6ef1382f764b"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "finished",
+      "source_sha256": "bce89bd8bda7895b563a581c2035bb3a1ecd7b638afef93a8e29523fd275f41d",
+      "tape_sha256": "59341e18f9eab02dfa59cbccf6fbc40f44d6999a9c03cb05101de5061d853093",
+      "checks": [
+        "fresh-ROM-tape-autostart-and-token-identity",
+        "title-invalid-key-and-quit",
+        "uppercase-start-and-empty-history",
+        "digits-space-delete-and-modifier-ignored",
+        "uppercase-guess-reveals-all-matches",
+        "repeated-hit-is-free",
+        "miss-costs-once-and-is-listed",
+        "pause-invalid-key-and-continue-preserve-round",
+        "legal-word-completion-and-retained-result",
+        "next-round-preserves-score-and-prevents-immediate-repeat",
+        "seven-distinct-misses-lose-and-reveal-answer",
+        "result-reset-clears-session",
+        "held-letter-is-one-guess",
+        "pause-reset-clears-session",
+        "pause-quit",
+        "all-24-authored-words-load-reveal-and-complete",
+        "q-and-r-are-letters-during-play"
+      ],
+      "captures": {
+        "lost.png": "524c7277674aca660b4405fc269a44528bbeebaed8504f51211236963f20973e",
+        "miss.png": "0a93ce5e20b569b5290f9a434f8466714e8cab3bc0c73eef3695312b0176d454",
+        "opening.png": "c7f6ab2e17a6e3c84ba1f2ae9571a8866111ee47423269f20e6fe173a84539a1",
+        "paused.png": "42143e19100a381242537961fda82a1b130667d86783182575438052ac20af4f",
+        "repeat.png": "e12b7c004c87d3fddb49c935909e0fc312e2605c7b49f213c572c195c43cdcf2",
+        "revealed.png": "0a07fe09d5952cc0b1745b1eacbc71b259c6dac1e1b931927dd9495438ea588b",
+        "title.png": "f573c217c4c8000ab25134529ec555117f1b014dab1d43081acad9c54fa68dcc",
+        "won.png": "4cdffe2093e96a423a2b0ef9a3bfdba65099a06f3ce1bea3b15553ff03c4b24c"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    }
+  ],
+  "execution_checks": 57,
+  "final_source_identical": true,
+  "limits": "The final game matches the prototype authorised for teaching. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
+}
