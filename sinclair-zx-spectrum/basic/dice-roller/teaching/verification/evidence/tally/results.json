@@ -1,0 +1,21 @@
+{
+  "source_sha256": "2bf84f976724d38e0c8e827ada4860a784d605277639951c3acc17ad586c99b8",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": [
+    "fresh-tape-autostart-and-token-identity",
+    "twelve-rolls-and-exact-accounting",
+    "run-starts-a-fresh-sample"
+  ],
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "direct_memory_writes": false,
+  "configuration": "Stock 48K PAL; fresh tape; ordinary keys and RUN; no state injection"
+}

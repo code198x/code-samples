@@ -1,0 +1,18 @@
+{
+  "name": "roll",
+  "source": "roll/dice-roller.bas",
+  "source_sha256": "f7da13bfdc6446a55a5c13aed94c3d849a411b04ec8ae8ef63af5967942cd85d",
+  "tape_sha256": "c47b2be1774f6fc2524222d7c3241d45932a026d9407cc95425471ad153eab93",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"dice\" LINE 10; no injection"
+}
