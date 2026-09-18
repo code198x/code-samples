@@ -1,0 +1,399 @@
+{
+  "source_sha256": "698ad676a3beb6f8536a2ec11b47df69d0b205e3759662734ed0f6757ecbde0b",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200",
+  "checks": [
+    "fresh-tape-autostart-token-identity",
+    "title-ignored-key-and-quit",
+    "initial-live-budget",
+    "ignored-planning-keys-preserve-state",
+    "empty-invalid-and-delete-input",
+    "cancel-preserves-plan",
+    "held-digit-is-one-entry",
+    "four-digit-limit-and-over-budget-block",
+    "excess-food-gives-no-extra-newcomers",
+    "cannot-sell-unowned-land",
+    "planting-limited-by-land",
+    "unfed-workers-cannot-plant",
+    "purchase-and-ledger-resolution",
+    "sale-and-ledger-resolution",
+    "partial-ration-costs-one-person-and-no-newcomers",
+    "report-does-not-advance-with-invalid-key",
+    "year-state-persists",
+    "ten-year-managed-run-and-every-ledger",
+    "finite-run-summary",
+    "summary-is-stable",
+    "held-harvest-does-not-skip-report",
+    "empty-settlement-ending",
+    "quit-ending",
+    "uppercase-menu-and-reset",
+    "quit-planning",
+    "quit-report"
+  ],
+  "trials": [
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 10,
+      "plan": [
+        0,
+        183,
+        100
+      ],
+      "yield": 4,
+      "result": [
+        63,
+        477,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 6,
+      "plan": [
+        5,
+        180,
+        105
+      ],
+      "yield": 4,
+      "result": [
+        63,
+        465,
+        105,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 6,
+      "plan": [
+        -10,
+        180,
+        90
+      ],
+      "yield": 2,
+      "result": [
+        63,
+        330,
+        90,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 6,
+      "plan": [
+        0,
+        179,
+        100
+      ],
+      "yield": 4,
+      "result": [
+        59,
+        481,
+        100,
+        1,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 6,
+      "plan": [
+        11,
+        180,
+        111
+      ],
+      "yield": 4,
+      "result": [
+        63,
+        447,
+        111,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 2,
+      "start": [
+        63,
+        447,
+        111
+      ],
+      "price": 10,
+      "plan": [
+        13,
+        189,
+        124
+      ],
+      "yield": 2,
+      "result": [
+        66,
+        252,
+        124,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 3,
+      "start": [
+        66,
+        252,
+        124
+      ],
+      "price": 10,
+      "plan": [
+        -7,
+        198,
+        117
+      ],
+      "yield": 3,
+      "result": [
+        69,
+        358,
+        117,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 4,
+      "start": [
+        69,
+        358,
+        117
+      ],
+      "price": 9,
+      "plan": [
+        3,
+        207,
+        120
+      ],
+      "yield": 4,
+      "result": [
+        72,
+        484,
+        120,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 5,
+      "start": [
+        72,
+        484,
+        120
+      ],
+      "price": 8,
+      "plan": [
+        16,
+        216,
+        136
+      ],
+      "yield": 3,
+      "result": [
+        75,
+        412,
+        136,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 6,
+      "start": [
+        75,
+        412,
+        136
+      ],
+      "price": 10,
+      "plan": [
+        4,
+        225,
+        140
+      ],
+      "yield": 5,
+      "result": [
+        78,
+        707,
+        140,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 7,
+      "start": [
+        78,
+        707,
+        140
+      ],
+      "price": 9,
+      "plan": [
+        16,
+        234,
+        156
+      ],
+      "yield": 2,
+      "result": [
+        81,
+        485,
+        156,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 8,
+      "start": [
+        81,
+        485,
+        156
+      ],
+      "price": 10,
+      "plan": [
+        6,
+        243,
+        162
+      ],
+      "yield": 3,
+      "result": [
+        85,
+        506,
+        162,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 9,
+      "start": [
+        85,
+        506,
+        162
+      ],
+      "price": 6,
+      "plan": [
+        8,
+        255,
+        170
+      ],
+      "yield": 3,
+      "result": [
+        89,
+        543,
+        170,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 10,
+      "start": [
+        89,
+        543,
+        170
+      ],
+      "price": 7,
+      "plan": [
+        8,
+        267,
+        178
+      ],
+      "yield": 3,
+      "result": [
+        93,
+        576,
+        178,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 7,
+      "plan": [
+        0,
+        0,
+        0
+      ],
+      "yield": 2,
+      "result": [
+        0,
+        360,
+        100,
+        60,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 9,
+      "plan": [
+        0,
+        180,
+        100
+      ],
+      "yield": 3,
+      "result": [
+        63,
+        380,
+        100,
+        0,
+        3
+      ]
+    }
+  ],
+  "sampling_retries": 0,
+  "direct_memory_writes": false,
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  }
+}
