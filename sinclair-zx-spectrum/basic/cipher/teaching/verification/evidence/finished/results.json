@@ -1,0 +1,255 @@
+{
+  "source_sha256": "bce89bd8bda7895b563a581c2035bb3a1ecd7b638afef93a8e29523fd275f41d",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "configuration": "Stock 48K PAL; fresh ROM tape; ordinary key play; content coverage uses explicit ROM commands",
+  "checks": [
+    "fresh-ROM-tape-autostart-and-token-identity",
+    "title-invalid-key-and-quit",
+    "uppercase-start-and-empty-history",
+    "digits-space-delete-and-modifier-ignored",
+    "uppercase-guess-reveals-all-matches",
+    "repeated-hit-is-free",
+    "miss-costs-once-and-is-listed",
+    "pause-invalid-key-and-continue-preserve-round",
+    "legal-word-completion-and-retained-result",
+    "next-round-preserves-score-and-prevents-immediate-repeat",
+    "seven-distinct-misses-lose-and-reveal-answer",
+    "result-reset-clears-session",
+    "held-letter-is-one-guess",
+    "pause-reset-clears-session",
+    "pause-quit",
+    "all-24-authored-words-load-reveal-and-complete",
+    "q-and-r-are-letters-during-play"
+  ],
+  "fixtures": [
+    {
+      "ROM_setup": [
+        "LET pick=1",
+        "GO TO 230"
+      ],
+      "word": "WINDOW",
+      "guesses": "DINOW",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=2",
+        "GO TO 230"
+      ],
+      "word": "BOTTLE",
+      "guesses": "BELOT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=3",
+        "GO TO 230"
+      ],
+      "word": "KETTLE",
+      "guesses": "EKLT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=4",
+        "GO TO 230"
+      ],
+      "word": "LADDER",
+      "guesses": "ADELR",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=5",
+        "GO TO 230"
+      ],
+      "word": "RABBIT",
+      "guesses": "ABIRT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=6",
+        "GO TO 230"
+      ],
+      "word": "GARDEN",
+      "guesses": "ADEGNR",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=7",
+        "GO TO 230"
+      ],
+      "word": "POCKET",
+      "guesses": "CEKOPT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=8",
+        "GO TO 230"
+      ],
+      "word": "CANDLE",
+      "guesses": "ACDELN",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=9",
+        "GO TO 230"
+      ],
+      "word": "PILLOW",
+      "guesses": "ILOPW",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=10",
+        "GO TO 230"
+      ],
+      "word": "BUTTON",
+      "guesses": "BNOTU",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=11",
+        "GO TO 230"
+      ],
+      "word": "BASKET",
+      "guesses": "ABEKST",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=12",
+        "GO TO 230"
+      ],
+      "word": "BRIDGE",
+      "guesses": "BDEGIR",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=13",
+        "GO TO 230"
+      ],
+      "word": "ORANGE",
+      "guesses": "AEGNOR",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=14",
+        "GO TO 230"
+      ],
+      "word": "SILVER",
+      "guesses": "EILRSV",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=15",
+        "GO TO 230"
+      ],
+      "word": "HAMMER",
+      "guesses": "AEHMR",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=16",
+        "GO TO 230"
+      ],
+      "word": "ROCKET",
+      "guesses": "CEKORT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=17",
+        "GO TO 230"
+      ],
+      "word": "JACKET",
+      "guesses": "ACEJKT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=18",
+        "GO TO 230"
+      ],
+      "word": "FOREST",
+      "guesses": "EFORST",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=19",
+        "GO TO 230"
+      ],
+      "word": "CAMERA",
+      "guesses": "ACEMR",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=20",
+        "GO TO 230"
+      ],
+      "word": "MARKET",
+      "guesses": "AEKMRT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=21",
+        "GO TO 230"
+      ],
+      "word": "CARPET",
+      "guesses": "ACEPRT",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=22",
+        "GO TO 230"
+      ],
+      "word": "SHELL",
+      "guesses": "EHLS",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=23",
+        "GO TO 230"
+      ],
+      "word": "TUNNEL",
+      "guesses": "ELNTU",
+      "remaining": 7
+    },
+    {
+      "ROM_setup": [
+        "LET pick=24",
+        "GO TO 230"
+      ],
+      "word": "STREAM",
+      "guesses": "AEMRST",
+      "remaining": 7
+    }
+  ],
+  "max_poll_frames_after_key": 110,
+  "max_ordinary_guess_poll_frames": 30,
+  "direct_memory_writes": false
+}

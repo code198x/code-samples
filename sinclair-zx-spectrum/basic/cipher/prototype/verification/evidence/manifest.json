@@ -1,0 +1,22 @@
+{
+  "configuration": "Stock 48K PAL",
+  "source_sha256": "bce89bd8bda7895b563a581c2035bb3a1ecd7b638afef93a8e29523fd275f41d",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": 17,
+  "word_fixtures": 24,
+  "files": {
+    "won.png": "4cdffe2093e96a423a2b0ef9a3bfdba65099a06f3ce1bea3b15553ff03c4b24c",
+    "title.png": "f573c217c4c8000ab25134529ec555117f1b014dab1d43081acad9c54fa68dcc",
+    "revealed.png": "0a07fe09d5952cc0b1745b1eacbc71b259c6dac1e1b931927dd9495438ea588b",
+    "results.json": "915ddd0362c2c67b623a57dbfdc42b97dba361cd2b08a9c89d94094f9ea803e5",
+    "lost.png": "524c7277674aca660b4405fc269a44528bbeebaed8504f51211236963f20973e",
+    "cipher.tap": "59341e18f9eab02dfa59cbccf6fbc40f44d6999a9c03cb05101de5061d853093",
+    "repeat.png": "e12b7c004c87d3fddb49c935909e0fc312e2605c7b49f213c572c195c43cdcf2",
+    "stored.json": "c70735396fb0249dcdb912eb4e69b0b9dbc27c17ef65901b5b44f77b31b6175f",
+    "opening.png": "c7f6ab2e17a6e3c84ba1f2ae9571a8866111ee47423269f20e6fe173a84539a1",
+    "miss.png": "0a93ce5e20b569b5290f9a434f8466714e8cab3bc0c73eef3695312b0176d454",
+    "build.json": "ef8bfa0dcd037f68bde28d6f57abf4dfa8f90b8814d85d73745060131ed72262",
+    "paused.png": "42143e19100a381242537961fda82a1b130667d86783182575438052ac20af4f"
+  },
+  "limits": "Original key-driven emulator captures; read-only memory. Content coverage uses labelled ordinary ROM setup commands. Native acceptance pending."
+}
