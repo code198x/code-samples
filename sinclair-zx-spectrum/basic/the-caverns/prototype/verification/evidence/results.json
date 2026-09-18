@@ -1,0 +1,327 @@
+{
+  "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play",
+  "checks": [
+    "fresh-tape-autostart-and-stored-identity",
+    "title-ignored-key-and-quit",
+    "start-safe-entrance",
+    "ignored-keys-cost-no-turn",
+    "wall-costs-no-turn",
+    "held-direction-is-one-turn",
+    "legal-pit-path-and-directional-clues",
+    "pit-result-stable",
+    "legal-caught-path-and-directional-clues",
+    "caught-result-stable",
+    "legal-arrival-path-and-directional-clues",
+    "legal-escape-path-and-directional-clues",
+    "legal-win-path-and-directional-clues",
+    "win-result-stable",
+    "arrival-grace-then-wait-is-caught",
+    "quit-result",
+    "quit-play",
+    "uppercase-start-and-direction",
+    "reset-restores-treasures-and-patrol"
+  ],
+  "trials": [
+    {
+      "key": "n",
+      "state": [
+        1,
+        2,
+        7
+      ],
+      "event": "wall"
+    },
+    {
+      "key": "s",
+      "state": [
+        5,
+        3,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        6,
+        4,
+        6
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        7,
+        4,
+        6
+      ],
+      "event": "pit"
+    },
+    {
+      "key": "s",
+      "state": [
+        5,
+        3,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "state": [
+        9,
+        4,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        10,
+        5,
+        5
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        11,
+        5,
+        5
+      ],
+      "event": "caught"
+    },
+    {
+      "key": "s",
+      "state": [
+        5,
+        3,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "state": [
+        9,
+        4,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        10,
+        5,
+        5
+      ],
+      "event": "move"
+    },
+    {
+      "key": " ",
+      "state": [
+        10,
+        6,
+        5
+      ],
+      "event": "arrival"
+    },
+    {
+      "key": "s",
+      "state": [
+        5,
+        3,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "state": [
+        9,
+        4,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        10,
+        5,
+        5
+      ],
+      "event": "move"
+    },
+    {
+      "key": " ",
+      "state": [
+        10,
+        6,
+        5
+      ],
+      "event": "arrival"
+    },
+    {
+      "key": "n",
+      "state": [
+        6,
+        7,
+        4
+      ],
+      "event": "arrival"
+    },
+    {
+      "key": "e",
+      "state": [
+        2,
+        3,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        3,
+        4,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        4,
+        5,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "state": [
+        8,
+        6,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "state": [
+        12,
+        7,
+        3
+      ],
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "state": [
+        11,
+        0,
+        3
+      ],
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "event": "move"
+    },
+    {
+      "key": "n",
+      "state": [
+        6,
+        2,
+        0
+      ],
+      "event": "move"
+    },
+    {
+      "key": "n",
+      "state": [
+        2,
+        3,
+        0
+      ],
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "state": [
+        1,
+        3,
+        0
+      ],
+      "event": "win"
+    },
+    {
+      "key": "s",
+      "state": [
+        5,
+        3,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "state": [
+        9,
+        4,
+        7
+      ],
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "state": [
+        10,
+        5,
+        5
+      ],
+      "event": "move"
+    },
+    {
+      "key": " ",
+      "state": [
+        10,
+        6,
+        5
+      ],
+      "event": "arrival"
+    },
+    {
+      "key": " ",
+      "state": [
+        10,
+        6,
+        5
+      ],
+      "event": "caught"
+    }
+  ],
+  "direct_memory_writes": false,
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  }
+}
