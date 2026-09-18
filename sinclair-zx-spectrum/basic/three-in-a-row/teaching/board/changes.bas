@@ -1,0 +1,14 @@
+10 BORDER 0: PAPER 0: INK 7: BRIGHT 1: CLS
+20 DIM b(9)
+30 GO SUB 1000
+40 STOP
+1000 CLS
+1010 PRINT AT 0,8; INK 5; "THREE IN A ROW"
+1030 INK 1: FOR i = 0 TO 3: PLOT 56 + i * 48,32: DRAW 0,120: NEXT i
+1040 FOR i = 0 TO 3: PLOT 56,32 + i * 40: DRAW 144,0: NEXT i
+1050 FOR n = 1 TO 9: GO SUB 2000: NEXT n
+1100 RETURN
+2000 LET row = INT ((n - 1) / 3): LET col = n - 1 - row * 3
+2010 LET x = 80 + col * 48: LET y = 132 - row * 40
+2020 PRINT AT 5 + row * 5,10 + col * 6; INK 7; " "
+2030 IF b(n) = 0 THEN PRINT AT 5 + row * 5,10 + col * 6; INK 7; n: RETURN

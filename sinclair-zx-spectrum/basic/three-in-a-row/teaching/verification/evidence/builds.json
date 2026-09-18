@@ -1,0 +1,146 @@
+[
+  {
+    "name": "board",
+    "source": "board/three.bas",
+    "source_sha256": "256140479571a8e4600aa61fcf0e1033f0c31699812edf41590271a9155a864f",
+    "tape_sha256": "a18fed71fc2d46ddfa1c8006bcf57cf0fa22e1fffe49cc31e2d0e921a9e55ffa",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  },
+  {
+    "name": "place",
+    "source": "place/three.bas",
+    "source_sha256": "dde1246d203ac9b5c38a7b1ef996704ebaba08a7c2f6f6aedfb83b901e243a28",
+    "tape_sha256": "f450d0918bd9d9b69962fd002e230852f93dfb5e7fddb7c7c51308691b0bd484",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  },
+  {
+    "name": "turns",
+    "source": "turns/three.bas",
+    "source_sha256": "869df1e80e04be9410357898b1105caef8ce5f2f2970f4622fe220595203aa00",
+    "tape_sha256": "99db08ac0f4a22d797f2561edffb73b9beae68b0800ec7f3d8de10c417326ac0",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  },
+  {
+    "name": "results",
+    "source": "results/three.bas",
+    "source_sha256": "51dd53d9a8fe82249f38f3be653afebfdddf1677f2d1c198ac9693241e532278",
+    "tape_sha256": "32492cb0ad8d4e1581592a7c573674160a0867a59f0af6e5ee43218923cc30b6",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  },
+  {
+    "name": "reply",
+    "source": "reply/three.bas",
+    "source_sha256": "c2881604c306db9f507c8d281d1c78646b99a5bf8e6d878d4889825b6b6bd130",
+    "tape_sha256": "5d2c307ee667c79ba4e01bb7184d4455383069ce95ec7c1f300c7d07db3fc9fa",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  },
+  {
+    "name": "tactics",
+    "source": "tactics/three.bas",
+    "source_sha256": "f689a06905f7be3fa4ac17e346d37f3b89e9e305a8810971e0688b36e6044a28",
+    "tape_sha256": "94331b02158e48841b08cfff0c93af5eebf4f3b285bd4a2c8842bd51e23a7db0",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  },
+  {
+    "name": "policy",
+    "source": "policy/three.bas",
+    "source_sha256": "ad203e2ab9079c6d81bfff64cb83ec195dec42032a74a850baeb3adfcc36b9b0",
+    "tape_sha256": "90c975c02cded0bdcb035edb1354436022e75a83d088b015a0dca6a80e6b1272",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  },
+  {
+    "name": "finished",
+    "source": "finished/three.bas",
+    "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+    "tape_sha256": "80efd76abce06293849f8269661cc744cc7953595103778d86d17b7d18493091",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+  }
+]

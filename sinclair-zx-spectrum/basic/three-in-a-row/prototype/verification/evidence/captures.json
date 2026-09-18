@@ -1,0 +1,222 @@
+{
+  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "method": "Fresh ROM tape load and legal keys; ten settled frames before each original PNG.",
+  "trials": [
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "computer": 3,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": 9,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 1
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 7,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "computer": 4,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 6,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        0,
+        2
+      ],
+      "computer": 9,
+      "reason": "corner",
+      "winner": 0
+    },
+    {
+      "player": 8,
+      "board": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "computer": null,
+      "reason": null,
+      "winner": 0
+    },
+    {
+      "player": 1,
+      "board": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 5,
+      "reason": "centre",
+      "winner": 0
+    },
+    {
+      "player": 2,
+      "board": [
+        1,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computer": 3,
+      "reason": "block",
+      "winner": 0
+    },
+    {
+      "player": 4,
+      "board": [
+        1,
+        1,
+        2,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "computer": 7,
+      "reason": "win",
+      "winner": 2
+    }
+  ],
+  "direct_memory_writes": false
+}

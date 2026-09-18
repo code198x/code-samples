@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "capture": "release-render.png",
+  "capture_sha256": "4fe6b1eeae8e6f9b9fb6ce9b58a0b07f2398aea73a08890fa7a9e1c60437daee",
+  "screen_pixels_compared": 49152,
+  "mismatches": 0,
+  "method": "Fresh tape, S, legal moves 1/8/7/4. Original PNG foreground compared pixel-for-pixel with the stable screen bitmap; black paper, non-black ink, FLASH off. No image edits or state writes."
+}

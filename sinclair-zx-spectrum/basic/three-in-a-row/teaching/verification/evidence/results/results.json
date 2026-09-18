@@ -1,0 +1,20 @@
+{
+  "name": "results",
+  "source_sha256": "51dd53d9a8fe82249f38f3be653afebfdddf1677f2d1c198ac9693241e532278",
+  "checks": [
+    "fresh-tape-empty-board",
+    "stored-line-identity",
+    "invalid-keys",
+    "held-key-places-once",
+    "occupied-key",
+    "reset",
+    "alternating-turns-and-stable-ending",
+    "full-board-draw-or-practice-stop",
+    "quit",
+    "sixteen-explicit-ROM-diagnostic-winning-lines",
+    "ROM-diagnostic-last-cell-win-before-draw"
+  ],
+  "configuration": "48K PAL; fresh tape load; ordinary key play",
+  "direct_memory_writes": false,
+  "diagnostics": "Winning-line and priority fixtures entered as ordinary DIM/LET after STOP; not public captures."
+}

@@ -1,0 +1,11 @@
+{
+  "name": "board",
+  "source_sha256": "256140479571a8e4600aa61fcf0e1033f0c31699812edf41590271a9155a864f",
+  "checks": [
+    "fresh-tape-numbered-board-stop",
+    "stored-line-identity"
+  ],
+  "configuration": "48K PAL; fresh tape load; ordinary key play",
+  "direct_memory_writes": false,
+  "diagnostics": "Winning-line and priority fixtures entered as ordinary DIM/LET after STOP; not public captures."
+}

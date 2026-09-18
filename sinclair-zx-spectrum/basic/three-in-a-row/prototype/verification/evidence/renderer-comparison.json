@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "release": {
+    "version": "0.25.0",
+    "record": "release-render.json",
+    "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1"
+  },
+  "local": {
+    "commit": "e1f49c7e8e20ff8cf1cab8453955f2b212dab4e3",
+    "reported_version": "0.24.0",
+    "record": "current-render.json",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+  },
+  "captures_byte_identical": true,
+  "screen_pixels_compared_per_build": 49152,
+  "mismatches": 0,
+  "emulator_source_changed": false,
+  "conclusion": "Both builds emit the same complete fork-win frame, matching screen bitmap data. No rendering defect is established by these checks."
+}

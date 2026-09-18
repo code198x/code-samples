@@ -1,0 +1,20 @@
+{
+  "name": "policy",
+  "source_sha256": "ad203e2ab9079c6d81bfff64cb83ec195dec42032a74a850baeb3adfcc36b9b0",
+  "checks": [
+    "fresh-tape-empty-board",
+    "stored-line-identity",
+    "invalid-keys",
+    "held-key-places-once",
+    "occupied-key",
+    "reset",
+    "legal-opponent-path-reasons-and-result",
+    "lesson-centre-opening-corner-response",
+    "quit",
+    "sixteen-explicit-ROM-diagnostic-winning-lines",
+    "ROM-diagnostic-win-before-block"
+  ],
+  "configuration": "48K PAL; fresh tape load; ordinary key play",
+  "direct_memory_writes": false,
+  "diagnostics": "Winning-line and priority fixtures entered as ordinary DIM/LET after STOP; not public captures."
+}
