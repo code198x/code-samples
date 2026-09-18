@@ -1,0 +1,337 @@
+{
+  "line": 8010,
+  "screen": [
+    " YEARFALL         HARVEST 10    ",
+    "                                ",
+    " Yield: 4 grain per acre        ",
+    "                                ",
+    " GRAIN ACCOUNT                  ",
+    "                                ",
+    " At start              0        ",
+    " Land trade cost       0        ",
+    " Food spent            0        ",
+    " Seed spent            0        ",
+    " Harvest added         0        ",
+    "                                ",
+    " Grain in store        0        ",
+    "                                ",
+    " People lost: 83                ",
+    " Newcomers: 0                   ",
+    " People 83 -> 0                 ",
+    " Land   0 -> 0                  ",
+    "                                ",
+    " SPACE continues. R restarts.   ",
+    " Q quits.                       ",
+    "                                ",
+    "                                ",
+    "                                "
+  ],
+  "checks": [
+    "fresh-tape-autostart-token-identity",
+    "title-ignored-key-and-quit",
+    "initial-live-budget",
+    "ignored-planning-keys-preserve-state",
+    "empty-invalid-and-delete-input",
+    "cancel-preserves-plan",
+    "held-digit-is-one-entry",
+    "four-digit-limit-and-over-budget-block",
+    "cannot-sell-unowned-land",
+    "planting-limited-by-land",
+    "unfed-workers-cannot-plant",
+    "purchase-and-ledger-resolution",
+    "sale-and-ledger-resolution",
+    "partial-ration-costs-one-person-and-no-newcomers",
+    "report-does-not-advance-with-invalid-key",
+    "year-state-persists"
+  ],
+  "trials": [
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 10,
+      "plan": [
+        5,
+        180,
+        105
+      ],
+      "yield": 4,
+      "result": [
+        63,
+        445,
+        105,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 6,
+      "plan": [
+        -10,
+        180,
+        90
+      ],
+      "yield": 4,
+      "result": [
+        63,
+        510,
+        90,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 6,
+      "plan": [
+        0,
+        179,
+        100
+      ],
+      "yield": 2,
+      "result": [
+        59,
+        281,
+        100,
+        1,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "price": 9,
+      "plan": [
+        8,
+        180,
+        108
+      ],
+      "yield": 2,
+      "result": [
+        63,
+        216,
+        108,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 2,
+      "start": [
+        63,
+        216,
+        108
+      ],
+      "price": 10,
+      "plan": [
+        -9,
+        189,
+        99
+      ],
+      "yield": 2,
+      "result": [
+        66,
+        216,
+        99,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 3,
+      "start": [
+        66,
+        216,
+        99
+      ],
+      "price": 6,
+      "plan": [
+        -14,
+        198,
+        85
+      ],
+      "yield": 3,
+      "result": [
+        69,
+        272,
+        85,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 4,
+      "start": [
+        69,
+        272,
+        85
+      ],
+      "price": 8,
+      "plan": [
+        -3,
+        207,
+        82
+      ],
+      "yield": 2,
+      "result": [
+        72,
+        171,
+        82,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 5,
+      "start": [
+        72,
+        171,
+        82
+      ],
+      "price": 9,
+      "plan": [
+        -15,
+        216,
+        67
+      ],
+      "yield": 3,
+      "result": [
+        75,
+        224,
+        67,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 6,
+      "start": [
+        75,
+        224,
+        67
+      ],
+      "price": 6,
+      "plan": [
+        -12,
+        225,
+        55
+      ],
+      "yield": 2,
+      "result": [
+        78,
+        126,
+        55,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 7,
+      "start": [
+        78,
+        126,
+        55
+      ],
+      "price": 7,
+      "plan": [
+        -24,
+        234,
+        31
+      ],
+      "yield": 3,
+      "result": [
+        81,
+        122,
+        31,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 8,
+      "start": [
+        81,
+        122,
+        31
+      ],
+      "price": 10,
+      "plan": [
+        -16,
+        243,
+        15
+      ],
+      "yield": 5,
+      "result": [
+        85,
+        99,
+        15,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 9,
+      "start": [
+        85,
+        99,
+        15
+      ],
+      "price": 10,
+      "plan": [
+        -15,
+        249,
+        0
+      ],
+      "yield": 4,
+      "result": [
+        83,
+        0,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "year": 10,
+      "start": [
+        83,
+        0,
+        0
+      ],
+      "price": 8,
+      "plan": [
+        0,
+        0,
+        0
+      ],
+      "yield": 4,
+      "result": [
+        0,
+        0,
+        0,
+        83,
+        0
+      ]
+    }
+  ],
+  "interpretation": "All year ledgers matched the model. A legal managed run collapsed after repeated poor harvests; the old checker wrongly required that random policy run to survive. Retained as design evidence, not a game implementation failure.",
+  "source_sha256": "a94167bb07800269081cb0762dd96adee0b06431d369acc037b943eae74898e0"
+}

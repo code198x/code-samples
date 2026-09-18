@@ -1,0 +1,172 @@
+"""Fresh-ROM tape checks: ordinary keys only, read-only memory observations."""
+import argparse,hashlib,json,sys
+from pathlib import Path
+from entry import Spectrum,ROOT
+from model import plan,resolve,choose,travellers
+sys.path.insert(0,str(ROOT.parents[1]/'tail-chase/prototype/verification'))
+from verify import state,line
+p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();m=Spectrum(a.emulator,out);checks=[];trials=[];events=[];retries=0
+
+def record(name):checks.append(name);print('PASS',name,flush=True)
+def wait(text):
+ global retries
+ for _ in range(3000):
+  if line(m) in (8010,8020) and any(text in r for r in m.screen()):
+   for retry in range(9):
+    try:return state(m)
+    except (AssertionError,IndexError):
+     if retry==8:raise
+     retries+=1;m.frames(1)
+  m.frames(5)
+ raise AssertionError((text,line(m),m.screen()))
+def key(k):m.key('space' if k==' ' else k);m.frames(8)
+def ready():return wait('SPACE harvest.')
+def report():return wait('GRAIN ACCOUNT')
+def edit(which,value):
+ if which=='t':which='s' if int(value)<0 else 'b';value=abs(int(value))
+ key(which);wait('DELETE erases.')
+ for c in str(value):
+  if c=='-':m.key('symbol','j')
+  else:key(c)
+  wait('DELETE erases.')
+ key('enter');return ready()
+def reset():
+ key('r');s=ready();assert (s['pop'],s['grain'],s['land'],s['yr'],s['lost'],s['joined'],s['welcome'],s['admitted'])==(60,360,100,1,0,0,0,0);return s
+
+def commit():
+ before=ready();params=[int(before[k]) for k in ['pop','grain','land','price','trade','feed','plant']]
+ expected=plan(*params);assert expected['ok'];key(' ');after=report()
+ result=resolve(*params,int(after['crop']))
+ assert tuple(after[k] for k in ['pop','grain','land','deaths','newcomers'])==result,(before,after,result)
+ assert after['lost']==before['lost']+result[3]
+ assert after['yr']==before['yr']
+ assert after['grain']==before['grain']-before['trade']*before['price']-before['feed']-before['plant']+after['harvest']
+ assert after['oldgrain']-after['welcome']-after['cost']-after['feed']-after['plant']+after['harvest']==after['grain']
+ assert after['oldpop']+after['admitted']-after['deaths']+after['newcomers']==after['pop']
+ trials.append({'year':before['yr'],'start':params[:3],'price':params[3],'plan':params[4:],'yield':after['crop'],'result':result})
+ return after
+
+def capture(name):m.call('save_screenshot',path=str(out/(name+'.png')))
+def stop():
+ for _ in range(500):
+  if any('9 STOP statement' in s for s in m.screen()):return
+  m.frames(5)
+ raise AssertionError(m.screen())
+try:
+ m.call('load_media',slot='tape-1',kind='tape',path=str(out/'yearfall.tap'));m.statement('LOAD ""');m.call('media_transport',slot='tape-1',transport='start');wait('S starts.')
+ assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};capture('title');record('fresh-tape-autostart-token-identity')
+ key('a');wait('S starts.');key('q');stop();record('title-ignored-key-and-quit')
+ m.statement('RUN');wait('S starts.');key('s');s=ready();assert (s['feed'],s['plant'],s['left'],s['fed'],s['ok'])==(180,100,80,60,1);capture('planning');record('initial-live-budget')
+ before=s
+ for k in ['a','0','enter','t']:key(k);s=ready();assert s['yr']==1 and s['grain']==360
+ record('ignored-planning-keys-preserve-state')
+ # Both land editors accept unsigned digits; the chosen action supplies direction.
+ key('f');wait('DELETE erases.');key('a');key('enter');assert ready()['feed']==180
+ key('f');wait('DELETE erases.');key('1');wait('DELETE erases.');m.key('caps','0');s=wait('DELETE erases.');assert s['d$']==''
+ key('enter');assert ready()['feed']==180;record('empty-invalid-and-delete-input')
+ key('f');wait('DELETE erases.');key('9');wait('DELETE erases.');key('x');assert ready()['feed']==180;record('cancel-preserves-plan')
+ key('f');wait('DELETE erases.');key('1');wait('DELETE erases.');capture('editing');m.call('input',events=[{'Key':{'name':'2','pressed':True}}]);m.frames(180)
+ assert state(m)['d$']=='12';m.call('input',events=[{'Key':{'name':'2','pressed':False}}]);m.frames(10);key('x');ready();record('held-digit-is-one-entry')
+ s=edit('f','99999');assert s['feed']==9999 and s['ok']==0;key(' ');assert ready()['yr']==1;record('four-digit-limit-and-over-budget-block')
+ reset();s=edit('f',183);assert s['fed']==60;commit();assert report()['newcomers']==3;record('excess-food-gives-no-extra-newcomers')
+ reset();assert 'B  Buy land' in m.screen()[6] and 'S  Sell land' in m.screen()[7];record('both-land-actions-visible')
+ s=edit('b',5);assert s['trade']==5 and f"Spend {int(s['cost'])} grain" in m.screen()[10];capture('buy-plan')
+ key('s');wait('DELETE erases.');key('2');wait('DELETE erases.');key('x');assert ready()['trade']==5;record('cancel-sale-preserves-purchase')
+ s=edit('s',10);assert s['trade']==-10 and s['buy']==0 and s['sell']==10 and f"Receive {int(-s['cost'])} grain" in m.screen()[10];capture('sell-plan');record('sale-replaces-purchase-and-shows-proceeds')
+ s=edit('b',2);assert s['trade']==2 and s['sell']==0;record('purchase-replaces-sale')
+ s=edit('s',0);assert s['trade']==0 and s['buy']==0 and s['sell']==0;record('zero-clears-land-plan')
+ for action in ['b','s']:
+  key(action);wait('DELETE erases.');m.key('symbol','j');s=wait('DELETE erases.');assert s['d$']=='';key('enter');assert ready()['trade']==0
+ record('both-land-editors-ignore-minus-and-keep-blank')
+ reset();s=edit('t',-101);assert s['ok']==0;key(' ');assert ready()['land']==100;capture('invalid-plan');record('cannot-sell-unowned-land')
+ reset();s=edit('p',101);assert s['ok']==0;record('planting-limited-by-land')
+ reset();s=edit('f',0);assert s['fed']==0 and s['ok']==0;key(' ');assert ready()['pop']==60;record('unfed-workers-cannot-plant')
+ # Trade itself is not committed until a valid plan is harvested.
+ reset();s=edit('t',5);assert s['land']==100 and s['grain']==360 and s['acres']==105
+ edit('p',105);s=ready();assert s['ok']==1;commit();capture('harvest');record('purchase-and-ledger-resolution')
+ reset();edit('t',-10);edit('p',90);commit();assert 'Land sold: received' in m.screen()[7];capture('sale-report');record('sale-and-ledger-resolution')
+ reset();s=edit('f',179);assert s['fed']==59 and s['ok']==1;commit();s=report();assert s['deaths']==1 and s['newcomers']==0;capture('short-rations');record('partial-ration-costs-one-person-and-no-newcomers')
+ before=s;key('a');s=report();assert s['grain']==before['grain'] and s['yr']==before['yr'];record('report-does-not-advance-with-invalid-key')
+ key(' ');s=ready();assert s['yr']==2 and s['pop']==59 and s['lost']==1;record('year-state-persists')
+ # Reproducible RNG fixture via ordinary ROM commands, without memory writes.
+ key('q');stop();m.statement('RANDOMIZE 17');m.statement('RUN 200');ready()
+ def arrive():
+  before=wait('YEARFALL')
+  if not any('TRAVELLERS AT THE GATE' in row for row in m.screen()):return ready()
+  assert 3<=before['guests']<=6 and before['fee']==6*before['guests']
+  assert before['food']==3*(before['pop']+before['guests'])
+  assert before['can']==int(before['grain']>=before['fee']+before['food'])
+  accept=len(events)>0 and before['can']==1
+  capture('travellers-welcome' if accept else 'travellers-offer')
+  expected=travellers(*(int(before[k]) for k in ['pop','grain','land','guests']),accept)
+  if accept:
+   m.call('input',events=[{'Key':{'name':'y','pressed':True}}]);m.frames(180)
+   assert state(m)['pop']==expected[0] and state(m)['grain']==expected[1]
+   m.call('input',events=[{'Key':{'name':'y','pressed':False}}]);m.frames(10)
+  else:m.key('caps','n')
+  after=ready()
+  assert tuple(after[k] for k in ['pop','grain','land','admitted','welcome'])==expected
+  assert after['joined']==before['joined']+expected[3]
+  assert after['yr']==before['yr'] and after['lost']==before['lost']
+  assert 3<=after['visit']-after['yr']<=5
+  events.append({'year':before['yr'],'guests':before['guests'],'accepted':accept,'fee':before['fee'],'before':[before[k] for k in ['pop','grain','land']],'after':expected})
+  return after
+ for year in range(1,31):
+  s=ready();assert s['yr']==year
+  t,f,plant=choose(*(int(s[k]) for k in ['pop','grain','land','price']))
+  for field,k,v in [('trade','t',t),('feed','f',f),('plant','p',plant)]:
+   if s[field]!=v:s=edit(k,v)
+  s=commit()
+  if s['admitted']>0:capture('welcome-report')
+  if s['pop']==0:raise AssertionError('Seeded managed trial collapsed; investigate trace')
+  if year==10:capture('tenth-harvest')
+  key(' ')
+  if year%10==0:
+   summary=wait('C continues ruling.')
+   assert all(summary[k]==s[k] for k in ['pop','grain','land','lost','joined','visit','yr'])
+   capture('ten-years' if year==10 else 'milestone-'+str(year))
+   key(' ');stable=wait('C continues ruling.');assert all(stable[k]==summary[k] for k in ['pop','grain','land','lost','joined','visit','yr'])
+   if year==30:break
+   if year==10:
+    m.call('input',events=[{'Key':{'name':'c','pressed':True}}]);m.frames(180)
+    assert state(m)['yr']==11
+    m.call('input',events=[{'Key':{'name':'c','pressed':False}}]);m.frames(10)
+   else:m.key('caps','c')
+   advanced=wait('YEARFALL');assert advanced['yr']==year+1
+   assert all(advanced[k]==summary[k] for k in ['pop','grain','land','lost','joined'])
+  arrive()
+ assert len(events)>=3 and any(e['accepted'] for e in events) and not events[0]['accepted']
+ record('thirty-year-managed-run-and-every-ledger')
+ record('decade-summaries-preserve-settlement-and-history')
+ record('continue-and-uppercase-continue-advance-one-year')
+ record('held-continue-does-not-harvest')
+ record('decline-preserves-people-grain-and-land')
+ record('welcome-charges-once-and-adds-workers')
+ record('event-cost-and-food-preview-match-plan')
+ record('held-welcome-is-one-acceptance')
+ record('traveller-visits-are-three-to-five-years-apart')
+ record('welcome-is-accounted-in-harvest-report')
+ # Reach an unaffordable offer through legal spending, without injected resources.
+ key('q');stop();m.statement('RANDOMIZE 17');m.statement('RUN 200');ready()
+ edit('s',100);edit('p',0);commit();key(' ');s=ready();assert s['yr']==2
+ edit('f',int(s['grain']));commit();key(' ');s=wait('TRAVELLERS AT THE GATE')
+ assert s['can']==0 and s['grain']==0;capture('travellers-unaffordable')
+ for k in ['y','a',' ','enter']:
+  key(k);after=wait('TRAVELLERS AT THE GATE');assert all(after[v]==s[v] for v in ['pop','grain','land','joined','visit','yr'])
+ record('unaffordable-welcome-and-invalid-keys-preserve-state')
+ key('r');s=ready();assert s['yr']==1 and s['joined']==0 and 3<=s['visit']<=5;record('restart-from-offer-clears-history')
+ key('q');stop();m.statement('RANDOMIZE 17');m.statement('RUN 200');ready()
+ edit('s',100);edit('p',0);commit();key(' ');s=ready();edit('f',int(s['grain']));commit();key(' ');wait('TRAVELLERS AT THE GATE');key('q');stop();record('quit-from-offer')
+ m.statement('RUN');wait('S starts.');key('s');ready()
+ reset();s=ready();m.call('input',events=[{'Key':{'name':'space','pressed':True}}]);m.frames(400);assert state(m)['yr']==1 and any('GRAIN ACCOUNT' in r for r in m.screen());m.call('input',events=[{'Key':{'name':'space','pressed':False}}]);m.frames(10);report();record('held-harvest-does-not-skip-report')
+ reset();edit('f',0);edit('p',0);s=commit();assert s['pop']==0 and s['lost']==60
+ key(' ');s=wait('settlement is empty.');capture('empty');record('empty-settlement-ending')
+ key('c');s=wait('settlement is empty.');assert s['pop']==0 and s['yr']==1;record('empty-settlement-cannot-continue')
+ key('q');stop();record('quit-ending')
+ m.statement('RUN');wait('S starts.');m.key('caps','s');ready();m.key('caps','b');wait('DELETE erases.');m.key('caps','x');ready();m.key('caps','s');wait('DELETE erases.');m.key('caps','x');ready();m.key('caps','r');ready();record('uppercase-menu-and-reset')
+ key('q');stop();record('quit-planning')
+ m.statement('RUN');wait('S starts.');key('s');ready();commit();key('q');stop();record('quit-report')
+ (out/'results.json').write_text(json.dumps({'source_sha256':hashlib.sha256((ROOT/'yearfall.bas').read_bytes()).hexdigest(),'binary_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'configuration':'Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200','checks':checks,'trials':trials,'events':events,'sampling_retries':retries,'direct_memory_writes':False,'server':m.server},indent=2)+'\n')
+except Exception:
+ (out/'failure.json').write_text(json.dumps({'line':line(m),'screen':m.screen(),'checks':checks,'trials':trials,'events':events},indent=2)+'\n');raise
+finally:m.close()

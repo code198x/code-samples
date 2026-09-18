@@ -1,0 +1,18 @@
+{
+  "name": "ledger",
+  "source": "ledger/yearfall.bas",
+  "source_sha256": "065b1923f6c7b3cf9ce22f5386951947a4f1e6f2da5f622691dfd174f6884834",
+  "tape_sha256": "87c2c63ab36479164eebb84388cacd216547ede06097fe72e610ce95cd362e8c",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"yearfall\" LINE 10; no injection"
+}

@@ -1,0 +1,407 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; executable identities in each checkpoint record",
+  "checkpoints": [
+    {
+      "name": "ledger",
+      "source_sha256": "065b1923f6c7b3cf9ce22f5386951947a4f1e6f2da5f622691dfd174f6884834",
+      "tape_sha256": "87c2c63ab36479164eebb84388cacd216547ede06097fe72e610ce95cd362e8c",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "initial-settlement-ledger"
+      ],
+      "captures": {
+        "initial.png": "1a00fadc1c550f68f1eb7654623765e6599bafe1a69d26ac6c6387f37d8ba0fc"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "food",
+      "source_sha256": "1a6741aaaae137e238e9f450fa997f5d9860af03a464e875cb84bfac44023e83",
+      "tape_sha256": "aaa0fa65bab190f627ea802422521137d137dc854dfbda6b568e537ebbf789d9",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "food-and-seed-budget",
+        "documented-line-edit-experiments-and-restoration"
+      ],
+      "captures": {
+        "initial.png": "a9352ca5ce1600bf36575f29d2d3300e4d6b9e3d10d4510d93fd742e0e11321a"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "seed",
+      "source_sha256": "9e4ec82ec388a74cd179577f8709e1152f67e265896587549983704a5a97cb99",
+      "tape_sha256": "9a0caa9b531550fdb7b8bd02f7ad9dc4868dd69e62ef013c53be5d395070c956",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "food-and-seed-budget",
+        "documented-line-edit-experiments-and-restoration"
+      ],
+      "captures": {
+        "initial.png": "af228524fda8c2bba6c783c007ba655ba6aec502e8193fc40e18bbc02befc739"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "harvest",
+      "source_sha256": "88928a96a60e8c1b55623ef93c1c5dbc7b7fe7f5013813827a924de059936cb3",
+      "tape_sha256": "5a4c7b97b584de17dd85ecc7bd6a2cafd1c60278b8cef7d9dc13ae64362fe4e0",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "single-harvest-ledger-without-growth",
+        "invalid-plan-stops-before-harvest"
+      ],
+      "captures": {
+        "initial.png": "bbcf59c217cb6d9bbd5c94288a707c370c6b72b031c4ec5d78425d5dc5b28a88"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "editor",
+      "source_sha256": "b3b445ec86130005b555653a9eec1c127af86b6782a116b35e5ab3db9f5f3cfb",
+      "tape_sha256": "b4228f55eecbff14285a672d414d12a61904b1b46a643f36c206a321819382af",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "initial-draft-budget",
+        "ignored-key-does-not-commit",
+        "cancel-preserves-plan",
+        "delete-and-empty-entry",
+        "held-digit-counts-once",
+        "bounded-input-and-invalid-budget",
+        "partial-food-and-year-ledger",
+        "single-year-report-retained",
+        "reset-and-quit"
+      ],
+      "captures": {
+        "initial.png": "33a41dd51e0dd9d3886f1a2eeaca352b7324fe8010af132435825925fd51a74d",
+        "short-rations.png": "f21f421c982240b794c3c73970424232946f0b3c2c9fd3cbfe9cbcff8601f046"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "planner",
+      "source_sha256": "64c3e31f201e525fb9842d455e49db75f8098394d29cc26e8fdf7783d31ce61c",
+      "tape_sha256": "e3f60b3d917e6ab448d44333c595849f6965f9e91fe72ceda46eeb3b406ab37f",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "initial-draft-budget",
+        "ignored-key-does-not-commit",
+        "cancel-preserves-plan",
+        "delete-and-empty-entry",
+        "held-digit-counts-once",
+        "bounded-input-and-invalid-budget",
+        "partial-food-and-year-ledger",
+        "single-year-report-retained",
+        "land-limits-planting",
+        "fed-workforce-and-empty-harvest",
+        "reset-and-quit"
+      ],
+      "captures": {
+        "initial.png": "007ab3916d5f71c6c0340c690d15bb7f2a64268cc63ced0e9ed286bc80aef823",
+        "short-rations.png": "f21f421c982240b794c3c73970424232946f0b3c2c9fd3cbfe9cbcff8601f046"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "years",
+      "source_sha256": "e68a597c3e55d49d84ed6ff35c24304474c71e2384a770cd6495f4626569e13a",
+      "tape_sha256": "e79746046d151dd1e67847e0bbe4df44f33d8181207ff29cf394ecab01c7a12b",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "initial-draft-budget",
+        "ignored-key-does-not-commit",
+        "cancel-preserves-plan",
+        "delete-and-empty-entry",
+        "held-digit-counts-once",
+        "bounded-input-and-invalid-budget",
+        "partial-food-and-year-ledger",
+        "land-limits-planting",
+        "fed-workforce-and-empty-harvest",
+        "empty-ending-cannot-continue",
+        "year-progression-and-ending",
+        "reset-and-quit"
+      ],
+      "captures": {
+        "initial.png": "007ab3916d5f71c6c0340c690d15bb7f2a64268cc63ced0e9ed286bc80aef823",
+        "short-rations.png": "1e54d9b08d560efb55818b3e655ee2f613647eb7ba190ae7701c9b2669de312b",
+        "summary.png": "47fa993aa1741c59cad828dd3317726ce8d2748aab83badf7cc481f4495652c0"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "trade",
+      "source_sha256": "11ee950ec084f00f4f5c0ef899d989ac4a7229a245cf4f8e34ea533ae58d1f28",
+      "tape_sha256": "6800e5d2a18e1bf05d03f2ec8d22a7bfdb38d589e1eaf315dd0fb43e91a4e6ea",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "initial-draft-budget",
+        "ignored-key-does-not-commit",
+        "cancel-preserves-plan",
+        "delete-and-empty-entry",
+        "held-digit-counts-once",
+        "bounded-input-and-invalid-budget",
+        "partial-food-and-year-ledger",
+        "land-limits-planting",
+        "fed-workforce-and-empty-harvest",
+        "empty-ending-cannot-continue",
+        "separate-buy-sell-and-sale-ledger",
+        "ownership-limit",
+        "worked-recovery-budget-fixture",
+        "year-progression-and-ending",
+        "reset-and-quit"
+      ],
+      "captures": {
+        "initial.png": "8d638327ab477b6e5f9a3c2eb9aebca89cf1b677e47b59d5dbfbf80439c1442c",
+        "short-rations.png": "ec120c38f46300cced0decff0fb4d813b74a9cc6616e897b99fcf16105524413",
+        "summary.png": "80de92cdd8fc1b48c2ef99e97f5303aba8500f17553a68506b1b050a3c2ba768"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "visitors",
+      "source_sha256": "6e63ffd2826725a815cbe44d35e86111308623f0c612d002db2608bd62801f29",
+      "tape_sha256": "8019e5e535eaf9140d8daeb9d3dfb4cc46e270779f6ff36507f584e2cec70af3",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "initial-draft-budget",
+        "ignored-key-does-not-commit",
+        "cancel-preserves-plan",
+        "delete-and-empty-entry",
+        "held-digit-counts-once",
+        "bounded-input-and-invalid-budget",
+        "partial-food-and-year-ledger",
+        "land-limits-planting",
+        "fed-workforce-and-empty-harvest",
+        "empty-ending-cannot-continue",
+        "separate-buy-sell-and-sale-ledger",
+        "ownership-limit",
+        "worked-recovery-budget-fixture",
+        "year-progression-and-ending",
+        "welcome-and-decline-resource-deltas",
+        "reset-and-quit"
+      ],
+      "captures": {
+        "initial.png": "28c0d2dcdce508b91becd73dd042ca7bd720000d78608a8aea9fa507ef901424",
+        "short-rations.png": "febbba8d9366f2fe807f5473998c9ccbb713a9804ebab1e10753f655d895d29e",
+        "summary.png": "a27726131f97d8ef821cca882b199784645d9a907859bc6c22b2119964e552c9"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "continued",
+      "source_sha256": "a40bf3f081fee7aca02efa5ab743d4858b4ec4119cc8d8731c4bbb679d930521",
+      "tape_sha256": "57d391d0d99b3c41b26025c19756419aa799041489153ea6de4e966842808f04",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "initial-draft-budget",
+        "ignored-key-does-not-commit",
+        "cancel-preserves-plan",
+        "delete-and-empty-entry",
+        "held-digit-counts-once",
+        "bounded-input-and-invalid-budget",
+        "partial-food-and-year-ledger",
+        "land-limits-planting",
+        "fed-workforce-and-empty-harvest",
+        "empty-ending-cannot-continue",
+        "separate-buy-sell-and-sale-ledger",
+        "ownership-limit",
+        "worked-recovery-budget-fixture",
+        "year-progression-and-ending",
+        "welcome-and-decline-resource-deltas",
+        "thirty-years-with-preserved-decade-continuation",
+        "reset-and-quit"
+      ],
+      "captures": {
+        "initial.png": "28c0d2dcdce508b91becd73dd042ca7bd720000d78608a8aea9fa507ef901424",
+        "short-rations.png": "febbba8d9366f2fe807f5473998c9ccbb713a9804ebab1e10753f655d895d29e",
+        "summary.png": "87819d048d1a98c39d3b2e7c90e626325f6f866a488c75b13e63598a83a5441c"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "finished",
+      "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
+      "tape_sha256": "62fc9233fb9e70778cf32e7b19b0a819dd83fea6474dda25133a029e37ac9e22",
+      "checks": [
+        "fresh-tape-autostart-token-identity",
+        "title-ignored-key-and-quit",
+        "initial-live-budget",
+        "ignored-planning-keys-preserve-state",
+        "empty-invalid-and-delete-input",
+        "cancel-preserves-plan",
+        "held-digit-is-one-entry",
+        "four-digit-limit-and-over-budget-block",
+        "excess-food-gives-no-extra-newcomers",
+        "both-land-actions-visible",
+        "cancel-sale-preserves-purchase",
+        "sale-replaces-purchase-and-shows-proceeds",
+        "purchase-replaces-sale",
+        "zero-clears-land-plan",
+        "both-land-editors-ignore-minus-and-keep-blank",
+        "cannot-sell-unowned-land",
+        "planting-limited-by-land",
+        "unfed-workers-cannot-plant",
+        "purchase-and-ledger-resolution",
+        "sale-and-ledger-resolution",
+        "partial-ration-costs-one-person-and-no-newcomers",
+        "report-does-not-advance-with-invalid-key",
+        "year-state-persists",
+        "thirty-year-managed-run-and-every-ledger",
+        "decade-summaries-preserve-settlement-and-history",
+        "continue-and-uppercase-continue-advance-one-year",
+        "held-continue-does-not-harvest",
+        "decline-preserves-people-grain-and-land",
+        "welcome-charges-once-and-adds-workers",
+        "event-cost-and-food-preview-match-plan",
+        "held-welcome-is-one-acceptance",
+        "traveller-visits-are-three-to-five-years-apart",
+        "welcome-is-accounted-in-harvest-report",
+        "unaffordable-welcome-and-invalid-keys-preserve-state",
+        "restart-from-offer-clears-history",
+        "quit-from-offer",
+        "held-harvest-does-not-skip-report",
+        "empty-settlement-ending",
+        "empty-settlement-cannot-continue",
+        "quit-ending",
+        "uppercase-menu-and-reset",
+        "quit-planning",
+        "quit-report"
+      ],
+      "captures": {
+        "buy-plan.png": "e54de8c46761829a13e212006eee3019d0a3602c225e5103df869cd11c59422d",
+        "editing.png": "ad979a3f7a455f9fca78b1010f3f9a592d7e66949b8db2d29692a458c331a922",
+        "empty.png": "0c984cc465614b0f0cc49db090d58b7f1090540bf406e6d7550ecde3b6c5190b",
+        "harvest.png": "c0b7d321aa7c6d2bf6a2edba6dc630b75cc1a898e9d2cdbedfb32bf1c3df46ae",
+        "invalid-plan.png": "1d8100a506821b89ea13bc315bb8182ed0a2b9a0f6e5693c746355f0fd12e859",
+        "milestone-20.png": "a358def76a89937766613e7147c33aa9a23482b62e61e281c1179a2b51deca0f",
+        "milestone-30.png": "87819d048d1a98c39d3b2e7c90e626325f6f866a488c75b13e63598a83a5441c",
+        "planning.png": "032b124dad6cb2cdf9172129d3c0adeebb599ccba94016c357ab245aac8bee95",
+        "sale-report.png": "156d4a2eea248567e3865f21f91afbfab013fe0fe786b51a88dcee19abbb9836",
+        "sell-plan.png": "2060bb5aad3933d3fb4a6682b3bf5214b751f035ec3c0243dae12e446d3cbb60",
+        "short-rations.png": "17f7e88feff6e2e57b95ed3354dd59c5d09f4a8bd288d2809f29189c9fa5d9ae",
+        "ten-years.png": "2622202fe4d00554633c0f1ee751beffd3e80dcdb6c38323c3a7bdb6ed01c235",
+        "tenth-harvest.png": "210d01201639592150290fa26e892deb73417edd1b3f4f18d8e2514fd2951644",
+        "title.png": "7251c79227871f9987b9bc59b7589faa211b813f8df39fde17ff593fa9e4baf5",
+        "travellers-offer.png": "f5cde0438afbfc3018bbd2cd2d69eb611527562a57953db1f3ec4c151442c7ae",
+        "travellers-unaffordable.png": "893a764cae5e3a70d994c08f147c78fa3b4b461ba6d079ecb58b06922ed9b7e7",
+        "travellers-welcome.png": "fa72a5856d7df0b02874dc855fd587b64d59440953713d31ee9f6a7ad3f6de89",
+        "welcome-report.png": "0532d4a53f1018dec569dcae7015924bd8990ae4173fc82dabb2a878f02a84b2"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    }
+  ],
+  "execution_checks": 140,
+  "final_source_identical": true,
+  "limits": "Native acceptance applies to the final game. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
+}

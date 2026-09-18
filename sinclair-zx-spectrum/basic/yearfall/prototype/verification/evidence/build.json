@@ -1,0 +1,17 @@
+{
+  "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
+  "tape_sha256": "62fc9233fb9e70778cf32e7b19b0a819dd83fea6474dda25133a029e37ac9e22",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "configuration": "Stock 48K PAL",
+  "entry": "ROM keyboard; SAVE \"yearfall\" LINE 10; no source injection"
+}

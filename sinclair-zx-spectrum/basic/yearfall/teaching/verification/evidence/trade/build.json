@@ -1,0 +1,18 @@
+{
+  "name": "trade",
+  "source": "trade/yearfall.bas",
+  "source_sha256": "11ee950ec084f00f4f5c0ef899d989ac4a7229a245cf4f8e34ea533ae58d1f28",
+  "tape_sha256": "6800e5d2a18e1bf05d03f2ec8d22a7bfdb38d589e1eaf315dd0fb43e91a4e6ea",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"yearfall\" LINE 10; no injection"
+}

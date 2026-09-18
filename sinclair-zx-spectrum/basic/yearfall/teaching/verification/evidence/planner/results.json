@@ -1,0 +1,68 @@
+{
+  "source_sha256": "64c3e31f201e525fb9842d455e49db75f8098394d29cc26e8fdf7783d31ce61c",
+  "checks": [
+    "fresh-tape-autostart-stored-identity",
+    "initial-draft-budget",
+    "ignored-key-does-not-commit",
+    "cancel-preserves-plan",
+    "delete-and-empty-entry",
+    "held-digit-counts-once",
+    "bounded-input-and-invalid-budget",
+    "partial-food-and-year-ledger",
+    "single-year-report-retained",
+    "land-limits-planting",
+    "fed-workforce-and-empty-harvest",
+    "reset-and-quit"
+  ],
+  "trials": [
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        179,
+        100
+      ],
+      "yield": 2,
+      "result": [
+        59,
+        281,
+        100,
+        1,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "yield": 3,
+      "result": [
+        0,
+        360,
+        100,
+        60,
+        0
+      ]
+    }
+  ],
+  "events": [],
+  "fixtures": [],
+  "direct_memory_writes": false,
+  "configuration": "Fresh stock 48K PAL tape load; ordinary key play. Listed early experiments edit source through ROM keys; yearly fixtures use RANDOMIZE 17 and RUN 200.",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+}

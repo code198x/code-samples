@@ -1,0 +1,91 @@
+{
+  "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
+  "checks": [
+    "initial-ledger",
+    "cannot-sell-unowned-land",
+    "land-limits-planting",
+    "unfed-people-cannot-work",
+    "combined-budget",
+    "poor-harvest",
+    "partial-ration-and-no-newcomers",
+    "sale-accounted-once",
+    "3000-seeded-policy-runs-preserve-resources",
+    "active-management-can-improve-on-defaults",
+    "welcome-cost-and-population",
+    "decline-preserves-resources",
+    "cannot-welcome-without-food-budget",
+    "exact-welcome-and-food-budget",
+    "2000-thirty-year-event-runs-preserve-resources"
+  ],
+  "policies_without_events_10_years": {
+    "hold": {
+      "runs": 1000,
+      "no_deaths": 717,
+      "empty": 241,
+      "median_population": 93.0,
+      "median_grain": 626.5,
+      "median_land": 100.0,
+      "example": {
+        "seed": 0,
+        "years": 10,
+        "population": 93,
+        "grain": 946,
+        "land": 100,
+        "lost": 0
+      }
+    },
+    "reserve": {
+      "runs": 1000,
+      "no_deaths": 979,
+      "empty": 7,
+      "median_population": 93.0,
+      "median_grain": 695.0,
+      "median_land": 145.5,
+      "example": {
+        "seed": 0,
+        "years": 10,
+        "population": 93,
+        "grain": 1378,
+        "land": 178,
+        "lost": 0
+      }
+    },
+    "expand": {
+      "runs": 1000,
+      "no_deaths": 980,
+      "empty": 5,
+      "median_population": 93.0,
+      "median_grain": 1035.0,
+      "median_land": 178.0,
+      "example": {
+        "seed": 0,
+        "years": 10,
+        "population": 93,
+        "grain": 1488,
+        "land": 178,
+        "lost": 0
+      }
+    }
+  },
+  "extended_30_years": {
+    "decline": {
+      "runs": 1000,
+      "completed_30_years": 811,
+      "no_deaths": 811,
+      "median_population": 231.0,
+      "median_grain": 4502.5,
+      "max_food": 693,
+      "max_land": 440
+    },
+    "welcome": {
+      "runs": 1000,
+      "completed_30_years": 644,
+      "no_deaths": 640,
+      "median_population": 291.0,
+      "median_grain": 3731.0,
+      "max_food": 981,
+      "max_land": 624
+    }
+  },
+  "limits": "Python random trials, not Spectrum random sequences, optimal strategy, player success rates or proof that every run is rescuable."
+}
