@@ -43,8 +43,11 @@ memory without writing it, checks totals and every displayed percentage/bar,
 and exercises repeat, add, size changes, the limit, early stop, held keys and
 quit. Exact zero/100% chart boundaries and an 8,400-roll starting total use labelled
 ordinary ROM commands. The latter tests adding to 9,600 and refusing another
-batch; its maximum-count capture is diagnostic rather than ordinary play. Captures advance fifty frames
-once input is ready so a full settled video frame is presented.
+batch; its maximum-count capture is diagnostic rather than ordinary play. Captures advance fifty frames once input is ready. Some headless PNGs still
+show incomplete glyph rendering; these are diagnostic evidence, not public
+lesson media.
 
 Execution is configuration-specific evidence, not original-hardware timing or
-player approval. The user approved the live prototype; a compact teaching sequence is next.
+player approval. The user approved the live prototype and five replacement lessons. Current
+curriculum status and lesson evidence are maintained in the
+[implementation record](https://github.com/code198x/docs/blob/main/platforms/sinclair-zx-spectrum/games/dice-roller/lessons.md).
