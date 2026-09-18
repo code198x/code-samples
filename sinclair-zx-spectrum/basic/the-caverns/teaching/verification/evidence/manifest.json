@@ -1,0 +1,301 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; executable identities in each checkpoint record",
+  "checkpoints": [
+    {
+      "name": "room",
+      "source_sha256": "5e2531c772343f571942b5a4920d9917d96e16c50d6415c6e0fd03c0e8fe9b01",
+      "tape_sha256": "80bc237a72e1eb358f48e61627cd266ec4a368ff010675fbc4919656496a3388",
+      "checks": [
+        "fresh-tape-room-display",
+        "stored-token-identity"
+      ],
+      "captures": {
+        "entrance.png": "a176b24731c0e87a02d64cff94844ab8b811bf37507f119e121c59ad3a739297"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "map",
+      "source_sha256": "115a8b88320fbfca2d9dd9cfe3e563f9e30be5835fa0c211db17040a67eea846",
+      "tape_sha256": "10efdecc312a161255fae3bff951bf41f791b23940fec7efc36c693f703b3677",
+      "checks": [
+        "fresh-tape-room-display",
+        "stored-token-identity",
+        "all-room-links-loaded"
+      ],
+      "captures": {
+        "entrance.png": "d43661bbbabc5b363fc551d419290a23e9bca946ea4356d2cbd177bcbb80fabd"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "walk",
+      "source_sha256": "31cc272c4542e775a576f26abebd5fd17c026e981f90e7dc0860d79b63a4e4dd",
+      "tape_sha256": "07047a6b3491af046d0c629654d9c89760cedb0c0267b694c0239c6048d04cc2",
+      "checks": [
+        "fresh-tape-room-display",
+        "stored-token-identity",
+        "all-room-links-loaded",
+        "ignored-keys-and-wall-cost-no-turn",
+        "held-direction-one-move",
+        "wait-counts-turn",
+        "uppercase-direction",
+        "all-twelve-rooms-reached-by-keys",
+        "reset-restores-state",
+        "quit"
+      ],
+      "captures": {
+        "entrance.png": "c59971d08676bcec2b43d432331279877d7d0ee18d0638fac8e3cb6fc7548a04",
+        "exploration.png": "8cda3f896ca8611768d3db1feb91c5c9078457768b3be5c832f355ce13bdca5d"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "treasure",
+      "source_sha256": "928d1267157d12308461975488e86516701689f6bddbdab8ee282a832f5ddbc1",
+      "tape_sha256": "f03e4d306d2979a7016d710a808b818375a101814f7f1338ffbbbac8f1f2cc55",
+      "checks": [
+        "fresh-tape-room-display",
+        "stored-token-identity",
+        "all-room-links-loaded",
+        "ignored-keys-and-wall-cost-no-turn",
+        "held-direction-one-move",
+        "wait-counts-turn",
+        "uppercase-direction",
+        "treasure-collected-once-and-clue-cleared",
+        "third-treasure-does-not-end-expedition",
+        "return-rule-present-only-in-expedition",
+        "reset-restores-state",
+        "quit"
+      ],
+      "captures": {
+        "entrance.png": "60dd807ee865becea1f8bef6fe7040fd499b017981228d486656000344a2e6ea",
+        "return.png": "97fa723a641d0f6886794f909bbe204e98cce0d8c63deccaa308176b9e181d86",
+        "three-found.png": "1384e7e521f3e51bdbc7e8e65825635a7f8a9f41db9efed43c142fb646e15801",
+        "treasure.png": "d792053b1b5616805668b80575d55c36e7db6f7aec951d453de7ac210a6db858"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "pit",
+      "source_sha256": "fb4345ecca9926b36f83d27c9fc431934f9eb861b67d489a99cc38a8aed0c69b",
+      "tape_sha256": "b69611e89eeed13663c7b39cc291ce9748234a49514042e4d5981ab558ee6615",
+      "checks": [
+        "fresh-tape-room-display",
+        "stored-token-identity",
+        "all-room-links-loaded",
+        "ignored-keys-and-wall-cost-no-turn",
+        "held-direction-one-move",
+        "wait-counts-turn",
+        "uppercase-direction",
+        "treasure-collected-once-and-clue-cleared",
+        "pit-and-stable-result",
+        "third-treasure-does-not-end-expedition",
+        "return-rule-present-only-in-expedition",
+        "reset-restores-state",
+        "quit"
+      ],
+      "captures": {
+        "entrance.png": "60dd807ee865becea1f8bef6fe7040fd499b017981228d486656000344a2e6ea",
+        "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
+        "return.png": "97fa723a641d0f6886794f909bbe204e98cce0d8c63deccaa308176b9e181d86",
+        "three-found.png": "1384e7e521f3e51bdbc7e8e65825635a7f8a9f41db9efed43c142fb646e15801",
+        "treasure.png": "6acba836dd7071c9b8739f502d27d4aa3e7696ce869343c406e1c63ff5ce07f1"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "patrol",
+      "source_sha256": "71b72a82792f1999e99f5654cc170de2c2c1ebefd532553592c0761d92b4e317",
+      "tape_sha256": "d9a30b1df5e695eb9b8b6e6d4750f8b008c46a9cf7366b61abcaacd885eeb3d8",
+      "checks": [
+        "fresh-tape-room-display",
+        "stored-token-identity",
+        "all-room-links-loaded",
+        "ignored-keys-and-wall-cost-no-turn",
+        "held-direction-one-move",
+        "wait-counts-turn",
+        "uppercase-direction",
+        "treasure-collected-once-and-clue-cleared",
+        "pit-and-stable-result",
+        "arrival-invalid-and-wall-preserve-escape-turn",
+        "arrival-escape",
+        "north-escape-can-receive-another-arrival",
+        "escape-after-second-arrival",
+        "waiting-after-arrival-is-caught",
+        "entering-warned-creature-is-caught",
+        "third-treasure-does-not-end-expedition",
+        "return-rule-present-only-in-expedition",
+        "reset-restores-state",
+        "quit"
+      ],
+      "captures": {
+        "arrival.png": "d3de901c487012fc0c74f130e71fae670bb53d77ce8e80d4189e4477520acd95",
+        "entrance.png": "b5f1b8246a8e554662d2f75c78b720d2f641103e7a1b22a0374b32bf9be217c7",
+        "escape.png": "7ce1d9295682544264d5cdc7024c5ec0eb5b0f3267c059919b9d9ee5826a181d",
+        "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
+        "return.png": "f0da9ee6c01a3c0991e6d54b1d11d492625c0b69167f86096f61015df677eaaa",
+        "three-found.png": "340b10dd1164902c5c24da8f1ebf4b2e71a5331786d536ff814da659918c8721",
+        "treasure.png": "868f7c4f7a9ad73165de66381a9bc52bf582c0c25fa6babbccd771ce017216b3"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "expedition",
+      "source_sha256": "224dd39a5712f12dbafe7e80f963b03a905ac30f158e1e69bb66072c8b6f37fa",
+      "tape_sha256": "f99e2ea12220fd1635285ddab8a7c7c5d01f8ac6c295a0c3eb30a7c5dc26fa1b",
+      "checks": [
+        "fresh-tape-room-display",
+        "stored-token-identity",
+        "all-room-links-loaded",
+        "ignored-keys-and-wall-cost-no-turn",
+        "held-direction-one-move",
+        "wait-counts-turn",
+        "uppercase-direction",
+        "treasure-collected-once-and-clue-cleared",
+        "pit-and-stable-result",
+        "arrival-invalid-and-wall-preserve-escape-turn",
+        "arrival-escape",
+        "north-escape-can-receive-another-arrival",
+        "escape-after-second-arrival",
+        "waiting-after-arrival-is-caught",
+        "entering-warned-creature-is-caught",
+        "third-treasure-does-not-end-expedition",
+        "return-rule-present-only-in-expedition",
+        "reset-restores-state",
+        "quit"
+      ],
+      "captures": {
+        "arrival.png": "d3de901c487012fc0c74f130e71fae670bb53d77ce8e80d4189e4477520acd95",
+        "entrance.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+        "escape.png": "7ce1d9295682544264d5cdc7024c5ec0eb5b0f3267c059919b9d9ee5826a181d",
+        "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
+        "return.png": "ae669aab7db737c84fce8b3151949a6764cc032e19e3781578634d17bd281236",
+        "three-found.png": "340b10dd1164902c5c24da8f1ebf4b2e71a5331786d536ff814da659918c8721",
+        "treasure.png": "868f7c4f7a9ad73165de66381a9bc52bf582c0c25fa6babbccd771ce017216b3"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "finished",
+      "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+      "tape_sha256": "34b9b02215c527b92d254b928e0755a29af2ad7d2ac91299c87d10afa32c9aa1",
+      "checks": [
+        "fresh-tape-autostart-and-stored-identity",
+        "title-ignored-key-and-quit",
+        "start-safe-entrance",
+        "ignored-keys-cost-no-turn",
+        "wall-costs-no-turn",
+        "held-direction-is-one-turn",
+        "legal-pit-path-and-directional-clues",
+        "pit-result-stable",
+        "legal-caught-path-and-directional-clues",
+        "caught-result-stable",
+        "legal-arrival-path-and-directional-clues",
+        "legal-escape-path-and-directional-clues",
+        "legal-win-path-and-directional-clues",
+        "win-result-stable",
+        "arrival-grace-then-wait-is-caught",
+        "quit-result",
+        "quit-play",
+        "uppercase-start-and-direction",
+        "reset-restores-treasures-and-patrol"
+      ],
+      "captures": {
+        "arrival.png": "d3de901c487012fc0c74f130e71fae670bb53d77ce8e80d4189e4477520acd95",
+        "caught.png": "5719fefb33944cffd7d3ed9d89ed6b77ce8c14868a7eb01ed01dffa1c2eed658",
+        "entrance.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+        "escape.png": "26532628f55f031ef0bb7c4663beae27fb756373fe77531f4cbbcd9e05e8b448",
+        "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
+        "reset.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+        "title.png": "b01268338cb77f67346fd912256f1362bf10b7fccb4de7d0dca0972ea1066222",
+        "win.png": "ae669aab7db737c84fce8b3151949a6764cc032e19e3781578634d17bd281236"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    }
+  ],
+  "execution_checks": 97,
+  "final_source_identical": true,
+  "limits": "Native acceptance applies to the final game. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
+}

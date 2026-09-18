@@ -1,0 +1,18 @@
+{
+  "name": "room",
+  "source": "room/caverns.bas",
+  "source_sha256": "5e2531c772343f571942b5a4920d9917d96e16c50d6415c6e0fd03c0e8fe9b01",
+  "tape_sha256": "80bc237a72e1eb358f48e61627cd266ec4a368ff010675fbc4919656496a3388",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "expedition",
+  "source": "expedition/caverns.bas",
+  "source_sha256": "224dd39a5712f12dbafe7e80f963b03a905ac30f158e1e69bb66072c8b6f37fa",
+  "tape_sha256": "f99e2ea12220fd1635285ddab8a7c7c5d01f8ac6c295a0c3eb30a7c5dc26fa1b",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+}

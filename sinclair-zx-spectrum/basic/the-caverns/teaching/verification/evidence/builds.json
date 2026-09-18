@@ -1,0 +1,146 @@
+[
+  {
+    "name": "room",
+    "source": "room/caverns.bas",
+    "source_sha256": "5e2531c772343f571942b5a4920d9917d96e16c50d6415c6e0fd03c0e8fe9b01",
+    "tape_sha256": "80bc237a72e1eb358f48e61627cd266ec4a368ff010675fbc4919656496a3388",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  },
+  {
+    "name": "map",
+    "source": "map/caverns.bas",
+    "source_sha256": "115a8b88320fbfca2d9dd9cfe3e563f9e30be5835fa0c211db17040a67eea846",
+    "tape_sha256": "10efdecc312a161255fae3bff951bf41f791b23940fec7efc36c693f703b3677",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  },
+  {
+    "name": "walk",
+    "source": "walk/caverns.bas",
+    "source_sha256": "31cc272c4542e775a576f26abebd5fd17c026e981f90e7dc0860d79b63a4e4dd",
+    "tape_sha256": "07047a6b3491af046d0c629654d9c89760cedb0c0267b694c0239c6048d04cc2",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  },
+  {
+    "name": "treasure",
+    "source": "treasure/caverns.bas",
+    "source_sha256": "928d1267157d12308461975488e86516701689f6bddbdab8ee282a832f5ddbc1",
+    "tape_sha256": "f03e4d306d2979a7016d710a808b818375a101814f7f1338ffbbbac8f1f2cc55",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  },
+  {
+    "name": "pit",
+    "source": "pit/caverns.bas",
+    "source_sha256": "fb4345ecca9926b36f83d27c9fc431934f9eb861b67d489a99cc38a8aed0c69b",
+    "tape_sha256": "b69611e89eeed13663c7b39cc291ce9748234a49514042e4d5981ab558ee6615",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  },
+  {
+    "name": "patrol",
+    "source": "patrol/caverns.bas",
+    "source_sha256": "71b72a82792f1999e99f5654cc170de2c2c1ebefd532553592c0761d92b4e317",
+    "tape_sha256": "d9a30b1df5e695eb9b8b6e6d4750f8b008c46a9cf7366b61abcaacd885eeb3d8",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  },
+  {
+    "name": "expedition",
+    "source": "expedition/caverns.bas",
+    "source_sha256": "224dd39a5712f12dbafe7e80f963b03a905ac30f158e1e69bb66072c8b6f37fa",
+    "tape_sha256": "f99e2ea12220fd1635285ddab8a7c7c5d01f8ac6c295a0c3eb30a7c5dc26fa1b",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  },
+  {
+    "name": "finished",
+    "source": "finished/caverns.bas",
+    "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+    "tape_sha256": "34b9b02215c527b92d254b928e0755a29af2ad7d2ac91299c87d10afa32c9aa1",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+  }
+]

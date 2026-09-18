@@ -1,0 +1,12 @@
+{
+  "name": "room",
+  "source_sha256": "5e2531c772343f571942b5a4920d9917d96e16c50d6415c6e0fd03c0e8fe9b01",
+  "checks": [
+    "fresh-tape-room-display",
+    "stored-token-identity"
+  ],
+  "actions": [],
+  "configuration": "Stock 48K PAL, fresh tape load and ordinary keys",
+  "direct_memory_writes": false,
+  "sampling_retries": []
+}

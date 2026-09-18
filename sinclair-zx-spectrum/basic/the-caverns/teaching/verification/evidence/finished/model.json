@@ -1,0 +1,13 @@
+{
+  "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+  "reachable_nonterminal_states": 534,
+  "arrival_states_with_safe_escape": 50,
+  "examples": {
+    "pit": "see",
+    "caught": "ssee",
+    "arrival": "sse ",
+    "escape": "sse n",
+    "win": "eeesswwnnw"
+  },
+  "limits": "Host state-space exploration, not ROM execution or proof of player enjoyment."
+}

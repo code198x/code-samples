@@ -1,0 +1,13 @@
+{
+  "name": "map",
+  "source_sha256": "115a8b88320fbfca2d9dd9cfe3e563f9e30be5835fa0c211db17040a67eea846",
+  "checks": [
+    "fresh-tape-room-display",
+    "stored-token-identity",
+    "all-room-links-loaded"
+  ],
+  "actions": [],
+  "configuration": "Stock 48K PAL, fresh tape load and ordinary keys",
+  "direct_memory_writes": false,
+  "sampling_retries": []
+}
