@@ -23,6 +23,7 @@ def key(k):m.key('space' if k==' ' else k);m.frames(8)
 def ready():return wait('SPACE harvest.')
 def report():return wait('GRAIN ACCOUNT')
 def edit(which,value):
+ if which=='t':which='s' if int(value)<0 else 'b';value=abs(int(value))
  key(which);wait('DELETE erases.')
  for c in str(value):
   if c=='-':m.key('symbol','j')
@@ -55,9 +56,9 @@ try:
  key('a');wait('S starts.');key('q');stop();record('title-ignored-key-and-quit')
  m.statement('RUN');wait('S starts.');key('s');s=ready();assert (s['feed'],s['plant'],s['left'],s['fed'],s['ok'])==(180,100,80,60,1);capture('planning');record('initial-live-budget')
  before=s
- for k in ['a','0','enter']:key(k);s=ready();assert s['yr']==1 and s['grain']==360
+ for k in ['a','0','enter','t']:key(k);s=ready();assert s['yr']==1 and s['grain']==360
  record('ignored-planning-keys-preserve-state')
- # The number editor accepts only digits, an initial trade sign and editing keys.
+ # Both land editors accept unsigned digits; the chosen action supplies direction.
  key('f');wait('DELETE erases.');key('a');key('enter');assert ready()['feed']==180
  key('f');wait('DELETE erases.');key('1');wait('DELETE erases.');m.key('caps','0');s=wait('DELETE erases.');assert s['d$']==''
  key('enter');assert ready()['feed']==180;record('empty-invalid-and-delete-input')
@@ -66,13 +67,22 @@ try:
  assert state(m)['d$']=='12';m.call('input',events=[{'Key':{'name':'2','pressed':False}}]);m.frames(10);key('x');ready();record('held-digit-is-one-entry')
  s=edit('f','99999');assert s['feed']==9999 and s['ok']==0;key(' ');assert ready()['yr']==1;record('four-digit-limit-and-over-budget-block')
  reset();s=edit('f',183);assert s['fed']==60;commit();assert report()['newcomers']==3;record('excess-food-gives-no-extra-newcomers')
+ reset();assert 'B  Buy land' in m.screen()[6] and 'S  Sell land' in m.screen()[7];record('both-land-actions-visible')
+ s=edit('b',5);assert s['trade']==5 and f"Spend {int(s['cost'])} grain" in m.screen()[10];capture('buy-plan')
+ key('s');wait('DELETE erases.');key('2');wait('DELETE erases.');key('x');assert ready()['trade']==5;record('cancel-sale-preserves-purchase')
+ s=edit('s',10);assert s['trade']==-10 and s['buy']==0 and s['sell']==10 and f"Receive {int(-s['cost'])} grain" in m.screen()[10];capture('sell-plan');record('sale-replaces-purchase-and-shows-proceeds')
+ s=edit('b',2);assert s['trade']==2 and s['sell']==0;record('purchase-replaces-sale')
+ s=edit('s',0);assert s['trade']==0 and s['buy']==0 and s['sell']==0;record('zero-clears-land-plan')
+ for action in ['b','s']:
+  key(action);wait('DELETE erases.');m.key('symbol','j');s=wait('DELETE erases.');assert s['d$']=='';key('enter');assert ready()['trade']==0
+ record('both-land-editors-ignore-minus-and-keep-blank')
  reset();s=edit('t',-101);assert s['ok']==0;key(' ');assert ready()['land']==100;capture('invalid-plan');record('cannot-sell-unowned-land')
  reset();s=edit('p',101);assert s['ok']==0;record('planting-limited-by-land')
  reset();s=edit('f',0);assert s['fed']==0 and s['ok']==0;key(' ');assert ready()['pop']==60;record('unfed-workers-cannot-plant')
  # Trade itself is not committed until a valid plan is harvested.
  reset();s=edit('t',5);assert s['land']==100 and s['grain']==360 and s['acres']==105
  edit('p',105);s=ready();assert s['ok']==1;commit();capture('harvest');record('purchase-and-ledger-resolution')
- reset();edit('t',-10);edit('p',90);commit();record('sale-and-ledger-resolution')
+ reset();edit('t',-10);edit('p',90);commit();assert 'Land sold: received' in m.screen()[7];capture('sale-report');record('sale-and-ledger-resolution')
  reset();s=edit('f',179);assert s['fed']==59 and s['ok']==1;commit();s=report();assert s['deaths']==1 and s['newcomers']==0;capture('short-rations');record('partial-ration-costs-one-person-and-no-newcomers')
  before=s;key('a');s=report();assert s['grain']==before['grain'] and s['yr']==before['yr'];record('report-does-not-advance-with-invalid-key')
  key(' ');s=ready();assert s['yr']==2 and s['pop']==59 and s['lost']==1;record('year-state-persists')
@@ -93,7 +103,7 @@ try:
  reset();edit('f',0);edit('p',0);s=commit();assert s['pop']==0 and s['lost']==60
  key(' ');s=wait('settlement is empty.');capture('empty');record('empty-settlement-ending')
  key('q');stop();record('quit-ending')
- m.statement('RUN');wait('S starts.');m.key('caps','s');ready();m.key('caps','t');wait('DELETE erases.');m.key('caps','x');ready();m.key('caps','r');ready();record('uppercase-menu-and-reset')
+ m.statement('RUN');wait('S starts.');m.key('caps','s');ready();m.key('caps','b');wait('DELETE erases.');m.key('caps','x');ready();m.key('caps','s');wait('DELETE erases.');m.key('caps','x');ready();m.key('caps','r');ready();record('uppercase-menu-and-reset')
  key('q');stop();record('quit-planning')
  m.statement('RUN');wait('S starts.');key('s');ready();commit();key('q');stop();record('quit-report')
  (out/'results.json').write_text(json.dumps({'source_sha256':hashlib.sha256((ROOT/'yearfall.bas').read_bytes()).hexdigest(),'binary_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'configuration':'Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200','checks':checks,'trials':trials,'sampling_retries':retries,'direct_memory_writes':False,'server':m.server},indent=2)+'\n')

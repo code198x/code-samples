@@ -24,7 +24,8 @@
 300 GO SUB 8000
 310 IF k$="q" OR k$="Q" THEN STOP
 320 IF k$="r" OR k$="R" THEN GO TO 200
-330 IF k$="t" OR k$="T" THEN LET edit=1: GO SUB 6000: GO TO 270
+330 IF k$="b" OR k$="B" THEN LET edit=1: GO SUB 6000: GO TO 270
+335 IF k$="s" OR k$="S" THEN LET edit=4: GO SUB 6000: GO TO 270
 340 IF k$="f" OR k$="F" THEN LET edit=2: GO SUB 6000: GO TO 270
 350 IF k$="p" OR k$="P" THEN LET edit=3: GO SUB 6000: GO TO 270
 360 IF k$<>" " OR ok=0 THEN GO TO 300
@@ -57,24 +58,32 @@
 2110 PRINT AT 2,1; INK 5; "PEOPLE ";pop; AT 2,17; "LAND ";land
 2120 PRINT AT 3,1; INK 5; "GRAIN  ";grain; AT 3,17; "PRICE ";price
 2130 PRINT AT 5,1; INK 4; "PLAN"; AT 5,17; "AMOUNT"; AT 5,25; "COST"
-2140 PRINT AT 7,1; "T  Trade acres"; AT 7,17;trade; AT 7,25;cost
+2135 LET buy=0: LET sell=0
+2136 IF trade>0 THEN LET buy=trade
+2137 IF trade<0 THEN LET sell=-trade
+2138 PRINT AT 6,1; "B  Buy land"; AT 6,17;buy
+2140 PRINT AT 7,1; "S  Sell land"; AT 7,17;sell
 2150 PRINT AT 8,1; "F  Feed grain"; AT 8,17;feed; AT 8,25;feed
 2160 PRINT AT 9,1; "P  Plant acres"; AT 9,17;plant; AT 9,25;plant
+2162 IF trade=0 THEN PRINT AT 10,1; INK 6; "No land bought or sold."
+2164 IF trade>0 THEN PRINT AT 10,1; INK 6; "Spend ";cost;" grain on land."
+2166 IF trade<0 THEN PRINT AT 10,1; INK 6; "Receive ";-cost;" grain for land."
 2170 PRINT AT 11,1; INK 6; "Grain left: ";left
 2180 PRINT AT 12,1; "Food needed: ";3*pop
 2190 PRINT AT 13,1; "Land after trade: ";acres
 2200 PRINT AT 14,1; "Fed workers can plant: ";2*fed
 2210 PRINT AT 16,1; INK 6;m$
 2220 IF ok=1 THEN PRINT AT 17,1; "After harvest: ";left+2*plant;" to ";left+5*plant
-2230 PRINT AT 19,1; INK 5; "T/F/P edit. SPACE harvest."
-2240 PRINT AT 20,1; "R restart. Q quit."
+2230 PRINT AT 19,1; INK 5; "B/S land. F/P food/plant."
+2240 PRINT AT 20,1; "SPACE harvest. R reset. Q quit."
 2250 RETURN
 4000 CLS
 4010 PRINT AT 0,1; INK 6; BRIGHT 1; "YEARFALL"; AT 0,18; "HARVEST ";yr
 4020 PRINT AT 2,1; "Yield: ";crop;" grain per acre"
 4030 PRINT AT 4,1; INK 5; "GRAIN ACCOUNT"
 4040 PRINT AT 6,1; "At start"; AT 6,23;oldgrain
-4050 PRINT AT 7,1; "Land trade cost"; AT 7,23;cost
+4050 IF cost>=0 THEN PRINT AT 7,1; "Land bought: spent"; AT 7,23;cost
+4055 IF cost<0 THEN PRINT AT 7,1; "Land sold: received"; AT 7,23;-cost
 4060 PRINT AT 8,1; "Food spent"; AT 8,23;feed
 4070 PRINT AT 9,1; "Seed spent"; AT 9,23;plant
 4080 PRINT AT 10,1; "Harvest added"; AT 10,23;harvest
@@ -104,26 +113,25 @@
 5150 IF k$="q" OR k$="Q" THEN STOP
 5160 IF k$="r" OR k$="R" THEN GO TO 200
 5170 GO TO 5140
-6000 LET d$="": LET a$="Trade acres"
+6000 LET d$="": LET a$="Buy acres"
+6005 IF edit=4 THEN LET a$="Sell acres"
 6010 IF edit=2 THEN LET a$="Feed grain"
 6020 IF edit=3 THEN LET a$="Plant acres"
 6030 PRINT AT 19,0; "                                "; AT 20,0; "                                "; AT 21,0; "                               "
 6040 PRINT AT 19,1; INK 6;a$;": ";d$;"_     "
 6050 PRINT AT 20,1; "Digits, ENTER. DELETE erases."
-6060 PRINT AT 21,1; "X cancels. Minus sells land."
+6060 PRINT AT 21,1; "X cancels. Blank keeps plan."
 6070 GO SUB 8000
 6080 IF k$="x" OR k$="X" THEN RETURN
-6090 IF CODE k$=13 AND (d$="" OR d$="-") THEN RETURN
+6090 IF CODE k$=13 AND d$="" THEN RETURN
 6100 IF CODE k$=13 THEN GO TO 6200
 6110 IF CODE k$=12 AND LEN d$>0 THEN LET d$=d$( TO LEN d$-1): GO TO 6040
-6120 IF k$="-" AND edit=1 AND d$="" THEN LET d$="-": GO TO 6040
 6130 IF CODE k$<48 OR CODE k$>57 THEN GO TO 6070
-6140 LET limit=4
-6150 IF LEN d$>0 THEN IF d$(1)="-" THEN LET limit=5
-6160 IF LEN d$>=limit THEN GO TO 6070
+6140 IF LEN d$>=4 THEN GO TO 6070
 6170 LET d$=d$+k$: GO TO 6040
 6200 LET value=VAL d$
 6210 IF edit=1 THEN LET trade=value
+6215 IF edit=4 THEN LET trade=-value
 6220 IF edit=2 THEN LET feed=value
 6230 IF edit=3 THEN LET plant=value
 6240 RETURN

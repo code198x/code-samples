@@ -1,5 +1,5 @@
 {
-  "source_sha256": "698ad676a3beb6f8536a2ec11b47df69d0b205e3759662734ed0f6757ecbde0b",
+  "source_sha256": "d6a02782ecaac5a1c6042c969c3c09d18315cd55b51c3ac4fb0a16b169ef32c0",
   "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
   "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200",
   "checks": [
@@ -12,6 +12,12 @@
     "held-digit-is-one-entry",
     "four-digit-limit-and-over-budget-block",
     "excess-food-gives-no-extra-newcomers",
+    "both-land-actions-visible",
+    "cancel-sale-preserves-purchase",
+    "sale-replaces-purchase-and-shows-proceeds",
+    "purchase-replaces-sale",
+    "zero-clears-land-plan",
+    "both-land-editors-ignore-minus-and-keep-blank",
     "cannot-sell-unowned-land",
     "planting-limited-by-land",
     "unfed-workers-cannot-plant",
@@ -38,16 +44,16 @@
         360,
         100
       ],
-      "price": 10,
+      "price": 6,
       "plan": [
         0,
         183,
         100
       ],
-      "yield": 4,
+      "yield": 3,
       "result": [
         63,
-        477,
+        377,
         100,
         0,
         3
@@ -60,16 +66,16 @@
         360,
         100
       ],
-      "price": 6,
+      "price": 10,
       "plan": [
         5,
         180,
         105
       ],
-      "yield": 4,
+      "yield": 3,
       "result": [
         63,
-        465,
+        340,
         105,
         0,
         3
@@ -88,10 +94,10 @@
         180,
         90
       ],
-      "yield": 2,
+      "yield": 3,
       "result": [
         63,
-        330,
+        420,
         90,
         0,
         3
@@ -104,16 +110,16 @@
         360,
         100
       ],
-      "price": 6,
+      "price": 8,
       "plan": [
         0,
         179,
         100
       ],
-      "yield": 4,
+      "yield": 3,
       "result": [
         59,
-        481,
+        381,
         100,
         1,
         0
@@ -368,16 +374,16 @@
         360,
         100
       ],
-      "price": 9,
+      "price": 10,
       "plan": [
         0,
         180,
         100
       ],
-      "yield": 3,
+      "yield": 4,
       "result": [
         63,
-        380,
+        480,
         100,
         0,
         3

@@ -4,8 +4,10 @@ A native-play trial in stock 48K PAL Sinclair BASIC. Manage one settlement for
 ten years: trade land, feed people and plant a harvest. The plan displays the
 combined cost, food requirement, fed-worker capacity and possible harvest range.
 
-S starts. T/F/P edit trade, feeding and planting. Type a new whole number;
-minus sells land. Enter accepts, Delete erases, X cancels. Space harvests a
+S starts. B buys land; S sells land. Both ask for a positive number of acres,
+and zero clears the land plan. Choosing one replaces the other planned land
+action. F/P edit feeding and planting. Enter accepts, Delete erases, X cancels.
+The plan states how much grain you spend or receive. Space harvests a
 valid plan or continues a report. R restarts and Q quits outside the editor.
 Blank entry keeps the existing amount. Held keys count once. The game is silent
 and has no time limit.
