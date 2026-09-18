@@ -35,5 +35,5 @@ line through the ROM and restore it. Finished-game content coverage uses labelle
 ROM commands to select each DATA entry; captures are from ordinary play.
 
 The evidence distinguishes emulator execution from independent learner success
-or original-hardware timing. The website remains a local lesson preview until
-reviewed and approved for publication.
+or original-hardware timing. Current publication status is maintained in the
+[implementation record](https://github.com/code198x/docs/blob/main/platforms/sinclair-zx-spectrum/games/cipher/lessons.md).

@@ -38,5 +38,5 @@ as ordinary play. The audit binds source, tape, stored tokens and execution
 identities. Timing observations concern this emulator configuration, not
 original-hardware measurements or human reaction time.
 
-Native execution is separate from player approval. The existing published
-lessons remain unchanged while this trial is reviewed.
+Native execution is separate from player approval. Current curriculum status
+and lesson evidence are maintained in the [implementation record](https://github.com/code198x/docs/blob/main/platforms/sinclair-zx-spectrum/games/cipher/lessons.md).
