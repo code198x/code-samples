@@ -1,0 +1,138 @@
+{
+  "name": "pit",
+  "source_sha256": "fb4345ecca9926b36f83d27c9fc431934f9eb861b67d489a99cc38a8aed0c69b",
+  "checks": [
+    "fresh-tape-room-display",
+    "stored-token-identity",
+    "all-room-links-loaded",
+    "ignored-keys-and-wall-cost-no-turn",
+    "held-direction-one-move",
+    "wait-counts-turn",
+    "uppercase-direction",
+    "treasure-collected-once-and-clue-cleared",
+    "pit-and-stable-result",
+    "third-treasure-does-not-end-expedition",
+    "return-rule-present-only-in-expedition",
+    "reset-restores-state",
+    "quit"
+  ],
+  "actions": [
+    {
+      "key": "n",
+      "room": 1,
+      "turns": 0,
+      "event": "wall"
+    },
+    {
+      "key": " ",
+      "room": 1,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 5,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 4,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 7,
+      "turns": 3,
+      "event": "pit"
+    },
+    {
+      "key": "e",
+      "room": 2,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 3,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 4,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 8,
+      "turns": 4,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 12,
+      "turns": 5,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 11,
+      "turns": 6,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 10,
+      "turns": 7,
+      "event": "move"
+    },
+    {
+      "key": "n",
+      "room": 6,
+      "turns": 8,
+      "event": "move"
+    },
+    {
+      "key": "n",
+      "room": 2,
+      "turns": 9,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 1,
+      "turns": 10,
+      "event": "move"
+    }
+  ],
+  "configuration": "Stock 48K PAL, fresh tape load and ordinary keys",
+  "direct_memory_writes": false,
+  "sampling_retries": []
+}

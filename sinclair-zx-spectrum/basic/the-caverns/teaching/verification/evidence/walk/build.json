@@ -1,0 +1,18 @@
+{
+  "name": "walk",
+  "source": "walk/caverns.bas",
+  "source_sha256": "31cc272c4542e775a576f26abebd5fd17c026e981f90e7dc0860d79b63a4e4dd",
+  "tape_sha256": "07047a6b3491af046d0c629654d9c89760cedb0c0267b694c0239c6048d04cc2",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+}

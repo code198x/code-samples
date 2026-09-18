@@ -1,0 +1,213 @@
+{
+  "name": "walk",
+  "source_sha256": "31cc272c4542e775a576f26abebd5fd17c026e981f90e7dc0860d79b63a4e4dd",
+  "checks": [
+    "fresh-tape-room-display",
+    "stored-token-identity",
+    "all-room-links-loaded",
+    "ignored-keys-and-wall-cost-no-turn",
+    "held-direction-one-move",
+    "wait-counts-turn",
+    "uppercase-direction",
+    "all-twelve-rooms-reached-by-keys",
+    "reset-restores-state",
+    "quit"
+  ],
+  "actions": [
+    {
+      "key": "n",
+      "room": 1,
+      "turns": 0,
+      "event": "wall"
+    },
+    {
+      "key": " ",
+      "room": 1,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 2,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 2,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 3,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 2,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 3,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 4,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 7,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 7,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 8,
+      "turns": 4,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 10,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 10,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 11,
+      "turns": 4,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 10,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 11,
+      "turns": 4,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 12,
+      "turns": 5,
+      "event": "move"
+    }
+  ],
+  "configuration": "Stock 48K PAL, fresh tape load and ordinary keys",
+  "direct_memory_writes": false,
+  "sampling_retries": []
+}

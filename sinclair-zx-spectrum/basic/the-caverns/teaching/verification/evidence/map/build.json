@@ -1,0 +1,18 @@
+{
+  "name": "map",
+  "source": "map/caverns.bas",
+  "source_sha256": "115a8b88320fbfca2d9dd9cfe3e563f9e30be5835fa0c211db17040a67eea846",
+  "tape_sha256": "10efdecc312a161255fae3bff951bf41f791b23940fec7efc36c693f703b3677",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+}

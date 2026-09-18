@@ -1,0 +1,270 @@
+{
+  "name": "patrol",
+  "source_sha256": "71b72a82792f1999e99f5654cc170de2c2c1ebefd532553592c0761d92b4e317",
+  "checks": [
+    "fresh-tape-room-display",
+    "stored-token-identity",
+    "all-room-links-loaded",
+    "ignored-keys-and-wall-cost-no-turn",
+    "held-direction-one-move",
+    "wait-counts-turn",
+    "uppercase-direction",
+    "treasure-collected-once-and-clue-cleared",
+    "pit-and-stable-result",
+    "arrival-invalid-and-wall-preserve-escape-turn",
+    "arrival-escape",
+    "north-escape-can-receive-another-arrival",
+    "escape-after-second-arrival",
+    "waiting-after-arrival-is-caught",
+    "entering-warned-creature-is-caught",
+    "third-treasure-does-not-end-expedition",
+    "return-rule-present-only-in-expedition",
+    "reset-restores-state",
+    "quit"
+  ],
+  "actions": [
+    {
+      "key": "n",
+      "room": 1,
+      "turns": 0,
+      "event": "wall"
+    },
+    {
+      "key": " ",
+      "room": 1,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 5,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 4,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 6,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 7,
+      "turns": 3,
+      "event": "pit"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 10,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": " ",
+      "room": 10,
+      "turns": 4,
+      "event": "arrival"
+    },
+    {
+      "key": "s",
+      "room": 10,
+      "turns": 4,
+      "event": "wall"
+    },
+    {
+      "key": "w",
+      "room": 9,
+      "turns": 5,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 10,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": " ",
+      "room": 10,
+      "turns": 4,
+      "event": "arrival"
+    },
+    {
+      "key": "n",
+      "room": 6,
+      "turns": 5,
+      "event": "arrival"
+    },
+    {
+      "key": "w",
+      "room": 5,
+      "turns": 6,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 10,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": " ",
+      "room": 10,
+      "turns": 4,
+      "event": "arrival"
+    },
+    {
+      "key": " ",
+      "room": 10,
+      "turns": 5,
+      "event": "caught"
+    },
+    {
+      "key": "s",
+      "room": 5,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 9,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 10,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 11,
+      "turns": 4,
+      "event": "caught"
+    },
+    {
+      "key": "e",
+      "room": 2,
+      "turns": 1,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 3,
+      "turns": 2,
+      "event": "move"
+    },
+    {
+      "key": "e",
+      "room": 4,
+      "turns": 3,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 8,
+      "turns": 4,
+      "event": "move"
+    },
+    {
+      "key": "s",
+      "room": 12,
+      "turns": 5,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 11,
+      "turns": 6,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 10,
+      "turns": 7,
+      "event": "move"
+    },
+    {
+      "key": "n",
+      "room": 6,
+      "turns": 8,
+      "event": "move"
+    },
+    {
+      "key": "n",
+      "room": 2,
+      "turns": 9,
+      "event": "move"
+    },
+    {
+      "key": "w",
+      "room": 1,
+      "turns": 10,
+      "event": "move"
+    }
+  ],
+  "configuration": "Stock 48K PAL, fresh tape load and ordinary keys",
+  "direct_memory_writes": false,
+  "sampling_retries": []
+}

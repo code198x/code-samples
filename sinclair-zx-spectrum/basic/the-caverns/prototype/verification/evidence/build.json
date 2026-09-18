@@ -1,0 +1,18 @@
+{
+  "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+  "tape_sha256": "c6e4833eb299c1d6479ec8440a18c5f2deb84af3ed8f57dd350be0536ac9f268",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "configuration": "Stock 48K PAL",
+  "entry": "ROM keyboard; SAVE \"caverns\" LINE 10; no source injection; then fresh tape load, ROM-entered line 5070 result-control colour/cleanup, all other stored lines identical, re-save",
+  "original_source_sha256": "36b833fcc16e4821946118e76860ffe020d2ee59897e28864421fe52afea93da"
+}

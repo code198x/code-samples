@@ -1,0 +1,23 @@
+{
+  "configuration": "Stock 48K PAL",
+  "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": 19,
+  "observed_actions": 32,
+  "files": {
+    "caught.png": "5719fefb33944cffd7d3ed9d89ed6b77ce8c14868a7eb01ed01dffa1c2eed658",
+    "model.json": "d1abc7026e6111709ef5d5cccb5604e37f1cdaa6dbda1175ecc33201abe31661",
+    "title.png": "b01268338cb77f67346fd912256f1362bf10b7fccb4de7d0dca0972ea1066222",
+    "arrival.png": "d3de901c487012fc0c74f130e71fae670bb53d77ce8e80d4189e4477520acd95",
+    "win.png": "ae669aab7db737c84fce8b3151949a6764cc032e19e3781578634d17bd281236",
+    "results.json": "355577d4da423862b6fe848d9401525ab5db8a9949a29bbc21defd5bfa64d30c",
+    "caverns.tap": "c6e4833eb299c1d6479ec8440a18c5f2deb84af3ed8f57dd350be0536ac9f268",
+    "reset.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+    "entrance.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+    "stored.json": "e3dcff7a96478208fadcc55d4cc8afd8d5fa60d619ed04b20683b64cd39853e6",
+    "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
+    "escape.png": "26532628f55f031ef0bb7c4663beae27fb756373fe77531f4cbbcd9e05e8b448",
+    "build.json": "f27c2933a1c785ac91df70c3d4386a95d080851efb69269863e8a5c54234432d"
+  },
+  "limits": "Original key-driven emulator captures; no state injection. Host model separate; native acceptance pending."
+}

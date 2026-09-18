@@ -1,0 +1,18 @@
+{
+  "name": "finished",
+  "source": "finished/caverns.bas",
+  "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+  "tape_sha256": "34b9b02215c527b92d254b928e0755a29af2ad7d2ac91299c87d10afa32c9aa1",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+}

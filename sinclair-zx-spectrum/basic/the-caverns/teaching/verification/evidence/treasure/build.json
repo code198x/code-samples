@@ -1,0 +1,18 @@
+{
+  "name": "treasure",
+  "source": "treasure/caverns.bas",
+  "source_sha256": "928d1267157d12308461975488e86516701689f6bddbdab8ee282a832f5ddbc1",
+  "tape_sha256": "f03e4d306d2979a7016d710a808b818375a101814f7f1338ffbbbac8f1f2cc55",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
+}
