@@ -1,0 +1,18 @@
+{
+  "name": "continued",
+  "source": "continued/yearfall.bas",
+  "source_sha256": "a40bf3f081fee7aca02efa5ab743d4858b4ec4119cc8d8731c4bbb679d930521",
+  "tape_sha256": "57d391d0d99b3c41b26025c19756419aa799041489153ea6de4e966842808f04",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"yearfall\" LINE 10; no injection"
+}

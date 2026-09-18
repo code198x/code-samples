@@ -1,0 +1,337 @@
+{
+  "source_sha256": "11ee950ec084f00f4f5c0ef899d989ac4a7229a245cf4f8e34ea533ae58d1f28",
+  "checks": [
+    "fresh-tape-autostart-stored-identity",
+    "initial-draft-budget",
+    "ignored-key-does-not-commit",
+    "cancel-preserves-plan",
+    "delete-and-empty-entry",
+    "held-digit-counts-once",
+    "bounded-input-and-invalid-budget",
+    "partial-food-and-year-ledger",
+    "land-limits-planting",
+    "fed-workforce-and-empty-harvest",
+    "empty-ending-cannot-continue",
+    "separate-buy-sell-and-sale-ledger",
+    "ownership-limit",
+    "worked-recovery-budget-fixture",
+    "year-progression-and-ending",
+    "reset-and-quit"
+  ],
+  "trials": [
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        8,
+        0,
+        179,
+        100
+      ],
+      "yield": 2,
+      "result": [
+        59,
+        281,
+        100,
+        1,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        9,
+        0,
+        0,
+        0
+      ],
+      "yield": 5,
+      "result": [
+        0,
+        360,
+        100,
+        60,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        7,
+        -10,
+        180,
+        90
+      ],
+      "yield": 4,
+      "result": [
+        63,
+        520,
+        90,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        6,
+        11,
+        180,
+        111
+      ],
+      "yield": 4,
+      "result": [
+        63,
+        447,
+        111,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 2,
+      "start": [
+        63,
+        447,
+        111
+      ],
+      "plan": [
+        10,
+        13,
+        189,
+        124
+      ],
+      "yield": 2,
+      "result": [
+        66,
+        252,
+        124,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 3,
+      "start": [
+        66,
+        252,
+        124
+      ],
+      "plan": [
+        10,
+        -7,
+        198,
+        117
+      ],
+      "yield": 3,
+      "result": [
+        69,
+        358,
+        117,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 4,
+      "start": [
+        69,
+        358,
+        117
+      ],
+      "plan": [
+        9,
+        3,
+        207,
+        120
+      ],
+      "yield": 4,
+      "result": [
+        72,
+        484,
+        120,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 5,
+      "start": [
+        72,
+        484,
+        120
+      ],
+      "plan": [
+        8,
+        16,
+        216,
+        136
+      ],
+      "yield": 3,
+      "result": [
+        75,
+        412,
+        136,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 6,
+      "start": [
+        75,
+        412,
+        136
+      ],
+      "plan": [
+        10,
+        4,
+        225,
+        140
+      ],
+      "yield": 5,
+      "result": [
+        78,
+        707,
+        140,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 7,
+      "start": [
+        78,
+        707,
+        140
+      ],
+      "plan": [
+        9,
+        16,
+        234,
+        156
+      ],
+      "yield": 2,
+      "result": [
+        81,
+        485,
+        156,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 8,
+      "start": [
+        81,
+        485,
+        156
+      ],
+      "plan": [
+        10,
+        6,
+        243,
+        162
+      ],
+      "yield": 3,
+      "result": [
+        85,
+        506,
+        162,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 9,
+      "start": [
+        85,
+        506,
+        162
+      ],
+      "plan": [
+        6,
+        8,
+        255,
+        170
+      ],
+      "yield": 3,
+      "result": [
+        89,
+        543,
+        170,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 10,
+      "start": [
+        89,
+        543,
+        170
+      ],
+      "plan": [
+        7,
+        8,
+        267,
+        178
+      ],
+      "yield": 3,
+      "result": [
+        93,
+        576,
+        178,
+        0,
+        4
+      ]
+    }
+  ],
+  "events": [],
+  "fixtures": [
+    {
+      "ordinary_ROM_commands": [
+        "LET grain=220",
+        "LET price=8",
+        "GO TO 220"
+      ],
+      "keys": [
+        "p",
+        "1",
+        "0",
+        "0",
+        "enter",
+        "s",
+        "7",
+        "enter",
+        "p",
+        "9",
+        "3",
+        "enter"
+      ],
+      "expected": "3 retained; harvest balance 189 to 468"
+    }
+  ],
+  "direct_memory_writes": false,
+  "configuration": "Fresh stock 48K PAL tape load; ordinary key play. Listed early experiments edit source through ROM keys; yearly fixtures use RANDOMIZE 17 and RUN 200.",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+}

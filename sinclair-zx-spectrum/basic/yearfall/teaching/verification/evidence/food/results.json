@@ -1,0 +1,28 @@
+{
+  "source_sha256": "1a6741aaaae137e238e9f450fa997f5d9860af03a464e875cb84bfac44023e83",
+  "checks": [
+    "fresh-tape-autostart-stored-identity",
+    "food-and-seed-budget",
+    "documented-line-edit-experiments-and-restoration"
+  ],
+  "trials": [],
+  "events": [],
+  "fixtures": [
+    {
+      "ordinary_ROM_line_edit": "220 LET feed=179",
+      "expected": {
+        "fed": 59,
+        "left": 181
+      }
+    },
+    {
+      "ordinary_ROM_line_edit": "220 LET feed=361",
+      "expected": {
+        "ok": 0
+      }
+    }
+  ],
+  "direct_memory_writes": false,
+  "configuration": "Fresh stock 48K PAL tape load; ordinary key play. Listed early experiments edit source through ROM keys; yearly fixtures use RANDOMIZE 17 and RUN 200.",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+}

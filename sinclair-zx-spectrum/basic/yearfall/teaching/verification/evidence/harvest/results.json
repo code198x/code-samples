@@ -1,0 +1,19 @@
+{
+  "source_sha256": "88928a96a60e8c1b55623ef93c1c5dbc7b7fe7f5013813827a924de059936cb3",
+  "checks": [
+    "fresh-tape-autostart-stored-identity",
+    "single-harvest-ledger-without-growth",
+    "invalid-plan-stops-before-harvest"
+  ],
+  "trials": [],
+  "events": [],
+  "fixtures": [
+    {
+      "ordinary_ROM_line_edit": "240 LET plant=101",
+      "expected": "rejected before resources change"
+    }
+  ],
+  "direct_memory_writes": false,
+  "configuration": "Fresh stock 48K PAL tape load; ordinary key play. Listed early experiments edit source through ROM keys; yearly fixtures use RANDOMIZE 17 and RUN 200.",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "harvest",
+  "source": "harvest/yearfall.bas",
+  "source_sha256": "88928a96a60e8c1b55623ef93c1c5dbc7b7fe7f5013813827a924de059936cb3",
+  "tape_sha256": "5a4c7b97b584de17dd85ecc7bd6a2cafd1c60278b8cef7d9dc13ae64362fe4e0",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"yearfall\" LINE 10; no injection"
+}

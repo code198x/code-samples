@@ -1,0 +1,289 @@
+{
+  "source_sha256": "e68a597c3e55d49d84ed6ff35c24304474c71e2384a770cd6495f4626569e13a",
+  "checks": [
+    "fresh-tape-autostart-stored-identity",
+    "initial-draft-budget",
+    "ignored-key-does-not-commit",
+    "cancel-preserves-plan",
+    "delete-and-empty-entry",
+    "held-digit-counts-once",
+    "bounded-input-and-invalid-budget",
+    "partial-food-and-year-ledger",
+    "land-limits-planting",
+    "fed-workforce-and-empty-harvest",
+    "empty-ending-cannot-continue",
+    "year-progression-and-ending",
+    "reset-and-quit"
+  ],
+  "trials": [
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        179,
+        100
+      ],
+      "yield": 2,
+      "result": [
+        59,
+        281,
+        100,
+        1,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "yield": 3,
+      "result": [
+        0,
+        360,
+        100,
+        60,
+        0
+      ]
+    },
+    {
+      "year": 1,
+      "start": [
+        60,
+        360,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        180,
+        100
+      ],
+      "yield": 2,
+      "result": [
+        63,
+        280,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 2,
+      "start": [
+        63,
+        280,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        189,
+        91
+      ],
+      "yield": 4,
+      "result": [
+        66,
+        364,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 3,
+      "start": [
+        66,
+        364,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        198,
+        100
+      ],
+      "yield": 5,
+      "result": [
+        69,
+        566,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 4,
+      "start": [
+        69,
+        566,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        207,
+        100
+      ],
+      "yield": 2,
+      "result": [
+        72,
+        459,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 5,
+      "start": [
+        72,
+        459,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        216,
+        100
+      ],
+      "yield": 5,
+      "result": [
+        75,
+        643,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 6,
+      "start": [
+        75,
+        643,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        225,
+        100
+      ],
+      "yield": 3,
+      "result": [
+        78,
+        618,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 7,
+      "start": [
+        78,
+        618,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        234,
+        100
+      ],
+      "yield": 4,
+      "result": [
+        81,
+        684,
+        100,
+        0,
+        3
+      ]
+    },
+    {
+      "year": 8,
+      "start": [
+        81,
+        684,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        243,
+        100
+      ],
+      "yield": 4,
+      "result": [
+        85,
+        741,
+        100,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 9,
+      "start": [
+        85,
+        741,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        255,
+        100
+      ],
+      "yield": 3,
+      "result": [
+        89,
+        686,
+        100,
+        0,
+        4
+      ]
+    },
+    {
+      "year": 10,
+      "start": [
+        89,
+        686,
+        100
+      ],
+      "plan": [
+        0,
+        0,
+        267,
+        100
+      ],
+      "yield": 3,
+      "result": [
+        93,
+        619,
+        100,
+        0,
+        4
+      ]
+    }
+  ],
+  "events": [],
+  "fixtures": [],
+  "direct_memory_writes": false,
+  "configuration": "Fresh stock 48K PAL tape load; ordinary key play. Listed early experiments edit source through ROM keys; yearly fixtures use RANDOMIZE 17 and RUN 200.",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+}

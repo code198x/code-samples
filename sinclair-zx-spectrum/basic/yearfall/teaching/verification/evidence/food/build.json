@@ -1,0 +1,18 @@
+{
+  "name": "food",
+  "source": "food/yearfall.bas",
+  "source_sha256": "1a6741aaaae137e238e9f450fa997f5d9860af03a464e875cb84bfac44023e83",
+  "tape_sha256": "aaa0fa65bab190f627ea802422521137d137dc854dfbda6b568e537ebbf789d9",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"yearfall\" LINE 10; no injection"
+}
