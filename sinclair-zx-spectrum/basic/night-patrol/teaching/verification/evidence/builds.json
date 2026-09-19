@@ -1,0 +1,146 @@
+[
+  {
+    "name": "archive",
+    "source": "archive/night-patrol.bas",
+    "source_sha256": "d645b4cd81e689d574eb8c32e16e27dce07ecdedbd37721ad231f97770903d57",
+    "tape_sha256": "03564169025c0d1d50c115d9b2f7bca22fdc26536fb1e78fbc0eccbfd5088686",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  },
+  {
+    "name": "movement",
+    "source": "movement/night-patrol.bas",
+    "source_sha256": "c5b60fc3f64f208230ab5f86da3688ccb856b5a9e51102336adb2736c049008e",
+    "tape_sha256": "fbd637779cc90f73e498ec5932205cc428d791977dfe724f8431d6fd557d0aec",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  },
+  {
+    "name": "mission",
+    "source": "mission/night-patrol.bas",
+    "source_sha256": "cd74b7fee7ce03d3f42a516c635c9d3011d899503eecdef8ac1ea2fbc02d466b",
+    "tape_sha256": "971cc7fd44eaf23df8857ca1b737a160290ed45324e9d6396e1c15af17f2ad11",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  },
+  {
+    "name": "patrol",
+    "source": "patrol/night-patrol.bas",
+    "source_sha256": "42b375729d3c9a6b7cfa3068d6a5f7a6cecf80413cf0989d8335ad4dbc53fa93",
+    "tape_sha256": "c56719644809c793d9d988b544f2eb0aab9cd030ffa39bd3d4e027b3f5673f24",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  },
+  {
+    "name": "scans",
+    "source": "scans/night-patrol.bas",
+    "source_sha256": "e54a6e8c88c9f7c526f68a99bf7ff1cd07f1dbeeff0a09b637324478d7a24d78",
+    "tape_sha256": "edfca0fc8b1099ab9acfc86daeb91fd545339ff242a78577f81076570943f369",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  },
+  {
+    "name": "sight",
+    "source": "sight/night-patrol.bas",
+    "source_sha256": "2dc432c7b2dee0e557d4143286d3f5cacf61cc66087c1c94c23c5309e5b5fcab",
+    "tape_sha256": "5168737a65e8abc4a546743ae4fc9ff72635fdd179bde80803d5b654093881e1",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  },
+  {
+    "name": "stealth",
+    "source": "stealth/night-patrol.bas",
+    "source_sha256": "42b6bb3ce736e7ff1fec1672a3b6b9ebafea41b2bb8666b3e24d90cbab720942",
+    "tape_sha256": "8cd79a0b8ed575c40298c2f8f97244ad7bd2f067f715c4f36c41824b5bfbf324",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  },
+  {
+    "name": "finished",
+    "source": "finished/night-patrol.bas",
+    "source_sha256": "72d436d316de7f278934846d68bc0c7b2125509c105fc3135a89cbd0ddbd5ae8",
+    "tape_sha256": "a6ee85cfb6a1b9b91fc5b32b2b4f0741db92c7e3edd0148c20dd8eb5d893dafe",
+    "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+    "server": {
+      "capabilities": {
+        "tools": {}
+      },
+      "protocolVersion": "2025-06-18",
+      "serverInfo": {
+        "name": "emu198x-spectrum",
+        "version": "0.24.0"
+      }
+    },
+    "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+  }
+]

@@ -1,0 +1,280 @@
+{
+  "status": "passed",
+  "configuration": "Stock 48K PAL; executable identities in each checkpoint record",
+  "checkpoints": [
+    {
+      "name": "archive",
+      "source_sha256": "d645b4cd81e689d574eb8c32e16e27dce07ecdedbd37721ad231f97770903d57",
+      "tape_sha256": "03564169025c0d1d50c115d9b2f7bca22fdc26536fb1e78fbc0eccbfd5088686",
+      "checks": [
+        "fresh-tape-autostart-and-stored-source-identity",
+        "full-map-and-distinct-object-positions",
+        "stops-without-falling-into-subroutines"
+      ],
+      "captures": {
+        "native-view.png": "210defbebf68667f83607e5732e8d9132308782f92bd7e47251b92c9d342587a"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "movement",
+      "source_sha256": "c5b60fc3f64f208230ab5f86da3688ccb856b5a9e51102336adb2736c049008e",
+      "tape_sha256": "fbd637779cc90f73e498ec5932205cc428d791977dfe724f8431d6fd557d0aec",
+      "checks": [
+        "fresh-tape-autostart-and-stored-source-identity",
+        "safe-start-and-map-state",
+        "ignored-key-uppercase-and-wall-rejection",
+        "held-key-repeats-movement",
+        "retry-restores-initial-state",
+        "quit-to-basic"
+      ],
+      "captures": {
+        "native-view.png": "7c6b9e3b740effde0d819d45f151676b9e99a848876e3f8ad90258d7f7fee260"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "mission",
+      "source_sha256": "cd74b7fee7ce03d3f42a516c635c9d3011d899503eecdef8ac1ea2fbc02d466b",
+      "tape_sha256": "971cc7fd44eaf23df8857ca1b737a160290ed45324e9d6396e1c15af17f2ad11",
+      "checks": [
+        "fresh-tape-autostart-and-stored-source-identity",
+        "safe-start-and-map-state",
+        "ignored-key-uppercase-and-wall-rejection",
+        "held-key-repeats-movement",
+        "retry-restores-initial-state",
+        "empty-handed-entrance-does-not-win",
+        "ordinary-key-file-pickup-and-safe-return",
+        "win-freezes-world",
+        "retry-after-win-restores-file-and-state",
+        "quit-to-basic"
+      ],
+      "captures": {
+        "native-view.png": "41b8813135dbd9089d8596c8126f99c201ce03cda523256c6b94aa3ea308e28d"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "patrol",
+      "source_sha256": "42b375729d3c9a6b7cfa3068d6a5f7a6cecf80413cf0989d8335ad4dbc53fa93",
+      "tape_sha256": "c56719644809c793d9d988b544f2eb0aab9cd030ffa39bd3d4e027b3f5673f24",
+      "checks": [
+        "fresh-tape-autostart-and-stored-source-identity",
+        "safe-start-and-map-state",
+        "ignored-key-uppercase-and-wall-rejection",
+        "held-key-repeats-movement",
+        "retry-restores-initial-state",
+        "empty-handed-entrance-does-not-win",
+        "patrol-without-player-input-and-complete-lap",
+        "ordinary-key-file-pickup-and-safe-return",
+        "win-freezes-world",
+        "retry-after-win-restores-file-and-state",
+        "ordinary-movement-into-danger-is-caught",
+        "capture-freezes-world",
+        "retry-after-capture-restores-world",
+        "quit-to-basic"
+      ],
+      "captures": {
+        "native-view.png": "7aa5ae86beac6b9bb37e93c64234064df6a6171e53c52d509b34e7dc7189a892"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "scans",
+      "source_sha256": "e54a6e8c88c9f7c526f68a99bf7ff1cd07f1dbeeff0a09b637324478d7a24d78",
+      "tape_sha256": "edfca0fc8b1099ab9acfc86daeb91fd545339ff242a78577f81076570943f369",
+      "checks": [
+        "fresh-tape-autostart-and-stored-source-identity",
+        "safe-start-and-map-state",
+        "ignored-key-uppercase-and-wall-rejection",
+        "held-key-repeats-movement",
+        "retry-restores-initial-state",
+        "empty-handed-entrance-does-not-win",
+        "patrol-without-player-input-and-complete-lap",
+        "eight-stationary-corner-facing-changes",
+        "ordinary-key-file-pickup-and-safe-return",
+        "win-freezes-world",
+        "retry-after-win-restores-file-and-state",
+        "ordinary-movement-into-danger-is-caught",
+        "capture-freezes-world",
+        "retry-after-capture-restores-world",
+        "quit-to-basic"
+      ],
+      "captures": {
+        "native-view.png": "629526a909d6837d24fb6cc03c5053ed0a074ad6c3b231bd7f50b98b2753800a"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "sight",
+      "source_sha256": "2dc432c7b2dee0e557d4143286d3f5cacf61cc66087c1c94c23c5309e5b5fcab",
+      "tape_sha256": "5168737a65e8abc4a546743ae4fc9ff72635fdd179bde80803d5b654093881e1",
+      "checks": [
+        "fresh-tape-autostart-and-stored-source-identity",
+        "safe-start-and-map-state",
+        "ignored-key-uppercase-and-wall-rejection",
+        "held-key-repeats-movement",
+        "retry-restores-initial-state",
+        "empty-handed-entrance-does-not-win",
+        "diagnostic-guard-and-mask-stay-stationary",
+        "ordinary-key-file-pickup-and-safe-return",
+        "win-freezes-world",
+        "retry-after-win-restores-file-and-state",
+        "ordinary-movement-into-danger-is-caught",
+        "capture-freezes-world",
+        "retry-after-capture-restores-world",
+        "quit-to-basic"
+      ],
+      "captures": {
+        "native-view.png": "e01261660ff5c50bdcb5142f38e649c855eef5f7768895edaab930dcdd98f611"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "stealth",
+      "source_sha256": "42b6bb3ce736e7ff1fec1672a3b6b9ebafea41b2bb8666b3e24d90cbab720942",
+      "tape_sha256": "8cd79a0b8ed575c40298c2f8f97244ad7bd2f067f715c4f36c41824b5bfbf324",
+      "checks": [
+        "fresh-tape-autostart-and-stored-source-identity",
+        "safe-start-and-map-state",
+        "ignored-key-uppercase-and-wall-rejection",
+        "held-key-repeats-movement",
+        "retry-restores-initial-state",
+        "empty-handed-entrance-does-not-win",
+        "patrol-without-player-input-and-complete-lap",
+        "eight-stationary-corner-facing-changes",
+        "ordinary-key-file-pickup-and-safe-return",
+        "win-freezes-world",
+        "retry-after-win-restores-file-and-state",
+        "ordinary-movement-into-danger-is-caught",
+        "capture-freezes-world",
+        "retry-after-capture-restores-world",
+        "stationary-look-back-capture",
+        "quit-to-basic"
+      ],
+      "captures": {
+        "native-view.png": "b3963d53b04b990531dd5e890f761f9fbc71849db408cef46dedffd60cd3fd41"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "finished",
+      "source_sha256": "72d436d316de7f278934846d68bc0c7b2125509c105fc3135a89cbd0ddbd5ae8",
+      "tape_sha256": "a6ee85cfb6a1b9b91fc5b32b2b4f0741db92c7e3edd0148c20dd8eb5d893dafe",
+      "checks": [
+        "independent-model-connected-map-and-safe-round-trip",
+        "fresh-tape-title-and-stored-source-identity",
+        "invalid-title-key",
+        "large-map-safe-start-and-visible-ray",
+        "invalid-key-uppercase-movement-and-wall-blocking",
+        "closed-bottom-boundary",
+        "all-four-corners-look-back-then-check-next-corridor",
+        "patrol-moves-without-input-and-turns-all-four-corners",
+        "file-pickup-and-return-objective",
+        "ordinary-key-round-trip-agrees-with-model",
+        "escape-freezes-patrol",
+        "retry-restores-file-player-patrol-and-vision",
+        "wall-occlusion-protects-player-in-line-with-guard",
+        "entering-danger-is-caught",
+        "caught-freezes-patrol",
+        "moving-sightline-catches-stationary-player",
+        "stationary-corner-scan-catches-player-behind-guard",
+        "quit-to-basic"
+      ],
+      "captures": {
+        "archive.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+        "corner-scan-capture.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+        "cover.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+        "escaped.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+        "file-taken.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+        "instructions.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+        "native-view.png": "44119e5c9600945f6eed17950d2dea09607e0910da0d325cd55da4fc0762009b",
+        "spotted.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.24.0"
+        }
+      },
+      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    }
+  ],
+  "execution_checks": 96,
+  "final_source_identical": true,
+  "limits": "The final game matches the prototype authorised for teaching. Intermediate stages have emulator execution evidence, not independent learner review. Prepared visibility and edit records are audited; debug-stepped PNGs are not lesson media."
+}

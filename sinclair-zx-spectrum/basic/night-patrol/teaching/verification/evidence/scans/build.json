@@ -1,0 +1,18 @@
+{
+  "name": "scans",
+  "source": "scans/night-patrol.bas",
+  "source_sha256": "e54a6e8c88c9f7c526f68a99bf7ff1cd07f1dbeeff0a09b637324478d7a24d78",
+  "tape_sha256": "edfca0fc8b1099ab9acfc86daeb91fd545339ff242a78577f81076570943f369",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+}

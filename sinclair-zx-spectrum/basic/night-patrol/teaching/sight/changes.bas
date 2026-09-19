@@ -1,0 +1,14 @@
+100 DIM v$(608): LET phase=0
+120 LET x=3: LET y=16: LET gx=7: LET gy=5: LET gd=1
+140 GO SUB 1000: RESTORE 8900: READ gx,gy,gd,bn,n: GO SUB 3000: GO SUB 3300: GO SUB 2500
+370 IF v$(y*32+x)="!" OR (x=gx AND y=gy) THEN LET outcome=1: GO TO 4000
+1010 PRINT AT 0,1; INK 5; BRIGHT 1; "NIGHT PATROL"; AT 0,20; "SIGHT TEST"
+2020 IF v$(r*32+c)="!" THEN LET paper=6
+2070 IF v$(r*32+c)="!" AND ((r=y AND c=x) OR (r=3 AND c=27) OR (r=16 AND c=3)) THEN LET paper=2
+3000 IF n=0 THEN RETURN
+3005 FOR j=1 TO n: READ cell: LET v$(cell)="!"
+3010 LET r=INT (cell/32): LET c=cell-32*r
+3020 PRINT AT r+1,c; PAPER 6; INK 7; BRIGHT 1; " "
+3030 NEXT j: LET r=y: LET c=x: GO SUB 2000: RETURN
+4010 IF outcome=1 THEN PRINT AT 1,1; INK 2; BRIGHT 1; "SPOTTED! Use the hiding places. "
+8900 DATA 7,5,1,11,11,168,137,169,201,138,170,202,139,171,140,172
