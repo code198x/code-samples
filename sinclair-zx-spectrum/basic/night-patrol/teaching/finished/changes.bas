@@ -1,0 +1,23 @@
+10 GO SUB 7000: GO SUB 5000: GO SUB 7100
+150 POKE 23560,0: LET tick=PEEK 23672
+250 LET k$=INKEY$: IF k$="" THEN LET k$=CHR$ (PEEK 23560)
+260 POKE 23560,0: LET dx=0: LET dy=0
+261 IF k$="q" OR k$="Q" THEN GO TO 9000
+262 IF k$="r" OR k$="R" THEN GO SUB 8100: GO TO 100
+5000 BORDER 0: PAPER 0: INK 7: CLS
+5010 PRINT AT 2,10; INK 5; BRIGHT 1; "NIGHT PATROL"
+5020 PRINT AT 5,2; "Steal the file. Get back out."
+5030 PRINT AT 7,2; INK 7;CHR$ 144;" You    "; INK 6;"> Guard"
+5040 PRINT AT 9,2; INK 5;CHR$ 146;" File   "; INK 4;CHR$ 147;" Exit"
+5050 PRINT AT 11,2; PAPER 6;" "; PAPER 0; INK 7;" Amber is the guard's sight."
+5060 PRINT AT 13,2; INK 7; "Walls stop you and block sight."
+5070 PRINT AT 15,2; "He looks back at each corner."
+5080 PRINT AT 17,2; "Hold I J K L to move."
+5090 PRINT AT 18,2; "R retries. Q quits."
+5100 PRINT AT 21,2; INK 5; "S starts.";
+5110 GO SUB 8000
+5120 IF k$="q" OR k$="Q" THEN GO TO 9000
+5130 IF k$<>"s" AND k$<>"S" THEN GO TO 5110
+5140 RETURN
+7000 RESTORE 7500: FOR j=0 TO 39: READ a: POKE USR "a"+j,a: NEXT j
+7540 DATA 0,0,0,24,24,0,0,0

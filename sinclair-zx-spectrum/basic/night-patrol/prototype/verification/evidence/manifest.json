@@ -1,0 +1,25 @@
+{
+  "source_sha256": "72d436d316de7f278934846d68bc0c7b2125509c105fc3135a89cbd0ddbd5ae8",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": 18,
+  "observed_update_frames": {
+    "min": 18,
+    "max": 125
+  },
+  "files": {
+    "spotted.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+    "model.json": "a8a36f1ce0be0c8a7f98bdf5cffbf9e4067fa4b555306029b13538b49d928489",
+    "corner-scan-capture.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+    "archive.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+    "night-patrol.tap": "6656fb4b316b2973654d89ed51036c2649edd4fd47fab96ffde9a2d23456fe5b",
+    "escaped.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+    "instructions.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+    "results.json": "ba860a9454422488d88a7fd4c722e9155c6564b12167f4a758ac0455d25209f2",
+    "stored.json": "6c068847747e64fed02e8cdd19dba1b8cbbcf5fd2cf853203a4f9376fdf62dad",
+    "cover.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+    "live-frames.png": "1d848804061fe2a0f95d9efc0d6a1a3c29dfc733349174448e012bdc1d04354e",
+    "file-taken.png": "22cbf32bd9eced09716f8a144312470826b5f000e3f3044280c313f19358a26e",
+    "build.json": "cd203775b794f65a7e977e4b4e9695bc1e4b3b8ca9fbd8b8dee2ac464baa558a"
+  },
+  "limits": "Stock 48K PAL emulator; read-only state; ordinary keyboard routes; host route search is not a player trial. Native play review pending."
+}

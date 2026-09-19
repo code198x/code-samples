@@ -1,0 +1,219 @@
+{
+  "source_sha256": "c5b60fc3f64f208230ab5f86da3688ccb856b5a9e51102336adb2736c049008e",
+  "tape_sha256": "fbd637779cc90f73e498ec5932205cc428d791977dfe724f8431d6fd557d0aec",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": [
+    "fresh-tape-autostart-and-stored-source-identity",
+    "safe-start-and-map-state",
+    "ignored-key-uppercase-and-wall-rejection",
+    "held-key-repeats-movement",
+    "retry-restores-initial-state",
+    "quit-to-basic"
+  ],
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "direct_memory_writes": false,
+  "configuration": "Stock 48K PAL; independently ROM-entered tape; ordinary keys; read-only observation",
+  "trace": [
+    {
+      "key": "x",
+      "before": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    },
+    {
+      "key": "L",
+      "before": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        4,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    },
+    {
+      "key": "j",
+      "before": [
+        4,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    },
+    {
+      "key": "j",
+      "before": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    },
+    {
+      "key": "k",
+      "before": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    },
+    {
+      "key": "l",
+      "before": [
+        3,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        4,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    },
+    {
+      "key": "l",
+      "before": [
+        4,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        5,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    },
+    {
+      "key": "l",
+      "before": [
+        5,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "after": [
+        6,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "result": 0
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "sight",
+  "source": "sight/night-patrol.bas",
+  "source_sha256": "2dc432c7b2dee0e557d4143286d3f5cacf61cc66087c1c94c23c5309e5b5fcab",
+  "tape_sha256": "5168737a65e8abc4a546743ae4fc9ff72635fdd179bde80803d5b654093881e1",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"patrol\" LINE 10; no injection"
+}
