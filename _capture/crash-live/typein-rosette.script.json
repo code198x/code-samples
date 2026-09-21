@@ -1,0 +1,497 @@
+[
+ {
+  "action": "wait_for_boot",
+  "max_frames": 800
+ },
+ {
+  "action": "press_key",
+  "key": "Enter",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 30
+ },
+ {
+  "action": "type_string",
+  "text": "10",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "B",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "7:",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "C"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "7:",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "B"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "1:",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "X"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "0:",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "O",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "23624,120:",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "V",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "20",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "F",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "a=0",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "F"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "23\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "30",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "X"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "1+a-6*",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "R",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "(a/6)\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "40",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "H"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "128+40*",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "W",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "(a*",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "M",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "/12),92+40*",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Q",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "(a*",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "M",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "/12),40\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "50",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "N",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "a\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "60",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "Extend",
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "X"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "0:",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "P",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "press_keys",
+  "keys": [
+   "SymbolShift",
+   "I"
+  ],
+  "hold_frames": 4
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "21,10;\"CODE198X.COM\"\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "type_string",
+  "text": "70",
+  "hold_frames": 3,
+  "settle_frames": 14
+ },
+ {
+  "action": "press_key",
+  "key": "M",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 14
+ },
+ {
+  "action": "type_string",
+  "text": "0\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "press_key",
+  "key": "R",
+  "hold_frames": 3
+ },
+ {
+  "action": "run_frames",
+  "frames": 8
+ },
+ {
+  "action": "type_string",
+  "text": "\n",
+  "hold_frames": 3,
+  "settle_frames": 25
+ },
+ {
+  "action": "run_frames",
+  "frames": 1000
+ },
+ {
+  "action": "save_screenshot",
+  "path": "/private/tmp/claude-501/-Users-stevehill-Projects-198x/1a7492e9-9a9c-4281-b26d-e71e9d3e3249/scratchpad/verify/typein-rosette.png"
+ }
+]
