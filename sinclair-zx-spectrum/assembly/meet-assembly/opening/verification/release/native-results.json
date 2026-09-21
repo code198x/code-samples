@@ -1,0 +1,81 @@
+{
+  "target": "stock 48K PAL",
+  "asm198x_version": "asm198x v0.0.58",
+  "pasmo_banner": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
+  "pasmo_sha256": "e5d0a100f96c3b513393cf3fe9ba1ff3e1ce4f0439b80217764ed695856ab692",
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": [
+    {
+      "source": "move-character.asm",
+      "source_sha256": "0269cb76e8b3d8a5566b17b34d0183998ff41de8757add9fe2fe136789e8e91c",
+      "code_sha256": "0b1e1be32e872eea6a10bcae4172be1f840595511630b0fc7c3e312094e1fdfb",
+      "code_bytes": 182,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "first-program.asm",
+      "source_sha256": "5e3104489afcac632d5015f66d5db1e63018537a3d80641058553f3d7ceaa113",
+      "code_sha256": "dd8ac8f622865a4761579e123155f742971cd9bdad2cd2abcc5a10629dcb8144",
+      "code_bytes": 6,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "draw-routine.asm",
+      "source_sha256": "d8418fb2b9d45617cc047ef11355361fab296e813a17ea2c573569c54dacad80",
+      "code_sha256": "01bc39e9dfcd8f7dc9c5cede9d8739514ec15bca7a8d78351e4afa579cf3784b",
+      "code_bytes": 52,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "clocked-character.asm",
+      "source_sha256": "a3df2da09f08aa1dd643bb73fbfbeb0a189ed61b849cb04d0ce23ffa7eca3149",
+      "code_sha256": "1a15cc177a873c8ca6a422735e4ac854ab323ce396b303ed21d7c7c71f6aac33",
+      "code_bytes": 207,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "row-loop.asm",
+      "source_sha256": "5915844c96778c60db5f808f4b88b7229f10a1a51f1ed366b9ffda7972f4dac6",
+      "code_sha256": "1c209ad84f8728684ede59f342b3efa9adcee3b80424be3b65693ad4ea206b46",
+      "code_bytes": 33,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "one-byte.asm",
+      "source_sha256": "454323ccc71b89ef174160c9c257008b8a36ff2dfc87a52c97bb736000a2ab77",
+      "code_sha256": "c5e6f0488ce6bf502e30bf855115ea7c714371d115e813a2aca25182f3ac7f58",
+      "code_bytes": 18,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "eight-rows.asm",
+      "source_sha256": "c6870cc21ee9f12d0634f0e9b59dbc4f7c08c304bf34dffe39e4a74c8ef56894",
+      "code_sha256": "ed76e3cb7c53ff7f660b183cc4490496b1727490572144cd82e141fff399f299",
+      "code_bytes": 51,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "debug-branch.asm",
+      "source_sha256": "a0365e2c8856cc9a51a20564a521e099c14544355e78ba5423110c84c9e86cb2",
+      "code_sha256": "83065700c1a0bc703ac7d6b7349cae965759d2be1b241ebf6c1bbbaeed6ade7a",
+      "code_bytes": 207,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "debug-trail.asm",
+      "source_sha256": "0a940ca8d9ef2f56738e1e79612a0326d8dc40c6820e1aa22ad5fb5458522d8b",
+      "code_sha256": "04f744f54d2ef8182be9513c03f47e96fc8163bd8e6c6ae1c1ef6248178c2ab6",
+      "code_bytes": 207,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    }
+  ]
+}
