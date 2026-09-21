@@ -53,7 +53,7 @@ EXT_PLAIN = {
 
 # Extend, then Symbol Shift plus a key: the red word on the key.
 EXT_CHORD = {
-    'INK': 'X', 'PAPER': 'C', 'FLASH': 'V', 'BRIGHT': 'B',
+    'INK': 'X', 'PAPER': 'C', 'FLASH': 'V', 'BRIGHT': 'B', 'CIRCLE': 'H',
     'OVER': 'N', 'INVERSE': 'M',
 }
 
