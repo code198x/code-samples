@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "Step 1: focused controls, worked examples, reset, axe and narrow/desktop layout pass",
+    "Step 2: focused controls, worked examples, reset, axe and narrow/desktop layout pass",
+    "Step 3: focused controls, worked examples, reset, axe and narrow/desktop layout pass",
+    "Step 4: focused controls, worked examples, reset, axe and narrow/desktop layout pass",
+    "Step 5: focused controls, worked examples, reset, axe and narrow/desktop layout pass",
+    "Step 6: focused controls, worked examples, reset, axe and narrow/desktop layout pass"
+  ],
+  "animation": "Normal playback completes; changed inputs cancel old results",
+  "errors": []
+}

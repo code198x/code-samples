@@ -1,6 +1,6 @@
 # Angle of attack
 
-Local Maths for Games prototype, awaiting user review. A host-side mathematical
+User-approved Maths for Games prototype, with six focused teaching pages awaiting review. A host-side mathematical
 experiment; no native machine, assembler or emulator is involved. Not published.
 
 Serve this directory, then open the printed address:
@@ -52,3 +52,15 @@ Browser checks cover misses/hits, all six target directions, pointer and keyboar
 input, reset, comparison toggling, reduced motion, accessibility and three widths.
 Evidence is in `verification/`. These checks establish the model and controls;
 they do not establish teaching effectiveness or user approval.
+
+## Focused teaching sequence
+
+Open `lessons.html?step=1` on the same server. Six pages introduce coordinates,
+right triangles, sine/cosine, radians, atan2 aiming and fixed-point movement.
+`lesson-content.mjs` contains the worked teaching copy; `lessons.mjs` supplies the
+focused controls and geometry, sharing `model.mjs` for the two shooting experiments.
+The complete playground is unchanged. These are local teaching drafts, not
+published website lessons.
+
+Run `node verify-lessons.mjs /tmp/aiming-lessons` with the same browser dependencies
+and local server as the original check. Evidence lives in `verification/lessons/`.
