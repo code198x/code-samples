@@ -39,8 +39,9 @@ Only one setting differs between the reference and adjustable ship:
 
 The last experiment reaches zero before accelerating the other way. This is a
 stated alternative to the original playground's direct approach towards the
-opposite target velocity. The lessons include the exact imported velocity
-functions through CodeFromFile; there is no separate illustrative implementation.
+opposite target velocity. The lessons explain the rules with pseudocode and offer
+a small download link to the exact imported velocity routine; they do not display
+JavaScript listings.
 
 Both ships start at 120; the marker is 560. Reset or a setting change restores the
 common start. Input recording, pause and explicit 1/60-second stepping use the
@@ -51,5 +52,5 @@ automatic demonstration or decorative motion.
 
 Run `node --test *.test.mjs` for the ten model checks. Website verification is
 `scripts/verification/game-feel-lessons.mjs`; it checks worked values, setting
-resets, controls, sequence navigation, actual code disclosures, light/dark
+resets, controls, sequence navigation, source downloads, light/dark
 accessibility, narrow/desktop overflow and iframe height synchronisation.
