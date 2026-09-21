@@ -1,0 +1,15 @@
+{
+  "assembler_init_ms": 7.399999991059303,
+  "assemble_ms": 4.399999991059303,
+  "emulator_init_ms": 4.600000008940697,
+  "machine_create_ms": 1.2999999970197678,
+  "autoload_ms": 1236.5,
+  "tape_wall_ms": 3560.0999999940395,
+  "frames": 896,
+  "load_tick_max_ms": 129.6000000089407,
+  "load_tick_mean_ms": 126.86071428284049,
+  "steady_tick_mean_ms": 5.378333333507181,
+  "steady_tick_max_ms": 119.8999999910593,
+  "configuration": "Headless installed Chrome, local preview, installed @asm198x/z80 and @emu198x/zx-spectrum 0.3.0; one cold-page measurement on the development machine",
+  "limitation": "Indicative local timing, not a cross-browser benchmark. The post-load sample includes the turbo-to-normal transition."
+}

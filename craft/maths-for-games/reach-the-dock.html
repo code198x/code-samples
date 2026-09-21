@@ -1,0 +1,64 @@
+<div id="reach-the-dock">
+  <style>
+    #reach-the-dock .track { position:relative; height:110px; margin:16px 18px; border-bottom:1px solid var(--border); }
+    #reach-the-dock .marker { position:absolute; bottom:26px; transform:translateX(-50%); transition:left 180ms ease; }
+    #reach-the-dock .craft { color:var(--viz-series-1); }
+    #reach-the-dock .dock { bottom:4px; color:var(--foreground); }
+    #reach-the-dock .tick { position:absolute; bottom:-24px; transform:translateX(-50%); }
+    #reach-the-dock .axis { margin:32px 0 16px; text-align:center; }
+    #reach-the-dock button { min-height:44px; }
+    #reach-the-dock .readout { margin:12px 0; }
+    @media(prefers-reduced-motion:reduce) { #reach-the-dock .marker { transition:none; } }
+  </style>
+  <h3>Reach the dock. Stop at 24.</h3>
+  <div class="readout tabular-nums" aria-live="polite" data-readout></div>
+  <div class="track" role="img" aria-label="Craft and dock on a position number line">
+    <span class="marker craft" data-craft>◆</span>
+    <span class="marker dock" data-dock>Dock</span>
+    <span class="tick text-small" data-low></span>
+    <span class="tick text-small" data-mid></span>
+    <span class="tick text-small" data-high></span>
+  </div>
+  <div class="axis text-small">Position (spaces) · right is positive</div>
+  <div class="viz-controls" aria-label="Advance one tick">
+    <button type="button" class="btn" data-burn="-1">Left burn −1</button>
+    <button type="button" class="btn" data-burn="0">Coast</button>
+    <button type="button" class="btn" data-burn="1">Right burn +1</button>
+    <button type="button" class="btn btn-ghost" data-reset>Reset</button>
+  </div>
+  <table class="table table-sm tabular-nums">
+    <caption>Recent ticks · velocity in spaces per tick</caption>
+    <thead><tr><th>Tick</th><th>Burn</th><th>Velocity</th><th>Position</th></tr></thead>
+    <tbody data-trace></tbody>
+  </table>
+  <script>
+    (() => {
+      const root = document.getElementById('reach-the-dock');
+      const get = selector => root.querySelector(selector);
+      let position = 0, velocity = 0, tick = 0, trace = [];
+      const signed = n => n > 0 ? '+' + n : String(n);
+      function draw() {
+        const docked = position === 24 && velocity === 0;
+        get('[data-readout]').textContent = `Position ${position} · Velocity ${signed(velocity)} spaces/tick${docked ? ' · Docked' : ''}`;
+        const low = Math.min(-4, position - 4), high = Math.max(28, position + 4);
+        const place = value => (100 * (value - low) / (high - low)) + '%';
+        get('[data-craft]').style.left = place(position);
+        get('[data-dock]').style.left = place(24);
+        get('.track').setAttribute('aria-label', `Craft at ${position}, dock at 24. Position axis from ${low} to ${high} spaces.`);
+        for (const [selector, value] of [['[data-low]', low], ['[data-mid]', (low + high) / 2], ['[data-high]', high]]) {
+          get(selector).textContent = value; get(selector).style.left = place(value);
+        }
+        get('[data-trace]').innerHTML = trace.map(row => `<tr><td>${row.tick}</td><td>${signed(row.burn)}</td><td>${signed(row.velocity)}</td><td>${row.position}</td></tr>`).join('');
+      }
+      root.querySelectorAll('[data-burn]').forEach(button => button.addEventListener('click', () => {
+        const burn = Number(button.dataset.burn);
+        velocity += burn; position += velocity; tick++;
+        trace.push({tick, burn, velocity, position}); trace = trace.slice(-6); draw();
+      }));
+      get('[data-reset]').addEventListener('click', () => {
+        position = 0; velocity = 0; tick = 0; trace = []; draw();
+      });
+      draw();
+    })();
+  </script>
+</div>

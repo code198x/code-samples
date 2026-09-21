@@ -1,0 +1,26 @@
+{
+  "assembler_package": "0.3.0",
+  "checks": [
+    {
+      "source": "first-program.asm",
+      "wasm_matches_native": true,
+      "browser_rom_tape_load": true
+    },
+    {
+      "source": "one-byte.asm",
+      "wasm_matches_native": true,
+      "browser_rom_tape_load": true
+    },
+    {
+      "source": "eight-rows.asm",
+      "wasm_matches_native": true,
+      "browser_rom_tape_load": true
+    }
+  ],
+  "edited_source_changes_border": true,
+  "invalid_source_diagnostic": true,
+  "restore_source": true,
+  "execution": "Web Worker",
+  "emulator_wasm_sha256": "d9139f3eaf9dcdb8ed44c68e09a451278987cd4bc52599e4222e9b0d5bc5a766",
+  "emulator_build": "Local unreleased worker API"
+}

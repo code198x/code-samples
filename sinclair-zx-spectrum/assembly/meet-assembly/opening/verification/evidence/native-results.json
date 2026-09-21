@@ -1,0 +1,33 @@
+{
+  "target": "stock 48K PAL",
+  "asm198x_version": "asm198x v0.0.58",
+  "pasmo_banner": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
+  "pasmo_sha256": "e5d0a100f96c3b513393cf3fe9ba1ff3e1ce4f0439b80217764ed695856ab692",
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": [
+    {
+      "source": "first-program.asm",
+      "source_sha256": "5e3104489afcac632d5015f66d5db1e63018537a3d80641058553f3d7ceaa113",
+      "code_sha256": "dd8ac8f622865a4761579e123155f742971cd9bdad2cd2abcc5a10629dcb8144",
+      "code_bytes": 6,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "one-byte.asm",
+      "source_sha256": "454323ccc71b89ef174160c9c257008b8a36ff2dfc87a52c97bb736000a2ab77",
+      "code_sha256": "c5e6f0488ce6bf502e30bf855115ea7c714371d115e813a2aca25182f3ac7f58",
+      "code_bytes": 18,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    },
+    {
+      "source": "eight-rows.asm",
+      "source_sha256": "c6870cc21ee9f12d0634f0e9b59dbc4f7c08c304bf34dffe39e4a74c8ef56894",
+      "code_sha256": "ed76e3cb7c53ff7f660b183cc4490496b1727490572144cd82e141fff399f299",
+      "code_bytes": 51,
+      "native_and_pasmo_equal": true,
+      "both_fresh_tapes_executed": true
+    }
+  ]
+}

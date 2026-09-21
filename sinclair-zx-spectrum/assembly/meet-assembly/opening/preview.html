@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/vendor/editor/editor.css">
+<script type="module" src="/vendor/editor/editor.js"></script>
+<title>Meet Assembly — opening experiments</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui;background:#12171c;color:#eef2f5}body{max-width:1180px;margin:3rem auto;padding:0 1.5rem}h1{font-size:2rem}p{line-height:1.6;max-width:75ch;color:#c5cdd5}label{display:block;margin-bottom:.5rem}select,button{font:inherit;padding:.65rem .9rem;border:1px solid #657584;border-radius:5px;background:#243342;color:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #6ed9ed;outline-offset:3px}.work{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem}textarea{box-sizing:border-box;width:100%;height:440px;padding:1rem;background:#0c1117;color:#e7eff7;border:1px solid #657584;font:14px/1.6 monospace;tab-size:4}canvas{width:100%;image-rendering:pixelated;background:#000}pre{white-space:pre-wrap;color:#ffd596}.actions{display:flex;gap:.6rem;margin-top:.75rem}@media(max-width:800px){.work{grid-template-columns:1fr}}
+</style>
+<h1>Meet Assembly</h1>
+<p>Change a byte. Assemble it. See what the machine does. These are the first experiments for the new introductory module.</p>
+<label for="experiment">Experiment</label><select id="experiment"><option value="first-program">1. Change the border</option><option value="one-byte">2. A byte becomes eight pixels</option><option value="eight-rows">3. Build an eight-row shape</option></select>
+<p id="explanation"></p>
+<div class="work"><div><label for="source">Z80 source</label><textarea id="source" spellcheck="false" aria-describedby="explanation"></textarea><div class="actions"><button id="run">Assemble and run</button><button id="reset">Restore source</button></div></div><div><canvas id="screen" width="352" height="296" aria-label="ZX Spectrum screen"></canvas><p id="status" role="status">Choose an experiment, then assemble.</p><pre id="diagnostics"></pre></div></div>
+<p>The assembler runs locally in your browser using Asm198x WebAssembly. The generated tape loads through the Spectrum ROM. The same source also builds with the Asm198x and Pasmo command-line tools.</p>
+<script type="module">
+const source=document.querySelector('#source'),select=document.querySelector('#experiment'),status=document.querySelector('#status'),diagnostics=document.querySelector('#diagnostics'),run=document.querySelector('#run'),canvas=document.querySelector('canvas');
+const notes={'first-program':'Change the 2 in ld a,2 to 4. Predict the border colour before running it. The hold loop keeps execution inside our program; it is not a timer.','one-byte':'The eight bits in pattern control the eight pixels at the top-left corner. Change %10101010 to %11110000. The rest of the screen still belongs to the tape loader.','eight-rows':'Eight explicit writes build a tiny shape at the top left. Change one row and predict which pixels move. A drawing loop comes later.'};
+let original='',worker=null,last=0,asm=null,pending=false,ready=false,selection=0;
+const context=canvas.getContext('2d');
+window.previewState={phase:'idle',frame:null,loadStarted:0,readyAt:0,workerTicks:[]};
+function say(message){if(status.textContent!==message)status.textContent=message}
+function stop(){worker?.terminate();worker=null;ready=false;pending=false}
+window.addEventListener('pagehide',stop);
+async function choose(){const generation=++selection;stop();const name=select.value;const text=await(await fetch(name+'.asm')).text();if(generation!==selection)return;original=text;source.value=original;source.dispatchEvent(new Event('input'));document.querySelector('#explanation').textContent=notes[name];diagnostics.textContent='';say('Ready to assemble.')}
+select.addEventListener('change',choose);document.querySelector('#reset').onclick=()=>{source.value=original;source.dispatchEvent(new Event('input'));diagnostics.textContent=''};
+run.onclick=async()=>{run.disabled=true;diagnostics.textContent='';stop();try{
+ say('Loading assembler…');if(!asm){asm=await import('/vendor/assembler/asm198x_web.js');await asm.default()}
+ const bytes=asm.tape('pasmo',source.value,select.value+'.tap','tap');
+ if(!bytes){diagnostics.textContent=asm.assemble('pasmo',source.value)??'Could not assemble.';say('Fix the source and try again.');return}
+ window.previewState={phase:'loading',frame:null,loadStarted:performance.now(),readyAt:0,workerTicks:[]};
+ say('Loading Spectrum…');
+ const {build}=await(await fetch('/emulator-build.json',{cache:'no-store'})).json();
+ const current=new Worker('./emulator-worker.mjs?build='+encodeURIComponent(build),{type:'module'});worker=current;
+ current.onerror=event=>{if(worker!==current)return;diagnostics.textContent=event.message;say('Could not run the program.');stop()};
+ current.onmessage=({data})=>{
+  if(worker!==current)return;
+  if(data.type==='status')say(data.message);
+  else if(data.type==='ready'){ready=true;last=performance.now();window.previewState.bootMs=data.bootMs;say('Loading tape…')}
+  else if(data.type==='frame'){
+   const [width,height]=data.size;if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height}
+   context.putImageData(new ImageData(new Uint8ClampedArray(data.pixels.buffer),width,height),0,0);
+   window.previewState.frame=data.pixels;window.previewState.workerTicks.push(data.tickMs);
+   if(window.previewState.workerTicks.length>512)window.previewState.workerTicks.shift();
+   if(data.pc>=32768&&data.pc<33000){if(window.previewState.phase!=='running')window.previewState.readyAt=performance.now();window.previewState.phase='running';say('Running your program.')}
+   pending=false;
+  }else if(data.type==='error'){diagnostics.textContent=data.message;say('Could not run the program.');stop()}
+ };
+ current.postMessage({type:'load',bytes},[bytes.buffer]);
+}catch(error){say('Could not run the program.');diagnostics.textContent=String(error);stop()}finally{run.disabled=false}};
+function frame(now){if(worker&&ready&&!pending&&!document.hidden){pending=true;worker.postMessage({type:'tick',elapsed:Math.min(100,now-last)});last=now}requestAnimationFrame(frame)}
+await choose();requestAnimationFrame(frame);
+</script></html>

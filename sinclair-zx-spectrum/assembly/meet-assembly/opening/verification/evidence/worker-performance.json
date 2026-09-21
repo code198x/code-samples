@@ -1,0 +1,12 @@
+{
+  "boot_worker_ms": 1420.5,
+  "load_to_run_ms": 5182.29999999702,
+  "ui_raf_p95_ms": 16.799999999999272,
+  "ui_raf_max_ms": 66.6,
+  "ui_raf_samples": 316,
+  "ui_long_tasks_ms": [],
+  "worker_tick_max_ms": 140.5,
+  "editing_survived": true,
+  "edit_duration_ms": 160,
+  "restart_during_boot": true
+}
