@@ -1,0 +1,30 @@
+{
+  "method": "Ordinary frames and keyboard input only; no state writes or stepping.",
+  "source_sha256": "1161fd64630a1af9461dac9cc803fbf30b15972b80a8981316bd2b50ba91dede",
+  "cases": [
+    {
+      "ship_x": 100,
+      "meteor_x": 116,
+      "horizontal_separation": 16,
+      "result": "miss"
+    },
+    {
+      "ship_x": 102,
+      "meteor_x": 116,
+      "horizontal_separation": 14,
+      "result": "hit"
+    },
+    {
+      "ship_x": 130,
+      "meteor_x": 116,
+      "horizontal_separation": 14,
+      "result": "hit"
+    },
+    {
+      "ship_x": 132,
+      "meteor_x": 116,
+      "horizontal_separation": 16,
+      "result": "miss"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+# Contracts to explain before reuse
+
+These are authoring notes for the runnable programs, not a substitute for teaching
+how each routine works. Each checkpoint contains the routines it uses. A lesson
+must link the earlier experiment or explain the implementation locally.
+
+## Entry and clock
+
+Code begins at 32768, disables interrupts and sets SP=$FCF0. This stack grows down;
+the program and data stay below it. The private interrupt programs reserve
+$FDFD..$FDFF for a JP and $FE00..$FF00 for a 257-byte vector table. They do not
+borrow the ROM interrupt service or depend on its IY value. DI protects setup;
+EI enables interrupts after the vector and handler are ready.
+
+`interrupt` changes only the memory byte `frames`; AF is saved and restored.
+Other primary registers are untouched. RETI completes the service, with EI
+allowing the next interrupt. `interrupt-clock` isolates this from the game.
+`half-rate-clock` then isolates the alternate-frame gate. This is not a general
+scheduler: missing an update is observable in `frame_delta`, not silently caught
+up. The final game's measured work fits the intended two-frame interval.
+
+The elapsed-frame subtraction works across one byte wrap because the unsigned
+low-byte difference represents the actual gap, provided fewer than 256 frames
+pass between samples. A 16-bit elapsed count wraps after 1310.72 PAL seconds;
+these fixed courses finish much sooner. The formatter is scoped to their short
+run times, not arbitrary hours or days.
+
+## Pixels and artwork
+
+`pixel_address`: D=pixel Y, E=pixel X; returns HL=bitmap byte address. Changes AF/HL;
+preserves BC/DE. Split Y into its three address bit groups and X into byte column
+and bit offset. This is the Spectrum bitmap layout, not a linear scanline buffer.
+
+`next_scanline`: HL points to one bitmap byte; returns the same byte column on
+the next scanline. Changes AF/HL. The low three bits of H advance within an
+eight-scanline group; L and H handle the group boundary.
+
+`draw_sprite`: D=Y, E=X, HL=shift table, A=row count. Changes AF/BC/DE/HL and two
+scratch variables, `sprite_ptr` and `sprite_height`. It leaves IX unchanged.
+Each shift occupies 16×4=64 bytes even when only twelve rows are drawn. The
+selected offset is `(X AND 7)×64`. Each row occupies four adjacent bitmap bytes.
+Callers keep X within 8..224 and the whole sprite within the screen.
+
+XOR is its own inverse: `background XOR image XOR image = background`.
+The two calls must use exactly the same image and position. Other XOR images
+can overlap because XOR commutes; overwriting the background or changing a
+sprite's kind before erasing breaks that contract. HUD rows and playfield rows
+are separate. This renderer is not a general solution for scrolling scenery.
+
+`ship` in the early programs toggles the image at the current `ship_x`.
+Later `erase_ship`/`draw_ship` track `ship_visible` so removal is conditional.
+They change the primary registers and scratch state used by `draw_sprite`.
+
+`draw_meteor`: IX=object record, D=Y, E=X. Uses the kind field to choose meteor
+or star artwork when stars exist. Draws twelve rows; changes AF/BC/DE/HL, preserves
+IX. Callers save BC around it while B is the pool loop counter.
+
+## Input, objects and contact
+
+`steer`: reads the O/P keyboard row; changes ship_x by two pixels within bounds.
+Both held and neither held leave it alone. Changes AF/BC/DE. `boost` reads Space
+and stores 0 or 1 in boost_time, representing one or two steps. It changes AF/BC.
+Input is active-low; the key experiments inherited from Meet Assembly apply.
+
+Pool records are deliberately concrete, with no hidden type system:
+
+| Stage | Offsets, in bytes | Stride |
+|---|---|---|
+| object-pool / fixed-course | 0 X, 1 Y, 2 active, 3 speed | 4 |
+| drift | previous fields plus 4 signed drift | 5 |
+| stars through boost | offset 2 becomes kind (0 free, 1 meteor, 2 star) | 5 |
+| render-budget onward | plus 5 previous-image X, 6 previous-image Y | 7 |
+
+The first-dodge program uses simple named variables. Pool iteration then uses IX
+as the current record and B as the remaining slot count. `spawn` searches twenty
+slots, fills the first free slot and draws it; if none is free it sets
+pool_overflow for verification. It changes primary registers and IX. `waves`
+reads the next event when its countdown expires, fills spawn scratch variables
+and calls spawn. Event strides are three bytes, then four with drift, then five
+with kind. Bounds and record sizes are visible in each source.
+
+`advance_meteors` processes all active slots; changes primary registers, IX and
+object/run state. It retires an object at y>=174. Contact requires 154<=y<172
+and abs(object_x-ship_x)<16. Equality at 16 is a miss. Kind determines whether
+contact removes the ship's one life or adds score. Removal clears kind/activity,
+so the same star cannot award points twice. This is an intentionally forgiving
+inset rectangle rule, not a claim that every lit pixel collides.
+
+`count_objects` counts occupied slots; despite its prototype ancestor's name it
+does not draw anything. It changes AF/B/DE/IX and active_count. Completion requires
+both event exhaustion and a zero active count, after checking for a fatal hit.
+
+## Text, numbers and lifetime
+
+`text`: B=character row, C=column, DE=zero-terminated ASCII. Copies glyphs from the
+ROM font, without ROM calls or print state. Changes all primary registers. Stops
+at row 24 or column 32. Used strings are printable ROM characters; this is not a
+control-code parser. `text_center` measures the actual string, computes
+floor((32-length)/2), and passes that column to text. Overlong strings start at
+column zero and are clipped.
+
+`decimal3`: A=0..255, HL=three output bytes. Writes hundreds, tens, units by
+repeated subtraction. Changes AF/B/HL. Score stores tens of points; its buffer
+has a fourth, fixed '0'. Do not confuse that representation with four-digit
+arithmetic. The accepted course's maximum is bounded below byte overflow.
+
+`seconds`: HL=elapsed PAL frames; returns A=whole seconds, L=remainder, H=0;
+changes AF/B/DE/HL. The current short-course use stays below 256 seconds.
+`format_time`: HL=frames, DE=SS.CC buffer with one writable padding byte before
+it; changes primary registers and scratch bytes. Explain that padding contract
+before reusing the routine: decimal3 writes three digits and the leading one
+lands in the pad. This is limited to the game's sub-100-second display.
+
+`new_game` clears state_start..state_end, reinitialises the ship, event countdown,
+HUD and frame baseline. It changes primary registers and IX. Session records
+live outside this range. `save_score` changes AF/B and replaces best_score only
+when this run is at least as high. A successful finish additionally considers
+best_time; a failed run cannot replace it. All records are RAM state, lost on
+program reload. `release_keys` waits for Space, Q and R to be released and changes
+AF/BC; it prevents a held launch/retry key from triggering the next phase.
