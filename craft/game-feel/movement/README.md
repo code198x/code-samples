@@ -25,3 +25,31 @@ targets the website's Game Feel outline.
 
 Run `node --test model.test.mjs` for numerical checks. Browser verification is
 maintained at `website/scripts/verification/game-feel.mjs`.
+
+## Focused controls-and-response lessons
+
+`lessons.html?step=1` through `?step=4` provide paired comparisons for the four
+local lesson drafts. Invalid step parameters fall back to the first experiment.
+Only one setting differs between the reference and adjustable ship:
+
+1. Top speed, with immediate velocity changes in both ships.
+2. Acceleration, with identical top speed and immediate release stops.
+3. Release braking, with identical held-input acceleration and top speed.
+4. Braking against existing motion, with identical acceleration and release rules.
+
+The last experiment reaches zero before accelerating the other way. This is a
+stated alternative to the original playground's direct approach towards the
+opposite target velocity. The lessons include the exact imported velocity
+functions through CodeFromFile; there is no separate illustrative implementation.
+
+Both ships start at 120; the marker is 560. Reset or a setting change restores the
+common start. Input recording, pause and explicit 1/60-second stepping use the
+same update function as manual play. The trace names old/new velocity and position.
+The model caps catch-up time at 0.1 seconds per rendered frame. Losing window focus
+or hiding the document pauses simulation and clears held input. There is no
+automatic demonstration or decorative motion.
+
+Run `node --test *.test.mjs` for the ten model checks. Website verification is
+`scripts/verification/game-feel-lessons.mjs`; it checks worked values, setting
+resets, controls, sequence navigation, actual code disclosures, light/dark
+accessibility, narrow/desktop overflow and iframe height synchronisation.

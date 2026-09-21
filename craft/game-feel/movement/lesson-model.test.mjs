@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {lessons,advance} from './lesson-model.mjs';
+const dt=1/60,near=(a,b)=>assert(Math.abs(a-b)<1e-8,`${a} != ${b}`);
+test('immediate movement matches the first lesson worked trace',()=>{const rule=lessons[0].rule;let ship=advance({x:120,v:0},rule,1,dt,240);assert.deepEqual(ship,{x:124,v:240});assert.deepEqual(advance(ship,rule,0,dt,240),{x:124,v:0});assert.deepEqual(advance(ship,rule,-1,dt,240),{x:120,v:-240});});
+test('acceleration builds speed, caps it, and preserves immediate release',()=>{const rule=lessons[1].rule;near(rule(0,1,dt,240),4);near(rule(4,1,dt,240),8);near(rule(238,1,dt,240),240);assert.equal(rule(100,0,dt,240),0);assert.equal(rule(0,-1,dt,240),-4);});
+test('release braking approaches zero from both directions',()=>{const rule=lessons[2].rule;near(rule(240,0,dt,120),238);near(rule(-60,0,dt,120),-58);let v=240;for(let i=0;i<120;i++)v=rule(v,0,dt,120);near(v,0);assert.equal(rule(240,0,dt,Infinity),0);});
+test('release setting does not change held-input acceleration',()=>{const rule=lessons[2].rule;for(const v of [-240,-60,0,60,240])for(const input of [-1,1])assert.equal(rule(v,input,dt,60),rule(v,input,dt,600));});
+test('reversal rate acts only against motion and reaches zero first',()=>{const rule=lessons[3].rule;near(rule(240,-1,dt,240),236);near(rule(-240,1,dt,240),-236);near(rule(2,-1,dt,240),0);near(rule(0,-1,dt,240),-10);for(const input of [0,1])assert.equal(rule(240,input,dt,60),rule(240,input,dt,960));let v=240;for(let i=0;i<60;i++)v=rule(v,-1,dt,240);near(v,0);});
+test('all focused models preserve wall boundaries',()=>{for(const lesson of lessons){const ship=advance({x:879,v:240},lesson.rule,1,dt,lesson.value);assert.deepEqual(ship,{x:880,v:0});}});

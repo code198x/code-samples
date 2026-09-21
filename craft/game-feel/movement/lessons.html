@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Controls and response</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="lessons.css"></head><body data-pagefind-ignore><main aria-label="Interactive movement comparison">
+<h1 id="title"></h1><p id="difference"></p>
+<div class="toolbar"><button id="compare">Run same input</button><button id="reset">Reset</button><button id="pause" aria-pressed="false">Pause</button></div>
+<label class="setting" for="setting"><span id="setting-label"></span> <output id="setting-value"></output> <span id="setting-unit"></span></label><input id="setting" type="range">
+<div id="arena" tabindex="0" role="group" aria-label="Movement controls: hold left or right arrow, or A and D">
+<div class="lane"><div class="lane-heading"><h2 id="reference-label"></h2><output aria-live="off" id="readout-0"></output></div><svg viewBox="0 0 900 90" role="img" aria-label="Reference ship position"><path class="track" d="M20 70H880"/><path class="target" d="M560 5V70"/><text x="560" y="86">MARKER</text><g id="ship-0"><path d="M-17-12H5L23 0 5 12H-17L-10 0Z"/></g></svg></div>
+<div class="lane"><div class="lane-heading"><h2>Your setting</h2><output aria-live="off" id="readout-1"></output></div><svg viewBox="0 0 900 90" role="img" aria-label="Your ship position"><path class="track" d="M20 70H880"/><path class="target" d="M560 5V70"/><text x="560" y="86">MARKER</text><g id="ship-1"><path d="M-17-12H5L23 0 5 12H-17L-10 0Z"/></g></svg></div></div>
+<div class="driving"><button id="left">← Hold left</button><span id="input">Released</span><button id="right">Hold right →</button></div>
+<p class="help">Focus the tracks for ← / → or A / D, or hold the buttons. x is position; v is velocity. Positive means right. Both ships start at x = 120; walls stop them at 20 and 880.</p>
+<details><summary>Inspect one update</summary><div class="inspect"><label for="next-input">Next input</label><select id="next-input"><option value="1">Right (+1)</option><option value="0">Released (0)</option><option value="-1">Left (−1)</option></select><button id="step">Pause and step 1/60 s</button></div><p id="trace">Step once to see the change in velocity and position.</p></details>
+<p id="status" role="status">Ready. Hold a direction or run the comparison.</p>
+</main><script type="module" src="lessons.mjs"></script></body></html>
