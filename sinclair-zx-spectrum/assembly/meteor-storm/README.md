@@ -1,6 +1,6 @@
 # Meteor Storm — runnable teaching progression
 
-Seventeen complete programs develop the accepted 48K PAL game from small
+Nineteen complete programs develop the accepted 48K PAL game from small
 experiments. These are teaching checkpoints, **not a fixed lesson count**.
 Split explanations further wherever one change needs its own experiment.
 Meet Assembly supplies the immediate background: bytes, bitmap addresses, loops,
@@ -17,6 +17,8 @@ to the prototype. Native evidence compares its gameplay with that reference.
 |---|---|
 | [one-row-shift](checkpoints/one-row-shift/README.md) | Carry a pixel into the next byte |
 | [eight-shifts](checkpoints/eight-shifts/README.md) | Prepare all eight offsets |
+| [pixel-address](checkpoints/pixel-address/README.md) | Find a pixel’s bitmap address |
+| [draw-ship](checkpoints/draw-ship/README.md) | Draw one stationary ship |
 | [pixel-motion](checkpoints/pixel-motion/README.md) | Move the ship between character columns |
 | [interrupt-clock](checkpoints/interrupt-clock/README.md) | Count interrupts without a game |
 | [half-rate-clock](checkpoints/half-rate-clock/README.md) | Separate display frames from updates |

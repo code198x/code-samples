@@ -2,6 +2,7 @@
 
 - `checkpoints.json`: seventeen complete builds, upstream Pasmo byte parity and
   142 execution checks. Every source/data hash matches the maintained files.
+- `opening-additions.json`: two additional static programs, native bitmap checks and upstream Pasmo parity.
 - `boundaries.json`: four keyboard-only contact/near-miss cases.
 - `endpoint.json`: 49 native checks, including exact reference measurements and
   a separate fresh ROM tape load. It retains the accepted prototype source hash.

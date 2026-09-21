@@ -1,0 +1,104 @@
+{
+  "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "assembler_version": "",
+  "programs": [
+    {
+      "name": "draw-ship",
+      "source_sha256": "b02505e3e601bdafb72b8d647acc255591177c5b1f43279c169c81eedad0a3ae",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "static ship row 0",
+          "detail": null
+        },
+        {
+          "check": "static ship row 1",
+          "detail": null
+        },
+        {
+          "check": "static ship row 2",
+          "detail": null
+        },
+        {
+          "check": "static ship row 3",
+          "detail": null
+        },
+        {
+          "check": "static ship row 4",
+          "detail": null
+        },
+        {
+          "check": "static ship row 5",
+          "detail": null
+        },
+        {
+          "check": "static ship row 6",
+          "detail": null
+        },
+        {
+          "check": "static ship row 7",
+          "detail": null
+        },
+        {
+          "check": "static ship row 8",
+          "detail": null
+        },
+        {
+          "check": "static ship row 9",
+          "detail": null
+        },
+        {
+          "check": "static ship row 10",
+          "detail": null
+        },
+        {
+          "check": "static ship row 11",
+          "detail": null
+        },
+        {
+          "check": "static ship row 12",
+          "detail": null
+        },
+        {
+          "check": "static ship row 13",
+          "detail": null
+        },
+        {
+          "check": "static ship row 14",
+          "detail": null
+        },
+        {
+          "check": "static ship row 15",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "46f0fd265614ff1b484b93e7fd23aaea91e423d576f72f984ffb9e3c4ba24484",
+      "binary_sha256": "19239964bbe99cbf45dc8a3f729273fe7e5f11ff6fdf59a79bc8f5785a6ab309",
+      "binary_bytes": 695
+    },
+    {
+      "name": "pixel-address",
+      "source_sha256": "ffe9ed85c6b638b9bf674bb9d28410f364e8db2aef818249fe0e0a0d7c5e89cc",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "coordinate maps to expected bitmap byte",
+          "detail": null
+        },
+        {
+          "check": "pixel pattern reaches that address",
+          "detail": null
+        }
+      ],
+      "binary_sha256": "863cc7594d72959f6ef5f19771359082213f0233890622c277fbdb14b50e3c18",
+      "binary_bytes": 89
+    }
+  ]
+}

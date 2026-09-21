@@ -33,3 +33,5 @@ CHECKPOINTS = ['pixel-motion', 'clocked-steering', 'one-meteor', 'first-dodge',
 if __name__ == '__main__':
     for number, name in enumerate(CHECKPOINTS, 1):
         (ROOT / 'checkpoints' / name / 'assets.inc').write_text(assets(number))
+
+    (ROOT / 'checkpoints/draw-ship/assets.inc').write_text(assets(1))

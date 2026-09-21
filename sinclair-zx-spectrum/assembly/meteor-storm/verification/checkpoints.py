@@ -62,6 +62,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--emulator', required=True)
     parser.add_argument('--pasmo', help='Optional upstream Pasmo executable for binary parity')
+    parser.add_argument('--only', nargs='+', help='Run selected named checkpoints')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     out = args.output.resolve()
@@ -70,6 +71,8 @@ def main():
               'emulator_sha256': hashlib.sha256(Path(args.emulator).read_bytes()).hexdigest(), 'assembler_version': subprocess.run(['asm198x', '--version'], capture_output=True, text=True, check=True).stdout.strip(), 'programs': []}
     for directory in sorted((ROOT / 'checkpoints').iterdir()):
         name = directory.name
+        if args.only and name not in args.only:
+            continue
         target = out / name
         target.mkdir(exist_ok=True)
         source = directory / 'meteor-storm.asm'
@@ -103,7 +106,16 @@ def main():
             m.frames(8)
         try:
             boot()
-            if name in ('one-row-shift', 'eight-shifts'):
+            if name == 'pixel-address':
+                check('coordinate maps to expected bitmap byte', read('address', 2) == 0x4801)
+                check('pixel pattern reaches that address', m.call('memory_read', addr=0x4801, len=1)['bytes'] == [2])
+            elif name == 'draw-ship':
+                for row, bits in enumerate(art.SHIP):
+                    y = 160 + row
+                    address = 0x4000 | ((y & 0xc0) << 5) | ((y & 7) << 8) | ((y & 0x38) << 2)
+                    actual = m.call('memory_read', addr=address, len=32)['bytes']
+                    check('static ship row ' + str(row), actual == list((bits << 116).to_bytes(32, 'big')))
+            elif name in ('one-row-shift', 'eight-shifts'):
                 pairs = [m.call('memory_read', addr=0x480c + i * 256, len=2)['bytes']
                          for i in range(2 if name == 'one-row-shift' else 8)]
                 expected = [[(0x8100 >> i) >> 8, (0x8100 >> i) & 255] for i in range(len(pairs))]
