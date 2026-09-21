@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "Unaimed shot misses",
+    "Calculated aim: coarse misses, fine hits",
+    "Fine precision hits all six target directions",
+    "Number input, slider keyboard, pointer aim, compare toggle and reset",
+    "Reduced-motion instant results",
+    "Axe: no violations",
+    "390/1280/1920 layouts: no page overflow"
+  ],
+  "errors": []
+}

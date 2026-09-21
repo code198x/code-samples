@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Angle of attack · Maths for Games</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<header><p class="eyebrow">CODE198x / MATHS FOR GAMES</p><h1>Angle of attack<span>.</span></h1><p class="intro">A direction is two numbers. Find them, take a shot, then see what happens when those numbers lose precision.</p></header>
+<div class="workbench">
+<section class="field-panel" aria-label="Aiming experiment">
+<div class="field-top"><span>01 / AIMING RANGE</span><span id="target-readout"></span></div>
+<svg id="field" viewBox="0 0 640 550" role="img" aria-labelledby="field-title field-desc"><title id="field-title">Aim from the origin towards the target</title><desc id="field-desc">Positive X points right; positive Y points up. Use the angle control or drag on this picture to aim.</desc><defs><pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#233541" stroke-width=".7"/></pattern><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="#f4c674"/></marker></defs><rect width="640" height="550" fill="url(#grid)"/><g id="drawing"></g></svg>
+<div class="legend"><span><i class="ideal"></i>Fractional reference</span><span><i class="fixed"></i>Fixed point · dashed</span></div>
+<p class="field-hint">Drag to aim, or use the angle control. The target has a radius of 5 units.</p>
+<p id="result" role="status">Try a shot. Which component needs to change?</p>
+</section>
+<section class="controls" aria-label="Shot controls"><form id="aim-form">
+<div class="control-heading"><label for="angle">Your angle</label><div><input id="angle" type="number" min="0" max="359.9" step="0.1" value="20" required aria-label="Angle in degrees"> °</div></div>
+<input id="angle-slider" type="range" min="0" max="359.9" step="0.1" value="20" aria-label="Adjust angle in degrees">
+<p id="angle-note" class="note"></p>
+<label for="radius">Target distance <output id="radius-value">220</output></label><input id="radius" type="range" min="100" max="225" value="220" step="1">
+<div class="buttons"><button id="fire" class="primary" type="submit">Fire both shots <span>↗</span></button><button id="next" type="button">Next target</button></div>
+<div class="toggles"><label><input id="triangle" type="checkbox" checked> Show the triangle</label><label><input id="compare" type="checkbox" checked> Compare fixed point</label></div>
+<div class="calculation"><p class="eyebrow">ONE TICK OF MOVEMENT</p><p id="cosine"></p><p id="sine"></p><p class="note">For one tick, the sloping side has length 3: our speed in units per tick. Cosine supplies the horizontal share; sine supplies the vertical share.</p></div>
+<label for="precision">Fixed-point precision</label><select id="precision"><option value="4">2 fractional bits · scale 4</option><option value="16">4 fractional bits · scale 16</option><option value="256">8 fractional bits · scale 256</option></select>
+<div id="fixed-maths" class="mono"></div>
+<details id="solution"><summary>Work backwards from the target</summary><p id="inverse"></p><button type="button" id="use-angle">Use the calculated angle</button><p class="note">atan2(y, x) uses both signs to select the quadrant. atan(y / x) alone loses that information and cannot divide by x = 0.</p></details>
+<button type="button" id="reset" class="quiet">Reset experiment</button>
+</form></section></div>
+<section class="explanation"><article><p class="eyebrow">02 / WHAT THE PICTURE MEANS</p><h2>One angle, two components</h2><p>Start at (0, 0). Measure angles anticlockwise from the positive X axis. At 0°, all movement is right; at 90°, it is up. Past 90°, the horizontal component becomes negative.</p><p>The triangle on the range is enlarged to the target’s distance. Its legs are <strong>distance × cos(angle)</strong> and <strong>distance × sin(angle)</strong>. Movement uses the same proportions, multiplied by speed instead.</p><p>Radians measure an angle as arc length divided by radius. One turn is 2π radians, so <strong>radians = degrees × π / 180</strong>. JavaScript’s trig functions take radians.</p></article>
+<article><p class="eyebrow">03 / KEEP THE FRACTION</p><h2>Small errors travel</h2><p>For each component, store <strong>round(velocity × scale)</strong>. Add that integer to the stored position every tick. Divide by the scale when drawing. Fractions survive because position uses the same scale as velocity.</p><p>Try the calculated angle at scale 4, then repeat at scale 256. Does the fixed-point shot still miss? The two shots begin with the same angle; only their stored velocity differs.</p><p>The stored values fit signed 16-bit velocity and signed 32-bit position. We round halves away from zero. The range keeps both within bounds. The fractional reference uses JavaScript numbers; it is not infinite-precision arithmetic.</p></article></section>
+<footer>A mathematical experiment, not a native-machine benchmark. No gravity, drag or moving targets. Contact is checked along each movement segment, so a shot cannot jump over the target between ticks. Screen Y is inverted when drawing; world Y stays positive upwards.</footer>
+</main><script type="module" src="app.mjs"></script></body></html>

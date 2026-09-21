@@ -1,0 +1,7 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {angleTo,velocity,simulate,roundSigned,distanceToSegment} from './model.mjs';
+test('axes, quadrants and undefined direction',()=>{assert.equal(angleTo(0,0),null);assert.equal(angleTo(0,3),90);assert.equal(angleTo(-1,0),180);assert.equal(angleTo(-1,-1),225);assert.equal(angleTo(0,-3),270);});
+test('signed rounding and cardinal components',()=>{assert.equal(roundSigned(-1.5),-2);assert.equal(roundSigned(1.5),2);const v=velocity(90,256);assert.equal(v.ix,0);assert.equal(v.iy,768);});
+test('swept contact includes a target crossed between ticks',()=>{assert.equal(distanceToSegment({x:2,y:0},{x:0,y:0},{x:4,y:0}),0);assert.equal(distanceToSegment({x:2,y:6},{x:0,y:0},{x:4,y:0}),6);});
+test('coarse velocity misses an accurately aimed shot; finer precision hits',()=>{const a=32.8*Math.PI/180,t={x:220*Math.cos(a),y:220*Math.sin(a)},coarse=simulate(32.8,4,t),fine=simulate(32.8,256,t);assert(coarse.exactHit);assert(!coarse.fixedHit);assert(fine.fixedHit);assert(coarse.separation>5);assert(fine.separation<.3);});
+test('all target quadrants hit with fine precision and fractional position survives',()=>{for(const a of [32.8,138.4,248.6,90,318.2,180]){const t={x:220*Math.cos(a*Math.PI/180),y:220*Math.sin(a*Math.PI/180)},s=simulate(a,256,t);assert(s.exactHit&&s.fixedHit);assert.equal(s.fixed[10].x,s.velocity.ix*10/256);assert(Math.abs(s.velocity.ix)<=32767);assert(Math.abs(s.fixed.at(-1).x*256)<2147483648);}});
