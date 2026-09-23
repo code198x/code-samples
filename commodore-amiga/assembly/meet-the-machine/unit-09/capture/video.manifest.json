@@ -1,0 +1,15 @@
+{
+  "machine": "commodore-amiga-asm",
+  "model": "a500",
+  "boot_frames": 1600,
+  "image_dir": "commodore-amiga/assembly/meet-the-machine/unit-09",
+  "captures": [{
+    "id": "heartbeat-video",
+    "program": "heartbeat.asm",
+    "timeline": [
+      {"record_video": "heartbeat.mp4"},
+      {"wait": 600},
+      {"stop_video": true}
+    ]
+  }]
+}

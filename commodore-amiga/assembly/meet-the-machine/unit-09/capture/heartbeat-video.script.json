@@ -1,0 +1,17 @@
+[
+ {
+  "action": "run_frames",
+  "frames": 1600
+ },
+ {
+  "action": "start_video_recording",
+  "path": "heartbeat.mp4"
+ },
+ {
+  "action": "run_frames",
+  "frames": 600
+ },
+ {
+  "action": "stop_video_recording"
+ }
+]

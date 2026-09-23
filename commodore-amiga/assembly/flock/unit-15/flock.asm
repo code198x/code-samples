@@ -606,11 +606,11 @@ losesheep:
 ;══════════════════════════════════════════════════════════════
 ; NEWSHEEP — the next one steps up, and the dice decide her coat
 ;
-; One sheep in eight is black: worth BLACK_BONUS at the fold,
-; and a touch quicker on her feet. The roll mixes the xorshift
-; generator with FRAMECNT — a clock that's been ticking since
-; power-on — so the dice land where the PLAYER's timing put
-; them. A machine with no randomness borrows some from you.
+; Roughly one in eight is the design target, not exact odds.
+; Black sheep earn BLACK_BONUS and move faster. We mix the
+; xorshift state with FRAMECNT, a wrapping main-loop counter.
+; Player timing can vary the values mixed in; it does not
+; guarantee different results or equal outcome frequencies.
 ;
 ; Her colours live in the Copper list, which is only data: the
 ; same trick that repoints sprites repaints a sheep — three
@@ -622,7 +622,7 @@ newsheep:
             move.w  #SHEEP_Y,sheepy
             clr.w   roadflag            ; A fresh road ahead of her
             bsr     rnd
-            and.w   #7,d0               ; One face of an eight-sided die
+            and.w   #7,d0               ; Black when the low three bits are zero
             beq.s   .black
             clr.w   isblack
             move.w  #COOLDOWN,hopgap

@@ -1,0 +1,20 @@
+{
+  "latest": {
+    "input_sha256": "449dfe5e7f36bef4d60b8a3f7bcb58bc809c4b6c91489c502ff6c13701ecfa92",
+    "output_sha256": "869d278242c468d7b6785236f5bc46f6bc7f048ff1f117a91d0e0737363f8f65",
+    "first_cue_sample": 425565,
+    "start_sample": 415965,
+    "end_sample": 607965,
+    "sample_rate": 48000,
+    "channels": 2
+  },
+  "priority": {
+    "input_sha256": "7289d202851f16203c99740e1865ea7a7929a405cce067b060a6285de1d0ec41",
+    "output_sha256": "decf3a120e2df0a0e3fd65a5ab5c8ea3103d8e007d0aa8fbf012264fe7862c7d",
+    "first_cue_sample": 425565,
+    "start_sample": 415965,
+    "end_sample": 607965,
+    "sample_rate": 48000,
+    "channels": 2
+  }
+}
