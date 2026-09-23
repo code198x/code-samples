@@ -4,8 +4,8 @@
 ;   Period 0/0 is a rest (silence is a note too). Two terminators, two
 ;   meanings: frames $FF loops to the top (the title jingle), frames $FE
 ;   stops for good (a fanfare or a sting says its piece once).
-;   The APU holds each note itself — this routine touches the chip twice
-;   per note, and the game runs on regardless.
+;   The APU generates the waveform between calls. We write settings when
+;   loading a note, rest or stop; other calls only advance the countdown.
 ; -----------------------------------------------------------------------------
 tune_tick:
     lda tune_ptr+1

@@ -32,6 +32,8 @@ warm2:
     bit $2002
     bpl warm2
 
+; Rendering stays disabled ($2001 = 0); NMI stays disabled ($2000 = 0).
+; This unrestricted palette loop is not a safe transfer loop for a rendered game.
 read:
     ; --- strobe the controller: a 1 then a 0 latches the current buttons ---
     lda #$01

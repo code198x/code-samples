@@ -1,7 +1,7 @@
 ; ============================================================================
 ; Meet the Machine (NES) - Unit 9: The Machine Has a Heartbeat
 ;
-; The PPU pulses once per frame - 60 times a second - and can tell the CPU each
+; The PPU pulses once per frame - about 60 times a second on NTSC - and can tell the CPU each
 ; time, through the NMI. We turn that heartbeat on, and do one small job every
 ; beat: nudge the backdrop colour. The screen cycles through colours by itself.
 ; ============================================================================
@@ -42,10 +42,11 @@ warm2:
     sta $2000
 
 forever:
-    jmp forever             ; the main loop does nothing - the NMI does the work
+    jmp forever             ; idle for this demonstration, not a required game architecture
 
-; --- the heartbeat handler: runs once per frame, at the top of VBlank ---------
+; --- the heartbeat handler: one bounded update after the VBlank NMI edge ---------
 nmi:
+    pha                     ; CPU entry saves PC/status, not A; X and Y are untouched
     inc COUNTER             ; one more frame has passed
     bit $2002               ; reset the address latch
     lda #$3f
@@ -60,6 +61,7 @@ nmi:
     sta $2006
     lda #$00
     sta $2006
+    pla                     ; restore the interrupted code's accumulator
     rti
 
 irq:

@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "configuration": "NES NTSC, rendering disabled",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-nes",
+      "version": "0.25.0"
+    }
+  },
+  "binary_sha256": "7ee2326974a821494533c530972ed8d1156d7a5ca30022ca44153d625fe5a147",
+  "checks": [
+    {
+      "unit": "09",
+      "registers_at_idle": {
+        "a": 128,
+        "x": 0,
+        "y": 0,
+        "p": 164,
+        "sp": 255
+      },
+      "successive_palette_entries": [
+        "04",
+        "05",
+        "06",
+        "07"
+      ],
+      "source_sha256": "df7d51b41a55174e9cc3d9a0cad3e5b68989011999d9fd37e21faa9c0ebc0f30",
+      "rom_sha256": "0b869e7256f6ba64b68c5e016691cd2bd0afbecf379bdb0b2b32dd569a141143"
+    },
+    {
+      "unit": "10",
+      "released_held_released_palette_entries": [
+        "16",
+        "2A",
+        "16"
+      ],
+      "source_sha256": "962e30f7323de900a10376447003d23e39800bab96bb6a2f1beb3832313f4f2a",
+      "rom_sha256": "3992e08b6832937be67e1d001a215bba92556cbceb75c46626b66bf2c53d3665"
+    },
+    {
+      "exercise": "five shifts",
+      "colour_change_frames": [
+        28,
+        60,
+        92
+      ],
+      "source_sha256": "580fb81ea1aa991d95886c2ee779e989614c64208981da1bd43e8afdb2e58ba9"
+    }
+  ],
+  "limits": "Emulator MCP input/register/palette observations; not native keyboard, original hardware, or proof of a general VBlank budget."
+}

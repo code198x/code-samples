@@ -47,11 +47,11 @@ check_collect:
     inc score
 
     ; Play collect sound (triangle channel)
-    lda #%00011000          ; Linear counter: halt=0, reload=24 (~100ms)
+    lda #%00011000          ; Control=0, linear reload=24; length may stop first
     sta TRI_LINEAR
     lda #$29                ; Timer low — bright pitch (~1330 Hz)
     sta TRI_LO
-    lda #$00                ; Timer high=0, length counter=0 (10 frames)
+    lda #$00                ; Timer high=0, length index=0 loads 10 half-frame ticks
     sta TRI_HI
 
 @done:

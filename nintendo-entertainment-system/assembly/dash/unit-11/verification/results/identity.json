@@ -1,0 +1,6 @@
+{
+  "dash.asm": "48a5c69bb7ec1b8062d98d5a81e6da93e3dcdb41e630758aefccf6e978f6148a",
+  "dash.nes": "f64f3e98aaa182dd4941422a1c50e86391c6cbf89a94adb4ed37e2d4f53fb8a1",
+  "apu_source_sha256": "47794ec2b33fba6c134c722ce48d0d6b83989213527c20910be147269cc5b887",
+  "scope": "Counter fixture only; not full NES execution, audible verification or hardware evidence"
+}
