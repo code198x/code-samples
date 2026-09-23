@@ -1,0 +1,356 @@
+{
+  "source_sha256": "c167968967e48ee77e54ca540beabe61e7272a9b4c92a7a1ad6528d1b6ed43dc",
+  "scope": "Host countdown/listening model; no native execution or measured service latency",
+  "pitch_clock_hz": 1789773,
+  "sample_rate": 48000,
+  "rates": {
+    "50": {
+      "phrase_updates": 286,
+      "phrase_seconds": 5.72,
+      "events": [
+        {
+          "row": 0,
+          "update": 0,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 1,
+          "update": 8,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 2,
+          "update": 16,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 3,
+          "update": 24,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 4,
+          "update": 32,
+          "period": 253,
+          "duration_updates": 8
+        },
+        {
+          "row": 5,
+          "update": 40,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 6,
+          "update": 48,
+          "period": 338,
+          "duration_updates": 16
+        },
+        {
+          "row": 7,
+          "update": 64,
+          "period": 0,
+          "duration_updates": 8
+        },
+        {
+          "row": 8,
+          "update": 72,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 9,
+          "update": 80,
+          "period": 380,
+          "duration_updates": 16
+        },
+        {
+          "row": 10,
+          "update": 96,
+          "period": 0,
+          "duration_updates": 6
+        },
+        {
+          "row": 11,
+          "update": 102,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 12,
+          "update": 110,
+          "period": 380,
+          "duration_updates": 16
+        },
+        {
+          "row": 13,
+          "update": 126,
+          "period": 0,
+          "duration_updates": 10
+        },
+        {
+          "row": 14,
+          "update": 136,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 15,
+          "update": 144,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 16,
+          "update": 152,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 17,
+          "update": 160,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 18,
+          "update": 168,
+          "period": 253,
+          "duration_updates": 8
+        },
+        {
+          "row": 19,
+          "update": 176,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 20,
+          "update": 184,
+          "period": 338,
+          "duration_updates": 16
+        },
+        {
+          "row": 21,
+          "update": 200,
+          "period": 0,
+          "duration_updates": 8
+        },
+        {
+          "row": 22,
+          "update": 208,
+          "period": 380,
+          "duration_updates": 8
+        },
+        {
+          "row": 23,
+          "update": 216,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 24,
+          "update": 224,
+          "period": 380,
+          "duration_updates": 8
+        },
+        {
+          "row": 25,
+          "update": 232,
+          "period": 427,
+          "duration_updates": 24
+        },
+        {
+          "row": 26,
+          "update": 256,
+          "period": 0,
+          "duration_updates": 30
+        }
+      ],
+      "audio": {
+        "seconds_with_padding": 6.22,
+        "peak_pcm": 6000,
+        "rms_pcm": 5092.078205424655,
+        "sha256": "c7daeec651ecd7dc0988cff17baf1bdbc4dc0befbb2d1297bf78c1e93d5681fa"
+      }
+    },
+    "60": {
+      "phrase_updates": 286,
+      "phrase_seconds": 4.766666666666667,
+      "events": [
+        {
+          "row": 0,
+          "update": 0,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 1,
+          "update": 8,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 2,
+          "update": 16,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 3,
+          "update": 24,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 4,
+          "update": 32,
+          "period": 253,
+          "duration_updates": 8
+        },
+        {
+          "row": 5,
+          "update": 40,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 6,
+          "update": 48,
+          "period": 338,
+          "duration_updates": 16
+        },
+        {
+          "row": 7,
+          "update": 64,
+          "period": 0,
+          "duration_updates": 8
+        },
+        {
+          "row": 8,
+          "update": 72,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 9,
+          "update": 80,
+          "period": 380,
+          "duration_updates": 16
+        },
+        {
+          "row": 10,
+          "update": 96,
+          "period": 0,
+          "duration_updates": 6
+        },
+        {
+          "row": 11,
+          "update": 102,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 12,
+          "update": 110,
+          "period": 380,
+          "duration_updates": 16
+        },
+        {
+          "row": 13,
+          "update": 126,
+          "period": 0,
+          "duration_updates": 10
+        },
+        {
+          "row": 14,
+          "update": 136,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 15,
+          "update": 144,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 16,
+          "update": 152,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 17,
+          "update": 160,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 18,
+          "update": 168,
+          "period": 253,
+          "duration_updates": 8
+        },
+        {
+          "row": 19,
+          "update": 176,
+          "period": 284,
+          "duration_updates": 8
+        },
+        {
+          "row": 20,
+          "update": 184,
+          "period": 338,
+          "duration_updates": 16
+        },
+        {
+          "row": 21,
+          "update": 200,
+          "period": 0,
+          "duration_updates": 8
+        },
+        {
+          "row": 22,
+          "update": 208,
+          "period": 380,
+          "duration_updates": 8
+        },
+        {
+          "row": 23,
+          "update": 216,
+          "period": 338,
+          "duration_updates": 8
+        },
+        {
+          "row": 24,
+          "update": 224,
+          "period": 380,
+          "duration_updates": 8
+        },
+        {
+          "row": 25,
+          "update": 232,
+          "period": 427,
+          "duration_updates": 24
+        },
+        {
+          "row": 26,
+          "update": 256,
+          "period": 0,
+          "duration_updates": 30
+        }
+      ],
+      "audio": {
+        "seconds_with_padding": 5.266666666666667,
+        "peak_pcm": 6000,
+        "rms_pcm": 5051.632146323815,
+        "sha256": "993f816fdae409af81e51d75e31a7d244725e91489460926b22c28bd3f8beef6"
+      }
+    }
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "source_sha256": "c167968967e48ee77e54ca540beabe61e7272a9b4c92a7a1ad6528d1b6ed43dc",
+  "emulator_sha256": "7ee2326974a821494533c530972ed8d1156d7a5ca30022ca44153d625fe5a147",
+  "configuration": "NTSC; real VBlank NMI in instrumented title fixture; no host state injection",
+  "variants": {
+    "early": {
+      "nmi_observations_stage_ready_low_high": [
+        [
+          1,
+          0,
+          28,
+          1
+        ],
+        [
+          2,
+          1,
+          213,
+          1
+        ],
+        [
+          3,
+          0,
+          213,
+          0
+        ],
+        [
+          4,
+          1,
+          82,
+          1
+        ],
+        [
+          5,
+          1,
+          124,
+          1
+        ],
+        [
+          6,
+          0,
+          124,
+          1
+        ]
+      ],
+      "final_state": [
+        0,
+        124,
+        1,
+        6,
+        6,
+        6,
+        1,
+        82,
+        1,
+        1
+      ],
+      "handler_measurements": [
+        {
+          "stage": 1,
+          "ready_at_entry": 0,
+          "cycles_including_dma": 864,
+          "return_scanline": 248,
+          "pulse_period_writes": []
+        },
+        {
+          "stage": 2,
+          "ready_at_entry": 1,
+          "cycles_including_dma": 895,
+          "return_scanline": 248,
+          "pulse_period_writes": [
+            [
+              16386,
+              213
+            ],
+            [
+              16387,
+              1
+            ]
+          ]
+        },
+        {
+          "stage": 3,
+          "ready_at_entry": 0,
+          "cycles_including_dma": 865,
+          "return_scanline": 248,
+          "pulse_period_writes": []
+        },
+        {
+          "stage": 4,
+          "ready_at_entry": 1,
+          "cycles_including_dma": 895,
+          "return_scanline": 248,
+          "pulse_period_writes": [
+            [
+              16386,
+              82
+            ],
+            [
+              16387,
+              1
+            ]
+          ]
+        },
+        {
+          "stage": 5,
+          "ready_at_entry": 1,
+          "cycles_including_dma": 895,
+          "return_scanline": 248,
+          "pulse_period_writes": [
+            [
+              16386,
+              124
+            ],
+            [
+              16387,
+              1
+            ]
+          ]
+        },
+        {
+          "stage": 6,
+          "ready_at_entry": 0,
+          "cycles_including_dma": 864,
+          "return_scanline": 248,
+          "pulse_period_writes": []
+        }
+      ],
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-nes",
+          "version": "0.25.0"
+        }
+      },
+      "source_sha256": "f65899112867f216f268deec046d6c82625911af1b8fee18c0ca714a78d8c8aa",
+      "rom_sha256": "de671834d88eb99c36dc5a0552bebf5783bb642521da69260205923b174c6d09",
+      "cold_repeat_matches": true
+    },
+    "complete": {
+      "nmi_observations_stage_ready_low_high": [
+        [
+          1,
+          0,
+          28,
+          1
+        ],
+        [
+          2,
+          0,
+          213,
+          1
+        ],
+        [
+          3,
+          1,
+          213,
+          0
+        ],
+        [
+          4,
+          1,
+          82,
+          1
+        ],
+        [
+          5,
+          1,
+          124,
+          1
+        ],
+        [
+          6,
+          0,
+          124,
+          1
+        ]
+      ],
+      "final_state": [
+        0,
+        124,
+        1,
+        6,
+        6,
+        6,
+        1,
+        82,
+        1,
+        1
+      ],
+      "handler_measurements": [
+        {
+          "stage": 1,
+          "ready_at_entry": 0,
+          "cycles_including_dma": 864,
+          "return_scanline": 248,
+          "pulse_period_writes": []
+        },
+        {
+          "stage": 2,
+          "ready_at_entry": 0,
+          "cycles_including_dma": 865,
+          "return_scanline": 248,
+          "pulse_period_writes": []
+        },
+        {
+          "stage": 3,
+          "ready_at_entry": 1,
+          "cycles_including_dma": 895,
+          "return_scanline": 248,
+          "pulse_period_writes": [
+            [
+              16386,
+              213
+            ],
+            [
+              16387,
+              0
+            ]
+          ]
+        },
+        {
+          "stage": 4,
+          "ready_at_entry": 1,
+          "cycles_including_dma": 895,
+          "return_scanline": 248,
+          "pulse_period_writes": [
+            [
+              16386,
+              82
+            ],
+            [
+              16387,
+              1
+            ]
+          ]
+        },
+        {
+          "stage": 5,
+          "ready_at_entry": 1,
+          "cycles_including_dma": 895,
+          "return_scanline": 248,
+          "pulse_period_writes": [
+            [
+              16386,
+              124
+            ],
+            [
+              16387,
+              1
+            ]
+          ]
+        },
+        {
+          "stage": 6,
+          "ready_at_entry": 0,
+          "cycles_including_dma": 864,
+          "return_scanline": 248,
+          "pulse_period_writes": []
+        }
+      ],
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-nes",
+          "version": "0.25.0"
+        }
+      },
+      "source_sha256": "8bc59aa7e4251cbce7772068165ad64b0bf40f8e980f623f9a2ae9428e38ac5e",
+      "rom_sha256": "6685be4d3b6ccd31c67ad72301790474e6e7ffacd0c3134c5d81372ec24cfca7",
+      "cold_repeat_matches": true
+    }
+  }
+}

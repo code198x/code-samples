@@ -1,0 +1,28 @@
+{
+  "target_updates_per_second": 50,
+  "source_sha256": "c167968967e48ee77e54ca540beabe61e7272a9b4c92a7a1ad6528d1b6ed43dc",
+  "rates": {
+    "50": {
+      "requested_phrase_seconds": 5.72,
+      "serviced_phrase_seconds": 5.72,
+      "max_event_lateness_seconds": 0.0,
+      "audio": {
+        "seconds_with_padding": 6.22,
+        "peak_pcm": 6000,
+        "rms_pcm": 5092.078205424655,
+        "sha256": "c7daeec651ecd7dc0988cff17baf1bdbc4dc0befbb2d1297bf78c1e93d5681fa"
+      }
+    },
+    "60": {
+      "requested_phrase_seconds": 5.72,
+      "serviced_phrase_seconds": 5.733333333333333,
+      "max_event_lateness_seconds": 0.013333333333333641,
+      "audio": {
+        "seconds_with_padding": 6.233333333333333,
+        "peak_pcm": 6000,
+        "rms_pcm": 5088.52121233097,
+        "sha256": "fe3126141e0cddc755c342fce0e341411f083f6852546a689c2e89cef50b0788"
+      }
+    }
+  }
+}

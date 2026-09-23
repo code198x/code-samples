@@ -1,0 +1,356 @@
+{
+  "source_sha256": "c167968967e48ee77e54ca540beabe61e7272a9b4c92a7a1ad6528d1b6ed43dc",
+  "emulator_sha256": "7ee2326974a821494533c530972ed8d1156d7a5ca30022ca44153d625fe5a147",
+  "assembler": "",
+  "configuration": "NTSC; real VBlank NMI; instrumented title; no host state injection",
+  "variants": {
+    "flag": {
+      "rows": [
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          2,
+          0,
+          1,
+          0
+        ],
+        [
+          2,
+          0,
+          2,
+          0,
+          1,
+          0
+        ]
+      ],
+      "final_state": [
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1,
+        1,
+        3
+      ],
+      "handler_measurements": [
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 838,
+          "return_scanline": 248
+        }
+      ],
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-nes",
+          "version": "0.25.0"
+        }
+      },
+      "source_sha256": "189df9dffd29bd3c0b7ba201b8338334068613793df2c5d20e637480abb76973",
+      "rom_sha256": "48c49ea91bcf23c79ee19f734240898ce905bfa077676d59fac1b9b438c1389d",
+      "cold_repeat_matches": true
+    },
+    "counter": {
+      "rows": [
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          2,
+          0,
+          1,
+          2,
+          0
+        ]
+      ],
+      "final_state": [
+        2,
+        2,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2,
+        3
+      ],
+      "handler_measurements": [
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        }
+      ],
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-nes",
+          "version": "0.25.0"
+        }
+      },
+      "source_sha256": "08414d4b913420f5e962671cc595c0b439e23f9065534ae0ae695810cda8a548",
+      "rom_sha256": "72508f42abe83b13decf85e636ab9003a678d7fddfb033650a4ec00491723ac6",
+      "cold_repeat_matches": true
+    },
+    "wrap": {
+      "rows": [
+        [
+          255,
+          254,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          255,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          2,
+          0
+        ]
+      ],
+      "final_state": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2,
+        3
+      ],
+      "handler_measurements": [
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        }
+      ],
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-nes",
+          "version": "0.25.0"
+        }
+      },
+      "source_sha256": "4ae92a4ce6c735ad078e7f3cee72985e26480accb55770436ed5250ea1544493",
+      "rom_sha256": "9351941c127312e5780ed4d8aef0ee65a34dbe4b814a623f6bc53c7812155e8f",
+      "cold_repeat_matches": true
+    },
+    "backlog": {
+      "rows": [
+        [
+          3,
+          0,
+          3,
+          1,
+          0,
+          0
+        ],
+        [
+          4,
+          1,
+          3,
+          1,
+          1,
+          0
+        ],
+        [
+          4,
+          2,
+          2,
+          1,
+          2,
+          0
+        ]
+      ],
+      "final_state": [
+        4,
+        2,
+        0,
+        4,
+        0,
+        1,
+        1,
+        2,
+        3
+      ],
+      "handler_measurements": [
+        {
+          "stage": 1,
+          "armed": 3,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 2,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        }
+      ],
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-nes",
+          "version": "0.25.0"
+        }
+      },
+      "source_sha256": "770390343493ce1b1195d0cd76a2f42333ddaa5a3e7379ed33b151d94bcbbc29",
+      "rom_sha256": "eed26cac5fe59d12c0e8351c590336914a715a7efe81a71ca04e0b5bccce3ccb",
+      "cold_repeat_matches": true
+    },
+    "overflow": {
+      "rows": [
+        [
+          255,
+          0,
+          255,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "final_state": [
+        255,
+        0,
+        1,
+        3,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "handler_measurements": [
+        {
+          "stage": 1,
+          "armed": 3,
+          "cycles_including_dma": 839,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 2,
+          "cycles_including_dma": 841,
+          "return_scanline": 248
+        },
+        {
+          "stage": 1,
+          "armed": 1,
+          "cycles_including_dma": 825,
+          "return_scanline": 248
+        }
+      ],
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-nes",
+          "version": "0.25.0"
+        }
+      },
+      "source_sha256": "a7b22e00c207a9442cfa624e74e7a6a61b465e4fce78f84aa72cf9d39f346314",
+      "rom_sha256": "afcde6f9fac2f3219eb2246bb3c2817fa1ad8b3f822ad2faa9e58a33432323f9",
+      "cold_repeat_matches": true
+    }
+  }
+}
