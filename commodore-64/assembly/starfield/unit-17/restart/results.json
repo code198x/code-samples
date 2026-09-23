@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "configuration": "Native C64 PAL, BASIC RUN, controlled guest transition calls",
+  "fields": [
+    "enemy_count",
+    "score",
+    "score_hi",
+    "lives",
+    "wave",
+    "kills",
+    "fall_speed",
+    "bullet_active",
+    "sprite_enable"
+  ],
+  "emulator_sha256": "de773a7f740b15342fd4ee3c2a7e3f45963c4cc6fd3e85dfae8d38cdbe20c39c",
+  "checks": {
+    "baseline": {
+      "source_sha256": "af46b2536ad29c778263968321ed32e90c3822f6335251bc9340135119866f7b",
+      "prg_sha256": "0e53421309a45ce1596328279721f6b3dc8a157438135a64e474abf4c61e498e",
+      "entries": [
+        [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ],
+        [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ],
+        [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ]
+      ]
+    },
+    "faulty": {
+      "source_sha256": "ed34e4416a68cfa6740093d8922b4ea1c82495cb48f854c8b032ff1a063faf60",
+      "prg_sha256": "a903bceb63f10186019344ad07956bb137497da03d66764f31829eaebeb00112",
+      "entries": [
+        [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ],
+        [
+          6,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ],
+        [
+          6,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ]
+      ]
+    },
+    "repaired": {
+      "source_sha256": "af46b2536ad29c778263968321ed32e90c3822f6335251bc9340135119866f7b",
+      "prg_sha256": "0e53421309a45ce1596328279721f6b3dc8a157438135a64e474abf4c61e498e",
+      "entries": [
+        [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ],
+        [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ],
+        [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          1,
+          0,
+          29
+        ]
+      ]
+    }
+  },
+  "limits": "Controlled routine exercise, not three complete playthroughs, SID handover, or original-hardware verification."
+}
