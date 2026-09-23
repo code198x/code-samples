@@ -48,3 +48,21 @@ The final source is `unit-07/steps/step-02.bas`. Generated tape/audio files stay
 Execution is configuration-specific: released Emu198x Spectrum v0.22.1, Apple silicon, stock 48K ROM, 50 Hz. Each edit receives extra settling frames for the ROM listing, as in the earlier harness. An initial finishing-experiment run omitted that allowance and failed to enter RUN after editing; the unchanged BASIC sources were retried with the established allowance. A second harness check mistook the intentional partial screen clear during replay for lost labels; label assertions now apply during cues and at the ready board, not while CLS is clearing the old result. No emulator defect is inferred from either automation failure.
 
 The final successful-round capture has been inspected and is used by lesson 7. The browser review checks all four new drafts at 390/1440 pixels in light/dark themes, including expanded full sources, answer panels and local links. Publication, independent learner review, native keyboard feel, subjective listening and original-hardware acceptance remain separate. The blocking input does not queue taps made during cues; the lesson tells players to wait for the current cue to finish.
+
+## Optional unit 02 cue comparison
+
+The [pitch and duration comparison](verification/cue-comparison/README.md) records
+independent edits, captured audio, restoration checks and the remaining learner
+review. It preserves the existing four-cue checkpoint.
+
+## Optional wrong-note investigation
+
+The [isolated fault and repair](verification/wrong-note/README.md) extend the
+unit 02 comparison with a missing assignment, visible values and regression
+checks. The canonical lesson checkpoint remains unchanged.
+
+## Local finished-game handover
+
+The [release package](release/README.md) pairs the unchanged unit 07 source with
+a ROM-saved TAP and identity manifest. [Verification](verification/handover/README.md)
+records the automated full-game checks, native load and remaining manual pass.

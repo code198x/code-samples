@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "configuration": "48K Spectrum PAL, ROM keyboard entry, read-only observations",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "source_sha256": "f0ed96fee254f1a981d7ab3a3f651521c8ce1aeef4aecb89445b8f6a6da3531a",
+  "converter_sha256": "d67812fce18cf9608653b5b2a0ef1cf35f623248b19a4afb1790d1cd19dbb3c8",
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "checks": [
+    "Known generated room: grid, player, pixels, move and restart",
+    "Rejected X leaves old output; unchanged consumer still plays old room",
+    "Regenerated player position reaches runtime and survives restart",
+    "Original data restored; move and restart pass again"
+  ],
+  "limits": "Emulator evidence only; no original hardware or learner trial."
+}

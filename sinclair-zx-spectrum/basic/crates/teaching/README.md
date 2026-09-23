@@ -67,3 +67,9 @@ All thirteen checkpoints passed on the recorded configuration. Execution status,
 Original program, maps, graphics and tooling use this repository's MIT licence. Language sources: Vickers/Bradbeer, *ZX Spectrum BASIC Programming*, second edition (1983), chapters 4–6, 8, 12, 14–16, 18 and 20.
 
 The recorded final teaching tape takes 30 PAL frames (0.60 seconds) for the sampled first walk and 42 frames (0.84 seconds) for the following push, including drawing and return to input. `verification/timing.json` identifies the source and tape. These are two deterministic samples, not native host-latency measurements. Run `verification/timing.py` with `--emulator`, `--tape` and `--output` to reproduce.
+
+## Optional map authoring tool
+
+After unit 08, [the small text-to-DATA converter](tools/README.md) validates one
+eight-row room and generates lines 8000–8070 for the unchanged loader. It runs
+on the development computer and is optional; typing DATA remains supported.

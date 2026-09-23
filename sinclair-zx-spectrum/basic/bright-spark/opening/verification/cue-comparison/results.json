@@ -1,0 +1,227 @@
+{
+  "status": "passed",
+  "configuration": "Default Spectrum 48K PAL, configured ROM, MCP ROM key entry",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "runs": [
+    {
+      "name": "baseline",
+      "source_sha256": "9efb6c3d047ea752be53dfd2ef2ae7070a8cf7a422e91da10326e144f3563ee3",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "notes": [
+        {
+          "start_seconds": 1.65,
+          "duration_seconds": 0.16,
+          "estimated_hz": 266.6666666666667
+        },
+        {
+          "start_seconds": 2.47,
+          "duration_seconds": 0.16,
+          "estimated_hz": 333.3333333333333
+        },
+        {
+          "start_seconds": 3.3,
+          "duration_seconds": 0.16,
+          "estimated_hz": 391.6666666666667
+        },
+        {
+          "start_seconds": 4.14,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    },
+    {
+      "name": "pitch",
+      "source_sha256": "0559f09176ea2a96f47ea047e6d85fd25f121e63ea9c6b044b8f4cc73641935c",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "notes": [
+        {
+          "start_seconds": 1.65,
+          "duration_seconds": 0.16,
+          "estimated_hz": 258.3333333333333
+        },
+        {
+          "start_seconds": 2.47,
+          "duration_seconds": 0.16,
+          "estimated_hz": 333.3333333333333
+        },
+        {
+          "start_seconds": 3.3,
+          "duration_seconds": 0.16,
+          "estimated_hz": 441.6666666666667
+        },
+        {
+          "start_seconds": 4.14,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    },
+    {
+      "name": "duration",
+      "source_sha256": "1e03e62fa651dcd4c3870aa82a9f856570d7305e0ec068313b5ec02506f8d5d3",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "notes": [
+        {
+          "start_seconds": 1.65,
+          "duration_seconds": 0.46,
+          "estimated_hz": 261.9047619047619
+        },
+        {
+          "start_seconds": 2.77,
+          "duration_seconds": 0.46,
+          "estimated_hz": 330.95238095238096
+        },
+        {
+          "start_seconds": 3.89,
+          "duration_seconds": 0.46,
+          "estimated_hz": 390.4761904761905
+        },
+        {
+          "start_seconds": 5.04,
+          "duration_seconds": 0.46,
+          "estimated_hz": 521.4285714285714
+        }
+      ]
+    },
+    {
+      "name": "restored",
+      "source_sha256": "9efb6c3d047ea752be53dfd2ef2ae7070a8cf7a422e91da10326e144f3563ee3",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "notes": [
+        {
+          "start_seconds": 1.65,
+          "duration_seconds": 0.16,
+          "estimated_hz": 258.3333333333333
+        },
+        {
+          "start_seconds": 2.47,
+          "duration_seconds": 0.16,
+          "estimated_hz": 333.3333333333333
+        },
+        {
+          "start_seconds": 3.3,
+          "duration_seconds": 0.16,
+          "estimated_hz": 391.6666666666667
+        },
+        {
+          "start_seconds": 4.14,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    }
+  ],
+  "method": "10 ms RMS windows, threshold 5000; positive mean crossings in tone centre. Pitch tolerance 25 Hz, duration tolerance 30 ms.",
+  "limits": "Emulator signal and screen checks, not subjective listening, native host keyboard acceptance or original-hardware evidence."
+}

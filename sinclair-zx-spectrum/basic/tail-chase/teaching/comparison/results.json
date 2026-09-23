@@ -1,0 +1,260 @@
+{
+  "method": "Retained ROM execution traces; source/tape hashes checked. Slot indices reconstructed, not new RAM observations.",
+  "matching_shift_and_ring_events": 64,
+  "wrap_examples": [
+    {
+      "steps": 8,
+      "derived_live_slots": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "observed_body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false
+    },
+    {
+      "steps": 9,
+      "derived_live_slots": [
+        10,
+        11,
+        12,
+        1
+      ],
+      "observed_body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false
+    },
+    {
+      "steps": 12,
+      "derived_live_slots": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "observed_body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false
+    },
+    {
+      "steps": 13,
+      "derived_live_slots": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "observed_body": [
+        [
+          8,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "grow": false,
+      "collision": false
+    }
+  ],
+  "growth_and_collision": [
+    {
+      "steps": 3,
+      "derived_live_slots": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "observed_body": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ]
+      ],
+      "grow": true,
+      "collision": false
+    },
+    {
+      "steps": 4,
+      "derived_live_slots": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "observed_body": [
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ]
+      ],
+      "grow": false,
+      "collision": false
+    },
+    {
+      "steps": 5,
+      "derived_live_slots": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "observed_body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": false
+    },
+    {
+      "steps": 5,
+      "derived_live_slots": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "observed_body": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "grow": false,
+      "collision": true
+    }
+  ]
+}

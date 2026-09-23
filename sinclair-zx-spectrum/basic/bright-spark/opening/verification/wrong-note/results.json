@@ -1,0 +1,530 @@
+{
+  "status": "passed",
+  "configuration": "Default Spectrum 48K PAL, configured ROM, MCP ROM key entry",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.24.0"
+    }
+  },
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "runs": [
+    {
+      "name": "baseline",
+      "source_sha256": "9efb6c3d047ea752be53dfd2ef2ae7070a8cf7a422e91da10326e144f3563ee3",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "diagnostic_row": "",
+      "notes": [
+        {
+          "start_seconds": 1.65,
+          "duration_seconds": 0.16,
+          "estimated_hz": 266.6666666666667
+        },
+        {
+          "start_seconds": 2.47,
+          "duration_seconds": 0.16,
+          "estimated_hz": 333.3333333333333
+        },
+        {
+          "start_seconds": 3.3,
+          "duration_seconds": 0.16,
+          "estimated_hz": 391.6666666666667
+        },
+        {
+          "start_seconds": 4.14,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    },
+    {
+      "name": "broken",
+      "source_sha256": "725d5a42564554ac7718b022cf7ed18c5fba067d4b4427ad1252942c69d9d332",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "diagnostic_row": "",
+      "notes": [
+        {
+          "start_seconds": 1.63,
+          "duration_seconds": 0.16,
+          "estimated_hz": 266.6666666666667
+        },
+        {
+          "start_seconds": 2.45,
+          "duration_seconds": 0.16,
+          "estimated_hz": 333.3333333333333
+        },
+        {
+          "start_seconds": 3.27,
+          "duration_seconds": 0.16,
+          "estimated_hz": 258.3333333333333
+        },
+        {
+          "start_seconds": 4.09,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    },
+    {
+      "name": "observed",
+      "source_sha256": "32869bfed2f85cb0629e23cfe642b91c907becfc7a0876921517e2b8f6739365",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "diagnostic_row": "      0     4     0     12",
+      "notes": [
+        {
+          "start_seconds": 1.64,
+          "duration_seconds": 0.16,
+          "estimated_hz": 266.6666666666667
+        },
+        {
+          "start_seconds": 2.47,
+          "duration_seconds": 0.15,
+          "estimated_hz": 327.27272727272725
+        },
+        {
+          "start_seconds": 3.3,
+          "duration_seconds": 0.16,
+          "estimated_hz": 258.3333333333333
+        },
+        {
+          "start_seconds": 4.13,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    },
+    {
+      "name": "repaired-observed",
+      "source_sha256": "22fcb2b41b8d5c94e5de4f6185eeb66617fde43364cb25a8a71a19c68ec4054f",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "diagnostic_row": "      0     4     7     12",
+      "notes": [
+        {
+          "start_seconds": 1.66,
+          "duration_seconds": 0.16,
+          "estimated_hz": 266.6666666666667
+        },
+        {
+          "start_seconds": 2.49,
+          "duration_seconds": 0.16,
+          "estimated_hz": 325.0
+        },
+        {
+          "start_seconds": 3.33,
+          "duration_seconds": 0.16,
+          "estimated_hz": 391.6666666666667
+        },
+        {
+          "start_seconds": 4.19,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    },
+    {
+      "name": "repaired",
+      "source_sha256": "9efb6c3d047ea752be53dfd2ef2ae7070a8cf7a422e91da10326e144f3563ee3",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "diagnostic_row": "",
+      "notes": [
+        {
+          "start_seconds": 1.65,
+          "duration_seconds": 0.16,
+          "estimated_hz": 258.3333333333333
+        },
+        {
+          "start_seconds": 2.47,
+          "duration_seconds": 0.16,
+          "estimated_hz": 333.3333333333333
+        },
+        {
+          "start_seconds": 3.3,
+          "duration_seconds": 0.16,
+          "estimated_hz": 391.6666666666667
+        },
+        {
+          "start_seconds": 4.14,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    },
+    {
+      "name": "repeated",
+      "source_sha256": "9efb6c3d047ea752be53dfd2ef2ae7070a8cf7a422e91da10326e144f3563ee3",
+      "active_panels": [
+        [
+          [
+            5,
+            7
+          ]
+        ],
+        [
+          [
+            5,
+            23
+          ]
+        ],
+        [
+          [
+            14,
+            7
+          ]
+        ],
+        [
+          [
+            14,
+            23
+          ]
+        ]
+      ],
+      "diagnostic_row": "",
+      "notes": [
+        {
+          "start_seconds": 1.6,
+          "duration_seconds": 0.16,
+          "estimated_hz": 266.6666666666667
+        },
+        {
+          "start_seconds": 2.41,
+          "duration_seconds": 0.16,
+          "estimated_hz": 333.3333333333333
+        },
+        {
+          "start_seconds": 3.24,
+          "duration_seconds": 0.16,
+          "estimated_hz": 391.6666666666667
+        },
+        {
+          "start_seconds": 4.08,
+          "duration_seconds": 0.16,
+          "estimated_hz": 525.0
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "check": "baseline",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "broken",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "observed",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "      0     4     0     12",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "repaired-observed",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "      0     4     7     12",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "repaired",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    },
+    {
+      "check": "repeated",
+      "expected": [
+        "9 STOP"
+      ],
+      "screen": [
+        "BRIGHT SPARK",
+        "",
+        "       1               2",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "       3               4",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Watch panels 1 to 4.",
+        "",
+        "",
+        "9 STOP statement, 330:1"
+      ]
+    }
+  ],
+  "limits": "Signal and screen checks; not subjective listening, native keyboard acceptance or original-hardware evidence. Diagnostic PRINT adds execution time."
+}

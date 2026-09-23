@@ -1,0 +1,2 @@
+610 IF p=3 THEN LET note=7
+920 BEEP 0.15,note

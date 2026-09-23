@@ -1,0 +1,14 @@
+{
+  "target": "ZX Spectrum 48K PAL",
+  "tape_program_name": "spark16",
+  "source": "../unit-07/steps/step-02.bas",
+  "source_sha256": "93cb34a7089d82417571462b03988dde43a4a9dfedb19335160fa8f72f8cc399",
+  "tape_sha256": "8c82d9a0a6a40687edef70f3a6023be3d010292d2fe9d400b3e8bef9372814c9",
+  "emulator": {
+    "name": "emu198x-spectrum",
+    "version": "0.24.0"
+  },
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "evidence": "../verification/handover/results.json",
+  "publication": "Published as a download from the Code198x website's Bright Spark experiment page"
+}
