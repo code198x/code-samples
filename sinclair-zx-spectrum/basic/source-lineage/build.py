@@ -143,11 +143,45 @@ def removals(old, new, allow_before_token=False):
     return removed, inserted
 
 
+def code_parts(line):
+    """Split a listing line into (is_code, text) parts: string literals and a
+    REM tail are not code, so a rename never touches them."""
+    parts, i, start, in_string = [], 0, 0, False
+    while i < len(line):
+        if line[i] == '"':
+            if not in_string:
+                parts.append((True, line[start:i]))
+                start = i
+            else:
+                parts.append((False, line[start:i + 1]))
+                start = i + 1
+            in_string = not in_string
+        elif not in_string and re.match(r'REM\b', line[i:]):
+            parts.append((True, line[start:i + 3]))
+            parts.append((False, line[i + 3:]))
+            return parts
+        i += 1
+    parts.append((not in_string, line[start:]))
+    return parts
+
+
 def renamed(old, new, names):
+    """True when new is old with each variable renamed as a whole word in code
+    only, and no new name was already in use (so two variables never merge)."""
     text = old.decode()
-    for a, b in names.items():
-        text = re.sub(rf'\b{a}\b', b, text)
-    return text.encode() == new
+    for b in names.values():
+        if re.search(rf'\b{b}\b', text, re.IGNORECASE):
+            return False
+    out = []
+    for line in text.split('\n'):
+        pieces = []
+        for is_code, part in code_parts(line):
+            if is_code:
+                for a, b in names.items():
+                    part = re.sub(rf'\b{a}\b', b, part)
+            pieces.append(part)
+        out.append(''.join(pieces))
+    return '\n'.join(out).encode() == new
 
 
 def build(args, recorded):
