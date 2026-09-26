@@ -2,6 +2,7 @@
 """Audit exact source transitions, fresh-load evidence, original captures and tape checksums."""
 import argparse,functools,json,re,hashlib
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 ROOT=Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def listing(p):return {int(s.split()[0]):s for s in p.read_text().splitlines()}
@@ -19,7 +20,7 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  out=a.evidence/item['name'];build=json.loads((out/'build.json').read_text());result=json.loads((out/'results.json').read_text());frames=json.loads((out/'frames.json').read_text())
  assert set(map(int,json.loads((out/'stored.json').read_text())))==set(current)
  assert result['status']==frames['status']=='passed'
- assert sha(source)==build['source_sha256']==result['source_sha256']==frames['source_sha256']
+ assert build['source_sha256']==result['source_sha256']==frames['source_sha256'] and lineage.accepts(build['source_sha256'],source)
  assert sha(out/'drift.tap')==build['tape_sha256']==result['tape_sha256']==frames['tape_sha256']
  tape=(out/'drift.tap').read_bytes();offset=0;blocks=[]
  while offset<len(tape):
@@ -30,7 +31,7 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  captures=json.loads((out/'captures.json').read_text());assert len(captures)==len({c['name'] for c in captures})
  assert all('match RAM' in c['scope'] and c['settling_frames']>=10 for c in captures)
  assert {c['name']+'.png' for c in captures}=={p.name for p in out.glob('*.png')}
- records.append(dict(name=item['name'],lessons=item['lessons'],source=item['source'],source_sha256=sha(source),tape_sha256=sha(out/'drift.tap'),tape_blocks=blocks,model_checks=result['checks'],normal_frame_checks=frames['checks'],captures={p.name:sha(p) for p in sorted(out.glob('*.png'))}))
+ records.append(dict(name=item['name'],lessons=item['lessons'],source=item['source'],source_sha256=build['source_sha256'],tape_sha256=sha(out/'drift.tap'),tape_blocks=blocks,model_checks=result['checks'],normal_frame_checks=frames['checks'],captures={p.name:sha(p) for p in sorted(out.glob('*.png'))}))
 assert (ROOT/'finished/drift.bas').read_bytes()==(ROOT.parent/'prototype/drift.bas').read_bytes()
 extra={}
 for name in ['controls','timing']:

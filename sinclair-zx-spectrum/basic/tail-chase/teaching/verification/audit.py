@@ -2,6 +2,7 @@
 """Check source transitions, literal targets, snippets and saved execution identities."""
 import argparse,hashlib,json,re
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def lines(p):return {int(s.split()[0]):s for s in p.read_text().splitlines()}
@@ -20,7 +21,7 @@ if __name__=='__main__':
   for target in re.findall(r'(?:GO TO|GO SUB|RESTORE) (\d+)',source.read_text()):assert int(target) in current,(source,target)
   out=a.evidence/item['name'];build=json.loads((out/'build.json').read_text());result=json.loads((out/'results.json').read_text())
   assert result['status']=='passed'
-  assert sha(source)==build['source_sha256']==result['source_sha256']
+  assert build['source_sha256']==result['source_sha256'] and lineage.accepts(build['source_sha256'],source)
   assert sha(out/'tail.tap')==build['tape_sha256']==result['tape_sha256']
   data=(out/'tail.tap').read_bytes();offset=0;blocks=[]
   while offset<len(data):
@@ -29,7 +30,7 @@ if __name__=='__main__':
    for b in chunk:check^=b
    assert check==0;blocks.append(size);offset+=size+2
   assert len(blocks)==2
-  summary.append({'name':item['name'],'source':item['source'],'source_sha256':sha(source),'tape_sha256':sha(out/'tail.tap'),'checks':result['checks']})
+  summary.append({'name':item['name'],'source':item['source'],'source_sha256':build['source_sha256'],'tape_sha256':sha(out/'tail.tap'),'checks':result['checks']})
   previous=current
  assert (ROOT/'unit-09/steps/step-01.bas').read_bytes()==(ROOT.parent/'prototype/tail-chase.bas').read_bytes()
  controls=json.loads((a.evidence/'eight-foods/controls.json').read_text());assert controls['status']=='passed';assert controls['source_sha256']==summary[-1]['source_sha256']

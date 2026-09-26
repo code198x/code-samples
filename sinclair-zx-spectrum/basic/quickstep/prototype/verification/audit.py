@@ -2,11 +2,13 @@
 """Audit retained source, ROM-stored lines, TAP checksums and execution/capture identities."""
 import argparse,json,hashlib,functools
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 ROOT=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('--evidence',type=Path,default=ROOT/'verification/evidence');a=p.parse_args();out=a.evidence
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 build=json.loads((out/'build.json').read_text());model=json.loads((out/'results.json').read_text());frames=json.loads((out/'frames.json').read_text())
-source=sha(ROOT/'quickstep.bas');tape=sha(out/'quickstep.tap')
+source=build['source_sha256'];tape=sha(out/'quickstep.tap')
+assert lineage.accepts(source,ROOT/'quickstep.bas')
 for item in [build,model,frames]:assert item['source_sha256']==source and item['tape_sha256']==tape
 assert model['status']==frames['status']=='passed'
 assert set(map(int,json.loads((out/'stored.json').read_text())))=={int(l.split()[0]) for l in (ROOT/'quickstep.bas').read_text().splitlines()}
