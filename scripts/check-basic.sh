@@ -7,8 +7,8 @@
 # own pull request instead:
 #
 #   1. `build198x basic lint` over both machines' listings, plus the CRASH!
-#      Live type-ins and the Foundations Spectrum captures, which are shown
-#      or typed but have no Makefile.
+#      Live type-ins and welcome and the Foundations Spectrum captures, which
+#      are shown or typed but have no Makefile.
 #   2. `make` in every BASIC unit folder (`*/basic/*/unit-*/Makefile`).
 #
 # It uses whatever `build198x` is on PATH; CI installs the pinned release
@@ -52,7 +52,8 @@ echo "Linting Spectrum listings..."
 zx=()
 while IFS= read -r f; do zx+=("$f"); done < <(
     listings 'sinclair-zx-spectrum/*.bas' \
-        _capture/crash-live/typein-198x.bas _capture/crash-live/typein-rosette.bas
+        _capture/crash-live/typein-198x.bas _capture/crash-live/typein-rosette.bas \
+        _capture/crash-live/welcome.bas
     foundations_spectrum | sort -u
 )
 build198x basic lint --machine sinclair-zx-spectrum "${zx[@]}" || failed=1
