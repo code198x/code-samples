@@ -23,6 +23,7 @@ for item in items:
   blocks.append(size);offset+=size+2
  assert offset==len(data) and len(blocks)==2
  records={k:json.loads((out/(k+'.json')).read_text()) for k in ['build','results','frames']}
+ assert len({r['source_sha256'] for r in records.values()})==1
  for record in records.values():assert lineage.accepts(record['source_sha256'],source) and record['tape_sha256']==sha(tape)
  for k in ['results','frames']:
   assert records[k]['status']=='passed'
