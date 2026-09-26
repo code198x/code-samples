@@ -127,10 +127,14 @@ def steps_for_line(line, hold=DEFAULT_HOLD, settle=DEFAULT_SETTLE):
 
 
 def script_for(listing, hold=DEFAULT_HOLD, settle=DEFAULT_SETTLE):
-    """A whole listing -> steps. Blank lines and # comments are skipped."""
+    """A whole listing -> steps. Blank lines and # comments are skipped.
+
+    A listing in listed form right-aligns its line numbers (`  10 PRINT`),
+    as LIST does. That alignment is LIST's, not keys anyone presses, so the
+    spaces before the line number are not typed."""
     steps = []
     for raw in listing.splitlines():
         if not raw.strip() or raw.lstrip().startswith('#'):
             continue
-        steps += steps_for_line(raw + '\n', hold=hold, settle=settle)
+        steps += steps_for_line(raw.lstrip(' ') + '\n', hold=hold, settle=settle)
     return steps
