@@ -1,1 +1,1 @@
-  10 PRINT INT (5 / 2)
+  10 PRINT INT (5 /2)
