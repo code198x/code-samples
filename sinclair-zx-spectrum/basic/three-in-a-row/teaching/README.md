@@ -39,3 +39,7 @@ The final game was accepted after human play; the intermediate stages have
 emulator evidence, not independent learner testing or original-hardware timing.
 Native feedback was that it works well and mostly produces draws. That is play
 feedback, not a measured outcome frequency or an unbeatable-policy claim.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

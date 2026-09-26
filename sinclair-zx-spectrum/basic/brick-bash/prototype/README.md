@@ -21,3 +21,7 @@ The builder enters ROM keyboard tokens and records `SAVE "bricks" LINE 10`. It r
 [Main results](verification/results.json) and [control results](verification/controls.json) contain fourteen passed checks: loading, held movement and clamps, miss, retry, complete clearance, frozen completion, all three return zones, one-pixel paddle-edge contacts, restart during flight and quitting from every phase. Each observed move is compared with an independent rectangle-scanning model. Full playfield bitmap comparisons check remaining artwork and stray pixels in ready, miss and completion states. [The manifest](verification/manifest.json) identifies the source, checksum-verified tape and four visually inspected captures.
 
 Movement observations had a median of 20 PAL frames, ranging from 18 to 25. These are commit/drawing boundaries, not a fixed update period or host input latency. Native feedback establishes that the game worked in this trial; original-hardware performance and learner outcomes remain untested.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

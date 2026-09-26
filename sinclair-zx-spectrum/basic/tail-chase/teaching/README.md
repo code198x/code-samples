@@ -31,3 +31,7 @@ The build enters each complete program through the ROM and records `SAVE "tail" 
 `derive.py` is the authoring recipe for the checkpoint sources and edit manifest. It does not verify execution. After changing it, regenerate the files, inspect the changes and rebuild/recheck affected checkpoints. `audit.py` replays every source edit, checks literal branch targets and confirms that source and tape identities match execution evidence.
 
 Load any retained `verification/evidence/NAME/tail.tap` through the ROM with `LOAD "tail"`. The early stages start directly; the final game begins at instructions. The game, character artwork and scripts use the repository's MIT licence.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

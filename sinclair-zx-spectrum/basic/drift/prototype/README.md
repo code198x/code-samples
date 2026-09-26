@@ -29,3 +29,7 @@ python3 verification/timing.py --emulator /path/to/emu198x-spectrum --output /tm
 The main checker reuses Tail Chase's read-only BASIC decoder and compares 360 updates against a host vector model. It covers rotation, coasting, counterthrust, the speed cap, four walls, restart and a complete two-axis docking flight. Additional trials cover held turning, fast dock passage and title exit. Ordinary-frame execution separately checks thrust, coasting, restart and exit after a crash.
 
 At rest, 40 complete movement-commit intervals had a median of 19 PAL frames and range 19–20: about 2.6 updates per second. Held thrust had a median of 44 frames across eight observed intervals, including the transition into burning. Updating the readout costs time during thrust. These observations are not a fixed flight rate or host-input latency measurement. The state-model checks use instruction stepping; their session clock is not a timing benchmark. The user reported successful native docking with the readout revision and accepted it as the teaching baseline. Original-hardware performance remains unverified.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

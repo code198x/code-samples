@@ -34,3 +34,7 @@ python3 verification/audit.py --evidence /tmp/drift-teaching
 The build and check tools accept `--only <checkpoint-name>` for one stage. The derivation script is an authoring tool, not a runtime dependency. Each tape is entered through the ROM keyboard and saved independently, then loaded into a fresh process. Tests drive keys and compare read-only state with a host vector model. Captures are original PNGs checked against the current bitmap; no images are reconstructed or edited. The prototype tools supply the maintained ROM keyboard harness, read-only state decoder and endpoint control/timing checks.
 
 Executed results and configuration-specific limitations are recorded in `verification/evidence/summary.json`. Native acceptance applies to the final game; the intermediate checkpoints and learner outcomes are separate claims.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

@@ -47,3 +47,7 @@ python3 verification/timing.py --emulator /path/to/emu198x-spectrum --tape /tmp/
 ## Sources and licence
 
 Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second edition (Sinclair Research, 1983): chapters 4–6 (loops, routines and DATA), 7–9 (variables and expressions), 12 (arrays), 14–16 (UDGs, display and colour), 18, page 131 (INKEY$ and release/press loops), and 20 (tape). The room layout, program and character graphics are original material under this repository's MIT licence. The five-state grid is adapted from the existing Crates samples; the ROM-entry helper is adapted from the verified Sonar helper.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

@@ -54,3 +54,7 @@ The user played the native prototype and reported that it works well and is quit
 ## Sources
 
 Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second edition (Sinclair Research, 1983): chapter 4 (FOR variables), chapters 7–8 (variable names), chapter 12 (arrays), chapter 14 (user-defined graphics), chapter 15 (PRINT AT), chapter 16 (PAPER), chapter 18 (INKEY$ and PAUSE), chapter 20 (tape saving), and chapter 23 (keyboard half-row ports and active-low key bits). The O/P and Space ports follow the manual's address formula, `254+256*(255-2^n)`, for half-rows 5 and 7. INKEY$ reports a character only when exactly one ordinary key is read, hence the separate port reads for combined flight controls.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

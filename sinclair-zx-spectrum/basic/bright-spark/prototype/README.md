@@ -74,3 +74,7 @@ python3 verification/pitches.py /tmp/bright-spark-playback/1234-none.wav --outpu
 ```
 
 The original runner still checks steps 1–3. The separate playback runner owns step 4 and deliberately replaces its sequence with fixed test strings. The approved full game's response comparison, growth, score, replay and ending remain to build.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

@@ -84,3 +84,7 @@ The stages 4–6 record covers all 64 retained clues, repeated misses and hits, 
 ## Sources
 
 Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second edition (Sinclair Research, 1983): chapter 4 (single-letter FOR variables and nested loops), chapter 7 (variable names), chapter 8 (`VAL`, `STR$`, `ABS` and `INT`), chapter 11 (`RND`, range conversion and `RANDOMIZE`), chapter 12 (`DIM`, initialisation and two-dimensional arrays), chapter 15 (`PRINT AT`, `INPUT LINE` and the lower input area), chapter 16 (PAPER and INK), and chapter 20 (named tapes and `SAVE … LINE`). The distance rule is this game's design, not a simulation of sonar propagation. Original source and character-based graphics use this repository's MIT licence.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

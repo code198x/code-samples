@@ -36,3 +36,7 @@ The retained evidence records **80 passed check groups and 52 scored guesses** o
 The audit checks exact source reconstruction, branch targets, unchanged ROM-stored line bytes, both tape checksums, line-10 autostart, source hashes and final identity. The history trial records the deduction sequence in `verification/evidence/history/deduction.json`: 1111 → 2/0, 2222 → 2/0, 2211 → 0/4. Those clues leave 150, six and one possible codes respectively. This is a worked example against a visible practice code, not a hidden solver feature.
 
 Native acceptance belongs to the unchanged final game. Intermediate programs have configuration-specific emulator checks, not independent learner review or original-hardware timing evidence. Full replacement lesson prose is the next step.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

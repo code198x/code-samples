@@ -23,3 +23,7 @@ The builder enters source through ROM keyboard tokens and records `SAVE "tail" L
 The user accepted the native prototype: “Works, just fine”. This is distinct from automated correctness evidence and does not establish original-hardware performance or novice learning outcomes. Timing samples observe movement commits during drawing; growth observations wait for replacement food. The 18-frame threshold is a minimum, not a fixed update period or a measurement of host input latency.
 
 Next: agree runnable teaching stages that explain ordered positions, growth and the relationship between body order and occupancy. The circular buffer must be motivated before it becomes lesson code.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

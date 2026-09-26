@@ -66,3 +66,7 @@ checks. The canonical lesson checkpoint remains unchanged.
 The [release package](release/README.md) pairs the unchanged unit 07 source with
 a ROM-saved TAP and identity manifest. [Verification](verification/handover/README.md)
 records the automated full-game checks, native load and remaining manual pass.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

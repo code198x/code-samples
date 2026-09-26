@@ -39,3 +39,7 @@ python3 verification/audit.py
 Run the audit after all eight names have passed. The builder enters every standalone source through fresh ROM keyboard sessions and saves self-starting tapes. Model checks use keyboard events at CPU statement boundaries; frame trials independently use ordinary video-frame execution. Neither injects game state. The audit reconstructs each exact edit transition, compares unchanged stored ROM lines, checks both tape blocks, verifies capture hashes and proves final-source identity.
 
 Retained PNGs are original emulator output, checked against the live bitmap and attributes. The ordinary-frame trials verify the polling-only short-tap limitation, the buffered fix, held movement, fresh loading, frame-byte wraps, complete crossings, retry and quit. Timing observations describe this emulator configuration, not original hardware or input latency. Native acceptance belongs to the unchanged endpoint; intermediate sources still need learner-facing authoring and review.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

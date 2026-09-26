@@ -30,3 +30,7 @@ output. The host model separately explores room, patrol-phase and treasure
 states and checks that every reachable creature arrival offers an escape.
 Neither the model nor scripted execution establishes enjoyment, learner
 outcomes or original-hardware timing. Use native play to judge the fixed cave.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

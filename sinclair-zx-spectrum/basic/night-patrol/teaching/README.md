@@ -76,3 +76,7 @@ with `--output verification/evidence/finished` and the same emulator argument.
 
 Execution records distinguish native behaviour from learner review. Teaching
 pages and publication are separate from these samples.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.
