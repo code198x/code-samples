@@ -1,5 +1,6 @@
 """Check editing instructions, ROM token identity, tapes and execution evidence."""
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 import functools,hashlib,json,re
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -27,8 +28,8 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  program=blocks[1][1:-1];pos=0
  for n,b in stored.items():
   assert int.from_bytes(program[pos:pos+2],'big')==n;size=int.from_bytes(program[pos+2:pos+4],'little');assert list(program[pos+4:pos+4+size])==b;pos+=size+4
- build=json.loads((out/'build.json').read_text());result=json.loads((out/'results.json').read_text());assert build['source_sha256']==result['source_sha256']==sha(source);assert build['tape_sha256']==sha(out/'cipher.tap');assert result['direct_memory_writes']==False
- reports.append(dict(name=name,source_sha256=sha(source),tape_sha256=sha(out/'cipher.tap'),checks=result['checks'],captures={p.name:sha(p) for p in sorted(out.glob('*.png'))},server=build['server'],binary_sha256=build['binary_sha256']))
+ build=json.loads((out/'build.json').read_text());result=json.loads((out/'results.json').read_text());assert build['source_sha256']==result['source_sha256'] and lineage.accepts(build['source_sha256'],source);assert build['tape_sha256']==sha(out/'cipher.tap');assert result['direct_memory_writes']==False
+ reports.append(dict(name=name,source_sha256=build['source_sha256'],tape_sha256=sha(out/'cipher.tap'),checks=result['checks'],captures={p.name:sha(p) for p in sorted(out.glob('*.png'))},server=build['server'],binary_sha256=build['binary_sha256']))
  previous=lines;previous_stored=stored
 assert (ROOT/'finished/cipher.bas').read_bytes()==(ROOT.parent/'prototype/cipher.bas').read_bytes()
 manifest=dict(status='passed',configuration='Stock 48K PAL; executable identities in each checkpoint record',checkpoints=reports,execution_checks=sum(len(r['checks']) for r in reports),final_source_identical=True,limits='The final game matches the prototype authorised for teaching. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures.')

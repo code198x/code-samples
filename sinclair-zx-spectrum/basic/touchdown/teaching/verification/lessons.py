@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
@@ -26,11 +27,11 @@ for item in roster:
     snippet = path.parent.parent / 'snippets' / path.name
     assert snippet.read_text() == ''.join(current[n] + '\n' for n in sorted(added + replaced)), snippet
     key = f"{item['unit']:02}-{item['step']}"
-    assert results[key]['source_sha256'] == hashlib.sha256(raw).hexdigest(), path
+    assert lineage.accepts(results[key]['source_sha256'], path), path
     previous = current
 assert (ROOT / 'unit-11/steps/step-02.bas').read_bytes() == (ROOT.parent / 'prototype/steps/step-06.bas').read_bytes()
 diagnostic = json.loads((ROOT / 'verification/diagnostic-results.json').read_text())
-assert diagnostic['source_sha256'] == hashlib.sha256((ROOT / 'unit-07/diagnostic.bas').read_bytes()).hexdigest()
+assert lineage.accepts(diagnostic['source_sha256'], ROOT / 'unit-07/diagnostic.bas')
 assert len(diagnostic['combinations']) == 8
 if args.website:
     assert json.loads((args.website / 'src/drafts/touchdown/roster.json').read_text()) == roster

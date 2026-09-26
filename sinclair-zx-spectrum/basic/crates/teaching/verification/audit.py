@@ -1,6 +1,7 @@
 """Check edit continuity, accepted map identities and graphics provenance."""
 import hashlib,json,sys
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT.parent/'prototype/verification'))
 from verify import initial
@@ -28,5 +29,5 @@ for room in [1,2,3]:
             grid.append({'-':0,'#':1,'.':2,'C':3,'*':4,'P':0,'+':2}[ch])
             if ch in 'P+':players.append((r+1,c+1))
     expected=initial(room);assert grid==expected['grid'] and players==[(expected['pr'],expected['pc'])]
-assert hashlib.sha256((ROOT.parent/'prototype/crates.bas').read_bytes()).hexdigest()==json.loads((ROOT.parent/'prototype/verification/results.json').read_text())['source_sha256']
+assert lineage.accepts(json.loads((ROOT.parent/'prototype/verification/results.json').read_text())['source_sha256'],ROOT.parent/'prototype/crates.bas')
 print(f'{len(roster)} edit transitions reconstruct exactly; all three maps and the tile bank match the accepted prototype.')

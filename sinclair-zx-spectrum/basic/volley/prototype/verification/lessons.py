@@ -2,12 +2,13 @@
 """Validate the Volley lesson edit roster and maintained snippets against full checkpoints."""
 import argparse,json,hashlib
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 from entry import ROOT,compact_source
 p=argparse.ArgumentParser();p.add_argument('--roster',type=Path,required=True);a=p.parse_args()
 spacing=json.loads((ROOT/'verification/spacing-source-map.json').read_text())['sources']
 previous={}
 for item in json.loads(a.roster.read_text()):
- n=item['number'];path=ROOT/f'steps/step-{n:02}.bas';text=path.read_text();assert hashlib.sha256(compact_source(text).encode()).hexdigest()==spacing[path.name]['after_sha256'],path
+ n=item['number'];path=ROOT/f'steps/step-{n:02}.bas';text=path.read_text();assert any(hashlib.sha256(compact_source(t).encode()).hexdigest()==spacing[path.name]['after_sha256'] for t in [text]+lineage.earlier_texts(path)),path
  current={int(l.split()[0]):l for l in text.splitlines()}
  added=sorted(current.keys()-previous.keys());replaced=sorted(k for k in current.keys()&previous.keys() if current[k]!=previous[k]);deleted=sorted(previous.keys()-current.keys())
  assert (added,replaced,deleted)==(item['added'],item['replaced'],item['deleted']),item

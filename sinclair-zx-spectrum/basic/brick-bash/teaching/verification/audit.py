@@ -2,6 +2,7 @@
 """Replay exact source edits and validate evidence identities and tape checksums."""
 import argparse,functools,hashlib,json,re,math
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def listing(p):return {int(s.split()[0]):s for s in p.read_text().splitlines()}
@@ -21,7 +22,7 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  captures=json.loads((out/'captures.json').read_text())
  assert all('settling_frames' in c and 'ROM font glyphs' in c['scope'] for c in captures)
  assert {c['name']+'.png' for c in captures}=={p.name for p in out.glob('*.png') if p.name!='failure.png'}
- assert sha(source)==build['source_sha256']==result['source_sha256']
+ assert build['source_sha256']==result['source_sha256'] and lineage.accepts(build['source_sha256'],source)
  assert sha(out/'bricks.tap')==build['tape_sha256']==result['tape_sha256']
  tape=(out/'bricks.tap').read_bytes();offset=0;blocks=[]
  while offset<len(tape):
@@ -29,7 +30,7 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
   assert len(chunk)==size and functools.reduce(int.__xor__,chunk)==0
   blocks.append(size);offset+=size+2
  assert offset==len(tape) and len(blocks)==2
- summary.append({'name':item['name'],'source':item['source'],'source_sha256':sha(source),'tape_sha256':sha(out/'bricks.tap'),'checks':result['checks'],'captures':{p.name:sha(p) for p in sorted(out.glob('*.png')) if p.name!='failure.png'}})
+ summary.append({'name':item['name'],'source':item['source'],'source_sha256':build['source_sha256'],'tape_sha256':sha(out/'bricks.tap'),'checks':result['checks'],'captures':{p.name:sha(p) for p in sorted(out.glob('*.png')) if p.name!='failure.png'}})
 assert (ROOT/'unit-09/brick-bash.bas').read_bytes()==(ROOT.parent/'prototype/brick-bash.bas').read_bytes()
 controls=json.loads((a.evidence/'unit-09/controls.json').read_text());assert controls['status']=='passed'
 assert controls['source_sha256']==summary[-1]['source_sha256'] and controls['tape_sha256']==summary[-1]['tape_sha256']

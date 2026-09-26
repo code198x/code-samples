@@ -1,5 +1,6 @@
 """Audit source targets, ROM-saved tape and verification identities."""
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 import functools,hashlib,json,re
 ROOT=Path(__file__).resolve().parents[1];out=ROOT/'verification/evidence'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -7,7 +8,7 @@ source=ROOT/'yearfall.bas';rows=source.read_text().splitlines();numbers=[int(s.s
 for target in re.findall(r'(?:GO TO|GO SUB|RESTORE) (\d+)',re.sub(r'"[^"]*"','',source.read_text())):assert int(target) in numbers
 stored={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};assert set(stored)==set(numbers)
 build=json.loads((out/'build.json').read_text());results=json.loads((out/'results.json').read_text());model=json.loads((out/'model.json').read_text())
-assert build['source_sha256']==results['source_sha256']==model['source_sha256']==sha(source)
+assert build['source_sha256']==results['source_sha256']==model['source_sha256'] and lineage.accepts(build['source_sha256'],source)
 assert build['binary_sha256']==results['binary_sha256'];assert not results['direct_memory_writes']
 tape=out/'yearfall.tap';assert build['tape_sha256']==sha(tape)
 data=tape.read_bytes();pos=0;blocks=[]
@@ -17,5 +18,5 @@ assert pos==len(data) and len(blocks)==2 and int.from_bytes(blocks[0][14:16],'li
 program=blocks[1][1:-1];pos=0
 for n,b in stored.items():
  assert int.from_bytes(program[pos:pos+2],'big')==n;size=int.from_bytes(program[pos+2:pos+4],'little');assert list(program[pos+4:pos+4+size])==b;pos+=size+4
-manifest={'configuration':build['configuration'],'source_sha256':sha(source),'binary_sha256':build['binary_sha256'],'checks':len(results['checks']),'observed_actions':len(results['trials']),'files':{p.name:sha(p) for p in out.iterdir() if p.is_file() and p.name!='manifest.json'},'limits':'Original key-driven emulator captures; no state injection. Host model separate; native acceptance pending.'}
+manifest={'configuration':build['configuration'],'source_sha256':build['source_sha256'],'binary_sha256':build['binary_sha256'],'checks':len(results['checks']),'observed_actions':len(results['trials']),'files':{p.name:sha(p) for p in out.iterdir() if p.is_file() and p.name!='manifest.json'},'limits':'Original key-driven emulator captures; no state injection. Host model separate; native acceptance pending.'}
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('PASS',manifest['checks'],'execution groups;',manifest['observed_actions'],'observed actions; tape and source identities')

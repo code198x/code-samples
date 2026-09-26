@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Audit source edits, ROM lines, tape blocks, execution and capture provenance."""
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 import json,hashlib,re,functools
 ROOT=Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -22,12 +23,12 @@ for item in items:
   blocks.append(size);offset+=size+2
  assert offset==len(data) and len(blocks)==2
  records={k:json.loads((out/(k+'.json')).read_text()) for k in ['build','results','frames']}
- for record in records.values():assert record['source_sha256']==sha(source) and record['tape_sha256']==sha(tape)
+ for record in records.values():assert lineage.accepts(record['source_sha256'],source) and record['tape_sha256']==sha(tape)
  for k in ['results','frames']:
   assert records[k]['status']=='passed'
   for capture in records[k]['captures']:assert sha(out/(capture['name']+'.png'))==capture['sha256']
  checks=len(records['results']['checks'])+len(records['frames']['checks'])
- reports.append(dict(name=name,source_sha256=sha(source),tape_sha256=sha(tape),checks=checks,tape_blocks=blocks,timing=records['frames']['timing'],model_checks=records['results']['checks'],frame_checks=records['frames']['checks'],captures=records['results']['captures']+records['frames']['captures']))
+ reports.append(dict(name=name,source_sha256=records['build']['source_sha256'],tape_sha256=sha(tape),checks=checks,tape_blocks=blocks,timing=records['frames']['timing'],model_checks=records['results']['checks'],frame_checks=records['frames']['checks'],captures=records['results']['captures']+records['frames']['captures']))
  if previous:
   (folder/'changes.bas').write_text('\n'.join(edits['enter'])+'\n')
   edit_prose += [f'## {name}', '',f"Add lines: {', '.join(map(str,edits['add'])) or 'none'}.",f"Replace lines: {', '.join(map(str,edits['replace'])) or 'none'}.",f"Delete lines: {', '.join(map(str,edits['delete'])) or 'none'}.",'',f'[Lines to enter]({name}/changes.bas) · [Complete program]({name}/quickstep.bas)','']

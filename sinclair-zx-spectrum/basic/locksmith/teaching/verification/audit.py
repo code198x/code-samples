@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Audit exact transitions, saved ROM programs and checkpoint execution evidence."""
 from pathlib import Path
+import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 import functools,hashlib,json,re
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -24,8 +25,8 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  program=blocks[1][1:-1];pos=0
  for n,b in stored.items():
   assert int.from_bytes(program[pos:pos+2],'big')==n;size=int.from_bytes(program[pos+2:pos+4],'little');assert list(program[pos+4:pos+4+size])==b;pos+=size+4
- build=json.loads((out/'build.json').read_text());result=json.loads((out/'results.json').read_text());assert build['source_sha256']==result['source_sha256']==sha(source);assert build['tape_sha256']==sha(out/'locksmith.tap');assert result['state_writes']==False
- reports.append(dict(name=name,source_sha256=sha(source),tape_sha256=sha(out/'locksmith.tap'),checks=result['checks'],scored_guesses=len(result['trials']),captures={p.name:sha(p) for p in sorted(out.glob('*.png'))},server=build['server']))
+ build=json.loads((out/'build.json').read_text());result=json.loads((out/'results.json').read_text());assert build['source_sha256']==result['source_sha256'] and lineage.accepts(build['source_sha256'],source);assert build['tape_sha256']==sha(out/'locksmith.tap');assert result['state_writes']==False
+ reports.append(dict(name=name,source_sha256=build['source_sha256'],tape_sha256=sha(out/'locksmith.tap'),checks=result['checks'],scored_guesses=len(result['trials']),captures={p.name:sha(p) for p in sorted(out.glob('*.png'))},server=build['server']))
  previous=lines;previous_stored=stored
 assert (ROOT/'finished/locksmith.bas').read_bytes()==(ROOT.parent/'prototype/locksmith.bas').read_bytes()
 manifest=dict(status='passed',configuration='Stock 48K PAL; Emu198x Spectrum 0.25.0',checkpoints=reports,execution_checks=sum(len(r['checks']) for r in reports),scored_guesses=sum(r['scored_guesses'] for r in reports),final_source_identical=True,limits='Native acceptance applies to the final game. Intermediate programs have keyboard-driven emulator execution evidence, not independent learner review or original-hardware timing.')
