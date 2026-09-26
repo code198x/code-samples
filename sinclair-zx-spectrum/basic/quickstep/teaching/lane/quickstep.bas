@@ -36,17 +36,17 @@
 1060 NEXT j
 1070 PRINT AT 2,15; PAPER 4; INK 7; "  "; AT 3,15; "  "
 1080 GO SUB 1200: LET z$ = ">": IF d = -1 THEN LET z$ = "<"
-1081 PRINT AT row,0; PAPER 0; INK ink; z$; AT row,31; z$
+1081 PRINT AT row,0; PAPER 0; INK colour; z$; AT row,31; z$
 1090 PRINT AT 20,2; PAPER 0; INK 7; "I up  J left  K down  L right"
 1095 PRINT AT 12,2; PAPER 0; INK 6; "SPACE moves the lane"
 1110 PRINT AT 21,2; INK 7; "R retry              Q quit";
 1120 RETURN
-1200 LET row = 4: LET ink = 6: IF d = -1 THEN LET ink = 5
-1210 PRINT AT row,1; PAPER 0; INK ink; a$; AT row+1,1; b$
+1200 LET row = 4: LET colour = 6: IF d = -1 THEN LET colour = 5
+1210 PRINT AT row,1; PAPER 0; INK colour; a$; AT row+1,1; b$
 1240 RETURN
-3000 LET paper = 0: IF y <> 1 THEN LET paper = 1
-3010 IF y = 0 AND x = 7 THEN LET paper = 4
-3020 PRINT AT 2+2*y,1+2*x; PAPER paper; INK 7; h$; AT 3+2*y,1+2*x; f$
+3000 LET shade = 0: IF y <> 1 THEN LET shade = 1
+3010 IF y = 0 AND x = 7 THEN LET shade = 4
+3020 PRINT AT 2+2*y,1+2*x; PAPER shade; INK 7; h$; AT 3+2*y,1+2*x; f$
 3030 RETURN
 3100 IF y = 1 THEN GO SUB 1200: RETURN
 3110 IF y = 0 AND x = 7 THEN PRINT AT 2,15; PAPER 4; "  "; AT 3,15; "  ": RETURN

@@ -26,9 +26,9 @@
 1090 PRINT AT 20,2; PAPER 0; INK 7; "I up  J left  K down  L right"
 1110 PRINT AT 21,2; INK 7; "R retry              Q quit";
 1120 RETURN
-3000 LET paper = 0: IF y <> 1 THEN LET paper = 1
-3010 IF y = 0 AND x = 7 THEN LET paper = 4
-3020 PRINT AT 2+2*y,1+2*x; PAPER paper; INK 7; h$; AT 3+2*y,1+2*x; f$
+3000 LET shade = 0: IF y <> 1 THEN LET shade = 1
+3010 IF y = 0 AND x = 7 THEN LET shade = 4
+3020 PRINT AT 2+2*y,1+2*x; PAPER shade; INK 7; h$; AT 3+2*y,1+2*x; f$
 3030 RETURN
 3100 IF y = 1 THEN PRINT AT 2+2*y,1+2*x; PAPER 0; "  "; AT 3+2*y,1+2*x; "  ": RETURN
 3110 IF y = 0 AND x = 7 THEN PRINT AT 2,15; PAPER 4; "  "; AT 3,15; "  ": RETURN

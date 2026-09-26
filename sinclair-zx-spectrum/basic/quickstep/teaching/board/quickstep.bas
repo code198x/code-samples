@@ -9,9 +9,9 @@
 1060 NEXT j
 1070 PRINT AT 2,15; PAPER 4; INK 7; "  "; AT 3,15; "  "
 1090 RETURN
-3000 LET paper = 0: IF y <> 1 THEN LET paper = 1
-3010 IF y = 0 AND x = 7 THEN LET paper = 4
-3020 PRINT AT 2+2*y,1+2*x; PAPER paper; INK 7; h$; AT 3+2*y,1+2*x; f$
+3000 LET shade = 0: IF y <> 1 THEN LET shade = 1
+3010 IF y = 0 AND x = 7 THEN LET shade = 4
+3020 PRINT AT 2+2*y,1+2*x; PAPER shade; INK 7; h$; AT 3+2*y,1+2*x; f$
 3030 RETURN
 7000 RESTORE 7280: FOR j = 64 TO 103: READ n: POKE USR "a" + j,n: NEXT j
 7010 LET h$ = CHR$ 152 + CHR$ 153: LET f$ = CHR$ 154 + CHR$ 155
