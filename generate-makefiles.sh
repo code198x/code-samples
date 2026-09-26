@@ -6,9 +6,18 @@
 # invent a Makefile. Only directories that already have one are rewritten.
 #
 # That contract is deliberate. Most units have no Makefile and should not:
-# Spectrum's 61 assembly units build through the capture harness, the BASIC
-# and AMOS tracks are not assembled at all, and a generator that walked the
-# tree looking for source would have created dozens of files nobody asked for.
+# Spectrum's 61 assembly units build through the capture harness, the AMOS
+# track is not assembled at all, and a generator that walked the tree looking
+# for source would have created dozens of files nobody asked for.
+#
+# BASIC is the one exception: for every unit-NN lesson page under a
+# `basic/<module>/` track, this script derives the unit's program (the last
+# `CodeFromFile` `.bas` src the page shows) from the sibling website checkout
+# and writes a Makefile that builds exactly that listing with `build198x
+# basic`, under its own filename, so the lesson's run strip runs the same
+# bytes the page shows. Unlike the assembly platforms, a missing BASIC unit
+# Makefile is created, not skipped — the website checkout names which units
+# exist, so there is no risk of inventing one nobody asked for.
 #
 # A Makefile carrying targets this script does not emit is left alone and
 # reported, so a unit that has grown its own verification or emulator wiring
@@ -20,6 +29,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WEBSITE_DIR="$SCRIPT_DIR/../website"
 CHECK=0
 [ "${1:-}" = "--check" ] && CHECK=1
 
@@ -55,6 +65,9 @@ emit() {
         echo "  would rewrite $(dirname "${path#"$SCRIPT_DIR"/}")"
         rm -f "$tmp"
     else
+        # A BASIC unit's directory may not exist yet — it is created fresh
+        # from the website checkout, not discovered by an existing Makefile.
+        mkdir -p "$(dirname "$path")"
         # Written through the existing file rather than moved over it, so
         # it keeps its mode; mktemp creates 0600 and Makefiles are 0644.
         cat "$tmp" > "$path"
@@ -182,15 +195,120 @@ clean:
 EOF
 }
 
+# A unit's Makefile builds the one listing its lesson page shows, under that
+# listing's own filename (extension swapped for the machine's native output),
+# so the run strip's program is byte-for-byte the program on the page. $1 is
+# the listing's path relative to the unit directory; $2 is the output name.
+spectrum_basic_makefile() {
+    local rel_src="$1" out="$2"
+    cat <<EOF
+# Build the program this unit's lesson shows, under its own name, so the
+# lesson's run strip runs exactly the listing on the page.
+BUILD198X ?= build198x
+
+all: ${out}
+
+${out}: ${rel_src}
+	\$(BUILD198X) basic \$< --machine sinclair-zx-spectrum -o \$@
+
+clean:
+	rm -f ${out}
+
+.PHONY: all clean
+EOF
+}
+
+c64_basic_makefile() {
+    local rel_src="$1" out="$2"
+    cat <<EOF
+# Build the program this unit's lesson shows, under its own name, so the
+# lesson's run strip runs exactly the listing on the page.
+BUILD198X ?= build198x
+
+all: ${out}
+
+${out}: ${rel_src}
+	\$(BUILD198X) basic \$< --machine commodore-c64 -o \$@
+
+clean:
+	rm -f ${out}
+
+.PHONY: all clean
+EOF
+}
+
+# Relative path from directory $1 to file $2, both repo-root-relative POSIX
+# paths with no leading ./ — the bit of arithmetic a unit-NN Makefile needs
+# to reach a listing that usually lives under a sibling teaching/ tree.
+relpath() {
+    local from="$1" to="$2"
+    local -a from_parts to_parts
+    IFS=/ read -r -a from_parts <<<"$from"
+    IFS=/ read -r -a to_parts <<<"$to"
+    local i=0
+    while [ "$i" -lt "${#from_parts[@]}" ] && [ "$i" -lt "${#to_parts[@]}" ] \
+        && [ "${from_parts[$i]}" = "${to_parts[$i]}" ]; do
+        i=$((i + 1))
+    done
+    local up="" down="" j
+    for ((j = i; j < ${#from_parts[@]}; j++)); do up="../$up"; done
+    for ((j = i; j < ${#to_parts[@]}; j++)); do down="$down${to_parts[$j]}/"; done
+    printf '%s' "${up}${down%/}"
+}
+
+# Step 1 (find each lesson's program) is: the last CodeFromFile .bas a unit's
+# page shows. One listing breaks that rule on purpose: meet-basic/unit-04's
+# last teaching step uses the illegal string variable name `name$` to show
+# the ROM refusing it (Ruling R-name$, 2026-09-26), so `build198x basic`
+# rightly fails its lint. basic-reference/unit-04 shows that same listing
+# last, so its Makefile builds the page's earlier, legal step instead.
+basic_source_override() {
+    case "$1/$2/$3" in
+        "sinclair-zx-spectrum/basic-reference/unit-04")
+            echo "sinclair-zx-spectrum/basic/meet-basic/unit-04/steps/step-01.bas" ;;
+        *) return 1 ;;
+    esac
+}
+
+# Walk every unit-NN lesson page under $1's basic/ track in the website
+# checkout, and emit that unit's Makefile from $3 (one of the two template
+# functions above). $2 is the native output extension (tap, prg).
+generate_basic_makefiles() {
+    local sysname="$1" ext="$2" tmpl="$3"
+    local curriculum="$WEBSITE_DIR/src/content/curriculum/$sysname/basic"
+    [ -d "$curriculum" ] || return 0
+    while IFS= read -r mdxf; do
+        local module unit_num unit_padded last_bas src_rel out_name unitdir override
+        module="$(basename "$(dirname "$mdxf")")"
+        unit_num="$(sed -n 's/^unit:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$mdxf" | head -1)"
+        [ -n "$unit_num" ] || { echo "  $module/$(basename "$mdxf"): no unit: frontmatter, skipped"; continue; }
+        unit_padded="$(printf 'unit-%02d' "$unit_num")"
+        last_bas="$(grep -oE '<CodeFromFile[^>]*src="[^"]+\.bas"' "$mdxf" \
+            | grep -oE 'src="[^"]+"' | sed -e 's/^src="//' -e 's/"$//' | tail -1)"
+        [ -n "$last_bas" ] || { echo "  $module/$unit_padded: no .bas CodeFromFile, skipped"; continue; }
+        if override="$(basic_source_override "$sysname" "$module" "$unit_padded")"; then
+            last_bas="$override"
+        fi
+        unitdir="$SCRIPT_DIR/$sysname/basic/$module/$unit_padded"
+        src_rel="$(relpath "$sysname/basic/$module/$unit_padded" "$last_bas")"
+        out_name="$(basename "$last_bas")"
+        out_name="${out_name%.bas}.$ext"
+        emit "$unitdir/Makefile" "$("$tmpl" "$src_rel" "$out_name")"
+    done < <(find "$curriculum" -name 'unit-*.mdx' | sort)
+}
+
 while IFS= read -r mk; do
     dir="$(dirname "$mk")"
     case "${mk#"$SCRIPT_DIR"/}" in
-        commodore-64/*)                  emit "$mk" "$(c64_makefile "$dir")" ;;
+        commodore-64/assembly/*)          emit "$mk" "$(c64_makefile "$dir")" ;;
         nintendo-entertainment-system/*) emit "$mk" "$(nes_makefile "$dir")" ;;
         commodore-amiga/*)               emit "$mk" "$(amiga_makefile "$dir")" ;;
         *) ;;   # Spectrum's only Makefile is a hand-written test harness.
     esac
 done < <(find "$SCRIPT_DIR" -name Makefile -not -path "*/_*" | sort)
+
+generate_basic_makefiles sinclair-zx-spectrum tap spectrum_basic_makefile
+generate_basic_makefiles commodore-64 prg c64_basic_makefile
 
 if [ "$CHECK" = 1 ]; then
     [ "$changed" = 0 ] && echo "Makefiles are current." || echo "$changed Makefile(s) out of date."
