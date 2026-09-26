@@ -1,5 +1,5 @@
 """Check edit continuity, accepted map identities and graphics provenance."""
-import hashlib,json,sys
+import hashlib,json
 from pathlib import Path
 import sys;sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'source-lineage'));import lineage  # accepts evidence recorded on an earlier text
 ROOT=Path(__file__).resolve().parents[1]
