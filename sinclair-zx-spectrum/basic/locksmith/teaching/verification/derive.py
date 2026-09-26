@@ -8,36 +8,36 @@ def change(lines,updates):
  result=dict(lines)
  for n,s in updates.items():
   if s is None:result.pop(n,None)
-  else:result[n]=f'{n} {s}'
+  else:result[n]=f'{n:>4} {s}'
  return result
 def subset(lines,pred):return {n:s for n,s in lines.items() if pred(n)}
 rounds=change(subset(end,lambda n:n==10 or n>=200),{})
 history=change(rounds,{
-200:'DIM c(4): LET c(1) = 1: LET c(2) = 1: LET c(3) = 2: LET c(4) = 2',210:None,
-430:None,440:'IF t = 10 THEN GO TO 5100',5000:None,5010:None,
-5100:'PRINT AT 17,1; INK 6; "Ten practice guesses recorded. "',
-1020:'PRINT AT 2,1; INK 7; "Practice code: 1122"',1070:'PRINT AT 21,1; "ENTER: check  R: clear Q: quit"',
-5220:'PRINT AT 20,1; "R: clear board   Q: quit       "',
+200:'DIM c(4): LET c(1)=1: LET c(2)=1: LET c(3)=2: LET c(4)=2',210:None,
+430:None,440:'IF t=10 THEN GO TO 5100',5000:None,5010:None,
+5100:'PRINT AT 17,1; INK 6;"Ten practice guesses recorded. "',
+1020:'PRINT AT 2,1; INK 7;"Practice code: 1122"',1070:'PRINT AT 21,1;"ENTER: check  R: clear Q: quit"',
+5220:'PRINT AT 20,1;"R: clear board   Q: quit       "',
 })
 clues=change(subset(history,lambda n:not 5000<=n<8000),{
 440:None,450:None,460:None,470:'GO TO 230',
-1010:'PRINT AT 0,1; INK 5; "LOCKSMITH"; AT 0,21; INK 7; "PRACTICE"',
-1040:'PRINT AT 5,1; INK 1; "-"; AT 5,7; ". . . ."; AT 5,21; "."; AT 5,28; "."',
-420:'GO SUB 4000: PRINT AT 18,2; "                            "',
+1010:'PRINT AT 0,1; INK 5;"LOCKSMITH";AT 0,21; INK 7;"PRACTICE"',
+1040:'PRINT AT 5,1; INK 1;"-";AT 5,7;". . . .";AT 5,21;".";AT 5,28;"."',
+420:'GO SUB 4000: PRINT AT 18,2;"                            "',
 })
 exact=change(subset(clues,lambda n:not 3030<=n<=3110),{
-3000:'DIM g(4): LET bulls = 0',3120:'RETURN',
-1030:'PRINT AT 4,1; INK 5; "TRY"; AT 4,7; "CODE"; AT 4,19; "EXACT"',
-1040:'PRINT AT 5,1; INK 1; "-"; AT 5,7; ". . . ."; AT 5,21; "."',
-4020:'PRINT AT 4 + t,21; INK 4; bulls',
+3000:'DIM g(4): LET bulls=0',3120:'RETURN',
+1030:'PRINT AT 4,1; INK 5;"TRY";AT 4,7;"CODE";AT 4,19;"EXACT"',
+1040:'PRINT AT 5,1; INK 1;"-";AT 5,7;". . . .";AT 5,21;"."',
+4020:'PRINT AT 4 +t,21; INK 4;bulls',
 })
 editor=change(subset(exact,lambda n:not 3000<=n<5000),{
-200:'LET t = 1',220:'LET g$ = "": GO SUB 1000',
-410:'PRINT AT 18,2; INK 4; "Four digits ready.          ": GO TO 230',420:None,470:None,
-1020:'PRINT AT 2,1; INK 7; "Build a four-digit guess."',1030:None,1040:None,
+200:'LET t=1',220:'LET g$="": GO SUB 1000',
+410:'PRINT AT 18,2; INK 4;"Four digits ready.          ": GO TO 230',420:None,470:None,
+1020:'PRINT AT 2,1; INK 7;"Build a four-digit guess."',1030:None,1040:None,
 })
 board=change(subset(editor,lambda n:n in (10,200,220,240) or 1000<=n<3000),{
-240:'GO SUB 2000: STOP',1060:'PRINT AT 20,1; INK 7; "Four spaces for four digits."',1070:None,
+240:'GO SUB 2000: STOP',1060:'PRINT AT 20,1; INK 7;"Four spaces for four digits."',1070:None,
 2010:None,
 })
 previous={};items=[];edits=['# Locksmith source transitions','', 'The opening is a new program. Later steps list exact additions, replacements and deletions.','']

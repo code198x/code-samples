@@ -3,49 +3,49 @@
     "name": "board",
     "lesson": 1,
     "source": "board/locksmith.bas",
-    "sha256": "a9310e7fb8b22f77907feac2e43cc6a61b569a5428f6cc584f174e86e13619b2",
+    "sha256": "fbe44aa2bd3fce31a665a0faf33bfcad1a5bd3f766079ceef567f1b0667aa46f",
     "lines": 12
   },
   {
     "name": "editor",
     "lesson": 2,
     "source": "editor/locksmith.bas",
-    "sha256": "67f09f555fe02ddad3a134645719501e1f196ae29bd80551cd7c1be7f7acd2ab",
+    "sha256": "a3cef27d1906869c35a2972f294470385e057374a2f27532360bc39fa870b7b9",
     "lines": 30
   },
   {
     "name": "exact",
     "lesson": 3,
     "source": "exact/locksmith.bas",
-    "sha256": "546b42056621ab30a90bae93badc890713e56ae0c608fe14005882e1915a6526",
+    "sha256": "6a8a37daa470e4b68075ed73236f39cbc2d3dea474bbc83345810a63f1c1e38e",
     "lines": 42
   },
   {
     "name": "clues",
     "lesson": 4,
     "source": "clues/locksmith.bas",
-    "sha256": "9d71f356901ea1d89ce99c3581d6b6e7ba0ef62aec838bbff9afb2db07952390",
+    "sha256": "32e007389c88ab652cd18900338e45fa06a659e3a38bad6f3edc8dcdfb6904fe",
     "lines": 51
   },
   {
     "name": "history",
     "lesson": 5,
     "source": "history/locksmith.bas",
-    "sha256": "24b0b0b81a504d87602b3b880fc0f88d1838d56a404bb07f04a5555dfb69a5a8",
+    "sha256": "8705310feb0059e64f9648436d5a0e41dc91fda306b14e9fd9d8597b1eca9aa1",
     "lines": 64
   },
   {
     "name": "round",
     "lesson": 7,
     "source": "round/locksmith.bas",
-    "sha256": "e4e33cc6065278f5f9696044db03819b9e06a307d10003bfef8479f8195aa2be",
+    "sha256": "c5911dfa63ea8838db70ad425486e6bc6c04e65ef599c0623e5bde6a81cffc5d",
     "lines": 68
   },
   {
     "name": "finished",
     "lesson": 8,
     "source": "finished/locksmith.bas",
-    "sha256": "0006a16d65447802016ae4597d079fa3b28bb6f6365f79b8075404c8a9d19f9b",
+    "sha256": "751856620daeacc77fec9921c7443f9f17d2ff6dd5480772a9b4d34bbdfe1389",
     "lines": 82
   }
 ]

@@ -19,7 +19,7 @@
     "replace": [],
     "delete": [],
     "edits": "unit-01/snippets/step-01-edits.bas",
-    "sha256": "c1025534c6eab77396d1b965cb98ef50e06a6c69caf2e96177282e54973b04ae"
+    "sha256": "527132271f411c367f647a22a02d4538817a4e5b16753d9415d38af8f9748831"
   },
   {
     "unit": 2,
@@ -65,7 +65,7 @@
     ],
     "delete": [],
     "edits": "unit-02/snippets/step-01-edits.bas",
-    "sha256": "c0080b3f8de6fa08f81da6f709bebb3d7245b5f4ce2413cca52a4d519171d940"
+    "sha256": "be154960451d27e8ddf80209dabc639a0777982924760eb8444b7774c1bd7465"
   },
   {
     "unit": 2,
@@ -100,7 +100,7 @@
     ],
     "delete": [],
     "edits": "unit-02/snippets/step-02-edits.bas",
-    "sha256": "a57a5e7e9e1d03bc3fa1e945a856117b635656ec0fe1d117e35f4f748d306a9a"
+    "sha256": "53700de3b0374ee8de7ce984daed1e10b47ae6e4b40bb092ce020decea4bbbd2"
   },
   {
     "unit": 2,
@@ -115,7 +115,7 @@
     "replace": [],
     "delete": [],
     "edits": "unit-02/snippets/step-03-edits.bas",
-    "sha256": "0bb1e384e021634dc28438158fc92bf67e7c68d5129afaa2edc81f2e9b70d816"
+    "sha256": "97810b52156706c07166924d9b481ade103992dcc625f945fc17eb68a5ecf57e"
   },
   {
     "unit": 3,
@@ -162,7 +162,7 @@
     ],
     "delete": [],
     "edits": "unit-03/snippets/step-01-edits.bas",
-    "sha256": "dccf0732775ea5fd845d437af0f8c8616c50f5f61db9703917975a28803989ac"
+    "sha256": "0fd6964eed8387febeb3e273753d94bb0e8d4eb0a99a073b2c441d2cb5d49c51"
   },
   {
     "unit": 4,
@@ -187,7 +187,7 @@
     ],
     "delete": [],
     "edits": "unit-04/snippets/step-01-edits.bas",
-    "sha256": "95c67c0d1fb7825ecfd3caec87245fa1daa1a0f5dd8792f497d747beceef543d"
+    "sha256": "47636fb94960d9edea20d90561991c5c35553c7f0461d780894c8331f45580c0"
   },
   {
     "unit": 5,
@@ -204,7 +204,7 @@
     ],
     "delete": [],
     "edits": "unit-05/snippets/step-01-edits.bas",
-    "sha256": "6be8c3ba815f7f32697a184f2e5ac2694dac2acfab9ff9524d8eff546f53d888"
+    "sha256": "a02cea31377cfdb285bcab153651f8a9519fc8a986ad3cb72da14c2789aa5917"
   },
   {
     "unit": 6,
@@ -225,7 +225,7 @@
     "replace": [],
     "delete": [],
     "edits": "unit-06/snippets/step-01-edits.bas",
-    "sha256": "6f79095b07dc1ac9231521c531d0c1a58ec8ff78a07d7dcf8bd47a433bd5e40a"
+    "sha256": "c04c690fe903f294b18eb453d1a84d156bea705d61131559e345455ba8c0d090"
   },
   {
     "unit": 6,
@@ -256,7 +256,7 @@
     ],
     "delete": [],
     "edits": "unit-06/snippets/step-02-edits.bas",
-    "sha256": "bd858504b1c4a4609cb37915704bec7fe96eec7d509946ec69e9ee91af54e4ee"
+    "sha256": "9960e433f8fb31caad916fb96327ffb0c6290b2af09f6f1a23d59121c3699f30"
   },
   {
     "unit": 7,
@@ -299,7 +299,7 @@
       80
     ],
     "edits": "unit-07/snippets/step-01-edits.bas",
-    "sha256": "47ebd03e7ded60bfe28319a61fe96d0535dee6f07b26b3f79d14deb22bd541e7"
+    "sha256": "136bf26723fa57795364dd9101faaceccd14fbbfb355289f23e713898e2dadaa"
   },
   {
     "unit": 8,
@@ -332,7 +332,7 @@
     ],
     "delete": [],
     "edits": "unit-08/snippets/step-01-edits.bas",
-    "sha256": "f0ed96fee254f1a981d7ab3a3f651521c8ce1aeef4aecb89445b8f6a6da3531a"
+    "sha256": "360b48ee1601390167a4aedd49047d5a72d9aa000dfea6b41296500c7c0162f7"
   },
   {
     "unit": 9,
@@ -362,7 +362,7 @@
     ],
     "delete": [],
     "edits": "unit-09/snippets/step-01-edits.bas",
-    "sha256": "52e6fb97be235d801b7b32271d2f7e8e236c9590e78c98c3dfefd3510eae0fd3"
+    "sha256": "bbb89e92b14c63ddd9bf529438a8b90dac561150521b4033ef428a2bc42928d5"
   },
   {
     "unit": 10,
@@ -389,6 +389,6 @@
     ],
     "delete": [],
     "edits": "unit-10/snippets/step-01-edits.bas",
-    "sha256": "b3b1b21c666652056dc0bb4d7b08cb4681aeddc9ce00c88e416a4db1ed6c3f25"
+    "sha256": "5f0af84b64146ca1d5ab09c24aa52b370be8537b54fc9b901200efb0c0399384"
   }
 ]
