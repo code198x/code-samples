@@ -1,18 +1,18 @@
   10 BORDER 0: PAPER 0: INK 7: CLS
  130 RANDOMIZE
  140 DIM c(4)
- 150 FOR i = 1 TO 4: LET c(i) = INT (RND * 6) + 1: NEXT i
+ 150 FOR i=1 TO 4: LET c(i)=INT (RND*6)+1: NEXT i
  160 CLS
  170 PRINT "The code is: ";
- 180 FOR i = 1 TO 4: PRINT c(i);: NEXT i
+ 180 FOR i=1 TO 4: PRINT c(i);: NEXT i
  190 PRINT
- 220 INPUT "Your guess (4 digits): "; g$
- 230 IF LEN g$ <> 4 THEN GO TO 220
- 240 IF g$(1) < "1" OR g$(1) > "6" OR g$(2) < "1" OR g$(2) > "6" OR g$(3) < "1" OR g$(3) > "6" OR g$(4) < "1" OR g$(4) > "6" THEN GO TO 220
+ 220 INPUT "Your guess (4 digits): ";g$
+ 230 IF LEN g$<>4 THEN GO TO 220
+ 240 IF g$(1)<"1" OR g$(1)>"6" OR g$(2)<"1" OR g$(2)>"6" OR g$(3)<"1" OR g$(3)>"6" OR g$(4)<"1" OR g$(4)>"6" THEN GO TO 220
  250 DIM g(4)
- 260 FOR i = 1 TO 4: LET g(i) = VAL g$(i): NEXT i
- 270 LET bulls = 0
- 280 FOR i = 1 TO 4
- 290 IF g(i) = c(i) THEN LET bulls = bulls + 1
+ 260 FOR i=1 TO 4: LET g(i)=VAL g$(i): NEXT i
+ 270 LET bulls=0
+ 280 FOR i=1 TO 4
+ 290 IF g(i)=c(i) THEN LET bulls=bulls+1
  300 NEXT i
- 310 PRINT "Bulls: "; bulls
+ 310 PRINT "Bulls: ";bulls

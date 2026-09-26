@@ -1,4 +1,4 @@
-275 PRINT AT 20,0;"1-4 choose. Hold q to quit."
+ 275 PRINT AT 20,0;"1-4 choose. Hold q to quit."
 1000 PRINT AT 18,0;"WATCH                         "
 1010 FOR i=1 TO LEN s$
 1020 IF INKEY$="q" THEN GO TO 1900

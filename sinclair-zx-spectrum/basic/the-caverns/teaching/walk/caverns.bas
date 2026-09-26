@@ -1,42 +1,42 @@
-10 BORDER 0: PAPER 0: INK 7: BRIGHT 1: CLS
-200 DIM m(12,4): DIM a$(12,24): DIM b$(12,28)
-210 RESTORE 9500
-220 FOR i = 1 TO 12: READ a$(i),b$(i): FOR j = 1 TO 4: READ m(i,j): NEXT j: NEXT i
-250 LET rm = 1: LET turns = 0
-260 LET d$ = "NSEW": LET e$ = "nsew": LET h$ = "Choose a tunnel to explore."
-270 GO SUB 1000
-300 GO SUB 9000
-310 LET k$ = INKEY$: IF k$ = "" THEN GO TO 310
-320 IF k$ = "q" OR k$ = "Q" THEN GO TO 8000
-330 IF k$ = "r" OR k$ = "R" THEN GO TO 200
-340 LET dir = 0: FOR j = 1 TO 4: IF k$ = d$(j) OR k$ = e$(j) THEN LET dir = j
-350 NEXT j
-360 IF dir = 0 AND k$ <> " " THEN GO TO 300
-370 LET dest = rm
-380 IF dir > 0 THEN LET dest = m(rm,dir)
-390 IF dest = 0 THEN PRINT AT 18,2; INK 6; "No tunnel in that direction. ": GO TO 300
-400 LET turns = turns + 1: LET h$ = "Your footsteps fade away."
-430 LET rm = dest
-490 GO TO 270
+  10 BORDER 0: PAPER 0: INK 7: BRIGHT 1: CLS
+ 200 DIM m(12,4): DIM a$(12,24): DIM b$(12,28)
+ 210 RESTORE 9500
+ 220 FOR i=1 TO 12: READ a$(i),b$(i): FOR j=1 TO 4: READ m(i,j): NEXT j: NEXT i
+ 250 LET rm=1: LET turns=0
+ 260 LET d$="NSEW": LET e$="nsew": LET h$="Choose a tunnel to explore."
+ 270 GO SUB 1000
+ 300 GO SUB 9000
+ 310 LET k$=INKEY$: IF k$="" THEN GO TO 310
+ 320 IF k$="q" OR k$="Q" THEN GO TO 8000
+ 330 IF k$="r" OR k$="R" THEN GO TO 200
+ 340 LET dir=0: FOR j=1 TO 4: IF k$=d$(j) OR k$=e$(j) THEN LET dir=j
+ 350 NEXT j
+ 360 IF dir=0 AND k$<>" " THEN GO TO 300
+ 370 LET dest=rm
+ 380 IF dir>0 THEN LET dest=m(rm,dir)
+ 390 IF dest=0 THEN PRINT AT 18,2; INK 6;"No tunnel in that direction. ": GO TO 300
+ 400 LET turns=turns+1: LET h$="Your footsteps fade away."
+ 430 LET rm=dest
+ 490 GO TO 270
 1000 CLS
-1010 PRINT AT 0,8; INK 5; "THE CAVERNS"
-1020 PRINT AT 2,2; INK 6; "TURNS "; turns
+1010 PRINT AT 0,8; INK 5;"THE CAVERNS"
+1020 PRINT AT 2,2; INK 6;"TURNS ";turns
 1030 INK 1: PLOT 16,148: DRAW 223,0
-1040 PRINT AT 5,2; INK 5; a$(rm)
-1050 PRINT AT 7,2; INK 7; b$(rm)
-1060 PRINT AT 9,2; INK 6; "TUNNELS"
-1070 FOR j = 1 TO 4
-1080 LET v = m(rm,j): LET y = 10 + j
-1090 PRINT AT y,2; INK 7; d$(j); "  --"
-1100 IF v = 0 THEN GO TO 1160
-1110 PRINT AT y,2; INK 7; d$(j); "  Open"
+1040 PRINT AT 5,2; INK 5;a$(rm)
+1050 PRINT AT 7,2; INK 7;b$(rm)
+1060 PRINT AT 9,2; INK 6;"TUNNELS"
+1070 FOR j=1 TO 4
+1080 LET v=m(rm,j): LET y=10 +j
+1090 PRINT AT y,2; INK 7;d$(j);"  --"
+1100 IF v=0 THEN GO TO 1160
+1110 PRINT AT y,2; INK 7;d$(j);"  Open"
 1160 NEXT j
-1190 PRINT AT 18,2; INK 5; h$
-1200 PRINT AT 20,2; INK 7; "N S E W / SPACE waits"
-1210 PRINT AT 21,2; INK 7; "R: restart   Q: quit"
+1190 PRINT AT 18,2; INK 5;h$
+1200 PRINT AT 20,2; INK 7;"N S E W / SPACE waits"
+1210 PRINT AT 21,2; INK 7;"R: restart   Q: quit"
 1220 RETURN
-8000 PRINT AT 21,2; INK 7; "The Caverns finished.       ": STOP
-9000 IF INKEY$ <> "" THEN GO TO 9000
+8000 PRINT AT 21,2; INK 7;"The Caverns finished.       ": STOP
+9000 IF INKEY$<>"" THEN GO TO 9000
 9010 RETURN
 9500 DATA "The entrance","Daylight rims the stone.",0,5,2,0
 9510 DATA "Split passage","Two worn paths meet here.",0,6,3,1

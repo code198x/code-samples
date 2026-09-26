@@ -3,7 +3,7 @@
   60 CLS
   90 PRINT "Rolling 5 dice:"
  100 PRINT
- 110 FOR i = 1 TO 5
- 120 LET d = INT (RND * 6) + 1
- 190 PRINT d; " ";
+ 110 FOR i=1 TO 5
+ 120 LET d=INT (RND*6)+1
+ 190 PRINT d;" ";
  250 NEXT i

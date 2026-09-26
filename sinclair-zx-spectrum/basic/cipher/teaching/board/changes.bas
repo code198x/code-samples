@@ -1,10 +1,10 @@
-250 LET d$="": LET t$="": LET m$="": LET left=7: LET u$="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-390 LET t$=t$+g$: LET found=0: LET u$(c-96 TO c-96)="."
-395 PRINT AT 14+INT ((c-97)/13),3+2*((c-97)-13*INT ((c-97)/13)); "."
-710 PRINT AT 6,16-LEN w$; INK 4; BRIGHT 1;
-720 FOR i=1 TO LEN w$: PRINT w$(i);" ";: NEXT i
-730 IF left=0 THEN PRINT AT 6,16-LEN w$; INK 6; BRIGHT 1;: FOR i=1 TO LEN w$: PRINT w$(i);" ";: NEXT i
-2110 PRINT AT 12,2; INK 5; "UNTRIED LETTERS"
+ 250 LET d$="": LET t$="": LET m$="": LET left=7: LET u$="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ 390 LET t$=t$+g$: LET found=0: LET u$(c-96 TO c-96)="."
+ 395 PRINT AT 14+INT ((c-97)/13),3+2*((c-97)-13*INT ((c-97)/13));"."
+ 710 PRINT AT 6,16-LEN w$; INK 4; BRIGHT 1;
+ 720 FOR i=1 TO LEN w$: PRINT w$(i);" ";: NEXT i
+ 730 IF left=0 THEN PRINT AT 6,16-LEN w$; INK 6; BRIGHT 1;: FOR i=1 TO LEN w$: PRINT w$(i);" ";: NEXT i
+2110 PRINT AT 12,2; INK 5;"UNTRIED LETTERS"
 2120 FOR j=1 TO 26
 2160 PRINT AT 14+INT ((j-1)/13),3+2*((j-1)-13*INT ((j-1)/13)); INK 7;
 2170 PRINT u$(j);

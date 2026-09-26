@@ -1,4 +1,4 @@
-290 GO TO 1000
+ 290 GO TO 1000
 1000 PRINT AT 18,0;"Release the keys.              "
 1010 PRINT AT 20,0;"1-4 choose. Hold q to quit."
 1020 GO SUB 1600

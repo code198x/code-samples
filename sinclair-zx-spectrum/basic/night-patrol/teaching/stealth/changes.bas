@@ -1,13 +1,13 @@
-130 LET got=0: LET outcome=0: LET bn=0: LET beat=0: LET steps=0
-400 LET beat=beat+1: IF beat<2 THEN GO TO 470
-410 LET beat=0: LET r=gy: LET c=gx
-420 LET phase=phase+1: IF phase=61 THEN LET phase=1
-430 RESTORE 8200+10*phase: READ gx,gy,gd,bn,n
-440 GO SUB 2000
-450 GO SUB 3000
-455 GO SUB 3300
-460 IF v$(y*32+x)="!" OR (x=gx AND y=gy) THEN LET outcome=1: GO TO 4000
-1010 PRINT AT 0,1; INK 5; BRIGHT 1; "NIGHT PATROL"; AT 0,20; "THE ARCHIVE"
+ 130 LET got=0: LET outcome=0: LET bn=0: LET beat=0: LET steps=0
+ 400 LET beat=beat+1: IF beat<2 THEN GO TO 470
+ 410 LET beat=0: LET r=gy: LET c=gx
+ 420 LET phase=phase+1: IF phase=61 THEN LET phase=1
+ 430 RESTORE 8200+10*phase: READ gx,gy,gd,bn,n
+ 440 GO SUB 2000
+ 450 GO SUB 3000
+ 455 GO SUB 3300
+ 460 IF v$(y*32+x)="!" OR (x=gx AND y=gy) THEN LET outcome=1: GO TO 4000
+1010 PRINT AT 0,1; INK 5; BRIGHT 1;"NIGHT PATROL";AT 0,20;"THE ARCHIVE"
 3005 FOR j=1 TO n: READ ad: LET cell=ABS ad
 3010 LET v$(cell)=CHR$ (32+(ad>0))
 3020 POKE 22560+cell,71-2*(cell=123)-3*(cell=515)+48*(ad>0)
