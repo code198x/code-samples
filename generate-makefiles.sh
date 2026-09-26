@@ -29,7 +29,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WEBSITE_DIR="$SCRIPT_DIR/../website"
+WEBSITE_DIR="${WEBSITE_DIR:-$SCRIPT_DIR/../website}"
 CHECK=0
 [ "${1:-}" = "--check" ] && CHECK=1
 
@@ -276,7 +276,12 @@ basic_source_override() {
 generate_basic_makefiles() {
     local sysname="$1" ext="$2" tmpl="$3"
     local curriculum="$WEBSITE_DIR/src/content/curriculum/$sysname/basic"
-    [ -d "$curriculum" ] || return 0
+    # The unit list comes from the lesson pages, so without them there is
+    # nothing to check against: fail rather than report "current".
+    [ -d "$curriculum" ] || {
+        echo "error: $curriculum not found; set WEBSITE_DIR to a website checkout" >&2
+        exit 1
+    }
     while IFS= read -r mdxf; do
         local module unit_num unit_padded last_bas src_rel out_name unitdir override
         module="$(basename "$(dirname "$mdxf")")"
