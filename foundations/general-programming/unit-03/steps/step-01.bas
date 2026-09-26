@@ -1,2 +1,2 @@
   10 PRINT "2 + 2"
-  20 PRINT 2 + 2
+  20 PRINT 2 +2
