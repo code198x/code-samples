@@ -187,6 +187,11 @@ def renamed(old, new, names):
 
 def build(args, recorded):
     changed = git('diff', '--name-only', PRE_SWEEP, SWEEP, '--', '*.bas').decode().split()
+    if recorded.get('links'):
+        # A listing whose links were removed has evidence recorded on its
+        # current text; it stays out.
+        listed = {link['path'] for link in recorded['links']}
+        changed = [path for path in changed if path in listed]
     kept = {(l['path'], l['kind']): l for l in recorded.get('links', [])}
     touched = {c: git('diff', '--name-only', f'{c}^', c).decode().split() for c, _, _ in RENAMES}
     links, failures = [], []
