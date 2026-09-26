@@ -32,6 +32,7 @@ format198x-sinclair-zx-spectrum-bas's `tokenise_listing` example does:
 import argparse
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -230,6 +231,9 @@ def main():
     p.add_argument('--pre-listing-tokeniser')
     p.add_argument('--write', action='store_true')
     args = p.parse_args()
+    for exe in (args.tokeniser, args.pre_listing_tokeniser):
+        if exe and not (Path(exe).is_file() and os.access(exe, os.X_OK)):
+            p.error(f'{exe} is not an executable tokeniser; see the usage at the top of build.py')
     recorded = json.loads(OUT.read_text()) if OUT.exists() else {}
     links, failures = build(args, recorded)
     data = dict(
