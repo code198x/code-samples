@@ -195,15 +195,28 @@ clean:
 EOF
 }
 
+# The comment a BASIC unit Makefile starts with: what it builds. An
+# overridden unit passes its own note instead ($1), because it does not
+# build the page's last listing.
+basic_header() {
+    if [ -n "$1" ]; then
+        printf '%s\n' "$1"
+    else
+        cat <<'EOF'
+# Build the program this unit's lesson shows, under its own name, so the
+# lesson's run strip runs exactly the listing on the page.
+EOF
+    fi
+}
+
 # A unit's Makefile builds the one listing its lesson page shows, under that
 # listing's own filename (extension swapped for the machine's native output),
 # so the run strip's program is byte-for-byte the program on the page. $1 is
 # the listing's path relative to the unit directory; $2 is the output name.
 spectrum_basic_makefile() {
     local rel_src="$1" out="$2"
+    basic_header "${3:-}"
     cat <<EOF
-# Build the program this unit's lesson shows, under its own name, so the
-# lesson's run strip runs exactly the listing on the page.
 BUILD198X ?= build198x
 
 all: ${out}
@@ -220,9 +233,8 @@ EOF
 
 c64_basic_makefile() {
     local rel_src="$1" out="$2"
+    basic_header "${3:-}"
     cat <<EOF
-# Build the program this unit's lesson shows, under its own name, so the
-# lesson's run strip runs exactly the listing on the page.
 BUILD198X ?= build198x
 
 all: ${out}
@@ -270,6 +282,20 @@ basic_source_override() {
     esac
 }
 
+# The Makefile header for an overridden unit, saying what it builds instead.
+basic_override_note() {
+    case "$1/$2/$3" in
+        "sinclair-zx-spectrum/basic-reference/unit-04")
+            cat <<'EOF'
+# Build the legal step-01 listing this lesson shows. The page's last listing,
+# meet-basic's step-03, uses the illegal name `name$` on purpose to show the
+# ROM refusing it, so it cannot build; the run strip runs step-01 instead.
+EOF
+            ;;
+        *) return 1 ;;
+    esac
+}
+
 # Walk every unit-NN lesson page under $1's basic/ track in the website
 # checkout, and emit that unit's Makefile from $3 (one of the two template
 # functions above). $2 is the native output extension (tap, prg).
@@ -283,7 +309,7 @@ generate_basic_makefiles() {
         exit 1
     }
     while IFS= read -r mdxf; do
-        local module unit_num unit_padded last_bas src_rel out_name unitdir override
+        local module unit_num unit_padded last_bas src_rel out_name unitdir override note=""
         module="$(basename "$(dirname "$mdxf")")"
         unit_num="$(sed -n 's/^unit:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$mdxf" | head -1)"
         [ -n "$unit_num" ] || { echo "  $module/$(basename "$mdxf"): no unit: frontmatter, skipped"; continue; }
@@ -293,12 +319,13 @@ generate_basic_makefiles() {
         [ -n "$last_bas" ] || { echo "  $module/$unit_padded: no .bas CodeFromFile, skipped"; continue; }
         if override="$(basic_source_override "$sysname" "$module" "$unit_padded")"; then
             last_bas="$override"
+            note="$(basic_override_note "$sysname" "$module" "$unit_padded")"
         fi
         unitdir="$SCRIPT_DIR/$sysname/basic/$module/$unit_padded"
         src_rel="$(relpath "$sysname/basic/$module/$unit_padded" "$last_bas")"
         out_name="$(basename "$last_bas")"
         out_name="${out_name%.bas}.$ext"
-        emit "$unitdir/Makefile" "$("$tmpl" "$src_rel" "$out_name")"
+        emit "$unitdir/Makefile" "$("$tmpl" "$src_rel" "$out_name" "$note")"
     done < <(find "$curriculum" -name 'unit-*.mdx' | sort)
 }
 
