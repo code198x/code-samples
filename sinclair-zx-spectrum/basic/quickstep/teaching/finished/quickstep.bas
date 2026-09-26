@@ -46,22 +46,22 @@
 1060 NEXT j
 1070 PRINT AT 2,15; PAPER 4; INK 7; "  "; AT 3,15; "  "
 1080 FOR i = 1 TO 6: GO SUB 1200: LET z$ = ">": IF d(i) = -1 THEN LET z$ = "<"
-1081 PRINT AT row,0; PAPER 0; INK ink; z$; AT row,31; z$
+1081 PRINT AT row,0; PAPER 0; INK colour; z$; AT row,31; z$
 1082 NEXT i
 1090 PRINT AT 20,2; PAPER 0; INK 7; "I up  J left  K down  L right"
 1110 PRINT AT 21,2; INK 7; "R retry              Q quit";
 1120 RETURN
-1200 LET row = 2 + 2 * r(i): LET ink = 6: IF d(i) = -1 THEN LET ink = 5
-1210 PRINT AT row,1; PAPER 0; INK ink; a$(i); AT row+1,1; b$(i)
+1200 LET row = 2 + 2 * r(i): LET colour = 6: IF d(i) = -1 THEN LET colour = 5
+1210 PRINT AT row,1; PAPER 0; INK colour; a$(i); AT row+1,1; b$(i)
 1240 RETURN
 2000 LET hit = 0: IF ny = 0 OR ny = 4 OR ny = 8 THEN RETURN
 2010 LET lane = ny: IF ny > 4 THEN LET lane = ny - 1
 2015 LET delta = nx - p(lane): LET delta = delta - 5 * INT (delta / 5)
 2020 IF delta < 2 THEN LET hit = 1
 2030 RETURN
-3000 LET paper = 0: IF y = 0 OR y = 4 OR y = 8 THEN LET paper = 1
-3010 IF y = 0 AND x = 7 THEN LET paper = 4
-3020 PRINT AT 2+2*y,1+2*x; PAPER paper; INK 7; h$; AT 3+2*y,1+2*x; f$
+3000 LET shade = 0: IF y = 0 OR y = 4 OR y = 8 THEN LET shade = 1
+3010 IF y = 0 AND x = 7 THEN LET shade = 4
+3020 PRINT AT 2+2*y,1+2*x; PAPER shade; INK 7; h$; AT 3+2*y,1+2*x; f$
 3030 RETURN
 3100 IF y <> 0 AND y <> 4 AND y <> 8 THEN PRINT AT 2+2*y,1+2*x; PAPER 0; "  "; AT 3+2*y,1+2*x; "  ": RETURN
 3110 PRINT AT 2+2*y,1+2*x; PAPER 1; INK 5; g$; AT 3+2*y,1+2*x; g$: RETURN

@@ -26,9 +26,9 @@ one=change(subset(six,lambda n:not 7100<=n<7200),{
 410:'IF d = -1 THEN LET a$ = a$(3 TO 30) + a$(1 TO 2): LET b$ = b$(3 TO 30) + b$(1 TO 2)',
 420:'GO SUB 1200: IF y = 1 THEN GO SUB 3000',430:None,
 1030:'FOR j = 0 TO 2 STEP 2',1080:'GO SUB 1200: LET z$ = ">": IF d = -1 THEN LET z$ = "<"',1082:None,
-1200:'LET row = 4: LET ink = 6: IF d = -1 THEN LET ink = 5',1210:'PRINT AT row,1; PAPER 0; INK ink; a$; AT row+1,1; b$',
+1200:'LET row = 4: LET colour = 6: IF d = -1 THEN LET colour = 5',1210:'PRINT AT row,1; PAPER 0; INK colour; a$; AT row+1,1; b$',
 2000:'LET hit = 0: IF ny <> 1 THEN RETURN',2010:None,2015:'LET delta = nx - p: LET delta = delta - 5 * INT (delta / 5)',
-3000:'LET paper = 0: IF y <> 1 THEN LET paper = 1',
+3000:'LET shade = 0: IF y <> 1 THEN LET shade = 1',
 3100:'IF y = 1 THEN PRINT AT 2+2*y,1+2*x; PAPER 0; "  "; AT 3+2*y,1+2*x; "  ": RETURN',
 })
 clock=change(subset(one,lambda n:not 2000<=n<3000 and not 4000<=n<5000),{320:None,330:None,440:'LET steps = steps + 1',450:None,460:None,
