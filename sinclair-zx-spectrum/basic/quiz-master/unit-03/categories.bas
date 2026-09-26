@@ -1,12 +1,12 @@
    5 DIM k(8)
   10 BORDER 0: PAPER 0: INK 7: CLS
-  50 RESTORE: FOR i = 1 TO 8: READ k(i): NEXT i
+  50 RESTORE : FOR i=1 TO 8: READ k(i): NEXT i
   60 RESTORE 600
-  80 LET score = 0: LET n = 0
-  90 FOR c = 1 TO 4
+  80 LET score=0: LET n=0
+  90 FOR c=1 TO 4
  100 READ t$,ink
- 110 FOR q = 1 TO 2
- 120 LET n = n + 1
+ 110 FOR q=1 TO 2
+ 120 LET n=n+1
  130 CLS
  140 PRINT t$
  190 READ q$,a$,b$,c$,d$
@@ -17,8 +17,8 @@
  240 PRINT "3. ";c$
  250 PRINT "4. ";d$
  260 INPUT "Answer (1-4): ";g
- 270 IF g = k(n) THEN PRINT "Correct!": LET score = score + 1
- 280 IF g <> k(n) THEN PRINT "The answer was ";k(n)
+ 270 IF g=k(n) THEN PRINT "Correct!": LET score=score+1
+ 280 IF g<>k(n) THEN PRINT "The answer was ";k(n)
  300 PAUSE 80
  310 NEXT q
  340 NEXT c

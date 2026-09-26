@@ -1,18 +1,18 @@
   10 BORDER 0: PAPER 1: INK 7: CLS
  110 DIM n(20): DIM s(20): DIM e(20): DIM w(20)
  120 RESTORE 1010
- 130 FOR i = 1 TO 20
- 140 READ n(i), s(i), e(i), w(i)
+ 130 FOR i=1 TO 20
+ 140 READ n(i),s(i),e(i),w(i)
  150 NEXT i
- 160 LET rm = 1
+ 160 LET rm=1
  270 CLS
- 280 LET a$ = "*** THE CAVERNS ***": LET y = 0: GO SUB 9000
- 300 PRINT AT 3, 2; "You are in room "; rm; "."
- 310 PRINT AT 5, 2; "Exits: ";
- 320 IF n(rm) > 0 THEN PRINT "N ";
- 330 IF s(rm) > 0 THEN PRINT "S ";
- 340 IF e(rm) > 0 THEN PRINT "E ";
- 350 IF w(rm) > 0 THEN PRINT "W ";
+ 280 LET a$="*** THE CAVERNS ***": LET y=0: GO SUB 9000
+ 300 PRINT AT 3,2;"You are in room ";rm;"."
+ 310 PRINT AT 5,2;"Exits: ";
+ 320 IF n(rm)>0 THEN PRINT "N ";
+ 330 IF s(rm)>0 THEN PRINT "S ";
+ 340 IF e(rm)>0 THEN PRINT "E ";
+ 350 IF w(rm)>0 THEN PRINT "W ";
  360 STOP
 1000 REM --- Room map: N,S,E,W ---
 1010 DATA 0,5,2,0
@@ -35,6 +35,5 @@
 1180 DATA 14,0,19,17
 1190 DATA 15,0,20,18
 1200 DATA 16,0,0,19
-
-9000 PRINT AT y, (32 - LEN a$) / 2; BRIGHT 1; a$
+9000 PRINT AT y,(32 -LEN a$)/2; BRIGHT 1;a$
 9010 RETURN

@@ -1,4 +1,4 @@
-55 GO TO 2000
+  55 GO TO 2000
 2000 PRINT AT 3,0;"Watch the order of the signals."
 2010 PRINT AT 5,0;"Repeat it with keys 1 to 4."
 2020 PRINT AT 7,0;"Wait for each cue to finish."

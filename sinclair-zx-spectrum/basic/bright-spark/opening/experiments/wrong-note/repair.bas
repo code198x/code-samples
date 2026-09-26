@@ -1,1 +1,1 @@
-610 IF p=3 THEN LET note=7
+ 610 IF p=3 THEN LET note=7

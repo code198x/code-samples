@@ -1,15 +1,15 @@
    5 DIM k(8)
   10 BORDER 0: PAPER 0: INK 7: CLS
-  50 RESTORE: FOR i = 1 TO 8: READ k(i): NEXT i
+  50 RESTORE : FOR i=1 TO 8: READ k(i): NEXT i
   60 RESTORE 600
-  80 LET score = 0: LET n = 0
-  90 FOR c = 1 TO 4
+  80 LET score=0: LET n=0
+  90 FOR c=1 TO 4
  100 READ t$,ink
- 110 FOR q = 1 TO 2
- 120 LET n = n + 1
+ 110 FOR q=1 TO 2
+ 120 LET n=n+1
  130 CLS
  140 PAPER ink: INK 7
- 150 FOR i = 0 TO 31: PRINT " ";: NEXT i
+ 150 FOR i=0 TO 31: PRINT " ";: NEXT i
  160 PRINT AT 0,1;t$
  170 PRINT AT 0,26;score;"/8"
  180 PAPER 7: INK 0
@@ -21,8 +21,8 @@
  240 PRINT AT 9,2;"3. ";c$
  250 PRINT AT 10,2;"4. ";d$
  260 PRINT AT 12,0;: INPUT "Answer (1-4): ";g
- 270 IF g = k(n) THEN PRINT AT 14,0;"Correct!": LET score = score + 1: BEEP 0.2,12
- 280 IF g <> k(n) THEN PRINT AT 14,0;"The answer was ";k(n): BEEP 0.3,-5
+ 270 IF g=k(n) THEN PRINT AT 14,0;"Correct!": LET score=score+1: BEEP 0.2,12
+ 280 IF g<>k(n) THEN PRINT AT 14,0;"The answer was ";k(n): BEEP 0.3,-5
  290 PRINT AT 0,26;score;"/8"
  300 PAUSE 80
  310 NEXT q

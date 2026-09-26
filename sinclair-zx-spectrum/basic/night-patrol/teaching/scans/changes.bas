@@ -1,7 +1,7 @@
-100 LET x=3: LET y=16: LET phase=0
-420 LET phase=phase+1: IF phase=61 THEN LET phase=1
-430 RESTORE 8200+10*phase: READ gx,gy,gd
-440 GO SUB 2000
+ 100 LET x=3: LET y=16: LET phase=0
+ 420 LET phase=phase+1: IF phase=61 THEN LET phase=1
+ 430 RESTORE 8200+10*phase: READ gx,gy,gd
+ 440 GO SUB 2000
 8200 DATA 7,5,1
 8210 DATA 8,5,1
 8220 DATA 9,5,1

@@ -1,1 +1,1 @@
-  10 PRINT "Score: "; 100
+  10 PRINT "Score: ";100

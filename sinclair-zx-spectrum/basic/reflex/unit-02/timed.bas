@@ -2,10 +2,10 @@
   20 RANDOMIZE
  100 CLS
  110 PRINT "Get ready..."
- 200 PAUSE INT (RND * 100) + 50
+ 200 PAUSE INT (RND*100)+50
  220 PRINT "NOW!"
- 230 LET t = 0
- 240 IF INKEY$ <> "" THEN GO TO 300
- 250 LET t = t + 1
+ 230 LET t=0
+ 240 IF INKEY$<>"" THEN GO TO 300
+ 250 LET t=t+1
  260 GO TO 240
- 300 PRINT "Your time: "; t
+ 300 PRINT "Your time: ";t

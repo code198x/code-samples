@@ -1,2 +1,2 @@
-  10 LET name$ = "Sam"
+  10 LET name$="Sam"
   20 PRINT name$
