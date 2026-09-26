@@ -22,3 +22,5 @@ cargo build --release -p format198x-sinclair-zx-spectrum-bas --example tokenise_
 Add `--write` to rewrite `lineage.json`. The file sits beside the audits it serves: every audit that reads it is under `sinclair-zx-spectrum/basic/`.
 
 When a listing is edited and its evidence recorded again, remove that listing's links from `lineage.json` and run `build.py --write`, because the new evidence names the current hash directly.
+
+The audits read earlier texts from git (volley's `lessons.py` does), so run them in a checkout with the full history, not a shallow clone or an archive.
