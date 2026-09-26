@@ -15,7 +15,7 @@ env:
   # The build198x release that builds these listings. Keep it equal to
   # BUILD198X_VERSION in code198x/website scripts/build-artefacts.sh, which
   # builds the same Makefiles at deploy time: bump the two together.
-  BUILD198X_VERSION: v0.2.8
+  BUILD198X_VERSION: v0.2.9
 
 jobs:
   basic:
