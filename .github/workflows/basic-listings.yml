@@ -1,0 +1,45 @@
+name: BASIC listings
+
+# Lint and build every BASIC listing the website builds, with the same
+# build198x release, so a listing that would stop the website's deploy fails
+# here first. The checks themselves are scripts/check-basic.sh.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+env:
+  # The build198x release that builds these listings. Keep it equal to
+  # BUILD198X_VERSION in code198x/website scripts/build-artefacts.sh, which
+  # builds the same Makefiles at deploy time: bump the two together.
+  BUILD198X_VERSION: v0.2.8
+
+jobs:
+  basic:
+    name: Lint and build BASIC listings
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Install build198x ${{ env.BUILD198X_VERSION }}
+        run: |
+          set -euo pipefail
+          name=build198x-x86_64-unknown-linux-gnu
+          base="https://github.com/build198x/build198x/releases/download/build198x-${BUILD198X_VERSION}"
+          cd "$RUNNER_TEMP"
+          curl -fsSL -o "$name.tar.xz" "$base/$name.tar.xz"
+          curl -fsSL -o "$name.tar.xz.sha256" "$base/$name.tar.xz.sha256"
+          grep -v '^[[:space:]]*$' "$name.tar.xz.sha256" | sha256sum -c -
+          tar xJf "$name.tar.xz"
+          mkdir -p bin
+          install -m 755 "$name/build198x" bin/build198x
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+
+      - name: Lint and build
+        run: |
+          build198x --version
+          scripts/check-basic.sh
