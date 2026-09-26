@@ -1,0 +1,13 @@
+# Build the program this unit's lesson shows, under its own name, so the
+# lesson's run strip runs exactly the listing on the page.
+BUILD198X ?= build198x
+
+all: yearfall.tap
+
+yearfall.tap: ../teaching/years/yearfall.bas
+	$(BUILD198X) basic $< --machine sinclair-zx-spectrum -o $@
+
+clean:
+	rm -f yearfall.tap
+
+.PHONY: all clean
