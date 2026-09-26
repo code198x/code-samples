@@ -25,12 +25,12 @@
 1030 PRINT AT 20,1; "I up  J left  K down  L right"
 1040 PRINT AT 21,1; "R retry              Q quit";
 1050 RETURN
-2000 LET z$=" ": LET colour=7: LET paper=0
+2000 LET z$=" ": LET colour=7: LET shade=0
 2010 IF m$(r,c)=CHR$ 145 THEN LET z$=CHR$ 145: LET colour=1
 2030 IF r=3 AND c=27 THEN LET z$=CHR$ 146: LET colour=5
 2040 IF r=16 AND c=3 THEN LET z$=CHR$ 147: LET colour=4
 2060 IF r=y AND c=x THEN LET z$=CHR$ 144: LET colour=7
-2080 PRINT AT r+1,c; PAPER paper; INK colour; BRIGHT 1;z$: RETURN
+2080 PRINT AT r+1,c; PAPER shade; INK colour; BRIGHT 1;z$: RETURN
 7000 RESTORE 7500: FOR j=0 TO 31: READ a: POKE USR "a"+j,a: NEXT j: RETURN
 7100 DIM m$(18,30): RESTORE 7200
 7110 FOR r=1 TO 18: READ m$(r): FOR c=1 TO 30
