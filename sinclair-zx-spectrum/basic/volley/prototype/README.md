@@ -61,3 +61,7 @@ Listings retain readable spacing, such as `PRINT AT y,x;"o"`. Sinclair BASIC tok
 ## Lessons
 
 The website's `src/content/curriculum/sinclair-zx-spectrum/basic/volley/` contains the approved overview and eight lessons. `scripts/volley-roster.json` declares the exact add/replace/delete sets; `verification/lessons.py --roster /path/to/website/scripts/volley-roster.json` checks them against the full sources and five focused snippets. Short opening lessons show their complete listings instead of duplicating change snippets.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

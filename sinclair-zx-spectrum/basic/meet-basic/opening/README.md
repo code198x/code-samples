@@ -117,3 +117,7 @@ edition (Sinclair Research, 1983): chapters 1–2 for keyboard/editor/program be
 chapter 7 for variable naming, chapter 15 (including p. 103) for input prompts, text layout and CLS, chapter 20 pp. 141–145 for tape storage. Emu198x's
 Spectrum UI keyboard map supplies host key mappings; native use has user-reported
 acceptance for A1–A3. Runtime observations above are separate evidence.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

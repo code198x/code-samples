@@ -57,3 +57,7 @@ remain unestablished.
 The extended native regression covers thirty years. The existing four-digit
 allocation editor remains a practical limit for very long runs; indefinite
 play at arbitrarily large populations has not been established.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

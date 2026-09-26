@@ -35,3 +35,7 @@ python3 verification/audit.py
 All artwork is original and stored in the source DATA. Each 16×16 player uses four UDGs; each 32×16 vehicle uses eight. A thirteenth UDG provides the safe-strip texture. Lane strings rotate by two characters while stored numeric phases determine collision.
 
 The ROM key latch and frame counter are documented in Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second edition (Sinclair Research, 1983), [chapter 25](https://worldofspectrum.org/ZXBasicManual/zxmanchap25.html). PEEK 23560 recovers a recognised key that arrived between BASIC polls; POKE clears a consumed latch. It is not a queue of every key pressed. Simultaneous keys and taps too short for ROM scanning are not guaranteed.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

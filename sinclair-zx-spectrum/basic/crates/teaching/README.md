@@ -73,3 +73,7 @@ The recorded final teaching tape takes 30 PAL frames (0.60 seconds) for the samp
 After unit 08, [the small text-to-DATA converter](tools/README.md) validates one
 eight-row room and generates lines 8000–8070 for the unchanged loader. It runs
 on the development computer and is optional; typing DATA remains supported.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

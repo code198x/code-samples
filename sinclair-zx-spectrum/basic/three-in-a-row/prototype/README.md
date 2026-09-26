@@ -57,3 +57,7 @@ The original fork-win captures from both builds are byte-identical. The separate
 off. It does not modify images. See `renderer-comparison.json` and the two
 `*-render.json` records. This checks original capture data independently of any
 image-preview display.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

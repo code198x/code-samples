@@ -26,3 +26,7 @@ All sixteen checkpoints passed line admission, uncontrolled contact and exit. Ev
 `captures/` contains fresh teaching-run captures: the single-key practice landing, final landing and combined-input diagnostic. The website overview uses the prototype's existing flight capture of the identical final program.
 
 All execution is on the configured 48K PAL emulator. Frame counts include this harness's observation cadence; they are not a fixed frame-rate claim. Automated success does not establish beginner difficulty or enjoyment. The user played the native final prototype and reported that it works well and is quite hard. The eleven lessons and their easier stages are approved for publication; no new subjective audio or original-hardware claim is made.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

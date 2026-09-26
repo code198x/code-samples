@@ -41,3 +41,7 @@ learner review or original-hardware timing. The prototype's known headless
 capture issue remains: retained PNGs are diagnostic, not public lesson media.
 The teaching specification is in the docs repository at
 `platforms/sinclair-zx-spectrum/games/dice-roller/lesson-brief.md`.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

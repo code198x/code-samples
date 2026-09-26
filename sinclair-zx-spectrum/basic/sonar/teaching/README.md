@@ -35,3 +35,7 @@ The runner enters source changes through ROM keyboard events, executes every sta
 The approved lessons live in the website repository under `src/content/curriculum/sinclair-zx-spectrum/basic/sonar/`. Publication checks and the review record remain with the website. See the documentation repository's `platforms/sinclair-zx-spectrum/games/sonar/lessons.md` for the authoring and review status.
 
 The original program and character graphics use the samples repository's MIT licence. Hardware/language sources: Steven Vickers, edited by Robin Bradbeer, *ZX Spectrum BASIC Programming*, second edition (Sinclair Research, 1983), chapters 4–5, 7–9, 11–12, 15–16 and 20. The band rule is a game design, not a physical sonar simulation.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

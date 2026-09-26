@@ -51,3 +51,7 @@ Execution is configuration-specific evidence, not original-hardware timing or
 player approval. The user approved the live prototype and five replacement lessons. Current
 curriculum status and lesson evidence are maintained in the
 [implementation record](https://github.com/code198x/docs/blob/main/platforms/sinclair-zx-spectrum/games/dice-roller/lessons.md).
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

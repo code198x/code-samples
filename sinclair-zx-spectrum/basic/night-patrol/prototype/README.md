@@ -67,3 +67,7 @@ The debug-stepped PNGs can be blank in this binary; `capture.py` produces
 `live-frames.png` using ordinary frame advancement. That capture has been inspected.
 The user approved this corner-scanning prototype. Preserve it as the gameplay
 endpoint for lesson planning. No lessons or publication are included.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

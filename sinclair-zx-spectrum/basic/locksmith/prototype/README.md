@@ -30,3 +30,7 @@ python3 verification/audit.py
 The build enters the listing through the ROM keyboard and saves an auto-starting tape. Checks fresh-load the tape, drive keys and inspect state without changing the secret or results. The independent scoring model removes matching occurrences rather than reusing the BASIC frequency-count algorithm. Eighteen check groups cover 42 submitted guesses, input editing, held and excess digits, incomplete submission, both outcomes, replay and quit. Four complete losing rounds check every history row against the model. Source, stored lines, both TAP checksums, line-10 autostart and evidence hashes are audited.
 
 PNG captures are original emulator output and were visually inspected. Tests establish this configuration's behaviour, not original-hardware timing or independent learner outcomes. The game is turn-based; release each key before entering the next. Native feedback establishes acceptance of the game, not completion of its teaching progression.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

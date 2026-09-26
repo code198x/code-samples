@@ -59,3 +59,7 @@ Units 7–8 add random secrets, colour, short sounds and another round. Their
 complete checkpoints and the remaining module are covered by the
 [completion verification](../completion-verification/README.md). The checks
 above retain their original units 5–6 scope.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.

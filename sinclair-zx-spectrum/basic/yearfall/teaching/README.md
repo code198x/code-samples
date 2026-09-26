@@ -39,3 +39,7 @@ configuration-specific emulator evidence, not independent learner acceptance or
 original-hardware timing. The four-digit editor remains a practical limit for
 very long runs. No claim of unlimited settlement size or guaranteed recovery is
 made.
+
+## Source lineage
+
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.
