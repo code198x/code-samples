@@ -16,7 +16,7 @@ EI enables interrupts after the vector and handler are ready.
 Other primary registers are untouched. RETI completes the service, with EI
 allowing the next interrupt. `interrupt-clock` isolates this from the game.
 `half-rate-clock` then isolates the alternate-frame gate. This is not a general
-scheduler: from `timed-course` on, a missed update is observable in
+scheduler: from `elapsed-time` on, a missed update is observable in
 `frame_delta`, not silently caught up. The final game's measured work fits the intended two-frame interval.
 
 The elapsed-frame subtraction works across one byte wrap because the unsigned
@@ -53,8 +53,9 @@ conditional: `draw_ship` sets it, and `erase_ship` does nothing unless it is set
 They change the primary registers and scratch state used by `draw_sprite`.
 
 `draw_meteor`: IX=object record, D=Y, E=X. Uses the kind field to choose meteor
-or star artwork when stars exist. Draws twelve rows; changes AF/BC/DE/HL, preserves
-IX. Callers save BC around it while B is the pool loop counter.
+or star artwork when stars exist (`star-pickups` on). Draws twelve rows; changes
+AF/BC/DE/HL, preserves IX. From `object-pool` on, callers save BC around it while
+B is the pool loop counter.
 
 ## Input, objects and contact
 
@@ -67,22 +68,27 @@ Pool records are deliberately concrete, with no hidden type system:
 
 | Stage | Offsets, in bytes | Stride |
 |---|---|---|
-| object-pool / fixed-course | 0 X, 1 Y, 2 active, 3 speed | 4 |
+| object-records through fixed-course | 0 X, 1 Y, 2 active, 3 speed | 4 |
 | drift | previous fields plus 4 signed drift | 5 |
-| stars through boost | offset 2 becomes kind (0 free, 1 meteor, 2 star) | 5 |
+| star-pickups through boost | offset 2 becomes kind (0 free, 1 meteor, 2 star) | 5 |
 | render-budget onward | plus 5 previous-image X, 6 previous-image Y | 7 |
 
-The first-dodge program uses simple named variables. Pool iteration then uses IX
-as the current record and B as the remaining slot count. `spawn` searches twenty
-slots, fills the first free slot and draws it; if none is free it sets
-pool_overflow for verification. It changes primary registers and IX. In
-`object-pool`, `new_game` fills the spawn scratch variables and calls spawn three
-times. From `fixed-course` on, `waves` reads the next event when its countdown
+The first-dodge and phases programs use simple named variables. In
+`object-records` there are three records and no pool walk: the caller points IX
+at a record (`objects`, `objects+4`, `objects+8`) before each call. `spawn` fills
+the record at IX from `spawn_x` and `spawn_speed` and draws it; `advance_meteor`
+moves, retires and tests the one record at IX, and `advance_meteors` calls it once
+per record. Both change primary registers and preserve IX.
+From `object-pool` on, pool iteration uses IX as the current record and B as the
+remaining slot count. `spawn` searches twenty slots, fills the first free slot and
+draws it; if none is free it sets pool_overflow for verification. It changes
+primary registers and IX. In `object-records` and `object-pool`, `new_game` fills
+the spawn scratch variables and calls spawn three times. From `fixed-course` on, `waves` reads the next event when its countdown
 expires, fills the same variables and calls spawn. Event strides are three bytes,
 then four with drift, then five with kind. Bounds and record sizes are visible
 in each source.
 
-`advance_meteors` processes all active slots; changes primary registers, IX and
+From `object-pool` on, `advance_meteors` loops over all active slots; changes primary registers, IX and
 object/run state. It retires an object at y>=174. Contact requires 154<=y<172
 and abs(object_x-ship_x)<16. Equality at 16 is a miss. Kind determines whether
 contact removes the ship's one life or adds score. Removal clears kind/activity,
@@ -90,8 +96,9 @@ so the same star cannot award points twice. This is an intentionally forgiving
 inset rectangle rule, not a claim that every lit pixel collides.
 
 `count_objects` counts occupied slots; despite its prototype ancestor's name it
-does not draw anything. It changes AF/B/DE/IX and active_count. In `object-pool`
-a zero active count completes the run; from `fixed-course` on, completion requires
+does not draw anything. It changes AF/B/DE/IX and active_count. In
+`object-records` there is no count: the run is complete when the three active
+bytes are all zero. In `object-pool` a zero active count completes the run; from `fixed-course` on, completion requires
 both event exhaustion and a zero active count. Both come after checking for a
 fatal hit.
 
@@ -118,11 +125,13 @@ floor((32-length)/2), and passes that column to text. Overlong strings start at
 column zero and are clipped.
 
 `decimal3`: A=0..255, HL=three output bytes. Writes hundreds, tens, units by
-repeated subtraction. Changes AF/B/HL. Score stores tens of points; its buffer
+repeated subtraction. Changes AF/B/HL. It arrives in `stars`; in `star-pickups`
+the score byte exists but is only inspected. Score stores tens of points; its buffer
 has a fourth, fixed '0'. Do not confuse that representation with four-digit
 arithmetic. The accepted course's maximum is bounded below byte overflow.
 
-`seconds`: HL=elapsed PAL frames; returns A=whole seconds, L=remainder, H=0;
+`seconds` and `format_time` arrive in `timed-course`; `elapsed-time` measures
+`elapsed` without displaying it. `seconds`: HL=elapsed PAL frames; returns A=whole seconds, L=remainder, H=0;
 changes AF/B/DE/HL. The current short-course use stays below 256 seconds.
 `format_time`: HL=frames, DE=SS.CC buffer with one writable padding byte before
 it; changes primary registers and scratch bytes. Explain that padding contract
@@ -131,9 +140,9 @@ lands in the pad. This is limited to the game's sub-100-second display.
 
 `new_game` clears the screen and state_start..state_end, then sets the non-zero
 starting values: phase 1, the ship and `hull`, then what the stage has: the one
-meteor (`phases`), three spawns (`object-pool`) or the first event countdown
-(`fixed-course` on), the HUD (`stars` on) and the frame baseline (`timed-course`
-on). It changes primary registers and IX. Session records (`records` on) live
+meteor (`phases`), three spawns (`object-records`, `object-pool`) or the first
+event countdown (`fixed-course` on), the HUD (`stars` on) and the frame baseline
+(`elapsed-time` on). It changes primary registers and IX. Session records (`records` on) live
 outside this range. `save_score` changes AF/B and replaces best_score only
 when this run is at least as high. A successful finish additionally considers
 best_time; a failed run cannot replace it. All records are RAM state, lost on

@@ -28,6 +28,9 @@ def assets(n):
    lines.append(' defb '+','.join(map(str,fields)))
  return '\n'.join(lines)+'\n'
 
+# These checkpoints use the same generated data as the stage named.
+SAME_DATA = {'object-records': 'object-pool', 'star-pickups': 'stars', 'elapsed-time': 'timed-course'}
+
 CHECKPOINTS = ['pixel-motion', 'clocked-steering', 'one-meteor', 'first-dodge',
                'object-pool', 'fixed-course', 'drift', 'stars', 'timed-course',
                'boost', 'render-budget', 'records', 'finished']
@@ -37,3 +40,5 @@ if __name__ == '__main__':
 
     (ROOT / 'checkpoints/draw-ship/assets.inc').write_text(assets(1))
     (ROOT / 'checkpoints/phases/assets.inc').write_text(assets(4))
+    for name, stage in SAME_DATA.items():
+        (ROOT / 'checkpoints' / name / 'assets.inc').write_text(assets(CHECKPOINTS.index(stage) + 1))

@@ -60,7 +60,7 @@ def route(events, spawn=20):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--emulator', required=True)
-    parser.add_argument('--pasmo', help='Optional Pasmo executable for binary parity; its banner is recorded')
+    parser.add_argument('--pasmo', help='Optional upstream Pasmo 0.5.5 executable for binary parity; its banner is recorded')
     parser.add_argument('--only', nargs='+', help='Run selected named checkpoints')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -69,9 +69,11 @@ def main():
     report = {'method': 'Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.',
               'emulator_sha256': hashlib.sha256(Path(args.emulator).read_bytes()).hexdigest(), 'assembler_version': subprocess.run(['asm198x', '--version'], capture_output=True, text=True, check=True).stdout.strip(), 'programs': []}
     if args.pasmo:
-        # Pasmo has no version flag; its usage banner names the build (upstream or PasmoNext).
+        # Pasmo has no version flag; its usage banner names the build. PasmoNext is a
+        # different assembler, so the parity check below would be mislabelled.
         banner = subprocess.run([args.pasmo], capture_output=True, text=True)
         report['pasmo_version'] = (banner.stdout + banner.stderr).strip().splitlines()[0]
+        assert report['pasmo_version'].startswith('Pasmo v. 0.5.5'), report['pasmo_version']
     for directory in sorted((ROOT / 'checkpoints').iterdir()):
         name = directory.name
         if args.only and name not in args.only:
@@ -96,7 +98,7 @@ def main():
         if args.pasmo:
             subprocess.run([args.pasmo, str(source), str(target / 'pasmo.bin')],
                            cwd=directory, check=True, capture_output=True)
-            check('Pasmo machine code matches', (target / 'program.bin').read_bytes() == (target / 'pasmo.bin').read_bytes())
+            check('upstream Pasmo machine code matches', (target / 'program.bin').read_bytes() == (target / 'pasmo.bin').read_bytes())
         symbols = {m[1]: int(m[2], 16) for line in (target / 'symbols.sym').read_text().splitlines()
                    if (m := re.match(r'(\w+) = \$(\w+)', line))}
         m = transport.Spectrum(args.emulator, target)
@@ -104,6 +106,12 @@ def main():
             return int.from_bytes(bytes(m.call('memory_read', addr=symbols[label], len=size)['bytes']), 'little')
         def key(key_name, down):
             m.call('input', events=[{'Key': {'name': key_name, 'pressed': down}}])
+        def active():
+            # object-records has no count yet: add the three records' active bytes.
+            if 'active_count' in symbols:
+                return read('active_count')
+            return sum(m.call('memory_read', addr=symbols['objects'] + 2 + 4 * i, len=1)['bytes'][0] > 0
+                       for i in range(3))
         def boot():
             m.call('load_snapshot', path=str(target / 'program.sna'))
             m.frames(8)
@@ -193,7 +201,7 @@ def main():
                 m.frames(90)
                 check('steering produces a clean pass', read('phase') == 3, read('ship_x'))
             else:
-                number = art.CHECKPOINTS.index(name) + 1
+                number = art.CHECKPOINTS.index(art.SAME_DATA.get(name, name)) + 1
                 m.call('press_key', key='space', hold_frames=3)
                 m.frames(4)
                 check('enters flight', read('phase') == 1)
@@ -245,16 +253,17 @@ def main():
                         last = action
                     if 'frame_delta' in symbols:
                         cadence.add(read('frame_delta'))
-                    if ('wave' not in symbols or read('wave') == len(events)) and read('active_count'):
+                    if ('wave' not in symbols or read('wave') == len(events)) and active():
                         last_event_still_active = True
                     m.frames(1)
                 if last:
                     key(last, False)
                 key('Space', False)
                 check('keyboard route finishes alive', read('phase') == 3 and read('hull') == 1, {'phase': read('phase'), 'frames': frame})
-                check('completion waits beyond final spawn', last_event_still_active and read('active_count') == 0
+                check('completion waits beyond final spawn', last_event_still_active and active() == 0
                       and ('wave' not in symbols or read('wave') == len(events)))
-                check('bounded object pool', read('pool_overflow') == 0)
+                if 'pool_overflow' in symbols:
+                    check('bounded object pool', read('pool_overflow') == 0)
                 if 'frame_delta' in symbols:
                     check('measured update cadence', (4 in cadence if name == 'boost' else cadence <= {0, 1, 2}), sorted(cadence))
                 if number >= 8:
