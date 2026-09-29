@@ -6,8 +6,8 @@
     {
       "name": "unit-01",
       "source": "unit-01/brick-bash.bas",
-      "source_sha256": "0da17dd08bc694a64beee89c8cee2678c4846922a5f8797de8fe1839c2c8e6c3",
-      "tape_sha256": "b84dc9d0053ba4e5e6cfa9f93bf278da2dc0db958f53aa1ce6f0c7bce0d1a90d",
+      "source_sha256": "7f56bec1c1e4ed8c741423403125c88e76a4428634b1edf7a09d84b989e0b2db",
+      "tape_sha256": "2445e4084eecf5ee7b77170012cb1dc00622fa340d9d3a7a7c1103ca9ac8fdd7",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "four-distinct-pixels-toggle-off-and-back-without-damage"
@@ -20,8 +20,8 @@
     {
       "name": "unit-02",
       "source": "unit-02/brick-bash.bas",
-      "source_sha256": "f01652e06a04b49fbaf4ac03fae4ed47f9f3efdd67729e151f2a340eafa7fc4e",
-      "tape_sha256": "5ffaa9c993d4eafcfb352777ee50ed2c0b92e40f4ee8c3cd8cc0a9f1fb25117b",
+      "source_sha256": "4a8c6120961a08fbe6758004a17baa849e5e6a4eba8347eef73533276deecca2",
+      "tape_sha256": "19186d130d5d1208504572e2bebc007cec9ed7fd20aa4f0fdf4d888f8ce72ab8",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "bottom-or-miss-preserves-last-valid-ball-without-trails",
@@ -35,8 +35,8 @@
     {
       "name": "unit-03",
       "source": "unit-03/brick-bash.bas",
-      "source_sha256": "369bedfa46fd25371477d88936d7079f815c14abb87f833451215a559218e510",
-      "tape_sha256": "5b6e2f4d8e9f7703265530e1c2ddf5f2fa038b8fbfa888f05691d2e973e884d5",
+      "source_sha256": "14519f3905a0957a9e1c8f8086f5c5dee4ea552c1e0c886d7caecd1674c4e925",
+      "tape_sha256": "79fe2e2286d5212dcd3ae6378663998d8e751d44c9325d7307031a88e97797ec",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "held-paddle-clamps-and-attached-ball",
@@ -51,8 +51,8 @@
     {
       "name": "unit-04",
       "source": "unit-04/brick-bash.bas",
-      "source_sha256": "5a014bb87888b0cab1e4912c83721723926bde264b3532fd7ead63c9552fb921",
-      "tape_sha256": "84ecb1850332249d77ae4368111ef5131998fe185c1963abb9ceaf6352e87d0c",
+      "source_sha256": "cda8a127203efaa6e4795966312e71ae7bd693df37abdab93cd45b660bc45e74",
+      "tape_sha256": "8530d037216b60777ebd18cb764a07340e28bccc9db127a4c850e7cbed354e4a",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "held-paddle-clamps-and-attached-ball",
@@ -68,8 +68,8 @@
     {
       "name": "unit-05",
       "source": "unit-05/brick-bash.bas",
-      "source_sha256": "e4451dc1000495bf8c150a0c6df12c0dbbefc7a55d92a12f916dba358049e330",
-      "tape_sha256": "934037d0301982f5af383eeb5ded6e8ddebfa6d900ead13be5817cc98e098c18",
+      "source_sha256": "0b9412b77b0928f9133055bb75e1c167b938c6bfe91064a4679e7db2ceb9314f",
+      "tape_sha256": "b654b7aad07ac4f6a7e8d2142a36aabbcc353b602e01db43051ca5bf9f91edc4",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "held-paddle-clamps-and-attached-ball",
@@ -87,22 +87,22 @@
     {
       "name": "unit-06",
       "source": "unit-06/brick-bash.bas",
-      "source_sha256": "410f7eb1c3e8211fbd94cc55fd4c8045d532af91e821960c7864a29b8125904e",
-      "tape_sha256": "eeb6bfd2d083fb9044b262c742a658af1cb74e7d964d6edd65e1ad8397e6f9b4",
+      "source_sha256": "8ef62dd316abcc3202e163911eaae9c75331ac3a5de06ffe235f24a2279f73aa",
+      "tape_sha256": "d63ed3949b973fff6a6e53e798fb2acdb1798d9f2f4e31e58ecb2fc4527101ab",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "probe-bounds-gaps-single-pixel-overlap-and-removed-bricks",
         "inspector-exit"
       ],
       "captures": {
-        "inspector.png": "b17d5c1f0bb6bb65d412c9a63f41df998bc531db7999b82d0d3a3cb1d2fd2377"
+        "inspector.png": "ce894815beb3a5f727c6632d6cccf95c11fb8a4e1c7fbdc5c7fcaed664c8f6a7"
       }
     },
     {
       "name": "unit-07",
       "source": "unit-07/brick-bash.bas",
-      "source_sha256": "fc0348ddde9941d375c78f33b3cde4be5fc4a07cffd05a67ae261cad14c3eb0c",
-      "tape_sha256": "9bf7b3b94c9bcfad664aba4e2612deb5554918e819f00e4fe443617d18ad07f2",
+      "source_sha256": "6cc72f2e0517b3bff06660263e45645f6fe8668497b7fafdc5777e4caab6388d",
+      "tape_sha256": "599789f71f7fa990bb21c558dab17aaaddf44add0225c829ec73ca85f05eb55d",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "held-paddle-clamps-and-attached-ball",
@@ -120,8 +120,8 @@
     {
       "name": "unit-08",
       "source": "unit-08/brick-bash.bas",
-      "source_sha256": "81f0cd0bfe028187013a6ee43051d755a04a0131989f25e43a546fdacba2ca43",
-      "tape_sha256": "15aa3507d401309712df900876e6f27d1f895b0fa9c422294783d938f7ed0656",
+      "source_sha256": "53994ee52a2f614f652b617140f25d28d11746c3df38106f79c57c87a9a716dd",
+      "tape_sha256": "c499a9cfa9d4d9a7d23842163134dd0e149be86db8bd1b335fc8a61c831957eb",
       "checks": [
         "fresh-tape-and-ROM-stored-listing",
         "held-paddle-clamps-and-attached-ball",
@@ -139,8 +139,8 @@
     {
       "name": "unit-09",
       "source": "unit-09/brick-bash.bas",
-      "source_sha256": "db066770a5516c0452d62234f5ddcb48c31a1ba6fbd047e9c14e7430817f362d",
-      "tape_sha256": "b1740ec0100b76aa463b1d9b960599e43bf3b9fd4b7fe5ee98ee646d3d81fca1",
+      "source_sha256": "e0b21a4083576ee29db4ad732ec3b5a50364a22a20e1487f4c6039b18671ef8c",
+      "tape_sha256": "dc9e2e6cccd9fc7e168df539041d6d127c656e9cd56e23785c94c97bd8a21207",
       "checks": [
         "fresh-tape-ready-state-and-pixel-art",
         "held-paddle-clamps-and-attached-ball-without-trails",

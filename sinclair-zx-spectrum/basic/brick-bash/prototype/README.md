@@ -1,6 +1,6 @@
 # Brick Bash prototype
 
-A stock 48K PAL Spectrum BASIC game: clear eighteen bricks with one ball and a horizontal paddle. Native play feedback: “That works, it's surprisingly tough”. The agreed ten-lesson progression now has [nine executed teaching checkpoints](../teaching/README.md); the final listing is identical to this prototype.
+A stock 48K PAL Spectrum BASIC game: clear eighteen bricks with one ball and a horizontal paddle. Native play feedback: “That works, it's surprisingly tough”. Since that play, line 300 pads the serve message to 23 characters so it fully overwrites the controls hint on row 1; the program is otherwise the one that was played. The agreed ten-lesson progression now has [nine executed teaching checkpoints](../teaching/README.md); the final listing is identical to this prototype.
 
 S starts, O/P move, SPACE serves, R restarts the round and Q quits. Catching the ball with the left, centre or right of the paddle sends it left, vertically or right. A miss ends the attempt; retry restores the whole wall.
 
@@ -20,8 +20,8 @@ The builder enters ROM keyboard tokens and records `SAVE "bricks" LINE 10`. It r
 
 [Main results](verification/results.json) and [control results](verification/controls.json) contain fourteen passed checks: loading, held movement and clamps, miss, retry, complete clearance, frozen completion, all three return zones, one-pixel paddle-edge contacts, restart during flight and quitting from every phase. Each observed move is compared with an independent rectangle-scanning model. Full playfield bitmap comparisons check remaining artwork and stray pixels in ready, miss and completion states. [The manifest](verification/manifest.json) identifies the source, checksum-verified tape and four visually inspected captures.
 
-Movement observations had a median of 20 PAL frames, ranging from 18 to 25. These are commit/drawing boundaries, not a fixed update period or host input latency. Native feedback establishes that the game worked in this trial; original-hardware performance and learner outcomes remain untested.
+Movement observations had a median of 19 PAL frames, ranging from 18 to 25. These are commit/drawing boundaries, not a fixed update period or host input latency. Native feedback establishes that the game worked in this trial; original-hardware performance and learner outcomes remain untested.
 
 ## Source lineage
 
-The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. The evidence here was recorded again after the serve-message fix, so it names the current listing directly and [`source-lineage/lineage.json`](../../source-lineage/README.md) carries no link for it.

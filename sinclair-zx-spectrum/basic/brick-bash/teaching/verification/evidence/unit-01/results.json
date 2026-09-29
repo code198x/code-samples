@@ -6,9 +6,9 @@
     "source": "unit-01/brick-bash.bas",
     "kind": "drawing"
   },
-  "source_sha256": "0da17dd08bc694a64beee89c8cee2678c4846922a5f8797de8fe1839c2c8e6c3",
-  "tape_sha256": "b84dc9d0053ba4e5e6cfa9f93bf278da2dc0db958f53aa1ce6f0c7bce0d1a90d",
-  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "source_sha256": "7f56bec1c1e4ed8c741423403125c88e76a4428634b1edf7a09d84b989e0b2db",
+  "tape_sha256": "2445e4084eecf5ee7b77170012cb1dc00622fa340d9d3a7a7c1103ca9ac8fdd7",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
   "server": {
     "capabilities": {
       "tools": {}
@@ -16,7 +16,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.25.0"
+      "version": "0.24.0"
     }
   },
   "checks": [

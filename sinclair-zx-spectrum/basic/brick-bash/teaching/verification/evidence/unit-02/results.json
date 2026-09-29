@@ -6,9 +6,9 @@
     "source": "unit-02/brick-bash.bas",
     "kind": "game"
   },
-  "source_sha256": "f01652e06a04b49fbaf4ac03fae4ed47f9f3efdd67729e151f2a340eafa7fc4e",
-  "tape_sha256": "5ffaa9c993d4eafcfb352777ee50ed2c0b92e40f4ee8c3cd8cc0a9f1fb25117b",
-  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "source_sha256": "4a8c6120961a08fbe6758004a17baa849e5e6a4eba8347eef73533276deecca2",
+  "tape_sha256": "19186d130d5d1208504572e2bebc007cec9ed7fd20aa4f0fdf4d888f8ce72ab8",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
   "server": {
     "capabilities": {
       "tools": {}
@@ -16,7 +16,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.25.0"
+      "version": "0.24.0"
     }
   },
   "checks": [
@@ -84,7 +84,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 147,
       "y": 60,
       "dx": 4,
@@ -149,7 +149,7 @@
     },
     {
       "key": "",
-      "frames": 6,
+      "frames": 7,
       "x": 167,
       "y": 80,
       "dx": 4,
@@ -162,7 +162,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 171,
       "y": 84,
       "dx": 4,
@@ -227,7 +227,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 191,
       "y": 104,
       "dx": 4,
@@ -279,7 +279,7 @@
     },
     {
       "key": "",
-      "frames": 6,
+      "frames": 7,
       "x": 207,
       "y": 120,
       "dx": 4,
@@ -305,7 +305,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 215,
       "y": 128,
       "dx": 4,
@@ -370,7 +370,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 235,
       "y": 148,
       "dx": 4,
@@ -425,7 +425,7 @@
     },
     {
       "key": "",
-      "frames": 6,
+      "frames": 7,
       "x": 225,
       "y": 134,
       "dx": -4,
@@ -451,7 +451,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 217,
       "y": 126,
       "dx": -4,
@@ -516,7 +516,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 197,
       "y": 106,
       "dx": -4,
@@ -555,7 +555,7 @@
     },
     {
       "key": "",
-      "frames": 6,
+      "frames": 7,
       "x": 185,
       "y": 94,
       "dx": -4,
@@ -594,7 +594,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 173,
       "y": 82,
       "dx": -4,
@@ -659,7 +659,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 153,
       "y": 62,
       "dx": -4,
@@ -698,7 +698,7 @@
     },
     {
       "key": "",
-      "frames": 6,
+      "frames": 7,
       "x": 141,
       "y": 50,
       "dx": -4,
@@ -737,7 +737,7 @@
     },
     {
       "key": "",
-      "frames": 7,
+      "frames": 6,
       "x": 129,
       "y": 38,
       "dx": -4,

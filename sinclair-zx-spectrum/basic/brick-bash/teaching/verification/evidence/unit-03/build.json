@@ -1,9 +1,9 @@
 {
   "name": "unit-03",
   "source": "unit-03/brick-bash.bas",
-  "source_sha256": "369bedfa46fd25371477d88936d7079f815c14abb87f833451215a559218e510",
-  "tape_sha256": "5b6e2f4d8e9f7703265530e1c2ddf5f2fa038b8fbfa888f05691d2e973e884d5",
-  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "source_sha256": "14519f3905a0957a9e1c8f8086f5c5dee4ea552c1e0c886d7caecd1674c4e925",
+  "tape_sha256": "79fe2e2286d5212dcd3ae6378663998d8e751d44c9325d7307031a88e97797ec",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
   "server": {
     "capabilities": {
       "tools": {}
@@ -11,7 +11,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.25.0"
+      "version": "0.24.0"
     }
   },
   "entry": "Fresh 48K ROM keyboard; SAVE \"bricks\" LINE 10; no injection"

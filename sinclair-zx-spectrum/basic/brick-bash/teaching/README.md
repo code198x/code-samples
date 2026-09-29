@@ -1,6 +1,6 @@
 # Brick Bash teaching checkpoints
 
-Nine standalone Sinclair BASIC programs support the agreed ten-lesson progression. Lesson ten saves and reloads the final program from lesson nine. The final source is byte-identical to the prototype that worked in native play and was described as surprisingly tough. Difficulty and artwork are unchanged. The approved overview and ten website lessons accompany these checkpoints.
+Nine standalone Sinclair BASIC programs support the agreed ten-lesson progression. Lesson ten saves and reloads the final program from lesson nine. The final source is byte-identical to the prototype that worked in native play and was described as surprisingly tough. Difficulty and artwork are unchanged; the one later change pads the serve message at line 300, in every stage from three onwards, so it fully overwrites the controls hint on row 1. The approved overview and ten website lessons accompany these checkpoints.
 
 | Lesson | Maintained source | Result |
 |---|---|---|
@@ -36,8 +36,8 @@ Derivation is an authoring tool: the learner programs have no host-Python depend
 
 Evidence directories retain tapes, stored ROM program lines, execution traces and inspected captures. Load any `bricks.tap` with `LOAD ""`; it starts at line 10. Capture verification checks result labels against the ROM font glyphs and the top 176 display rows against the current RAM bitmap, then retains the original PNG. `captures.json` records how many frames were needed. Result captures also wait for the full prompt. Bitmap checks cover the complete court, surviving bricks, paddle and ball, with the inspector's report below the court.
 
-Human feedback applies to the unchanged prototype endpoint. Scripted checkpoint execution does not establish novice learning outcomes or original-hardware performance. The module overview and ten authored lessons now explain these stages; their local review and publication state belong in the documentation repository.
+Human feedback applies to the prototype endpoint as it was played, before the serve message was padded; that change touches only the text on row 1. Scripted checkpoint execution does not establish novice learning outcomes or original-hardware performance. The module overview and ten authored lessons now explain these stages; their local review and publication state belong in the documentation repository.
 
 ## Source lineage
 
-The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. [`source-lineage/lineage.json`](../../source-lineage/README.md) links each of those hashes to the listing now here, with the proof of what changed (stored spaces removed, or a variable renamed), and the audits accept the recorded hashes through it.
+The recorded evidence names the SHA-256 of each listing as it was when that evidence ran. The evidence here was recorded again after the serve-message fix, so it names the current listings directly and [`source-lineage/lineage.json`](../../source-lineage/README.md) carries no links for them.

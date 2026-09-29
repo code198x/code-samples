@@ -12,7 +12,7 @@
  270 IF p>26 THEN LET p=26
  280 IF p<>oldp THEN PRINT AT 18,oldp;"    ";AT 18,p; INK 7;p$
  290 IF served=1 THEN GO TO 350
- 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Watch the ball bounce.": GO TO 350
+ 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Watch the ball bounce. ": GO TO 350
  310 IF p=oldp THEN GO TO 200
  320 GO SUB 3000: LET x=8 *p+15: GO SUB 3000: GO TO 200
  350 LET nx=x+dx: LET ny=y+dy
