@@ -1,13 +1,14 @@
 {
   "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
   "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "assembler_version": "",
   "programs": [
     {
       "name": "boost",
-      "source_sha256": "26bd79fc443ff4ebf3fb64e7cc48f05da12d163fa89711e65de8d6f0957aab70",
+      "source_sha256": "33703b87585f3607b4e07b9324d8903145763a3c17b8f956487926144bccf733",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -55,15 +56,15 @@
         }
       ],
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "5036f664853fa89bac10519918257ad2b8a03bceaf8b7a2bef6f947f3e509b88",
-      "binary_bytes": 3654
+      "binary_sha256": "40c51c86fd8463a9977304bdf9b354cfbd99dcedb1ee27190963c5c6ff6fcb16",
+      "binary_bytes": 3789
     },
     {
       "name": "clocked-steering",
       "source_sha256": "e92e7de2310fbfb1e2ea903fa79b69e5aecd89fecb470d68a1b1624005aa4327",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -157,10 +158,10 @@
     },
     {
       "name": "drift",
-      "source_sha256": "8c00635f47f4d7657c7f8ab4796815b4359039099e9d4f913ea03b2ec120ebbb",
+      "source_sha256": "6d6127d5d55b413ebc0fe63ecb473d7c8a2de266fb671eff3e10d705c835ab41",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -189,25 +190,18 @@
         {
           "check": "bounded object pool",
           "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
         }
       ],
       "assets_sha256": "35a29465ae7d8cf4f7ac7cc3689ff379b39153fafca093e9e5d938c968f2114d",
-      "binary_sha256": "57f4294370dd482d0dbdb626b07ebec7f177c17ef689c4b9f6921afb267fb39d",
-      "binary_bytes": 2556
+      "binary_sha256": "ed98b417ecec3f5c7df6a8c155e1a1659de10ee95cc9ab464e5722b45b91abd1",
+      "binary_bytes": 2658
     },
     {
       "name": "eight-shifts",
       "source_sha256": "f6ace4c904b808a6aa94e54b43463b211e2c2e6493641846b6adcb28350e4fee",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -256,7 +250,7 @@
       "source_sha256": "113e89bed3bc25073eaa474448e79a485a068891e5982772090715fc597496a9",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -311,7 +305,7 @@
       "source_sha256": "1161fd64630a1af9461dac9cc803fbf30b15972b80a8981316bd2b50ba91dede",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -333,10 +327,10 @@
     },
     {
       "name": "fixed-course",
-      "source_sha256": "e7ba9facd128d2a0edf95d442372b0b383656a7fe2cf652b2c74a4f1d49231bd",
+      "source_sha256": "ce026a43b6a819d52a49077749db773762ca2fba635931f0b5fd61ce20465791",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -365,25 +359,18 @@
         {
           "check": "bounded object pool",
           "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
         }
       ],
       "assets_sha256": "7739ecba61c11dc59a0bb06f0093f65121025255c8c977b6157df17c148ac944",
-      "binary_sha256": "93d454b273ac8784e3267ce4d42bebd9a8f345c5a75b2ce0111eea4456af3673",
-      "binary_bytes": 2383
+      "binary_sha256": "672151d913247f583b0dd9c444d947cf70ab6bd7567114777893ef5d7e0605b3",
+      "binary_bytes": 2476
     },
     {
       "name": "half-rate-clock",
       "source_sha256": "774f718ffe2ea7e9a3595d71810c33081f1476ae2efabfda8093ab74a2c03cb1",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -399,7 +386,7 @@
       "source_sha256": "12a9ea258e446f3d33ffc6a00289dc0450d20431752bf813084cbcdd040ef073",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -412,10 +399,10 @@
     },
     {
       "name": "object-pool",
-      "source_sha256": "b3d32c9f10923f708c4a5716fef90442fc43b585970c932f141c3d26a520100b",
+      "source_sha256": "16456b0f9640f437e0f03890619758eb4ba9c5fee4114be81fca7640fdb4478a",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -434,7 +421,7 @@
           "check": "keyboard route finishes alive",
           "detail": {
             "phase": 3,
-            "frames": 195
+            "frames": 149
           }
         },
         {
@@ -444,25 +431,18 @@
         {
           "check": "bounded object pool",
           "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
         }
       ],
-      "assets_sha256": "7d6078e8c57dc5d92b96281461d9e943dcfd36189173b8e04561d16b0e1e3d34",
-      "binary_sha256": "d01a5ba40b9b025390f39ce2c47cba7587765ba77781e261525edacaeb058c8e",
-      "binary_bytes": 2092
+      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
+      "binary_sha256": "06197defc9df13e92270cec2a1e8122dd3780db079a31a764766417c2e3424c7",
+      "binary_bytes": 2146
     },
     {
       "name": "one-meteor",
       "source_sha256": "ce14af620942772885dadd7af19236ddbfd07431428bd35463e03440332df830",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -487,7 +467,7 @@
       "source_sha256": "dd9087a755363fde385f5721f9730038dae0876482f70502ee6d29740adf7938",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -508,11 +488,60 @@
       "binary_bytes": 58
     },
     {
+      "name": "phases",
+      "source_sha256": "b9aae09a3fdbe612c7ea9f1c311c18b1da753df3ebb33c5849d18f1a1a751f83",
+      "checks": [
+        {
+          "check": "Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "starts at the title",
+          "detail": null
+        },
+        {
+          "check": "held launch waits for release",
+          "detail": null
+        },
+        {
+          "check": "release starts one flight",
+          "detail": null
+        },
+        {
+          "check": "idle flight is destroyed",
+          "detail": 2
+        },
+        {
+          "check": "result freezes movement",
+          "detail": null
+        },
+        {
+          "check": "retry clears the run block",
+          "detail": 27
+        },
+        {
+          "check": "steering produces a clean pass",
+          "detail": 82
+        },
+        {
+          "check": "Q at a result returns to the title",
+          "detail": null
+        },
+        {
+          "check": "Q in flight returns to the title",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
+      "binary_sha256": "e4fa09699db2d353105a19761eb8b14d05f00e5924f560e03ee9db136b4ac112",
+      "binary_bytes": 1891
+    },
+    {
       "name": "pixel-motion",
       "source_sha256": "76406e9cd7654eba7ec304e4178ce29fb3ab6a2e27abb792814c5d33a9832d7e",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -602,10 +631,10 @@
     },
     {
       "name": "records",
-      "source_sha256": "2c19d1e6ae01fa901278aa2ec0dd9f5fb4e4c9581a00521be9ce8a3a8210185f",
+      "source_sha256": "901a7a3ce252680e42c80a8046559ef2f48d6f8d02c87a9fe545aa16c57ad24c",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -652,15 +681,15 @@
         }
       ],
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "cd58b7d6349d08b62246b6c4e6aa014ce66ea5c0f0d2d7188d9131f89f5ca365",
-      "binary_bytes": 3959
+      "binary_sha256": "6b235a661ce2d3441952eab36d6f98f9c6103e2bad79e278ca1141953eb47a3e",
+      "binary_bytes": 4094
     },
     {
       "name": "render-budget",
-      "source_sha256": "a22128bedb5320c7dd38fdf070b0defdc39bbb04267add5fa1809fc6b10c9428",
+      "source_sha256": "fe78d98ba0b774d1ad6f2efdea3701767b3b0cec990885bd3406131976deec8c",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -707,15 +736,15 @@
         }
       ],
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "4b57ae7b4277c5195b590b69c5cf27b82fdaba5a98dc55f2937872b257e80c71",
-      "binary_bytes": 3758
+      "binary_sha256": "9f223fddd19de3a242bd247d923eee5b41d104eeac48d111571f007b08a22d2a",
+      "binary_bytes": 3893
     },
     {
       "name": "stars",
-      "source_sha256": "8889a6212bd04f681ad79dc6a7aac78b1699cb0a0e6048d10c7105cca23fd5fc",
+      "source_sha256": "abaed826c66870ce37d0d2cd40cbbab6cd916afb44cff1777564b5970d6e46fc",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -746,27 +775,20 @@
           "detail": null
         },
         {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
           "check": "route collects stars",
           "detail": 80
         }
       ],
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "cc9456a27aacc7fdfb264c70ae4317e7a666ff3e83c4c028546b0b60de79281a",
-      "binary_bytes": 3416
+      "binary_sha256": "a375498cc4d5b24e810150963321b0f4681b8f4741370a35272f3c8f263d816d",
+      "binary_bytes": 3520
     },
     {
       "name": "timed-course",
-      "source_sha256": "0648b53a2fd1902c4af415f905071bca2b92c44fd9e40f0980965e7c0ea8c478",
+      "source_sha256": "0cee6e36d3c99062252d7768157d3e5e9666e6689393505068d96f67640f0e87",
       "checks": [
         {
-          "check": "upstream Pasmo machine code matches",
+          "check": "Pasmo machine code matches",
           "detail": null
         },
         {
@@ -813,10 +835,9 @@
         }
       ],
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "fda7e348f1aa4b0862414b47c38c9e4ba95d34ec87930971374ada6eb03eba16",
-      "binary_bytes": 3533
+      "binary_sha256": "ac4a544e71832f56d22224611a7140af37fb394a47323ed0ceb704d0dee1f4f8",
+      "binary_bytes": 3662
     }
   ],
-  "assembler_version": "asm198x v0.0.58",
-  "pasmo_version": "Pasmo v. 0.5.5"
+  "pasmo_version": "PasmoNext v0.1.3 (PC) (C) 2004-2005 Julian Albo"
 }

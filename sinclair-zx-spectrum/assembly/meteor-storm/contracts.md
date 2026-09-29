@@ -16,8 +16,8 @@ EI enables interrupts after the vector and handler are ready.
 Other primary registers are untouched. RETI completes the service, with EI
 allowing the next interrupt. `interrupt-clock` isolates this from the game.
 `half-rate-clock` then isolates the alternate-frame gate. This is not a general
-scheduler: missing an update is observable in `frame_delta`, not silently caught
-up. The final game's measured work fits the intended two-frame interval.
+scheduler: from `timed-course` on, a missed update is observable in
+`frame_delta`, not silently caught up. The final game's measured work fits the intended two-frame interval.
 
 The elapsed-frame subtraction works across one byte wrap because the unsigned
 low-byte difference represents the actual gap, provided fewer than 256 frames
@@ -48,7 +48,8 @@ sprite's kind before erasing breaks that contract. HUD rows and playfield rows
 are separate. This renderer is not a general solution for scrolling scenery.
 
 `ship` in the early programs toggles the image at the current `ship_x`.
-Later `erase_ship`/`draw_ship` track `ship_visible` so removal is conditional.
+From `phases` on, `erase_ship`/`draw_ship` track `ship_visible` so removal is
+conditional: `draw_ship` sets it, and `erase_ship` does nothing unless it is set.
 They change the primary registers and scratch state used by `draw_sprite`.
 
 `draw_meteor`: IX=object record, D=Y, E=X. Uses the kind field to choose meteor
@@ -74,10 +75,12 @@ Pool records are deliberately concrete, with no hidden type system:
 The first-dodge program uses simple named variables. Pool iteration then uses IX
 as the current record and B as the remaining slot count. `spawn` searches twenty
 slots, fills the first free slot and draws it; if none is free it sets
-pool_overflow for verification. It changes primary registers and IX. `waves`
-reads the next event when its countdown expires, fills spawn scratch variables
-and calls spawn. Event strides are three bytes, then four with drift, then five
-with kind. Bounds and record sizes are visible in each source.
+pool_overflow for verification. It changes primary registers and IX. In
+`object-pool`, `new_game` fills the spawn scratch variables and calls spawn three
+times. From `fixed-course` on, `waves` reads the next event when its countdown
+expires, fills the same variables and calls spawn. Event strides are three bytes,
+then four with drift, then five with kind. Bounds and record sizes are visible
+in each source.
 
 `advance_meteors` processes all active slots; changes primary registers, IX and
 object/run state. It retires an object at y>=174. Contact requires 154<=y<172
@@ -87,8 +90,23 @@ so the same star cannot award points twice. This is an intentionally forgiving
 inset rectangle rule, not a claim that every lit pixel collides.
 
 `count_objects` counts occupied slots; despite its prototype ancestor's name it
-does not draw anything. It changes AF/B/DE/IX and active_count. Completion requires
-both event exhaustion and a zero active count, after checking for a fatal hit.
+does not draw anything. It changes AF/B/DE/IX and active_count. In `object-pool`
+a zero active count completes the run; from `fixed-course` on, completion requires
+both event exhaustion and a zero active count. Both come after checking for a
+fatal hit.
+
+## Phases
+
+From `phases` on, `phase` is 0 at the title, 1 in flight, 2 after destruction and
+3 in clear space. `title` sets phase 0, clears the screen, draws its lines and
+waits for Space between two calls to `release_keys`. `phases` through `records`
+place the title lines at hand-counted columns; `finished` centres them with
+`text_center`. In flight, Q leaves for `title`. `hull` is 1 while the ship is
+alive; contact clears it and the main loop leaves for `lost` when it reads zero.
+The name survives from an earlier multi-hit prototype; one contact ends the run.
+`lost` and `won` set phase 2 or 3 and share `result`, which clears the screen,
+draws the outcome and waits: R calls `new_game`, Q returns to `title`. Each
+result waits for key release first, so a key held from flight cannot choose.
 
 ## Text, numbers and lifetime
 
@@ -111,9 +129,12 @@ it; changes primary registers and scratch bytes. Explain that padding contract
 before reusing the routine: decimal3 writes three digits and the leading one
 lands in the pad. This is limited to the game's sub-100-second display.
 
-`new_game` clears state_start..state_end, reinitialises the ship, event countdown,
-HUD and frame baseline. It changes primary registers and IX. Session records
-live outside this range. `save_score` changes AF/B and replaces best_score only
+`new_game` clears the screen and state_start..state_end, then sets the non-zero
+starting values: phase 1, the ship and `hull`, then what the stage has: the one
+meteor (`phases`), three spawns (`object-pool`) or the first event countdown
+(`fixed-course` on), the HUD (`stars` on) and the frame baseline (`timed-course`
+on). It changes primary registers and IX. Session records (`records` on) live
+outside this range. `save_score` changes AF/B and replaces best_score only
 when this run is at least as high. A successful finish additionally considers
 best_time; a failed run cannot replace it. All records are RAM state, lost on
 program reload. `release_keys` waits for Space, Q and R to be released and changes

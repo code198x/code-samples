@@ -1,11 +1,11 @@
-# Build the checkpoint this unit's lesson runs (records). Its source lives in
-# checkpoints/records/; this folder exists so the site can stage the tape where the lesson looks for it.
+# Build the checkpoint this unit's lesson runs (render-budget). Its source lives in
+# checkpoints/render-budget/; this folder exists so the site can stage the tape where the lesson looks for it.
 ASM ?= asm198x
 ASMFLAGS = --dialect pasmo --cpu z80 --tapbas
 
 all: meteor-storm.tap
 
-meteor-storm.tap: ../checkpoints/records/meteor-storm.asm $(wildcard ../checkpoints/records/*.inc)
+meteor-storm.tap: ../checkpoints/render-budget/meteor-storm.asm $(wildcard ../checkpoints/render-budget/*.inc)
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:

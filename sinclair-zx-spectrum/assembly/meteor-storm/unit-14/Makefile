@@ -1,11 +1,11 @@
-# Build the checkpoint this unit's lesson runs (drift). Its source lives in
-# checkpoints/drift/; this folder exists so the site can stage the tape where the lesson looks for it.
+# Build the checkpoint this unit's lesson runs (fixed-course). Its source lives in
+# checkpoints/fixed-course/; this folder exists so the site can stage the tape where the lesson looks for it.
 ASM ?= asm198x
 ASMFLAGS = --dialect pasmo --cpu z80 --tapbas
 
 all: meteor-storm.tap
 
-meteor-storm.tap: ../checkpoints/drift/meteor-storm.asm $(wildcard ../checkpoints/drift/*.inc)
+meteor-storm.tap: ../checkpoints/fixed-course/meteor-storm.asm $(wildcard ../checkpoints/fixed-course/*.inc)
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:
