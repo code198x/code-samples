@@ -1,7 +1,7 @@
 # Native checkpoint evidence
 
-- `checkpoints.json`: twenty-one complete builds, upstream Pasmo 0.5.5 byte
-  parity and 172 checks. Every source/data hash matches the maintained files.
+- `checkpoints.json`: twenty-three complete builds, upstream Pasmo 0.5.5 byte
+  parity and 192 checks. Every source/data hash matches the maintained files.
   `pasmo_version` records the Pasmo banner (`Pasmo v. 0.5.5`) and
   `assembler_version` the Asm198x build.
 - `opening-additions.json`: two additional static programs, native bitmap checks
@@ -14,12 +14,15 @@
 - `title.png`, `flight.png`, `hit.png`, `miss.png`: inspected native captures.
 - `phases-title.png`, `phases-play.png`, `phases-result.png`: inspected native
   captures of the `phases` checkpoint's three phases.
+- `endpoint-tone.json`, `endpoint-sound-table.json`: the endpoint suite run
+  against each sound checkpoint. Both reproduce the accepted route's frames,
+  ticks, times, scores and records exactly; blocking sounds did not move them.
 
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
 an optional upstream Pasmo 0.5.5 executable for binary comparison and refuses
-any other Pasmo build. `checkpoints.json` keeps the twenty-one game programs; `opening-additions.json` keeps `pixel-address` and
+any other Pasmo build. `checkpoints.json` keeps the twenty-three game programs; `opening-additions.json` keeps `pixel-address` and
 `draw-ship`. The endpoint uses the independent accepted route from
 `prototype/verification/model-results.json`.
 
@@ -32,3 +35,11 @@ found the full score line. They have not been selected as lesson illustrations.
 Result-screen visual review belongs in browser/interactive verification before
 publication. Audio captures exist in the temporary endpoint output; this record
 does not claim listening review or physical-hardware testing.
+
+The sound checkpoints' evidence comes from the same Emu198x build (0.24.0),
+the official 48K ROM and upstream Pasmo 0.5.5. Loading a snapshot over a
+running, unhalted CPU can resume at $0000 (emu198x/emu198x#1564), and a blocking
+sound can leave the CPU running at a frame boundary, so the endpoint harness
+resets first in that case only. Halted loads are unchanged and `endpoint.json`
+reproduces exactly. Measured pitches and lengths of the sound captures are in
+each checkpoint's README; nobody has yet listened to them.

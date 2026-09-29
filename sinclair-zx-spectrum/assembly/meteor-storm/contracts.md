@@ -148,3 +148,31 @@ when this run is at least as high. A successful finish additionally considers
 best_time; a failed run cannot replace it. All records are RAM state, lost on
 program reload. `release_keys` waits for Space, Q and R to be released and changes
 AF/BC; it prevents a held launch/retry key from triggering the next phase.
+
+## Sound
+
+Port $FE bit 4 drives the speaker and bits 0-2 set the border; bit 3 (MIC) stays
+0. From `tone` onward the border colour lives in `border`, outside the run state,
+and every speaker write ORs it in, so a sound never changes the border. Start-up
+writes it once. Sounds block: interrupts still count frames, but the program
+waits until the sound ends. Timings assume 3.5 MHz and code above $8000, where
+only each OUT to the ULA port can be delayed by contention.
+
+`impact_sound` (tone checkpoint): no inputs. Plays IMPACT_CYCLES periods of
+26×IMPACT_HALF+57 T-states, 105 cycles of 6687 (523 Hz, 200.6 ms). Changes AF/B/DE.
+IMPACT_HALF 0 would mean 256 passes; keep it 1-255, and IMPACT_CYCLES 1-255.
+
+`tone` (sound-table onward): D=border bits, C=half-period count 1-255, E=cycle
+count 1-255. Period 26×C+51 T-states. Changes AF/B/E; preserves C, D and HL.
+The two halves differ by 23 T-states; pitch follows the whole period.
+
+`play_sound`: HL=sound, a list of (half-period, cycle count) byte pairs ended by
+a 0 half-period. Reads `border`, plays each note through `tone`. Changes
+AF/BC/DE/HL; preserves IX. Callers inside the pool loop save BC. Sounds played
+during an update (`star_sound`, `boost_sound`) must stay short: the update has
+139,776 T-states and they take about 17,000 and 22,000. `arrival_sound` and
+`impact_sound` play after the run's result is decided.
+
+`boost` also plays `boost_sound` when Space is held now and was not at the
+previous update. `boost_last` holds that previous state inside the run range, so
+a new run starts with it clear. Changes AF/BC/DE/HL.

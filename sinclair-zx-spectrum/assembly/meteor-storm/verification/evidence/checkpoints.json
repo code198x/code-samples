@@ -832,6 +832,61 @@
       "binary_bytes": 3893
     },
     {
+      "name": "sound-table",
+      "source_sha256": "b768442a5597049587989e5a755190228d107b223e148018aca294ffd21fcc79",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "3eb266dd00087692f4a88dd4838cd5442b59b54514bd3b61ad8c77e9484e7015",
+      "binary_bytes": 4293
+    },
+    {
       "name": "star-pickups",
       "source_sha256": "3929b5128ea7c131829f0ad65296a6fa1361324084cbf2eec0efdb3bb56dee34",
       "checks": [
@@ -973,6 +1028,61 @@
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
       "binary_sha256": "ac4a544e71832f56d22224611a7140af37fb394a47323ed0ceb704d0dee1f4f8",
       "binary_bytes": 3662
+    },
+    {
+      "name": "tone",
+      "source_sha256": "9bff4ecdbf1f948da7785c83fa14347466fb5f9a446f1ec925d3bdf307d4ea44",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "bb987c81a9f798494cc59d8e34772525e70c1036270de54834042c035ad0aa0f",
+      "binary_bytes": 4223
     }
   ]
 }
