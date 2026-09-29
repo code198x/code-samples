@@ -34,8 +34,8 @@ def base(u):
   d[110]=' 110 LET dx=4: LET dy=4: LET steps=0'
   d[1020]='1020 PRINT AT 1,2;"Watch the ball bounce."'
   d[1090]='1090 PRINT AT 21,2; INK 5;"R retry  Q quit";'
- if u==3:d[300]=' 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Watch the ball bounce.": GO TO 350'
- if u==4:d[300]=' 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Keep the ball in play.": GO TO 350'
+ if u==3:d[300]=' 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Watch the ball bounce. ": GO TO 350'
+ if u==4:d[300]=' 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Keep the ball in play. ": GO TO 350'
  if u==5:
   d[100]=' 100 LET alive=1: LET left=1: LET p=14: LET x=127: LET y=40'
   drop(d,120,1040,1050,1060,1070)

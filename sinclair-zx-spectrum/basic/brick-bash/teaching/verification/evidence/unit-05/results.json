@@ -6,9 +6,9 @@
     "source": "unit-05/brick-bash.bas",
     "kind": "game"
   },
-  "source_sha256": "e4451dc1000495bf8c150a0c6df12c0dbbefc7a55d92a12f916dba358049e330",
-  "tape_sha256": "934037d0301982f5af383eeb5ded6e8ddebfa6d900ead13be5817cc98e098c18",
-  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
+  "source_sha256": "0b9412b77b0928f9133055bb75e1c167b938c6bfe91064a4679e7db2ceb9314f",
+  "tape_sha256": "b654b7aad07ac4f6a7e8d2142a36aabbcc353b602e01db43051ca5bf9f91edc4",
+  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
   "server": {
     "capabilities": {
       "tools": {}
@@ -16,7 +16,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.25.0"
+      "version": "0.24.0"
     }
   },
   "checks": [
@@ -36,7 +36,7 @@
   "trace": [
     {
       "key": " ",
-      "frames": 19,
+      "frames": 18,
       "x": 131,
       "y": 44,
       "dx": 4,
@@ -88,7 +88,7 @@
     },
     {
       "key": "",
-      "frames": 16,
+      "frames": 15,
       "x": 147,
       "y": 60,
       "dx": 4,
@@ -140,7 +140,7 @@
     },
     {
       "key": "",
-      "frames": 16,
+      "frames": 15,
       "x": 163,
       "y": 76,
       "dx": 4,
@@ -166,7 +166,7 @@
     },
     {
       "key": "",
-      "frames": 16,
+      "frames": 15,
       "x": 171,
       "y": 84,
       "dx": 4,
@@ -179,7 +179,7 @@
     },
     {
       "key": "",
-      "frames": 15,
+      "frames": 16,
       "x": 175,
       "y": 88,
       "dx": 4,
@@ -205,7 +205,7 @@
     },
     {
       "key": "",
-      "frames": 16,
+      "frames": 15,
       "x": 183,
       "y": 96,
       "dx": 4,
@@ -246,7 +246,7 @@
     },
     {
       "key": " ",
-      "frames": 20,
+      "frames": 15,
       "x": 35,
       "y": 44,
       "dx": 4,
@@ -272,7 +272,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 43,
       "y": 52,
       "dx": 4,
@@ -285,7 +285,7 @@
     },
     {
       "key": "o",
-      "frames": 15,
+      "frames": 16,
       "x": 47,
       "y": 56,
       "dx": 4,
@@ -324,7 +324,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 59,
       "y": 68,
       "dx": 4,
@@ -363,7 +363,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 71,
       "y": 80,
       "dx": 4,
@@ -402,7 +402,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 83,
       "y": 92,
       "dx": 4,
@@ -454,7 +454,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 99,
       "y": 108,
       "dx": 4,
@@ -493,7 +493,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 111,
       "y": 120,
       "dx": 4,
@@ -532,7 +532,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 123,
       "y": 132,
       "dx": 4,
@@ -558,7 +558,7 @@
     },
     {
       "key": "o",
-      "frames": 15,
+      "frames": 16,
       "x": 131,
       "y": 140,
       "dx": 4,
@@ -584,7 +584,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 139,
       "y": 148,
       "dx": 4,
@@ -612,7 +612,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 147,
       "y": 142,
       "dx": 4,
@@ -651,7 +651,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 159,
       "y": 130,
       "dx": 4,
@@ -690,7 +690,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 171,
       "y": 118,
       "dx": 4,
@@ -729,7 +729,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 183,
       "y": 106,
       "dx": 4,
@@ -742,7 +742,7 @@
     },
     {
       "key": "o",
-      "frames": 15,
+      "frames": 16,
       "x": 187,
       "y": 102,
       "dx": 4,
@@ -781,7 +781,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 199,
       "y": 90,
       "dx": 4,
@@ -820,7 +820,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 211,
       "y": 78,
       "dx": 4,
@@ -859,7 +859,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 223,
       "y": 66,
       "dx": 4,
@@ -939,7 +939,7 @@
     },
     {
       "key": "o",
-      "frames": 16,
+      "frames": 15,
       "x": 229,
       "y": 42,
       "dx": -4,

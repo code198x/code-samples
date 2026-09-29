@@ -1,5 +1,5 @@
  100 LET alive=1: LET left=1: LET p=14: LET x=127: LET y=40
- 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Clear every brick.": GO TO 350
+ 300 IF k$=" " THEN LET served=1: PRINT AT 1,2;"Clear every brick.     ": GO TO 350
  390 IF ny>=32 THEN GO TO 440
  440 LET tx=nx: LET ty=y: GO SUB 2000
  450 IF hit=1 THEN LET dx=-dx: LET nx=x: GO SUB 2500
