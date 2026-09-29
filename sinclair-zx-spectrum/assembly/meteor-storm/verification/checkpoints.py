@@ -67,7 +67,10 @@ def main():
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     report = {'method': 'Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.',
-              'emulator_sha256': hashlib.sha256(Path(args.emulator).read_bytes()).hexdigest(), 'assembler_version': subprocess.run(['asm198x', '--version'], capture_output=True, text=True, check=True).stdout.strip(), 'programs': []}
+              'emulator_sha256': hashlib.sha256(Path(args.emulator).read_bytes()).hexdigest(), 'programs': []}
+    # asm198x prints its version on stderr.
+    version = subprocess.run(['asm198x', '--version'], capture_output=True, text=True, check=True)
+    report['assembler_version'] = (version.stdout + version.stderr).strip()
     if args.pasmo:
         # Pasmo has no version flag; its usage banner names the build. PasmoNext is a
         # different assembler, so the parity check below would be mislabelled.
