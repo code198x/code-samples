@@ -1,7 +1,8 @@
 {
   "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
   "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
-  "assembler_version": "",
+  "assembler_version": "asm198x v0.0.58",
+  "pasmo_version": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
   "programs": [
     {
       "name": "draw-ship",
