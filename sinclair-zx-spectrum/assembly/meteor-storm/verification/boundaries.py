@@ -21,7 +21,7 @@ def main():
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     source = ROOT / 'checkpoints/first-dodge/meteor-storm.asm'
-    subprocess.run(['asm198x', '--dialect', 'pasmonext', '--cpu', 'z80', '--sna',
+    subprocess.run(['asm198x', '--dialect', 'pasmo', '--cpu', 'z80', '--sna',
                     '--sym=' + str(out / 'symbols.sym'), str(source), '-o', str(out / 'program.sna')], check=True)
     symbols = {match[1]: int(match[2], 16) for line in (out / 'symbols.sym').read_text().splitlines()
                if (match := re.match(r'(\w+) = \$(\w+)', line))}

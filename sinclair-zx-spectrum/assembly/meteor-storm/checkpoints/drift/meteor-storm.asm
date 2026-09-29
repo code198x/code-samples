@@ -1,6 +1,6 @@
-; Meteor Storm checkpoint 7: complete standalone program. Stock 48K PAL.
+; Meteor Storm checkpoint drift: complete standalone program. Stock 48K PAL.
 ; Explicit state drives collision; the screen is only a view.
-; Build: asm198x --dialect pasmonext --cpu z80 --tapbas meteor-storm.asm -o meteor-storm.tap
+; Build: asm198x --dialect pasmo --cpu z80 --tapbas meteor-storm.asm -o meteor-storm.tap
  org 32768
 SHIP_Y equ 160
 SLOTS equ 20
@@ -36,6 +36,28 @@ interrupt:
  reti
 
 title:
+ xor a
+ ld (phase),a
+ call clear
+ ld bc,$030A
+ ld de,name_text
+ call text
+ ld bc,$0602
+ ld de,title_goal
+ call text
+ ld bc,$0A06
+ ld de,title_keys
+ call text
+ ld bc,$1408
+ ld de,title_start
+ call text
+ call release_keys
+title_title_wait:
+ halt
+ ld bc,$7FFE
+ in a,(c)
+ bit 0,a
+ jr nz,title_title_wait
  call release_keys
  call new_game
 main_loop:
@@ -43,17 +65,6 @@ main_loop:
  ld a,(frames)
  and 1
  jr nz,main_loop
- ; Fixed 25 Hz updates: rendering density must not set movement speed.
- ld a,(frames)
- ld c,a
- ld a,(last_frame)
- ld b,a
- ld a,c
- sub b
- ld (frame_delta),a
- ld a,c
- ld (last_frame),a
-race_step:
  call erase_ship
  ld bc,$FBFE
  in a,(c)
@@ -101,8 +112,6 @@ new_game:
  call text
  call draw_ship
  call count_objects
- ld a,(frames)
- ld (last_frame),a
  ret
 
 steer:
@@ -143,7 +152,7 @@ advance_meteors_next:
  ld d,(ix+1)
  call draw_meteor
  pop bc
- ; Stars fall vertically; meteors drift one pixel every fourth update.
+ ; Meteors drift one pixel every fourth update.
  ld a,(ticks)
  and 3
  jr nz,drift_done
@@ -183,7 +192,6 @@ drift_done:
 advance_meteors_absolute:
  cp 16
  jp nc,advance_meteors_skip
-meteor_contact:
  ; One contact ends this attempt; no recovery state is needed.
  xor a
  ld (hull),a
@@ -270,7 +278,6 @@ spawn_found:
  ; XOR removes exactly the old sprite, preserving overlapping objects.
 draw_meteor:
  ld hl,meteor_sprites
-draw_object:
  ld a,12
  jp draw_sprite
 
@@ -492,8 +499,6 @@ result:
  push de
  call clear
  pop de
- push de
- pop de
  ld bc,$0608
  call text
  ld bc,$0A04
@@ -528,11 +533,15 @@ release_keys:
  jr nz,release_keys
  ret
 
-controls: defb "O/P STEER   Q RESTART",0
+name_text: defb "METEOR STORM",0
+title_goal: defb "DODGE ROCKS. ONE HIT ENDS IT",0
+title_keys: defb "O LEFT       P RIGHT",0
+title_start: defb "SPACE TO LAUNCH",0
+controls: defb "O/P STEER  Q QUIT",0
 lost_text: defb "SHIP DESTROYED",0
 won_text: defb "CLEAR SPACE",0
 result_text: defb "METEOR STORM - FLIGHT ENDED",0
-retry_text: defb "R RETRY   Q RESTART",0
+retry_text: defb "R RETRY   Q TITLE",0
 frames: defb 0
 sprite_ptr: defw 0
 sprite_height: defb 0
@@ -545,8 +554,6 @@ wave_timer: defb 0
 ticks: defw 0
 active_count: defb 0
 pool_overflow: defb 0
-last_frame: defb 0
-frame_delta: defb 0
 ship_visible: defb 0
 spawn_drift: defb 0
 spawn_speed: defb 0

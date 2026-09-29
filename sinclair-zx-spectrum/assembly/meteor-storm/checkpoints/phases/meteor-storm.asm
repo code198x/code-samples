@@ -1,5 +1,5 @@
 ; Meteor Storm checkpoint phases: complete standalone program. Stock 48K PAL.
-; A title, one flight and a result; retry clears the run as one block.
+; Explicit state drives collision; the screen is only a view.
 ; Build: asm198x --dialect pasmo --cpu z80 --tapbas meteor-storm.asm -o meteor-storm.tap
  org 32768
 SHIP_Y equ 160
@@ -89,7 +89,7 @@ main_loop:
 distance:
  cp 16
  jr nc,no_contact
- ; One contact ends this attempt: the ship has one life.
+ ; One contact ends this attempt; no recovery state is needed.
  xor a
  ld (hull),a
  call impact_sound
@@ -150,7 +150,6 @@ steer_store:
  ld (ship_x),a
  ret
 
-; Remove the ship only while an image is on screen, so XOR never draws one.
 erase_ship:
  ld a,(ship_visible)
  or a

@@ -22,9 +22,8 @@ def load(name, path):
 transport = load('transport', ROOT.parents[1] / 'basic/meet-basic/opening/verification/verify.py')
 art = load('art', ROOT / 'assets.py')
 
-def route(events):
+def route(events, spawn=20):
     tracks = {}
-    spawn = 20
     end = 0
     for x, speed, delay, drift, kind in events:
         tick, y = spawn, 24
@@ -61,7 +60,7 @@ def route(events):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--emulator', required=True)
-    parser.add_argument('--pasmo', help='Optional upstream Pasmo executable for binary parity')
+    parser.add_argument('--pasmo', help='Optional Pasmo executable for binary parity; its banner is recorded')
     parser.add_argument('--only', nargs='+', help='Run selected named checkpoints')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -69,6 +68,10 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     report = {'method': 'Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.',
               'emulator_sha256': hashlib.sha256(Path(args.emulator).read_bytes()).hexdigest(), 'assembler_version': subprocess.run(['asm198x', '--version'], capture_output=True, text=True, check=True).stdout.strip(), 'programs': []}
+    if args.pasmo:
+        # Pasmo has no version flag; its usage banner names the build (upstream or PasmoNext).
+        banner = subprocess.run([args.pasmo], capture_output=True, text=True)
+        report['pasmo_version'] = (banner.stdout + banner.stderr).strip().splitlines()[0]
     for directory in sorted((ROOT / 'checkpoints').iterdir()):
         name = directory.name
         if args.only and name not in args.only:
@@ -84,7 +87,7 @@ def main():
             entry['checks'].append({'check': label, 'detail': detail})
             print('PASS', name, label, flush=True)
         for flag, extension in [('--sna', 'sna'), ('--tapbas', 'tap'), ('', 'bin')]:
-            subprocess.run(['asm198x', '--dialect', 'pasmonext', '--cpu', 'z80', *([flag] if flag else []),
+            subprocess.run(['asm198x', '--dialect', 'pasmo', '--cpu', 'z80', *([flag] if flag else []),
                             '--sym=' + str(target / 'symbols.sym'), str(source), '-o',
                             str(target / ('program.' + extension))], check=True, capture_output=True)
         binary = (target / 'program.bin').read_bytes()
@@ -93,7 +96,7 @@ def main():
         if args.pasmo:
             subprocess.run([args.pasmo, str(source), str(target / 'pasmo.bin')],
                            cwd=directory, check=True, capture_output=True)
-            check('upstream Pasmo machine code matches', (target / 'program.bin').read_bytes() == (target / 'pasmo.bin').read_bytes())
+            check('Pasmo machine code matches', (target / 'program.bin').read_bytes() == (target / 'pasmo.bin').read_bytes())
         symbols = {m[1]: int(m[2], 16) for line in (target / 'symbols.sym').read_text().splitlines()
                    if (m := re.match(r'(\w+) = \$(\w+)', line))}
         m = transport.Spectrum(args.emulator, target)
@@ -146,6 +149,39 @@ def main():
                 m.call('press_key', key='r', hold_frames=4)
                 m.frames(4)
                 check('restart restores ship', read('ship_x') == 116)
+            elif name == 'phases':
+                check('starts at the title', read('phase') == 0)
+                m.call('save_screenshot', path=str(target / 'title.png'))
+                key('Space', True)
+                m.frames(20)
+                check('held launch waits for release', read('phase') == 0)
+                key('Space', False)
+                m.frames(4)
+                check('release starts one flight', read('phase') == 1 and read('hull') == 1)
+                m.frames(40)
+                m.call('save_screenshot', path=str(target / 'play.png'))
+                m.frames(70)
+                check('idle flight is destroyed', read('phase') == 2 and read('hull') == 0, read('phase'))
+                frozen = read('meteor_y')
+                m.frames(30)
+                check('result freezes movement', read('meteor_y') == frozen)
+                m.call('save_screenshot', path=str(target / 'lost.png'))
+                m.call('press_key', key='r', hold_frames=4)
+                m.frames(4)
+                check('retry clears the run block', read('phase') == 1 and read('hull') == 1
+                      and read('ship_x') == 116 and read('meteor_y') <= 30, read('meteor_y'))
+                m.call('press_key', key='o', hold_frames=34)
+                m.frames(90)
+                check('steering produces a clean pass', read('phase') == 3 and read('hull') == 1, read('ship_x'))
+                m.call('save_screenshot', path=str(target / 'won.png'))
+                m.call('press_key', key='q', hold_frames=3)
+                m.frames(4)
+                check('Q at a result returns to the title', read('phase') == 0)
+                m.call('press_key', key='space', hold_frames=3)
+                m.frames(10)
+                m.call('press_key', key='q', hold_frames=3)
+                m.frames(4)
+                check('Q in flight returns to the title', read('phase') == 0)
             elif name in ('one-meteor', 'first-dodge'):
                 m.frames(110)
                 check('idle contact outcome', read('phase') == (2 if name == 'first-dodge' else 3), read('phase'))
@@ -158,22 +194,38 @@ def main():
                 check('steering produces a clean pass', read('phase') == 3, read('ship_x'))
             else:
                 number = art.CHECKPOINTS.index(name) + 1
-                if name == 'finished':
-                    m.call('press_key', key='space', hold_frames=3)
-                    m.frames(4)
+                m.call('press_key', key='space', hold_frames=3)
+                m.frames(4)
                 check('enters flight', read('phase') == 1)
                 # First verify an ordinary loss, then restart before the safe route.
                 m.frames(2200)
                 check('idle course loses on first impact', read('phase') == 2 and read('hull') == 0)
                 m.call('press_key', key='r', hold_frames=3)
                 m.frames(4)
-                check('retry clears run state', read('phase') == 1 and read('ship_x') == 116 and read('wave') == 0)
-                events = [(80, 2, 20, 0, 1), (116, 3, 20, 0, 1), (170, 4, 20, 0, 1)] if number == 5 else art.EVENTS
+                check('retry clears run state', read('phase') == 1 and read('ship_x') == 116
+                      and ('wave' not in symbols or read('wave') == 0))
+                # object-pool starts three meteors together; later courses read the event table.
+                events = [(80, 2, 0, 0, 1), (116, 3, 0, 0, 1), (170, 4, 0, 0, 1)] if number == 5 else art.EVENTS
                 if number < 8:
                     events = [e for e in events if e[4] == 1]
                 if number < 7:
                     events = [(x, speed, delay, 0, kind) for x, speed, delay, drift, kind in events]
-                positions = route(events)
+                positions = route(events, 0 if number == 5 else 20)
+                # Before drift there is no course-step counter to read. Count the
+                # even frames that start updates, from a known step: the first
+                # event's countdown, or the first meteor's height at speed 2.
+                if 'ticks' in symbols:
+                    course_step = lambda: read('ticks', 2)
+                else:
+                    counted = {'step': 20 - read('wave_timer') if 'wave_timer' in symbols
+                               else (m.call('memory_read', addr=symbols['objects'] + 1, len=1)['bytes'][0] - 24) // 2,
+                               'frame': read('frames')}
+                    def course_step():
+                        now = read('frames')
+                        while counted['frame'] != now:
+                            counted['frame'] = (counted['frame'] + 1) & 255
+                            counted['step'] += counted['frame'] % 2 == 0
+                        return counted['step']
                 if number >= 10:
                     key('Space', True)
                 last = None
@@ -182,7 +234,7 @@ def main():
                 for frame in range(3500):
                     if read('phase') != 1:
                         break
-                    tick, x = read('ticks', 2), read('ship_x')
+                    tick, x = course_step(), read('ship_x')
                     target_x = positions[min(tick + 1, len(positions) - 1)]
                     action = 'P' if target_x > x else 'O' if target_x < x else None
                     if action != last:
@@ -191,17 +243,20 @@ def main():
                         if action:
                             key(action, True)
                         last = action
-                    cadence.add(read('frame_delta'))
-                    if read('wave') == len(events) and read('active_count'):
+                    if 'frame_delta' in symbols:
+                        cadence.add(read('frame_delta'))
+                    if ('wave' not in symbols or read('wave') == len(events)) and read('active_count'):
                         last_event_still_active = True
                     m.frames(1)
                 if last:
                     key(last, False)
                 key('Space', False)
                 check('keyboard route finishes alive', read('phase') == 3 and read('hull') == 1, {'phase': read('phase'), 'frames': frame})
-                check('completion waits beyond final spawn', last_event_still_active and read('active_count') == 0 and read('wave') == len(events))
+                check('completion waits beyond final spawn', last_event_still_active and read('active_count') == 0
+                      and ('wave' not in symbols or read('wave') == len(events)))
                 check('bounded object pool', read('pool_overflow') == 0)
-                check('measured update cadence', (4 in cadence if name == 'boost' else cadence <= {0, 1, 2}), sorted(cadence))
+                if 'frame_delta' in symbols:
+                    check('measured update cadence', (4 in cadence if name == 'boost' else cadence <= {0, 1, 2}), sorted(cadence))
                 if number >= 8:
                     check('route collects stars', read('score') > 0, read('score') * 10)
                 if number >= 9:
