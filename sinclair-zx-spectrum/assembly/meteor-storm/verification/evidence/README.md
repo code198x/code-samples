@@ -1,18 +1,27 @@
 # Native checkpoint evidence
 
-- `checkpoints.json`: seventeen complete builds, upstream Pasmo byte parity and
-  142 execution checks. Every source/data hash matches the maintained files.
-- `opening-additions.json`: two additional static programs, native bitmap checks and upstream Pasmo parity.
+- `checkpoints.json`: eighteen complete builds, Pasmo byte parity and 148
+  execution checks. Every source/data hash matches the maintained files. The
+  2026-09-29 run compared against PasmoNext v0.1.3, the only Pasmo installed;
+  earlier runs used upstream Pasmo 0.5.5. `pasmo_version` records which.
+- `opening-additions.json`: two additional static programs, native bitmap checks and upstream Pasmo 0.5.5 parity.
+  Their sources are unchanged; the 2026-09-29 full run repeated all 20 checks.
 - `boundaries.json`: four keyboard-only contact/near-miss cases.
 - `endpoint.json`: 49 native checks, including exact reference measurements and
   a separate fresh ROM tape load. It retains the accepted prototype source hash.
+  Its ROM hash is the official 48K image (SHA-1 `5ea7c2b8...`); the earlier record
+  named a locally patched copy since replaced.
 - `title.png`, `flight.png`, `hit.png`, `miss.png`: inspected native captures.
+- `phases-title.png`, `phases-play.png`, `phases-result.png`: inspected native
+  captures of the `phases` checkpoint's three phases.
 
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
-an optional upstream Pasmo executable for binary comparison. The endpoint uses
-the independent accepted route from `prototype/verification/model-results.json`.
+an optional Pasmo executable for binary comparison. `checkpoints.json` keeps the
+eighteen game programs; `opening-additions.json` keeps `pixel-address` and
+`draw-ship`. The endpoint uses the independent accepted route from
+`prototype/verification/model-results.json`.
 
 The game reference source is unchanged; teaching-source cleanup is explicit in
 the module README. Whole-tape hashes include the assembler's output-path-derived
