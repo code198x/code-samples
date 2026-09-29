@@ -1,11 +1,11 @@
 # Native checkpoint evidence
 
-- `checkpoints.json`: eighteen complete builds, Pasmo byte parity and 148
-  execution checks. Every source/data hash matches the maintained files. The
-  2026-09-29 run compared against PasmoNext v0.1.3, the only Pasmo installed;
-  earlier runs used upstream Pasmo 0.5.5. `pasmo_version` records which.
-- `opening-additions.json`: two additional static programs, native bitmap checks and upstream Pasmo 0.5.5 parity.
-  Their sources are unchanged; the 2026-09-29 full run repeated all 20 checks.
+- `checkpoints.json`: twenty-one complete builds, upstream Pasmo 0.5.5 byte
+  parity and 172 checks. Every source/data hash matches the maintained files.
+  `pasmo_version` records the Pasmo banner (`Pasmo v. 0.5.5`) and
+  `assembler_version` the Asm198x build.
+- `opening-additions.json`: two additional static programs, native bitmap checks
+  and upstream Pasmo 0.5.5 parity, 20 checks from the same run.
 - `boundaries.json`: four keyboard-only contact/near-miss cases.
 - `endpoint.json`: 49 native checks, including exact reference measurements and
   a separate fresh ROM tape load. It retains the accepted prototype source hash.
@@ -18,8 +18,8 @@
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
-an optional Pasmo executable for binary comparison. `checkpoints.json` keeps the
-eighteen game programs; `opening-additions.json` keeps `pixel-address` and
+an optional upstream Pasmo 0.5.5 executable for binary comparison and refuses
+any other Pasmo build. `checkpoints.json` keeps the twenty-one game programs; `opening-additions.json` keeps `pixel-address` and
 `draw-ship`. The endpoint uses the independent accepted route from
 `prototype/verification/model-results.json`.
 
