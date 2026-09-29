@@ -2,12 +2,14 @@
 import argparse,hashlib,importlib.util,json,re,subprocess,sys
 from pathlib import Path
 PROJECT=Path(__file__).resolve().parents[1]
-ROOT=PROJECT/'checkpoints/finished'
 donor=PROJECT.parents[1]/'basic/meet-basic/opening/verification/verify.py'
 spec=importlib.util.spec_from_file_location('spectrum_transport',donor);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
+ p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True)
+ # Later checkpoints keep the finished game's rules, so the same regression applies.
+ p.add_argument('--checkpoint',default='finished',choices=['finished','tone','sound-table']);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
+ ROOT=PROJECT/'checkpoints'/a.checkpoint
  for flag,ext in [('--sna','sna'),('--tapbas','tap')]:subprocess.run(['asm198x','--dialect','pasmonext','--cpu','z80',flag,'--sym='+str(out/'meteor-storm.sym'),str(ROOT/'meteor-storm.asm'),'-o',str(out/('meteor-storm.'+ext))],check=True,cwd=ROOT)
  symbols={m[1]:int(m[2],16) for line in (out/'meteor-storm.sym').read_text().splitlines() if (m:=re.match(r'(\w+) = \$(\w+)',line))}
  m=module.Spectrum(a.emulator,out);checks=[];events=[]
@@ -17,6 +19,10 @@ def main():
   assert truth,(name,detail);checks.append({'check':name,'detail':detail});print('PASS',name,flush=True)
  def key(name,down):m.call('input',events=[{'Key':{'name':name,'pressed':down}}])
  def start():
+  # Emu198x can resume at $0000 when a snapshot replaces a running, unhalted CPU
+  # (emu198x/emu198x#1564); blocking sounds can leave it there. Reset only then:
+  # a reset shifts frame alignment, so halted loads stay as they were recorded.
+  if not m.call('query_cpu')['registers']['halt']:m.call('reset')
   m.call('load_snapshot',path=str(out/'meteor-storm.sna'));m.frames(30);m.call('press_key',key='space',hold_frames=6);m.frames(12);check('start enters flight',state()['phase']==1,state()['phase'])
  try:
   m.call('load_snapshot',path=str(out/'meteor-storm.sna'));m.frames(60)
@@ -126,7 +132,7 @@ def main():
   check('fresh tape reaches title',state()['phase']==0)
   m.call('press_key',key='space',hold_frames=3);m.frames(8);check('tape-loaded game starts',state()['phase']==1 and state()['hull']==1)
   m.call('save_screenshot',path=str(out/'tape-flight.png'))
-  report={'method':'Ordinary emulator frames, keyboard input, read-only game-state probes; snapshot checks plus separate fresh tape load. No debug stepping or state writes.','target':'spectrum_48k PAL','emulator_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'source_sha256':hashlib.sha256((ROOT/'meteor-storm.asm').read_bytes()).hexdigest(),'tape_sha256':hashlib.sha256((out/'meteor-storm.tap').read_bytes()).hexdigest(),'checks':checks}
+  report={'checkpoint':a.checkpoint,'method':'Ordinary emulator frames, keyboard input, read-only game-state probes; snapshot checks plus separate fresh tape load. No debug stepping or state writes.','target':'spectrum_48k PAL','emulator_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'source_sha256':hashlib.sha256((ROOT/'meteor-storm.asm').read_bytes()).hexdigest(),'tape_sha256':hashlib.sha256((out/'meteor-storm.tap').read_bytes()).hexdigest(),'checks':checks}
   version=subprocess.run(['asm198x','--version'],capture_output=True,text=True)
   report['assembler_version']=(version.stdout+version.stderr).strip()
   report['assets_sha256']=hashlib.sha256((ROOT/'assets.inc').read_bytes()).hexdigest()
