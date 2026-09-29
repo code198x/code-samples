@@ -273,7 +273,3 @@ meteor_sprites:
  defb $00,$00,$00,$00
  defb $00,$00,$00,$00
  defb $00,$00,$00,$00
-meteor_events:
- defb 80,2,20
- defb 116,3,20
- defb 170,4,20

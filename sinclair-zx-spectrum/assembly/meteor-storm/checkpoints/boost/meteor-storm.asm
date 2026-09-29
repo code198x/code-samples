@@ -1,6 +1,6 @@
-; Meteor Storm checkpoint 10: complete standalone program. Stock 48K PAL.
+; Meteor Storm checkpoint boost: complete standalone program. Stock 48K PAL.
 ; Explicit state drives collision; the screen is only a view.
-; Build: asm198x --dialect pasmonext --cpu z80 --tapbas meteor-storm.asm -o meteor-storm.tap
+; Build: asm198x --dialect pasmo --cpu z80 --tapbas meteor-storm.asm -o meteor-storm.tap
  org 32768
 SHIP_Y equ 160
 SLOTS equ 20
@@ -36,6 +36,28 @@ interrupt:
  reti
 
 title:
+ xor a
+ ld (phase),a
+ call clear
+ ld bc,$030A
+ ld de,name_text
+ call text
+ ld bc,$0602
+ ld de,title_goal
+ call text
+ ld bc,$0A06
+ ld de,title_keys
+ call text
+ ld bc,$1408
+ ld de,title_start
+ call text
+ call release_keys
+title_title_wait:
+ halt
+ ld bc,$7FFE
+ in a,(c)
+ bit 0,a
+ jr nz,title_title_wait
  call release_keys
  call new_game
 main_loop:
@@ -701,7 +723,11 @@ release_keys:
  jr nz,release_keys
  ret
 
-controls: defb "O/P STEER  SPACE 2X  Q RESET",0
+name_text: defb "METEOR STORM",0
+title_goal: defb "DODGE ROCKS. ONE HIT ENDS IT",0
+title_keys: defb "O LEFT       P RIGHT",0
+title_start: defb "SPACE TO LAUNCH",0
+controls: defb "O/P STEER  SPACE BOOST  Q QUIT",0
 time_text: defb "TIME "
 time_pad: defb ' '
 time_digits: defb "00.00",0
@@ -712,7 +738,7 @@ time_fraction: defb 0
 lost_text: defb "SHIP DESTROYED",0
 won_text: defb "CLEAR SPACE",0
 result_text: defb "METEOR STORM - FLIGHT ENDED",0
-retry_text: defb "R RETRY   Q RESTART",0
+retry_text: defb "R RETRY   Q TITLE",0
 score_text: defb "SCORE "
 score_digits_text: defb "0000",0
 frames: defb 0

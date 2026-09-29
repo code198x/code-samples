@@ -19,8 +19,9 @@ def assets(n):
    lines.append('; shift '+str(shift))
    for row in rows:
     v=(row<<8)>>shift;lines.append(' defb '+','.join('$%02X'%((v>>b)&255) for b in (24,16,8,0)))
- if n>=5:
-  events=[(80,2,20,0,1),(116,3,20,0,1),(170,4,20,0,1)] if n==5 else ([e for e in EVENTS if e[4]==1] if n<8 else EVENTS)
+ # object-pool starts its three meteors in code; the event table begins with fixed-course.
+ if n>=6:
+  events=[e for e in EVENTS if e[4]==1] if n<8 else EVENTS
   lines.append('meteor_events:')
   for x,speed,delay,drift,kind in events:
    fields=[x,speed,delay]+([drift&255] if n>=7 else [])+([kind] if n>=8 else [])
@@ -35,3 +36,4 @@ if __name__ == '__main__':
         (ROOT / 'checkpoints' / name / 'assets.inc').write_text(assets(number))
 
     (ROOT / 'checkpoints/draw-ship/assets.inc').write_text(assets(1))
+    (ROOT / 'checkpoints/phases/assets.inc').write_text(assets(4))
