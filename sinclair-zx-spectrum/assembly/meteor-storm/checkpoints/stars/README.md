@@ -1,6 +1,6 @@
-# Make an object kind change the rules
+# Print the score as decimal digits
 
-The active byte becomes kind: 0 free, 1 meteor, 2 star. Restore all 120 accepted events, including twenty stars. Stars keep their X, award one score unit and retire on contact. One score unit displays as ten points: decimal3 writes three digits before a fixed trailing zero. Collecting never damages the ship. `hud` redraws the score only when it has changed; the result screen shows the final score.
+The `score` byte gains a readable display. One score unit displays as ten points: `decimal3` writes three digit characters before a fixed trailing zero in `score_digits_text`, and `score_line` prints `score_text` at the top of the screen. `hud` redraws the score only when it has changed; `new_game` draws it once, and `result` redraws it so the result screen shows the final score. The game rules are unchanged from `star-pickups`.
 
 Predict, then check: collect one star and the HUD reads SCORE 0010. The star vanishes and cannot score twice, because removal clears its kind before the next update.
 

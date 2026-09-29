@@ -1,6 +1,6 @@
 # Meteor Storm — runnable teaching progression
 
-Twenty complete programs develop the accepted 48K PAL game from small
+Twenty-three complete programs develop the accepted 48K PAL game from small
 experiments. These are teaching checkpoints, **not a fixed lesson count**.
 Split explanations further wherever one change needs its own experiment.
 Meet Assembly supplies the immediate background: bytes, bitmap addresses, loops,
@@ -26,11 +26,14 @@ to the prototype. Native evidence compares its gameplay with that reference.
 | [one-meteor](checkpoints/one-meteor/README.md) | Keep two positions independent |
 | [first-dodge](checkpoints/first-dodge/README.md) | Decide contact from geometry |
 | [phases](checkpoints/phases/README.md) | Give the game a title, a flight and a result |
-| [object-pool](checkpoints/object-pool/README.md) | Trace independent records |
+| [object-records](checkpoints/object-records/README.md) | Give each meteor its own record |
+| [object-pool](checkpoints/object-pool/README.md) | Walk the pool and reuse a slot |
 | [fixed-course](checkpoints/fixed-course/README.md) | Read a complete event schedule |
 | [drift](checkpoints/drift/README.md) | Move sideways more slowly |
-| [stars](checkpoints/stars/README.md) | Make an object kind change the rules |
-| [timed-course](checkpoints/timed-course/README.md) | Measure time independently of progress |
+| [star-pickups](checkpoints/star-pickups/README.md) | Make an object kind change the rules |
+| [stars](checkpoints/stars/README.md) | Print the score as decimal digits |
+| [elapsed-time](checkpoints/elapsed-time/README.md) | Measure time independently of progress |
+| [timed-course](checkpoints/timed-course/README.md) | Show the time as seconds and hundredths |
 | [boost](checkpoints/boost/README.md) | Check both steps of a faster update |
 | [render-budget](checkpoints/render-budget/README.md) | Save drawing work without losing contacts |
 | [records](checkpoints/records/README.md) | Separate one run from a session |
@@ -46,7 +49,7 @@ asm198x --dialect pasmo --cpu z80 --tapbas meteor-storm.asm -o meteor-storm.tap
 emu198x-spectrum --machine spectrum_48k --tape meteor-storm.tap --autoload-tape --scale 3
 ```
 
-Or assemble with Pasmo:
+Or assemble with upstream Pasmo 0.5.5:
 
 ```sh
 pasmo --tapbas meteor-storm.asm meteor-storm.tap
@@ -54,8 +57,8 @@ pasmo --tapbas meteor-storm.asm meteor-storm.tap
 
 The lessons use the pasmo dialect; `--dialect pasmonext` assembles every checkpoint
 to identical bytes. The explicit `--cpu z80` selects the original CPU.
-Verification can also compare Asm198x's raw machine code with a Pasmo build for
-every checkpoint, and records which Pasmo build it used. A tape loads through
+Verification can also compare Asm198x's raw machine code with an upstream Pasmo
+0.5.5 build for every checkpoint, and records the Pasmo banner. A tape loads through
 the ROM; a `--sna` snapshot starts directly and is useful during investigation. Both start at 32768. These programs do not return
 to BASIC: use the stated retry control, or reset/reload for a new program.
 
@@ -76,7 +79,7 @@ the labels and constants each checkpoint adds, for checking against the lessons.
 
 ```sh
 python3 verification/checkpoints.py --emulator /path/to/emu198x-spectrum \
-  --pasmo /path/to/pasmo --output /tmp/meteor-checkpoints
+  --pasmo /path/to/upstream/pasmo --output /tmp/meteor-checkpoints
 python3 verification/boundaries.py --emulator /path/to/emu198x-spectrum \
   --output /tmp/meteor-boundaries
 python3 verification/endpoint.py --emulator /path/to/emu198x-spectrum \
