@@ -1,0 +1,327 @@
+{
+  "checkpoint": "colour-bands",
+  "method": "Ordinary emulator frames, keyboard input, read-only game-state probes; snapshot checks plus separate fresh tape load. No debug stepping or state writes.",
+  "target": "spectrum_48k PAL",
+  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "source_sha256": "92318790afd4cd2964c9c0a3c24daea2bda7a1669cbce358d290d9d2c8bad2f6",
+  "tape_sha256": "57331af2aae55f1a2ce91fc743063b52b5003db38e1f48a229c72f7112e30407",
+  "checks": [
+    {
+      "check": "every title line is centred without wrapping",
+      "detail": null
+    },
+    {
+      "check": "start enters flight",
+      "detail": 1
+    },
+    {
+      "check": "releasing boost restores normal speed",
+      "detail": {
+        "boost_steps": 11,
+        "normal_steps": 6
+      }
+    },
+    {
+      "check": "start enters flight",
+      "detail": 1
+    },
+    {
+      "check": "opposing controls cancel",
+      "detail": null
+    },
+    {
+      "check": "quit returns to title",
+      "detail": null
+    },
+    {
+      "check": "held launch waits for release",
+      "detail": null
+    },
+    {
+      "check": "release starts one flight",
+      "detail": null
+    },
+    {
+      "check": "idle flight is destroyed",
+      "detail": [
+        {
+          "frame": 111,
+          "hull": 0
+        }
+      ]
+    },
+    {
+      "check": "one contact spends the one life",
+      "detail": null
+    },
+    {
+      "check": "first impact ends the run",
+      "detail": null
+    },
+    {
+      "check": "debris plays before the result",
+      "detail": {
+        "frames": 50
+      }
+    },
+    {
+      "check": "result freezes simulation",
+      "detail": null
+    },
+    {
+      "check": "retry restores flight",
+      "detail": null
+    },
+    {
+      "check": "keyboard route reaches clear space",
+      "detail": {
+        "frames": 2092,
+        "ticks": 1046,
+        "wave": 120,
+        "hull": 1
+      }
+    },
+    {
+      "check": "complete route takes no damage",
+      "detail": 1
+    },
+    {
+      "check": "stars fall vertically",
+      "detail": 1656
+    },
+    {
+      "check": "meteor drift stays gentle",
+      "detail": 9514
+    },
+    {
+      "check": "stars award points without damage",
+      "detail": 670
+    },
+    {
+      "check": "pickup value follows speed",
+      "detail": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "check": "finish bonus rewards elapsed time",
+      "detail": {
+        "pickup_units": 8,
+        "bonus_units": 59
+      }
+    },
+    {
+      "check": "result preserves score",
+      "detail": null
+    },
+    {
+      "check": "result displays complete score line",
+      "detail": null
+    },
+    {
+      "check": "all hazards pass before arrival",
+      "detail": null
+    },
+    {
+      "check": "updates keep a two-frame cadence",
+      "detail": [
+        0,
+        2
+      ]
+    },
+    {
+      "check": "object pool remains bounded",
+      "detail": 9
+    },
+    {
+      "check": "normal finish establishes both records",
+      "detail": [
+        2092,
+        67
+      ]
+    },
+    {
+      "check": "retry keeps records",
+      "detail": null
+    },
+    {
+      "check": "keyboard route reaches clear space",
+      "detail": {
+        "frames": 1046,
+        "ticks": 1046,
+        "wave": 120,
+        "hull": 1
+      }
+    },
+    {
+      "check": "complete route takes no damage",
+      "detail": 1
+    },
+    {
+      "check": "stars fall vertically",
+      "detail": 822
+    },
+    {
+      "check": "meteor drift stays gentle",
+      "detail": 4713
+    },
+    {
+      "check": "stars award points without damage",
+      "detail": 960
+    },
+    {
+      "check": "pickup value follows speed",
+      "detail": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "check": "finish bonus rewards elapsed time",
+      "detail": {
+        "pickup_units": 16,
+        "bonus_units": 80
+      }
+    },
+    {
+      "check": "result preserves score",
+      "detail": null
+    },
+    {
+      "check": "result displays complete score line",
+      "detail": null
+    },
+    {
+      "check": "all hazards pass before arrival",
+      "detail": null
+    },
+    {
+      "check": "updates keep a two-frame cadence",
+      "detail": [
+        0,
+        2
+      ]
+    },
+    {
+      "check": "object pool remains bounded",
+      "detail": 9
+    },
+    {
+      "check": "unlimited boost finishes sooner",
+      "detail": {
+        "normal_frames": 2092,
+        "boost_frames": 1046
+      }
+    },
+    {
+      "check": "faster finish earns more points",
+      "detail": {
+        "normal_points": 670,
+        "boost_points": 960
+      }
+    },
+    {
+      "check": "fast finish improves best time",
+      "detail": null
+    },
+    {
+      "check": "best score retains highest run",
+      "detail": null
+    },
+    {
+      "check": "failed run cannot replace best time",
+      "detail": null
+    },
+    {
+      "check": "failed run preserves best score",
+      "detail": null
+    },
+    {
+      "check": "fresh tape loads exact program",
+      "detail": null
+    },
+    {
+      "check": "fresh tape reaches title",
+      "detail": null
+    },
+    {
+      "check": "tape-loaded game starts",
+      "detail": null
+    },
+    {
+      "check": "accepted gameplay measurements match",
+      "detail": [
+        {
+          "check": "keyboard route reaches clear space",
+          "detail": {
+            "frames": 2092,
+            "ticks": 1046,
+            "wave": 120,
+            "hull": 1
+          }
+        },
+        {
+          "check": "finish bonus rewards elapsed time",
+          "detail": {
+            "pickup_units": 8,
+            "bonus_units": 59
+          }
+        },
+        {
+          "check": "normal finish establishes both records",
+          "detail": [
+            2092,
+            67
+          ]
+        },
+        {
+          "check": "keyboard route reaches clear space",
+          "detail": {
+            "frames": 1046,
+            "ticks": 1046,
+            "wave": 120,
+            "hull": 1
+          }
+        },
+        {
+          "check": "finish bonus rewards elapsed time",
+          "detail": {
+            "pickup_units": 16,
+            "bonus_units": 80
+          }
+        },
+        {
+          "check": "unlimited boost finishes sooner",
+          "detail": {
+            "normal_frames": 2092,
+            "boost_frames": 1046
+          }
+        },
+        {
+          "check": "faster finish earns more points",
+          "detail": {
+            "normal_points": 670,
+            "boost_points": 960
+          }
+        }
+      ]
+    }
+  ],
+  "assembler_version": "asm198x v0.0.58",
+  "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
+  "rom_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+  "accepted_source_sha256": "fefac65915baa0a2fa29395a7ff8f19fac9c2261b11073ebd37e7a602d302f4d"
+}

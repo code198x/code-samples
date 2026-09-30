@@ -1,7 +1,7 @@
 # Native checkpoint evidence
 
-- `checkpoints.json`: twenty-five complete builds, upstream Pasmo 0.5.5 byte
-  parity and 222 checks. Every source/data hash matches the maintained files.
+- `checkpoints.json`: twenty-six complete builds, upstream Pasmo 0.5.5 byte
+  parity and 248 checks. Every source/data hash matches the maintained files.
   `pasmo_version` records the Pasmo banner (`Pasmo v. 0.5.5`) and
   `assembler_version` the Asm198x build.
 - `opening-additions.json`: two additional static programs, native bitmap checks
@@ -38,12 +38,31 @@
   finds it unchanged, so the pieces leave no trails. It checks the border flash
   (6 frames), that every piece stays between y=24 and the controls line, and that
   the result and the next run are black-bordered with no debris pixels.
+- `endpoint-colour-bands.json`: the endpoint suite against `colour-bands`, 50
+  checks. Every check and measurement matches `endpoint-debris.json`, including
+  the accepted route, the destroyed phase and the retry alignment: the colour
+  bands are presentation only. `checkpoints.py` adds six attribute checks for
+  this checkpoint: the whole attribute map equals `row_colours`, row by row, on
+  the title, in flight, late in the destroyed phase, at the result and after a
+  retry, and ten samples through the keyboard route never differ from it.
+- `colour-bands-flight.png`, `colour-bands-debris.png`: inspected native
+  captures of `colour-bands`. The flight capture is `endpoint.py`'s frame 400 of
+  the normal route: meteors in the cyan, green, yellow and red bands, a star,
+  and the white ship. Several objects straddle a band edge and show the two
+  bands' colours split along the row line; enlarged, no object changes colour at
+  a vertical cell edge, so no cell shows clash. The debris capture is
+  `checkpoints.py`'s frame 24 after contact: pieces red and yellow by where they
+  fly, the meteor that hit red above and white below the row 19/20 line.
+- `colour-bands-clash-prediction.png`: the README's prediction variant, not a
+  checkpoint. Nine lines added to `draw_ship` write $46 into the ship's left
+  cell on row 20; after steering left and back, the ship's top half is yellow
+  and its bottom half white, the colour left in the cells it visited.
 
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
 an optional upstream Pasmo 0.5.5 executable for binary comparison and refuses
-any other Pasmo build. `checkpoints.json` keeps the twenty-five game programs; `opening-additions.json` keeps `pixel-address` and
+any other Pasmo build. `checkpoints.json` keeps the twenty-six game programs; `opening-additions.json` keeps `pixel-address` and
 `draw-ship`. The endpoint uses the independent accepted route from
 `prototype/verification/model-results.json`.
 
