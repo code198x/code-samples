@@ -87,20 +87,24 @@ def destroyed_phase(m, read, symbols, check, target):
     while not read('debris_time'):
         m.frames(1)
     check('contact starts the destroyed phase', read('phase') == 2 and read('debris_time') > 0, read('debris_time'))
-    pieces, pool = symbols['DEBRIS'], symbols['state_end'] - symbols['objects']
+    check('contact flashes the border', read('border') == symbols['FLASH_BORDER'], read('border'))
+    pieces, rows, pool = symbols['DEBRIS'], symbols['DEBRIS_ROWS'], symbols['state_end'] - symbols['objects']
     def objects():
         return m.call('memory_read', addr=symbols['objects'], len=pool)['bytes']
     ticks, frozen = read('ticks', 2), objects()
     start, elapsed, storm, compared, moved, pressed = read('frames'), 0, None, 0, set(), []
-    m.call('save_screenshot', path=str(target / 'destroyed-impact.png'))
+    flash_frames, lowest, highest = None, 255, 0
     while read('debris_time'):
+        if flash_frames is None and read('border') == 0:
+            flash_frames = elapsed
         if m.call('query_cpu')['registers']['halt']:
             screen = bitmap(m)
             records = m.call('memory_read', addr=symbols['debris'], len=4 * pieces)['bytes']
             for piece in range(pieces):
                 x, y = records[4 * piece], records[4 * piece + 1]
-                moved.add((x, y))
-                for row, bits in enumerate(art.DEBRIS[:3]):
+                moved.add((piece, x, y))
+                lowest, highest = min(lowest, y), max(highest, y)
+                for row, bits in enumerate(art.DEBRIS[piece][:rows]):
                     for column in range(24):
                         if bits >> (23 - column) & 1:
                             screen[bitmap_address(y + row, x + column)] ^= 0x80 >> ((x + column) & 7)
@@ -114,14 +118,23 @@ def destroyed_phase(m, read, symbols, check, target):
         else:
             m.frames(1)
         elapsed = (read('frames') - start) & 255
-        if elapsed == 24:
-            m.call('save_screenshot', path=str(target / 'destroyed-debris.png'))
+        # Frame 2 is the first with the pieces drawn in place of the ship.
+        for frame, label in [(2, 'impact'), (10, 'early'), (24, 'debris'), (44, 'late')]:
+            if elapsed == frame:
+                m.call('save_screenshot', path=str(target / f'destroyed-{label}.png'))
+    records = m.call('memory_read', addr=symbols['debris'], len=4 * pieces)['bytes']
+    landed = sum(records[4 * piece + 1] == symbols['DEBRIS_FLOOR'] for piece in range(pieces))
     check('R and Q cannot cut the destroyed phase short', all(p['phase'] == 2 for p in pressed), pressed)
     check('destroyed phase lasts 25 updates', 48 <= elapsed <= 52, {'frames': elapsed})
+    check('border flash ends within the phase', flash_frames is not None and read('border') == 0, {'flash_frames': flash_frames})
     check('storm stays frozen and drawn', read('ticks', 2) == ticks and objects() == frozen)
-    check('debris moves without trails', compared >= 20 and len(moved) > 5, {'compared_frames': compared})
+    check('debris moves without trails', compared >= 12 and len(moved) > 3 * pieces, {'compared_frames': compared})
+    # The HUD ends at y=24 and the controls line starts at y=184.
+    check('debris stays between the HUD and the controls line', lowest >= 24 and highest + rows <= 184,
+          {'highest_y': lowest, 'lowest_y': highest, 'landed': landed})
     m.frames(30)
-    check('result screen keeps no debris', read('phase') == 2 and not lit_rows(m, [3, 4, 5, 7, 8, 9, 11, 13, 15, 16, 19, 20, 21, 22, 23]))
+    check('result screen keeps no debris', read('phase') == 2 and read('border') == 0
+          and not lit_rows(m, [3, 4, 5, 7, 8, 9, 11, 13, 15, 16, 19, 20, 21, 22, 23]))
     m.call('save_screenshot', path=str(target / 'destroyed-result.png'))
 
 def main():
@@ -286,7 +299,7 @@ def main():
                 check('retry clears run state', read('phase') == 1 and read('ship_x') == 116
                       and ('wave' not in symbols or read('wave') == 0))
                 if 'debris_time' in symbols:
-                    check('next run starts without debris', not lit_rows(m, range(3, 20)) and not lit_rows(m, [22]))
+                    check('next run starts without debris', read('border') == 0 and not lit_rows(m, range(3, 20)) and not lit_rows(m, [22]))
                 # object-pool starts three meteors together; later courses read the event table.
                 events = [(80, 2, 0, 0, 1), (116, 3, 0, 0, 1), (170, 4, 0, 0, 1)] if number == 5 else art.EVENTS
                 if number < 8:

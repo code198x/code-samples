@@ -3,8 +3,8 @@
   "method": "Ordinary emulator frames, keyboard input, read-only game-state probes; snapshot checks plus separate fresh tape load. No debug stepping or state writes.",
   "target": "spectrum_48k PAL",
   "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
-  "source_sha256": "f3e055c8db19b1f8b87eef416a92cff07f09490e4cad1b83ea77b3f274834134",
-  "tape_sha256": "ee0e23fa142cec27e418f8122b91a1fdb71edd465a066760ef305dfee4abcfee",
+  "source_sha256": "b6c98bc2f324b984873c9ec8a8e0ed68ee9b3632bc762d1f8b91e1b0aed624b5",
+  "tape_sha256": "928bef612a2d1d7a33ffef238ec3025c0eea4a11384512dc6c8e4f9ee1af9971",
   "checks": [
     {
       "check": "every title line is centred without wrapping",
@@ -61,7 +61,7 @@
     {
       "check": "debris plays before the result",
       "detail": {
-        "frames": 49
+        "frames": 50
       }
     },
     {
@@ -321,7 +321,7 @@
     }
   ],
   "assembler_version": "asm198x v0.0.58",
-  "assets_sha256": "ecf2d9b63ceb0b1b6113fecf52e59adf5fe45da2b0cee65713211eb8e5157021",
+  "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
   "rom_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
   "accepted_source_sha256": "fefac65915baa0a2fa29395a7ff8f19fac9c2261b11073ebd37e7a602d302f4d"
 }

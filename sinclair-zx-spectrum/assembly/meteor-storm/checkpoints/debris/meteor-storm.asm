@@ -1,12 +1,16 @@
-; Meteor Storm checkpoint 16: complete standalone program. Stock 48K PAL.
+; Meteor Storm checkpoint debris: complete standalone program. Stock 48K PAL.
 ; Explicit state drives collision; the screen is only a view.
 ; Build: asm198x --dialect pasmonext --cpu z80 --tapbas meteor-storm.asm -o meteor-storm.tap
  org 32768
 SHIP_Y equ 160
 SLOTS equ 20
 WAVES equ 120
-DEBRIS equ 5
+DEBRIS equ 8
+DEBRIS_ROWS equ 5
 DEBRIS_UPDATES equ 25
+DEBRIS_FLOOR equ 179
+FLASH_BORDER equ 2
+FLASH_UPDATES equ 3
 
 start:
  di
@@ -890,12 +894,17 @@ impact_sound: defb 150,30, 200,30, 255,60, 0
 destroyed:
  ld a,2
  ld (phase),a
+ ; Flash the border. The impact sound's speaker writes carry `border`.
+ ld a,FLASH_BORDER
+ ld (border),a
+ out ($FE),a
  call erase_ship
  ld hl,debris_start
  ld de,debris
  ld bc,DEBRIS*4
  ldir
- ; Every piece starts in the ship's own sprite column.
+ ; Every piece starts at the ship's X. Its artwork sits where it was in
+ ; the ship, so together the pieces first draw the whole ship.
  ld ix,debris
  ld b,DEBRIS
  ld de,4
@@ -918,6 +927,15 @@ destroyed_wait:
  ld a,(debris_time)
  dec a
  ld (debris_time),a
+ ; After FLASH_UPDATES updates the border returns to black.
+ cp DEBRIS_UPDATES-FLASH_UPDATES
+ jr nz,destroyed_count
+ xor a
+ ld (border),a
+ out ($FE),a
+destroyed_count:
+ ld a,(debris_time)
+ or a
  jr nz,destroyed_wait
 lost:
  call save_score
@@ -987,17 +1005,22 @@ result_wait:
  jp main_loop
 
 ; XOR every piece at its record's position: the first call draws, the
-; same call at the same positions erases. Changes AF/BC/DE/HL/IX.
+; same call at the same positions erases. Piece n's artwork is the nth
+; 512-byte shift table from debris_sprites. Changes AF/BC/DE/HL/IX.
 draw_debris:
  ld ix,debris
+ ld hl,debris_sprites
  ld b,DEBRIS
 draw_debris_next:
  push bc
+ push hl
  ld e,(ix+0)
  ld d,(ix+1)
- ld hl,debris_sprites
- ld a,3
+ ld a,DEBRIS_ROWS
  call draw_sprite
+ pop hl
+ ld de,512
+ add hl,de
  pop bc
  ld de,4
  add ix,de
@@ -1005,7 +1028,9 @@ draw_debris_next:
  ret
 
 ; Add each piece's dX and dY. A piece that would leave X 8..224 keeps its
-; X, so draw_sprite's bounds hold. Changes AF/BC/DE/IX.
+; X, so draw_sprite's bounds hold. Gravity adds 1 to dY every update, so a
+; rising piece slows, stops and falls. A piece that would pass DEBRIS_FLOOR
+; lands there and stops moving sideways. Changes AF/BC/DE/IX.
 move_debris:
  ld ix,debris
  ld b,DEBRIS
@@ -1018,8 +1043,14 @@ move_debris_next:
  jr nc,debris_x_kept
  ld (ix+0),a
 debris_x_kept:
+ inc (ix+3)
  ld a,(ix+1)
  add a,(ix+3)
+ cp DEBRIS_FLOOR+1
+ jr c,debris_y_store
+ ld (ix+2),0
+ ld a,DEBRIS_FLOOR
+debris_y_store:
  ld (ix+1),a
  ld de,4
  add ix,de
@@ -1070,14 +1101,17 @@ result_text: defb "METEOR STORM - FLIGHT ENDED",0
 retry_text: defb "R RETRY   Q TITLE",0
 score_text: defb "SCORE "
 score_digits_text: defb "0000",0
-; Debris records: X (set from ship_x), Y, dX, dY. Every dY is negative, so
-; each piece rises from the ship's rows and stays inside the playfield.
+; Debris records: X (set from ship_x), Y, dX, dY. The Y values are the
+; ship rows where each piece's artwork begins: nose, middle, tail.
 debris_start:
- defb 0,SHIP_Y+1,0,-3
- defb 0,SHIP_Y+4,-2,-2
- defb 0,SHIP_Y+7,2,-2
- defb 0,SHIP_Y+10,-3,-1
- defb 0,SHIP_Y+13,3,-1
+ defb 0,SHIP_Y+1,-3,-11
+ defb 0,SHIP_Y+1,3,-11
+ defb 0,SHIP_Y+6,-5,-8
+ defb 0,SHIP_Y+6,0,-12
+ defb 0,SHIP_Y+6,5,-8
+ defb 0,SHIP_Y+11,-6,-4
+ defb 0,SHIP_Y+11,-1,1
+ defb 0,SHIP_Y+11,6,-4
 frames: defb 0
 sprite_ptr: defw 0
 sprite_height: defb 0

@@ -1141,7 +1141,7 @@
     },
     {
       "name": "debris",
-      "source_sha256": "f3e055c8db19b1f8b87eef416a92cff07f09490e4cad1b83ea77b3f274834134",
+      "source_sha256": "b6c98bc2f324b984873c9ec8a8e0ed68ee9b3632bc762d1f8b91e1b0aed624b5",
       "checks": [
         {
           "check": "upstream Pasmo machine code matches",
@@ -1154,6 +1154,10 @@
         {
           "check": "contact starts the destroyed phase",
           "detail": 25
+        },
+        {
+          "check": "contact flashes the border",
+          "detail": 2
         },
         {
           "check": "R and Q cannot cut the destroyed phase short",
@@ -1173,7 +1177,13 @@
         {
           "check": "destroyed phase lasts 25 updates",
           "detail": {
-            "frames": 49
+            "frames": 50
+          }
+        },
+        {
+          "check": "border flash ends within the phase",
+          "detail": {
+            "flash_frames": 6
           }
         },
         {
@@ -1183,7 +1193,15 @@
         {
           "check": "debris moves without trails",
           "detail": {
-            "compared_frames": 35
+            "compared_frames": 18
+          }
+        },
+        {
+          "check": "debris stays between the HUD and the controls line",
+          "detail": {
+            "highest_y": 100,
+            "lowest_y": 179,
+            "landed": 8
           }
         },
         {
@@ -1206,7 +1224,7 @@
           "check": "keyboard route finishes alive",
           "detail": {
             "phase": 3,
-            "frames": 1047
+            "frames": 1046
           }
         },
         {
@@ -1220,7 +1238,7 @@
         {
           "check": "measured update cadence",
           "detail": [
-            1,
+            0,
             2
           ]
         },
@@ -1230,12 +1248,12 @@
         },
         {
           "check": "PAL elapsed clock advances",
-          "detail": 1047
+          "detail": 1046
         }
       ],
-      "assets_sha256": "ecf2d9b63ceb0b1b6113fecf52e59adf5fe45da2b0cee65713211eb8e5157021",
-      "binary_sha256": "412addc1f28772d6d420dc1e2f2da519347c8fa584760c32d1df0860487155e0",
-      "binary_bytes": 5084
+      "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
+      "binary_sha256": "db3bb9c5d991bc8fe05bf5fa97ab1729ee23e45088d32e948f2dc30d8f8cc83c",
+      "binary_bytes": 8732
     }
   ]
 }
