@@ -9,14 +9,17 @@ import random
 rng=random.Random(1986)
 EVENTS=[(rng.randrange(8,225,2),rng.choice([2,3,4,5]),rng.randrange(6,11),rng.choice([-1,0,1]),2 if i%6==3 else 1) for i in range(120)]
 STAR=[0x001800,0x001800,0x003C00,0x00FF00,0x03FFC0,0x00FF00,0x007E00,0x00E700,0x018180,0x0300C0,0,0,0,0,0,0]
-# One debris piece, three rows in the ship's centre columns, so it shares the ship's X.
-DEBRIS=[0x001C00,0x003E00,0x001A00]+[0]*13
+# Eight debris pieces cut from the ship: (first ship row, first column, last column).
+# Each keeps its columns, so drawn at the ship's X it lands where it was in the ship.
+PIECES=[(1,0,11),(1,12,23),(6,0,9),(6,10,13),(6,14,23),(11,0,9),(11,10,13),(11,14,23)]
+DEBRIS=[[SHIP[top+r]&sum(1<<(23-c) for c in range(lo,hi+1)) for r in range(5)]+[0]*11 for top,lo,hi in PIECES]
 
 def assets(n):
- names=[('ship',SHIP)]+([('meteor',METEOR)] if n>=3 else [])+([('star',STAR)] if n>=8 else [])+([('debris',DEBRIS)] if n>=17 else [])
+ names=[('ship',SHIP)]+([('meteor',METEOR)] if n>=3 else [])+([('star',STAR)] if n>=8 else [])+([('debris',rows) for rows in DEBRIS] if n>=17 else [])
  lines=['; Eight horizontal shifts; each shift has 16 rows of four bytes.']
- for name,rows in names:
-  lines.append(name+'_sprites:')
+ for index,(name,rows) in enumerate(names):
+  # The debris pieces share one label: piece n is the nth table after it.
+  if name!='debris' or names[index-1][0]!='debris':lines.append(name+'_sprites:')
   for shift in range(8):
    lines.append('; shift '+str(shift))
    for row in rows:
