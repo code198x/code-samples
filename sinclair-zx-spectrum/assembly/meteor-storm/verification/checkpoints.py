@@ -72,6 +72,20 @@ def lit_rows(m, rows):
     return [row for row in rows if any(screen[bitmap_address(row * 8 + scan) + col]
                                        for scan in range(8) for col in range(32))]
 
+def attributes_by_row(m):
+    # The 768-byte attribute map at $5800, one list of 32 cells per character row.
+    data = []
+    for address in range(0x5800, 0x5b00, 256):
+        data += m.call('memory_read', addr=address, len=256)['bytes']
+    return [data[row * 32:row * 32 + 32] for row in range(24)]
+
+def check_bands(m, symbols, check, label):
+    """Every cell of each character row holds that row's byte from row_colours."""
+    table = m.call('memory_read', addr=symbols['row_colours'], len=24)['bytes']
+    rows = attributes_by_row(m)
+    check(label, rows == [[byte] * 32 for byte in table],
+          {'row_colours': ['$%02X' % byte for byte in table]})
+
 def destroyed_phase(m, read, symbols, check, target):
     """Watch the destroyed phase frame by frame, pressing R and Q during it.
 
@@ -122,6 +136,8 @@ def destroyed_phase(m, read, symbols, check, target):
         for frame, label in [(2, 'impact'), (10, 'early'), (24, 'debris'), (44, 'late')]:
             if elapsed == frame:
                 m.call('save_screenshot', path=str(target / f'destroyed-{label}.png'))
+                if 'row_colours' in symbols and label == 'late':
+                    check_bands(m, symbols, check, 'debris changes no attribute')
     records = m.call('memory_read', addr=symbols['debris'], len=4 * pieces)['bytes']
     landed = sum(records[4 * piece + 1] == symbols['DEBRIS_FLOOR'] for piece in range(pieces))
     check('R and Q cannot cut the destroyed phase short', all(p['phase'] == 2 for p in pressed), pressed)
@@ -285,12 +301,18 @@ def main():
                 check('steering produces a clean pass', read('phase') == 3, read('ship_x'))
             else:
                 number = art.CHECKPOINTS.index(art.SAME_DATA.get(name, name)) + 1
+                if 'row_colours' in symbols:
+                    check_bands(m, symbols, check, 'title colours each row from its table byte')
                 m.call('press_key', key='space', hold_frames=3)
                 m.frames(4)
                 check('enters flight', read('phase') == 1)
+                if 'row_colours' in symbols:
+                    check_bands(m, symbols, check, 'flight colours each row from its table byte')
                 # First verify an ordinary loss, then restart before the safe route.
                 if 'debris_time' in symbols:
                     destroyed_phase(m, read, symbols, check, target)
+                    if 'row_colours' in symbols:
+                        check_bands(m, symbols, check, 'result keeps the row colours')
                 else:
                     m.frames(2200)
                 check('idle course loses on first impact', read('phase') == 2 and read('hull') == 0)
@@ -327,9 +349,15 @@ def main():
                 last = None
                 cadence = set()
                 last_event_still_active = False
+                band_samples = []
+                if 'row_colours' in symbols:
+                    check_bands(m, symbols, check, 'retry restores the row colours')
+                    bands = attributes_by_row(m)
                 for frame in range(3500):
                     if read('phase') != 1:
                         break
+                    if 'row_colours' in symbols and frame % 100 == 50:
+                        band_samples.append(attributes_by_row(m))
                     tick, x = course_step(), read('ship_x')
                     target_x = positions[min(tick + 1, len(positions) - 1)]
                     action = 'P' if target_x > x else 'O' if target_x < x else None
@@ -350,6 +378,9 @@ def main():
                 check('keyboard route finishes alive', read('phase') == 3 and read('hull') == 1, {'phase': read('phase'), 'frames': frame})
                 check('completion waits beyond final spawn', last_event_still_active and active() == 0
                       and ('wave' not in symbols or read('wave') == len(events)))
+                if 'row_colours' in symbols:
+                    check('flight never changes an attribute', band_samples and band_samples == [bands] * len(band_samples),
+                          {'sampled_frames': len(band_samples)})
                 if 'pool_overflow' in symbols:
                     check('bounded object pool', read('pool_overflow') == 0)
                 if 'frame_delta' in symbols:

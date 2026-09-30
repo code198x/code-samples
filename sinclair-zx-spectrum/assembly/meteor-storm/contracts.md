@@ -228,3 +228,21 @@ its five rows end at y=183, above the controls line. With the starting dY of
 `debris_start` (-12 at the most) Y stays within 100..179 and never wraps.
 Changes AF/BC/DE/IX.
 `debris_time` and `debris` are in the run range.
+
+## Colour
+
+`clear`: no inputs. Zeroes the bitmap at $4000-$57FF, then writes the attribute
+map at $5800-$5AFF, 24 rows of 32 bytes. Up to `debris` it writes $47 (BRIGHT
+white INK on black PAPER) to every cell, then $45 (BRIGHT cyan) to the first 64,
+the top two rows. From `colour-bands` on it reads one byte per character row
+from `row_colours`, top row first, and writes it to all 32 cells of that row.
+Changes AF/BC/DE/HL. An attribute byte is FLASH (bit 7), BRIGHT (bit 6), PAPER
+(bits 5-3) and INK (bits 2-0); every byte in the table is $40+INK.
+
+Nothing else writes attributes: the sprite and text routines change only the
+bitmap. The colours therefore belong to places, not objects, and last until the
+next `clear` (the title, `new_game` and `result`). Every object in a row shows
+that row's INK on black PAPER, so objects cannot clash; a sprite across a row
+boundary shows each row's colour on its side of the line. `row_colours` sits
+outside the run range. A per-object colour would break this contract: the
+colour would stay with the cell, not follow the object.

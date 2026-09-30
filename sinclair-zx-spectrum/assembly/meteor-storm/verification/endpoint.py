@@ -8,7 +8,7 @@ spec=importlib.util.spec_from_file_location('spectrum_transport',donor);module=i
 def main():
  p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True)
  # Later checkpoints keep the finished game's rules, so the same regression applies.
- p.add_argument('--checkpoint',default='finished',choices=['finished','tone','sound-table','sound-frames','debris']);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
+ p.add_argument('--checkpoint',default='finished',choices=['finished','tone','sound-table','sound-frames','debris','colour-bands']);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
  ROOT=PROJECT/'checkpoints'/a.checkpoint
  for flag,ext in [('--sna','sna'),('--tapbas','tap')]:subprocess.run(['asm198x','--dialect','pasmonext','--cpu','z80',flag,'--sym='+str(out/'meteor-storm.sym'),str(ROOT/'meteor-storm.asm'),'-o',str(out/('meteor-storm.'+ext))],check=True,cwd=ROOT)
  symbols={m[1]:int(m[2],16) for line in (out/'meteor-storm.sym').read_text().splitlines() if (m:=re.match(r'(\w+) = \$(\w+)',line))}

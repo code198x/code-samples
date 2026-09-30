@@ -34,7 +34,8 @@ def assets(n):
  return '\n'.join(lines)+'\n'
 
 # These checkpoints use the same generated data as the stage named.
-SAME_DATA = {'object-records': 'object-pool', 'star-pickups': 'stars', 'elapsed-time': 'timed-course'}
+SAME_DATA = {'object-records': 'object-pool', 'star-pickups': 'stars', 'elapsed-time': 'timed-course',
+             'colour-bands': 'debris'}
 
 CHECKPOINTS = ['pixel-motion', 'clocked-steering', 'one-meteor', 'first-dodge',
                'object-pool', 'fixed-course', 'drift', 'stars', 'timed-course',
