@@ -1254,6 +1254,283 @@
       "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
       "binary_sha256": "db3bb9c5d991bc8fe05bf5fa97ab1729ee23e45088d32e948f2dc30d8f8cc83c",
       "binary_bytes": 8732
+    },
+    {
+      "name": "colour-bands",
+      "source_sha256": "92318790afd4cd2964c9c0a3c24daea2bda7a1669cbce358d290d9d2c8bad2f6",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "title colours each row from its table byte",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "flight colours each row from its table byte",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "contact starts the destroyed phase",
+          "detail": 25
+        },
+        {
+          "check": "contact flashes the border",
+          "detail": 2
+        },
+        {
+          "check": "debris changes no attribute",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "R and Q cannot cut the destroyed phase short",
+          "detail": [
+            {
+              "key": "r",
+              "phase": 2,
+              "debris_time": 20
+            },
+            {
+              "key": "q",
+              "phase": 2,
+              "debris_time": 16
+            }
+          ]
+        },
+        {
+          "check": "destroyed phase lasts 25 updates",
+          "detail": {
+            "frames": 50
+          }
+        },
+        {
+          "check": "border flash ends within the phase",
+          "detail": {
+            "flash_frames": 6
+          }
+        },
+        {
+          "check": "storm stays frozen and drawn",
+          "detail": null
+        },
+        {
+          "check": "debris moves without trails",
+          "detail": {
+            "compared_frames": 18
+          }
+        },
+        {
+          "check": "debris stays between the HUD and the controls line",
+          "detail": {
+            "highest_y": 100,
+            "lowest_y": 179,
+            "landed": 8
+          }
+        },
+        {
+          "check": "result screen keeps no debris",
+          "detail": null
+        },
+        {
+          "check": "result keeps the row colours",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "next run starts without debris",
+          "detail": null
+        },
+        {
+          "check": "retry restores the row colours",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1046
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "flight never changes an attribute",
+          "detail": {
+            "sampled_frames": 10
+          }
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            0,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1046
+        }
+      ],
+      "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
+      "binary_sha256": "34fb3a3f845e8edf8edcf3116352728bf7122b6301f36e1d3ac8d907afc80d04",
+      "binary_bytes": 8752
     }
   ]
 }
