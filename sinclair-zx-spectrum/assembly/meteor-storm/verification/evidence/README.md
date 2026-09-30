@@ -1,7 +1,7 @@
 # Native checkpoint evidence
 
-- `checkpoints.json`: twenty-three complete builds, upstream Pasmo 0.5.5 byte
-  parity and 192 checks. Every source/data hash matches the maintained files.
+- `checkpoints.json`: twenty-four complete builds, upstream Pasmo 0.5.5 byte
+  parity and 202 checks. Every source/data hash matches the maintained files.
   `pasmo_version` records the Pasmo banner (`Pasmo v. 0.5.5`) and
   `assembler_version` the Asm198x build.
 - `opening-additions.json`: two additional static programs, native bitmap checks
@@ -14,15 +14,19 @@
 - `title.png`, `flight.png`, `hit.png`, `miss.png`: inspected native captures.
 - `phases-title.png`, `phases-play.png`, `phases-result.png`: inspected native
   captures of the `phases` checkpoint's three phases.
-- `endpoint-tone.json`, `endpoint-sound-table.json`: the endpoint suite run
-  against each sound checkpoint. Both reproduce the accepted route's frames,
-  ticks, times, scores and records exactly; blocking sounds did not move them.
+- `endpoint-tone.json`, `endpoint-sound-table.json`, `endpoint-sound-frames.json`:
+  the endpoint suite run against each sound checkpoint. All three reproduce the
+  accepted route's frames, ticks, times, scores and records exactly; neither
+  blocking sounds nor sounds played in the frame wait moved them. In
+  `endpoint-sound-frames.json` only the count of vertical-star samples differs
+  (1656 and 822 against 1659 and 824): the harness samples at frame boundaries,
+  most likely because the update now finishes earlier in its frame.
 
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
 an optional upstream Pasmo 0.5.5 executable for binary comparison and refuses
-any other Pasmo build. `checkpoints.json` keeps the twenty-three game programs; `opening-additions.json` keeps `pixel-address` and
+any other Pasmo build. `checkpoints.json` keeps the twenty-four game programs; `opening-additions.json` keeps `pixel-address` and
 `draw-ship`. The endpoint uses the independent accepted route from
 `prototype/verification/model-results.json`.
 
