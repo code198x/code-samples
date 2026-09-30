@@ -9,9 +9,11 @@ import random
 rng=random.Random(1986)
 EVENTS=[(rng.randrange(8,225,2),rng.choice([2,3,4,5]),rng.randrange(6,11),rng.choice([-1,0,1]),2 if i%6==3 else 1) for i in range(120)]
 STAR=[0x001800,0x001800,0x003C00,0x00FF00,0x03FFC0,0x00FF00,0x007E00,0x00E700,0x018180,0x0300C0,0,0,0,0,0,0]
+# One debris piece, three rows in the ship's centre columns, so it shares the ship's X.
+DEBRIS=[0x001C00,0x003E00,0x001A00]+[0]*13
 
 def assets(n):
- names=[('ship',SHIP)]+([('meteor',METEOR)] if n>=3 else [])+([('star',STAR)] if n>=8 else [])
+ names=[('ship',SHIP)]+([('meteor',METEOR)] if n>=3 else [])+([('star',STAR)] if n>=8 else [])+([('debris',DEBRIS)] if n>=17 else [])
  lines=['; Eight horizontal shifts; each shift has 16 rows of four bytes.']
  for name,rows in names:
   lines.append(name+'_sprites:')
@@ -34,7 +36,7 @@ SAME_DATA = {'object-records': 'object-pool', 'star-pickups': 'stars', 'elapsed-
 CHECKPOINTS = ['pixel-motion', 'clocked-steering', 'one-meteor', 'first-dodge',
                'object-pool', 'fixed-course', 'drift', 'stars', 'timed-course',
                'boost', 'render-budget', 'records', 'finished',
-               'tone', 'sound-table', 'sound-frames']
+               'tone', 'sound-table', 'sound-frames', 'debris']
 if __name__ == '__main__':
     for number, name in enumerate(CHECKPOINTS, 1):
         (ROOT / 'checkpoints' / name / 'assets.inc').write_text(assets(number))

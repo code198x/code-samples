@@ -8,7 +8,7 @@ spec=importlib.util.spec_from_file_location('spectrum_transport',donor);module=i
 def main():
  p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True)
  # Later checkpoints keep the finished game's rules, so the same regression applies.
- p.add_argument('--checkpoint',default='finished',choices=['finished','tone','sound-table','sound-frames']);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
+ p.add_argument('--checkpoint',default='finished',choices=['finished','tone','sound-table','sound-frames','debris']);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
  ROOT=PROJECT/'checkpoints'/a.checkpoint
  for flag,ext in [('--sna','sna'),('--tapbas','tap')]:subprocess.run(['asm198x','--dialect','pasmonext','--cpu','z80',flag,'--sym='+str(out/'meteor-storm.sym'),str(ROOT/'meteor-storm.asm'),'-o',str(out/('meteor-storm.'+ext))],check=True,cwd=ROOT)
  symbols={m[1]:int(m[2],16) for line in (out/'meteor-storm.sym').read_text().splitlines() if (m:=re.match(r'(\w+) = \$(\w+)',line))}
@@ -54,6 +54,17 @@ def main():
   check('idle flight is destroyed',s['phase']==2 and s['hull']==0,hits)
   check('one contact spends the one life',[h['hull'] for h in hits]==[0])
   check('first impact ends the run',len(hits)==1 and s['phase']==2)
+  if 'debris_time' in symbols:
+   # From debris on, phase 2 begins with about a second of debris before the
+   # result screen, so the lost path waits for it instead of assuming the result.
+   start_frame=m.call('memory_read',addr=symbols['frames'],len=1)['bytes'][0];m.frames(1)
+   while state()['debris_time']:m.frames(1)
+   destroyed_frames=(m.call('memory_read',addr=symbols['frames'],len=1)['bytes'][0]-start_frame)&255
+   check('debris plays before the result',46<=destroyed_frames<=52 and state()['phase']==2,{'frames':destroyed_frames})
+   # The next run's elapsed count starts on the frame new_game finishes, so
+   # the retry below must land on the same frame parity as the recorded runs
+   # (an odd frame count): one frame later measures the course a frame shorter.
+   while m.call('memory_read',addr=symbols['frames'],len=1)['bytes'][0]%2==0:m.frames(1)
   m.call('save_audio_capture',path=str(out/'impacts.wav'));m.frames(20);m.call('save_screenshot',path=str(out/'destroyed.png'));frozen=state()['ticks'];m.frames(40);check('result freezes simulation',state()['ticks']==frozen)
   m.call('press_key',key='r',hold_frames=3);m.frames(4);s=state();check('retry restores flight',s['phase']==1 and s['hull']==1 and s['wave']==0 and s['ship_x']==116 and s['score']==0)
   # Keyboard-only feedback pilot, at frame boundaries. State reads choose input;

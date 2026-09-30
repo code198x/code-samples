@@ -1138,6 +1138,104 @@
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
       "binary_sha256": "bed7c95c45a29e7744d9561a36d9d0535315a5569e97b8b5df1468e205e924eb",
       "binary_bytes": 4387
+    },
+    {
+      "name": "debris",
+      "source_sha256": "f3e055c8db19b1f8b87eef416a92cff07f09490e4cad1b83ea77b3f274834134",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "contact starts the destroyed phase",
+          "detail": 25
+        },
+        {
+          "check": "R and Q cannot cut the destroyed phase short",
+          "detail": [
+            {
+              "key": "r",
+              "phase": 2,
+              "debris_time": 20
+            },
+            {
+              "key": "q",
+              "phase": 2,
+              "debris_time": 16
+            }
+          ]
+        },
+        {
+          "check": "destroyed phase lasts 25 updates",
+          "detail": {
+            "frames": 49
+          }
+        },
+        {
+          "check": "storm stays frozen and drawn",
+          "detail": null
+        },
+        {
+          "check": "debris moves without trails",
+          "detail": {
+            "compared_frames": 35
+          }
+        },
+        {
+          "check": "result screen keeps no debris",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "next run starts without debris",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "ecf2d9b63ceb0b1b6113fecf52e59adf5fe45da2b0cee65713211eb8e5157021",
+      "binary_sha256": "412addc1f28772d6d420dc1e2f2da519347c8fa584760c32d1df0860487155e0",
+      "binary_bytes": 5084
     }
   ]
 }
