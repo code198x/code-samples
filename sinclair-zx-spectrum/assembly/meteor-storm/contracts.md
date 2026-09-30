@@ -105,7 +105,7 @@ fatal hit.
 ## Phases
 
 From `phases` on, `phase` is 0 at the title, 1 in flight, 2 after destruction and
-3 in clear space. `title` sets phase 0, clears the screen, draws its lines and
+3 in clear space. From `debris` on, phase 2 begins with the destroyed phase (see below). `title` sets phase 0, clears the screen, draws its lines and
 waits for Space between two calls to `release_keys`. `phases` through `records`
 place the title lines at hand-counted columns; `finished` centres them with
 `text_center`. In flight, Q leaves for `title`. `hull` is 1 while the ship is
@@ -156,7 +156,8 @@ Port $FE bit 4 drives the speaker and bits 0-2 set the border; bit 3 (MIC) stays
 and every speaker write ORs it in, so a sound never changes the border. Start-up
 writes it once. Up to sound-table, sounds block: interrupts still count frames,
 but the program waits until the sound ends. From sound-frames, star and boost
-play during the wait for the next frame instead. Timings assume 3.5 MHz and code above $8000, where
+play during the wait for the next frame instead, and from debris the impact
+does too. Timings assume 3.5 MHz and code above $8000, where
 only each OUT to the ULA port can be delayed by contention.
 
 `impact_sound` (tone checkpoint): no inputs. Plays IMPACT_CYCLES periods of
@@ -194,4 +195,24 @@ note change. A 0 half-period ends the sound: `sound_left` becomes 0 and the rest
 of the wait polls `frames`. Reads `border`; changes AF/BC/DE/HL/IX. A sound that
 outlasts one wait continues in the next, silent while the update runs.
 `sound_note` and `sound_left` are in the run range, so a new run starts silent.
-`arrival_sound` and `impact_sound` still block through `play_sound`.
+`arrival_sound` and `impact_sound` still block through `play_sound`; from `debris`,
+`impact_sound` is started with `start_sound` at contact and plays during the
+destroyed phase's frame waits, while `arrival_sound` still blocks.
+
+## Destroyed phase
+
+From `debris` on, contact clears `hull`, starts `impact_sound` and leaves the meteor
+in its slot and on screen; the main loop then jumps to `destroyed` instead of `lost`.
+`destroyed` sets phase 2, calls `erase_ship`, copies DEBRIS (5) four-byte records
+from `debris_start` to `debris` and sets each X to `ship_x`. Records are 0 X, 1 Y,
+2 signed dX, 3 signed dY; stride 4. It draws them, sets `debris_time` to
+DEBRIS_UPDATES (25) and runs that many updates on the main loop's even-frame gate:
+`draw_debris` (erase), `move_debris`, `draw_debris` (draw). It reads no keys and
+never updates the pool, `ticks` or `elapsed`. It then falls into `lost`.
+
+`draw_debris`: no inputs. XORs every piece with `draw_sprite`, three rows of
+`debris_sprites` at the record's X and Y. Changes AF/BC/DE/HL/IX.
+`move_debris`: no inputs. Adds dX and dY; a new X outside 8..224 is not stored, so
+the piece keeps its X. Y is not bounded: every dY in `debris_start` is negative and
+at most 3, so over 25 updates Y stays within 86..175. Changes AF/BC/DE/IX.
+`debris_time` and `debris` are in the run range.

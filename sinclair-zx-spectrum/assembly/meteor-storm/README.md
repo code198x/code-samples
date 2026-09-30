@@ -1,7 +1,7 @@
 # Meteor Storm — runnable teaching progression
 
-Twenty-six complete programs develop the accepted 48K PAL game from small
-experiments, then extend it with sound. These are teaching checkpoints, **not a fixed lesson count**.
+Twenty-seven complete programs develop the accepted 48K PAL game from small
+experiments, then extend it with sound and a destroyed phase. These are teaching checkpoints, **not a fixed lesson count**.
 Split explanations further wherever one change needs its own experiment.
 Meet Assembly supplies the immediate background: bytes, bitmap addresses, loops,
 calls, flags, bounded keyboard movement and the debugger.
@@ -41,6 +41,7 @@ to the prototype. Native evidence compares its gameplay with that reference.
 | [tone](checkpoints/tone/README.md) | Turn the impact click into an audible tone |
 | [sound-table](checkpoints/sound-table/README.md) | Give star, boost, arrival and impact their own sounds |
 | [sound-frames](checkpoints/sound-frames/README.md) | Play star and boost sounds while the storm keeps moving |
+| [debris](checkpoints/debris/README.md) | Break the ship apart before the result |
 
 ## Build and run
 
@@ -86,7 +87,7 @@ python3 verification/checkpoints.py --emulator /path/to/emu198x-spectrum \
 python3 verification/boundaries.py --emulator /path/to/emu198x-spectrum \
   --output /tmp/meteor-boundaries
 python3 verification/endpoint.py --emulator /path/to/emu198x-spectrum \
-  --output /tmp/meteor-endpoint [--checkpoint tone|sound-table|sound-frames]
+  --output /tmp/meteor-endpoint [--checkpoint tone|sound-table|sound-frames|debris]
 ```
 
 The first suite builds all programs and checks bit shifts, clocks across wrap,
@@ -96,8 +97,9 @@ keyboard steering; it does not write state to manufacture a successful run.
 The endpoint suite additionally checks exact title pixels, boost release,
 vertical stars, gentle drift, first-hit loss, timing, score/time records and a
 fresh ROM tape load. Evidence identifies source/assets/emulator hashes.
-The endpoint suite runs against `finished` by default. `tone`, `sound-table` and
-`sound-frames` keep its rules, so `--checkpoint` runs the same checks, including the comparison
-with the accepted prototype's route, times and scores, against them.
+The endpoint suite runs against `finished` by default. `tone`, `sound-table`,
+`sound-frames` and `debris` keep its rules, so `--checkpoint` runs the same checks, including the comparison
+with the accepted prototype's route, times and scores, against them. For `debris` the
+lost path first waits for the destroyed phase to end.
 These are emulator results, not physical-hardware tests. Impact audio is captured;
 no independent listening claim is made for these captures.

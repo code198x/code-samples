@@ -57,6 +57,73 @@ def route(events, spawn=20):
         paths = following
     return [116] + max(paths.values(), key=lambda value: value[0])[1]
 
+def bitmap_address(y, x=0):
+    return ((y & 0xc0) << 5) | ((y & 7) << 8) | ((y & 0x38) << 2) | (x >> 3)
+
+def bitmap(m):
+    data = []
+    for address in range(0x4000, 0x5800, 256):
+        data += m.call('memory_read', addr=address, len=256)['bytes']
+    return data
+
+def lit_rows(m, rows):
+    # Character rows (of eight scanlines) holding any set pixel.
+    screen = bitmap(m)
+    return [row for row in rows if any(screen[bitmap_address(row * 8 + scan) + col]
+                                       for scan in range(8) for col in range(32))]
+
+def destroyed_phase(m, read, symbols, check, target):
+    """Watch the destroyed phase frame by frame, pressing R and Q during it.
+
+    At each halted frame the debris pieces, drawn from their records, are
+    XORed out of the bitmap. What remains is the storm under the debris; it
+    must never change, which rules out trails. Frames where the CPU is still
+    running an update (the impact sound delays it) are not compared.
+    """
+    for _ in range(2200):
+        if read('hull') == 0:
+            break
+        m.frames(1)
+    while not read('debris_time'):
+        m.frames(1)
+    check('contact starts the destroyed phase', read('phase') == 2 and read('debris_time') > 0, read('debris_time'))
+    pieces, pool = symbols['DEBRIS'], symbols['state_end'] - symbols['objects']
+    def objects():
+        return m.call('memory_read', addr=symbols['objects'], len=pool)['bytes']
+    ticks, frozen = read('ticks', 2), objects()
+    start, elapsed, storm, compared, moved, pressed = read('frames'), 0, None, 0, set(), []
+    m.call('save_screenshot', path=str(target / 'destroyed-impact.png'))
+    while read('debris_time'):
+        if m.call('query_cpu')['registers']['halt']:
+            screen = bitmap(m)
+            records = m.call('memory_read', addr=symbols['debris'], len=4 * pieces)['bytes']
+            for piece in range(pieces):
+                x, y = records[4 * piece], records[4 * piece + 1]
+                moved.add((x, y))
+                for row, bits in enumerate(art.DEBRIS[:3]):
+                    for column in range(24):
+                        if bits >> (23 - column) & 1:
+                            screen[bitmap_address(y + row, x + column)] ^= 0x80 >> ((x + column) & 7)
+            storm = storm or screen
+            assert screen == storm, ('storm changed under the debris', elapsed)
+            compared += 1
+        if len(pressed) < 2 and elapsed >= (6, 14)[len(pressed)]:
+            key = 'rq'[len(pressed)]
+            m.call('press_key', key=key, hold_frames=3)
+            pressed.append({'key': key, 'phase': read('phase'), 'debris_time': read('debris_time')})
+        else:
+            m.frames(1)
+        elapsed = (read('frames') - start) & 255
+        if elapsed == 24:
+            m.call('save_screenshot', path=str(target / 'destroyed-debris.png'))
+    check('R and Q cannot cut the destroyed phase short', all(p['phase'] == 2 for p in pressed), pressed)
+    check('destroyed phase lasts 25 updates', 48 <= elapsed <= 52, {'frames': elapsed})
+    check('storm stays frozen and drawn', read('ticks', 2) == ticks and objects() == frozen)
+    check('debris moves without trails', compared >= 20 and len(moved) > 5, {'compared_frames': compared})
+    m.frames(30)
+    check('result screen keeps no debris', read('phase') == 2 and not lit_rows(m, [3, 4, 5, 7, 8, 9, 11, 13, 15, 16, 19, 20, 21, 22, 23]))
+    m.call('save_screenshot', path=str(target / 'destroyed-result.png'))
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--emulator', required=True)
@@ -209,12 +276,17 @@ def main():
                 m.frames(4)
                 check('enters flight', read('phase') == 1)
                 # First verify an ordinary loss, then restart before the safe route.
-                m.frames(2200)
+                if 'debris_time' in symbols:
+                    destroyed_phase(m, read, symbols, check, target)
+                else:
+                    m.frames(2200)
                 check('idle course loses on first impact', read('phase') == 2 and read('hull') == 0)
                 m.call('press_key', key='r', hold_frames=3)
                 m.frames(4)
                 check('retry clears run state', read('phase') == 1 and read('ship_x') == 116
                       and ('wave' not in symbols or read('wave') == 0))
+                if 'debris_time' in symbols:
+                    check('next run starts without debris', not lit_rows(m, range(3, 20)) and not lit_rows(m, [22]))
                 # object-pool starts three meteors together; later courses read the event table.
                 events = [(80, 2, 0, 0, 1), (116, 3, 0, 0, 1), (170, 4, 0, 0, 1)] if number == 5 else art.EVENTS
                 if number < 8:

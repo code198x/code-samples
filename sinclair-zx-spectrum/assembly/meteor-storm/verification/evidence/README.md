@@ -1,7 +1,7 @@
 # Native checkpoint evidence
 
-- `checkpoints.json`: twenty-four complete builds, upstream Pasmo 0.5.5 byte
-  parity and 202 checks. Every source/data hash matches the maintained files.
+- `checkpoints.json`: twenty-five complete builds, upstream Pasmo 0.5.5 byte
+  parity and 219 checks. Every source/data hash matches the maintained files.
   `pasmo_version` records the Pasmo banner (`Pasmo v. 0.5.5`) and
   `assembler_version` the Asm198x build.
 - `opening-additions.json`: two additional static programs, native bitmap checks
@@ -21,12 +21,26 @@
   `endpoint-sound-frames.json` only the count of vertical-star samples differs
   (1656 and 822 against 1659 and 824): the harness samples at frame boundaries,
   most likely because the update now finishes earlier in its frame.
+- `endpoint-debris.json`: the endpoint suite against `debris`, 50 checks. Every
+  measurement matches `endpoint-sound-frames.json`, including the accepted route.
+  Its lost path is longer: phase 2 now starts at contact with the destroyed phase,
+  so the suite waits for `debris_time` to reach 0 (49 frames, recorded as
+  `debris plays before the result`) before the result checks. It then aligns the
+  retry to an odd frame count, as in the recorded runs: the next run's elapsed
+  count starts on the frame `new_game` finishes, so a retry one frame later
+  measures the same course one frame shorter (2091 instead of 2092).
+- `debris-impact.png`, `debris-scatter.png`, `debris-result.png`: inspected native
+  captures of the `debris` checkpoint's destroyed phase from `checkpoints.py`: the
+  first frame after contact (the meteor where the ship was, pieces over it), 24
+  frames later, and the result. `checkpoints.py` also compares the bitmap under
+  the pieces at every halted frame of the phase and finds it unchanged, so the
+  pieces leave no trails; the result and the next run show no debris pixels.
 
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
 an optional upstream Pasmo 0.5.5 executable for binary comparison and refuses
-any other Pasmo build. `checkpoints.json` keeps the twenty-four game programs; `opening-additions.json` keeps `pixel-address` and
+any other Pasmo build. `checkpoints.json` keeps the twenty-five game programs; `opening-additions.json` keeps `pixel-address` and
 `draw-ship`. The endpoint uses the independent accepted route from
 `prototype/verification/model-results.json`.
 
