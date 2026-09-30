@@ -154,8 +154,9 @@ AF/BC; it prevents a held launch/retry key from triggering the next phase.
 Port $FE bit 4 drives the speaker and bits 0-2 set the border; bit 3 (MIC) stays
 0. From `tone` onward the border colour lives in `border`, outside the run state,
 and every speaker write ORs it in, so a sound never changes the border. Start-up
-writes it once. Sounds block: interrupts still count frames, but the program
-waits until the sound ends. Timings assume 3.5 MHz and code above $8000, where
+writes it once. Up to sound-table, sounds block: interrupts still count frames,
+but the program waits until the sound ends. From sound-frames, star and boost
+play during the wait for the next frame instead. Timings assume 3.5 MHz and code above $8000, where
 only each OUT to the ULA port can be delayed by contention.
 
 `impact_sound` (tone checkpoint): no inputs. Plays IMPACT_CYCLES periods of
@@ -168,11 +169,29 @@ The two halves differ by 23 T-states; pitch follows the whole period.
 
 `play_sound`: HL=sound, a list of (half-period, cycle count) byte pairs ended by
 a 0 half-period. Reads `border`, plays each note through `tone`. Changes
-AF/BC/DE/HL; preserves IX. Callers inside the pool loop save BC. Sounds played
+AF/BC/DE/HL; preserves IX. Callers inside the pool loop save BC. In sound-table, sounds played
 during an update (`star_sound`, `boost_sound`) must stay short: the update has
 139,776 T-states and they take about 17,000 and 22,000. `arrival_sound` and
 `impact_sound` play after the run's result is decided.
 
 `boost` also plays `boost_sound` when Space is held now and was not at the
 previous update. `boost_last` holds that previous state inside the run range, so
-a new run starts with it clear. Changes AF/BC/DE/HL.
+a new run starts with it clear. Changes AF/BC/DE/HL (sound-table); from
+sound-frames it starts the sound instead and changes AF/BC/HL.
+
+`start_sound` (sound-frames onward): HL=sound, in `play_sound`'s format. Records
+it in `sound_note` (current note address) and `sound_left` (cycles still to play
+in that note), replacing any sound already due. Plays nothing itself. Changes
+A/HL; preserves BC, DE and IX, so the pool loop calls it without saving BC.
+
+`wait_frame` (sound-frames onward): replaces the main loop's `halt`. Returns once
+`frames` has changed since entry, as `halt` would. With `sound_left` 0 it is a
+`halt`. Otherwise it plays the current note from `sound_note`, one period of
+26×n+49 T-states at a time (n=half-period, 2-255: it uses n-1 delay passes to
+pay for the 24-T-state frame check), reading `frames` after each period. It
+saves the cycles left and returns within one period of the interrupt, two at a
+note change. A 0 half-period ends the sound: `sound_left` becomes 0 and the rest
+of the wait polls `frames`. Reads `border`; changes AF/BC/DE/HL/IX. A sound that
+outlasts one wait continues in the next, silent while the update runs.
+`sound_note` and `sound_left` are in the run range, so a new run starts silent.
+`arrival_sound` and `impact_sound` still block through `play_sound`.
