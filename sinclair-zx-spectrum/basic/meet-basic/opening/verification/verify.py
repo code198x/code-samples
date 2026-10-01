@@ -56,7 +56,13 @@ class Spectrum:
         return json.loads(result['content'][0]['text'])
 
     def frames(self, count):
-        self.call('run_frames', frames=count)
+        # Busy teaching loops take longer than HALT-based games. Keep each
+        # request within the RPC deadline without changing the elapsed frames.
+        if count <= 500:
+            self.call('run_frames', frames=count)
+        else:
+            for start in range(0, count, 500):
+                self.call('run_frames', frames=min(500, count - start))
 
     def key(self, *keys):
         if len(keys) == 1:
@@ -87,7 +93,8 @@ class Spectrum:
 
     def statement(self, line):
         # Keywords are entered by their actual K-mode key, never spelled out.
-        words = line.split(' ', 2)
+        # LIST right-aligns line numbers; that padding is not keyboard input.
+        words = line.lstrip().split(' ', 2)
         if words[0].isdigit():
             self.text(words.pop(0))
         command = words.pop(0)
