@@ -1,0 +1,184 @@
+{
+  "target": "Stock 48K PAL; code $8000, stack $FF00; DI during tones",
+  "method": "Snapshot callers, complete I/O traces, PCM crossings; separate fresh ROM tape load",
+  "emulator_sha256": "9009466df08dd2635ff169044c8196feb959d5bb25225fb4a4b8054c9cddae37",
+  "sources": {
+    "demo.asm": "1d6f83fe313ef3fa03bd60b9bd12e23604793714f403db34c36834be555874db"
+  },
+  "includes": {
+    "effects.inc": "8ed4fbc9ccfe1fdb577f7ea42dbeb5dbf97adc08e6891991ff8d3f1c3ede50be",
+    "sound-beep.inc": "275fdad2e271244623ca2984b89f8d84d71351368593192036452170c4ca975a"
+  },
+  "cases": [
+    {
+      "name": "low",
+      "frequency_hz": [
+        523.50188334665
+      ],
+      "observed_tone_seconds": 0.20056689342403627,
+      "cycles": 105,
+      "port_writes": 210,
+      "base_output": 1,
+      "source_sha256": "d97ce4d0c67b33ca0bae299455828a91b1bbda00fa3b90bdc0ce4cb2270596b7",
+      "binary_sha256": "d7b1d02cd6d521110c13dbfb52e5ce1f9ccce50c6d100193cfbef08f473bcad7",
+      "wav_sha256": "d5fcfd40181d522b158600967adddafb54bedbe2bed9ae20101eafed2fc85696",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    },
+    {
+      "name": "high",
+      "frequency_hz": [
+        1042.600591043419
+      ],
+      "observed_tone_seconds": 0.10070294784580498,
+      "cycles": 105,
+      "port_writes": 210,
+      "base_output": 1,
+      "source_sha256": "a25892bc6f82ad0af75022b748af5a8b4a7e85c8c4c0f281b3dfc70b8e5a4690",
+      "binary_sha256": "1d25e9a2e8d8bda3445e8ac337c3f5756471145cb7c2847d6312b427093c1658",
+      "wav_sha256": "f1e2a4a242ea4f91f46778b0c10c1dd01786804ea523fa346eeb31489c0f12ee",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    },
+    {
+      "name": "high-long",
+      "frequency_hz": [
+        1042.7537051702682
+      ],
+      "observed_tone_seconds": 0.20138321995464853,
+      "cycles": 210,
+      "port_writes": 420,
+      "base_output": 1,
+      "source_sha256": "67253af3e4924f0ecaff2a2804c33601c897b06e8fe9582a0c2e098e7820c18f",
+      "binary_sha256": "5a8ac670577bca084d177a4d5c0f7af8eac2e27729a0a6461ccbea509042ba2f",
+      "wav_sha256": "e4f2a365b4832bd1b46b9537e01639ea9212b8b7f4a2ca2012439f2b29bde508",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    },
+    {
+      "name": "low-short",
+      "frequency_hz": [
+        523.3603997501561
+      ],
+      "observed_tone_seconds": 0.03820861678004535,
+      "cycles": 20,
+      "port_writes": 40,
+      "base_output": 1,
+      "source_sha256": "1ee84de25a804bc97ea085e9d2693205f5a9fb8714a80b2d299d9d3b300e554c",
+      "binary_sha256": "5180549d39af3cc90dcdcae5dc1595887af9916bece523fee700ba07478ebf57",
+      "wav_sha256": "6cf68b69718fda2c5d22d1c2e49ca0f1f096d7f9cf2f823d71314bd8b6b81416",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    },
+    {
+      "name": "mic-high",
+      "frequency_hz": [
+        523.50188334665
+      ],
+      "observed_tone_seconds": 0.20056689342403627,
+      "cycles": 105,
+      "port_writes": 210,
+      "base_output": 9,
+      "source_sha256": "084a55a7652453282544f3ede715195b65791a688bfe29765328ece9422ff2f0",
+      "binary_sha256": "48acc3c1877189ff88441b62ab50233d6d73826bfa4295888f7de9084da59d25",
+      "wav_sha256": "d5fcfd40181d522b158600967adddafb54bedbe2bed9ae20101eafed2fc85696",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    },
+    {
+      "name": "success",
+      "frequency_hz": [
+        666.1631419939577,
+        722.9508196721312,
+        791.2679425837321,
+        873.8441215323645,
+        974.2268041237113,
+        1102.5,
+        1267.2413793103449,
+        1496.606334841629
+      ],
+      "observed_tone_seconds": 0.13959183673469389,
+      "cycles": 128,
+      "port_writes": 256,
+      "base_output": 1,
+      "source_sha256": "5a58dd3a768885a7df75776443a136128fb0c443e82f8a9182133be143d730da",
+      "binary_sha256": "7c5f320e87ce6917c4a45223930172aa445ed24be40939cbface8b1628f4cfb3",
+      "wav_sha256": "051f4dc8ccbede22d544a36235143ca45ff29ed84913df89e9cf9d6209f75070",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    },
+    {
+      "name": "error",
+      "frequency_hz": [
+        1493.2279909706544,
+        1269.6737044145873,
+        1102.5,
+        975.6637168141592,
+        873.8441215323645,
+        791.2679425837321,
+        723.7417943107222,
+        666.1631419939577
+      ],
+      "observed_tone_seconds": 0.13866213151927437,
+      "cycles": 128,
+      "port_writes": 256,
+      "base_output": 1,
+      "source_sha256": "e1fd81b5e91b3499f3ee82d3d4d0e9972276ca1ec812552587f3d379c251fa45",
+      "binary_sha256": "bb60ead8a7208cfa50d7a347f3ecd7090bc58a36e17b8344773dd678c43bda5c",
+      "wav_sha256": "6f31a4e0f5d9ef962bceeb59cae943f1daeb1cec071f75ef131e3e2c630080b1",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    },
+    {
+      "name": "click",
+      "frequency_hz": [
+        1043.225806451613
+      ],
+      "observed_tone_seconds": 0.011496598639455782,
+      "cycles": 12,
+      "port_writes": 24,
+      "base_output": 1,
+      "source_sha256": "7ffdfa19e5473e0aea05312ad297830d1171d5a4c26bed0c3fc89fb79fa3b40c",
+      "binary_sha256": "d05ec225e6292950d7e47bfd43fe89d34987cbd9c73cea017082da0bb6e1182b",
+      "wav_sha256": "e81d66fbd56d69f4fa72408aedde2c9ef6215783b04b35cfda5fe8aa92b4b649",
+      "checks": [
+        "Complete alternating speaker writes preserve border/MIC",
+        "Caller resumes with stack, C, E and disabled interrupt state preserved",
+        "PCM pitch matches the nominal instruction-cost derivation",
+        "PCM cycle count matches the bus trace"
+      ]
+    }
+  ],
+  "limits": "Emulator observations; no physical hardware or listening claim.",
+  "alternate_assembler": "PasmoNext v0.1.3 (PC) (C) 2004-2005 Julian Albo",
+  "fresh_tape_sequence_completed": true,
+  "status": "passed"
+}

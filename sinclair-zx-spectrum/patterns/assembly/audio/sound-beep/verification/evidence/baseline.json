@@ -1,0 +1,6 @@
+{
+  "website_revision": "823e571fbfb67cd4db408adf3f695d46019bb391",
+  "pattern_sha256": "b32a2412bfdfcf8d9d8c7662680271225cee9f3cbbd9420d5ae6276adbffff13",
+  "build_exit": 0,
+  "diagnostic": "Both assemblers accept the original source; fixed-delay repetition changes do not implement the claimed pitch sweep."
+}
