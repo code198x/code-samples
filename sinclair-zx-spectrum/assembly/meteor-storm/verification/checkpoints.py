@@ -452,6 +452,11 @@ def main():
                     check('each storm fits the two-digit time display', max(storm_seconds) < 100,
                           [round(seconds, 2) for seconds in storm_seconds])
                     check('the interlude shows between storms', interlude_seen)
+                    # The browser pilot compares its end state with this one.
+                    check('the voyage ends in clear space after the last storm',
+                          read('phase') == 3 and read('hull') == 1,
+                          {'ticks': read('ticks', 2), 'elapsed': read('elapsed', 2), 'score': read('score'),
+                           'best_time': read('best_time', 2), 'best_score': read('best_score')})
                     check('the one-byte score wraps past 255', score_wrapped,
                           {'storm_start_scores': [s['score'] for s in storm_starts], 'final_score': read('score') * 10})
             m.call('save_screenshot', path=str(target / 'screen.png'))
