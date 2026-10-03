@@ -341,6 +341,10 @@ def main():
                 # From voyage on each storm has its own course, flown from the centre.
                 courses = art.VOYAGE if 'storm' in symbols else [events]
                 routes = [route(course, 0 if number == 5 else 20) for course in courses]
+                if 'storm' in symbols:
+                    # The browser pilot flies the same routes: ship X for each course step.
+                    (target / 'routes.json').write_text(json.dumps({'seeds': list(range(1986, 1986 + len(courses))),
+                                                                    'routes': routes}) + '\n')
                 # Before drift there is no course-step counter to read. Count the
                 # even frames that start updates, from a known step: the first
                 # event's countdown, or the first meteor's height at speed 2.
