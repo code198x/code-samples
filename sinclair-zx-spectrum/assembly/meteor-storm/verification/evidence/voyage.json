@@ -485,6 +485,16 @@
           "detail": null
         },
         {
+          "check": "the voyage ends in clear space after the last storm",
+          "detail": {
+            "ticks": 980,
+            "elapsed": 980,
+            "score": 2,
+            "best_time": 980,
+            "best_score": 2
+          }
+        },
+        {
           "check": "the one-byte score wraps past 255",
           "detail": {
             "storm_start_scores": [

@@ -58,7 +58,7 @@
   cell on row 20; after steering left and back, the ship's top half is yellow
   and its bottom half white, the colour left in the cells it visited.
 
-- `voyage.json`: `checkpoints.py --only voyage`, 32 checks, from a later Emu198x
+- `voyage.json`: `checkpoints.py --only voyage`, 33 checks, from a later Emu198x
   build (its hash is recorded) without upstream Pasmo, which was not available
   for this run; Asm198x's pasmo and pasmonext dialects and PasmoNext 0.1.3 give
   identical bytes. The same build re-ran every checkpoint in `checkpoints.json`:
@@ -69,7 +69,10 @@
   starts on an empty playfield with the ship at X 116 and `elapsed` and `ticks`
   at 0, and the HUD reads `STORM 1/5` to `STORM 5/5`, read back from the bitmap.
   The score at each storm start reads 0, 960, 1940, 500 and 1490 and the result
-  20: the true 5,140 points have wrapped the score byte twice.
+  20: the true 5,140 points have wrapped the score byte twice. The voyage ends
+  in clear space at course step 980 of the fifth storm, 980 frames into it,
+  with that storm as `best_time`; the website's browser pilot reaches the
+  same end state.
 - `voyage-routes.json`: the five keyboard routes that run flew, ship X for each
   course step of each storm, written by `checkpoints.py` beside its voyage
   output. The website's browser pilot flies the voyage with the same routes.
