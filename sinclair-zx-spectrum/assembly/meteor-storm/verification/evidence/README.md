@@ -70,6 +70,9 @@
   at 0, and the HUD reads `STORM 1/5` to `STORM 5/5`, read back from the bitmap.
   The score at each storm start reads 0, 960, 1940, 500 and 1490 and the result
   20: the true 5,140 points have wrapped the score byte twice.
+- `voyage-routes.json`: the five keyboard routes that run flew, ship X for each
+  course step of each storm, written by `checkpoints.py` beside its voyage
+  output. The website's browser pilot flies the voyage with the same routes.
 - `voyage-interlude.png`, `voyage-storm-2-flight.png`, `voyage-storm-5-start.png`:
   inspected native captures of `voyage`: the first interlude (CLEAR SPACE, FINISH
   BONUS 0800, NEXT STORM, over the bands), the second storm's own course mid-way,
