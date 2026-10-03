@@ -72,6 +72,16 @@ def lit_rows(m, rows):
     return [row for row in rows if any(screen[bitmap_address(row * 8 + scan) + col]
                                        for scan in range(8) for col in range(32))]
 
+def text_at(m, row, column, length):
+    # Read characters back from the bitmap by matching the ROM font.
+    font = []
+    for address in range(0x3d00, 0x4000, 256):
+        font += m.call('memory_read', addr=address, len=256)['bytes']
+    screen = bitmap(m)
+    glyphs = {tuple(font[i * 8:i * 8 + 8]): chr(32 + i) for i in range(96)}
+    return ''.join(glyphs.get(tuple(screen[bitmap_address(row * 8 + scan) + column + i] for scan in range(8)), '?')
+                   for i in range(length))
+
 def attributes_by_row(m):
     # The 768-byte attribute map at $5800, one list of 32 cells per character row.
     data = []
@@ -328,7 +338,13 @@ def main():
                     events = [e for e in events if e[4] == 1]
                 if number < 7:
                     events = [(x, speed, delay, 0, kind) for x, speed, delay, drift, kind in events]
-                positions = route(events, 0 if number == 5 else 20)
+                # From voyage on each storm has its own course, flown from the centre.
+                courses = art.VOYAGE if 'storm' in symbols else [events]
+                routes = [route(course, 0 if number == 5 else 20) for course in courses]
+                if 'storm' in symbols:
+                    # The browser pilot flies the same routes: ship X for each course step.
+                    (target / 'routes.json').write_text(json.dumps({'seeds': list(range(1986, 1986 + len(courses))),
+                                                                    'routes': routes}) + '\n')
                 # Before drift there is no course-step counter to read. Count the
                 # even frames that start updates, from a known step: the first
                 # event's countdown, or the first meteor's height at speed 2.
@@ -350,15 +366,49 @@ def main():
                 cadence = set()
                 last_event_still_active = False
                 band_samples = []
+                storm_starts = []
+                storm_seconds = []
+                score_wrapped = False
+                last_score = read('score') if 'storm' in symbols else 0
+                interlude_seen = False
                 if 'row_colours' in symbols:
                     check_bands(m, symbols, check, 'retry restores the row colours')
                     bands = attributes_by_row(m)
-                for frame in range(3500):
+                for frame in range(3500 * len(courses)):
                     if read('phase') != 1:
                         break
+                    storm = read('storm') if 'storm' in symbols else 0
+                    if 'storm' in symbols:
+                        if len(storm_starts) == storm:
+                            storm_starts.append({'storm': storm + 1, 'ship_x': read('ship_x'),
+                                                 'elapsed': read('elapsed', 2), 'ticks': read('ticks', 2),
+                                                 'score': read('score') * 10,
+                                                 'lit_playfield_rows': lit_rows(m, range(3, 20))})
+                            if storm:
+                                # `storm` changes before the HUD is redrawn, and a capture shows the
+                                # last finished frame: let both catch up first.
+                                m.frames(2)
+                                m.call('save_screenshot', path=str(target / f'storm-{storm + 1}-start.png'))
+                            storm_starts[-1]['hud'] = text_at(m, 0, 22, 9)
+                            storm_seconds.append(0)
+                        storm_seconds[storm] = max(storm_seconds[storm], read('elapsed', 2) / 50)
+                        if storm == 1 and not (target / 'storm-2-flight.png').exists() and read('ticks', 2) >= 400:
+                            # Mid-way through the second storm: its own course, not the first one's.
+                            m.frames(1)
+                            m.call('save_screenshot', path=str(target / 'storm-2-flight.png'))
+                        score = read('score')
+                        score_wrapped |= score < last_score
+                        last_score = score
+                        if not interlude_seen and storm == 0 and read('wave') == len(events) \
+                                and not active() and lit_rows(m, [15]):
+                            # The first interlude: CLEAR SPACE, the bonus and NEXT STORM on screen.
+                            interlude_seen = True
+                            m.frames(1)
+                            m.call('save_screenshot', path=str(target / 'interlude.png'))
                     if 'row_colours' in symbols and frame % 100 == 50:
                         band_samples.append(attributes_by_row(m))
                     tick, x = course_step(), read('ship_x')
+                    positions = routes[storm]
                     target_x = positions[min(tick + 1, len(positions) - 1)]
                     action = 'P' if target_x > x else 'O' if target_x < x else None
                     if action != last:
@@ -389,6 +439,26 @@ def main():
                     check('route collects stars', read('score') > 0, read('score') * 10)
                 if number >= 9:
                     check('PAL elapsed clock advances', read('elapsed', 2) > 500, read('elapsed', 2))
+                if 'storm' in symbols:
+                    check('the route crosses every storm', read('storm') == len(courses) - 1
+                          and len(storm_starts) == len(courses), storm_starts)
+                    # The first storm starts at launch, a few frames before the route begins.
+                    check('each later storm starts from the centre with the clock and course step at zero',
+                          all(s['ship_x'] == 116 and s['elapsed'] < 4 and s['ticks'] < 2 for s in storm_starts[1:]), storm_starts)
+                    check('the HUD names each storm', [s['hud'] for s in storm_starts]
+                          == ['STORM %d/%d' % (s['storm'], len(courses)) for s in storm_starts], storm_starts)
+                    check('each later storm starts on an empty playfield',
+                          all(not s['lit_playfield_rows'] for s in storm_starts[1:]), storm_starts)
+                    check('each storm fits the two-digit time display', max(storm_seconds) < 100,
+                          [round(seconds, 2) for seconds in storm_seconds])
+                    check('the interlude shows between storms', interlude_seen)
+                    # The browser pilot compares its end state with this one.
+                    check('the voyage ends in clear space after the last storm',
+                          read('phase') == 3 and read('hull') == 1,
+                          {'ticks': read('ticks', 2), 'elapsed': read('elapsed', 2), 'score': read('score'),
+                           'best_time': read('best_time', 2), 'best_score': read('best_score')})
+                    check('the one-byte score wraps past 255', score_wrapped,
+                          {'storm_start_scores': [s['score'] for s in storm_starts], 'final_score': read('score') * 10})
             m.call('save_screenshot', path=str(target / 'screen.png'))
         finally:
             m.close()
