@@ -1,7 +1,8 @@
 # Meteor Storm — runnable teaching progression
 
-Twenty-eight complete programs develop the accepted 48K PAL game from small
-experiments, then extend it with sound, a destroyed phase and colour bands. These are teaching checkpoints, **not a fixed lesson count**.
+Twenty-nine complete programs develop the accepted 48K PAL game from small
+experiments, then extend it with sound, a destroyed phase, colour bands and a
+voyage of five storms. These are teaching checkpoints, **not a fixed lesson count**.
 Split explanations further wherever one change needs its own experiment.
 Meet Assembly supplies the immediate background: bytes, bitmap addresses, loops,
 calls, flags, bounded keyboard movement and the debugger.
@@ -43,6 +44,7 @@ to the prototype. Native evidence compares its gameplay with that reference.
 | [sound-frames](checkpoints/sound-frames/README.md) | Play star and boost sounds while the storm keeps moving |
 | [debris](checkpoints/debris/README.md) | Break the ship apart before the result |
 | [colour-bands](checkpoints/colour-bands/README.md) | Colour the storm by place, not by object |
+| [voyage](checkpoints/voyage/README.md) | Cross five storms, each from its own event table |
 
 ## Build and run
 
@@ -105,5 +107,12 @@ with the accepted prototype's route, times and scores, against them. For `debris
 For `colour-bands` the first suite also checks that every cell of each
 character row holds that row's byte from `row_colours` on the title, in flight,
 during debris and at the result, and that no attribute changes during a course.
+`voyage` changes the rules (clear space leads into the next storm), so the endpoint
+suite, which replays the accepted single-storm route, does not apply to it. The
+first suite flies it instead: the host model finds a keyboard route through each
+of the five courses, and the suite checks that every storm is crossed, that each
+later storm starts on an empty playfield with the ship centred and the clock and
+course step at zero, that the HUD names each storm, that each storm stays under
+100 seconds and that the one-byte score wraps.
 These are emulator results, not physical-hardware tests. Impact audio is captured;
 no independent listening claim is made for these captures.
