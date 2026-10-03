@@ -4,7 +4,7 @@
   "programs": [
     {
       "name": "voyage",
-      "source_sha256": "0435535bd7d677ab6698d3b74777ebafc0bba769d346e3f2d1dea64cc6c284b1",
+      "source_sha256": "39cb2f673b828ed45594fa3467737ee198b4037176cf92999866e93c55644d90",
       "checks": [
         {
           "check": "title colours each row from its table byte",
@@ -509,8 +509,8 @@
         }
       ],
       "assets_sha256": "3829130674d64ce81ba26e7f3d4c9108b6a5c463eafe43e999544d254d72812f",
-      "binary_sha256": "4c62f10fbae46148ecde4f0be2d6dd423497babf7c667e96672e9984c4d9137e",
-      "binary_bytes": 11365
+      "binary_sha256": "8cbc8715f62828894753cb2928ed677f66718e8a2b6ef521229e8cfcc684f5a0",
+      "binary_bytes": 11366
     }
   ],
   "assembler_version": "asm198x v0.0.58"

@@ -1163,7 +1163,7 @@ time_pad: defb ' '
 time_digits: defb "00.00",0
 boost_ready: defb "1X  HOLD SPACE: 2X",0
 boost_active: defb "2X  STARS X2      ",0
-best_time_text: defb "BEST STORM"
+best_time_text: defb "BEST STORM "
 best_time_pad: defb ' '
 best_time_digits: defb "--.--",0
 best_score_text: defb "BEST SCORE "
