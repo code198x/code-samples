@@ -128,7 +128,8 @@ column zero and are clipped.
 repeated subtraction. Changes AF/B/HL. It arrives in `stars`; in `star-pickups`
 the score byte exists but is only inspected. Score stores tens of points; its buffer
 has a fourth, fixed '0'. Do not confuse that representation with four-digit
-arithmetic. The accepted course's maximum is bounded below byte overflow.
+arithmetic. One storm's maximum is bounded below byte overflow; from `voyage` on,
+five storms are not, and the score wraps past 255.
 
 `seconds` and `format_time` arrive in `timed-course`; `elapsed-time` measures
 `elapsed` without displaying it. `seconds`: HL=elapsed PAL frames; returns A=whole seconds, L=remainder, H=0;
@@ -246,3 +247,30 @@ that row's INK on black PAPER, so objects cannot clash; a sprite across a row
 boundary shows each row's colour on its side of the line. `row_colours` sits
 outside the run range. A per-object colour would break this contract: the
 colour would stay with the cell, not follow the object.
+
+## Voyage
+
+From `voyage` on, `assets.py` emits five event tables, `course_1` to `course_5`,
+each 120 events of five bytes, from seeds 1986 to 1990. `courses` lists their
+addresses (two bytes each, low byte first) in storm order; it sits outside the
+run range. The run range holds `storm` (0 to STORMS-1) and `course`, the address
+of the current table, which `waves` reads in place of the fixed `meteor_events`.
+
+`start_storm`: no inputs. Reads `courses` at `storm`×2 into `course`, then sets
+`wave` 0, `wave_timer` 20, `ticks` 0, `elapsed` 0 and `ship_x` 116. It leaves
+score, phase, hull, records and the screen alone. Changes AF/DE/HL. `new_game`
+calls it after clearing the run range; `storm_cleared` calls it after adding 1
+to `storm`. The caller erases and redraws the ship around it.
+
+`storm_cleared` replaces `won` as the main loop's exit for clear space. It adds
+the finish bonus and keeps a faster `best_time` (the fastest storm, since
+`elapsed` restarts each storm), then plays `arrival_sound`. At the last storm it
+falls into `won`, which now only calls `save_score`, sets phase 3 and shows the
+result. Before it, it draws CLEAR SPACE, the bonus line and NEXT STORM, halts
+INTERLUDE_FRAMES (100) times, writes 32 spaces from column 0 over rows 8, 12
+and 15, then starts the next storm and redraws the HUD with `hud_drawn` at 0.
+The interlude reads no keys and leaves `last_frame` at the frame the next storm
+starts, so it adds nothing to `elapsed`.
+
+`hud` with `hud_drawn` at 0 also writes `storm`+'1' into `storm_digit` and draws
+`storm_text` (`STORM n/5`, the 5 assembled from STORMS) at row 0, column 22.
