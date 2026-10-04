@@ -1,9 +1,9 @@
 # Meteor Storm — runnable teaching progression
 
-Thirty-three complete programs develop the accepted 48K PAL game from small
+Thirty-four complete programs develop the accepted 48K PAL game from small
 experiments, then extend it with sound, a destroyed phase, colour bands, a
 voyage of five storms, a two-byte score, a bonus multiplied by the storm,
-harder storms and a voyage record. These are teaching checkpoints, **not a fixed lesson count**.
+harder storms, a voyage record and an attract mode. These are teaching checkpoints, **not a fixed lesson count**.
 Split explanations further wherever one change needs its own experiment.
 Meet Assembly supplies the immediate background: bytes, bitmap addresses, loops,
 calls, flags, bounded keyboard movement and the debugger.
@@ -50,6 +50,7 @@ to the prototype. Native evidence compares its gameplay with that reference.
 | [storm-bonus](checkpoints/storm-bonus/README.md) | Multiply each storm's bonus by its number |
 | [harder-storms](checkpoints/harder-storms/README.md) | Give each storm its own speed, density, drift and colours |
 | [furthest-storm](checkpoints/furthest-storm/README.md) | Keep the furthest voyage as the session record |
+| [attract](checkpoints/attract/README.md) | Play the first storm behind a flashing title |
 
 ## Build and run
 
@@ -126,6 +127,9 @@ each bonus line back. From `harder-storms` on the host model reads each storm's
 rules from the program, the routes follow them, and the suite checks each
 storm's colour table in every cell and every object's speed. From
 `furthest-storm` on it checks that a whole voyage becomes the record, that a
-later idle loss leaves it alone and that the title shows it.
+later idle loss leaves it alone and that the title shows it. From `attract` on it
+checks the flashing prompt row, that objects fall behind the title with nothing
+to hit, that a whole attract course leaves the title bitmap exactly as drawn,
+and that a launch starts on an empty playfield.
 These are emulator results, not physical-hardware tests. Impact audio is captured;
 no independent listening claim is made for these captures.

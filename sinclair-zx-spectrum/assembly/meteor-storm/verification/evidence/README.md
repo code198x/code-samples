@@ -111,6 +111,15 @@
   storms) keeps it; Q shows it on the title.
 - `furthest-storm-title.png`: inspected native capture of that title.
 
+- `attract.json`: `checkpoints.py --only attract`, 43 checks, same build and
+  conditions. The title's attributes are the colour table with FLASH on row 1,
+  which holds SPACE TO LAUNCH; objects fall behind the title in phase 0; after
+  the attract course ends and restarts (1,790 frames) the bitmap equals the
+  title as drawn; a launch starts with no lit playfield rows and no objects; the
+  voyage and record checks pass as for `furthest-storm`.
+- `attract-title.png`: inspected native capture of the attract storm crossing
+  the title text.
+
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
