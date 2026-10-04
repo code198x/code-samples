@@ -1,8 +1,8 @@
 # Meteor Storm — runnable teaching progression
 
-Twenty-nine complete programs develop the accepted 48K PAL game from small
-experiments, then extend it with sound, a destroyed phase, colour bands and a
-voyage of five storms. These are teaching checkpoints, **not a fixed lesson count**.
+Thirty complete programs develop the accepted 48K PAL game from small
+experiments, then extend it with sound, a destroyed phase, colour bands, a
+voyage of five storms and a two-byte score. These are teaching checkpoints, **not a fixed lesson count**.
 Split explanations further wherever one change needs its own experiment.
 Meet Assembly supplies the immediate background: bytes, bitmap addresses, loops,
 calls, flags, bounded keyboard movement and the debugger.
@@ -45,6 +45,7 @@ to the prototype. Native evidence compares its gameplay with that reference.
 | [debris](checkpoints/debris/README.md) | Break the ship apart before the result |
 | [colour-bands](checkpoints/colour-bands/README.md) | Colour the storm by place, not by object |
 | [voyage](checkpoints/voyage/README.md) | Cross five storms, each from its own event table |
+| [two-byte-score](checkpoints/two-byte-score/README.md) | Count the whole voyage's score without wrapping |
 
 ## Build and run
 
@@ -113,6 +114,8 @@ first suite flies it instead: the host model finds a keyboard route through each
 of the five courses, and the suite checks that every storm is crossed, that each
 later storm starts on an empty playfield with the ship centred and the clock and
 course step at zero, that the HUD names each storm, that each storm stays under
-100 seconds and that the one-byte score wraps.
+100 seconds and that the one-byte score wraps. From `two-byte-score` on it checks
+instead that the score counts the whole voyage without wrapping, and reads the
+HUD's and the result's score lines back from the bitmap.
 These are emulator results, not physical-hardware tests. Impact audio is captured;
 no independent listening claim is made for these captures.

@@ -48,7 +48,8 @@ SAME_DATA = {'object-records': 'object-pool', 'star-pickups': 'stars', 'elapsed-
 CHECKPOINTS = ['pixel-motion', 'clocked-steering', 'one-meteor', 'first-dodge',
                'object-pool', 'fixed-course', 'drift', 'stars', 'timed-course',
                'boost', 'render-budget', 'records', 'finished',
-               'tone', 'sound-table', 'sound-frames', 'debris', 'voyage']
+               'tone', 'sound-table', 'sound-frames', 'debris', 'voyage',
+               'two-byte-score']
 if __name__ == '__main__':
     for number, name in enumerate(CHECKPOINTS, 1):
         (ROOT / 'checkpoints' / name / 'assets.inc').write_text(assets(number))

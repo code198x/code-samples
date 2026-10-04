@@ -129,7 +129,16 @@ repeated subtraction. Changes AF/B/HL. It arrives in `stars`; in `star-pickups`
 the score byte exists but is only inspected. Score stores tens of points; its buffer
 has a fourth, fixed '0'. Do not confuse that representation with four-digit
 arithmetic. One storm's maximum is bounded below byte overflow; from `voyage` on,
-five storms are not, and the score wraps past 255.
+five storms are not, and the score wraps past 255. From `two-byte-score` on
+`score`, `best_score` and `hud_last_score` are words, low byte first.
+
+`decimal4` (from `two-byte-score`): HL=0..9999, DE=four output bytes. Writes
+thousands, hundreds, tens and units. Changes AF/BC/DE/HL. `decimal_digit`:
+BC=minus a power of ten, HL=value, DE=output; adds BC while it carries,
+counting from '0', undoes the last add with `sbc hl,bc` (carry clear), writes
+the digit at DE and advances DE. Above 9999 the thousands digit passes '9'; the
+voyage's score stays well below that. `save_score` compares words with
+`or a` / `sbc hl,de` and changes AF/DE/HL.
 
 `seconds` and `format_time` arrive in `timed-course`; `elapsed-time` measures
 `elapsed` without displaying it. `seconds`: HL=elapsed PAL frames; returns A=whole seconds, L=remainder, H=0;

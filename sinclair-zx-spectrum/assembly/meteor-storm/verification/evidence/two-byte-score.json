@@ -1,0 +1,524 @@
+{
+  "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
+  "emulator_sha256": "207832e3912531195510acde4b183166d743f8f638a2fec8222849a737ad06a6",
+  "programs": [
+    {
+      "name": "two-byte-score",
+      "source_sha256": "b7802d5480f75159c8eaad44c9f4300d94d657d75c8bdf845345e90c754cfae0",
+      "checks": [
+        {
+          "check": "title colours each row from its table byte",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "flight colours each row from its table byte",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "contact starts the destroyed phase",
+          "detail": 25
+        },
+        {
+          "check": "contact flashes the border",
+          "detail": 2
+        },
+        {
+          "check": "debris changes no attribute",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "R and Q cannot cut the destroyed phase short",
+          "detail": [
+            {
+              "key": "r",
+              "phase": 2,
+              "debris_time": 20
+            },
+            {
+              "key": "q",
+              "phase": 2,
+              "debris_time": 16
+            }
+          ]
+        },
+        {
+          "check": "destroyed phase lasts 25 updates",
+          "detail": {
+            "frames": 50
+          }
+        },
+        {
+          "check": "border flash ends within the phase",
+          "detail": {
+            "flash_frames": 6
+          }
+        },
+        {
+          "check": "storm stays frozen and drawn",
+          "detail": null
+        },
+        {
+          "check": "debris moves without trails",
+          "detail": {
+            "compared_frames": 18
+          }
+        },
+        {
+          "check": "debris stays between the HUD and the controls line",
+          "detail": {
+            "highest_y": 100,
+            "lowest_y": 179,
+            "landed": 8
+          }
+        },
+        {
+          "check": "result screen keeps no debris",
+          "detail": null
+        },
+        {
+          "check": "result keeps the row colours",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "next run starts without debris",
+          "detail": null
+        },
+        {
+          "check": "retry restores the row colours",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 5661
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "flight never changes an attribute",
+          "detail": {
+            "sampled_frames": 57
+          }
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            0,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 5140
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 980
+        },
+        {
+          "check": "the route crosses every storm",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 1940,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 3060,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 4050,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "each later storm starts from the centre with the clock and course step at zero",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 1940,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 3060,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 4050,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "the HUD names each storm",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 1940,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 3060,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 4050,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "each later storm starts on an empty playfield",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 1940,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 3060,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 4050,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "each storm fits the two-digit time display",
+          "detail": [
+            20.92,
+            20.92,
+            20.8,
+            21.6,
+            19.6
+          ]
+        },
+        {
+          "check": "the interlude shows between storms",
+          "detail": null
+        },
+        {
+          "check": "the voyage ends in clear space after the last storm",
+          "detail": {
+            "ticks": 980,
+            "elapsed": 980,
+            "score": 514,
+            "best_time": 980,
+            "best_score": 514
+          }
+        },
+        {
+          "check": "the two-byte score counts the whole voyage without wrapping",
+          "detail": {
+            "storm_start_scores": [
+              0,
+              960,
+              1940,
+              3060,
+              4050
+            ],
+            "final_score": 5140
+          }
+        },
+        {
+          "check": "decimal4 prints the score and the best score in full",
+          "detail": {
+            "hud": "SCORE 05140",
+            "record": "BEST SCORE 05140"
+          }
+        }
+      ],
+      "assets_sha256": "3829130674d64ce81ba26e7f3d4c9108b6a5c463eafe43e999544d254d72812f",
+      "binary_sha256": "4b55cb28b415e058152207d6555f96fdc48b4a0ec8a3f67a7e86c6b3874cefe4",
+      "binary_bytes": 11416
+    }
+  ],
+  "assembler_version": "asm198x v0.0.58"
+}
