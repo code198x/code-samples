@@ -22,14 +22,17 @@ def load(name, path):
 transport = load('transport', ROOT.parents[1] / 'basic/meet-basic/opening/verification/verify.py')
 art = load('art', ROOT / 'assets.py')
 
-def route(events, spawn=20):
+def route(events, spawn=20, speed_add=0, gap_cut=0, drift_mask=3):
+    # From harder-storms on a storm's rules add to every speed, cut every gap
+    # and set how often meteors drift (on course steps where tick & mask is 0).
     tracks = {}
     end = 0
     for x, speed, delay, drift, kind in events:
         tick, y = spawn, 24
+        speed += speed_add
         while y < 174:
             tracks.setdefault(tick, []).append((x, y, kind))
-            if kind == 1 and tick % 4 == 0:
+            if kind == 1 and tick & drift_mask == 0:
                 x += drift
                 if x < 8:
                     x, drift = 8, 1
@@ -38,7 +41,7 @@ def route(events, spawn=20):
             y += speed
             tick += 1
         end = max(end, tick)
-        spawn += delay
+        spawn += delay - gap_cut
     paths = {116: (0, [])}
     for tick in range(1, end + 1):
         objects = tracks.get(tick, [])
@@ -342,7 +345,17 @@ def main():
                     events = [(x, speed, delay, 0, kind) for x, speed, delay, drift, kind in events]
                 # From voyage on each storm has its own course, flown from the centre.
                 courses = art.VOYAGE if 'storm' in symbols else [events]
-                routes = [route(course, 0 if number == 5 else 20) for course in courses]
+                # From harder-storms on, each storm's rules are five bytes in the program:
+                # extra speed, gap cut, drift mask and a colour table's address.
+                rules = [(0, 0, 3)] * len(courses)
+                colour_tables = []
+                if 'storm_rules' in symbols:
+                    raw = m.call('memory_read', addr=symbols['storm_rules'], len=5 * len(courses))['bytes']
+                    rules = [tuple(raw[5 * i:5 * i + 3]) for i in range(len(courses))]
+                    colour_tables = [m.call('memory_read', addr=raw[5 * i + 3] + 256 * raw[5 * i + 4], len=24)['bytes']
+                                     for i in range(len(courses))]
+                routes = [route(course, 0 if number == 5 else 20, *rule) for course, rule in zip(courses, rules)]
+                storm_speeds = [set() for _ in courses]
                 if 'storm' in symbols:
                     # The browser pilot flies the same routes: ship X for each course step.
                     (target / 'routes.json').write_text(json.dumps({'seeds': list(range(1986, 1986 + len(courses))),
@@ -397,6 +410,11 @@ def main():
                             storm_starts[-1]['hud'] = text_at(m, 0, 22, 9)
                             storm_seconds.append(0)
                         storm_seconds[storm] = max(storm_seconds[storm], read('elapsed', 2) / 50)
+                        if colour_tables and storm >= 2 and not (target / f'storm-{storm + 1}-flight.png').exists() \
+                                and read('ticks', 2) >= 300:
+                            # The harder storms, mid-way: their colours, speeds and density.
+                            m.frames(1)
+                            m.call('save_screenshot', path=str(target / f'storm-{storm + 1}-flight.png'))
                         if storm == 1 and not (target / 'storm-2-flight.png').exists() and read('ticks', 2) >= 400:
                             # Mid-way through the second storm: its own course, not the first one's.
                             m.frames(1)
@@ -421,7 +439,10 @@ def main():
                             m.frames(1)
                             m.call('save_screenshot', path=str(target / 'interlude.png'))
                     if 'row_colours' in symbols and frame % 100 == 50:
-                        band_samples.append(attributes_by_row(m))
+                        band_samples.append((storm, attributes_by_row(m)))
+                    if colour_tables and frame % 10 == 0:
+                        pool = m.call('memory_read', addr=symbols['objects'], len=7 * 20)['bytes']
+                        storm_speeds[storm] |= {pool[7 * i + 3] for i in range(20) if pool[7 * i + 2]}
                     tick, x = course_step(), read('ship_x')
                     positions = routes[storm]
                     target_x = positions[min(tick + 1, len(positions) - 1)]
@@ -443,8 +464,18 @@ def main():
                 check('keyboard route finishes alive', read('phase') == 3 and read('hull') == 1, {'phase': read('phase'), 'frames': frame})
                 check('completion waits beyond final spawn', last_event_still_active and active() == 0
                       and ('wave' not in symbols or read('wave') == len(events)))
-                if 'row_colours' in symbols:
-                    check('flight never changes an attribute', band_samples and band_samples == [bands] * len(band_samples),
+                if colour_tables:
+                    check('each storm keeps its own colour table in every cell',
+                          {sample[0] for sample in band_samples} == set(range(len(courses))) and
+                          all(attributes == [[table[row]] * 32 for row in range(24)]
+                              for storm_index, attributes in band_samples for table in [colour_tables[storm_index]]),
+                          {'sampled_frames': len(band_samples), 'tables': colour_tables})
+                    check("every object falls at its event's speed plus its storm's",
+                          all(speeds and min(speeds) >= 2 + rule[0] and max(speeds) <= 5 + rule[0]
+                              for speeds, rule in zip(storm_speeds, rules)),
+                          {'rules': rules, 'speeds': [sorted(speeds) for speeds in storm_speeds]})
+                elif 'row_colours' in symbols:
+                    check('flight never changes an attribute', band_samples and [a for _, a in band_samples] == [bands] * len(band_samples),
                           {'sampled_frames': len(band_samples)})
                 if 'pool_overflow' in symbols:
                     check('bounded object pool', read('pool_overflow') == 0)

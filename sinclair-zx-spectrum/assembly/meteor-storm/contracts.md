@@ -288,3 +288,14 @@ From `storm-bonus` on `storm_cleared` adds `finish_points` to `score` `storm`+1
 times (`djnz`, B from 1 to 5), so one storm adds at most 495 tens. `start_storm`
 also sets `finish_points` to 0. `bonus_line` writes `storm`+'1' into
 `bonus_storm`, then prints `FINISH BONUS nnn0 Xn` at row 12, column 5.
+
+From `harder-storms` on `storm_rules` holds five bytes per storm, outside the run
+range: extra speed, gap cut, drift mask (`ticks` AND mask zero drifts) and a
+colour table address. `start_storm` copies them into `storm_speed`, `storm_cut`,
+`drift_mask` (run range) and `band_colours` (outside it). `waves` adds
+`storm_speed` to each event speed and subtracts `storm_cut` from each delay;
+the smallest delay (6) minus the largest cut (3) leaves 3. `paint_bands` is the
+attribute half of `clear`: it writes the table at `band_colours`, one byte per
+row, and changes AF/BC/DE/HL. `title` points `band_colours` at `row_colours`;
+`new_game` calls `start_storm` before `clear`; the interlude calls `paint_bands`
+after `start_storm`.
