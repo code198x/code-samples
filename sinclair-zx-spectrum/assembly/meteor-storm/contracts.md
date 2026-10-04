@@ -283,3 +283,8 @@ starts, so it adds nothing to `elapsed`.
 
 `hud` with `hud_drawn` at 0 also writes `storm`+'1' into `storm_digit` and draws
 `storm_text` (`STORM n/5`, the 5 assembled from STORMS) at row 0, column 22.
+
+From `storm-bonus` on `storm_cleared` adds `finish_points` to `score` `storm`+1
+times (`djnz`, B from 1 to 5), so one storm adds at most 495 tens. `start_storm`
+also sets `finish_points` to 0. `bonus_line` writes `storm`+'1' into
+`bonus_storm`, then prints `FINISH BONUS nnn0 Xn` at row 12, column 5.

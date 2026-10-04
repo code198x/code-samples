@@ -373,6 +373,9 @@ def main():
                 score_wrapped = False
                 last_score = read('score', score_bytes) if 'storm' in symbols else 0
                 interlude_seen = False
+                # From storm-bonus on: the score just before each clear space, and each storm's bonus.
+                flight_score = 0
+                bonuses = []
                 if 'row_colours' in symbols:
                     check_bands(m, symbols, check, 'retry restores the row colours')
                     bands = attributes_by_row(m)
@@ -401,6 +404,16 @@ def main():
                         score = read('score', score_bytes)
                         score_wrapped |= score < last_score
                         last_score = score
+                        clearing = read('wave') == len(events) and not active()
+                        if not clearing:
+                            flight_score = score
+                        elif 'bonus_storm' in symbols and len(bonuses) == storm and lit_rows(m, [15]):
+                            # The interlude is up: the bonus has been added n times and its line printed.
+                            bonuses.append({'storm': storm + 1, 'finish_points': read('finish_points'),
+                                            'added': score - flight_score, 'line': text_at(m, 12, 5, 20)})
+                            if storm == 2:
+                                m.frames(1)
+                                m.call('save_screenshot', path=str(target / 'interlude-3.png'))
                         if not interlude_seen and storm == 0 and read('wave') == len(events) \
                                 and not active() and lit_rows(m, [15]):
                             # The first interlude: CLEAR SPACE, the bonus and NEXT STORM on screen.
@@ -460,6 +473,18 @@ def main():
                           {'ticks': read('ticks', 2), 'elapsed': read('elapsed', 2), 'score': read('score', score_bytes),
                            'best_time': read('best_time', 2), 'best_score': read('best_score', score_bytes)})
                     scores = {'storm_start_scores': [s['score'] for s in storm_starts], 'final_score': read('score', score_bytes) * 10}
+                    if 'bonus_storm' in symbols:
+                        m.frames(10)
+                        bonuses.append({'storm': len(courses), 'finish_points': read('finish_points'),
+                                        'added': read('score', score_bytes) - flight_score, 'line': text_at(m, 12, 5, 20)})
+                        # A star taken on the update that clears the storm adds 1 or 2 more.
+                        check('each storm adds its bonus times its number',
+                              len(bonuses) == len(courses) and all(
+                                  b['finish_points'] > 0 and b['added'] - b['finish_points'] * b['storm'] in (0, 1, 2)
+                                  for b in bonuses), bonuses)
+                        check('the bonus line shows the bonus and its multiplier',
+                              all(b['line'] == 'FINISH BONUS %03d0 X%d' % (b['finish_points'], b['storm']) for b in bonuses),
+                              [b['line'] for b in bonuses])
                     if score_bytes == 1:
                         check('the one-byte score wraps past 255', score_wrapped, scores)
                     else:

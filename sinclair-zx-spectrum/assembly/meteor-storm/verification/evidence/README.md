@@ -88,6 +88,14 @@
   `SCORE 05140` and `BEST SCORE 05140` are read back from the bitmap.
 - `two-byte-score-result.png`: inspected native capture of that result screen.
 
+- `storm-bonus.json`: `checkpoints.py --only storm-bonus`, 36 checks, same build
+  and conditions. The same route ends at step 980; each clear space adds the
+  bonus times the storm's number (80, 160, 240, 316 and 405 tens for bonuses of
+  80, 80, 80, 79 and 81), each bonus line reads back as `FINISH BONUS nnn0 Xn`,
+  and the voyage ends at 1,315 tens: 514 plus 801.
+- `storm-bonus-interlude-3.png`: inspected native capture of the third storm's
+  interlude, `FINISH BONUS 0800 X3`.
+
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
