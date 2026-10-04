@@ -96,6 +96,15 @@
 - `storm-bonus-interlude-3.png`: inspected native capture of the third storm's
   interlude, `FINISH BONUS 0800 X3`.
 
+- `harder-storms.json`: `checkpoints.py --only harder-storms`, 37 checks, same
+  build and conditions. The host model, reading each storm's rules from the
+  program, finds a keyboard route through all five; the suite flies them. Falling
+  objects move at 2-5, 3-6, 3-6, 4-7 and 4-7 pixels per update, each event's
+  speed plus its storm's; 46 attribute samples match their storm's colour table
+  in every cell; the storms take 20.92, 18.28, 15.56, 16.08 and 12.08 seconds.
+- `harder-storms-storm-3-flight.png`, `harder-storms-storm-5-flight.png`:
+  inspected native captures six seconds into the third and fifth storms.
+
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts
