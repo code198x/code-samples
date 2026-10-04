@@ -307,3 +307,11 @@ it crossed more, or as many with an equal or higher score. Changes AF/B/DE/HL.
 `record_text` fills `record_line` (`BEST VOYAGE n/5 sssss`) and changes
 AF/BC/DE/HL; `records` prints it at row 18, the title centres it at row 22 when
 the record is not all zero.
+
+From `attract` on `title` sets bit 7 (FLASH) of row 1's 32 attribute bytes,
+where it prints the prompt, prints the record at row 20, clears the run range
+and calls `start_storm`. Its wait loop calls `attract_step` on even frames:
+`advance_meteors`, `waves`, `count_objects` and `ticks`+1 with `boost_time` 0 and
+`steps_left` 1, restarting with `start_storm` when the course is over and the
+pool empty. It changes primary registers and IX. `advance_meteors` skips the
+contact test while `phase` is 0.

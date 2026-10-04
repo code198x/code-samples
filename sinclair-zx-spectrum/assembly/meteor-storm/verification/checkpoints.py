@@ -92,9 +92,11 @@ def attributes_by_row(m):
         data += m.call('memory_read', addr=address, len=256)['bytes']
     return [data[row * 32:row * 32 + 32] for row in range(24)]
 
-def check_bands(m, symbols, check, label):
-    """Every cell of each character row holds that row's byte from row_colours."""
+def check_bands(m, symbols, check, label, flash_rows=()):
+    """Every cell of each character row holds that row's byte from row_colours,
+    with FLASH (bit 7) added on flash_rows."""
     table = m.call('memory_read', addr=symbols['row_colours'], len=24)['bytes']
+    table = [byte | 0x80 if row in flash_rows else byte for row, byte in enumerate(table)]
     rows = attributes_by_row(m)
     check(label, rows == [[byte] * 32 for byte in table],
           {'row_colours': ['$%02X' % byte for byte in table]})
@@ -316,11 +318,42 @@ def main():
                 check('steering produces a clean pass', read('phase') == 3, read('ship_x'))
             else:
                 number = art.CHECKPOINTS.index(art.SAME_DATA.get(name, name)) + 1
-                if 'row_colours' in symbols:
+                if 'attract_step' in symbols:
+                    # From attract on the title flashes its prompt row and plays the first course.
+                    check_bands(m, symbols, check, 'title colours each row, flashing the prompt row', flash_rows=(1,))
+                    check('the prompt is in the flashing row', text_at(m, 1, 8, 15) == 'SPACE TO LAUNCH', text_at(m, 1, 8, 15))
+                    # Before the first spawn: the title as drawn. XOR drawing must give it back.
+                    drawn = bitmap(m)
+                    attract = []
+                    for _ in range(30):
+                        m.frames(10)
+                        attract.append({'phase': read('phase'), 'active': read('active_count'), 'ticks': read('ticks', 2)})
+                    check('meteors fall behind the title with nothing to hit',
+                          all(a['phase'] == 0 for a in attract) and max(a['active'] for a in attract) > 2
+                          and attract[-1]['ticks'] > attract[0]['ticks'], attract[::6])
+                    m.call('save_screenshot', path=str(target / 'attract.png'))
+                    # Run the attract course to its end: when it restarts, every object has been
+                    # drawn and erased over the title text, which must be exactly as it was.
+                    restart = None
+                    last_ticks = read('ticks', 2)
+                    for step in range(400):
+                        m.frames(10)
+                        ticks = read('ticks', 2)
+                        if ticks < last_ticks and read('active_count') == 0:
+                            restart = step
+                            break
+                        last_ticks = ticks
+                    check('a whole attract course leaves the title text as it was drawn',
+                          restart is not None and bitmap(m) == drawn, {'restart_after_frames': restart and 10 * (restart + 1)})
+                elif 'row_colours' in symbols:
                     check_bands(m, symbols, check, 'title colours each row from its table byte')
                 m.call('press_key', key='space', hold_frames=3)
                 m.frames(4)
                 check('enters flight', read('phase') == 1)
+                if 'attract_step' in symbols:
+                    check('a launch from the attract storm starts on an empty playfield',
+                          not lit_rows(m, range(3, 20)) and read('active_count') == 0 and read('wave') == 0,
+                          {'lit': lit_rows(m, range(3, 20)), 'active': read('active_count')})
                 if 'row_colours' in symbols:
                     check_bands(m, symbols, check, 'flight colours each row from its table byte')
                 # First verify an ordinary loss, then restart before the safe route.
@@ -547,7 +580,7 @@ def main():
                                   after_loss)
                             m.call('press_key', key='q', hold_frames=3)
                             m.frames(10)
-                            title = text_at(m, 22, (32 - len(won)) // 2, len(won))
+                            title = text_at(m, 20 if 'attract_step' in symbols else 22, (32 - len(won)) // 2, len(won))
                             m.call('save_screenshot', path=str(target / 'title-record.png'))
                             check('the title shows the record', read('phase') == 0 and title == won, title)
             m.call('save_screenshot', path=str(target / 'screen.png'))
