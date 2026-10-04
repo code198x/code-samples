@@ -1,0 +1,827 @@
+{
+  "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
+  "emulator_sha256": "207832e3912531195510acde4b183166d743f8f638a2fec8222849a737ad06a6",
+  "programs": [
+    {
+      "name": "loading-screen",
+      "source_sha256": "0ce6a2bb21a8304582b4175fa94dc2b956c00218f8ef6cf9e4ddba41af24b073",
+      "checks": [
+        {
+          "check": "title colours each row, flashing the prompt row",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$C5",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "the prompt is in the flashing row",
+          "detail": "SPACE TO LAUNCH"
+        },
+        {
+          "check": "meteors fall behind the title with nothing to hit",
+          "detail": [
+            {
+              "phase": 0,
+              "active": 0,
+              "ticks": 7
+            },
+            {
+              "phase": 0,
+              "active": 3,
+              "ticks": 36
+            },
+            {
+              "phase": 0,
+              "active": 4,
+              "ticks": 66
+            },
+            {
+              "phase": 0,
+              "active": 4,
+              "ticks": 96
+            },
+            {
+              "phase": 0,
+              "active": 5,
+              "ticks": 126
+            }
+          ]
+        },
+        {
+          "check": "a whole attract course leaves the title text as it was drawn",
+          "detail": {
+            "restart_after_frames": 1790
+          }
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "a launch from the attract storm starts on an empty playfield",
+          "detail": {
+            "lit": [],
+            "active": 0
+          }
+        },
+        {
+          "check": "flight colours each row from its table byte",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "contact starts the destroyed phase",
+          "detail": 25
+        },
+        {
+          "check": "contact flashes the border",
+          "detail": 2
+        },
+        {
+          "check": "debris changes no attribute",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "R and Q cannot cut the destroyed phase short",
+          "detail": [
+            {
+              "key": "r",
+              "phase": 2,
+              "debris_time": 20
+            },
+            {
+              "key": "q",
+              "phase": 2,
+              "debris_time": 16
+            }
+          ]
+        },
+        {
+          "check": "destroyed phase lasts 25 updates",
+          "detail": {
+            "frames": 50
+          }
+        },
+        {
+          "check": "border flash ends within the phase",
+          "detail": {
+            "flash_frames": 6
+          }
+        },
+        {
+          "check": "storm stays frozen and drawn",
+          "detail": null
+        },
+        {
+          "check": "debris moves without trails",
+          "detail": {
+            "compared_frames": 18
+          }
+        },
+        {
+          "check": "debris stays between the HUD and the controls line",
+          "detail": {
+            "highest_y": 100,
+            "lowest_y": 179,
+            "landed": 8
+          }
+        },
+        {
+          "check": "result screen keeps no debris",
+          "detail": null
+        },
+        {
+          "check": "result keeps the row colours",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "next run starts without debris",
+          "detail": null
+        },
+        {
+          "check": "retry restores the row colours",
+          "detail": {
+            "row_colours": [
+              "$45",
+              "$45",
+              "$47",
+              "$45",
+              "$45",
+              "$45",
+              "$45",
+              "$44",
+              "$44",
+              "$44",
+              "$44",
+              "$46",
+              "$46",
+              "$46",
+              "$46",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$42",
+              "$47",
+              "$47",
+              "$47",
+              "$47"
+            ]
+          }
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 4611
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "each storm keeps its own colour table in every cell",
+          "detail": {
+            "sampled_frames": 46,
+            "tables": [
+              [
+                69,
+                69,
+                71,
+                69,
+                69,
+                69,
+                69,
+                68,
+                68,
+                68,
+                68,
+                70,
+                70,
+                70,
+                70,
+                66,
+                66,
+                66,
+                66,
+                66,
+                71,
+                71,
+                71,
+                71
+              ],
+              [
+                69,
+                69,
+                71,
+                68,
+                68,
+                68,
+                68,
+                70,
+                70,
+                70,
+                70,
+                67,
+                67,
+                67,
+                67,
+                66,
+                66,
+                66,
+                66,
+                66,
+                71,
+                71,
+                71,
+                71
+              ],
+              [
+                69,
+                69,
+                71,
+                70,
+                70,
+                70,
+                70,
+                70,
+                70,
+                70,
+                70,
+                67,
+                67,
+                67,
+                67,
+                66,
+                66,
+                66,
+                66,
+                66,
+                71,
+                71,
+                71,
+                71
+              ],
+              [
+                69,
+                69,
+                71,
+                67,
+                67,
+                67,
+                67,
+                67,
+                67,
+                67,
+                67,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                71,
+                71,
+                71,
+                71
+              ],
+              [
+                69,
+                69,
+                71,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                66,
+                71,
+                71,
+                71,
+                71
+              ]
+            ]
+          }
+        },
+        {
+          "check": "every object falls at its event's speed plus its storm's",
+          "detail": {
+            "rules": [
+              [
+                0,
+                0,
+                3
+              ],
+              [
+                1,
+                1,
+                3
+              ],
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                2,
+                2,
+                1
+              ],
+              [
+                2,
+                3,
+                0
+              ]
+            ],
+            "speeds": [
+              [
+                2,
+                3,
+                4,
+                5
+              ],
+              [
+                3,
+                4,
+                5,
+                6
+              ],
+              [
+                3,
+                4,
+                5,
+                6
+              ],
+              [
+                4,
+                5,
+                6,
+                7
+              ],
+              [
+                4,
+                5,
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            0,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 13730
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 604
+        },
+        {
+          "check": "the route crosses every storm",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 2780,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 5590,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 9150,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "each later storm starts from the centre with the clock and course step at zero",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 2780,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 5590,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 9150,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "the HUD names each storm",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 2780,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 5590,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 9150,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "each later storm starts on an empty playfield",
+          "detail": [
+            {
+              "storm": 1,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 0,
+              "lit_playfield_rows": [],
+              "hud": "STORM 1/5"
+            },
+            {
+              "storm": 2,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 960,
+              "lit_playfield_rows": [],
+              "hud": "STORM 2/5"
+            },
+            {
+              "storm": 3,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 2780,
+              "lit_playfield_rows": [],
+              "hud": "STORM 3/5"
+            },
+            {
+              "storm": 4,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 5590,
+              "lit_playfield_rows": [],
+              "hud": "STORM 4/5"
+            },
+            {
+              "storm": 5,
+              "ship_x": 116,
+              "elapsed": 0,
+              "ticks": 0,
+              "score": 9150,
+              "lit_playfield_rows": [],
+              "hud": "STORM 5/5"
+            }
+          ]
+        },
+        {
+          "check": "each storm fits the two-digit time display",
+          "detail": [
+            20.92,
+            18.28,
+            15.56,
+            16.08,
+            12.08
+          ]
+        },
+        {
+          "check": "the interlude shows between storms",
+          "detail": null
+        },
+        {
+          "check": "the voyage ends in clear space after the last storm",
+          "detail": {
+            "ticks": 603,
+            "elapsed": 604,
+            "score": 1373,
+            "best_time": 604,
+            "best_score": 1373
+          }
+        },
+        {
+          "check": "each storm adds its bonus times its number",
+          "detail": [
+            {
+              "storm": 1,
+              "finish_points": 80,
+              "added": 80,
+              "line": "FINISH BONUS 0800 X1"
+            },
+            {
+              "storm": 2,
+              "finish_points": 82,
+              "added": 164,
+              "line": "FINISH BONUS 0820 X2"
+            },
+            {
+              "storm": 3,
+              "finish_points": 85,
+              "added": 255,
+              "line": "FINISH BONUS 0850 X3"
+            },
+            {
+              "storm": 4,
+              "finish_points": 84,
+              "added": 336,
+              "line": "FINISH BONUS 0840 X4"
+            },
+            {
+              "storm": 5,
+              "finish_points": 88,
+              "added": 440,
+              "line": "FINISH BONUS 0880 X5"
+            }
+          ]
+        },
+        {
+          "check": "the bonus line shows the bonus and its multiplier",
+          "detail": [
+            "FINISH BONUS 0800 X1",
+            "FINISH BONUS 0820 X2",
+            "FINISH BONUS 0850 X3",
+            "FINISH BONUS 0840 X4",
+            "FINISH BONUS 0880 X5"
+          ]
+        },
+        {
+          "check": "the two-byte score counts the whole voyage without wrapping",
+          "detail": {
+            "storm_start_scores": [
+              0,
+              960,
+              2780,
+              5590,
+              9150
+            ],
+            "final_score": 13730
+          }
+        },
+        {
+          "check": "a whole voyage becomes the record",
+          "detail": {
+            "hud": "SCORE 13730",
+            "record": "BEST VOYAGE 5/5 13730",
+            "crossed": 5,
+            "score": 13730
+          }
+        },
+        {
+          "check": "a run that crosses fewer storms leaves the record alone",
+          "detail": {
+            "phase": 2,
+            "crossed": 5,
+            "score": 13730,
+            "record": "BEST VOYAGE 5/5 13730"
+          }
+        },
+        {
+          "check": "the title shows the record",
+          "detail": "BEST VOYAGE 5/5 13730"
+        }
+      ],
+      "assets_sha256": "3829130674d64ce81ba26e7f3d4c9108b6a5c463eafe43e999544d254d72812f",
+      "binary_sha256": "63c02176a4f97a32ce7c9cf775a919ed7f7729fe4027982100d8a0968fb0eb10",
+      "binary_bytes": 11757
+    }
+  ],
+  "assembler_version": "asm198x v0.0.58"
+}

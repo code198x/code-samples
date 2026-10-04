@@ -315,3 +315,14 @@ and calls `start_storm`. Its wait loop calls `attract_step` on even frames:
 `steps_left` 1, restarting with `start_storm` when the course is over and the
 pool empty. It changes primary registers and IX. `advance_meteors` skips the
 contact test while `phase` is 0.
+
+## Tape
+
+From `loading-screen` on the release tape (unit 35's Makefile) is three blocks:
+`meteor`, a BASIC program autostarting at line 10 (`loader.bas`, tokenised by
+`build198x basic`); `screen`, CODE 6912 bytes at 16384 (`screen.asm`, which
+`incbin`s `meteor-storm.scr`); and `storm`, the program, CODE at 32768. The
+loader sets BORDER, PAPER and INK to 0, `CLEAR 32767`, loads the SCREEN$, POKEs
+23739 with 111 (channel S output to $096F, RET, so header messages are not
+printed over the picture), loads the CODE and runs it with `RANDOMIZE USR 32768`.
+The program is `attract`'s, unchanged.
