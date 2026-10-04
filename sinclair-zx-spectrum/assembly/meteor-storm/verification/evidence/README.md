@@ -122,6 +122,9 @@
 
 - `loading-screen.json`: `checkpoints.py --only loading-screen`, 43 checks, the
   same as `attract.json`: the program is unchanged.
+- `loading-screen-routes.json`: the five keyboard routes that run flew under the
+  harder storms' rules. The website's browser pilot flies the closing lesson's
+  checkpoint with its own routes where they exist, and the voyage's otherwise.
 - `loading-screen-tape.json`: `tape.py`, 4 checks. Unit 35's tape loaded through
   a fresh ROM: the screen is visibly black from frame 450, the SCREEN$ starts
   arriving by frame 925 and matches byte for byte at frame 2,350, stays exact in
