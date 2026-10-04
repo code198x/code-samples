@@ -299,3 +299,11 @@ attribute half of `clear`: it writes the table at `band_colours`, one byte per
 row, and changes AF/BC/DE/HL. `title` points `band_colours` at `row_colours`;
 `new_game` calls `start_storm` before `clear`; the interlude calls `paint_bands`
 after `start_storm`.
+
+From `furthest-storm` on `record_crossed` (byte) and `record_score` (word) replace
+`best_score`, outside the run range. `save_record`: A=storms this run crossed
+(`lost` passes `storm`, `won` passes `storm`+1); the run replaces the record if
+it crossed more, or as many with an equal or higher score. Changes AF/B/DE/HL.
+`record_text` fills `record_line` (`BEST VOYAGE n/5 sssss`) and changes
+AF/BC/DE/HL; `records` prints it at row 18, the title centres it at row 22 when
+the record is not all zero.

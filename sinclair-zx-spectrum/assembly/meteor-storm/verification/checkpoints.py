@@ -502,7 +502,7 @@ def main():
                     check('the voyage ends in clear space after the last storm',
                           read('phase') == 3 and read('hull') == 1,
                           {'ticks': read('ticks', 2), 'elapsed': read('elapsed', 2), 'score': read('score', score_bytes),
-                           'best_time': read('best_time', 2), 'best_score': read('best_score', score_bytes)})
+                           'best_time': read('best_time', 2), 'best_score': read('best_score' if 'best_score' in symbols else 'record_score', score_bytes)})
                     scores = {'storm_start_scores': [s['score'] for s in storm_starts], 'final_score': read('score', score_bytes) * 10}
                     if 'bonus_storm' in symbols:
                         m.frames(10)
@@ -523,11 +523,33 @@ def main():
                               not score_wrapped and scores['final_score'] > 2550, scores)
                         # Let the result screen finish drawing, then read its score lines back from the bitmap.
                         m.frames(10)
-                        shown = {'hud': text_at(m, 2, 1, 11), 'record': text_at(m, 18, 3, 16)}
                         m.call('save_screenshot', path=str(target / 'result.png'))
-                        check('decimal4 prints the score and the best score in full', shown ==
-                              {'hud': 'SCORE %05d' % scores['final_score'],
-                               'record': 'BEST SCORE %05d' % (read('best_score', 2) * 10)}, shown)
+                        if 'record_score' not in symbols:
+                            shown = {'hud': text_at(m, 2, 1, 11), 'record': text_at(m, 18, 3, 16)}
+                            check('decimal4 prints the score and the best score in full', shown ==
+                                  {'hud': 'SCORE %05d' % scores['final_score'],
+                                   'record': 'BEST SCORE %05d' % (read('best_score', 2) * 10)}, shown)
+                        else:
+                            # From furthest-storm on the record is storms crossed and that run's score.
+                            won = 'BEST VOYAGE %d/%d %05d' % (len(courses), len(courses), scores['final_score'])
+                            shown = {'hud': text_at(m, 2, 1, 11), 'record': text_at(m, 18, 3, len(won)),
+                                     'crossed': read('record_crossed'), 'score': read('record_score', 2) * 10}
+                            check('a whole voyage becomes the record', shown ==
+                                  {'hud': 'SCORE %05d' % scores['final_score'], 'record': won,
+                                   'crossed': len(courses), 'score': scores['final_score']}, shown)
+                            # A retry left idle crosses no storms: it must not replace five.
+                            m.call('press_key', key='r', hold_frames=3)
+                            m.frames(400)
+                            after_loss = {'phase': read('phase'), 'crossed': read('record_crossed'),
+                                          'score': read('record_score', 2) * 10, 'record': text_at(m, 18, 3, len(won))}
+                            check('a run that crosses fewer storms leaves the record alone', after_loss ==
+                                  {'phase': 2, 'crossed': len(courses), 'score': scores['final_score'], 'record': won},
+                                  after_loss)
+                            m.call('press_key', key='q', hold_frames=3)
+                            m.frames(10)
+                            title = text_at(m, 22, (32 - len(won)) // 2, len(won))
+                            m.call('save_screenshot', path=str(target / 'title-record.png'))
+                            check('the title shows the record', read('phase') == 0 and title == won, title)
             m.call('save_screenshot', path=str(target / 'screen.png'))
         finally:
             m.close()
