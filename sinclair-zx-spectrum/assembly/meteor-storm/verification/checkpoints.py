@@ -213,6 +213,8 @@ def main():
         m = transport.Spectrum(args.emulator, target)
         def read(label, size=1):
             return int.from_bytes(bytes(m.call('memory_read', addr=symbols[label], len=size)['bytes']), 'little')
+        # From two-byte-score on the score and best score are words, printed by decimal4.
+        score_bytes = 2 if 'decimal4' in symbols else 1
         def key(key_name, down):
             m.call('input', events=[{'Key': {'name': key_name, 'pressed': down}}])
         def active():
@@ -369,7 +371,7 @@ def main():
                 storm_starts = []
                 storm_seconds = []
                 score_wrapped = False
-                last_score = read('score') if 'storm' in symbols else 0
+                last_score = read('score', score_bytes) if 'storm' in symbols else 0
                 interlude_seen = False
                 if 'row_colours' in symbols:
                     check_bands(m, symbols, check, 'retry restores the row colours')
@@ -382,7 +384,7 @@ def main():
                         if len(storm_starts) == storm:
                             storm_starts.append({'storm': storm + 1, 'ship_x': read('ship_x'),
                                                  'elapsed': read('elapsed', 2), 'ticks': read('ticks', 2),
-                                                 'score': read('score') * 10,
+                                                 'score': read('score', score_bytes) * 10,
                                                  'lit_playfield_rows': lit_rows(m, range(3, 20))})
                             if storm:
                                 # `storm` changes before the HUD is redrawn, and a capture shows the
@@ -396,7 +398,7 @@ def main():
                             # Mid-way through the second storm: its own course, not the first one's.
                             m.frames(1)
                             m.call('save_screenshot', path=str(target / 'storm-2-flight.png'))
-                        score = read('score')
+                        score = read('score', score_bytes)
                         score_wrapped |= score < last_score
                         last_score = score
                         if not interlude_seen and storm == 0 and read('wave') == len(events) \
@@ -436,7 +438,7 @@ def main():
                 if 'frame_delta' in symbols:
                     check('measured update cadence', (4 in cadence if name == 'boost' else cadence <= {0, 1, 2}), sorted(cadence))
                 if number >= 8:
-                    check('route collects stars', read('score') > 0, read('score') * 10)
+                    check('route collects stars', read('score', score_bytes) > 0, read('score', score_bytes) * 10)
                 if number >= 9:
                     check('PAL elapsed clock advances', read('elapsed', 2) > 500, read('elapsed', 2))
                 if 'storm' in symbols:
@@ -455,10 +457,21 @@ def main():
                     # The browser pilot compares its end state with this one.
                     check('the voyage ends in clear space after the last storm',
                           read('phase') == 3 and read('hull') == 1,
-                          {'ticks': read('ticks', 2), 'elapsed': read('elapsed', 2), 'score': read('score'),
-                           'best_time': read('best_time', 2), 'best_score': read('best_score')})
-                    check('the one-byte score wraps past 255', score_wrapped,
-                          {'storm_start_scores': [s['score'] for s in storm_starts], 'final_score': read('score') * 10})
+                          {'ticks': read('ticks', 2), 'elapsed': read('elapsed', 2), 'score': read('score', score_bytes),
+                           'best_time': read('best_time', 2), 'best_score': read('best_score', score_bytes)})
+                    scores = {'storm_start_scores': [s['score'] for s in storm_starts], 'final_score': read('score', score_bytes) * 10}
+                    if score_bytes == 1:
+                        check('the one-byte score wraps past 255', score_wrapped, scores)
+                    else:
+                        check('the two-byte score counts the whole voyage without wrapping',
+                              not score_wrapped and scores['final_score'] > 2550, scores)
+                        # Let the result screen finish drawing, then read its score lines back from the bitmap.
+                        m.frames(10)
+                        shown = {'hud': text_at(m, 2, 1, 11), 'record': text_at(m, 18, 3, 16)}
+                        m.call('save_screenshot', path=str(target / 'result.png'))
+                        check('decimal4 prints the score and the best score in full', shown ==
+                              {'hud': 'SCORE %05d' % scores['final_score'],
+                               'record': 'BEST SCORE %05d' % (read('best_score', 2) * 10)}, shown)
             m.call('save_screenshot', path=str(target / 'screen.png'))
         finally:
             m.close()
