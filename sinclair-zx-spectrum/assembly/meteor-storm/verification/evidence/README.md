@@ -105,6 +105,12 @@
 - `harder-storms-storm-3-flight.png`, `harder-storms-storm-5-flight.png`:
   inspected native captures six seconds into the third and fifth storms.
 
+- `furthest-storm.json`: `checkpoints.py --only furthest-storm`, 39 checks, same
+  build and conditions. The whole voyage becomes the record (5 storms, 13,730),
+  read back as `BEST VOYAGE 5/5 13730` on the result; a retry left idle (0
+  storms) keeps it; Q shows it on the title.
+- `furthest-storm-title.png`: inspected native capture of that title.
+
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts

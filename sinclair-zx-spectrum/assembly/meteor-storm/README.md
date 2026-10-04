@@ -1,9 +1,9 @@
 # Meteor Storm — runnable teaching progression
 
-Thirty-two complete programs develop the accepted 48K PAL game from small
+Thirty-three complete programs develop the accepted 48K PAL game from small
 experiments, then extend it with sound, a destroyed phase, colour bands, a
-voyage of five storms, a two-byte score, a bonus multiplied by the storm and
-harder storms. These are teaching checkpoints, **not a fixed lesson count**.
+voyage of five storms, a two-byte score, a bonus multiplied by the storm,
+harder storms and a voyage record. These are teaching checkpoints, **not a fixed lesson count**.
 Split explanations further wherever one change needs its own experiment.
 Meet Assembly supplies the immediate background: bytes, bitmap addresses, loops,
 calls, flags, bounded keyboard movement and the debugger.
@@ -49,6 +49,7 @@ to the prototype. Native evidence compares its gameplay with that reference.
 | [two-byte-score](checkpoints/two-byte-score/README.md) | Count the whole voyage's score without wrapping |
 | [storm-bonus](checkpoints/storm-bonus/README.md) | Multiply each storm's bonus by its number |
 | [harder-storms](checkpoints/harder-storms/README.md) | Give each storm its own speed, density, drift and colours |
+| [furthest-storm](checkpoints/furthest-storm/README.md) | Keep the furthest voyage as the session record |
 
 ## Build and run
 
@@ -123,6 +124,8 @@ HUD's and the result's score lines back from the bitmap. From `storm-bonus` on i
 checks that each clear space adds the bonus times the storm's number and reads
 each bonus line back. From `harder-storms` on the host model reads each storm's
 rules from the program, the routes follow them, and the suite checks each
-storm's colour table in every cell and every object's speed.
+storm's colour table in every cell and every object's speed. From
+`furthest-storm` on it checks that a whole voyage becomes the record, that a
+later idle loss leaves it alone and that the title shows it.
 These are emulator results, not physical-hardware tests. Impact audio is captured;
 no independent listening claim is made for these captures.
