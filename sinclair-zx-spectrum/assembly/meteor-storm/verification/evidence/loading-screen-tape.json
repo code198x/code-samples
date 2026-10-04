@@ -1,0 +1,34 @@
+{
+  "method": "Fresh 48K ROM, LOAD \"\" from the unit 35 tape, ordinary frames and read-only probes.",
+  "tape_sha256": "31420966522468be267830cf1b0ce5fe31087b987dfe293d879512a67de4933d",
+  "scr_sha256": "1325b44c95fab8934ad257c290170e4cfacda56118baf6b94d08cfb3c3514843",
+  "emulator_sha256": "207832e3912531195510acde4b183166d743f8f638a2fec8222849a737ad06a6",
+  "checks": [
+    {
+      "check": "the loader blanks the screen before the picture arrives",
+      "detail": {
+        "first_blank_frame": 450,
+        "picture_starts_by_frame": 925
+      }
+    },
+    {
+      "check": "the SCREEN$ block lands on the screen byte for byte",
+      "detail": {
+        "complete_at_frame": 2350
+      }
+    },
+    {
+      "check": "nothing prints over the picture while the game loads",
+      "detail": {
+        "samples_after_picture": 130,
+        "game_started_by_frame": 5600
+      }
+    },
+    {
+      "check": "the game reaches its title",
+      "detail": {
+        "pc": "0x80af"
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# Build the tape this unit's lesson makes (loading-screen): a BASIC loader, the
+# Build the tape this unit's lesson makes (loading-screen), the same tape unit 35 makes: a BASIC loader, the
 # loading screen and the game, in that order. Their sources live in
 # checkpoints/loading-screen/; this folder exists so the site can stage the tape
 # where the lesson looks for it.

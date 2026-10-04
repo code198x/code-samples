@@ -120,6 +120,18 @@
 - `attract-title.png`: inspected native capture of the attract storm crossing
   the title text.
 
+- `loading-screen.json`: `checkpoints.py --only loading-screen`, 43 checks, the
+  same as `attract.json`: the program is unchanged.
+- `loading-screen-tape.json`: `tape.py`, 4 checks. Unit 35's tape loaded through
+  a fresh ROM: the screen is visibly black from frame 450, the SCREEN$ starts
+  arriving by frame 925 and matches byte for byte at frame 2,350, stays exact in
+  all 130 samples until the game starts by frame 5,600, and the game reaches its
+  title. Loaders without the POKE to 23739 were tried first: the ROM's
+  `Bytes: storm` message, black on black, wiped a strip of the picture.
+- `loading-screen-partial.png`, `loading-screen-loaded.png`: inspected native
+  captures mid-way through the SCREEN$ (pixels arriving unseen, INK and PAPER
+  black) and once its attributes have arrived.
+
 Run the three Python scripts in the parent directory to reproduce these reports,
 passing an emulator executable and a temporary output directory. Captures and
 build products go there; source files are not rewritten. `checkpoints.py` accepts

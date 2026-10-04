@@ -50,7 +50,7 @@ CHECKPOINTS = ['pixel-motion', 'clocked-steering', 'one-meteor', 'first-dodge',
                'boost', 'render-budget', 'records', 'finished',
                'tone', 'sound-table', 'sound-frames', 'debris', 'voyage',
                'two-byte-score', 'storm-bonus', 'harder-storms',
-               'furthest-storm', 'attract']
+               'furthest-storm', 'attract', 'loading-screen']
 if __name__ == '__main__':
     for number, name in enumerate(CHECKPOINTS, 1):
         (ROOT / 'checkpoints' / name / 'assets.inc').write_text(assets(number))
