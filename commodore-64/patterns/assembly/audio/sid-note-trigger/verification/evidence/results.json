@@ -1,0 +1,106 @@
+{
+  "target": "C64 PAL, booted from its ROMs; PRG imported, started with RUN",
+  "emulator_sha256": "52189fd853b40c66f3f93948bf1c5ddbf5f1c2943a72722b06b64293994d7423",
+  "sources": {
+    "demo.asm": "950bd22236d284a86bd3913d97a24ae6d75c8886408fc626dfc553546bc526a4"
+  },
+  "includes": {
+    "sid-note.inc": "e46ac2a5130017ebc5b466d2f3295fb0463ab2a93344ca4437dcc7ade7a80049"
+  },
+  "costs": {
+    "sid_voice_setup": {
+      "bytes": 22,
+      "cycles_through_rts": 32
+    },
+    "sid_note_on": {
+      "bytes": 17,
+      "cycles_through_rts": 26
+    },
+    "sid_note_off": {
+      "bytes": 6,
+      "cycles_through_rts": 12
+    }
+  },
+  "ownership": {
+    "source_sha256": "85f1e6236b3eb6567247c60a9ff0ed017f653515a7d4537ca51c5069d3c51d15",
+    "prg_sha256": "8652ef471a605486ae51c5f9b3ff39b4bbee36424ab72eb6ce9febc77e14e106",
+    "after_setup": [
+      165,
+      165,
+      0,
+      8,
+      64,
+      18,
+      52
+    ],
+    "after_note_on": [
+      103,
+      17,
+      0,
+      8,
+      65,
+      18,
+      52
+    ],
+    "after_note_off": [
+      103,
+      17,
+      0,
+      8,
+      64,
+      18,
+      52
+    ]
+  },
+  "envelope": {
+    "source_sha256": "b1f3bdb5e861b28f2037e8d1c7e4a5c7ebbfc1076e11e1c18972fa6c674a3786",
+    "prg_sha256": "f728272c1d0ba082508768a471c7930d97dbc90b414ea8af31d706e603965b4d",
+    "attack0_zero_polls_before_rise": 2921,
+    "attack0_start_ms_after_gate": 32.6,
+    "attack0_rise_cycles": 2250,
+    "attack0_rise_ms": 2.284,
+    "attack0_first_samples": [
+      6,
+      7,
+      9,
+      11,
+      12,
+      14,
+      16,
+      17,
+      19,
+      21,
+      22,
+      24
+    ],
+    "release9_frames_to_zero": 37,
+    "release9_ms_upper": 738.2,
+    "sustain8_level": 136,
+    "repeated_set_gate_env3": 136,
+    "retrigger_first_samples": [
+      139,
+      141,
+      143,
+      144,
+      146,
+      148,
+      149,
+      151,
+      153,
+      154,
+      156,
+      158
+    ],
+    "retrigger_rise_cycles": 1035
+  },
+  "demo": {
+    "prg_sha256": "331673da646c6cb4459afbd0af2bf2078c05a75c6bb11e97cebce7a09e0de03c",
+    "wav_sha256": "118e48d1b4b167794c812171d9827d03b5e42caa26103000bf692da88a4bea86",
+    "measured_hz": 261.62,
+    "expected_hz": 261.62,
+    "hold_ms": 520,
+    "release_ms_to_one_percent_level": 700
+  },
+  "limits": "Emulator observations; no original-hardware measurement or listening claim.",
+  "status": "passed"
+}

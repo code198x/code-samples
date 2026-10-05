@@ -1,0 +1,6 @@
+{
+  "website_revision": "db83f5c7fb5584f49c80512474a2d6b6e90af5fc",
+  "pattern_path": "src/content/patterns/commodore-64/assembly/audio/sid-note-trigger.mdx",
+  "pattern_sha256": "1601e053ba5f4957d9b51eedb2a94c40d9cd314d21b17c73ea2b3e4c35017960",
+  "diagnostic": "The page called attack and decay rate 0 instant (the MOS 6581 data sheet gives 2 ms and 6 ms at 1 MHz), retriggered by writing a set gate without clearing it, wrote $D418 inside a voice routine, and quoted unmeasured '~50 cycles' and '~60 bytes' costs. Its usage fragment had no maintained, executed source."
+}
