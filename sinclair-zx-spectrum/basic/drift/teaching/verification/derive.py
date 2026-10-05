@@ -59,5 +59,19 @@ save('readout',base(hud=True),[5],'readout')
 save('docking',base(hud=True,dock=True),[6],'docking')
 save('finished',p,[7,8],'finished')
 assert (ROOT/'finished/drift.bas').read_bytes()==(ROOT.parent/'prototype/drift.bas').read_bytes()
+# Lesson 9 keeps the ship drawn while nothing it shows has changed. The
+# routine at 3000 remembers the picture it draws (px, py, ph); 3010 toggles
+# that remembered picture, so an erase always matches the earlier draw.
+d=p.copy();drop(d,230)
+put(d,''' 330 IF nx<22 OR nx>233 OR ny<30 OR ny>145 THEN GO SUB 3100: LET e$="Hull lost. Try a gentler burn.": GO TO 4000
+ 350 GO SUB 3100
+3000 LET px=INT (x+.5): LET py=INT (y+.5): LET ph=h
+3010 PLOT INK 7; OVER 1;px+c(ph),py+d(ph)
+3020 DRAW INK 7; OVER 1;e(ph)-c(ph),f(ph)-d(ph)
+3030 DRAW INK 7; OVER 1;g(ph)-e(ph),j(ph)-f(ph)
+3040 DRAW INK 7; OVER 1;c(ph)-g(ph),d(ph)-j(ph): RETURN
+3100 IF INT (x+.5)<>px OR INT (y+.5)<>py OR h<>ph THEN GO SUB 3010: GO SUB 3000
+3110 RETURN''')
+save('steady',d,[9],'steady')
 (ROOT/'checkpoints.json').write_text(json.dumps(items,indent=2)+'\n')
-print('Six checkpoints for eight lessons; final listing is byte-identical to the accepted prototype.')
+print('Seven checkpoints for nine lessons; the finished listing stays byte-identical to the accepted prototype.')

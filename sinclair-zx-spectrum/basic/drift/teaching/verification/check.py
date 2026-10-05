@@ -7,6 +7,8 @@ sys.path.insert(0,str(ROOT.parent/'prototype/verification'))
 import check as endpoint
 from entry import Spectrum
 from check import state,line,sha
+import picture
+FINAL=('finished','steady')
 class Review(endpoint.Review):
  def __init__(self,item,exe,output):
   super().__init__(exe,output/item['name']);self.item=item;self.kind=item['kind']
@@ -16,7 +18,7 @@ class Review(endpoint.Review):
   return {(x,y) for y in range(176) for x in range(256) if raw[((y&192)<<5)|((y&7)<<8)|((y&56)<<2)|(x>>3)]&(128>>(x&7))}
  def playfield(self):return {(x,175-y) for x,y in self.memory_pixels() if 24<=175-y<=152}
  def hud(self,s):
-  if self.kind not in ('readout','docking','finished'):return
+  if self.kind not in ('readout','docking',*FINAL):return
   rows=self.m.screen();rounded=lambda v:format(int(abs(v)*10+.5)/10,'g')
   assert 'SPEED '+rounded(math.hypot(s['vx'],s['vy'])) in rows[1],rows[1]
   slow=s['vx']**2+s['vy']**2<=.16
@@ -35,12 +37,13 @@ class Review(endpoint.Review):
    if speed>3:vx*=3/speed;vy*=3/speed
   nx,ny=old['x']+vx,old['y']+vy
   crash=not(22<=nx<=233 and 30<=ny<=145)
-  win=self.kind in ('docking','finished') and not crash and 190<=nx<=210 and 94<=ny<=114 and vx*vx+vy*vy<=.16
+  win=self.kind in ('docking',*FINAL) and not crash and 190<=nx<=210 and 94<=ny<=114 and vx*vx+vy*vy<=.16
   expected=dict(h=h,x=old['x'] if crash else nx,y=old['y'] if crash else ny,steps=old['steps']+(not crash))
   if self.kind!='heading':expected.update(vx=vx,vy=vy)
   for name,value in expected.items():assert abs(s[name]-value)<1e-5,(name,s[name],value,key)
   assert (at==4000)==bool(crash or win),(at,crash,win,s)
   if at==370:self.hud(s)
+  self.one_ship(s)
   self.trace.append(dict(key=key,**{k:s[k] for k in expected},crash=crash,win=win))
   self.m.frames(1);self.boundary({4030} if at==4000 else {200})
   return s,crash,win
@@ -48,11 +51,11 @@ class Review(endpoint.Review):
   self.event('r',True);self.m.frames(1);self.boundary({100});self.event('r',False);self.m.frames(1);self.boundary({200});s=state(self.m)
   assert all(abs(s[k]-v)<1e-7 for k,v in dict(x=48,y=56,h=2,steps=0).items())
   if self.kind!='heading':assert s['vx']==s['vy']==0
-  self.hud(s);return s
+  self.hud(s);self.one_ship(s);return s
  def load(self):
   self.m.call('load_media',slot='tape-1',kind='tape',path=str(self.out/'drift.tap'));self.m.statement('LOAD ""');self.m.call('media_transport',slot='tape-1',transport='start')
   if self.kind=='drawing':self.wait_text('STOP')
-  elif self.kind=='finished':self.wait_text('S starts.');self.m.call('press_key',key='s',hold_frames=4);self.boundary({200})
+  elif self.kind in FINAL:self.wait_text('S starts.');self.m.call('press_key',key='s',hold_frames=4);self.boundary({200})
   else:
    # Loading is frame-driven until program state exists, then find a loop entry.
    for _ in range(1500):
@@ -62,6 +65,19 @@ class Review(endpoint.Review):
    self.boundary({200})
   assert self.m.program_lines()=={int(k):v for k,v in json.loads((self.out/'stored.json').read_text()).items()}
   self.record('fresh-ROM-tape-load-and-stored-lines')
+  if self.kind=='steady':
+   # The first flight shows the arena, dock and one ship at 48,56 facing h=2.
+   s=state(self.m);self.background=self.playfield()^picture.ship(s,48,56,2)
+   walls={(x,y) for x in range(15,241) for y in [24,152]}|{(x,y) for x in [15,240] for y in range(24,153)}
+   box={(x,y) for x in range(184,217) for y in [88,120]}|{(x,y) for x in [184,216] for y in range(88,121)}
+   assert walls|box<=self.background and not any(abs(x-48)<=8 and abs(y-56)<=8 for x,y in self.background-walls)
+   self.one_ship(s);self.record('host-drawing-model-matches-first-ship')
+ def one_ship(self,s):
+  # Erase and draw must pair: the screen holds the arena and exactly one ship,
+  # drawn where the rounded centre and the current heading say.
+  if self.kind!='steady':return
+  px,py=picture.drawn_at(s);assert (s['px'],s['py'],s['ph'])==(px,py,s['h']),s
+  assert self.playfield()==self.background^picture.ship(s,px,py,s['h']),(px,py,s['h'])
  def run(self):
   self.load()
   if self.kind=='drawing':
@@ -114,12 +130,13 @@ class Review(endpoint.Review):
    for _ in range(5):
     s,c,w=self.tick(' ');assert not c
     if w:won=True;break
-   if self.kind in ('docking','finished'):
+   if self.kind in ('docking',*FINAL):
     assert won;self.record('two-axis-transfer-and-low-speed-docking')
    else:
     assert not won and 190<=s['x']<=210 and 94<=s['y']<=114
     self.record('slow-target-region-remains-free-flight')
-   if self.kind in ('readout','docking','finished'):self.record('readout-values-direction-and-unrounded-speed-cue')
+   if self.kind in ('readout','docking',*FINAL):self.record('readout-values-direction-and-unrounded-speed-cue')
+   if self.kind=='steady':self.record('every-update-leaves-one-ship-at-the-drawn-state')
    self.reset()
    for _ in range(4):self.tick(' ')
    self.record('retry-after-transfer')

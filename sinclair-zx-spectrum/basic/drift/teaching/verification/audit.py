@@ -34,7 +34,22 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  records.append(dict(name=item['name'],lessons=item['lessons'],source=item['source'],source_sha256=build['source_sha256'],tape_sha256=sha(out/'drift.tap'),tape_blocks=blocks,model_checks=result['checks'],normal_frame_checks=frames['checks'],captures={p.name:sha(p) for p in sorted(out.glob('*.png'))}))
 assert (ROOT/'finished/drift.bas').read_bytes()==(ROOT.parent/'prototype/drift.bas').read_bytes()
 extra={}
-for name in ['controls','timing']:
- result=json.loads((a.evidence/'finished'/f'{name}.json').read_text());assert result['status']=='passed';assert result['source_sha256']==records[-1]['source_sha256'];assert result['tape_sha256']==records[-1]['tape_sha256'];extra[name]=result['checks']
-summary=dict(status='passed',checkpoint_count=len(records),lesson_count=8,execution_checks=sum(len(r['model_checks'])+len(r['normal_frame_checks']) for r in records)+sum(map(len,extra.values())),checkpoints=records,endpoint_checks=extra,source_transitions='Exact add/replace/delete replay; all literal branch targets exist; final listing byte-identical to the accepted native prototype.',method='Independent ROM keyboard entry and tape save per checkpoint; fresh tape loads; keyboard-only input; read-only state/bitmap checks; separate ordinary-frame controls and original captures. CPU-stepped state comparisons are not performance measurements.')
+# Endpoint control and timing trials: required for the final checkpoint, and
+# still checked for the lesson 7 endpoint that recorded them before.
+for record in records:
+ for name in ['controls','timing']:
+  path=a.evidence/record['name']/f'{name}.json'
+  if not path.exists():assert record is not records[-1],path;continue
+  result=json.loads(path.read_text());assert result['status']=='passed';assert result['source_sha256']==record['source_sha256'];assert result['tape_sha256']==record['tape_sha256']
+  if record is records[-1]:extra[name]=result['checks']
+# Lesson 9's still-ship check must fail on the lesson 7 endpoint and pass on lesson 9.
+redraw=json.loads((a.evidence/'redraw/redraw.json').read_text());assert redraw['status']=='passed'
+by_name={r['name']:r for r in records};outcome={'finished':'failed','steady':'passed'}
+assert [r['checkpoint'] for r in redraw['results']]==list(outcome)
+for r in redraw['results']:
+ assert r['status']==outcome[r['checkpoint']] and r['source_sha256']==by_name[r['checkpoint']]['source_sha256'] and r['tape_sha256']==by_name[r['checkpoint']]['tape_sha256']
+ assert sha(a.evidence/'redraw'/r['capture']['name'])==r['capture']['sha256']
+assert {r['capture']['name'] for r in redraw['results']}=={p.name for p in (a.evidence/'redraw').glob('*.png')}
+extra['redraw']=[f"{r['checkpoint']}-{r['status']}-{r['toggles_per_pass']:g}-toggles-per-still-pass-{r['frame_states']['complete']}-of-{r['frames']}-frames-complete" for r in redraw['results']]
+summary=dict(status='passed',checkpoint_count=len(records),lesson_count=max(n for r in records for n in r['lessons']),execution_checks=sum(len(r['model_checks'])+len(r['normal_frame_checks']) for r in records)+sum(map(len,extra.values())),checkpoints=records,endpoint_checks=extra,source_transitions='Exact add/replace/delete replay; all literal branch targets exist; the lesson 7 listing is byte-identical to the accepted native prototype.',method='Independent ROM keyboard entry and tape save per checkpoint; fresh tape loads; keyboard-only input; read-only state/bitmap checks; separate ordinary-frame controls and original captures. CPU-stepped state comparisons are not performance measurements.')
 (a.evidence/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(f"PASS {len(records)} checkpoints, {summary['execution_checks']} check groups, exact edits and checksum-valid tapes")

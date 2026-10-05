@@ -1,8 +1,8 @@
 {
   "status": "passed",
-  "checkpoint_count": 6,
-  "lesson_count": 8,
-  "execution_checks": 79,
+  "checkpoint_count": 7,
+  "lesson_count": 9,
+  "execution_checks": 100,
   "checkpoints": [
     {
       "name": "draw-ship",
@@ -204,6 +204,48 @@
         "instructions.png": "1d788dabe4ef57497293677e68ad5f16af2c7c252fbbfbb31d8a060da6bfb8fb",
         "velocity.png": "a6541744ef5069f51c9deb69383e31fb22c5d73a1e96807554ea82b3795b54c9"
       }
+    },
+    {
+      "name": "steady",
+      "lessons": [
+        9
+      ],
+      "source": "steady/drift.bas",
+      "source_sha256": "76bf5ba43f7a2782b98d99d60b47d8f968d6dfa9c4f0427de56298c0db416350",
+      "tape_sha256": "2d7acd031e28994fbe0daf45b347733e009534cf04135abb47f7353591cea8e7",
+      "tape_blocks": [
+        19,
+        3816
+      ],
+      "model_checks": [
+        "fresh-ROM-tape-load-and-stored-lines",
+        "host-drawing-model-matches-first-ship",
+        "thrust-and-coasting-in-two-components",
+        "turning-does-not-turn-velocity",
+        "counterthrust-cancels-equal-burn",
+        "retry-restores-all-motion-state",
+        "resultant-speed-cap",
+        "right-wall-freezes-last-valid-position",
+        "top-wall",
+        "left-wall",
+        "bottom-wall",
+        "two-axis-transfer-and-low-speed-docking",
+        "readout-values-direction-and-unrounded-speed-cue",
+        "every-update-leaves-one-ship-at-the-drawn-state",
+        "retry-after-transfer"
+      ],
+      "normal_frame_checks": [
+        "normal-frame-thrust-coast-and-flight-quit",
+        "normal-frame-crash-retry-and-quit",
+        "normal-frame-two-axis-docking",
+        "normal-frame-docked-result-quit"
+      ],
+      "captures": {
+        "crash.png": "1e0d03b6f413737d2fd62ca57bdba89e6582f7b7db9351425e1315a8cf45a1ac",
+        "docked.png": "28b1fa51f02c2f6eef9fb2c6040b677c8495bdedf17ad17aa44a995772a50e68",
+        "instructions.png": "1d788dabe4ef57497293677e68ad5f16af2c7c252fbbfbb31d8a060da6bfb8fb",
+        "velocity.png": "f6adca6186cc2c3a550fc76cedfe2dde75d0d782ee621b9f0a4082522206eaea"
+      }
     }
   ],
   "endpoint_checks": {
@@ -217,8 +259,12 @@
       "frame-driven-coasting",
       "frame-driven-restart",
       "frame-driven-crash-and-result-quit"
+    ],
+    "redraw": [
+      "finished-failed-2-toggles-per-still-pass-81-of-300-frames-complete",
+      "steady-passed-0-toggles-per-still-pass-300-of-300-frames-complete"
     ]
   },
-  "source_transitions": "Exact add/replace/delete replay; all literal branch targets exist; final listing byte-identical to the accepted native prototype.",
+  "source_transitions": "Exact add/replace/delete replay; all literal branch targets exist; the lesson 7 listing is byte-identical to the accepted native prototype.",
   "method": "Independent ROM keyboard entry and tape save per checkpoint; fresh tape loads; keyboard-only input; read-only state/bitmap checks; separate ordinary-frame controls and original captures. CPU-stepped state comparisons are not performance measurements."
 }

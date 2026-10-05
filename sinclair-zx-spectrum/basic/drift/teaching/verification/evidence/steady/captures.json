@@ -1,0 +1,22 @@
+[
+  {
+    "name": "instructions",
+    "settling_frames": 10,
+    "scope": "Normal video-frame execution; original PNG top 176 display rows match RAM bitmap; no image editing."
+  },
+  {
+    "name": "velocity",
+    "settling_frames": 10,
+    "scope": "Normal video-frame execution; original PNG top 176 display rows match RAM bitmap; no image editing."
+  },
+  {
+    "name": "crash",
+    "settling_frames": 10,
+    "scope": "Normal video-frame execution; original PNG top 176 display rows match RAM bitmap; no image editing."
+  },
+  {
+    "name": "docked",
+    "settling_frames": 10,
+    "scope": "Normal video-frame execution; original PNG top 176 display rows match RAM bitmap; no image editing."
+  }
+]

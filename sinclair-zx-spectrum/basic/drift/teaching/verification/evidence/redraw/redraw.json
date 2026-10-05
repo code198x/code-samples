@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30",
+  "method": "Fresh tape loads from the build evidence; S then no key; instruction-stepped line visits; display memory read at ordinary frame boundaries. Frame-boundary samples show what display memory holds then, not every raster line the viewer saw.",
+  "expectation": "finished fails (two whole-ship toggles per still pass); steady passes (none, ship complete at every frame)",
+  "results": [
+    {
+      "checkpoint": "finished",
+      "source": "finished/drift.bas",
+      "source_sha256": "c25fa64ce5b99280ed29659f30b6f589f481772f8b1736127031322e2e2b422c",
+      "tape_sha256": "a309de947a53a722bd1d4004ae0e4d398eeae5291bcf15dd2498cb2f7b6774a7",
+      "passes": 20,
+      "ship_toggles": 40,
+      "toggles_per_pass": 2.0,
+      "frames": 300,
+      "frame_states": {
+        "complete": 81,
+        "absent": 100,
+        "part-drawn": 119
+      },
+      "loop_passes_while_sampling": 16,
+      "capture": {
+        "name": "finished-still.png",
+        "frame": 0,
+        "shows": "absent",
+        "sha256": "93826d4c7a4bd05ed83bbb7915015e772d3b089f8dcecdaedfc452ee7284d086",
+        "scope": "Normal video-frame execution; original PNG display area matches the RAM bitmap; no image editing."
+      },
+      "status": "failed"
+    },
+    {
+      "checkpoint": "steady",
+      "source": "steady/drift.bas",
+      "source_sha256": "76bf5ba43f7a2782b98d99d60b47d8f968d6dfa9c4f0427de56298c0db416350",
+      "tape_sha256": "2d7acd031e28994fbe0daf45b347733e009534cf04135abb47f7353591cea8e7",
+      "passes": 20,
+      "ship_toggles": 0,
+      "toggles_per_pass": 0.0,
+      "frames": 300,
+      "frame_states": {
+        "complete": 300,
+        "absent": 0,
+        "part-drawn": 0
+      },
+      "loop_passes_while_sampling": 34,
+      "capture": {
+        "name": "steady-still.png",
+        "frame": 0,
+        "shows": "complete",
+        "sha256": "f1a8556cf4006032f152284814f38f1324505932491d450a6edb47160ad1470b",
+        "scope": "Normal video-frame execution; original PNG display area matches the RAM bitmap; no image editing."
+      },
+      "status": "passed"
+    }
+  ]
+}
