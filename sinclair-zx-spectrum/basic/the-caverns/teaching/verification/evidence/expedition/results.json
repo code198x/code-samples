@@ -1,6 +1,6 @@
 {
   "name": "expedition",
-  "source_sha256": "224dd39a5712f12dbafe7e80f963b03a905ac30f158e1e69bb66072c8b6f37fa",
+  "source_sha256": "e1e7402f941e13329e37c84b50316fbf004e0a33d1e521515ea68f8c84425bd0",
   "checks": [
     "fresh-tape-room-display",
     "stored-token-identity",
@@ -266,16 +266,5 @@
   ],
   "configuration": "Stock 48K PAL, fresh tape load and ordinary keys",
   "direct_memory_writes": false,
-  "sampling_retries": [
-    {
-      "line": 310,
-      "reader_error": "(0, 1082, {'i': 9, 'j': 5, 'rm': 1, 'pit': 7, 'ci': 3, 'cr': 4, 'found': 0, 'turns': 0, 'v': 0, 'y': 14, 'dir': 3, 'dest': 7, 'ending': 1, 'm': 48, 't': 12})",
-      "resume_frames": 1
-    },
-    {
-      "line": 310,
-      "reader_error": "(0, 1128, {'i': 9, 'j': 5, 'rm': 1, 'pit': 7, 'ci': 3, 'cr': 4, 'found': 0, 'turns': 0, 'v': 0, 'y': 14, 'dir': 4, 'dest': 1, 'ending': 3, 'm': 48, 't': 12, 'c': 8})",
-      "resume_frames": 1
-    }
-  ]
+  "sampling_retries": []
 }

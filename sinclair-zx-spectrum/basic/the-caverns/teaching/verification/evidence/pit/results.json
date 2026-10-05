@@ -1,6 +1,6 @@
 {
   "name": "pit",
-  "source_sha256": "fb4345ecca9926b36f83d27c9fc431934f9eb861b67d489a99cc38a8aed0c69b",
+  "source_sha256": "bb9106e621f6499bd7edece6b4a951ec884d98bb113a55b3584ec768c6696a73",
   "checks": [
     "fresh-tape-room-display",
     "stored-token-identity",

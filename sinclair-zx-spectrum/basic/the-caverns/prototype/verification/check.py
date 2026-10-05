@@ -5,7 +5,9 @@ from entry import Spectrum,ROOT
 from model import START,PATROL,TREASURES,rooms,step
 sys.path.insert(0,str(ROOT.parents[1]/'tail-chase/prototype/verification'))
 from verify import state,line
-p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();m=Spectrum(a.emulator,out);checks=[];trials=[]
+# --source names the listing the tape was built from; a teaching checkpoint
+# that plays the whole game (title, endings, replay) reuses these checks.
+p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--source',type=Path,default=ROOT/'caverns.bas');a=p.parse_args();out=a.output.resolve();m=Spectrum(a.emulator,out);checks=[];trials=[]
 def record(name):checks.append(name);print('PASS',name,flush=True)
 def wait(targets):
  for _ in range(2500):
@@ -66,6 +68,6 @@ try:
  # Uppercase is delivered as a real Spectrum chord.
  m.statement('RUN');wait([110]);m.key('caps','s');ready();m.key('caps','e');s=ready();assert s['rm']==2 and s['turns']==1;record('uppercase-start-and-direction')
  key('r');ready();capture('reset');record('reset-restores-treasures-and-patrol')
- data={'source_sha256':hashlib.sha256((ROOT/'caverns.bas').read_bytes()).hexdigest(),'binary_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'configuration':'Stock 48K PAL; fresh ROM tape load; ordinary key play','checks':checks,'trials':trials,'direct_memory_writes':False,'server':m.server}
+ data={'source_sha256':hashlib.sha256(a.source.read_bytes()).hexdigest(),'binary_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'configuration':'Stock 48K PAL; fresh ROM tape load; ordinary key play','checks':checks,'trials':trials,'direct_memory_writes':False,'server':m.server}
  (out/'results.json').write_text(json.dumps(data,indent=2)+'\n')
 finally:m.close()

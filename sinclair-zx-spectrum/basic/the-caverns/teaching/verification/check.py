@@ -140,5 +140,5 @@ def check(item,exe,out):
  finally:m.close()
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--only');p.add_argument('--jobs',type=int,default=1);a=p.parse_args()
- items=[i for i in json.loads((ROOT/'checkpoints.json').read_text()) if i['name']!='finished' and (not a.only or i['name']==a.only)]
+ items=[i for i in json.loads((ROOT/'checkpoints.json').read_text()) if i['name'] in NAMES and (not a.only or i['name']==a.only)]
  with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as pool:list(pool.map(lambda i:check(i,a.emulator,a.output.resolve()),items))

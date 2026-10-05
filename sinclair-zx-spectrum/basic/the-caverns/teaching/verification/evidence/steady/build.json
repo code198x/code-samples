@@ -1,8 +1,8 @@
 {
-  "name": "pit",
-  "source": "pit/caverns.bas",
-  "source_sha256": "bb9106e621f6499bd7edece6b4a951ec884d98bb113a55b3584ec768c6696a73",
-  "tape_sha256": "4948811dbbe869dc3c44e177fe8a390d175e1f6faf83bbaa0f74c582b9e90976",
+  "name": "steady",
+  "source": "steady/caverns.bas",
+  "source_sha256": "313c701d1c9e0d81a944974426ee8dd5a938fd6e25da60ed8176d22b2014946c",
+  "tape_sha256": "10c578b023cef2cf89f52e5773620008132e046e75564d9a26d0aa81e928f496",
   "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e",
   "server": {
     "capabilities": {

@@ -1,6 +1,6 @@
 {
   "name": "room",
-  "source_sha256": "5e2531c772343f571942b5a4920d9917d96e16c50d6415c6e0fd03c0e8fe9b01",
+  "source_sha256": "2d152c528eaf5a7af3362e4968b740f8b2c502daed8c02fd94b09e30285b1149",
   "checks": [
     "fresh-tape-room-display",
     "stored-token-identity"

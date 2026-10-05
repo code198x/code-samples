@@ -1,0 +1,17 @@
+ 200 DIM m(12,4): DIM a$(12,24): DIM b$(12,28): DIM t(12): DIM c(8): DIM h$(29): DIM s$(13)
+ 490 GO SUB 1020: GO TO 300
+1012 INK 1: PLOT 16,148: DRAW 223,0
+1014 PRINT AT 9,2; INK 6;"TUNNELS       NEARBY SIGNS"
+1016 PRINT AT 20,2; INK 7;"N S E W / SPACE waits"
+1018 PRINT AT 21,2; INK 7;"R: restart   Q: quit"
+1090 LET s$="": LET hue=7
+1100 IF v=0 THEN PRINT AT y,2; INK 7;d$(j);"  --  ": GO TO 1155
+1120 IF v=pit THEN LET s$="Cold draught": LET hue=6
+1130 IF v=cr THEN LET s$="Footsteps": LET hue=6
+1140 IF t(v)=1 THEN LET s$="Glint": LET hue=4
+1150 IF v=cr AND t(v)=1 THEN LET s$="Steps + glint": LET hue=6
+1155 PRINT AT y,15; INK hue;s$
+1170 IF cr=rm THEN PRINT AT 16,2; INK 6;"IT IS HERE. MOVE NOW.    "
+5030 GO SUB 1020
+5050 IF ending=3 THEN PRINT AT 16,2; INK 6;"YOU ESCAPED THE CAVERNS.    "
+5060 IF ending<>3 THEN PRINT AT 16,2; INK 6;"YOUR EXPEDITION ENDS.       "

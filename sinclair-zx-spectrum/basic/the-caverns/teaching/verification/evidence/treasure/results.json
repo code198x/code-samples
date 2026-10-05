@@ -1,6 +1,6 @@
 {
   "name": "treasure",
-  "source_sha256": "928d1267157d12308461975488e86516701689f6bddbdab8ee282a832f5ddbc1",
+  "source_sha256": "649973678bf2930aca1f409939e8bdaa9c816167cbde5653a0d570f74a9a72b0",
   "checks": [
     "fresh-tape-room-display",
     "stored-token-identity",

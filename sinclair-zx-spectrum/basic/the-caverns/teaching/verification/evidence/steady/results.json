@@ -1,5 +1,5 @@
 {
-  "source_sha256": "dc780a9b025dd4ecd53119db5b63456e73cbb5e24018e090826b771c899224f1",
+  "source_sha256": "313c701d1c9e0d81a944974426ee8dd5a938fd6e25da60ed8176d22b2014946c",
   "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e",
   "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play",
   "checks": [

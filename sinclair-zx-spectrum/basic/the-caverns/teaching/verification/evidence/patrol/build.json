@@ -1,9 +1,9 @@
 {
   "name": "patrol",
   "source": "patrol/caverns.bas",
-  "source_sha256": "71b72a82792f1999e99f5654cc170de2c2c1ebefd532553592c0761d92b4e317",
-  "tape_sha256": "d9a30b1df5e695eb9b8b6e6d4750f8b008c46a9cf7366b61abcaacd885eeb3d8",
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "source_sha256": "165e687a4c13325b89e692fe30d6759b91514bc716a5545946ce3fae54a16afc",
+  "tape_sha256": "0c963bef60d402d0e99633e6d424265f1002946cb24819bc855416d96f4cbf9e",
+  "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e",
   "server": {
     "capabilities": {
       "tools": {}
@@ -11,7 +11,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.25.0"
     }
   },
   "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"
