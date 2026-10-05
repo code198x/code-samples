@@ -1,0 +1,172 @@
+{
+  "source": "finished/yearfall.bas",
+  "source_sha256": "2ff306a577664165a4443cf7a3139236bb0ced3a19f66e92b274fcf213afab76",
+  "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30",
+  "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play; offer route uses ROM RANDOMIZE 17 and RUN 200",
+  "checks": [
+    "every-edit-leaves-the-full-plan-screen",
+    "new-year-draws-a-fresh-frame"
+  ],
+  "failures": [
+    {
+      "check": "edits-leave-the-title-row-untouched",
+      "detail": [
+        {
+          "edit": "feed-shrinks",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "feed-grows",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "large-purchase",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "sale-replaces-purchase",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "land-plan-cleared",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "planting-shrinks",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "feed-at-editor-limit",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "planting-restored",
+          "title_row_writes": 46
+        },
+        {
+          "edit": "plan-valid-again",
+          "title_row_writes": 46
+        }
+      ]
+    },
+    {
+      "check": "quit-from-plan-says-goodbye",
+      "detail": {
+        "from": "plan",
+        "report": "9 STOP statement, 310:2",
+        "farewell": false
+      }
+    },
+    {
+      "check": "quit-from-title-says-goodbye",
+      "detail": {
+        "from": "title",
+        "report": "9 STOP statement, 120:2",
+        "farewell": false
+      }
+    },
+    {
+      "check": "quit-from-report-says-goodbye",
+      "detail": {
+        "from": "report",
+        "report": "9 STOP statement, 510:2",
+        "farewell": false
+      }
+    },
+    {
+      "check": "quit-from-review-says-goodbye",
+      "detail": {
+        "from": "review",
+        "report": "9 STOP statement, 5150:2",
+        "farewell": false
+      }
+    },
+    {
+      "check": "quit-from-offer-says-goodbye",
+      "detail": {
+        "from": "offer",
+        "report": "9 STOP statement, 7180:2",
+        "farewell": false
+      }
+    }
+  ],
+  "redraws": [
+    {
+      "edit": "feed-shrinks",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "feed-grows",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "large-purchase",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "sale-replaces-purchase",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "land-plan-cleared",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "planting-shrinks",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "feed-at-editor-limit",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "planting-restored",
+      "title_row_writes": 46
+    },
+    {
+      "edit": "plan-valid-again",
+      "title_row_writes": 46
+    }
+  ],
+  "quits": [
+    {
+      "from": "plan",
+      "report": "9 STOP statement, 310:2",
+      "farewell": false
+    },
+    {
+      "from": "title",
+      "report": "9 STOP statement, 120:2",
+      "farewell": false
+    },
+    {
+      "from": "report",
+      "report": "9 STOP statement, 510:2",
+      "farewell": false
+    },
+    {
+      "from": "review",
+      "report": "9 STOP statement, 5150:2",
+      "farewell": false
+    },
+    {
+      "from": "offer",
+      "report": "9 STOP statement, 7180:2",
+      "farewell": false
+    }
+  ],
+  "direct_memory_writes": false,
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "tape": "verification/evidence/finished/yearfall.tap",
+  "tape_sha256": "62fc9233fb9e70778cf32e7b19b0a819dd83fea6474dda25133a029e37ac9e22",
+  "expected": "fails: the finished program redraws the whole plan per edit and stops on each Q line"
+}

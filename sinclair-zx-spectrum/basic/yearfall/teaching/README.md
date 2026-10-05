@@ -1,9 +1,11 @@
 # Yearfall teaching checkpoints
 
-Eleven stock 48K PAL Sinclair BASIC programs develop the accepted game across
-thirteen lessons. The final `finished/yearfall.bas` is byte-identical to the
-prototype at samples commit `03afc02`. The shortage lesson reuses `trade`; the
-saving lesson reuses `finished`.
+Twelve stock 48K PAL Sinclair BASIC programs develop the game across fourteen
+lessons. `finished/yearfall.bas` is byte-identical to the accepted prototype at
+samples commit `03afc02`. The shortage lesson reuses `trade`; the saving lesson
+reuses `finished`. The last lesson's `polished/yearfall.bas` is the endpoint:
+the same accounts, events and reviews, with a plan screen that reprints only its
+changing figures and one closing routine for every Q.
 
 `checkpoints.json` records exact additions, replacements and deletions. Each
 `changes.bas` contains ordinary lines to enter; lessons state deletions separately.
@@ -19,6 +21,8 @@ Run from this directory:
 python3 verification/build.py --emulator "$EMU198X_SPECTRUM" --output verification/evidence --jobs 4
 python3 verification/check.py --emulator "$EMU198X_SPECTRUM" --output verification/evidence --jobs 4
 python3 ../prototype/verification/check.py --emulator "$EMU198X_SPECTRUM" --output verification/evidence/finished
+python3 ../prototype/verification/check.py --emulator "$EMU198X_SPECTRUM" --output verification/evidence/polished --source polished/yearfall.bas
+python3 verification/polish.py --emulator "$EMU198X_SPECTRUM" --output verification/evidence/polished --source polished/yearfall.bas
 python3 verification/audit.py
 ```
 
@@ -26,6 +30,13 @@ Each build enters the complete source through ROM keyword keys in a fresh
 process and records `SAVE "yearfall" LINE 10`. Checks load that tape in a
 separate process. Memory observation is read-only; incomplete snapshots during
 string updates are retried for at most eight frames.
+
+`polish.py` compares every row of the plan screen after each edit with the
+layout drawn from a cleared screen, watches the title row's display memory for
+writes during edits, and quits from the title, plan, report, review and offer.
+Run against the `finished` tape (copy its `yearfall.tap` into a scratch
+folder), the update and exit checks fail; `verification/evidence/polished/polish-on-finished.json`
+records that run and the audit requires it.
 
 The first four stages deliberately STOP. Food/seed experiments edit stated
 lines through the ROM, then restore them. The shortage fixture uses explicit

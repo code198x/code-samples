@@ -1,0 +1,93 @@
+{
+  "source": "polished/yearfall.bas",
+  "source_sha256": "0b412c91206351ae3cc316d4b1d6fa66a2dc6b84a3fe405986ab683972743863",
+  "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30",
+  "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play; offer route uses ROM RANDOMIZE 17 and RUN 200",
+  "checks": [
+    "every-edit-leaves-the-full-plan-screen",
+    "edits-leave-the-title-row-untouched",
+    "new-year-draws-a-fresh-frame",
+    "quit-from-plan-says-goodbye",
+    "quit-from-title-says-goodbye",
+    "quit-from-report-says-goodbye",
+    "quit-from-review-says-goodbye",
+    "quit-from-offer-says-goodbye"
+  ],
+  "failures": [],
+  "redraws": [
+    {
+      "edit": "feed-shrinks",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "feed-grows",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "large-purchase",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "sale-replaces-purchase",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "land-plan-cleared",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "planting-shrinks",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "feed-at-editor-limit",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "planting-restored",
+      "title_row_writes": 0
+    },
+    {
+      "edit": "plan-valid-again",
+      "title_row_writes": 0
+    }
+  ],
+  "quits": [
+    {
+      "from": "plan",
+      "report": "9 STOP statement, 9020:1",
+      "farewell": true
+    },
+    {
+      "from": "title",
+      "report": "9 STOP statement, 9020:1",
+      "farewell": true
+    },
+    {
+      "from": "report",
+      "report": "9 STOP statement, 9020:1",
+      "farewell": true
+    },
+    {
+      "from": "review",
+      "report": "9 STOP statement, 9020:1",
+      "farewell": true
+    },
+    {
+      "from": "offer",
+      "report": "9 STOP statement, 9020:1",
+      "farewell": true
+    }
+  ],
+  "direct_memory_writes": false,
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  }
+}
