@@ -1,0 +1,6 @@
+{
+  "website_revision": "db83f5c7fb5584f49c80512474a2d6b6e90af5fc",
+  "pattern_sha256": "7e90db9014c59f6dbf00b964b68f4e16edcce9a0f8bc59fbeaa5e7319ff01407",
+  "build_exit": 0,
+  "diagnostic": "asm198x 0.0.58 (ca65 dialect) accepts the fenced source, but the image has no iNES header and no reset/NMI/IRQ vectors; after the five register writes execution runs into zero-filled PRG (BRK). The writes themselves would sound (pulse 1 enabled before the $4003 load, timer 253 is below $400 so sweep $00 does not mute it), but the prose misstated why: the $4003 write does load the length counter, the length counter cuts off rather than fades, $00 in $4001 mutes timers of $400 and above, and the DMC does play samples."
+}
