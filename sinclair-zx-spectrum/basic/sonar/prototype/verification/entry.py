@@ -28,7 +28,8 @@ class Spectrum(module.Spectrum):
                   'FOR': 'f', 'NEXT': 'n', 'DIM': 'd', 'RANDOMIZE': 't'}
         symbol = {'THEN': 'g', '<>': 'w', 'STOP': 'a', 'AT': 'i',
                   'TO': 'f', 'AND': 'y', 'OR': 'u'}
-        extended = {'LEN': 'k', 'VAL': 'j', 'STR$': 'y', 'INT': 'r', 'ABS': 'g', 'RND': 't'}
+        extended = {'LEN': 'k', 'VAL': 'j', 'STR$': 'y', 'INT': 'r', 'ABS': 'g', 'RND': 't',
+                    'INKEY$': 'n'}
         shifted = {'PAPER': 'c', 'INK': 'x', 'LINE': '3'}
         tokens = sorted([*normal, *symbol, *extended, *shifted], key=len, reverse=True)
         pattern = '|'.join(re.escape(token) for token in tokens)

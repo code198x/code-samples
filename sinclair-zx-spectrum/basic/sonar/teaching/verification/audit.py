@@ -16,4 +16,4 @@ result=json.loads((ROOT/'verification/results.json').read_text())
 for source,digest in result['sources'].items():
     assert lineage.accepts(digest,ROOT/source),source
 assert (ROOT/'unit-08/steps/step-01.bas').read_bytes()==(ROOT.parent/'prototype/experiments/distance-bands.bas').read_bytes()
-print('All eleven edit rosters reconstruct the verified sources; final source equals the accepted game.')
+print(f'All {len(roster)} edit rosters reconstruct the verified sources; lesson 8 equals the accepted game.')

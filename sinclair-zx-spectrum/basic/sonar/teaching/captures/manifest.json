@@ -46,6 +46,33 @@
       "sequence": "verification/verify.py: final-found"
     },
     {
+      "file": "keys-column.png",
+      "sha256": "69128e8bc94687c7e6c651db2f465727782b40ea5fef36192132b92aa22e4428",
+      "source": "unit-10/steps/step-01.bas",
+      "source_sha256": "8f7396c2ca5c9e9ba8631ff0a718d65ac83e14569a20ede7b4165929c262d9f0",
+      "sequence": "verification/verify.py: keys (verification/keys.py check_keys)",
+      "rom_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+      "emulator": "emu198x-spectrum 0.25.0"
+    },
+    {
+      "file": "keys-found.png",
+      "sha256": "7247f71b9ce67013f215fb064c29953245ee7abaca25fc97acee15f2e9cb7cbd",
+      "source": "unit-10/steps/step-01.bas",
+      "source_sha256": "8f7396c2ca5c9e9ba8631ff0a718d65ac83e14569a20ede7b4165929c262d9f0",
+      "sequence": "verification/verify.py: keys (verification/keys.py check_keys)",
+      "rom_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+      "emulator": "emu198x-spectrum 0.25.0"
+    },
+    {
+      "file": "keys-instructions.png",
+      "sha256": "fdb7bdf28069649a8bcc82cff0a6d0d4127586764b092612720e4c8be1d30e96",
+      "source": "unit-10/steps/step-01.bas",
+      "source_sha256": "8f7396c2ca5c9e9ba8631ff0a718d65ac83e14569a20ede7b4165929c262d9f0",
+      "sequence": "verification/verify.py: keys (verification/keys.py check_keys)",
+      "rom_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+      "emulator": "emu198x-spectrum 0.25.0"
+    },
+    {
       "file": "memory.png",
       "sha256": "d3a440cc887ace51414ebabdfcfad3e724047aa790de06e130ce72b088b6ff55",
       "source": "unit-05/steps/step-02.bas",
