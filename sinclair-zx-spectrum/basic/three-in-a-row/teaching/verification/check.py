@@ -25,15 +25,40 @@ def check(item,exe,out):
  def ready():return wait([260,5010])
  def capture(label):m.frames(10);m.call('save_screenshot',path=str(out/(label+'.png')))
  def reset():key('r');return ready()
+ def load(tape):m.call('load_media',slot='tape-1',kind='tape',path=str(tape));m.statement('LOAD ""');m.call('media_transport',slot='tape-1',transport='start')
+ def colours(tape,label):
+  # Read-only: ATTR_P (23693) holds the permanent colours; 22528 starts the
+  # attribute map. Line 10 makes the permanent colours BRIGHT 1, PAPER 0, INK 7.
+  def attrs():return sum((m.call('memory_read',addr=22528+o,len=128)['bytes'] for o in range(0,768,128)),[]),m.call('memory_read',addr=23693,len=1)['bytes'][0]
+  load(tape);wait([110]);key('s');s=wait([260,5080]);assert s['b']==[0]*9
+  board=attrs();capture(label+'board')
+  for n in (1,8,7,4):key(str(n));s=wait([260,5080])
+  assert s['winner']==1 and s['wl']==4 and line(m)==5080
+  won=attrs();capture(label+'win');key('q');stopped()
+  # Row 21 columns 2-30 hold line 5060's footer, printed with no INK item.
+  return dict(board_attr_p=board[1],grid_cell=board[0][10*32+7],win_attr_p=won[1],footer=sorted(set(won[0][21*32+2:21*32+31])),cross=won[0][15*32+16],win_line=won[0][10*32+10])
  try:
-  m.call('load_media',slot='tape-1',kind='tape',path=str(out/'three.tap'));m.statement('LOAD ""');m.call('media_transport',slot='tape-1',transport='start')
-  if name=='board':
+  if name=='colours':
+   old=colours(out.parent/'finished/three.tap','finished-')
+   assert old['board_attr_p']==65 and old['grid_cell']==65 and old['win_attr_p']==70 and old['footer']==[70],old
+   record('finished-statement-INK-leaks-into-footer')
+   new=colours(out/'three.tap','')
+   assert new['board_attr_p']==71 and new['win_attr_p']==71,new;record('permanent-colours-unchanged-by-drawing')
+   assert new['footer']==[71],new;record('footer-keeps-permanent-white')
+   assert new['grid_cell']==68,new;record('grid-drawn-in-bright-green')
+   assert new['cross']==69 and new['win_line']==70,new;record('cross-and-win-line-keep-temporary-colours')
+   load(out/'three.tap');wait([110])
+  else:load(out/'three.tap')
+  if name=='colours':
+   assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};record('stored-line-identity')
+   key('q');stopped();record('quit')
+  elif name=='board':
    stopped();assert state(m)['b']==[0]*9
    capture('board');record('fresh-tape-numbered-board-stop')
   else:
    s=ready();assert s['b']==[0]*9;capture('board');record('fresh-tape-empty-board')
-  assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};record('stored-line-identity')
-  if name!='board':
+  if name!='colours':assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};record('stored-line-identity')
+  if name not in ('board','colours'):
    for k in ['0','a','enter','space']:key(k);assert ready()['b']==[0]*9
    record('invalid-keys')
    m.call('input',events=[{'Key':{'name':'1','pressed':True}}]);m.frames(400)

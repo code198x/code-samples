@@ -283,9 +283,41 @@
         }
       },
       "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+    },
+    {
+      "name": "colours",
+      "source_sha256": "f9910937daa687516c6e1c608c59e68ec528665f66f2c07ad13621ff966258cb",
+      "tape_sha256": "1c47cda8d44731eab04ab5d5fbf5be2a75e1c8349c0f5416e19b0132ec51e61a",
+      "checks": [
+        "finished-statement-INK-leaks-into-footer",
+        "permanent-colours-unchanged-by-drawing",
+        "footer-keeps-permanent-white",
+        "grid-drawn-in-bright-green",
+        "cross-and-win-line-keep-temporary-colours",
+        "stored-line-identity",
+        "quit"
+      ],
+      "captures": {
+        "board.png": "9c37130305e8fe1d1a27e47e93a559efa5c0a3d75d27c879ec408f2731c4059a",
+        "finished-board.png": "d32521f70e8917cf2818018b0c869724f8680859886d2ada7803d42aa8cac792",
+        "finished-win.png": "4fe6b1eeae8e6f9b9fb6ce9b58a0b07f2398aea73a08890fa7a9e1c60437daee",
+        "win.png": "47e91b7f26f166bd402772326e1a6fd422aecf557d0096515021607f64c76b24"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      },
+      "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30"
     }
   ],
-  "execution_checks": 101,
-  "final_source_identical": true,
-  "limits": "Native acceptance applies to the final game. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
+  "execution_checks": 108,
+  "finished_matches_prototype": true,
+  "final_checkpoint": "colours",
+  "limits": "Native acceptance applies to the finished checkpoint, which matches the prototype; the colours checkpoint after it changes only how colour is applied, with emulator evidence. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
 }

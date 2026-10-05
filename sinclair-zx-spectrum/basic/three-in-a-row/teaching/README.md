@@ -1,9 +1,12 @@
 # Three in a Row teaching checkpoints
 
-Eight stock 48K PAL Sinclair BASIC programs develop the native-accepted game.
-The ten lessons use `board`, `place`, `turns`, `results`, `reply`, `tactics`,
-`policy`, then reuse `policy` for the fork, add `finished`, and reuse that for
-saving. `finished/three.bas` is byte-identical to the accepted prototype.
+Nine stock 48K PAL Sinclair BASIC programs develop the game.
+The eleven lessons use `board`, `place`, `turns`, `results`, `reply`, `tactics`,
+`policy`, then reuse `policy` for the fork, add `finished`, reuse that for
+saving, and end with `colours`. `finished/three.bas` is byte-identical to the
+accepted prototype. `colours/three.bas` is the final program: it replaces the
+dim blue grid with green and keeps every drawing colour temporary, so only
+lines 10 and 8000 change the permanent colours.
 
 `checkpoints.json` records exact additions, replacements and deletions between
 programs. `changes.bas` contains ordinary lines to enter, with deletions stated
@@ -35,7 +38,16 @@ adds immediate wins and blocks; `policy` adds positional preferences. These
 programs have no session tally and always restart with X. The finished game
 introduces a title, tally and alternating starters.
 
-The final game was accepted after human play; the intermediate stages have
+The `colours` check first plays the fork (1, 8, 7, 4) on the `finished` tape and
+asserts the leak it teaches: the grid and the permanent colours (`ATTR P`,
+23693) are blue after the board is drawn, and yellow after the winning line,
+so line 5060's footer prints in yellow. It then plays the same round on the
+`colours` tape and asserts that the permanent colours stay BRIGHT white on
+black, the footer is white, the grid is green, and the cross and winning line
+keep their own colours. `audit.py` also checks the listings: only lines 10 and
+8000 of `colours` contain a colour statement, against six lines in `finished`.
+
+The `finished` game was accepted after human play; `colours` changes only how colour is applied and has emulator evidence; the intermediate stages have
 emulator evidence, not independent learner testing or original-hardware timing.
 Native feedback was that it works well and mostly produces draws. That is play
 feedback, not a measured outcome frequency or an unbeatable-policy claim.
