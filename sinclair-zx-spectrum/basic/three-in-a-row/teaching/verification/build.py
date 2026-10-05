@@ -28,4 +28,7 @@ if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--only');p.add_argument('--jobs',type=int,default=1);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
  items=json.loads((ROOT/'checkpoints.json').read_text());items=[i for i in items if not a.only or i['name']==a.only]
  with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as pool:records=list(pool.map(lambda item:build(item,a.emulator,out),items))
- (out/'builds.json').write_text(json.dumps(records,indent=2)+'\n')
+ # --only rebuilds one checkpoint; keep the other checkpoints' records.
+ kept=[r for r in json.loads((out/'builds.json').read_text()) if r['name']!=a.only] if a.only and (out/'builds.json').exists() else []
+ order=[i['name'] for i in json.loads((ROOT/'checkpoints.json').read_text())]
+ (out/'builds.json').write_text(json.dumps(sorted(kept+records,key=lambda r:order.index(r['name'])),indent=2)+'\n')
