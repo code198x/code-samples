@@ -4,8 +4,8 @@
   "checkpoints": [
     {
       "name": "room",
-      "source_sha256": "5e2531c772343f571942b5a4920d9917d96e16c50d6415c6e0fd03c0e8fe9b01",
-      "tape_sha256": "80bc237a72e1eb358f48e61627cd266ec4a368ff010675fbc4919656496a3388",
+      "source_sha256": "2d152c528eaf5a7af3362e4968b740f8b2c502daed8c02fd94b09e30285b1149",
+      "tape_sha256": "e1da4c8fdabc0e05b1e6d940497506b54677b0af02bea9182deeee6773588cd3",
       "checks": [
         "fresh-tape-room-display",
         "stored-token-identity"
@@ -20,15 +20,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     },
     {
       "name": "map",
-      "source_sha256": "115a8b88320fbfca2d9dd9cfe3e563f9e30be5835fa0c211db17040a67eea846",
-      "tape_sha256": "10efdecc312a161255fae3bff951bf41f791b23940fec7efc36c693f703b3677",
+      "source_sha256": "79b6c272917f56e02b26db002f7e82cb15cc3ec01cd12fd0363c577be8762152",
+      "tape_sha256": "2051a867178faeddfd351c719b5cdd10e802bf2fa009e472ca97488105a4e5b4",
       "checks": [
         "fresh-tape-room-display",
         "stored-token-identity",
@@ -44,15 +44,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     },
     {
       "name": "walk",
-      "source_sha256": "31cc272c4542e775a576f26abebd5fd17c026e981f90e7dc0860d79b63a4e4dd",
-      "tape_sha256": "07047a6b3491af046d0c629654d9c89760cedb0c0267b694c0239c6048d04cc2",
+      "source_sha256": "2b9e49b2023a903a0be6076b2f4491b0ace6752aea6a8602031d2dd3c41a7f01",
+      "tape_sha256": "dc80b83c196bc0e939fe578c838c8a5092767347cd19145f0c3c179967f68e00",
       "checks": [
         "fresh-tape-room-display",
         "stored-token-identity",
@@ -76,15 +76,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     },
     {
       "name": "treasure",
-      "source_sha256": "928d1267157d12308461975488e86516701689f6bddbdab8ee282a832f5ddbc1",
-      "tape_sha256": "f03e4d306d2979a7016d710a808b818375a101814f7f1338ffbbbac8f1f2cc55",
+      "source_sha256": "649973678bf2930aca1f409939e8bdaa9c816167cbde5653a0d570f74a9a72b0",
+      "tape_sha256": "3f95058513e5a607925d236d106531d1882236e571d5e5444ff03f9fde3f738d",
       "checks": [
         "fresh-tape-room-display",
         "stored-token-identity",
@@ -112,15 +112,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     },
     {
       "name": "pit",
-      "source_sha256": "fb4345ecca9926b36f83d27c9fc431934f9eb861b67d489a99cc38a8aed0c69b",
-      "tape_sha256": "b69611e89eeed13663c7b39cc291ce9748234a49514042e4d5981ab558ee6615",
+      "source_sha256": "bb9106e621f6499bd7edece6b4a951ec884d98bb113a55b3584ec768c6696a73",
+      "tape_sha256": "4948811dbbe869dc3c44e177fe8a390d175e1f6faf83bbaa0f74c582b9e90976",
       "checks": [
         "fresh-tape-room-display",
         "stored-token-identity",
@@ -150,15 +150,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     },
     {
       "name": "patrol",
-      "source_sha256": "71b72a82792f1999e99f5654cc170de2c2c1ebefd532553592c0761d92b4e317",
-      "tape_sha256": "d9a30b1df5e695eb9b8b6e6d4750f8b008c46a9cf7366b61abcaacd885eeb3d8",
+      "source_sha256": "165e687a4c13325b89e692fe30d6759b91514bc716a5545946ce3fae54a16afc",
+      "tape_sha256": "0c963bef60d402d0e99633e6d424265f1002946cb24819bc855416d96f4cbf9e",
       "checks": [
         "fresh-tape-room-display",
         "stored-token-identity",
@@ -196,15 +196,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     },
     {
       "name": "expedition",
-      "source_sha256": "224dd39a5712f12dbafe7e80f963b03a905ac30f158e1e69bb66072c8b6f37fa",
-      "tape_sha256": "f99e2ea12220fd1635285ddab8a7c7c5d01f8ac6c295a0c3eb30a7c5dc26fa1b",
+      "source_sha256": "e1e7402f941e13329e37c84b50316fbf004e0a33d1e521515ea68f8c84425bd0",
+      "tape_sha256": "91943638b1e48bcd91d32fab16cb33b0463510253f9a2eda5b711d6a76d60fef",
       "checks": [
         "fresh-tape-room-display",
         "stored-token-identity",
@@ -242,15 +242,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     },
     {
       "name": "finished",
-      "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
-      "tape_sha256": "34b9b02215c527b92d254b928e0755a29af2ad7d2ac91299c87d10afa32c9aa1",
+      "source_sha256": "dc780a9b025dd4ecd53119db5b63456e73cbb5e24018e090826b771c899224f1",
+      "tape_sha256": "152f317f7dc650a675c9a5371acd22d2bd13fd6d79c657914fcf35bf47e933ea",
       "checks": [
         "fresh-tape-autostart-and-stored-identity",
         "title-ignored-key-and-quit",
@@ -289,13 +289,67 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
+    },
+    {
+      "name": "steady",
+      "source_sha256": "313c701d1c9e0d81a944974426ee8dd5a938fd6e25da60ed8176d22b2014946c",
+      "tape_sha256": "10c578b023cef2cf89f52e5773620008132e046e75564d9a26d0aa81e928f496",
+      "checks": [
+        "fresh-tape-autostart-and-stored-identity",
+        "title-ignored-key-and-quit",
+        "start-safe-entrance",
+        "ignored-keys-cost-no-turn",
+        "wall-costs-no-turn",
+        "held-direction-is-one-turn",
+        "legal-pit-path-and-directional-clues",
+        "pit-result-stable",
+        "legal-caught-path-and-directional-clues",
+        "caught-result-stable",
+        "legal-arrival-path-and-directional-clues",
+        "legal-escape-path-and-directional-clues",
+        "legal-win-path-and-directional-clues",
+        "win-result-stable",
+        "arrival-grace-then-wait-is-caught",
+        "quit-result",
+        "quit-play",
+        "uppercase-start-and-direction",
+        "reset-restores-treasures-and-patrol"
+      ],
+      "captures": {
+        "arrival.png": "d3de901c487012fc0c74f130e71fae670bb53d77ce8e80d4189e4477520acd95",
+        "caught.png": "5719fefb33944cffd7d3ed9d89ed6b77ce8c14868a7eb01ed01dffa1c2eed658",
+        "entrance.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+        "escape.png": "26532628f55f031ef0bb7c4663beae27fb756373fe77531f4cbbcd9e05e8b448",
+        "mid-turn-finished.png": "5381ceebcb4ce3fe7067e123285ae707f9c177d53490579cdb324b490424b454",
+        "mid-turn-steady.png": "7b83e22b1d2724b96818e99a9a828d392a57675643bc7de63b814ebe0aee09a6",
+        "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
+        "reset.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+        "title.png": "b01268338cb77f67346fd912256f1362bf10b7fccb4de7d0dca0972ea1066222",
+        "win.png": "ae669aab7db737c84fce8b3151949a6764cc032e19e3781578634d17bd281236"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      },
+      "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e"
     }
   ],
-  "execution_checks": 97,
+  "execution_checks": 116,
   "final_source_identical": true,
+  "flicker": {
+    "turns": 27,
+    "finished_flash_frames": 795,
+    "steady_flash_frames": 0
+  },
   "limits": "Native acceptance applies to the final game. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
 }

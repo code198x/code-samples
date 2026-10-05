@@ -1,6 +1,6 @@
 {
   "name": "walk",
-  "source_sha256": "31cc272c4542e775a576f26abebd5fd17c026e981f90e7dc0860d79b63a4e4dd",
+  "source_sha256": "2b9e49b2023a903a0be6076b2f4491b0ace6752aea6a8602031d2dd3c41a7f01",
   "checks": [
     "fresh-tape-room-display",
     "stored-token-identity",

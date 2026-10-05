@@ -1,6 +1,6 @@
 {
   "name": "patrol",
-  "source_sha256": "71b72a82792f1999e99f5654cc170de2c2c1ebefd532553592c0761d92b4e317",
+  "source_sha256": "165e687a4c13325b89e692fe30d6759b91514bc716a5545946ce3fae54a16afc",
   "checks": [
     "fresh-tape-room-display",
     "stored-token-identity",
@@ -266,5 +266,16 @@
   ],
   "configuration": "Stock 48K PAL, fresh tape load and ordinary keys",
   "direct_memory_writes": false,
-  "sampling_retries": []
+  "sampling_retries": [
+    {
+      "line": 310,
+      "reader_error": "(0, 1168, {'i': 9, 'j': 5, 'rm': 6, 'pit': 7, 'ci': 5, 'cr': 12, 'found': 1, 'turns': 2, 'v': 5, 'y': 14, 'dir': 3, 'dest': 6, 'm': 48, 't': 12, 'c': 8, 'd$': 'NSEW', 'e$': 'nsew', 'h$': 'YH\\x1c\\x00You recover a lost treas', 'u': 5.4640968301100656e-05})",
+      "resume_frames": 1
+    },
+    {
+      "line": 5090,
+      "reader_error": "(0, 1176, {'i': 9, 'j': 5, 'rm': 10, 'pit': 7, 'ci': 7, 'cr': 10, 'found': 1, 'turns': 5, 'v': 9, 'y': 7.306958195840707e-06, 'dir': 0, 'dest': 10, 'ending': 2, 'm': 48, 't': 12, 'c': 8, 'd$': 'NSEW', 'e$': 'nsew', 'h$': 'The creature catchesches '})",
+      "resume_frames": 1
+    }
+  ]
 }

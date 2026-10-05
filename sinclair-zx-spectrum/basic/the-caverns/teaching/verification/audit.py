@@ -32,5 +32,10 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  reports.append(dict(name=name,source_sha256=build['source_sha256'],tape_sha256=sha(out/'caverns.tap'),checks=result['checks'],captures={p.name:sha(p) for p in sorted(out.glob('*.png'))},server=build['server'],binary_sha256=build['binary_sha256']))
  previous=lines;previous_stored=stored
 assert (ROOT/'finished/caverns.bas').read_bytes()==(ROOT.parent/'prototype/caverns.bas').read_bytes()
-manifest=dict(status='passed',configuration='Stock 48K PAL; executable identities in each checkpoint record',checkpoints=reports,execution_checks=sum(len(r['checks']) for r in reports),final_source_identical=True,limits='Native acceptance applies to the final game. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures.')
-(ROOT/'verification/evidence/manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('PASS',len(reports),'checkpoints;',manifest['execution_checks'],'checks; transitions, TAPs, tokens and final identity')
+# steady overprints instead of clearing: its turns never blank a line that
+# stays, finished's do (the control), and both end every action on the same picture.
+flicker=json.loads((ROOT/'verification/evidence/steady/flicker.json').read_text())
+for name in ('finished','steady'):assert flicker['source_sha256'][name]==sha(ROOT/name/'caverns.bas'),name
+assert flicker['steady_flash_frames']==0 and flicker['finished_flash_frames']>0 and not flicker['direct_memory_writes']
+manifest=dict(status='passed',configuration='Stock 48K PAL; executable identities in each checkpoint record',checkpoints=reports,execution_checks=sum(len(r['checks']) for r in reports),final_source_identical=True,flicker=dict(turns=flicker['turns'],finished_flash_frames=flicker['finished_flash_frames'],steady_flash_frames=flicker['steady_flash_frames']),limits='Native acceptance applies to the final game. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures.')
+(ROOT/'verification/evidence/manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('PASS',len(reports),'checkpoints;',manifest['execution_checks'],'checks; transitions, TAPs, tokens and final identity;',flicker['finished_flash_frames'],'flash frames before steady, 0 after')

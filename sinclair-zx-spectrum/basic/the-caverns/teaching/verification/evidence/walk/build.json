@@ -1,9 +1,9 @@
 {
   "name": "walk",
   "source": "walk/caverns.bas",
-  "source_sha256": "31cc272c4542e775a576f26abebd5fd17c026e981f90e7dc0860d79b63a4e4dd",
-  "tape_sha256": "07047a6b3491af046d0c629654d9c89760cedb0c0267b694c0239c6048d04cc2",
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "source_sha256": "2b9e49b2023a903a0be6076b2f4491b0ace6752aea6a8602031d2dd3c41a7f01",
+  "tape_sha256": "dc80b83c196bc0e939fe578c838c8a5092767347cd19145f0c3c179967f68e00",
+  "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e",
   "server": {
     "capabilities": {
       "tools": {}
@@ -11,7 +11,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.25.0"
     }
   },
   "entry": "Fresh 48K ROM keyboard; SAVE \"caverns\" LINE 10; no injection"

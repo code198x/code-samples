@@ -1,6 +1,6 @@
 {
   "name": "map",
-  "source_sha256": "115a8b88320fbfca2d9dd9cfe3e563f9e30be5835fa0c211db17040a67eea846",
+  "source_sha256": "79b6c272917f56e02b26db002f7e82cb15cc3ec01cd12fd0363c577be8762152",
   "checks": [
     "fresh-tape-room-display",
     "stored-token-identity",
