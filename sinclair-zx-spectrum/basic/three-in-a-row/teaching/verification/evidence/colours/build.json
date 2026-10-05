@@ -1,0 +1,18 @@
+{
+  "name": "colours",
+  "source": "colours/three.bas",
+  "source_sha256": "f9910937daa687516c6e1c608c59e68ec528665f66f2c07ad13621ff966258cb",
+  "tape_sha256": "1c47cda8d44731eab04ab5d5fbf5be2a75e1c8349c0f5416e19b0132ec51e61a",
+  "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30",
+  "server": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "emu198x-spectrum",
+      "version": "0.25.0"
+    }
+  },
+  "entry": "Fresh 48K ROM keyboard; SAVE \"three\" LINE 10; no injection"
+}

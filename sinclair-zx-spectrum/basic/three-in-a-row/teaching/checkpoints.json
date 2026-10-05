@@ -214,5 +214,18 @@
       4930,
       4940
     ]
+  },
+  {
+    "name": "colours",
+    "source": "colours/three.bas",
+    "add": [],
+    "replace": [
+      1030,
+      1040,
+      2050,
+      2100,
+      6040
+    ],
+    "delete": []
   }
 ]

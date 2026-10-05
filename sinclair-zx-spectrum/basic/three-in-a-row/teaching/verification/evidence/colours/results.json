@@ -1,0 +1,16 @@
+{
+  "name": "colours",
+  "source_sha256": "f9910937daa687516c6e1c608c59e68ec528665f66f2c07ad13621ff966258cb",
+  "checks": [
+    "finished-statement-INK-leaks-into-footer",
+    "permanent-colours-unchanged-by-drawing",
+    "footer-keeps-permanent-white",
+    "grid-drawn-in-bright-green",
+    "cross-and-win-line-keep-temporary-colours",
+    "stored-line-identity",
+    "quit"
+  ],
+  "configuration": "48K PAL; fresh tape load; ordinary key play",
+  "direct_memory_writes": false,
+  "diagnostics": "Winning-line and priority fixtures entered as ordinary DIM/LET after STOP; not public captures."
+}
