@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "source_sha256": "76bf5ba43f7a2782b98d99d60b47d8f968d6dfa9c4f0427de56298c0db416350",
+  "tape_sha256": "2d7acd031e28994fbe0daf45b347733e009534cf04135abb47f7353591cea8e7",
+  "checks": [
+    "normal-frame-thrust-coast-and-flight-quit",
+    "normal-frame-crash-retry-and-quit",
+    "normal-frame-two-axis-docking",
+    "normal-frame-docked-result-quit"
+  ]
+}

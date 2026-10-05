@@ -17,7 +17,7 @@ class Frames:
  def load(self):
   self.m.call('load_media',slot='tape-1',kind='tape',path=str(self.out/'drift.tap'));self.m.statement('LOAD ""');self.m.call('media_transport',slot='tape-1',transport='start')
   if self.item['kind']=='drawing':self.wait('STOP')
-  elif self.item['kind']=='finished':
+  elif self.item['kind'] in ('finished','steady'):
    self.wait('S starts.')
    if not any(c['name']=='instructions' for c in self.captures):self.capture('instructions')
    self.m.call('press_key',key='s',hold_frames=4);self.m.frames(200)
@@ -75,7 +75,7 @@ class Frames:
    self.m.call('press_key',key='r',hold_frames=80);self.m.frames(200);s=state(self.m)
    assert s['x']==48 and s['y']==56 and s['vx']==s['vy']==0
    self.m.call('press_key',key='q',hold_frames=100);self.wait('Finished. RUN');self.checks.append('normal-frame-crash-retry-and-quit')
-  if kind in ('docking','finished'):
+  if kind in ('docking','finished','steady'):
    self.m.close();self.m=Spectrum(self.exe,self.out);self.load();self.dock()
   (self.out/'captures.json').write_text(json.dumps(self.captures,indent=2)+'\n')
   (self.out/'frames.json').write_text(json.dumps(dict(status='passed',source_sha256=sha(ROOT/self.item['source']),tape_sha256=sha(self.out/'drift.tap'),checks=self.checks),indent=2)+'\n')

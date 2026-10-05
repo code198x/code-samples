@@ -4,7 +4,7 @@ import argparse,json
 from pathlib import Path
 from check import Review,state,sha,ROOT
 from entry import Spectrum
-p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();r=Review(a.emulator,a.output.resolve())
+p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--source',type=Path,default=ROOT/'drift.bas',help='listing the tape was built from');a=p.parse_args();r=Review(a.emulator,a.output.resolve())
 def load():
  r.m.call('load_media',slot='tape-1',kind='tape',path=str(r.out/'drift.tap'));r.m.statement('LOAD ""');r.m.call('media_transport',slot='tape-1',transport='start');r.wait_text('S starts.')
 def quit_game():
@@ -30,5 +30,5 @@ try:
   if crash:break
  assert inside and crash;r.record('fast-passage-through-dock-does-not-win')
  # Result-screen exit is checked with ordinary frame execution in timing.py.
- (r.out/'controls.json').write_text(json.dumps(dict(status='passed',source_sha256=sha(ROOT/'drift.bas'),tape_sha256=sha(r.out/'drift.tap'),checks=r.checks,trace=r.trace),indent=2)+'\n')
+ (r.out/'controls.json').write_text(json.dumps(dict(status='passed',source_sha256=sha(a.source),tape_sha256=sha(r.out/'drift.tap'),checks=r.checks,trace=r.trace),indent=2)+'\n')
 finally:r.m.close()

@@ -48,5 +48,13 @@
       8
     ],
     "kind": "finished"
+  },
+  {
+    "name": "steady",
+    "source": "steady/drift.bas",
+    "lessons": [
+      9
+    ],
+    "kind": "steady"
   }
 ]
