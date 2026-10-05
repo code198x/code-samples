@@ -40,12 +40,15 @@ start:
             lea     wave16,a0
             moveq   #(wave16_end-wave16)/2,d0
             move.w  #212,d1
+            moveq   #64,d2
             bsr     play_sample
             bsr     wait_tone
 
             ; --- 3. Twice the samples per cycle at period 212: back down ---
             lea     wave32,a0
             moveq   #(wave32_end-wave32)/2,d0
+            move.w  #212,d1
+            moveq   #64,d2
             bsr     play_sample
             bsr     wait_tone
 
