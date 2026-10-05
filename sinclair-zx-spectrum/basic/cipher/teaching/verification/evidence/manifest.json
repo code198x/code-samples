@@ -4,7 +4,7 @@
   "checkpoints": [
     {
       "name": "reveal",
-      "source_sha256": "1fe22c14092dee96145e998e16ca62d3ae4868694f12d8e1c3834d077c7ff2ed",
+      "source_sha256": "50a650ab439c7e3d7cc17830be32dff10773c32eb4c53927a7a1da89c55d92f2",
       "tape_sha256": "784f0c0983589c00b91ca938c15ca9d19e24ebafa4b833520410ad0932297a93",
       "checks": [
         "fresh-tape-autostart-stored-identity",
@@ -21,15 +21,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30"
     },
     {
       "name": "guess",
-      "source_sha256": "b2600c0af1d419f4707bfb3fea95fd1c5dc03504cce97999e4c2a0c85cb8040e",
-      "tape_sha256": "7debc8a2fa3d499244c5547ed5634de4605188bf7c1911381de08591ac063a80",
+      "source_sha256": "6b19b9cf1f839b5e384d2ddd51a0ba43aa104216f24ff2563b56b48f608f3fa1",
+      "tape_sha256": "94bbc3eb8be223bcca0e5392435148733e8287ae3426274f5a3271d75cc21738",
       "checks": [
         "fresh-tape-autostart-stored-identity",
         "nonletters-ignored",
@@ -51,15 +51,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30"
     },
     {
       "name": "rules",
-      "source_sha256": "9e66a82de32b722bdf6829a8fcf0a5917645dbad1dd8b3e19433fc0160889222",
-      "tape_sha256": "7f0d487edfa79e449b37c0e5239929bf63911ac9a36d75569cca381e95270e35",
+      "source_sha256": "24a51af622143dc1d96b93c546273ba9a4eb9320f7e29e67dfc4bbf4c6239c19",
+      "tape_sha256": "a5b8a628f0e88c8d82bd17813dc251be7af298129ad423d0901647c70bc2bf5d",
       "checks": [
         "fresh-tape-autostart-stored-identity",
         "nonletters-ignored",
@@ -90,15 +90,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30"
     },
     {
       "name": "board",
-      "source_sha256": "c85b4a00846c90a6c999d82e55fe18debba79951600ce246cd5fa133a6cfafaf",
-      "tape_sha256": "4e3f8364c5599d6d7fda3990bf2bee546c993345a56d157e1924a3de2ea958d0",
+      "source_sha256": "400d60d7a2b34f8494c80fa65ad8d25deac88ce53b093ec8cec8de3deb27cee7",
+      "tape_sha256": "adf31bd83819dbc6a3dda6d1a28ef21e4581ff3932c22c1726ca4e45aca4f6aa",
       "checks": [
         "fresh-tape-autostart-stored-identity",
         "nonletters-ignored",
@@ -130,15 +130,15 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30"
     },
     {
       "name": "finished",
-      "source_sha256": "bce89bd8bda7895b563a581c2035bb3a1ecd7b638afef93a8e29523fd275f41d",
-      "tape_sha256": "59341e18f9eab02dfa59cbccf6fbc40f44d6999a9c03cb05101de5061d853093",
+      "source_sha256": "c382a72d2418db8b153c4d3de599fa02e9286e29a1ffd8101aae685a59ba2b75",
+      "tape_sha256": "28db8c84cc9735263f55ef369a40e0d6795ed207c2d89d35451973444cf1716a",
       "checks": [
         "fresh-ROM-tape-autostart-and-token-identity",
         "title-invalid-key-and-quit",
@@ -175,13 +175,41 @@
         "protocolVersion": "2025-06-18",
         "serverInfo": {
           "name": "emu198x-spectrum",
-          "version": "0.24.0"
+          "version": "0.25.0"
         }
       },
-      "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a"
+      "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30"
+    },
+    {
+      "name": "quit",
+      "source_sha256": "a3cc207f78f3226781cf227ec9274b818667fdfb03fd31f2bf2adc29bd296570",
+      "tape_sha256": "53753c0940dc241485e2786acf36eeadb3dfdbe9ec9be8a8b4358e9e5bdfb0ea",
+      "checks": [
+        "fresh-tape-autostart-stored-identity",
+        "title-quit-closes-with-zero-tally",
+        "result-quit-closes-with-session-tally",
+        "pause-quit-closes-with-session-tally-and-q-still-guesses",
+        "run-after-quit-starts-fresh"
+      ],
+      "captures": {
+        "farewell.png": "8df559f3bd9b08cd0f8f1fa9d47ddcc4c41af86bc6b2e0b1890f77c57c2386be",
+        "quit-title.png": "c437eee9812596f2f376f59756bef2e80d4d06b5d4b3bd2ddbff5a5d63517220",
+        "title.png": "f573c217c4c8000ab25134529ec555117f1b014dab1d43081acad9c54fa68dcc"
+      },
+      "server": {
+        "capabilities": {
+          "tools": {}
+        },
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {
+          "name": "emu198x-spectrum",
+          "version": "0.25.0"
+        }
+      },
+      "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30"
     }
   ],
-  "execution_checks": 57,
+  "execution_checks": 62,
   "final_source_identical": true,
   "limits": "The final game matches the prototype authorised for teaching. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures."
 }

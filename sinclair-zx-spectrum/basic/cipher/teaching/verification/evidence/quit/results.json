@@ -1,5 +1,5 @@
 {
-  "source_sha256": "50a650ab439c7e3d7cc17830be32dff10773c32eb4c53927a7a1da89c55d92f2",
+  "source_sha256": "a3cc207f78f3226781cf227ec9274b818667fdfb03fd31f2bf2adc29bd296570",
   "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30",
   "server": {
     "capabilities": {
@@ -14,20 +14,11 @@
   "configuration": "Fresh ROM tape on stock 48K PAL",
   "checks": [
     "fresh-tape-autostart-stored-identity",
-    "both-matching-positions",
-    "single-and-missing-letter-source-experiments"
+    "title-quit-closes-with-zero-tally",
+    "result-quit-closes-with-session-tally",
+    "pause-quit-closes-with-session-tally-and-q-still-guesses",
+    "run-after-quit-starts-fresh"
   ],
-  "fixtures": [
-    {
-      "edit": "L",
-      "mask": "____L_",
-      "matches": 1
-    },
-    {
-      "edit": "Z",
-      "mask": "______",
-      "matches": 0
-    }
-  ],
+  "fixtures": [],
   "direct_memory_writes": false
 }

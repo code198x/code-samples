@@ -18,6 +18,7 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  for s in changes:patched[int(s.split()[0])]=s
  assert patched==lines
  for n in re.findall(r'\b(?:GO TO|GO SUB|RESTORE) (\d+)',re.sub(r'"[^"]*"','',source.read_text())):assert int(n) in lines
+ if name=='quit':assert [n for n,s in lines.items() if 'STOP' in re.sub(r'"[^"]*"','',s)]==[8550],'every quit must reach the one closing routine'
  stored={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};assert set(stored)==set(lines)
  for n in lines.keys()&previous.keys():
   if lines[n]==previous[n]:assert stored[n]==previous_stored[n],(name,n)
@@ -33,4 +34,4 @@ for item in json.loads((ROOT/'checkpoints.json').read_text()):
  previous=lines;previous_stored=stored
 assert (ROOT/'finished/cipher.bas').read_bytes()==(ROOT.parent/'prototype/cipher.bas').read_bytes()
 manifest=dict(status='passed',configuration='Stock 48K PAL; executable identities in each checkpoint record',checkpoints=reports,execution_checks=sum(len(r['checks']) for r in reports),final_source_identical=True,limits='The final game matches the prototype authorised for teaching. Intermediate stages have emulator execution evidence, not independent learner review. Explicit ROM-command diagnostics are separate from legal play captures.')
-(ROOT/'verification/evidence/manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('PASS',len(reports),'checkpoints;',manifest['execution_checks'],'checks; transitions, TAPs, tokens and final identity')
+(ROOT/'verification/evidence/manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('PASS',len(reports),'checkpoints;',manifest['execution_checks'],'checks; transitions, TAPs, tokens, finished identity and one STOP')
