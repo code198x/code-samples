@@ -5,7 +5,7 @@ from entry import Spectrum,ROOT
 from model import plan,resolve,choose,travellers
 sys.path.insert(0,str(ROOT.parents[1]/'tail-chase/prototype/verification'))
 from verify import state,line
-p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();m=Spectrum(a.emulator,out);checks=[];trials=[];events=[];retries=0
+p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--source',type=Path,default=ROOT/'yearfall.bas',help='listing the tape was built from; a later teaching checkpoint of the same game');a=p.parse_args();out=a.output.resolve();m=Spectrum(a.emulator,out);checks=[];trials=[];events=[];retries=0
 
 def record(name):checks.append(name);print('PASS',name,flush=True)
 def wait(text):
@@ -166,7 +166,7 @@ try:
  m.statement('RUN');wait('S starts.');m.key('caps','s');ready();m.key('caps','b');wait('DELETE erases.');m.key('caps','x');ready();m.key('caps','s');wait('DELETE erases.');m.key('caps','x');ready();m.key('caps','r');ready();record('uppercase-menu-and-reset')
  key('q');stop();record('quit-planning')
  m.statement('RUN');wait('S starts.');key('s');ready();commit();key('q');stop();record('quit-report')
- (out/'results.json').write_text(json.dumps({'source_sha256':hashlib.sha256((ROOT/'yearfall.bas').read_bytes()).hexdigest(),'binary_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'configuration':'Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200','checks':checks,'trials':trials,'events':events,'sampling_retries':retries,'direct_memory_writes':False,'server':m.server},indent=2)+'\n')
+ (out/'results.json').write_text(json.dumps({'source_sha256':hashlib.sha256(a.source.read_bytes()).hexdigest(),'binary_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'configuration':'Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200','checks':checks,'trials':trials,'events':events,'sampling_retries':retries,'direct_memory_writes':False,'server':m.server},indent=2)+'\n')
 except Exception:
  (out/'failure.json').write_text(json.dumps({'line':line(m),'screen':m.screen(),'checks':checks,'trials':trials,'events':events},indent=2)+'\n');raise
 finally:m.close()
