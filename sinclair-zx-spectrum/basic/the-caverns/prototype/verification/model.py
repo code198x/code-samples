@@ -10,8 +10,8 @@ for line in source.splitlines():
   row=next(csv.reader([line.split('DATA ',1)[1]],skipinitialspace=True));rooms[(n-9500)//10+1]=dict(name=row[0],description=row[1],exits=list(map(int,row[2:])))
 PATROL=tuple(map(int,next(line for line in source.splitlines() if line.startswith('9800 DATA ')).split('DATA ',1)[1].split(',')))
 TREASURES=(6,10,12);START=(1,2,7);KEYS='nsew '
-assert '240 LET t(6) = 1: LET t(10) = 1: LET t(12) = 1' in source
-assert '250 LET rm = 1: LET pit = 7: LET ci = 3: LET cr = c(ci): LET found = 0: LET turns = 0' in source
+assert '240 LET t(6)=1: LET t(10)=1: LET t(12)=1' in source
+assert '250 LET rm=1: LET pit=7: LET ci=3: LET cr=c(ci): LET found=0: LET turns=0' in source
 def step(s,key):
  rm,ci,mask=s;cr=PATROL[ci];dest=rm if key==' ' else rooms[rm]['exits'][KEYS.index(key)]
  if not dest:return s,'wall'
