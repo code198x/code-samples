@@ -1,9 +1,9 @@
 {
   "name": "reveal",
   "source": "reveal/cipher.bas",
-  "source_sha256": "1fe22c14092dee96145e998e16ca62d3ae4868694f12d8e1c3834d077c7ff2ed",
+  "source_sha256": "50a650ab439c7e3d7cc17830be32dff10773c32eb4c53927a7a1da89c55d92f2",
   "tape_sha256": "784f0c0983589c00b91ca938c15ca9d19e24ebafa4b833520410ad0932297a93",
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30",
   "server": {
     "capabilities": {
       "tools": {}
@@ -11,7 +11,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.25.0"
     }
   },
   "entry": "Fresh 48K ROM keyboard; SAVE \"cipher\" LINE 10; no injection"

@@ -1,8 +1,9 @@
 # Cipher teaching checkpoints
 
-Six lessons use five independently runnable stock 48K PAL Sinclair BASIC
+Seven lessons use six independently runnable stock 48K PAL Sinclair BASIC
 programs. The finished source is byte-identical to the prototype authorised for
-teaching. The saving lesson reuses that source.
+teaching. The saving lesson reuses that source, and the seventh lesson's quit
+checkpoint is the game's endpoint.
 
 | Checkpoint | Behaviour |
 |---|---|
@@ -11,10 +12,12 @@ teaching. The saving lesson reuses that source.
 | rules | Seven distinct misses, free repeats, scores, pause and results; fixed word |
 | board | Spaced word, mistake markers, stored alphabet and selective updates |
 | finished | Complete title, 24-word DATA list, random selection and replay |
+| quit | Every Q goes to one closing routine: tally, restart hint, one STOP at 8550 |
 
 `checkpoints.json` records exact additions, replacements and deletions, while
 `changes.bas` contains the ordinary lines to enter. The first program is new;
-the sixth lesson adds no source lines. The audit reconstructs every transition.
+the sixth lesson adds no source lines. The audit reconstructs every transition,
+and checks that the quit checkpoint has exactly one `STOP`, at 8550.
 
 ## Reproduce
 
@@ -29,10 +32,15 @@ python3 verification/audit.py
 ```
 
 Each build enters complete source through keyword keys in a fresh ROM and saves
-`SAVE "cipher" LINE 10`. Checks load that tape in another process. Memory
+`SAVE "cipher" LINE 10`. `--only <name>` rebuilds one checkpoint and keeps the
+others' records in `builds.json`. Checks load that tape in another process. Memory
 observation is read-only. The first checkpoint's L/Z experiments edit the stated
 line through the ROM and restore it. Finished-game content coverage uses labelled
 ROM commands to select each DATA entry; captures are from ordinary play.
+The quit checks press Q on the title, at a result and from the pause menu, and
+require the same closing screen each time: the tally at that moment, nothing
+left from the board, and the report `9 STOP statement, 8550:1`. Run against the
+finished tape they fail at the first quit, which reports `100:2`.
 
 The evidence distinguishes emulator execution from independent learner success
 or original-hardware timing. Current publication status is maintained in the

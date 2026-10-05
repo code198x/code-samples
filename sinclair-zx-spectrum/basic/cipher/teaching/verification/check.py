@@ -1,4 +1,4 @@
-"""Verify intermediate Cipher tapes; final tape uses the prototype suite."""
+"""Verify intermediate Cipher tapes and the quit routine; the finished tape uses the prototype suite."""
 import argparse,concurrent.futures,hashlib,json,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -25,17 +25,47 @@ def check(name,exe,output):
  def capture(label):m.call('save_screenshot',path=str(out/(label+'.png')))
  def stop():return wait('9 STOP statement',True)
  def guess(k):key(k);return ready()
+ def waiting():
+  # Press only once the gate at 8010 has passed: a key that arrives while 8010
+  # waits for release is swallowed, and the next poll would miss the guess.
+  for _ in range(3000):
+   if line(m)==8020:return
+   m.frames(1)
+  raise AssertionError((name,'gate',line(m),m.screen()))
+ def finish(letters):
+  for c in letters:
+   waiting();before=snapshot()['t$'];key(c.lower())
+   s=wait('SPACE next.' if c==letters[-1] else 'ENTER pauses.');assert s['t$']==before+c,(before,c,s['t$'])
+  return s
+ def win(s):return finish(sorted(set(s['w$'])))
+ def lose(s):return finish([c for c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' if c not in s['w$']][:7])
+ def farewell(won,lost):
+  # Whichever menu quits: one closing screen with the tally and a restart hint,
+  # nothing left from the board, and the ROM report naming the routine's STOP.
+  s=wait('9 STOP statement, 8550:1',True);rows=[r.rstrip() for r in m.screen() if r.strip()]
+  assert rows==['          C I P H E R','   Thanks for playing.','   Words won:  '+str(won),'   Words lost: '+str(lost),'   RUN plays again.','9 STOP statement, 8550:1'],rows
+  assert s['wins']==won and s['losses']==lost
+ def quit_routine():
+  wait('S starts.');assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};capture('title');record('fresh-tape-autostart-stored-identity')
+  waiting();key('q');farewell(0,0);capture('quit-title');record('title-quit-closes-with-zero-tally')
+  m.statement('RUN');wait('S starts.');waiting();key('s');s=win(ready());assert s['wins']==1;waiting();key(' ');s=lose(ready());assert s['losses']==1
+  waiting();key('q');farewell(1,1);capture('farewell');record('result-quit-closes-with-session-tally')
+  m.statement('RUN');wait('S starts.');waiting();key('s');win(ready());waiting();key(' ');s=ready();assert s['round']==2
+  waiting();s=guess('q');assert 'Q' in s['t$'];waiting();key('enter');wait('PAUSED');waiting();key('q');farewell(1,0);record('pause-quit-closes-with-session-tally-and-q-still-guesses')
+  m.statement('RUN');wait('S starts.');waiting();key('s');s=ready();assert (s['round'],s['wins'],s['losses'],s['left'])==(1,0,0,7);record('run-after-quit-starts-fresh')
  try:
   m.call('load_media',slot='tape-1',kind='tape',path=str(out/'cipher.tap'));m.statement('LOAD ""');m.call('media_transport',slot='tape-1',transport='start')
-  s=stop() if name=='reveal' else ready()
-  assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};capture('initial');record('fresh-tape-autostart-stored-identity')
+  if name=='quit':quit_routine()
+  else:
+   s=stop() if name=='reveal' else ready()
+   assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};capture('initial');record('fresh-tape-autostart-stored-identity')
   if name=='reveal':
    assert s['w$']=='BOTTLE' and s['d$']=='__TT__' and s['found']==2;record('both-matching-positions')
    for g,mask,count in [('L','____L_',1),('Z','______',0)]:
     m.statement('200 LET w$="BOTTLE": LET g$="'+g+'"');m.statement('RUN');s=stop();assert s['d$']==mask and s['found']==count
     fixtures.append({'edit':g,'mask':mask,'matches':count})
    m.statement('200 LET w$="BOTTLE": LET g$="T"');m.statement('RUN');stop();record('single-and-missing-letter-source-experiments')
-  else:
+  elif name!='quit':
    assert s['d$']=='______'
    for k in ('1',' ','0'):key(k);assert ready()['d$']=='______'
    m.key('caps','0');assert ready()['d$']=='______';record('nonletters-ignored')
@@ -69,5 +99,5 @@ def check(name,exe,output):
  finally:m.close()
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--jobs',type=int,default=1);p.add_argument('--only');a=p.parse_args()
- names=[n for n in ('reveal','guess','rules','board') if not a.only or n==a.only]
+ names=[n for n in ('reveal','guess','rules','board','quit') if not a.only or n==a.only]
  with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as pool:list(pool.map(lambda n:check(n,a.emulator,a.output.resolve()),names))

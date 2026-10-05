@@ -1,6 +1,6 @@
 {
-  "source_sha256": "b2600c0af1d419f4707bfb3fea95fd1c5dc03504cce97999e4c2a0c85cb8040e",
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "source_sha256": "6b19b9cf1f839b5e384d2ddd51a0ba43aa104216f24ff2563b56b48f608f3fa1",
+  "binary_sha256": "b2a9e9a131b3ffe2edec3beb33cecfe9014bfafae168ab2033586ea09ff37f30",
   "server": {
     "capabilities": {
       "tools": {}
@@ -8,7 +8,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.25.0"
     }
   },
   "configuration": "Fresh ROM tape on stock 48K PAL",
