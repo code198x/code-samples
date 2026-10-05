@@ -7,6 +7,8 @@ sys.path.insert(0,str(ROOT.parent/'prototype/verification'))
 from bands import Bands, clue, CELLS
 from entry import Spectrum
 from verify import sha
+sys.path.insert(0,str(ROOT/'verification'))
+from keys import Keys
 
 def unspaced(program):
     """Stored lines without the spaces outside strings and number forms.
@@ -73,6 +75,7 @@ class Teaching(Bands):
         rom=[]
         for address in range(0,16384,128):rom+=self.machine.call('memory_read',addr=address,len=128)['bytes']
         for item in self.roster:
+            if item['name']=='keys':continue
             self.edit(item);name=item['name'];self.machine.statement('RUN')
             if name in ['row','board','array-lab']:
                 self.wait('9 STOP')
@@ -122,7 +125,23 @@ class Teaching(Bands):
         self.machine.call('load_media',slot='tape-1',kind='tape',path=str(baseline));self.machine.statement('LOAD "sonarband"');self.machine.call('media_transport',slot='tape-1',transport='start');self.wait('ENTER to search, Q quits:',limit=16000)
         assert unspaced(self.machine.program_lines())==unspaced(stored)
         self.record('stored-program-identical-to-accepted-game-apart-from-stored-spaces',baseline_sha256=sha(baseline))
-        result={'status':'passed','server':self.machine.server,'binary_sha256':sha(Path(self.executable)),'rom_sha256':hashlib.sha256(bytes(rom)).hexdigest(),'configuration':'48K Spectrum PAL; source entered through ROM keyboard events','sources':self.sources,'tape_sha256':sha(tape),'checks':self.cases,'limits':'Scripted execution and inspected captures. No new human play, audio or original-hardware claim.'}
+        # Lesson 10 starts from the saved lesson 8 tape, edits it through the
+        # ROM editor and plays it by single key presses. Keys shares this run's
+        # machine, captures and check list.
+        self.machine.close();self.machine=Spectrum(self.executable,self.output)
+        self.machine.call('load_media',slot='tape-1',kind='tape',path=str(tape));self.machine.statement('LOAD "sonarteach"');self.machine.call('media_transport',slot='tape-1',transport='start');self.wait('ENTER to search, Q quits:',limit=16000)
+        keyed=Keys.__new__(Keys);keyed.__dict__=self.__dict__
+        self.quit();self.edit(next(item for item in self.roster if item['name']=='keys'))
+        self.machine.statement('RUN');keyed.check_keys()
+        stored=self.machine.program_lines();assert 10 not in stored
+        self.machine.statement('SAVE "sonar" LINE 10');self.machine.enter();self.wait('0 OK',limit=16000)
+        keys_tape=self.output/'sonar-keys.tap';self.machine.call('save_tape',path=str(keys_tape));self.machine.close()
+        self.machine=Spectrum(self.executable,self.output)
+        self.machine.call('load_media',slot='tape-1',kind='tape',path=str(keys_tape));self.machine.statement('LOAD "sonar"');self.machine.call('media_transport',slot='tape-1',transport='start')
+        keyed.check_keys(capture=False,limit=16000)
+        assert self.machine.program_lines()==stored
+        self.record('keys-fresh-load-from-LINE-10-play-retry-exit')
+        result={'status':'passed','server':self.machine.server,'binary_sha256':sha(Path(self.executable)),'rom_sha256':hashlib.sha256(bytes(rom)).hexdigest(),'configuration':'48K Spectrum PAL; source entered through ROM keyboard events','sources':self.sources,'tape_sha256':sha(tape),'keys_tape_sha256':sha(keys_tape),'checks':self.cases,'limits':'Scripted execution and inspected captures. No new human play, audio or original-hardware claim.'}
         (self.output/'results.json').write_text(json.dumps(result,indent=2)+'\n')
 
 if __name__=='__main__':

@@ -25,7 +25,17 @@ memory=change(counted,{27:'LET lr=0: LET lc=0: LET pr=0: LET pc=0',160:'LET g(pr
 # roster explicitly says to save the game, NEW, inspect, then reload the game.
 array={10:'DIM g(8,8)',20:'PRINT g(1,1)',30:'FOR r=1 TO 8',40:'FOR c=1 TO 8',50:'LET g(r,c)=-1',60:'NEXT c',70:'NEXT r',80:'PRINT g(1,1);" ";g(8,8)',90:'LET g(1,2)=3',100:'PRINT g(1,2);" ";g(2,1)',110:'STOP'}
 array={n:f'{n:>4} {s}' for n,s in array.items()}
-items=[(1,1,'row',row),(1,2,'board',board),(2,1,'row-input',row_input),(2,2,'probe',p2),(3,1,'distance',p3),(4,1,'bands',latest),(5,1,'array-lab',array),(5,2,'memory',memory),(6,1,'count',counted),(7,1,'round',fixed),(8,1,'random',final)]
+# Lesson 10 reads each choice as one key press with INKEY$, so the lower
+# screen never takes typed input and the scroll workaround (3015, 6010) goes.
+# Line 10 (LET stage=6) is removed: nothing reads stage.
+keys=change(final,{100:'LET p$="Row": LET pl=0: GO SUB 3000: LET pr=v',110:'LET p$="Column": LET pl=1: GO SUB 3000: LET pc=v',
+ 3005:'IF pl=0 THEN PRINT #1;AT 1,0;"                    ";',3010:'PRINT #1;AT pl,0;p$;" (1-8, Q):   ";',3012:'GO SUB 3200',
+ 3045:'PRINT #1;AT pl,LEN p$+11;a$;',3200:'LET a$=INKEY$: IF a$="" THEN GO TO 3200',
+ 3210:'IF INKEY$<>"" THEN GO TO 3210',3220:'RETURN',5030:'PRINT AT 7,1;"Press a row key, then a column."',
+ 5085:'IF INKEY$<>"" THEN GO TO 5085',5090:'PRINT #1;AT 0,0;"Any key to search, Q quits.";',5100:'GO SUB 3200',5110:'IF a$="q" OR a$="Q" THEN GO TO 9000',
+ 6000:'PRINT #1;AT 0,0;"R another round, Q quits:   ";AT 1,0;"                    ";',6010:'GO SUB 3200',
+ 6040:'LET s$="Press R for another round or Q.": GO SUB 2600'},[10,3015,3030])
+items=[(1,1,'row',row),(1,2,'board',board),(2,1,'row-input',row_input),(2,2,'probe',p2),(3,1,'distance',p3),(4,1,'bands',latest),(5,1,'array-lab',array),(5,2,'memory',memory),(6,1,'count',counted),(7,1,'round',fixed),(8,1,'random',final),(10,1,'keys',keys)]
 roster=[];previous={};previous_path=None;saved=None
 for unit,step,name,program in items:
     if name=='array-lab':saved=(previous,previous_path);previous={};previous_path=None
@@ -40,4 +50,4 @@ for unit,step,name,program in items:
     previous=program;previous_path=str(rel)
 (ROOT/'roster.json').write_text(json.dumps(roster,indent=2)+'\n')
 assert (ROOT/'unit-08/steps/step-01.bas').read_bytes()==(PROTO/'experiments/distance-bands.bas').read_bytes()
-print('Derived',len(roster),'states; final source equals accepted endpoint.')
+print('Derived',len(roster),'states; lesson 8 equals the accepted game.')

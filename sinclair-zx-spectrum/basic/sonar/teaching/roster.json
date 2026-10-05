@@ -363,5 +363,39 @@
     ],
     "delete": [],
     "edits": "unit-08/snippets/step-01-edits.bas"
+  },
+  {
+    "unit": 10,
+    "step": 1,
+    "name": "keys",
+    "source": "unit-10/steps/step-01.bas",
+    "from": "unit-08/steps/step-01.bas",
+    "add": [
+      3005,
+      3012,
+      3045,
+      3200,
+      3210,
+      3220,
+      5085
+    ],
+    "replace": [
+      100,
+      110,
+      3010,
+      5030,
+      5090,
+      5100,
+      5110,
+      6000,
+      6010,
+      6040
+    ],
+    "delete": [
+      10,
+      3015,
+      3030
+    ],
+    "edits": "unit-10/snippets/step-01-edits.bas"
   }
 ]

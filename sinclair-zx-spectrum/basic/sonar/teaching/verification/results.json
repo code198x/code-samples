@@ -10,23 +10,25 @@
       "version": "0.25.0"
     }
   },
-  "binary_sha256": "d3244e51ba6406246cc2d80bcf698cbccf2d4f0aa2fc69ca5dbdf2d369a1c8b1",
-  "rom_sha256": "b9f50896259d2ec4b61b2a4f72855197b378e74762b8e5420a1fa78fc6959c07",
+  "binary_sha256": "b8c2ca493606cc4ae26bafbb561fc47c05db1b2f176bd726a01f31f65231cb1e",
+  "rom_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
   "configuration": "48K Spectrum PAL; source entered through ROM keyboard events",
   "sources": {
-    "unit-01/steps/step-01.bas": "c0f4f4f4d1e075005bf47817a3a268f28e88ebe007b670d6857a0c627049cece",
-    "unit-01/steps/step-02.bas": "a4e4f8af50153791ad3a29149533e441fc9b8329e961519ac84b6d6bcaa684f1",
-    "unit-02/steps/step-01.bas": "dda44e54fd3cdf6670d04cb5163ac576df7f5645856a00cc1ee36699e32a8834",
-    "unit-02/steps/step-02.bas": "c92b920285d5d7d8558e80ea26795897e3701f9b6c407f81ab320c0f4b7a95fc",
-    "unit-03/steps/step-01.bas": "230680263a4486352b0cfb072994d0dfbd8ff5c5736ff8cf3e73e33668ca73ba",
-    "unit-04/steps/step-01.bas": "cd71f50b00b0a6af6d24740aca5bc6b6b4c689bbfe1b404964e5abf799dc4362",
-    "unit-05/steps/step-01.bas": "e56c2efc3efbab4f6aaf9a2bf296cc970491f5d2735c2ecb0fc5e1059ba855ae",
-    "unit-05/steps/step-02.bas": "c5e8ffc841f52e94f28db65f825a35440809b191b00e4f37238482452ba90487",
-    "unit-06/steps/step-01.bas": "dd97472e4480776deff78462a581676cb684721ba22d12da7677a78f2e86501a",
-    "unit-07/steps/step-01.bas": "ee68e3ac26a47445860e167d39b112610ca2261b60d90f478b5dd16363c20fad",
-    "unit-08/steps/step-01.bas": "7d481c35247c4bed8e9965a5e46ff4218ba4162c4330059abc638ef5bb467b7b"
+    "unit-01/steps/step-01.bas": "911d1c10016a445ccd03ddd97f796feae5383a5e1e621bb825c96df0522ba3aa",
+    "unit-01/steps/step-02.bas": "75042f47e1eaa44cce21053f85b7be714d47b487bf00a829bb174bb5ef6619eb",
+    "unit-02/steps/step-01.bas": "ac8c4dfad645f686fdc84df399fec3b3a576a62c4c17d5b1991ffe1f25a90331",
+    "unit-02/steps/step-02.bas": "2cb5737312fedb0637af4ab18f5462df9d149ff76dc357d1600ea6fb68e330d3",
+    "unit-03/steps/step-01.bas": "f9cf93fb5d96e5528c0b59dad98788a63d7609a747991520054f73202fa79195",
+    "unit-04/steps/step-01.bas": "96cc088f93cec18377079788314674bd524ac67dd93f582213ae3e74fd3f3504",
+    "unit-05/steps/step-01.bas": "80b6a9673b8c451f3107fdcdd572163aa2bfa74ecf459c0e35a4013b87be7df7",
+    "unit-05/steps/step-02.bas": "3ad90268739aff8f7e19c2a474b0df8b6c54c9f2388dd843e32fa91d3b74836d",
+    "unit-06/steps/step-01.bas": "38e878fc737ecdb1ca499ba8c43b4266947df13d0c92b23ffae03575fdc6c65f",
+    "unit-07/steps/step-01.bas": "8b5abe35da842ae261866734958ef315a1a7db610d84ebe3fca420220536cab5",
+    "unit-08/steps/step-01.bas": "e307915d1f46705e340606f5d3d83e0bb0c039a2512339f736a3555768390680",
+    "unit-10/steps/step-01.bas": "8f7396c2ca5c9e9ba8631ff0a718d65ac83e14569a20ede7b4165929c262d9f0"
   },
-  "tape_sha256": "7ac0b36db63d2abcb302b3a5652a33aa462b804721fcdf2d2e76ccb205bda5a8",
+  "tape_sha256": "27cc06b703c7a64622da62803995cf556302f40eff87952874fa0cf55b9e4ea2",
+  "keys_tape_sha256": "406b3cf020f2ab1484a43bd889b20771f00206705e0e06c1c8f79618cc456d70",
   "checks": [
     {
       "check": "row"
@@ -65,8 +67,23 @@
       "check": "fresh-load-play-retry-exit"
     },
     {
-      "check": "stored-program-identical-to-accepted-game",
+      "check": "stored-program-identical-to-accepted-game-apart-from-stored-spaces",
       "baseline_sha256": "919bcf2e2864852a3a79c7c7ab4a8a586b0456ed1c94494a6aea25328e4d0fc1"
+    },
+    {
+      "check": "single-key-entry-echo-release-invalid-keys"
+    },
+    {
+      "check": "keyed-round-replay-reminder-retry-quit"
+    },
+    {
+      "check": "single-key-entry-echo-release-invalid-keys"
+    },
+    {
+      "check": "keyed-round-replay-reminder-retry-quit"
+    },
+    {
+      "check": "keys-fresh-load-from-LINE-10-play-retry-exit"
     }
   ],
   "limits": "Scripted execution and inspected captures. No new human play, audio or original-hardware claim."
