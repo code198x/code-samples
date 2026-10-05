@@ -131,7 +131,7 @@ wait_aud0:
             move.w  #INTF_AUD0,INTREQ(a5)
             rts
 
-            include "paula-sample.inc"
+            include "../paula-sample.inc"
 
             section data,data_c
             even

@@ -30,7 +30,8 @@ python3 verification/verify.py --emulator /path/to/emu198x-amiga \
   --kickstart /path/to/kick13.rom --output /tmp/playing-a-sample
 ```
 
-Add `--build198x /path/to/build198x` if it is not on the path. The check
+Add `--build198x /path/to/build198x` if it is not on the path, and
+`--vasm /path/to/vasmm68k_mot` to require byte-identical executables from vasm. The check
 assembles and masters the demo and `verification/probe.asm`, cold-boots each
 on the A500 PAL profile and reads the emulator's chipset write log and audio
 capture. It asserts:

@@ -66,10 +66,16 @@ class Amiga:
         self.process.wait(timeout=10)
 
 
-def build(source, output, build198x):
+def build(source, output, build198x, vasm=None):
     executable = output / source.stem
-    subprocess.run(['asm198x', '--dialect', 'vasm', '--exe', '-I', str(ROOT),
-                    str(source), '-o', str(executable)], check=True, capture_output=True)
+    subprocess.run(['asm198x', '--dialect', 'vasm', '--exe', str(source), '-o',
+                    str(executable)], check=True, capture_output=True, cwd=source.parent)
+    if vasm:
+        reference = output / (source.stem + '.vasm')
+        subprocess.run([vasm, '-Fhunkexe', '-kick1hunks', '-nosym', '-quiet', '-o',
+                        str(reference), source.name], check=True, capture_output=True,
+                       cwd=source.parent)
+        assert reference.read_bytes() == executable.read_bytes(), source.name
     disk = output / (source.stem + '.adf')
     subprocess.run([build198x, 'adf', str(executable), '-o', str(disk),
                     '--volume', source.stem.capitalize(), '--name', source.stem],
@@ -224,12 +230,13 @@ def main():
     parser.add_argument('--emulator', type=Path, required=True)
     parser.add_argument('--kickstart', type=Path, required=True)
     parser.add_argument('--build198x', default='build198x')
+    parser.add_argument('--vasm', help='vasmm68k_mot, for a byte comparison')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
-    demo, demo_disk = build(ROOT / 'demo.asm', out, args.build198x)
-    probe, probe_disk = build(ROOT / 'verification/probe.asm', out, args.build198x)
+    demo, demo_disk = build(ROOT / 'demo.asm', out, args.build198x, args.vasm)
+    probe, probe_disk = build(ROOT / 'verification/probe.asm', out, args.build198x, args.vasm)
     report = {
         'status': 'passed',
         'configuration': 'A500 OCS PAL, Kickstart 1.3, cold ADF boot',
@@ -237,6 +244,7 @@ def main():
         'sources': {p.name: sha(p) for p in [ROOT / 'demo.asm', ROOT / 'paula-sample.inc',
                                              ROOT / 'verification/probe.asm']},
         'binaries': {p.name: sha(p) for p in [demo, demo_disk, probe, probe_disk]},
+        'vasm_identical': bool(args.vasm),
         'demo': check_demo(args.emulator, args.kickstart, demo_disk, out),
         'probe': check_probe(args.emulator, args.kickstart, probe_disk, out),
         'limits': 'Emulator observations only. No listening, original-hardware or '
