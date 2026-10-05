@@ -17,7 +17,14 @@ def wait(text):
   m.frames(5)
  raise AssertionError((text,line(m),m.screen()))
 def ready():return wait('ENTER pauses.')[0]
-def key(k):m.key('space' if k==' ' else k)
+def press(*keys):
+ # A key that arrives while 8010 waits for release is swallowed, and the next
+ # poll would then miss the guess; press only once 8020 is waiting for a key.
+ for _ in range(3000):
+  if line(m)==8020:return m.key(*keys)
+  m.frames(1)
+ raise AssertionError(('gate',line(m),m.screen()))
+def key(k):press('space' if k==' ' else k)
 def capture(name):m.call('save_screenshot',path=str(out/(name+'.png')))
 def stop():
  for _ in range(400):
@@ -26,7 +33,7 @@ def stop():
  raise AssertionError(m.screen())
 def guess(k,upper=False):
  before=ready();letter=k.upper();seen=letter in before['t$'];found=letter in before['w$'];expected=''.join(c if c==letter else before['d$'][i] for i,c in enumerate(before['w$']))
- if upper:m.key('caps',k)
+ if upper:press('caps',k)
  else:key(k)
  end=(expected==before['w$'] or (before['left']==1 and not seen and not found))
  after,frames=wait('SPACE next.' if end else 'ENTER pauses.');delays.append(frames)
@@ -43,14 +50,14 @@ try:
  m.call('load_media',slot='tape-1',kind='tape',path=str(out/'cipher.tap'));m.statement('LOAD ""');m.call('media_transport',slot='tape-1',transport='start');wait('S starts.');capture('title')
  assert m.program_lines()=={int(k):v for k,v in json.loads((out/'stored.json').read_text()).items()};record('fresh-ROM-tape-autostart-and-token-identity')
  key('a');wait('S starts.');key('q');stop();record('title-invalid-key-and-quit')
- m.statement('RUN');wait('S starts.');m.key('caps','s');s=ready();assert (s['round'],s['wins'],s['losses'],s['left'],s['t$'],s['m$'])==(1,0,0,7,'','');capture('opening');record('uppercase-start-and-empty-history')
+ m.statement('RUN');wait('S starts.');press('caps','s');s=ready();assert (s['round'],s['wins'],s['losses'],s['left'],s['t$'],s['m$'])==(1,0,0,7,'','');capture('opening');record('uppercase-start-and-empty-history')
  for k in ('1','0',' ','symbol'):
   key(k);after=ready();assert after['d$']==s['d$'] and after['t$']=='' and after['left']==7
- m.key('caps','0');after=ready();assert after['t$']=='';record('digits-space-delete-and-modifier-ignored')
+ press('caps','0');after=ready();assert after['t$']=='';record('digits-space-delete-and-modifier-ignored')
  letter=s['w$'][0].lower();s,_=guess(letter,upper=True);assert s['found']==s['w$'].count(letter.upper());capture('revealed');record('uppercase-guess-reveals-all-matches')
  before=s;s,_=guess(letter);assert s['t$']==before['t$'] and s['left']==7;capture('repeat');record('repeated-hit-is-free')
  miss=next(c for c in 'ZXQJV' if c not in s['w$']);s,_=guess(miss.lower());before=s;s,_=guess(miss.lower());assert s['left']==6 and s['m$']==miss;capture('miss');record('miss-costs-once-and-is-listed')
- key('enter');paused=wait('PAUSED')[0];capture('paused');key('a');again=wait('PAUSED')[0];assert again['t$']==paused['t$'];m.key('caps','c');after=ready();assert all(after[k]==paused[k] for k in ('w$','d$','left','t$','m$','wins','losses','round'));record('pause-invalid-key-and-continue-preserve-round')
+ key('enter');paused=wait('PAUSED')[0];capture('paused');key('a');again=wait('PAUSED')[0];assert again['t$']==paused['t$'];press('caps','c');after=ready();assert all(after[k]==paused[k] for k in ('w$','d$','left','t$','m$','wins','losses','round'));record('pause-invalid-key-and-continue-preserve-round')
  for c in sorted(set(after['w$'])-set(after['t$'])):s,end=guess(c.lower())
  assert end and s['wins']==1 and s['losses']==0;capture('won');record('legal-word-completion-and-retained-result')
  key('a');after=wait('SPACE next.')[0];assert after['wins']==1 and after['round']==1
@@ -58,12 +65,12 @@ try:
  misses=[c for c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' if c not in s['w$']][:7]
  for c in misses:s,end=guess(c.lower())
  assert end and s['losses']==1 and s['wins']==1 and s['left']==0;capture('lost');record('seven-distinct-misses-lose-and-reveal-answer')
- m.key('caps','r');s=ready();assert s['round']==1 and s['wins']==s['losses']==0;record('result-reset-clears-session')
+ press('caps','r');s=ready();assert s['round']==1 and s['wins']==s['losses']==0;record('result-reset-clears-session')
  letter=s['w$'][0].lower();m.call('input',events=[{'Key':{'name':letter,'pressed':True}}]);m.frames(1000)
  held=state(m);assert held['t$']==letter.upper() and held['left']==7
  m.call('input',events=[{'Key':{'name':letter,'pressed':False}}]);m.frames(10);ready();record('held-letter-is-one-guess')
- key('enter');wait('PAUSED');m.key('caps','r');s=ready();assert s['t$']=='' and s['round']==1;record('pause-reset-clears-session')
- key('enter');wait('PAUSED');m.key('caps','q');stop();record('pause-quit')
+ key('enter');wait('PAUSED');press('caps','r');s=ready();assert s['t$']=='' and s['round']==1;record('pause-reset-clears-session')
+ key('enter');wait('PAUSED');press('caps','q');stop();record('pause-quit')
  # Explicit ROM diagnostics select each authored word; no direct memory writes.
  words=[]
  for pick in range(1,25):
