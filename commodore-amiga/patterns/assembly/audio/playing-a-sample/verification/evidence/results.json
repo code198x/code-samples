@@ -6,7 +6,7 @@
   "sources": {
     "demo.asm": "b65880fa3dcd1a8d0ffda8e7098ea485c8cead877bb91fb9b0aa01d7f6efb368",
     "paula-sample.inc": "a6c1dcda0cc8e9bc864f44cc8e4795cc9cfbe27bfdd63ecad0f8d4a081b9b8d9",
-    "probe.asm": "4d16737fc8f3579cec1877cb2d06cf691f25601bb5d89cf0e116bf2922226806"
+    "probe.asm": "e7459e029f65ee2f4ae3943a30faf9f6556b7b6e91f7e381490594b4f254b5cc"
   },
   "binaries": {
     "demo": "8f26e48774e4490764ed23e4bc18a3f0260c94fbb4f4921f0badd5bd473bb190",
@@ -14,6 +14,7 @@
     "probe": "49721b4dfcb95b3bc210dd2732427c146d6464ad6d14c5c5c99395955a0231c1",
     "probe.adf": "282abaaa25f2ac36b0f7acbd476dc7e23ba3d8152931799ac1dacba75eb6431e"
   },
+  "vasm_identical": true,
   "demo": {
     "tones": [
       {
