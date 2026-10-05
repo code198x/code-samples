@@ -11,6 +11,8 @@ build/
 # Amiga executables (no extension) - explicit names
 commodore-amiga/**/signal
 commodore-amiga/**/hop
+commodore-amiga/patterns/assembly/audio/playing-a-sample/demo
+commodore-amiga/patterns/assembly/audio/playing-a-sample/demo.adf
 
 # Emulator and capture outputs
 *.vsf
