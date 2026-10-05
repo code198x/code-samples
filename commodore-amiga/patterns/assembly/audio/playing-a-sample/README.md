@@ -59,6 +59,7 @@ edition, chapter 5 (Audio Hardware: forming and playing a sound, period
 limits, joining tones, the equal-tempered table, direct output and the audio
 state machine) and chapter 6 (DMA time-slot allocation and 68000 bus
 sharing). *Amiga ROM Kernel Reference Manual: Devices*, third edition, Audio
-Device: channel allocation. Results are emulator observations, not hardware tests. They make no
+Device: channel allocation. Abacus, *Amiga System Programmer's Guide*,
+chapter 1: odd bus cycles reserved for DMA, including audio. Results are emulator observations, not hardware tests. They make no
 claim about which stereo jack carries channel 0: primary sources disagree
 (emu198x#1514). Listening remains a human check.
