@@ -8,6 +8,23 @@ from bands import Bands, clue, CELLS
 from entry import Spectrum
 from verify import sha
 
+def unspaced(program):
+    """Stored lines without the spaces outside strings and number forms.
+
+    The accepted banded tape was saved when the listings still stored spaces
+    beside keywords; the listings now match the ROM's LIST and store none
+    (see ../../../source-lineage). Nothing else may differ."""
+    result={}
+    for number,data in program.items():
+        out=[];i=0;quoted=False
+        while i<len(data):
+            if data[i]==0x0e and not quoted:out+=data[i:i+6];i+=6;continue
+            if data[i]==0x22:quoted=not quoted
+            if data[i]!=0x20 or quoted:out.append(data[i])
+            i+=1
+        result[number]=bytes(out)
+    return result
+
 class Teaching(Bands):
     def __init__(self,executable,output):
         super().__init__(executable,output)
@@ -103,8 +120,8 @@ class Teaching(Bands):
         self.record('fresh-load-play-retry-exit')
         self.machine.close();self.machine=Spectrum(self.executable,self.output)
         self.machine.call('load_media',slot='tape-1',kind='tape',path=str(baseline));self.machine.statement('LOAD "sonarband"');self.machine.call('media_transport',slot='tape-1',transport='start');self.wait('ENTER to search, Q quits:',limit=16000)
-        assert self.machine.program_lines()==stored
-        self.record('stored-program-identical-to-accepted-game',baseline_sha256=sha(baseline))
+        assert unspaced(self.machine.program_lines())==unspaced(stored)
+        self.record('stored-program-identical-to-accepted-game-apart-from-stored-spaces',baseline_sha256=sha(baseline))
         result={'status':'passed','server':self.machine.server,'binary_sha256':sha(Path(self.executable)),'rom_sha256':hashlib.sha256(bytes(rom)).hexdigest(),'configuration':'48K Spectrum PAL; source entered through ROM keyboard events','sources':self.sources,'tape_sha256':sha(tape),'checks':self.cases,'limits':'Scripted execution and inspected captures. No new human play, audio or original-hardware claim.'}
         (self.output/'results.json').write_text(json.dumps(result,indent=2)+'\n')
 
