@@ -154,9 +154,14 @@ publication. Audio captures exist in the temporary endpoint output; this record
 does not claim listening review or physical-hardware testing.
 
 The sound checkpoints' evidence comes from the same Emu198x build (0.24.0),
-the official 48K ROM and upstream Pasmo 0.5.5. Loading a snapshot over a
-running, unhalted CPU can resume at $0000 (emu198x/emu198x#1564), and a blocking
-sound can leave the CPU running at a frame boundary, so the endpoint harness
-resets first in that case only. Halted loads are unchanged and `endpoint.json`
-reproduces exactly. Measured pitches and lengths of the sound captures are in
-each checkpoint's README; nobody has yet listened to them.
+the official 48K ROM and upstream Pasmo 0.5.5. Measured pitches and lengths of
+the sound captures are in each checkpoint's README; nobody has yet listened to
+them.
+
+The endpoint harness needs Emu198x 0.27.1 or later. It loads the snapshot
+again over a running game, and earlier builds could resume that load at $0000
+(emu198x/emu198x#1564), which fails `sound-table` at "start enters flight".
+On 0.27.1 every checkpoint passes. One recorded detail differs from
+`endpoint.json`: "releasing boost restores normal speed" counts 12 boost steps
+where the 0.24.0 run counted 11. That comes from emulator timing changes between
+the two builds, not from the harness, and the check passes either way.
