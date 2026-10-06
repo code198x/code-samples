@@ -19,10 +19,6 @@ def main():
   assert truth,(name,detail);checks.append({'check':name,'detail':detail});print('PASS',name,flush=True)
  def key(name,down):m.call('input',events=[{'Key':{'name':name,'pressed':down}}])
  def start():
-  # Emu198x can resume at $0000 when a snapshot replaces a running, unhalted CPU
-  # (emu198x/emu198x#1564); blocking sounds can leave it there. Reset only then:
-  # a reset shifts frame alignment, so halted loads stay as they were recorded.
-  if not m.call('query_cpu')['registers']['halt']:m.call('reset')
   m.call('load_snapshot',path=str(out/'meteor-storm.sna'));m.frames(30);m.call('press_key',key='space',hold_frames=6);m.frames(12);check('start enters flight',state()['phase']==1,state()['phase'])
  try:
   m.call('load_snapshot',path=str(out/'meteor-storm.sna'));m.frames(60)
