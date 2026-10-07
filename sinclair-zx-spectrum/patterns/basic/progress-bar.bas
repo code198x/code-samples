@@ -2,7 +2,7 @@
   20 REM Pattern: reusable across games
   30 REM
   40 REM Usage:
-  50 REM   LET v=75: LET vm=100: GO SUB 2200
+  50 REM   LET br=15: LET v=75: LET vm=100: GO SUB 2200
   60 REM
   70 REM Parameters:
   80 REM   v  = current value
@@ -10,7 +10,7 @@
  100 REM
  110 REM Draws a 28-cell horizontal bar at row br
  120 REM Colour shifts: blue -> yellow -> red -> white
- 130 REM Set br before first call (default row 15)
+ 130 REM Set br before first call (for example, 15)
  140 REM
  150 REM Example: temperature bar
  160 REM   LET br=15: LET v=100-ABS(guess-target)
