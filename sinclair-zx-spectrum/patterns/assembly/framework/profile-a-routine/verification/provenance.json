@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-07",
+  "assembler": {
+    "version": "0.0.59",
+    "revision": "4d50d25980337768169721cc89fd2e97978286bd",
+    "workflow": "https://github.com/asm198x/asm198x/actions/runs/37595675011",
+    "artifact_id": 11469714771
+  },
+  "emulator": {
+    "build_version": "0.31.0",
+    "revision": "3023b6a3794edcb10a7821bbb5c38a1794a18faa",
+    "workflow": "https://github.com/emu198x/emu198x/actions/runs/37678730043",
+    "artifact_id": 11508782065,
+    "note": "The Linux binary artifact is used; this is not a claim that every job in the release workflow succeeded."
+  },
+  "verification": "Archive SHA-256 values matched the GitHub artifact digests; the Spectrum archive also matched its bundled checksum. Executable hashes and source/build hashes are in results.json."
+}

@@ -1,0 +1,39 @@
+{
+  "checks": [
+    {
+      "case": "baseline",
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true
+    },
+    {
+      "case": "two-at-a-time",
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "passed": true
+    },
+    {
+      "case": "buffer-overrun",
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "passed": true
+    },
+    {
+      "case": "unfinished-capture",
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "passed": true
+    },
+    {
+      "case": "failed-rerun",
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "passed": true
+    }
+  ],
+  "date": "2026-10-07",
+  "assembler_sha256": "886af887f5b26b3adf65947d79a3dd9c637cd7b822cd6f86cc68350cbc14c760",
+  "emulator_sha256": "9cb6fb3cc3939cb512e96b2ada68cf2b7f9fc6441b61dd3ab6170b16a8b0ddf9",
+  "verifier_sha256": "8dc78530088827bc4a41f3f36b81f22b9990a65c3087a69d669914193ba7882c",
+  "check_runner_sha256": "c4b6d85d64516e2ea8d3e0d18e14ba6f7b138f9146893ff18473a86150a38261"
+}

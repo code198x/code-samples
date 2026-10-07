@@ -1,0 +1,298 @@
+{
+  "status": "passed",
+  "mode": "baseline",
+  "assembler_version": "",
+  "assembler_sha256": "886af887f5b26b3adf65947d79a3dd9c637cd7b822cd6f86cc68350cbc14c760",
+  "emulator_sha256": "9cb6fb3cc3939cb512e96b2ada68cf2b7f9fc6441b61dd3ab6170b16a8b0ddf9",
+  "target": "48K PAL; code $C000; buffer $9000; stack $FF00; interrupts disabled",
+  "method": "Asm198x snapshot start in RAM, Debug198x source join, exact profile window",
+  "limits": "Emulator observation with unused synthetic ROM; no ROM boot, tape loading, contention, hardware or host-speed claim.",
+  "cases": [
+    {
+      "source": "loop.asm",
+      "source_sha256": "5c08a29f1e7710b5c9df81982c460c221250081c7905ed75793e6fa45a653b93",
+      "artifacts_sha256": {
+        "bin": "aadf4b40704a9b750b21c023209f7659911f79fd0a4a77093015e7c0ca7110c9",
+        "sna": "30e912018fdbac4aba474a559425f42ad7497dc9d68afbb1818d2fa1851871ea",
+        "debug198x": "9a35fb00c750347e199e898f3f781931b001be0868a80513fee1d44a99a6c07c",
+        "sym": "fe234ea219683a8768bb5e05f2030852db87dea4962a3dc9ce8acdf22e7b3140",
+        "listing.json": "8807dcbc7d1b7b7f5664c9c747378146939c8a9b8f0d3762be31520cec961977"
+      },
+      "routine_bytes": 7,
+      "routine_instructions": 98,
+      "routine_ticks": 3376,
+      "routine_t_states": 844.0,
+      "weighted_static_t_states": {
+        "min": 689,
+        "max": 849
+      },
+      "caller_exclusive_ticks": 208,
+      "caller_inclusive_ticks": 3584,
+      "capture_ticks": 4096,
+      "interrupt_ticks": 0,
+      "halt_ticks": 512,
+      "leading_partial_ticks": 0,
+      "trailing_partial_ticks": 0,
+      "completed_calls": 1,
+      "buffer_hex": "4747474747474747474747474747474747474747474747474747474747474747",
+      "lines": [
+        {
+          "file": "loop.asm",
+          "line": 5,
+          "executions": 1,
+          "ticks": 16,
+          "t_states": 4.0,
+          "source": "di"
+        },
+        {
+          "file": "loop.asm",
+          "line": 6,
+          "executions": 1,
+          "ticks": 40,
+          "t_states": 10.0,
+          "source": "ld sp,$ff00"
+        },
+        {
+          "file": "loop.asm",
+          "line": 7,
+          "executions": 1,
+          "ticks": 40,
+          "t_states": 10.0,
+          "source": "ld hl,$9000"
+        },
+        {
+          "file": "loop.asm",
+          "line": 8,
+          "executions": 1,
+          "ticks": 28,
+          "t_states": 7.0,
+          "source": "ld a,$47"
+        },
+        {
+          "file": "loop.asm",
+          "line": 9,
+          "executions": 1,
+          "ticks": 68,
+          "t_states": 17.0,
+          "source": "call fill_row"
+        },
+        {
+          "file": "loop.asm",
+          "line": 10,
+          "executions": 1,
+          "ticks": 16,
+          "t_states": 4.0,
+          "source": "halt"
+        },
+        {
+          "file": "loop.asm",
+          "line": 16,
+          "executions": 1,
+          "ticks": 28,
+          "t_states": 7.0,
+          "source": "ld b,32"
+        },
+        {
+          "file": "loop.asm",
+          "line": 18,
+          "executions": 32,
+          "ticks": 896,
+          "t_states": 224.0,
+          "source": "ld (hl),a"
+        },
+        {
+          "file": "loop.asm",
+          "line": 19,
+          "executions": 32,
+          "ticks": 768,
+          "t_states": 192.0,
+          "source": "inc hl"
+        },
+        {
+          "file": "loop.asm",
+          "line": 20,
+          "executions": 32,
+          "ticks": 1644,
+          "t_states": 411.0,
+          "source": "djnz fill_loop"
+        },
+        {
+          "file": "loop.asm",
+          "line": 21,
+          "executions": 1,
+          "ticks": 40,
+          "t_states": 10.0,
+          "source": "ret"
+        }
+      ]
+    },
+    {
+      "source": "unrolled.asm",
+      "source_sha256": "796780f5489a3ded12fd3771a133d35119a55938d05e55d618b7ba0196319c65",
+      "artifacts_sha256": {
+        "bin": "e8f1a97d50958302101c0925840ede6990535a3e4bc123d77c8a855d1e84da1a",
+        "sna": "1b8e07e5bc2b20e0209e96f6d49c1a973dfed0f1b2a169b5708e68b6c971579d",
+        "debug198x": "eef073e31c404351a7cae7af90d48577b21bc432e861fa6463938000ccb16955",
+        "sym": "8bd5ba686373da633df1150adf5780f5a33d4cbb72a95f67f1c249544e721713",
+        "listing.json": "e3a175deb2a9414b1a8f488c24cbd238377c561e23216346aa02ce33c334d91d"
+      },
+      "routine_bytes": 13,
+      "routine_instructions": 74,
+      "routine_ticks": 2128,
+      "routine_t_states": 532.0,
+      "weighted_static_t_states": {
+        "min": 497,
+        "max": 537
+      },
+      "caller_exclusive_ticks": 208,
+      "caller_inclusive_ticks": 2336,
+      "capture_ticks": 4096,
+      "interrupt_ticks": 0,
+      "halt_ticks": 1760,
+      "leading_partial_ticks": 0,
+      "trailing_partial_ticks": 0,
+      "completed_calls": 1,
+      "buffer_hex": "4747474747474747474747474747474747474747474747474747474747474747",
+      "lines": [
+        {
+          "file": "unrolled.asm",
+          "line": 5,
+          "executions": 1,
+          "ticks": 16,
+          "t_states": 4.0,
+          "source": "di"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 6,
+          "executions": 1,
+          "ticks": 40,
+          "t_states": 10.0,
+          "source": "ld sp,$ff00"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 7,
+          "executions": 1,
+          "ticks": 40,
+          "t_states": 10.0,
+          "source": "ld hl,$9000"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 8,
+          "executions": 1,
+          "ticks": 28,
+          "t_states": 7.0,
+          "source": "ld a,$47"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 9,
+          "executions": 1,
+          "ticks": 68,
+          "t_states": 17.0,
+          "source": "call fill_row"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 10,
+          "executions": 1,
+          "ticks": 16,
+          "t_states": 4.0,
+          "source": "halt"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 16,
+          "executions": 1,
+          "ticks": 28,
+          "t_states": 7.0,
+          "source": "ld b,8"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 18,
+          "executions": 8,
+          "ticks": 224,
+          "t_states": 56.0,
+          "source": "ld (hl),a"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 19,
+          "executions": 8,
+          "ticks": 192,
+          "t_states": 48.0,
+          "source": "inc hl"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 20,
+          "executions": 8,
+          "ticks": 224,
+          "t_states": 56.0,
+          "source": "ld (hl),a"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 21,
+          "executions": 8,
+          "ticks": 192,
+          "t_states": 48.0,
+          "source": "inc hl"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 22,
+          "executions": 8,
+          "ticks": 224,
+          "t_states": 56.0,
+          "source": "ld (hl),a"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 23,
+          "executions": 8,
+          "ticks": 192,
+          "t_states": 48.0,
+          "source": "inc hl"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 24,
+          "executions": 8,
+          "ticks": 224,
+          "t_states": 56.0,
+          "source": "ld (hl),a"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 25,
+          "executions": 8,
+          "ticks": 192,
+          "t_states": 48.0,
+          "source": "inc hl"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 26,
+          "executions": 8,
+          "ticks": 396,
+          "t_states": 99.0,
+          "source": "djnz fill_loop"
+        },
+        {
+          "file": "unrolled.asm",
+          "line": 27,
+          "executions": 1,
+          "ticks": 40,
+          "t_states": 10.0,
+          "source": "ret"
+        }
+      ]
+    }
+  ],
+  "saved_t_states": 312.0,
+  "extra_bytes": 6
+}
