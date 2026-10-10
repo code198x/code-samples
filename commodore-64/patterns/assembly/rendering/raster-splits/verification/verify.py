@@ -93,9 +93,15 @@ def execute(
             if engine == "emu":
                 script = [
                     {"action": "run_frames", "frames": 20},
-                    {"action": "run_until_pc", "addr": sym["picture_ready"]},
                 ]
                 for index in range(3):
+                    script += [
+                        # Leave a possible mid-instruction PC match from normal
+                        # running before measuring completed guest frame updates.
+                        {"action": "run_until_pc", "addr": sym["wait_top"]},
+                        {"action": "run_until_pc", "addr": sym["picture_ready"]},
+                        {"action": "memory_read", "addr": sym["frames"], "len": 2},
+                    ]
                     for _ in range(3):
                         script += [
                             {"action": "run_until_pc", "addr": sym["wait_top"]},
@@ -103,13 +109,23 @@ def execute(
                         ]
                     script += [
                         {"action": "memory_read", "addr": sym["frames"], "len": 2},
+                        # Debug stepping resyncs the machine but does not emit
+                        # a session frame. Refresh the capture through normal running.
+                        {"action": "run_frames", "frames": 2},
                         {
                             "action": "save_screenshot",
                             "path": str(dest / f"{engine}-{model}-{index}.png"),
                         },
                     ]
                 obs = RUN.emu(args, dest, prg, model, script)
-                states = [r["bytes"] for r in obs if r["kind"] == "memory_read"]
+                reads = [r["bytes"] for r in obs if r["kind"] == "memory_read"]
+                require(len(reads) == 6, "missing foreground before/after observations")
+                for before, after in zip(reads[::2], reads[1::2], strict=True):
+                    require(
+                        before[1] == 0 and after[0] - before[0] == 3,
+                        "foreground frame progress differs",
+                    )
+                states = reads[1::2]
             else:
                 commands = [f'load "{prg}" 0']
                 for index in range(3):
@@ -132,7 +148,7 @@ def execute(
                     len(state) == 2 and state[0] >= 20 and state[1] == 0,
                     f"foreground failed: {state}",
                 )
-                if previous is not None:
+                if previous is not None and engine == "vice":
                     require(
                         state[0] - previous == 3, "foreground frame progress differs"
                     )
@@ -144,6 +160,7 @@ def execute(
                     "frame": state[0],
                     "errors": state[1],
                     "prg_sha256": sha(prg),
+                    "normal_run_frames_before_capture": 2 if engine == "emu" else 0,
                 }
                 if broken:
                     try:
@@ -174,6 +191,67 @@ def execute(
     return results, sizes
 
 
+def refresh_control(args: argparse.Namespace) -> list[dict[str, Any]]:
+    """Prove debug-only screenshots are stale and normal running refreshes them."""
+    dest = args.output / "capture-refresh"
+    dest.mkdir(parents=True, exist_ok=True)
+    (dest / "split.inc").write_text((ROOT / "split.inc").read_text())
+    prg, sym = RUN.build(args, dest, (ROOT / "demo.asm").read_text())
+    rows = []
+    for model in ("pal", "ntsc"):
+
+        def shot(name: str, model: str = model) -> dict[str, Any]:
+            return {
+                "action": "save_screenshot",
+                "path": str(dest / f"{model}-{name}.png"),
+            }
+
+        script = [
+            {"action": "run_frames", "frames": 20},
+            shot("before"),
+            {"action": "poke_byte", "addr": sym["at_split"] + 1, "value": 0},
+            {"action": "run_until_pc", "addr": sym["picture_ready"]},
+        ]
+        for _ in range(3):
+            script += [
+                {"action": "run_until_pc", "addr": sym["wait_top"]},
+                {"action": "run_until_pc", "addr": sym["picture_ready"]},
+            ]
+        script += [
+            shot("stale"),
+            {"action": "run_frames", "frames": 2},
+            shot("fresh"),
+            {"action": "poke_byte", "addr": sym["at_split"] + 1, "value": 6},
+            {"action": "run_frames", "frames": 2},
+            shot("restored"),
+        ]
+        RUN.emu(args, dest, prg, model, script)
+        paths = {
+            name: dest / f"{model}-{name}.png"
+            for name in ("before", "stale", "fresh", "restored")
+        }
+        picture(paths["before"], 130, "emu", model)
+        require(
+            paths["before"].read_bytes() == paths["stale"].read_bytes(),
+            "debug-only capture did not reproduce stale frame",
+        )
+        require(
+            not RUN.PNG.pixels(paths["fresh"])[2],
+            "normal running did not refresh the changed picture",
+        )
+        picture(paths["restored"], 130, "emu", model)
+        rows.append(
+            {
+                "model": model,
+                "stale_capture_reproduced": True,
+                "fresh_capture_is_black": True,
+                "restored_capture_is_blue": True,
+                "sha256": {name: sha(path) for name, path in paths.items()},
+            }
+        )
+    return rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     for name, default in (
@@ -196,6 +274,7 @@ def main() -> None:
         observed, sizes = execute(args, args.output / f"line-{line}", line)
         rows += observed
     negative, _ = execute(args, args.output / "negative", 130, broken=True)
+    refresh = refresh_control(args)
     record = {
         "sources": {
             name: sha(ROOT / name)
@@ -217,6 +296,7 @@ def main() -> None:
         "cases": rows,
         "negative_control": negative,
         "sizes": sizes,
+        "capture_refresh": refresh,
     }
     (args.output / "results.json").write_text(json.dumps(record, indent=2) + "\n")
     print(
