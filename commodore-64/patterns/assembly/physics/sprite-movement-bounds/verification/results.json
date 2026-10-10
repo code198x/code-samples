@@ -1,0 +1,1379 @@
+{
+  "sources": {
+    "demo.asm": "b4b9a1d1a9b33f3c36101283e1d199a63c682f529f7f0c62fd7478ca770d7cd7",
+    "movement.inc": "80ec20ba682b9804e6cf60f3815261c251b35e8722912642b94f0e706c575f85",
+    "verification/verify.py": "39c324ee55bd758a7481d1b2e979709447f2897a83f33efb71a70c97c447658b",
+    "verification/baseline.inc": "f6ba6429ed3dabfb521bd0e70a9c19440a207ab7625b9cf1d28d8879189fa491"
+  },
+  "shared_sources": {
+    "commodore-64/patterns/assembly/rendering/hardware-sprites/sprite.inc": "7eddc16bf3aebc21a127b0d04a958a046f67932412d1ce8f29ffd222d3d8bf81",
+    "commodore-64/patterns/assembly/rendering/hardware-sprites/shape.inc": "6440692be1e7d29878b9e8311103b3d1d41e495e08d4a0cc6a23740551a7c16e",
+    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "589022dbe37609c612eada0142858990e378bde38f5f10debcc074015f771bef"
+  },
+  "tools": {
+    "assembler": {
+      "sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8"
+    },
+    "acme": {
+      "sha256": "7be6afb147f75c974a48a0540cdb8affc0760ed94bed4d822d95c7e8ee4bb35c"
+    },
+    "emulator": {
+      "sha256": "292cb7420c319e886b66e0fe88a71f2b40d82a3b047755c32194ecdb7e62c895"
+    },
+    "vice": {
+      "sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
+    }
+  },
+  "baseline": [
+    {
+      "engine": "emu",
+      "model": "pal",
+      "cases": 2,
+      "prg_sha256": "d1bf1b1f0e9816edafc38472374a1b66e2b2f224c67659dd3fa15a737cdd8293",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        },
+        {
+          "input": [
+            160,
+            228,
+            2,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            229,
+            160,
+            229,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            228,
+            160,
+            228,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "cases": 2,
+      "prg_sha256": "d1bf1b1f0e9816edafc38472374a1b66e2b2f224c67659dd3fa15a737cdd8293",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        },
+        {
+          "input": [
+            160,
+            228,
+            2,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            229,
+            160,
+            229,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            228,
+            160,
+            228,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "cases": 2,
+      "prg_sha256": "d1bf1b1f0e9816edafc38472374a1b66e2b2f224c67659dd3fa15a737cdd8293",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        },
+        {
+          "input": [
+            160,
+            228,
+            2,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            229,
+            160,
+            229,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            228,
+            160,
+            228,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "cases": 2,
+      "prg_sha256": "d1bf1b1f0e9816edafc38472374a1b66e2b2f224c67659dd3fa15a737cdd8293",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        },
+        {
+          "input": [
+            160,
+            228,
+            2,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            229,
+            160,
+            229,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            228,
+            160,
+            228,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "matrix": [
+    {
+      "engine": "emu",
+      "model": "pal",
+      "cases": 1536,
+      "prg_sha256": "550496e69fe5100b529cfb9bcd954c951b8b9d8e3a459cb2c47ebeb6fcdc3953",
+      "mismatches": []
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "cases": 1536,
+      "prg_sha256": "550496e69fe5100b529cfb9bcd954c951b8b9d8e3a459cb2c47ebeb6fcdc3953",
+      "mismatches": []
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "cases": 1536,
+      "prg_sha256": "550496e69fe5100b529cfb9bcd954c951b8b9d8e3a459cb2c47ebeb6fcdc3953",
+      "mismatches": []
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "cases": 1536,
+      "prg_sha256": "550496e69fe5100b529cfb9bcd954c951b8b9d8e3a459cb2c47ebeb6fcdc3953",
+      "mismatches": []
+    }
+  ],
+  "negative_control": [
+    {
+      "engine": "emu",
+      "model": "pal",
+      "cases": 1,
+      "prg_sha256": "1a3a31356e8c0c971f68bb79f46995b162e41dc6f92e8d7ab505bd27feec3545",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "cases": 1,
+      "prg_sha256": "1a3a31356e8c0c971f68bb79f46995b162e41dc6f92e8d7ab505bd27feec3545",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "cases": 1,
+      "prg_sha256": "1a3a31356e8c0c971f68bb79f46995b162e41dc6f92e8d7ab505bd27feec3545",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "cases": 1,
+      "prg_sha256": "1a3a31356e8c0c971f68bb79f46995b162e41dc6f92e8d7ab505bd27feec3545",
+      "mismatches": [
+        {
+          "input": [
+            160,
+            51,
+            1,
+            0
+          ],
+          "expected": [
+            160,
+            0,
+            50,
+            160,
+            50,
+            0
+          ],
+          "actual": [
+            160,
+            0,
+            51,
+            160,
+            51,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "live": [
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 0,
+      "mask": 0,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        160,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "d6a50936ecf8708ab5dc7874bad34f53af32e117c4d152435d19e1f4589edb7b"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 1,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "2b2985ad4aab7147ea4ee257fabe076a6496d01a87039a2d2908ec2e5e0a85c3"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 2,
+      "mask": 0,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "2b2985ad4aab7147ea4ee257fabe076a6496d01a87039a2d2908ec2e5e0a85c3"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 3,
+      "mask": 4,
+      "updates": 20,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "a78930f7be31a444b11e843973764daffb5d02217c29c483f8a3164f84c9b3e0"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 4,
+      "mask": 2,
+      "updates": 80,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "6605597d15765ded94c9b4d4de4ed7e18dc2aa3ac362d51d3f58dbae3907521a"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 5,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        320,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "cdacf29860db6d82d5fdbe9eaff3498f6031635d55081c32f21de6640256f4ea"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 6,
+      "mask": 5,
+      "updates": 170,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "0ae27182a861e604deae081d0c51c3d38ba3a5c759242f8afa1475590a1f6f73"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 7,
+      "mask": 3,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "0ae27182a861e604deae081d0c51c3d38ba3a5c759242f8afa1475590a1f6f73"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 8,
+      "mask": 12,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "0ae27182a861e604deae081d0c51c3d38ba3a5c759242f8afa1475590a1f6f73"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 9,
+      "mask": 15,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "0ae27182a861e604deae081d0c51c3d38ba3a5c759242f8afa1475590a1f6f73"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 10,
+      "mask": 16,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "0ae27182a861e604deae081d0c51c3d38ba3a5c759242f8afa1475590a1f6f73"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 11,
+      "mask": 10,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        30,
+        56
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "lit_pixels": 144,
+        "sha256": "cdc56ba575561edfbf9dd9c2a4395c20d39330848fe175ba361727dd3f50ea70"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 0,
+      "mask": 0,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        160,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "428d54f9bfbddf90796a86c5334a17db260dae57166243c4ccfb5c6d5bd1df9d"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 1,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "a091a6aebab2fe66f264f80d0a00866539dc77559e9277de1855750a202956fe"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 2,
+      "mask": 0,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "a091a6aebab2fe66f264f80d0a00866539dc77559e9277de1855750a202956fe"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 3,
+      "mask": 4,
+      "updates": 20,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "9e2d4bfaead1e5148069a74d32a9295470c431e34b56b784ae9c62e54f5d36e7"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 4,
+      "mask": 2,
+      "updates": 80,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "1bc8d918a6f1a31df6900a9805202206b9b8095ac361a5b05381e64b31849e5a"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 5,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        320,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "ba0ffced82571d6fddb2ffcf99e8820c5622b109c0badf12a2cd3e747a01b9df"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 6,
+      "mask": 5,
+      "updates": 170,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "795faa8b007ee7a712fa1cea2372ce66c5c8a5a5cfe028b4a9bd2f1c14e971ee"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 7,
+      "mask": 3,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "795faa8b007ee7a712fa1cea2372ce66c5c8a5a5cfe028b4a9bd2f1c14e971ee"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 8,
+      "mask": 12,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "795faa8b007ee7a712fa1cea2372ce66c5c8a5a5cfe028b4a9bd2f1c14e971ee"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 9,
+      "mask": 15,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "795faa8b007ee7a712fa1cea2372ce66c5c8a5a5cfe028b4a9bd2f1c14e971ee"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 10,
+      "mask": 16,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "795faa8b007ee7a712fa1cea2372ce66c5c8a5a5cfe028b4a9bd2f1c14e971ee"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 11,
+      "mask": 10,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        30,
+        56
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "lit_pixels": 144,
+        "sha256": "cc3ddd6748a29242bf098cd902be0d3051ca3b4e089b29aafa016835dcd99596"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 0,
+      "mask": 0,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        160,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "cb6f82d4e5b34bf152c046b132c67c6294625e8da6f6e709df317f7c3c67296b"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 1,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "0a0ee15bd4a39473e91960341b8fcb9916af61183acf6ad4bcac9ad084b874bd"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 2,
+      "mask": 0,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "0a0ee15bd4a39473e91960341b8fcb9916af61183acf6ad4bcac9ad084b874bd"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 3,
+      "mask": 4,
+      "updates": 20,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "9d56b4c2d9c034ae2a941d79008b6b1f8e0c66ad92d6f62130567215623c7fa0"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 4,
+      "mask": 2,
+      "updates": 80,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "ef82e63f20ed3e0331c2b0f519f23bf8ce2d93c12c148a54698f880d820b0ff5"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 5,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        320,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "272489880fb5759f31677a1caef33293f9b8aa5fda3855799dd98fe622065fb5"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 6,
+      "mask": 5,
+      "updates": 170,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "56dc0336a2528d059379ad9d77ecba4059db96844837354b4868a48c02be65b3"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 7,
+      "mask": 3,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "56dc0336a2528d059379ad9d77ecba4059db96844837354b4868a48c02be65b3"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 8,
+      "mask": 12,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "56dc0336a2528d059379ad9d77ecba4059db96844837354b4868a48c02be65b3"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 9,
+      "mask": 15,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "56dc0336a2528d059379ad9d77ecba4059db96844837354b4868a48c02be65b3"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 10,
+      "mask": 16,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "56dc0336a2528d059379ad9d77ecba4059db96844837354b4868a48c02be65b3"
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 11,
+      "mask": 10,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        30,
+        56
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "lit_pixels": 144,
+        "sha256": "f233176d01ae8372dcd383a8eaa5dec877e80e373d68fd62b647692a2565d414"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 0,
+      "mask": 0,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        160,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "011d5ffac4c0d5bbdf336cc2571c8b39c09106ddd5702c4d55759465c5c7071a"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 1,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "d21764fe096829319832d3d767951d356b11108d9ac877c013b0ec0cd865119b"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 2,
+      "mask": 0,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        280,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "d21764fe096829319832d3d767951d356b11108d9ac877c013b0ec0cd865119b"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 3,
+      "mask": 4,
+      "updates": 20,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        140
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "a19472565568cdf6651c81872012ba9afad7098db457be038b5d21f2b8cbe3a4"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 4,
+      "mask": 2,
+      "updates": 80,
+      "released_capture_frames": 1,
+      "position": [
+        240,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "97162c078db640cf0393fa3a253a0bb4ef3f516216cd8e2770b3f582a237c8c7"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 5,
+      "mask": 8,
+      "updates": 60,
+      "released_capture_frames": 1,
+      "position": [
+        320,
+        229
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "96c82bbded16afd7dbfb3ca3df9603b6f7591d03f308011acbeb7abc7a86bd3f"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 6,
+      "mask": 5,
+      "updates": 170,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "92152005c5efa03fbe960358b538372627bc6ea60360808b4a47d5793b2a1b7f"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 7,
+      "mask": 3,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "92152005c5efa03fbe960358b538372627bc6ea60360808b4a47d5793b2a1b7f"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 8,
+      "mask": 12,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "92152005c5efa03fbe960358b538372627bc6ea60360808b4a47d5793b2a1b7f"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 9,
+      "mask": 15,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "92152005c5efa03fbe960358b538372627bc6ea60360808b4a47d5793b2a1b7f"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 10,
+      "mask": 16,
+      "updates": 4,
+      "released_capture_frames": 1,
+      "position": [
+        24,
+        50
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "92152005c5efa03fbe960358b538372627bc6ea60360808b4a47d5793b2a1b7f"
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 11,
+      "mask": 10,
+      "updates": 3,
+      "released_capture_frames": 1,
+      "position": [
+        30,
+        56
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "lit_pixels": 144,
+        "sha256": "95a7706d8a933f09b8bde55e3f26a47a38795049da527f9d45b18f83020e5a91"
+      }
+    }
+  ],
+  "sizes": {
+    "movement_bytes": 160,
+    "state_bytes": 4
+  }
+}

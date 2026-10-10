@@ -1,0 +1,6 @@
+{
+  "website_revision": "a445b33aea26d5f08df4d314b0911b3f0226f7b9",
+  "page_sha256": "67b45877625d7ac77aa335e43df4580a99e9f41bd3052506b9ec4ec321c35db6",
+  "listing_sha256": "f6ba6429ed3dabfb521bd0e70a9c19440a207ab7625b9cf1d28d8879189fa491",
+  "fixture_change": "JOY2 is redirected to a RAM byte for injected input; arithmetic and register writes are unchanged."
+}
