@@ -1,0 +1,10 @@
+PASS held-a4 440.41 status 1
+PASS octave 880.82 status 1
+PASS low-negate-sweep 109.14 status 1
+PASS low-sweep-00-mutes silent status 1
+PASS timer-below-8-mutes silent status 1
+PASS load-before-enable silent status 0
+PASS length-expires 440.38 status 0
+PASS octave ratio 2.0
+PASS negative control rejected duration WAV duration 1.959339s differs from emulated 1.996722s by more than 2 ms
+PASS negative control rejected pitch WAV playback pitch 448.81 Hz, expected 440.40 Hz

@@ -5,7 +5,8 @@ the length-counter state comes from the machine itself; pitch, silence and
 duration come from the captured PCM. Times are measured in emulated time: the
 capture's sample count is divided by the frames that produced it, so a
 resampler that emits fewer samples than its WAV header claims cannot move the
-measured pitch. The header and effective rates are both recorded.
+emulated-time pitch. Separate checks use the WAV header, as a player does,
+and reject a rate/duration mismatch. A deliberately mislabelled WAV must fail.
 """
 import argparse
 from array import array
@@ -13,6 +14,7 @@ import hashlib
 import json
 from pathlib import Path
 import queue
+import shutil
 import subprocess
 import sys
 import threading
@@ -20,7 +22,7 @@ import wave
 
 ROOT = Path(__file__).resolve().parents[1]
 CPU_HZ = 1789773            # NTSC CPU clock
-FRAME_CYCLES = 29780.5      # NTSC CPU cycles per frame (341 * 262 - 0.5 dots / 3)
+FRAME_CYCLES = 341 * 262 / 3    # Rendering off: no odd-frame dot skip
 FRAMES = 120
 
 
@@ -135,6 +137,26 @@ def frequency(info, start, stop):
     return info['effective_rate'] * (len(edges) - 1) / (edges[-1] - edges[0]), edges
 
 
+def check_timebase(info, frames):
+    seconds = frames * FRAME_CYCLES / CPU_HZ
+    playback_seconds = len(info['samples']) / info['header_rate']
+    # Allow capture-boundary rounding, but reject the former 1.9% rate error.
+    if abs(playback_seconds - seconds) > 0.002:
+        raise AssertionError(
+            f'WAV duration {playback_seconds:.6f}s differs from emulated '
+            f'{seconds:.6f}s by more than 2 ms'
+        )
+    return playback_seconds
+
+
+def check_playback_pitch(info, measured, timer):
+    playback_hz = measured * info['header_rate'] / info['effective_rate']
+    if abs(playback_hz / expected_hz(timer) - 1) >= 0.005:
+        raise AssertionError(f'WAV playback pitch {playback_hz:.2f} Hz, '
+                             f'expected {expected_hz(timer):.2f} Hz')
+    return playback_hz
+
+
 def run_case(emulator, rom, symbols_status, out_wav):
     machine = Nes(emulator)
     try:
@@ -159,10 +181,12 @@ def main():
     status_addr = 0x0000   # first ZEROPAGE byte in demo.asm
     report = {
         'target': 'NTSC NES, NROM, rendering off; pulse 1 only',
-        'method': 'Complete ROMs in emu198x-nes --mcp; CPU reads of $4015; PCM in emulated time',
+        'method': 'Complete ROMs in emu198x-nes --mcp; CPU reads of $4015; PCM in emulated time and WAV playback time',
         'emulator_sha256': sha(args.emulator),
+        'assembler_sha256': sha(shutil.which('asm198x')),
         'sources': {'demo.asm': sha(ROOT / 'demo.asm'),
-                    'square-wave.inc': sha(ROOT / 'square-wave.inc')},
+                    'square-wave.inc': sha(ROOT / 'square-wave.inc'),
+                    'verification/verify.py': sha(Path(__file__))},
         'frames_per_case': FRAMES,
         'cases': [],
         'limits': 'Emulator observations; no original-hardware or listening claim.',
@@ -182,12 +206,17 @@ def main():
         wav = directory / 'capture.wav'
         status = run_case(args.emulator, rom, status_addr, wav)
         info = analyse(wav, FRAMES)
+        playback_seconds = check_timebase(info, FRAMES)
         entry = {'name': name, 'timer': timer, 'status_4015': status,
                  'source_sha256': sha(source), 'rom_sha256': sha(rom),
                  'wav_sha256': sha(wav), 'header_rate': info['header_rate'],
-                 'effective_rate': round(info['effective_rate'], 1)}
+                 'effective_rate': round(info['effective_rate'], 1),
+                 'sample_count': len(info['samples']),
+                 'playback_seconds': round(playback_seconds, 6),
+                 'emulated_seconds': round(FRAMES * FRAME_CYCLES / CPU_HZ, 6)}
         assert status & 1 == bit0, (name, 'status', status)
-        entry['checks'] = [f'$4015 bit 0 reads {bit0} after {FRAMES} frames']
+        entry['checks'] = [f'$4015 bit 0 reads {bit0} after {FRAMES} frames',
+                           'WAV playback duration within 2 ms of emulated time']
         if not tone:
             # Nothing but the filtered settling of the mixer's DC level.
             assert len(info['rising']) <= 2, (name, 'unexpected crossings', len(info['rising']))
@@ -215,6 +244,8 @@ def main():
             assert abs(measured / expected_hz(timer) - 1) < 0.005, (name, measured)
             entry['frequency_hz'] = round(measured, 2)
             entry['tone_seconds'] = round(seconds, 4)
+            entry['playback_tone_seconds'] = round(seconds * info['effective_rate'] /
+                                                    info['header_rate'], 4)
             entry['checks'] += ['Tone stops after ten half-frame clocks (75-84 ms)',
                                 'Level is unchanged until the cut: no fade']
         else:
@@ -230,12 +261,35 @@ def main():
             entry['frequency_hz'] = round(measured, 2)
             entry['expected_hz'] = round(expected_hz(timer), 2)
             entry['checks'].append('Pitch within 0.5% of 1789773/(16*(t+1)), held to the end')
+        if tone:
+            entry['playback_frequency_hz'] = round(check_playback_pitch(info, measured, timer), 2)
+            entry['checks'].append('WAV playback pitch within 0.5% of timer frequency')
         report['cases'].append(entry)
         print('PASS', name, entry.get('frequency_hz', 'silent'), 'status', status, flush=True)
     results = {c['name']: c for c in report['cases']}
     ratio = results['octave']['frequency_hz'] / results['held-a4']['frequency_hz']
     assert abs(ratio - 2) < 0.01, ratio
     print('PASS octave ratio', round(ratio, 4))
+    # Change only the header of real captured audio, not the observer's inputs.
+    source_wav = out / 'held-a4' / 'capture.wav'
+    bad_wav = out / 'negative-wrong-rate.wav'
+    with wave.open(str(source_wav)) as source, wave.open(str(bad_wav), 'wb') as bad:
+        bad.setparams(source.getparams())
+        bad.setframerate(round(source.getframerate() * 48000 / 47100))
+        bad.writeframes(source.readframes(source.getnframes()))
+    bad_info = analyse(bad_wav, FRAMES)
+    measured, _ = frequency(bad_info, len(bad_info['samples']) // 2, len(bad_info['samples']))
+    negatives = {}
+    for name, check in [('duration', lambda: check_timebase(bad_info, FRAMES)),
+                        ('pitch', lambda: check_playback_pitch(bad_info, measured, 253))]:
+        try:
+            check()
+        except AssertionError as error:
+            negatives[name] = str(error)
+            print('PASS negative control rejected', name, error)
+        else:
+            raise AssertionError(f'{name} accepted a deliberately mislabelled WAV')
+    report['negative_control'] = {'wav_sha256': sha(bad_wav), 'rejections': negatives}
     rates = {(c['header_rate'], c['effective_rate']) for c in report['cases']}
     report['audio_timebase'] = [{'wav_header_hz': h, 'samples_per_emulated_second': e}
                                 for h, e in sorted(rates)]
