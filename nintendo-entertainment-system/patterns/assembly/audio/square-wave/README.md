@@ -39,16 +39,20 @@ captured PCM:
 | load-before-enable (`$4003` before `$4015`) | silent, length counter zero |
 | length-expires (halt cleared, index 0 = 10) | tone stops after 75–84 ms at full level, no fade |
 
-Pitch and duration are measured in emulated time: samples in the capture
-divided by the emulated seconds that produced them (120 NTSC frames of
-29,780.5 CPU cycles). Emu198x's NES capture currently emits about 47,100
-samples per emulated second while its WAV header says 48,000, so a player
-reading the header hears it about 1.9% sharp. The results record both rates.
+Pitch and duration are checked twice: against emulated time (120 NTSC
+frames with rendering off) and against the WAV header, as an audio player
+would play them. The current capture advertises 48,000 Hz and contains
+95,845 samples over about 1.99677 seconds. A-4 measures 440.4 Hz at playback;
+the length-limited tone stops after about 81.8 ms. Each capture must agree
+with emulated duration within 2 ms and each tone with its timer frequency
+within 0.5%. A copy with a deliberately wrong sample-rate header must fail
+both checks.
 
 The retained [results](verification/evidence/results.json) identify source,
 ROM, capture and emulator hashes; [baseline](verification/evidence/baseline.json)
 identifies the original page and what was wrong with it. Regenerate results
-when the routine changes.
+when the routine or capture path changes. The [run record](verification/evidence/run.md)
+names the emulator revision and the separately executed APU regressions.
 
 Hardware sources: NESdev Wiki, [APU Pulse](https://www.nesdev.org/wiki/APU_Pulse),
 [APU Sweep](https://www.nesdev.org/wiki/APU_Sweep) ("Muting"),
