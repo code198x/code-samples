@@ -1,0 +1,9 @@
+{
+  "repository": "https://github.com/code198x/website",
+  "revision": "c46a2149bba18b143ecacefa506d7bbfa6ed9f0c",
+  "path": "src/content/patterns/commodore-64/assembly/input/joystick-reading.mdx",
+  "sha256": {
+    "baseline1.inc": "4bf69503a89a6b8c0f7ea1d9770c276dbb19d659fb036c02322f4fbcf3512cd8",
+    "baseline2.inc": "b1aa0ff10a16f3f286b321d2a18375943200b0041516a318726f7f4ae4ed25e6"
+  }
+}
