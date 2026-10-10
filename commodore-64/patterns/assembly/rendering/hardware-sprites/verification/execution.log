@@ -1,0 +1,22 @@
+PASS 160 0 emu pal
+PASS 160 0 vice pal
+PASS 160 0 emu ntsc
+PASS 160 0 vice ntsc
+PASS 24 170 emu pal
+PASS 24 170 vice pal
+PASS 24 170 emu ntsc
+PASS 24 170 vice ntsc
+PASS 255 84 emu pal
+PASS 255 84 vice pal
+PASS 255 84 emu ntsc
+PASS 255 84 vice ntsc
+PASS 256 170 emu pal
+PASS 256 170 vice pal
+PASS 256 170 emu ntsc
+PASS 256 170 vice ntsc
+PASS 296 84 emu pal
+PASS 296 84 vice pal
+PASS 296 84 emu ntsc
+PASS 296 84 vice ntsc
+PASS negative control rejected: wrong pixels: missing 144, extra 144
+20 captures passed; negative control rejected
