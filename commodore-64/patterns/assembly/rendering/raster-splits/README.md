@@ -63,10 +63,14 @@ The record in `verification/results.json` contains:
 - Forty-eight maintained-example captures: compare lines 64, 130, 131 and
   200, both engines, PAL and NTSC, three separated frames per configuration.
 - Foreground frame progress and A/X/Y preservation checks. Emu198x is
-  synchronised to guest instructions; VICE uses conditional breakpoints.
+  synchronised to completed guest instructions; VICE uses conditional breakpoints.
+  Emu198x then runs normally for two frames to emit a fresh screenshot.
 - Every blue pixel checked: no colour outside the lower display window,
   no holes, one blue colour, and transition rows matching the reference
   fixture. Per-column transition runs retain the partial-line boundary.
+- A PAL/NTSC capture control patches blue to black while running. Debug-only
+  screenshots must reproduce the stale blue frame; normal running must emit
+  black, and restoring the write must bring blue back.
 - Twelve negative captures where the blue write is deliberately replaced
   with black. The same picture observer must reject each one.
 

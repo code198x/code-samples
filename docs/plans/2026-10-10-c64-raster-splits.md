@@ -44,3 +44,17 @@ frame stepping was replaced with guest-PC synchronisation, and vertical
 coordinates now use hardware raster origins rather than sprite Y origins
 (which include the sprite's one-line start delay). The fixed capture origins
 were checked against the renderer code and VICE's documented crop constants.
+
+## Capture refresh correction
+
+Final review after sample PR #64 found that Emu198x's session screenshot
+retains its last normally emitted frame during debugger stepping. The first
+record therefore repeated an older image across its three Emu captures.
+VICE independently established the timing finding; this correction refreshes
+each Emu capture through two normal frames after the state checks. A live
+blue-to-black patch reproduces the stale debug-only image, then proves normal
+running refreshes it and restoring the patch brings blue back.
+
+The foreground observer also leaves any mid-instruction PC match left by
+normal running before measuring its three completed guest frame updates.
+The published assembly program is unchanged.
