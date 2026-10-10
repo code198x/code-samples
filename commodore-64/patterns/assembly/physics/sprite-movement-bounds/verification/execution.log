@@ -1,0 +1,61 @@
+REJECTED matrix emu pal 2 cases, 2 mismatches
+REJECTED matrix vice pal 2 cases, 2 mismatches
+REJECTED matrix emu ntsc 2 cases, 2 mismatches
+REJECTED matrix vice ntsc 2 cases, 2 mismatches
+PASS matrix emu pal 1536 cases, 0 mismatches
+PASS matrix vice pal 1536 cases, 0 mismatches
+PASS matrix emu ntsc 1536 cases, 0 mismatches
+PASS matrix vice ntsc 1536 cases, 0 mismatches
+REJECTED matrix emu pal 1 cases, 1 mismatches
+REJECTED matrix vice pal 1 cases, 1 mismatches
+REJECTED matrix emu ntsc 1 cases, 1 mismatches
+REJECTED matrix vice ntsc 1 cases, 1 mismatches
+PASS live emu pal 0 0 3 160 140
+PASS live emu pal 1 8 60 280 140
+PASS live emu pal 2 0 4 280 140
+PASS live emu pal 3 4 20 240 140
+PASS live emu pal 4 2 80 240 229
+PASS live emu pal 5 8 60 320 229
+PASS live emu pal 6 5 170 24 50
+PASS live emu pal 7 3 4 24 50
+PASS live emu pal 8 12 4 24 50
+PASS live emu pal 9 15 4 24 50
+PASS live emu pal 10 16 4 24 50
+PASS live emu pal 11 10 3 30 56
+PASS live vice pal 0 0 3 160 140
+PASS live vice pal 1 8 60 280 140
+PASS live vice pal 2 0 4 280 140
+PASS live vice pal 3 4 20 240 140
+PASS live vice pal 4 2 80 240 229
+PASS live vice pal 5 8 60 320 229
+PASS live vice pal 6 5 170 24 50
+PASS live vice pal 7 3 4 24 50
+PASS live vice pal 8 12 4 24 50
+PASS live vice pal 9 15 4 24 50
+PASS live vice pal 10 16 4 24 50
+PASS live vice pal 11 10 3 30 56
+PASS live emu ntsc 0 0 3 160 140
+PASS live emu ntsc 1 8 60 280 140
+PASS live emu ntsc 2 0 4 280 140
+PASS live emu ntsc 3 4 20 240 140
+PASS live emu ntsc 4 2 80 240 229
+PASS live emu ntsc 5 8 60 320 229
+PASS live emu ntsc 6 5 170 24 50
+PASS live emu ntsc 7 3 4 24 50
+PASS live emu ntsc 8 12 4 24 50
+PASS live emu ntsc 9 15 4 24 50
+PASS live emu ntsc 10 16 4 24 50
+PASS live emu ntsc 11 10 3 30 56
+PASS live vice ntsc 0 0 3 160 140
+PASS live vice ntsc 1 8 60 280 140
+PASS live vice ntsc 2 0 4 280 140
+PASS live vice ntsc 3 4 20 240 140
+PASS live vice ntsc 4 2 80 240 229
+PASS live vice ntsc 5 8 60 320 229
+PASS live vice ntsc 6 5 170 24 50
+PASS live vice ntsc 7 3 4 24 50
+PASS live vice ntsc 8 12 4 24 50
+PASS live vice ntsc 9 15 4 24 50
+PASS live vice ntsc 10 16 4 24 50
+PASS live vice ntsc 11 10 3 30 56
+PASS: baseline and mutation rejected; 6144 matrix rows and 48 live captures
