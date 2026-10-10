@@ -1,0 +1,11852 @@
+{
+  "sources": {
+    "demo.asm": "489b9d02bdb8405f712fe441f787eec54fe34e3ee537676eef2cba582e2cdd63",
+    "joystick.inc": "1783dc758f76ba4b165f86aa5e637a5fdaf7ae675c46c80144f20c797f9388a5",
+    "verification/verify.py": "653b4d5a4e54eecf2c93d81c0c903db7f55840bda3932ee738d403302994335f",
+    "verification/probe.asm": "11235d51622649934496c8dccb6156c443a5acb42853c561cc827df3116f3a99",
+    "verification/baseline1.inc": "4bf69503a89a6b8c0f7ea1d9770c276dbb19d659fb036c02322f4fbcf3512cd8",
+    "verification/baseline2.inc": "b1aa0ff10a16f3f286b321d2a18375943200b0041516a318726f7f4ae4ed25e6"
+  },
+  "shared_sources": {
+    "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py": "39c324ee55bd758a7481d1b2e979709447f2897a83f33efb71a70c97c447658b",
+    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "589022dbe37609c612eada0142858990e378bde38f5f10debcc074015f771bef"
+  },
+  "tools": {
+    "assembler": {
+      "sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8"
+    },
+    "acme": {
+      "sha256": "7be6afb147f75c974a48a0540cdb8affc0760ed94bed4d822d95c7e8ee4bb35c"
+    },
+    "emulator": {
+      "sha256": "292cb7420c319e886b66e0fe88a71f2b40d82a3b047755c32194ecdb7e62c895"
+    },
+    "vice": {
+      "sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
+    }
+  },
+  "keyboard_probe": [
+    {
+      "model": "pal",
+      "key": "none",
+      "emulator": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    },
+    {
+      "model": "pal",
+      "key": "1",
+      "emulator": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    },
+    {
+      "model": "pal",
+      "key": "SPACE",
+      "emulator": [
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    },
+    {
+      "model": "pal",
+      "key": "RETURN",
+      "emulator": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "reference": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2
+      ],
+      "matches_reference": false,
+      "known_difference": "reverse keyboard scan"
+    },
+    {
+      "model": "pal",
+      "key": "A",
+      "emulator": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    },
+    {
+      "model": "ntsc",
+      "key": "none",
+      "emulator": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    },
+    {
+      "model": "ntsc",
+      "key": "1",
+      "emulator": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    },
+    {
+      "model": "ntsc",
+      "key": "SPACE",
+      "emulator": [
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    },
+    {
+      "model": "ntsc",
+      "key": "RETURN",
+      "emulator": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "reference": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2
+      ],
+      "matches_reference": false,
+      "known_difference": "reverse keyboard scan"
+    },
+    {
+      "model": "ntsc",
+      "key": "A",
+      "emulator": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "matches_reference": true,
+      "known_difference": null
+    }
+  ],
+  "cases": [
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 1,
+      "input": [
+        1,
+        0
+      ],
+      "observed": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 2,
+      "input": [
+        2,
+        0
+      ],
+      "observed": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 3,
+      "input": [
+        3,
+        0
+      ],
+      "observed": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 4,
+      "input": [
+        4,
+        0
+      ],
+      "observed": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 5,
+      "input": [
+        5,
+        0
+      ],
+      "observed": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 6,
+      "input": [
+        6,
+        0
+      ],
+      "observed": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 7,
+      "input": [
+        7,
+        0
+      ],
+      "observed": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 8,
+      "input": [
+        8,
+        0
+      ],
+      "observed": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 9,
+      "input": [
+        9,
+        0
+      ],
+      "observed": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 10,
+      "input": [
+        10,
+        0
+      ],
+      "observed": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 11,
+      "input": [
+        11,
+        0
+      ],
+      "observed": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 12,
+      "input": [
+        12,
+        0
+      ],
+      "observed": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 13,
+      "input": [
+        13,
+        0
+      ],
+      "observed": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 14,
+      "input": [
+        14,
+        0
+      ],
+      "observed": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 15,
+      "input": [
+        15,
+        0
+      ],
+      "observed": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 16,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 17,
+      "input": [
+        17,
+        0
+      ],
+      "observed": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 18,
+      "input": [
+        18,
+        0
+      ],
+      "observed": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 19,
+      "input": [
+        19,
+        0
+      ],
+      "observed": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 20,
+      "input": [
+        20,
+        0
+      ],
+      "observed": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 21,
+      "input": [
+        21,
+        0
+      ],
+      "observed": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 22,
+      "input": [
+        22,
+        0
+      ],
+      "observed": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 23,
+      "input": [
+        23,
+        0
+      ],
+      "observed": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 24,
+      "input": [
+        24,
+        0
+      ],
+      "observed": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 25,
+      "input": [
+        25,
+        0
+      ],
+      "observed": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 26,
+      "input": [
+        26,
+        0
+      ],
+      "observed": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 27,
+      "input": [
+        27,
+        0
+      ],
+      "observed": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 28,
+      "input": [
+        28,
+        0
+      ],
+      "observed": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 29,
+      "input": [
+        29,
+        0
+      ],
+      "observed": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 30,
+      "input": [
+        30,
+        0
+      ],
+      "observed": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 31,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "ca37b4e3f7382288fc73fdbaf256eba28089ff603e94f705c5a8c64e5402114f",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 32,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 33,
+      "input": [
+        0,
+        1
+      ],
+      "observed": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 34,
+      "input": [
+        0,
+        2
+      ],
+      "observed": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 35,
+      "input": [
+        0,
+        3
+      ],
+      "observed": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 36,
+      "input": [
+        0,
+        4
+      ],
+      "observed": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 37,
+      "input": [
+        0,
+        5
+      ],
+      "observed": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 38,
+      "input": [
+        0,
+        6
+      ],
+      "observed": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 39,
+      "input": [
+        0,
+        7
+      ],
+      "observed": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 40,
+      "input": [
+        0,
+        8
+      ],
+      "observed": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 41,
+      "input": [
+        0,
+        9
+      ],
+      "observed": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 42,
+      "input": [
+        0,
+        10
+      ],
+      "observed": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 43,
+      "input": [
+        0,
+        11
+      ],
+      "observed": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 44,
+      "input": [
+        0,
+        12
+      ],
+      "observed": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 45,
+      "input": [
+        0,
+        13
+      ],
+      "observed": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 46,
+      "input": [
+        0,
+        14
+      ],
+      "observed": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 47,
+      "input": [
+        0,
+        15
+      ],
+      "observed": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 48,
+      "input": [
+        0,
+        16
+      ],
+      "observed": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 49,
+      "input": [
+        0,
+        17
+      ],
+      "observed": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 50,
+      "input": [
+        0,
+        18
+      ],
+      "observed": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 51,
+      "input": [
+        0,
+        19
+      ],
+      "observed": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 52,
+      "input": [
+        0,
+        20
+      ],
+      "observed": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 53,
+      "input": [
+        0,
+        21
+      ],
+      "observed": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 54,
+      "input": [
+        0,
+        22
+      ],
+      "observed": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 55,
+      "input": [
+        0,
+        23
+      ],
+      "observed": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 56,
+      "input": [
+        0,
+        24
+      ],
+      "observed": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 57,
+      "input": [
+        0,
+        25
+      ],
+      "observed": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 58,
+      "input": [
+        0,
+        26
+      ],
+      "observed": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 59,
+      "input": [
+        0,
+        27
+      ],
+      "observed": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 60,
+      "input": [
+        0,
+        28
+      ],
+      "observed": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 61,
+      "input": [
+        0,
+        29
+      ],
+      "observed": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 62,
+      "input": [
+        0,
+        30
+      ],
+      "observed": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 63,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "f4d3a8833f13c9e7beebcfbcc34bb43e60fa724ae97f2c540292735c5b79d99e",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 64,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 65,
+      "input": [
+        1,
+        30
+      ],
+      "observed": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 66,
+      "input": [
+        2,
+        29
+      ],
+      "observed": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 67,
+      "input": [
+        3,
+        28
+      ],
+      "observed": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 68,
+      "input": [
+        4,
+        27
+      ],
+      "observed": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 69,
+      "input": [
+        5,
+        26
+      ],
+      "observed": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 70,
+      "input": [
+        6,
+        25
+      ],
+      "observed": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 71,
+      "input": [
+        7,
+        24
+      ],
+      "observed": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 72,
+      "input": [
+        8,
+        23
+      ],
+      "observed": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ],
+      "expected": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 73,
+      "input": [
+        9,
+        22
+      ],
+      "observed": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 74,
+      "input": [
+        10,
+        21
+      ],
+      "observed": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 75,
+      "input": [
+        11,
+        20
+      ],
+      "observed": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 76,
+      "input": [
+        12,
+        19
+      ],
+      "observed": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 77,
+      "input": [
+        13,
+        18
+      ],
+      "observed": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 78,
+      "input": [
+        14,
+        17
+      ],
+      "observed": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 79,
+      "input": [
+        15,
+        16
+      ],
+      "observed": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "0c31a3e9bc5885c814a29ec11599f032c89f09f133a9f8b9817a51693b55ff7a",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 80,
+      "input": [
+        16,
+        15
+      ],
+      "observed": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ],
+      "expected": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 81,
+      "input": [
+        17,
+        14
+      ],
+      "observed": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 82,
+      "input": [
+        18,
+        13
+      ],
+      "observed": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 83,
+      "input": [
+        19,
+        12
+      ],
+      "observed": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 84,
+      "input": [
+        20,
+        11
+      ],
+      "observed": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 85,
+      "input": [
+        21,
+        10
+      ],
+      "observed": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 86,
+      "input": [
+        22,
+        9
+      ],
+      "observed": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 87,
+      "input": [
+        23,
+        8
+      ],
+      "observed": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 88,
+      "input": [
+        24,
+        7
+      ],
+      "observed": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ],
+      "expected": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 89,
+      "input": [
+        25,
+        6
+      ],
+      "observed": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 90,
+      "input": [
+        26,
+        5
+      ],
+      "observed": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 91,
+      "input": [
+        27,
+        4
+      ],
+      "observed": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 92,
+      "input": [
+        28,
+        3
+      ],
+      "observed": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 93,
+      "input": [
+        29,
+        2
+      ],
+      "observed": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 94,
+      "input": [
+        30,
+        1
+      ],
+      "observed": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 95,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "6a1577ff8ea7f954ac4b37aa8f1bf66685c0c66252fc981f172967b08f54b8ec",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 96,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 97,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 98,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 99,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 100,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 101,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 102,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 1,
+      "input": [
+        1,
+        0
+      ],
+      "observed": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 2,
+      "input": [
+        2,
+        0
+      ],
+      "observed": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 3,
+      "input": [
+        3,
+        0
+      ],
+      "observed": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 4,
+      "input": [
+        4,
+        0
+      ],
+      "observed": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 5,
+      "input": [
+        5,
+        0
+      ],
+      "observed": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 6,
+      "input": [
+        6,
+        0
+      ],
+      "observed": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 7,
+      "input": [
+        7,
+        0
+      ],
+      "observed": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 8,
+      "input": [
+        8,
+        0
+      ],
+      "observed": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 9,
+      "input": [
+        9,
+        0
+      ],
+      "observed": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 10,
+      "input": [
+        10,
+        0
+      ],
+      "observed": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 11,
+      "input": [
+        11,
+        0
+      ],
+      "observed": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 12,
+      "input": [
+        12,
+        0
+      ],
+      "observed": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 13,
+      "input": [
+        13,
+        0
+      ],
+      "observed": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 14,
+      "input": [
+        14,
+        0
+      ],
+      "observed": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 15,
+      "input": [
+        15,
+        0
+      ],
+      "observed": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 16,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 17,
+      "input": [
+        17,
+        0
+      ],
+      "observed": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 18,
+      "input": [
+        18,
+        0
+      ],
+      "observed": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 19,
+      "input": [
+        19,
+        0
+      ],
+      "observed": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 20,
+      "input": [
+        20,
+        0
+      ],
+      "observed": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 21,
+      "input": [
+        21,
+        0
+      ],
+      "observed": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 22,
+      "input": [
+        22,
+        0
+      ],
+      "observed": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 23,
+      "input": [
+        23,
+        0
+      ],
+      "observed": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 24,
+      "input": [
+        24,
+        0
+      ],
+      "observed": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 25,
+      "input": [
+        25,
+        0
+      ],
+      "observed": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 26,
+      "input": [
+        26,
+        0
+      ],
+      "observed": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 27,
+      "input": [
+        27,
+        0
+      ],
+      "observed": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 28,
+      "input": [
+        28,
+        0
+      ],
+      "observed": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 29,
+      "input": [
+        29,
+        0
+      ],
+      "observed": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 30,
+      "input": [
+        30,
+        0
+      ],
+      "observed": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 31,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "23f6ad48b7c076069c35564bc72000197d27bd7dc6b54ea9c8eaf1cf54b888ad",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 32,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 33,
+      "input": [
+        0,
+        1
+      ],
+      "observed": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 34,
+      "input": [
+        0,
+        2
+      ],
+      "observed": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 35,
+      "input": [
+        0,
+        3
+      ],
+      "observed": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 36,
+      "input": [
+        0,
+        4
+      ],
+      "observed": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 37,
+      "input": [
+        0,
+        5
+      ],
+      "observed": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 38,
+      "input": [
+        0,
+        6
+      ],
+      "observed": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 39,
+      "input": [
+        0,
+        7
+      ],
+      "observed": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 40,
+      "input": [
+        0,
+        8
+      ],
+      "observed": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 41,
+      "input": [
+        0,
+        9
+      ],
+      "observed": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 42,
+      "input": [
+        0,
+        10
+      ],
+      "observed": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 43,
+      "input": [
+        0,
+        11
+      ],
+      "observed": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 44,
+      "input": [
+        0,
+        12
+      ],
+      "observed": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 45,
+      "input": [
+        0,
+        13
+      ],
+      "observed": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 46,
+      "input": [
+        0,
+        14
+      ],
+      "observed": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 47,
+      "input": [
+        0,
+        15
+      ],
+      "observed": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 48,
+      "input": [
+        0,
+        16
+      ],
+      "observed": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 49,
+      "input": [
+        0,
+        17
+      ],
+      "observed": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 50,
+      "input": [
+        0,
+        18
+      ],
+      "observed": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 51,
+      "input": [
+        0,
+        19
+      ],
+      "observed": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 52,
+      "input": [
+        0,
+        20
+      ],
+      "observed": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 53,
+      "input": [
+        0,
+        21
+      ],
+      "observed": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 54,
+      "input": [
+        0,
+        22
+      ],
+      "observed": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 55,
+      "input": [
+        0,
+        23
+      ],
+      "observed": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 56,
+      "input": [
+        0,
+        24
+      ],
+      "observed": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 57,
+      "input": [
+        0,
+        25
+      ],
+      "observed": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 58,
+      "input": [
+        0,
+        26
+      ],
+      "observed": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 59,
+      "input": [
+        0,
+        27
+      ],
+      "observed": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 60,
+      "input": [
+        0,
+        28
+      ],
+      "observed": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 61,
+      "input": [
+        0,
+        29
+      ],
+      "observed": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 62,
+      "input": [
+        0,
+        30
+      ],
+      "observed": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 63,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "34e52ce512f1f9bf1b72377ff7398a6ab633cb6886b41d04779cbb41de9ad960",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 64,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 65,
+      "input": [
+        1,
+        30
+      ],
+      "observed": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 66,
+      "input": [
+        2,
+        29
+      ],
+      "observed": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 67,
+      "input": [
+        3,
+        28
+      ],
+      "observed": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 68,
+      "input": [
+        4,
+        27
+      ],
+      "observed": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 69,
+      "input": [
+        5,
+        26
+      ],
+      "observed": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 70,
+      "input": [
+        6,
+        25
+      ],
+      "observed": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 71,
+      "input": [
+        7,
+        24
+      ],
+      "observed": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 72,
+      "input": [
+        8,
+        23
+      ],
+      "observed": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ],
+      "expected": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 73,
+      "input": [
+        9,
+        22
+      ],
+      "observed": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 74,
+      "input": [
+        10,
+        21
+      ],
+      "observed": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 75,
+      "input": [
+        11,
+        20
+      ],
+      "observed": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 76,
+      "input": [
+        12,
+        19
+      ],
+      "observed": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 77,
+      "input": [
+        13,
+        18
+      ],
+      "observed": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 78,
+      "input": [
+        14,
+        17
+      ],
+      "observed": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 79,
+      "input": [
+        15,
+        16
+      ],
+      "observed": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "5a07e9d4fb9c33e2dac01ea9f9928c50026b893435541043bd7454454721f04a",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 80,
+      "input": [
+        16,
+        15
+      ],
+      "observed": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ],
+      "expected": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 81,
+      "input": [
+        17,
+        14
+      ],
+      "observed": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 82,
+      "input": [
+        18,
+        13
+      ],
+      "observed": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 83,
+      "input": [
+        19,
+        12
+      ],
+      "observed": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 84,
+      "input": [
+        20,
+        11
+      ],
+      "observed": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 85,
+      "input": [
+        21,
+        10
+      ],
+      "observed": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 86,
+      "input": [
+        22,
+        9
+      ],
+      "observed": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 87,
+      "input": [
+        23,
+        8
+      ],
+      "observed": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 88,
+      "input": [
+        24,
+        7
+      ],
+      "observed": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ],
+      "expected": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 89,
+      "input": [
+        25,
+        6
+      ],
+      "observed": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 90,
+      "input": [
+        26,
+        5
+      ],
+      "observed": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 91,
+      "input": [
+        27,
+        4
+      ],
+      "observed": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 92,
+      "input": [
+        28,
+        3
+      ],
+      "observed": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 93,
+      "input": [
+        29,
+        2
+      ],
+      "observed": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 94,
+      "input": [
+        30,
+        1
+      ],
+      "observed": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 95,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "c46c15340b0377e18b1b55950cff23d8cc50da6b59b4c8f31b18681234c16668",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 96,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 97,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 98,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 99,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 100,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 101,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 102,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 1,
+      "input": [
+        1,
+        0
+      ],
+      "observed": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 2,
+      "input": [
+        2,
+        0
+      ],
+      "observed": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 3,
+      "input": [
+        3,
+        0
+      ],
+      "observed": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 4,
+      "input": [
+        4,
+        0
+      ],
+      "observed": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 5,
+      "input": [
+        5,
+        0
+      ],
+      "observed": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 6,
+      "input": [
+        6,
+        0
+      ],
+      "observed": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 7,
+      "input": [
+        7,
+        0
+      ],
+      "observed": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 8,
+      "input": [
+        8,
+        0
+      ],
+      "observed": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 9,
+      "input": [
+        9,
+        0
+      ],
+      "observed": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 10,
+      "input": [
+        10,
+        0
+      ],
+      "observed": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 11,
+      "input": [
+        11,
+        0
+      ],
+      "observed": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 12,
+      "input": [
+        12,
+        0
+      ],
+      "observed": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 13,
+      "input": [
+        13,
+        0
+      ],
+      "observed": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 14,
+      "input": [
+        14,
+        0
+      ],
+      "observed": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 15,
+      "input": [
+        15,
+        0
+      ],
+      "observed": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 16,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 17,
+      "input": [
+        17,
+        0
+      ],
+      "observed": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 18,
+      "input": [
+        18,
+        0
+      ],
+      "observed": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 19,
+      "input": [
+        19,
+        0
+      ],
+      "observed": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 20,
+      "input": [
+        20,
+        0
+      ],
+      "observed": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 21,
+      "input": [
+        21,
+        0
+      ],
+      "observed": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 22,
+      "input": [
+        22,
+        0
+      ],
+      "observed": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 23,
+      "input": [
+        23,
+        0
+      ],
+      "observed": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 24,
+      "input": [
+        24,
+        0
+      ],
+      "observed": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 25,
+      "input": [
+        25,
+        0
+      ],
+      "observed": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 26,
+      "input": [
+        26,
+        0
+      ],
+      "observed": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 27,
+      "input": [
+        27,
+        0
+      ],
+      "observed": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 28,
+      "input": [
+        28,
+        0
+      ],
+      "observed": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 29,
+      "input": [
+        29,
+        0
+      ],
+      "observed": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 30,
+      "input": [
+        30,
+        0
+      ],
+      "observed": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 31,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "b31aa52af12e12923aed9582594de569b679048f8189c6e65c12336cda9af2f1",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 32,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 33,
+      "input": [
+        0,
+        1
+      ],
+      "observed": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 34,
+      "input": [
+        0,
+        2
+      ],
+      "observed": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 35,
+      "input": [
+        0,
+        3
+      ],
+      "observed": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 36,
+      "input": [
+        0,
+        4
+      ],
+      "observed": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 37,
+      "input": [
+        0,
+        5
+      ],
+      "observed": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 38,
+      "input": [
+        0,
+        6
+      ],
+      "observed": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 39,
+      "input": [
+        0,
+        7
+      ],
+      "observed": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 40,
+      "input": [
+        0,
+        8
+      ],
+      "observed": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 41,
+      "input": [
+        0,
+        9
+      ],
+      "observed": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 42,
+      "input": [
+        0,
+        10
+      ],
+      "observed": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 43,
+      "input": [
+        0,
+        11
+      ],
+      "observed": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 44,
+      "input": [
+        0,
+        12
+      ],
+      "observed": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 45,
+      "input": [
+        0,
+        13
+      ],
+      "observed": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 46,
+      "input": [
+        0,
+        14
+      ],
+      "observed": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 47,
+      "input": [
+        0,
+        15
+      ],
+      "observed": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 48,
+      "input": [
+        0,
+        16
+      ],
+      "observed": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 49,
+      "input": [
+        0,
+        17
+      ],
+      "observed": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 50,
+      "input": [
+        0,
+        18
+      ],
+      "observed": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 51,
+      "input": [
+        0,
+        19
+      ],
+      "observed": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 52,
+      "input": [
+        0,
+        20
+      ],
+      "observed": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 53,
+      "input": [
+        0,
+        21
+      ],
+      "observed": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 54,
+      "input": [
+        0,
+        22
+      ],
+      "observed": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 55,
+      "input": [
+        0,
+        23
+      ],
+      "observed": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 56,
+      "input": [
+        0,
+        24
+      ],
+      "observed": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 57,
+      "input": [
+        0,
+        25
+      ],
+      "observed": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 58,
+      "input": [
+        0,
+        26
+      ],
+      "observed": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 59,
+      "input": [
+        0,
+        27
+      ],
+      "observed": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 60,
+      "input": [
+        0,
+        28
+      ],
+      "observed": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 61,
+      "input": [
+        0,
+        29
+      ],
+      "observed": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 62,
+      "input": [
+        0,
+        30
+      ],
+      "observed": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 63,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "8ff4e6617514c0dd47649733fd07c2d145bc6f504f4cfdd3d447d152d6df73b2",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 64,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 65,
+      "input": [
+        1,
+        30
+      ],
+      "observed": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 66,
+      "input": [
+        2,
+        29
+      ],
+      "observed": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 67,
+      "input": [
+        3,
+        28
+      ],
+      "observed": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 68,
+      "input": [
+        4,
+        27
+      ],
+      "observed": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 69,
+      "input": [
+        5,
+        26
+      ],
+      "observed": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 70,
+      "input": [
+        6,
+        25
+      ],
+      "observed": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 71,
+      "input": [
+        7,
+        24
+      ],
+      "observed": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 72,
+      "input": [
+        8,
+        23
+      ],
+      "observed": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ],
+      "expected": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 73,
+      "input": [
+        9,
+        22
+      ],
+      "observed": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 74,
+      "input": [
+        10,
+        21
+      ],
+      "observed": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 75,
+      "input": [
+        11,
+        20
+      ],
+      "observed": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 76,
+      "input": [
+        12,
+        19
+      ],
+      "observed": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 77,
+      "input": [
+        13,
+        18
+      ],
+      "observed": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 78,
+      "input": [
+        14,
+        17
+      ],
+      "observed": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 79,
+      "input": [
+        15,
+        16
+      ],
+      "observed": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "00247116afad1e03aad319e3d07fe5a8479005c322e6d20691f633cf2e502e0e",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 80,
+      "input": [
+        16,
+        15
+      ],
+      "observed": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ],
+      "expected": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 81,
+      "input": [
+        17,
+        14
+      ],
+      "observed": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 82,
+      "input": [
+        18,
+        13
+      ],
+      "observed": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 83,
+      "input": [
+        19,
+        12
+      ],
+      "observed": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 84,
+      "input": [
+        20,
+        11
+      ],
+      "observed": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 85,
+      "input": [
+        21,
+        10
+      ],
+      "observed": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 86,
+      "input": [
+        22,
+        9
+      ],
+      "observed": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 87,
+      "input": [
+        23,
+        8
+      ],
+      "observed": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 88,
+      "input": [
+        24,
+        7
+      ],
+      "observed": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ],
+      "expected": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 89,
+      "input": [
+        25,
+        6
+      ],
+      "observed": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 90,
+      "input": [
+        26,
+        5
+      ],
+      "observed": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 91,
+      "input": [
+        27,
+        4
+      ],
+      "observed": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 92,
+      "input": [
+        28,
+        3
+      ],
+      "observed": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 93,
+      "input": [
+        29,
+        2
+      ],
+      "observed": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 94,
+      "input": [
+        30,
+        1
+      ],
+      "observed": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 95,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "24f17b08678d05f34ee92604e52e71efb9946bcc27e7ac15ae05ecc226fde8fd",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 96,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 97,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 98,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 99,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 100,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 101,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ]
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 102,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 1,
+      "input": [
+        1,
+        0
+      ],
+      "observed": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 2,
+      "input": [
+        2,
+        0
+      ],
+      "observed": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 3,
+      "input": [
+        3,
+        0
+      ],
+      "observed": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 4,
+      "input": [
+        4,
+        0
+      ],
+      "observed": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        4,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 5,
+      "input": [
+        5,
+        0
+      ],
+      "observed": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        5,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 6,
+      "input": [
+        6,
+        0
+      ],
+      "observed": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 7,
+      "input": [
+        7,
+        0
+      ],
+      "observed": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        7,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 8,
+      "input": [
+        8,
+        0
+      ],
+      "observed": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        8,
+        0,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 9,
+      "input": [
+        9,
+        0
+      ],
+      "observed": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        9,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 10,
+      "input": [
+        10,
+        0
+      ],
+      "observed": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        10,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 11,
+      "input": [
+        11,
+        0
+      ],
+      "observed": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        11,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 12,
+      "input": [
+        12,
+        0
+      ],
+      "observed": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        12,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 13,
+      "input": [
+        13,
+        0
+      ],
+      "observed": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        13,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 14,
+      "input": [
+        14,
+        0
+      ],
+      "observed": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        14,
+        0,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 15,
+      "input": [
+        15,
+        0
+      ],
+      "observed": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        15,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 16,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 17,
+      "input": [
+        17,
+        0
+      ],
+      "observed": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        17,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 18,
+      "input": [
+        18,
+        0
+      ],
+      "observed": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        18,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 19,
+      "input": [
+        19,
+        0
+      ],
+      "observed": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        19,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 20,
+      "input": [
+        20,
+        0
+      ],
+      "observed": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        20,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 21,
+      "input": [
+        21,
+        0
+      ],
+      "observed": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        21,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 22,
+      "input": [
+        22,
+        0
+      ],
+      "observed": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        22,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 23,
+      "input": [
+        23,
+        0
+      ],
+      "observed": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        23,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 24,
+      "input": [
+        24,
+        0
+      ],
+      "observed": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        24,
+        0,
+        8,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 25,
+      "input": [
+        25,
+        0
+      ],
+      "observed": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        25,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 26,
+      "input": [
+        26,
+        0
+      ],
+      "observed": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        26,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 27,
+      "input": [
+        27,
+        0
+      ],
+      "observed": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        27,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 28,
+      "input": [
+        28,
+        0
+      ],
+      "observed": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        28,
+        0,
+        4,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 29,
+      "input": [
+        29,
+        0
+      ],
+      "observed": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        29,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 30,
+      "input": [
+        30,
+        0
+      ],
+      "observed": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        30,
+        0,
+        2,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 31,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "6889909c4c55627d5fd5400a259ad7816ac0e1041e80aaabb266c4c1714d7490",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 32,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 33,
+      "input": [
+        0,
+        1
+      ],
+      "observed": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 34,
+      "input": [
+        0,
+        2
+      ],
+      "observed": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        2,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 35,
+      "input": [
+        0,
+        3
+      ],
+      "observed": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        3,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 36,
+      "input": [
+        0,
+        4
+      ],
+      "observed": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        4,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 37,
+      "input": [
+        0,
+        5
+      ],
+      "observed": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        5,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 38,
+      "input": [
+        0,
+        6
+      ],
+      "observed": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        6,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 39,
+      "input": [
+        0,
+        7
+      ],
+      "observed": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 40,
+      "input": [
+        0,
+        8
+      ],
+      "observed": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        8,
+        0,
+        8,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 41,
+      "input": [
+        0,
+        9
+      ],
+      "observed": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        9,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 42,
+      "input": [
+        0,
+        10
+      ],
+      "observed": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        10,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 43,
+      "input": [
+        0,
+        11
+      ],
+      "observed": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        11,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 44,
+      "input": [
+        0,
+        12
+      ],
+      "observed": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        12,
+        0,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 45,
+      "input": [
+        0,
+        13
+      ],
+      "observed": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        13,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 46,
+      "input": [
+        0,
+        14
+      ],
+      "observed": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        14,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 47,
+      "input": [
+        0,
+        15
+      ],
+      "observed": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        0,
+        15,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 48,
+      "input": [
+        0,
+        16
+      ],
+      "observed": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        16,
+        0,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 49,
+      "input": [
+        0,
+        17
+      ],
+      "observed": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        17,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 50,
+      "input": [
+        0,
+        18
+      ],
+      "observed": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        18,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 51,
+      "input": [
+        0,
+        19
+      ],
+      "observed": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        19,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 52,
+      "input": [
+        0,
+        20
+      ],
+      "observed": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        20,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 53,
+      "input": [
+        0,
+        21
+      ],
+      "observed": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        21,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 54,
+      "input": [
+        0,
+        22
+      ],
+      "observed": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        22,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 55,
+      "input": [
+        0,
+        23
+      ],
+      "observed": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        23,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 56,
+      "input": [
+        0,
+        24
+      ],
+      "observed": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        24,
+        0,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 57,
+      "input": [
+        0,
+        25
+      ],
+      "observed": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        25,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 58,
+      "input": [
+        0,
+        26
+      ],
+      "observed": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        26,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 59,
+      "input": [
+        0,
+        27
+      ],
+      "observed": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        27,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 60,
+      "input": [
+        0,
+        28
+      ],
+      "observed": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        28,
+        0,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 61,
+      "input": [
+        0,
+        29
+      ],
+      "observed": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        29,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 62,
+      "input": [
+        0,
+        30
+      ],
+      "observed": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        30,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 63,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        1,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "bcd6b64bdbb6dbaea36636088299aadd3e8f37d56a62ca276821093ab7129b64",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 64,
+      "input": [
+        0,
+        31
+      ],
+      "observed": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        0,
+        31,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 65,
+      "input": [
+        1,
+        30
+      ],
+      "observed": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        30,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 66,
+      "input": [
+        2,
+        29
+      ],
+      "observed": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        2,
+        29,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 67,
+      "input": [
+        3,
+        28
+      ],
+      "observed": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        3,
+        28,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 68,
+      "input": [
+        4,
+        27
+      ],
+      "observed": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        4,
+        27,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 69,
+      "input": [
+        5,
+        26
+      ],
+      "observed": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        5,
+        26,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 70,
+      "input": [
+        6,
+        25
+      ],
+      "observed": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        6,
+        25,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 71,
+      "input": [
+        7,
+        24
+      ],
+      "observed": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        7,
+        24,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 72,
+      "input": [
+        8,
+        23
+      ],
+      "observed": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ],
+      "expected": [
+        8,
+        23,
+        8,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 73,
+      "input": [
+        9,
+        22
+      ],
+      "observed": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        9,
+        22,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 74,
+      "input": [
+        10,
+        21
+      ],
+      "observed": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        10,
+        21,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 75,
+      "input": [
+        11,
+        20
+      ],
+      "observed": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        11,
+        20,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 76,
+      "input": [
+        12,
+        19
+      ],
+      "observed": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ],
+      "expected": [
+        12,
+        19,
+        4,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 77,
+      "input": [
+        13,
+        18
+      ],
+      "observed": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        13,
+        18,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 78,
+      "input": [
+        14,
+        17
+      ],
+      "observed": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        14,
+        17,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 79,
+      "input": [
+        15,
+        16
+      ],
+      "observed": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "expected": [
+        15,
+        16,
+        1,
+        0,
+        1,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "1bad1f794909126824d93d14bbe62127eec5077af2075d147f338ab804e48db3",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 80,
+      "input": [
+        16,
+        15
+      ],
+      "observed": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ],
+      "expected": [
+        16,
+        15,
+        16,
+        15,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 81,
+      "input": [
+        17,
+        14
+      ],
+      "observed": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        17,
+        14,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 82,
+      "input": [
+        18,
+        13
+      ],
+      "observed": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        18,
+        13,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 83,
+      "input": [
+        19,
+        12
+      ],
+      "observed": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        19,
+        12,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 84,
+      "input": [
+        20,
+        11
+      ],
+      "observed": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        20,
+        11,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 85,
+      "input": [
+        21,
+        10
+      ],
+      "observed": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        21,
+        10,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 86,
+      "input": [
+        22,
+        9
+      ],
+      "observed": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        22,
+        9,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 87,
+      "input": [
+        23,
+        8
+      ],
+      "observed": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        23,
+        8,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 88,
+      "input": [
+        24,
+        7
+      ],
+      "observed": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ],
+      "expected": [
+        24,
+        7,
+        8,
+        7,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 89,
+      "input": [
+        25,
+        6
+      ],
+      "observed": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        25,
+        6,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 90,
+      "input": [
+        26,
+        5
+      ],
+      "observed": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        26,
+        5,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 91,
+      "input": [
+        27,
+        4
+      ],
+      "observed": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        27,
+        4,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 92,
+      "input": [
+        28,
+        3
+      ],
+      "observed": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ],
+      "expected": [
+        28,
+        3,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 93,
+      "input": [
+        29,
+        2
+      ],
+      "observed": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        29,
+        2,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 94,
+      "input": [
+        30,
+        1
+      ],
+      "observed": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        30,
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 95,
+      "input": [
+        31,
+        0
+      ],
+      "observed": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        31,
+        0,
+        1,
+        0,
+        2,
+        1
+      ],
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "5f1cce64325fc8ba0e7a502c040c0a80df41f6551f5a3f57cd1a62b3270c88e1",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 96,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 97,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 98,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 99,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        16,
+        16,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 100,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 101,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ],
+      "expected": [
+        16,
+        16,
+        16,
+        16,
+        4,
+        3
+      ]
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 102,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        3
+      ]
+    }
+  ],
+  "negative_control": [
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 1,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 2,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        2,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "rejected": true
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 1,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 2,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        2,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "rejected": true
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 1,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 2,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        2,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "rejected": true
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 1,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        16,
+        0,
+        1,
+        0
+      ],
+      "rejected": false
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 2,
+      "input": [
+        16,
+        0
+      ],
+      "observed": [
+        16,
+        0,
+        16,
+        0,
+        2,
+        0
+      ],
+      "expected": [
+        16,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "rejected": true
+    }
+  ],
+  "sizes": {
+    "routine_bytes": 100,
+    "state_bytes": 6
+  },
+  "live": [
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "9dd40126e90467677f4a5cc7dde52975ee29b8d605cad5e077b685b56e2d6063",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 1,
+      "input": [
+        1,
+        2
+      ],
+      "observed": [
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "bf611a050a1c0d8c563bc713a5ffde5edb5d183a18a50e47f08e351acc827bf6",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 2,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "48138564233213a414d6d70e807004b296cb22df72c4326da1fc19fbdd05cf96",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 3,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "48138564233213a414d6d70e807004b296cb22df72c4326da1fc19fbdd05cf96",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 4,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "8b0a49b8afad0e5e250d135465f3298c58551feae8ba5d075b2b065b74ee1117",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 5,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "39d5361a3428c44cb976ebe2d7a06b4ead65cc214857bb96f87329f51104376f",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 6,
+      "input": [
+        31,
+        31
+      ],
+      "observed": [
+        31,
+        31,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "3e608ead7c5932f2c003e1903c6c796944a5c4aaedf66402e28bd610b96668e8",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "pal",
+      "stage": 7,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          312
+        ],
+        "sha256": "7ccd979e098a05d60b8279a8c362bb30b095a9fe96ea92ee9d9090c8bf0ce798",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "dc8e44dbaaa3bf2cf009bc31da12e066f84d46d1f3c819af7edd4fc619d76a0a",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 1,
+      "input": [
+        1,
+        2
+      ],
+      "observed": [
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "1ea89fa27055c63f57ca232972e097e89da020ca77033cbb4bfaa60df291351a",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 2,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "3394cc66dc69b1a52dad0ca0f05d5447bbc8ac7ebf838ec64c27b1bd5f02687b",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 3,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "3394cc66dc69b1a52dad0ca0f05d5447bbc8ac7ebf838ec64c27b1bd5f02687b",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 4,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "e04b25e08ce6b4901860cd39b6bd5bfedb77006bdcba961ee86b16e1b79b53dd",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 5,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "e842b4e204062199f25c3615108836b86b4fcd6baecc9b6d928e8da4496abee4",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 6,
+      "input": [
+        31,
+        31
+      ],
+      "observed": [
+        31,
+        31,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "a71579e9c1ee572fc8c6d4ef5ef603a9238a6b5ac0d207be5a52b6b86c44a202",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "pal",
+      "stage": 7,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          272
+        ],
+        "sha256": "f1350c215f0f81a62f74e188129bd90cb5cd8759a5540ed2e7bd81bf11d6cd01",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "0b495936a363cb0a4f35a8bdbd3fda22ea4ab85787e281be8f2927600e0932f2",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 1,
+      "input": [
+        1,
+        2
+      ],
+      "observed": [
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "0460767017540dad0535b61a21fd4bce52cfee1b4af767f6ff671a4d930f5357",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 2,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "f7f4fc67d1e053656100d9feb6f321f3c5795936ca6da0234cc993e0ed8d1e26",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 3,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "f7f4fc67d1e053656100d9feb6f321f3c5795936ca6da0234cc993e0ed8d1e26",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 4,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "e383b8a6a99bb35c93e2109a9a3fdc7d1353eb9e26c04e52e4e4fdba4f47997f",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 5,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "02931a5c7ebe577f1dd5c125accd094bbad0340758aa76b70b20bcc710875950",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 6,
+      "input": [
+        31,
+        31
+      ],
+      "observed": [
+        31,
+        31,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "64c849feb473d75bbd02b50dc8eb0a9a53727f0783242a423114f4352155d0da",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "emu",
+      "model": "ntsc",
+      "stage": 7,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          416,
+          263
+        ],
+        "sha256": "ad0a10755b514c1296a0bda015c24c3ec3bb97762b65cc9a5d249bfc4219b77a",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 0,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "7008ff2d4987e6206d807de71bfec75390ed5e0e7e6bf463ef6b7f9da4dab6a2",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 1,
+      "input": [
+        1,
+        2
+      ],
+      "observed": [
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "e94edced44c15360a93f954476cd4258c5d86b3164cc7dc949ef8ddba7c2d2a7",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 2,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "d6653f52ab6fa1c8efb81b77f326838a321e7b6458258c08ceede4053672a8a4",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 3,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "d6653f52ab6fa1c8efb81b77f326838a321e7b6458258c08ceede4053672a8a4",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 4,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "ee48aba061da55486b6264b0922747f9e70c346d53dadebccbdac2eb5d85aba7",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 5,
+      "input": [
+        16,
+        16
+      ],
+      "observed": [
+        16,
+        16,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "5e92070a8491b7c0d115c9e0339c88c788ddb445e2443184d9010a55f5881dc9",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 6,
+      "input": [
+        31,
+        31
+      ],
+      "observed": [
+        31,
+        31,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "908f35b345bdfa3ad3da298ea1056f3421e2e70be05c94a503e0df427e362386",
+        "checked_cells": 10
+      }
+    },
+    {
+      "engine": "vice",
+      "model": "ntsc",
+      "stage": 7,
+      "input": [
+        0,
+        0
+      ],
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "prg_sha256": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee",
+      "picture": {
+        "dimensions": [
+          384,
+          247
+        ],
+        "sha256": "cbd6e9f0f22bf958f22cd24ffcaf2bdf13f41c09216c6c6cdd13b8da907e94f3",
+        "checked_cells": 10
+      }
+    }
+  ]
+}
