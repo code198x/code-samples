@@ -15,8 +15,8 @@ asm198x --dialect pasmo --cpu z80 --tapbas diagnostic.asm -o diagnostic.tap
 ```
 
 Boot a Spectrum 48K with its normal ROM and type `LOAD ""`, then play the tape.
-The BASIC loader clears RAM below `8000`, loads CODE there, and calls
-`RANDOMIZE USR 32768`. Do not import the code into RAM or restore a snapshot to
+The BASIC loader sets BASIC's RAM limit to `7FFF`, loads CODE at `8000`, and
+calls `RANDOMIZE USR 32768`. Do not import the code into RAM or restore a snapshot to
 claim tape-loading evidence.
 
 For the current Emu198x CLI:
