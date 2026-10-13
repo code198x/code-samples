@@ -28,9 +28,9 @@ emu198x-spectrum --machine spectrum_48k --rom "$SPECTRUM_ROM" \
 ```
 
 The screenshot command is a convenience, not a qualification assertion. The
-cross-stack runner checks that the ROM loader reaches `8000`, observes zeroes
-at `7000` before program execution, watches the program's stores change them,
-checks the completion PC, and compares every screen RAM byte. Neither the
+cross-stack runner checks the ROM-loaded bytes at `8000`, observes zeroes at `7000` before
+loading, watches the program's stores change them, checks the completion
+loop, and compares every screen RAM byte after a bounded 2,000-frame run. Neither the
 screen nor the completion word occupies the tape CODE payload.
 
 Use native output and JSON reporting in separate Asm invocations until
