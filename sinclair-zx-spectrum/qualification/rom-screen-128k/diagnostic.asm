@@ -40,36 +40,46 @@ start:  di
         ld a,1
         ld ($7002),a
 phase1: call hold
-        ld a,$1f               ; ROM 1, shadow
+        ld a,$17               ; ROM 1, primary: change only ROM
         call select
         ld a,2
         ld ($7002),a
 phase2: call hold
-        ld a,$07               ; both selectors can return to zero
+        ld a,$0f               ; ROM 0, shadow: exercise the other mixed pair
         call select
         ld a,3
         ld ($7002),a
 phase3: call hold
-        ld a,lock_value        ; lock ROM 1 and shadow
+        ld a,$1f               ; ROM 1, shadow
         call select
         ld a,4
         ld ($7002),a
 phase4: call hold
-        ld a,$0f               ; try to clear ROM selector only
+        ld a,$07               ; both selectors can return to zero
         call select
         ld a,5
         ld ($7002),a
 phase5: call hold
-        ld a,$17               ; try to clear display selector only
+        ld a,lock_value        ; lock ROM 1 and shadow
         call select
         ld a,6
         ld ($7002),a
 phase6: call hold
-        ld a,$07               ; try to clear both
+        ld a,$0f               ; try to clear ROM selector only
         call select
         ld a,7
         ld ($7002),a
 phase7: call hold
+        ld a,$17               ; try to clear display selector only
+        call select
+        ld a,8
+        ld ($7002),a
+phase8: call hold
+        ld a,$07               ; try to clear both
+        call select
+        ld a,9
+        ld ($7002),a
+phase9: call hold
         ld a,$a5
         xor $ff
         ld ($7000),a
