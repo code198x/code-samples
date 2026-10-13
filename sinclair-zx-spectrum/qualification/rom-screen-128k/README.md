@@ -1,8 +1,8 @@
 # 128K ROM and screen selection diagnostic
 
-This 224-byte MIT program produces alternating white/black columns in screen
+This 250-byte MIT program produces alternating white/black columns in screen
 bank 5 and the opposite columns in bank 7. It computes the sum of every byte
-in the CPU's ROM window modulo 65536 at each of seven phases. The host checks
+in the CPU's ROM window modulo 65536 at each of nine phases. The host checks
 these readbacks and the actual rendered pixels before accepting completion.
 
 Build with Asm198x's existing BASIC+CODE tape writer:
@@ -20,20 +20,25 @@ are outside the payload.
 | Phase | Write to `$7FFD` | Expected ROM | Expected display bank |
 | --- | --- | --- | --- |
 | 1 | `$07` | 0 | 5 |
-| 2 | `$1F` | 1 | 7 |
-| 3 | `$07` | 0 | 5 |
-| 4 | `$3F` | 1, now locked | 7, now locked |
-| 5 | `$0F` | 1 | 7 |
-| 6 | `$17` | 1 | 7 |
-| 7 | `$07` | 1 | 7 |
+| 2 | `$17` | 1 | 5 |
+| 3 | `$0F` | 0 | 7 |
+| 4 | `$1F` | 1 | 7 |
+| 5 | `$07` | 0 | 5 |
+| 6 | `$3F` | 1, now locked | 7, now locked |
+| 7 | `$0F` | 1 | 7 |
+| 8 | `$17` | 1 | 7 |
+| 9 | `$07` | 1 | 7 |
 
 `$7002` records the current phase; `$7003–7004` hold the little-endian computed
 sum. The exact UK ROM pair sums are 29117 and 34348. These distinguish the
 two named pages; the runner separately identifies the complete firmware by
 SHA-256. The delay at each `phaseN` label allows several full rendered frames.
-The program finally computes bytes 90,91 at `$7000–7001` and loops at `$80B1`.
+The program finally computes bytes 90,91 at `$7000–7001` and loops at `$80CB`.
 Completion alone does not mean the paging checks passed: the host must verify
-all seven phases, including every active display pixel.
+all nine phases, including every active display pixel.
+
+Recipe v2 adds the two mixed unlocked pairs, so coupling the ROM and display
+selectors cannot pass. The earlier seven-phase v1 evidence remains historical.
 
 The source basis is the [ZX Spectrum 128 Service Manual](https://spectrumforeveryone.com/wp-content/uploads/2017/11/ZX-Spectrum-128-Service-Manual.pdf),
 section 1.3, printed page 6: bit 3 selects display page 5/7, bit 4 selects ROM
