@@ -33,6 +33,7 @@ loading, watches the program's stores change them, checks the completion
 loop, and compares every screen RAM byte after a bounded 2,000-frame run. Neither the
 screen nor the completion word occupies the tape CODE payload.
 
-Use native output and JSON reporting in separate Asm invocations until
-[Asm198x #619](https://github.com/asm198x/asm198x/issues/619) is resolved. The
-qualification runner independently compares the raw bytes and native payload.
+Asm198x 0.0.61 and later preserve native tape output with JSON reporting;
+[Asm198x #619](https://github.com/asm198x/asm198x/issues/619) records the fix.
+The qualification runner retains separate invocations to support older source
+baselines and independently compares the raw bytes and native payload.
