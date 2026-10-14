@@ -30,7 +30,7 @@ data_start:
         defs 256,$ >> 8
         endm
         defs $cfc0-$,$ >> 8
-; File offset $4FC0 is beyond the $3F80 CODE boundary of extent zero:
+; CODE offset $4FC0 is beyond the $3F80 CODE boundary of extent zero:
 ; the +3DOS header occupies the first 128 bytes of the first extent.
 tail:   ld hl,$4000
         ld de,$4001

@@ -37,8 +37,7 @@ build198x plus3 --basic loader.bas --code large.bin --load-address 32768 -o larg
 ```
 
 The program checks every byte from `$8040` to `$CFBF` against the high byte
-of its address, giving each page a distinct value. It
-then jumps to `$CFC0` to draw the same striped screen and compute `5A 5B` at
+of its address, giving each page a distinct value. It then jumps to `$CFC0` to draw the same striped screen and compute `5A 5B` at
 `$7000`. It loops at `$CFE9`. A filler mismatch stops in a red-border loop
 without writing completion. The fixture is MIT licensed.
 
