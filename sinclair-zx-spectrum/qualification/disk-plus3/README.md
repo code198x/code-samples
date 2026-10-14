@@ -84,3 +84,17 @@ separately from mastering, and compares every loaded CODE byte. Results apply
 only to the exercised arrangements; other permutations remain untested.
 Production mastering options are a later follow-up under
 [Build #6](https://github.com/build198x/build198x/issues/6).
+
+## Final allocation block and directory slot
+
+`python3.13 rearrange.py boundary large.dsk boundary.dsk > boundary.json`
+relocates the full file block originally at physical block 22 to block 174,
+and puts CODE extent 1 in directory slot 63. The other blocks retain their
+original placement; DISK and extent 0 remain in slots 0 and 1. The unused slots
+are deleted entries. The input is still the original validated `large.dsk`.
+
+Block 174 covers track 39 sectors 7 and 8. Both contain diagnostic bytes that
+load at `$CB80–$CF7F` and are checked before completion. The trailing sector 9
+is outside the type-0 allocation area and remains unchanged. This is the last
+allocation block and last directory slot, not a full-disk or full-directory
+test. No new production mastering option is implied.

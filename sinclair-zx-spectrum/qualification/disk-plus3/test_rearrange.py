@@ -42,7 +42,7 @@ def disk_bytes(image: bytes) -> bytes:
 class LayoutTests(unittest.TestCase):
     def test_all_layouts_preserve_each_logical_block_and_headers(self) -> None:
         original = fixture()
-        for mode in ("fragmented", "reordered", "combined"):
+        for mode in ("fragmented", "reordered", "combined", "boundary"):
             with self.subTest(mode=mode):
                 output, report = rearrange(original, mode)
                 self.assertEqual(rearrange(original, mode), (output, report))
@@ -68,11 +68,24 @@ class LayoutTests(unittest.TestCase):
                 self.assertEqual(raw[6656:7680], bytes([2]) * 1024)
                 slots = [i for i in range(64) if raw[4608 + i * 32] != 229]
                 self.assertEqual(
-                    slots, [0, 1, 2] if mode == "fragmented" else [0, 2, 17]
+                    slots,
+                    [0, 1, 63]
+                    if mode == "boundary"
+                    else [0, 1, 2]
+                    if mode == "fragmented"
+                    else [0, 2, 17],
                 )
-                if mode != "reordered":
+                if mode in ("fragmented", "combined"):
                     self.assertTrue(all(abs(a - b) > 1 for a, b in pairwise(blocks)))
                     self.assertTrue(any(a > b for a, b in pairwise(blocks)))
+                if mode == "boundary":
+                    self.assertEqual(blocks, [*range(3, 22), 174, 23])
+                    # Independent physical addresses: both final allocatable
+                    # sectors contain the original full block; trailing sector
+                    # 9 and all container framing remain untouched.
+                    self.assertEqual(raw[182784:183808], bytes([22]) * 1024)
+                    self.assertEqual(raw[183808:], disk_bytes(original)[183808:])
+                    self.assertEqual(raw[27136:28160], b"\xe5" * 1024)
 
     def test_rejects_truncation_bad_directory_and_unknown_mode(self) -> None:
         original = fixture()
