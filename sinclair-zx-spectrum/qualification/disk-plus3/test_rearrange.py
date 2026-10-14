@@ -42,7 +42,13 @@ def disk_bytes(image: bytes) -> bytes:
 class LayoutTests(unittest.TestCase):
     def test_all_layouts_preserve_each_logical_block_and_headers(self) -> None:
         original = fixture()
-        for mode in ("fragmented", "reordered", "combined", "boundary"):
+        for mode in (
+            "fragmented",
+            "reordered",
+            "combined",
+            "boundary",
+            "full-directory",
+        ):
             with self.subTest(mode=mode):
                 output, report = rearrange(original, mode)
                 self.assertEqual(rearrange(original, mode), (output, report))
@@ -69,7 +75,9 @@ class LayoutTests(unittest.TestCase):
                 slots = [i for i in range(64) if raw[4608 + i * 32] != 229]
                 self.assertEqual(
                     slots,
-                    [0, 1, 63]
+                    list(range(64))
+                    if mode == "full-directory"
+                    else [0, 1, 63]
                     if mode == "boundary"
                     else [0, 1, 2]
                     if mode == "fragmented"
@@ -86,6 +94,35 @@ class LayoutTests(unittest.TestCase):
                     self.assertEqual(raw[182784:183808], bytes([22]) * 1024)
                     self.assertEqual(raw[183808:], disk_bytes(original)[183808:])
                     self.assertEqual(raw[27136:28160], b"\xe5" * 1024)
+
+    def test_full_directory_uses_distinct_files_without_changing_existing_data(
+        self,
+    ) -> None:
+        original = fixture()
+        output, report = rearrange(original, "full-directory")
+        before, raw = disk_bytes(original), disk_bytes(output)
+        self.assertEqual(raw[:4608], before[:4608])
+        self.assertEqual(raw[6656:29184], before[6656:29184])
+        self.assertEqual(raw[91648:], before[91648:])
+        for index in range(61):
+            entry = raw[4608 + 32 * index : 4640 + 32 * index]
+            self.assertEqual(entry[1:12], f"FILL{index:04}BIN".encode())
+            self.assertEqual(entry[12:16], bytes([0, 0, 0, 2]))
+            self.assertEqual(entry[16:], bytes([24 + index]) + bytes(15))
+            start = 29184 + 1024 * index
+            data = raw[start : start + 1024]
+            self.assertEqual(int.from_bytes(data[11:15], "little"), 129)
+            self.assertEqual(int.from_bytes(data[16:18], "little"), 1)
+            self.assertEqual(data[127], sum(data[:127]) % 256)
+            self.assertEqual(data[128:256], bytes([index]) + bytes(127))
+            self.assertEqual(data[256:], b"\xe5" * 768)
+        self.assertEqual(raw[6560:6656], before[4608:4704])
+        self.assertEqual(len(report["added_files"]), 61)
+        # A destination containing data must not be silently overwritten.
+        damaged = bytearray(original)
+        damaged[31232] = 0  # Track 6, sector 4: first new allocation block.
+        with self.assertRaisesRegex(ValueError, "not unused"):
+            rearrange(damaged, "full-directory")
 
     def test_rejects_truncation_bad_directory_and_unknown_mode(self) -> None:
         original = fixture()

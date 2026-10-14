@@ -33,7 +33,7 @@ FRAGMENTED = [
     25,
     23,
 ]
-MODES = ("fragmented", "reordered", "combined", "boundary")
+MODES = ("fragmented", "reordered", "combined", "boundary", "full-directory")
 
 
 def require(ok: bool, message: str) -> None:
@@ -85,7 +85,9 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
     require(original[4704:6656] == b"\xe5" * 1952, "unexpected extra directory entries")
     # Never copy from the destination: source/destination block sets overlap.
     disk = bytearray(original)
-    blocks = FRAGMENTED if mode != "reordered" else list(range(3, 24))
+    blocks = (
+        list(range(3, 24)) if mode in ("reordered", "full-directory") else FRAGMENTED
+    )
     if mode == "boundary":
         # Move a full checked-data block, not the partly used final file block.
         # Physical 174 occupies track 39 sectors 7/8; sector 9 is unallocated.
@@ -98,7 +100,7 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
         ),
         "destination block is not unused",
     )
-    if mode != "reordered":
+    if mode not in ("reordered", "full-directory"):
         for block in range(3, 24):
             disk[4608 + block * 1024 : 5632 + block * 1024] = b"\xe5" * 1024
         for old, new in zip(range(3, 24), blocks, strict=True):
@@ -111,9 +113,41 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
     slots = [2, 17, 0] if mode != "fragmented" else [0, 1, 2]
     if mode == "boundary":
         slots = [0, 1, 63]
+    if mode == "full-directory":
+        slots = [61, 62, 63]
     disk[4608:6656] = b"\xe5" * 2048
     for entry, slot in zip(entries, slots, strict=True):
         disk[4608 + slot * 32 : 4640 + slot * 32] = entry
+    added = []
+    if mode == "full-directory":
+        for index in range(61):
+            block = 24 + index
+            start = 4608 + block * 1024
+            require(
+                original[start : start + 1024] == b"\xe5" * 1024,
+                "destination block is not unused",
+            )
+            name = f"FILL{index:04}BIN"
+            entry = (
+                b"\0" + name.encode("ascii") + bytes(3) + bytes([2, block]) + bytes(15)
+            )
+            disk[4608 + index * 32 : 4640 + index * 32] = entry
+            # Reuse the validated CODE header, with a one-byte payload.
+            header = bytearray(original[7680:7808])
+            header[11:15] = (129).to_bytes(4, "little")
+            header[16:18] = (1).to_bytes(2, "little")
+            header[127] = sum(header[:127]) % 256
+            file = bytes(header) + bytes([index])
+            disk[start : start + 256] = file + bytes(127)
+            added.append(
+                {
+                    "slot": index,
+                    "name": name,
+                    "block": block,
+                    "file_bytes": len(file),
+                    "sha256": digest(file),
+                }
+            )
     result = bytearray(image)
     for track in range(40):
         result[512 + track * 4864 : 512 + track * 4864 + 4608] = disk[
@@ -130,6 +164,7 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
             for old, new in zip(range(3, 24), blocks, strict=True)
         ],
         "directory_moves": [{"from": old, "to": new} for old, new in enumerate(slots)],
+        "added_files": added,
         "changed_bytes": sum(a != b for a, b in zip(image, output, strict=True)),
         "route": "qualification fixture rearrangement after Build198x mastering",
     }
