@@ -169,3 +169,27 @@ save-state persistence, protected/full-media errors, deletion, formatting and
 other file sizes or layouts need separate evidence. Emu198x 0.32.5 cannot
 execute Write Data; the owning repair is
 [Emu #1764](https://github.com/emu198x/emu198x/issues/1764).
+
+### Directory-full SAVE fixture
+
+`fill_save_directory.py` prepares the existing `roundtrip.asm` / `roundtrip.bas`
+disk for a failed file-creation check. It leaves DISK and DIAG.BIN in slots 0–1
+and blocks 2–3, then adds 62 valid one-byte CODE files in slots 2–63 and blocks
+4–65. All 64 directory entries are occupied; 109 file-allocation blocks remain
+free. This separates directory capacity from disk capacity.
+
+```sh
+python3.13 fill_save_directory.py roundtrip.dsk directory-full.dsk
+python3.13 fill_save_directory.py roundtrip.dsk one-free-slot.dsk --free-slot
+```
+
+The control adds 61 fillers, leaving slot 63 free and 110 free data blocks. The
+script refuses existing output paths and reports input/output hashes, every
+added file, capacity counts and changed bytes. It shares the existing fixed
+DSK sector helpers with `rearrange.py`. This is qualification fixture preparation;
+production mastering options remain separate Build198x work.
+
+The normal ROM loader must execute the generator and attempt BASIC line 40's
+SAVE. The +3 manual lists `Directory full` among +3DOS's non-recoverable errors
+(page 221). Runtime qualification, error observation, unchanged-live-media
+checks and independent MAME evidence belong to the umbrella programme.
