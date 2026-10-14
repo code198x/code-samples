@@ -52,3 +52,35 @@ This remains a contiguous two-extent file on one standard disk geometry.
 Fragmented allocation, reordered directories, more extents and writes are
 separate work. Use an Asm198x release containing the Pasmo `DEFS count, fill`
 repair (asm198x/asm198x#628); release 0.0.63 rejects that syntax.
+
+## Fragmented and reordered qualification fixtures
+
+After building and independently validating `large.dsk`, generate a new fixture:
+
+```sh
+python3.13 rearrange.py fragmented large.dsk fragmented.dsk > fragmented.json
+python3.13 rearrange.py reordered large.dsk reordered.dsk > reordered.json
+python3.13 rearrange.py combined large.dsk combined.dsk > combined.json
+```
+
+The MIT script accepts only this diagnostic's original directory layout. It
+leaves the input unchanged and refuses an existing output. JSON records the
+input/output hashes and every block and directory-entry move. It uses no extra
+dependencies. Run its checks with `python3.13 -m unittest test_rearrange.py -v`.
+
+Fragmentation places CODE's 21 logical blocks at physical blocks
+`3,43,5,41,7,39,9,37,11,35,13,33,15,31,17,29,19,27,21,25,23`.
+Copies use the original bytes, including where old and new locations overlap.
+Directory reordering places extent 1 in slot 0, `DISK` in slot 2 and extent 0
+in slot 17, with deleted entries in the gaps. This makes the loader find the
+first extent in the second directory sector. `combined` applies both changes.
+The loader and program bytes are unchanged. The original data disk has no
+executable boot sector; all runs still enter through the normal ROM Loader.
+
+These are fixed qualification fixtures, not production Build198x layout
+options or a general disk editor. The umbrella runner independently validates
+both original and rearranged images before execution, records fixture preparation
+separately from mastering, and compares every loaded CODE byte. Results apply
+only to the exercised arrangements; other permutations remain untested.
+Production mastering options are a later follow-up under
+[Build #6](https://github.com/build198x/build198x/issues/6).
