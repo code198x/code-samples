@@ -11,7 +11,8 @@ from pathlib import Path
 from rearrange import digest, replace_sector_bytes, require, sector_bytes
 
 
-def prepare(image: bytes, *, free_slot: bool = False) -> tuple[bytes, dict]:
+def roundtrip_disk(image: bytes) -> bytes:
+    """Validate the unchanged two-file source shared by capacity fixtures."""
     original = sector_bytes(image)
     require(
         original[4608:4672]
@@ -34,6 +35,12 @@ def prepare(image: bytes, *, free_slot: bool = False) -> tuple[bytes, dict]:
         and header[11:22] == bytes.fromhex("0801000003880000800000"),
         "expected the roundtrip CODE header",
     )
+    return original
+
+
+def prepare(image: bytes, *, free_slot: bool = False) -> tuple[bytes, dict]:
+    original = roundtrip_disk(image)
+    header = bytearray(original[7680:7808])
     count = 61 if free_slot else 62
     disk = bytearray(original)
     added = []

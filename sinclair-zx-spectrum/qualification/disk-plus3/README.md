@@ -193,3 +193,30 @@ The normal ROM loader must execute the generator and attempt BASIC line 40's
 SAVE. The +3 manual lists `Directory full` among +3DOS's non-recoverable errors
 (page 221). Runtime qualification, error observation, unchanged-live-media
 checks and independent MAME evidence belong to the umbrella programme.
+
+### Disk-full SAVE fixture
+
+`fill_save_disk.py` preserves the roundtrip loader and CODE, then fills all
+171 remaining data blocks with 11 valid single-extent CODE files. The disk has
+13 occupied directory entries and 51 free slots. The last half-block outside
+the type-0 filesystem allocation remains unused. This separates data capacity
+from the directory-capacity fixture above.
+
+```sh
+python3.13 fill_save_disk.py roundtrip.dsk full-save.dsk
+python3.13 fill_save_disk.py roundtrip.dsk free-space-save.dsk --free-space
+python3.13 -m unittest discover -s . -p 'test_*.py' -v
+```
+
+The control frees the final two 1 KiB blocks, enough for the diagnostic's
+1,024-byte SAVE plus its 128-byte header. Both images preserve the original
+files and disk framing. The JSON report identifies allocations, capacities,
+changed bytes and input/output hashes; an existing output is never overwritten.
+This remains fixture preparation, not a Build198x production mastering option.
+
+The Spectrum +3 manual, printed page 221, lists `Disk full` separately from
+`Directory full`. The umbrella's `--case disk-full` consumer checks ordinary
+ROM loading, new generator execution, the exact line-40 error, preserved
+buffer/phase and all live disk sectors. The two-free-block control completes
+SAVE/erase/LOAD instead. Partial-space failures, replacement/deletion, other
+layouts and formatting are separate cases.
