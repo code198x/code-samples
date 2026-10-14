@@ -33,7 +33,14 @@ FRAGMENTED = [
     25,
     23,
 ]
-MODES = ("fragmented", "reordered", "combined", "boundary", "full-directory")
+MODES = (
+    "fragmented",
+    "reordered",
+    "combined",
+    "boundary",
+    "full-directory",
+    "full-disk",
+)
 
 
 def require(ok: bool, message: str) -> None:
@@ -86,7 +93,9 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
     # Never copy from the destination: source/destination block sets overlap.
     disk = bytearray(original)
     blocks = (
-        list(range(3, 24)) if mode in ("reordered", "full-directory") else FRAGMENTED
+        list(range(3, 24))
+        if mode in ("reordered", "full-directory", "full-disk")
+        else FRAGMENTED
     )
     if mode == "boundary":
         # Move a full checked-data block, not the partly used final file block.
@@ -100,7 +109,7 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
         ),
         "destination block is not unused",
     )
-    if mode not in ("reordered", "full-directory"):
+    if mode not in ("reordered", "full-directory", "full-disk"):
         for block in range(3, 24):
             disk[4608 + block * 1024 : 5632 + block * 1024] = b"\xe5" * 1024
         for old, new in zip(range(3, 24), blocks, strict=True):
@@ -113,32 +122,51 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
     slots = [2, 17, 0] if mode != "fragmented" else [0, 1, 2]
     if mode == "boundary":
         slots = [0, 1, 63]
-    if mode == "full-directory":
+    if mode in ("full-directory", "full-disk"):
         slots = [61, 62, 63]
     disk[4608:6656] = b"\xe5" * 2048
     for entry, slot in zip(entries, slots, strict=True):
         disk[4608 + slot * 32 : 4640 + slot * 32] = entry
     added = []
-    if mode == "full-directory":
+    if mode in ("full-directory", "full-disk"):
         for index in range(61):
             block = 24 + index
+            size = 129
+            allocation = [block]
+            if mode == "full-disk":
+                allocation = (
+                    list(range(24 + index * 16, 40 + index * 16))
+                    if index < 6
+                    else [114 + index]
+                )
+                block = allocation[0]
+                size = len(allocation) * 1024
+            record_count = (size + 127) // 128
             start = 4608 + block * 1024
             require(
-                original[start : start + 1024] == b"\xe5" * 1024,
+                original[start : start + len(allocation) * 1024]
+                == b"\xe5" * (len(allocation) * 1024),
                 "destination block is not unused",
             )
             name = f"FILL{index:04}BIN"
             entry = (
-                b"\0" + name.encode("ascii") + bytes(3) + bytes([2, block]) + bytes(15)
+                b"\0"
+                + name.encode("ascii")
+                + bytes(3)
+                + bytes([record_count])
+                + bytes(allocation)
+                + bytes(16 - len(allocation))
             )
             disk[4608 + index * 32 : 4640 + index * 32] = entry
-            # Reuse the validated CODE header, with a one-byte payload.
+            # Reuse the validated CODE header with the fixed filler length.
             header = bytearray(original[7680:7808])
-            header[11:15] = (129).to_bytes(4, "little")
-            header[16:18] = (1).to_bytes(2, "little")
+            header[11:15] = size.to_bytes(4, "little")
+            header[16:18] = (size - 128).to_bytes(2, "little")
             header[127] = sum(header[:127]) % 256
-            file = bytes(header) + bytes([index])
-            disk[start : start + 256] = file + bytes(127)
+            file = bytes(header) + bytes([index]) * (size - 128)
+            disk[start : start + record_count * 128] = file + bytes(
+                record_count * 128 - size
+            )
             added.append(
                 {
                     "slot": index,
@@ -148,6 +176,8 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
                     "sha256": digest(file),
                 }
             )
+            if mode == "full-disk":
+                added[-1]["allocation_blocks"] = allocation
     result = bytearray(image)
     for track in range(40):
         result[512 + track * 4864 : 512 + track * 4864 + 4608] = disk[

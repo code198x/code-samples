@@ -118,3 +118,23 @@ This tests finding the loader and CODE past valid unrelated files in a full
 directory. It does not test opening the filler files, file creation or directory
 exhaustion errors, full disk allocation, deletion or writes. It remains a fixed
 qualification fixture; production mastering options belong to later Build #6 work.
+
+## Loading with every allocation block occupied
+
+`python3.13 rearrange.py full-disk large.dsk full-disk.dsk > full-disk.json`
+uses the same 64 occupied directory slots, but enlarges the filler files to
+occupy every remaining allocation block. FILL0000.BIN–FILL0005.BIN each contain
+16,384 bytes including their 128-byte +3DOS header, taking blocks 24–119.
+FILL0006.BIN–FILL0060.BIN each contain 1,024 bytes, taking blocks 120–174.
+Every payload byte equals the file's index; file records fill the allocations.
+The report includes every added file's allocation list and hash.
+
+DISK and DIAG.BIN remain in blocks 2–23 and directory slots 61–63. Blocks 0–1
+hold the directory. Thus all 173 usable file blocks have exactly one owner.
+The boot sector, existing file bytes and track-39 sector 9 outside allocation
+remain unchanged. Occupied destination blocks are rejected before output.
+
+The umbrella independently checks complete, unique allocation and every filler
+byte, then loads only DISK and DIAG.BIN through the normal ROM/FDC path. This
+qualifies existing-file loading with zero free blocks. It does not qualify file
+creation, disk-full errors, writes, loading the fillers or reading every sector.

@@ -48,6 +48,7 @@ class LayoutTests(unittest.TestCase):
             "combined",
             "boundary",
             "full-directory",
+            "full-disk",
         ):
             with self.subTest(mode=mode):
                 output, report = rearrange(original, mode)
@@ -76,7 +77,7 @@ class LayoutTests(unittest.TestCase):
                 self.assertEqual(
                     slots,
                     list(range(64))
-                    if mode == "full-directory"
+                    if mode in ("full-directory", "full-disk")
                     else [0, 1, 63]
                     if mode == "boundary"
                     else [0, 1, 2]
@@ -123,6 +124,44 @@ class LayoutTests(unittest.TestCase):
         damaged[31232] = 0  # Track 6, sector 4: first new allocation block.
         with self.assertRaisesRegex(ValueError, "not unused"):
             rearrange(damaged, "full-directory")
+
+    def test_full_disk_owns_every_block_and_preserves_non_filler_bytes(self) -> None:
+        original = fixture()
+        output, report = rearrange(original, "full-disk")
+        self.assertEqual(rearrange(original, "full-disk"), (output, report))
+        raw, before = disk_bytes(output), disk_bytes(original)
+        self.assertEqual(raw[:4608], before[:4608])
+        self.assertEqual(raw[6656:29184], before[6656:29184])
+        self.assertEqual(raw[183808:], before[183808:])
+        self.assertEqual(raw[6560:6656], before[4608:4704])
+        all_blocks = []
+        cursor = 24
+        for i in range(61):
+            entry = raw[4608 + 32 * i : 4640 + 32 * i]
+            size = 16384 if i < 6 else 1024
+            count = size // 1024
+            blocks = list(entry[16 : 16 + count])
+            self.assertEqual(blocks, list(range(cursor, cursor + count)))
+            self.assertEqual(entry[15], size // 128)
+            self.assertEqual(entry[16 + count :], bytes(16 - count))
+            data = raw[4608 + cursor * 1024 : 4608 + (cursor + count) * 1024]
+            self.assertEqual(int.from_bytes(data[11:15], "little"), size)
+            self.assertEqual(int.from_bytes(data[16:18], "little"), size - 128)
+            self.assertEqual(data[127], sum(data[:127]) % 256)
+            self.assertEqual(data[128:], bytes([i]) * (size - 128))
+            self.assertEqual(report["added_files"][i]["allocation_blocks"], blocks)
+            all_blocks.extend(blocks)
+            cursor += count
+        self.assertEqual(all_blocks, list(range(24, 175)))
+        self.assertEqual(cursor, 175)
+        for offset in (31232, 194303):
+            damaged = bytearray(original)
+            damaged[offset] = 0
+            with (
+                self.subTest(offset=offset),
+                self.assertRaisesRegex(ValueError, "not unused"),
+            ):
+                rearrange(damaged, "full-disk")
 
     def test_rejects_truncation_bad_directory_and_unknown_mode(self) -> None:
         original = fixture()
