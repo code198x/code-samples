@@ -52,8 +52,8 @@ def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
-    require(mode in MODES, "unknown fixture layout")
+def sector_bytes(image: bytes) -> bytes:
+    """Validate this fixed DSK geometry and return logical sector bytes."""
     require(len(image) == 194816, "expected standard 180 KiB DSK")
     require(
         image[:34] == b"MV - CPCEMU Disk-File\r\nDisk-Info\r\n"
@@ -79,6 +79,22 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
             "unexpected sectors",
         )
         original.extend(image[start + 256 : start + 4864])
+    return bytes(original)
+
+
+def replace_sector_bytes(image: bytes, disk: bytes) -> bytes:
+    require(len(disk) == 184320, "wrong logical disk size")
+    result = bytearray(image)
+    for track in range(40):
+        result[512 + track * 4864 : 512 + track * 4864 + 4608] = disk[
+            track * 4608 : (track + 1) * 4608
+        ]
+    return bytes(result)
+
+
+def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
+    require(mode in MODES, "unknown fixture layout")
+    original = sector_bytes(image)
     entries = [bytes(original[4608 + i * 32 : 4640 + i * 32]) for i in range(3)]
     require(
         entries
@@ -178,12 +194,7 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
             )
             if mode == "full-disk":
                 added[-1]["allocation_blocks"] = allocation
-    result = bytearray(image)
-    for track in range(40):
-        result[512 + track * 4864 : 512 + track * 4864 + 4608] = disk[
-            track * 4608 : (track + 1) * 4608
-        ]
-    output = bytes(result)
+    output = replace_sector_bytes(image, disk)
     return output, {
         "schema_version": 1,
         "mode": mode,
