@@ -9,8 +9,8 @@ start:  di
         ld ($7001),a
         ld hl,data_start
         ld bc,tail-data_start
-verify: ld a,(hl)
-        cp $3c
+verify: ld a,h
+        cp (hl)
         jr nz,failed
         inc hl
         dec bc
@@ -23,7 +23,13 @@ failed: ld a,2
         jr failed
         defs $8040-$,0
 data_start:
-        defs $cfc0-$,$3c
+; Each page has a different value: its high address byte.
+; Repeating a sector from another track cannot satisfy this check.
+        defs $8100-$,$ >> 8
+        rept 78
+        defs 256,$ >> 8
+        endm
+        defs $cfc0-$,$ >> 8
 ; File offset $4FC0 is beyond the $3F80 CODE boundary of extent zero:
 ; the +3DOS header occupies the first 128 bytes of the first extent.
 tail:   ld hl,$4000
