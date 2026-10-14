@@ -98,3 +98,23 @@ load at `$CB80–$CF7F` and are checked before completion. The trailing sector 9
 is outside the type-0 allocation area and remains unchanged. This is the last
 allocation block and last directory slot, not a full-disk or full-directory
 test. No new production mastering option is implied.
+
+## Full directory search
+
+`python3.13 rearrange.py full-directory large.dsk full-directory.dsk > full-directory.json`
+adds 61 unrelated one-byte CODE files, `FILL0000.BIN` through `FILL0060.BIN`,
+in slots 0–60. Each owns a distinct block (24–84), a checksummed +3DOS header,
+and two 128-byte records; its one-byte payload is its index, 0–60. The remaining
+slots 61–63 hold the unchanged `DISK` and two `DIAG.BIN` extents. CODE keeps its
+original contiguous blocks 3–23. All 64 directory entries are occupied.
+
+The original files, boot sector and unused blocks are preserved. JSON records
+all added files with their slots, blocks, lengths and hashes, as well as the
+three directory moves. Occupied destination blocks and existing output files
+are rejected. The umbrella independently validates all 63 files and the exact
+64-entry directory before normal ROM loading and newly observed execution.
+
+This tests finding the loader and CODE past valid unrelated files in a full
+directory. It does not test opening the filler files, file creation or directory
+exhaustion errors, full disk allocation, deletion or writes. It remains a fixed
+qualification fixture; production mastering options belong to later Build #6 work.
