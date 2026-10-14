@@ -16,9 +16,11 @@ class SaveDiskTests(unittest.TestCase):
     def test_allocation_exhaustion_leaves_directory_space(self) -> None:
         source = roundtrip_disk()
         original = sector_bytes(source)
-        for free in (False, True):
-            image, report = prepare(source, free_space=free)
-            self.assertEqual(prepare(source, free_space=free), (image, report))
+        for free, one in ((False, False), (True, False), (False, True)):
+            image, report = prepare(source, free_space=free, one_free_block=one)
+            self.assertEqual(
+                prepare(source, free_space=free, one_free_block=one), (image, report)
+            )
             data = sector_bytes(image)
             self.assertEqual(data[:4672], original[:4672])
             self.assertEqual(data[6656:8704], original[6656:8704])
@@ -44,7 +46,7 @@ class SaveDiskTests(unittest.TestCase):
                 )
                 self.assertEqual(sum(content[:127]) % 256, content[127])
                 self.assertEqual(content[128:], bytes([i]) * (len(content) - 128))
-            end = 173 if free else 175
+            end = 173 if free else 174 if one else 175
             self.assertEqual(allocations, list(range(4, end)))
             self.assertEqual(
                 report["free_file_blocks"], 175 - len(set([0, 1, 2, 3] + allocations))
@@ -55,6 +57,8 @@ class SaveDiskTests(unittest.TestCase):
 
     def test_rejects_unexpected_source_and_refuses_overwrite(self) -> None:
         source = roundtrip_disk()
+        with self.assertRaises(ValueError):
+            prepare(source, free_space=True, one_free_block=True)
         for offset in (48, 280, 5376 + 64, 5376 + 4096):
             bad = bytearray(source)
             bad[offset] ^= 1
