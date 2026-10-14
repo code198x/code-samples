@@ -138,3 +138,34 @@ The umbrella independently checks complete, unique allocation and every filler
 byte, then loads only DISK and DIAG.BIN through the normal ROM/FDC path. This
 qualifies existing-file loading with zero free blocks. It does not qualify file
 creation, disk-full errors, writes, loading the fillers or reading every sector.
+
+## ROM save, erase, reload and compare
+
+`roundtrip.asm` and `roundtrip.bas` exercise a new file on a disk with free space:
+
+```sh
+asm198x --dialect pasmo --cpu z80 roundtrip.asm -o roundtrip.bin
+build198x plus3 --basic roundtrip.bas --code roundtrip.bin --load-address 32768 -o roundtrip.dsk --format json
+```
+
+Mount the disk writable in drive A, cold boot and select **Loader**. The BASIC
+program calls three assembly entry points. `$8000` generates 1,024 bytes at
+`$9000`, with each byte equal to its address's high byte XOR low byte XOR `$5A`.
+BASIC saves them as `ROUND.BIN`. `$8003` then erases the entire buffer; BASIC
+reloads the file through the ROM. `$8006` checks every recovered byte before
+showing the striped screen, computing `5A 5B` at `$7000`, and looping at `$8080`.
+A comparison failure loops with a red border and no completion signature.
+The returning routines preserve BASIC's stack and IY.
+
+The umbrella `plus3-disk-roundtrip` recipe observes all 1,024 bytes at each of
+three checkpoints: generated (`$8027`), erased (`$803C`) and verified (`$8057`).
+It requires pattern → zeros → pattern, then new signature stores and screen
+RAM. `ROUND.BIN` is absent from the mastered image. Omitting BASIC line 60 is a
+negative control: verification must fail after erasure. The fixture uses no
+memory injection or intercepted ROM calls and is MIT licensed.
+
+This is an in-session ROM SAVE/LOAD check on one standard disk. Export/reopen,
+save-state persistence, protected/full-media errors, deletion, formatting and
+other file sizes or layouts need separate evidence. Emu198x 0.32.5 cannot
+execute Write Data; the owning repair is
+[Emu #1764](https://github.com/emu198x/emu198x/issues/1764).
