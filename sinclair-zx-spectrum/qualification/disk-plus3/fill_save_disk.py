@@ -9,13 +9,16 @@ import json
 from pathlib import Path
 
 from fill_save_directory import roundtrip_disk
-from rearrange import digest, replace_sector_bytes
+from rearrange import digest, replace_sector_bytes, require
 
 
-def prepare(image: bytes, *, free_space: bool = False) -> tuple[bytes, dict]:
+def prepare(
+    image: bytes, *, free_space: bool = False, one_free_block: bool = False
+) -> tuple[bytes, dict]:
+    require(not (free_space and one_free_block), "choose one capacity control")
     original = roundtrip_disk(image)
     disk = bytearray(original)
-    end = 173 if free_space else 175
+    end = 173 if free_space else 174 if one_free_block else 175
     added = []
     for index, first in enumerate(range(4, end, 16)):
         blocks = list(range(first, min(first + 16, end)))
@@ -48,7 +51,11 @@ def prepare(image: bytes, *, free_space: bool = False) -> tuple[bytes, dict]:
     output = replace_sector_bytes(image, disk)
     return output, {
         "schema_version": 1,
-        "mode": "save-disk-free-space" if free_space else "save-disk-full",
+        "mode": "save-disk-free-space"
+        if free_space
+        else "save-disk-one-block"
+        if one_free_block
+        else "save-disk-full",
         "input_sha256": digest(image),
         "output_sha256": digest(output),
         "added_files": added,
@@ -65,9 +72,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--free-space", action="store_true")
+    controls = parser.add_mutually_exclusive_group()
+    controls.add_argument("--free-space", action="store_true")
+    controls.add_argument("--one-free-block", action="store_true")
     args = parser.parse_args()
-    result, report = prepare(args.source.read_bytes(), free_space=args.free_space)
+    result, report = prepare(
+        args.source.read_bytes(),
+        free_space=args.free_space,
+        one_free_block=args.one_free_block,
+    )
     with args.output.open("xb") as stream:
         stream.write(result)
     print(json.dumps(report, indent=2))
