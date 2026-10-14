@@ -33,7 +33,7 @@ FRAGMENTED = [
     25,
     23,
 ]
-MODES = ("fragmented", "reordered", "combined")
+MODES = ("fragmented", "reordered", "combined", "boundary")
 
 
 def require(ok: bool, message: str) -> None:
@@ -86,6 +86,10 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
     # Never copy from the destination: source/destination block sets overlap.
     disk = bytearray(original)
     blocks = FRAGMENTED if mode != "reordered" else list(range(3, 24))
+    if mode == "boundary":
+        # Move a full checked-data block, not the partly used final file block.
+        # Physical 174 occupies track 39 sectors 7/8; sector 9 is unallocated.
+        blocks = [*range(3, 22), 174, 23]
     require(
         all(
             original[4608 + b * 1024 : 5632 + b * 1024] == b"\xe5" * 1024
@@ -105,6 +109,8 @@ def rearrange(image: bytes, mode: str) -> tuple[bytes, dict]:
     entries[2] = entries[2][:16] + bytes(blocks[16:]) + bytes(11)
     # Extent 1 precedes extent 0; extent 0 is beyond the first directory sector.
     slots = [2, 17, 0] if mode != "fragmented" else [0, 1, 2]
+    if mode == "boundary":
+        slots = [0, 1, 63]
     disk[4608:6656] = b"\xe5" * 2048
     for entry, slot in zip(entries, slots, strict=True):
         disk[4608 + slot * 32 : 4640 + slot * 32] = entry
