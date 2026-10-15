@@ -1,12 +1,13 @@
 """Cold-boot the demo and probe; check Paula writes, pitch, interrupts and cost."""
 import argparse
-from array import array
 import hashlib
 import json
-from pathlib import Path
 import subprocess
 import sys
 import wave
+from array import array
+from itertools import pairwise
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAL_CLOCK = 3_546_895          # colour clocks per second (HRM, Audio Hardware)
@@ -107,6 +108,21 @@ def frequency(samples, rate, start, end):
     return rate * (len(rising) - 1) / (rising[-1] - rising[0])
 
 
+def count_cycles(samples, start, cycle):
+    """Count complete peaks with a trough on each side, excluding filter decay."""
+    peaks = []
+    half = cycle // 2
+    for i in range(start, start + 40 * cycle):
+        left = samples[max(0, i - half):i + 1]
+        right = samples[i:i + half]
+        peak = samples[i]
+        if (peak == max(left) == max(right)
+                and min(peak - min(left), peak - min(right)) > 10000
+                and (not peaks or i - peaks[-1] > half)):
+            peaks.append(i)
+    return len(peaks)
+
+
 def check_demo(emulator, kickstart, disk, out):
     machine = Amiga(emulator, kickstart, disk)
     try:
@@ -195,7 +211,7 @@ def check_probe(emulator, kickstart, disk, out):
     words, period = 8, 424
     pass_cck = words * 2 * period
     last_word = (words - 1) * 2 * period
-    gaps = [b - a for a, b in zip(acks, acks[1:])]
+    gaps = [b - a for a, b in pairwise(acks)]
     poll = 64                                # polling loop latency allowance
     assert acks[0] - enable < 2 * LINE, acks[0] - enable
     assert abs(gaps[0] - last_word) <= LINE + poll, gaps[0]
@@ -209,20 +225,16 @@ def check_probe(emulator, kickstart, disk, out):
     shot = onset(samples, tone + rate // 2)
     # One cycle is 6784 cck, about 92 output samples at 48 kHz.
     cycle = round(pass_cck / PAL_CLOCK * rate)
-    peaks = []
-    # Scan 40 cycles: a loop would keep peaking; a one shot stops after 8.
-    for i in range(shot, shot + 40 * cycle):
-        window = samples[max(0, i - cycle // 2):i + cycle // 2]
-        if samples[i] == max(window) and max(window) - min(window) > 10000:
-            if not peaks or i - peaks[-1] > cycle // 2:
-                peaks.append(i)
-    assert len(peaks) == 8, len(peaks)
+    # A decaying filter tail can rise out of the final negative half-wave.
+    # Count a cycle only when a substantial trough exists on both sides.
+    peaks = count_cycles(samples, shot, cycle)
+    assert peaks == 8, peaks
     print('PASS one shot: 8 cycles, then none in the next 32', flush=True)
     return {'loop_passes_no_dma': quiet, 'loop_passes_four_channels_period_124': busy,
             'loop_passes_six_lowres_bitplanes_control': planes,
             'first_request_after_dmacon_cck': acks[0] - enable, 'request_gaps_cck': gaps,
             'predicted_last_word_cck': last_word, 'predicted_pass_cck': pass_cck,
-            'one_shot_cycles': len(peaks), 'wav_sha256': sha(audio)}
+            'one_shot_cycles': peaks, 'wav_sha256': sha(audio)}
 
 
 def main():
