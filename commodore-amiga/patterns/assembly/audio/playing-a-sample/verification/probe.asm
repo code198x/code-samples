@@ -1,11 +1,11 @@
 ; =============================================================================
 ; Verification probe for paula-sample.inc. Not a learner listing.
-;   1. CPU cost: count a chip-RAM polling loop for 10 frames with no DMA,
+;   CPU cost: count a chip-RAM polling loop for 10 frames with no DMA,
 ;      with all four audio channels fetching at period 124 (volume 0), and,
 ;      as a control the count must notice, with six low-res bitplanes.
-;   2. Interrupt timing: play_sample, then acknowledge six AUD0 requests by
+;   Interrupt timing: play_sample, then acknowledge six AUD0 requests by
 ;      polling INTREQR. The host reads the acknowledgement times.
-;   3. One shot: play an 8-cycle burst, and on the first AUD0 request queue a
+;   One shot: play an 8-cycle burst, and on the first AUD0 request queue a
 ;      one-word silent loop. The host counts the cycles that sound.
 ; Results go in a table after the marker PAULAPROBE-V1.
 ; =============================================================================
@@ -25,6 +25,35 @@ start:
             move.w  #$7fff,INTREQ(a5)
             move.w  #$7fff,DMACON(a5)
             lea     results,a4
+
+            ; Run the interrupt/one-shot checks before the one-word DMA
+            ; cost workload, which can leave a held loop request on AUD0.
+            ; --- Six AUD0 requests from a looping 16-byte sample ---
+            move.w  #INTF_AUD0,INTREQ(a5)
+            lea     wave16,a0
+            moveq   #8,d0
+            move.w  #424,d1
+            moveq   #64,d2
+            bsr     play_sample
+            moveq   #5,d7
+.irq:       bsr     wait_aud0
+            dbra    d7,.irq
+            bsr     stop_sample
+            moveq   #24,d7
+            bsr     wait_frames
+
+            ; --- One shot: queue silence on the first request ---
+            move.w  #INTF_AUD0,INTREQ(a5)
+            lea     burst,a0
+            move.w  #(burst_end-burst)/2,d0
+            bsr     play_sample         ; d1 = 424, d2 = 64 still
+            bsr     wait_aud0           ; LC/LEN now copied: rewrite them
+            lea     silence,a0
+            move.l  a0,AUD0LC(a5)
+            move.w  #1,AUD0LEN(a5)
+            moveq   #24,d7
+            bsr     wait_frames
+            bsr     stop_sample
 
             ; --- 1a. Loop count, no DMA ---
             bsr     count_frames
@@ -69,33 +98,6 @@ start:
             move.w  #$0200,$100(a5)
             moveq   #24,d7
             bsr     wait_frames
-
-            ; --- 2. Six AUD0 requests from a looping 16-byte sample ---
-            move.w  #INTF_AUD0,INTREQ(a5)
-            lea     wave16,a0
-            moveq   #8,d0
-            move.w  #424,d1
-            moveq   #64,d2
-            bsr     play_sample
-            moveq   #5,d7
-.irq:       bsr     wait_aud0
-            dbra    d7,.irq
-            bsr     stop_sample
-            moveq   #24,d7
-            bsr     wait_frames
-
-            ; --- 3. One shot: queue silence on the first request ---
-            move.w  #INTF_AUD0,INTREQ(a5)
-            lea     burst,a0
-            move.w  #(burst_end-burst)/2,d0
-            bsr     play_sample         ; d1 = 424, d2 = 64 still
-            bsr     wait_aud0           ; LC/LEN now copied: rewrite them
-            lea     silence,a0
-            move.l  a0,AUD0LC(a5)
-            move.w  #1,AUD0LEN(a5)
-            moveq   #24,d7
-            bsr     wait_frames
-            bsr     stop_sample
 
             move.w  #1,(a4)+            ; done
 hold:       bra.s   hold

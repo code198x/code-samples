@@ -46,7 +46,8 @@ capture. It asserts:
   the DMACON write, the second about seven words of playback later (as the
   last word starts), then one per pass of eight words, within one scan line;
 - that queuing a one-word silent loop on the first request plays an eight-cycle
-  burst exactly once.
+  burst exactly once, counting complete peaks with a substantial trough on
+  both sides so a filter-decay maximum cannot count as another cycle.
 
 Output goes to the supplied directory; Kickstart is not distributed. The
 retained [results](verification/evidence/results.json) identify the emulator,
@@ -65,10 +66,22 @@ chapter 1: odd bus cycles reserved for DMA, including audio. Results are emulato
 claim about which stereo jack carries channel 0: primary sources disagree
 (emu198x#1514). Listening remains a human check.
 
-The [15 October 2026 rerun](verification/evidence/runs/2026-10-15-failed.json)
-passes the three pitch observations and the DMA-cost comparison, then fails
-the first interrupt-gap assertion with `AssertionError: 140`. The retained
-success above is a different run; the current failure does not qualify the
-remaining interrupt or one-shot checks. [Issue #85](https://github.com/code198x/code-samples/issues/85)
-tracks reconciliation of the guest acknowledgement trace and the observer's
-expectation. No assertion or emulator timing has been changed.
+The [reconciled 15 October 2026 run](verification/evidence/runs/2026-10-15-reconciled.json)
+passes every check with the Paula correction in
+[Emu198x PR #1777](https://github.com/emu198x/emu198x/pull/1777). The probe runs
+interrupt and one-shot checks before the one-word cost workload, which can
+leave a held request on channel 0. The observer requires a substantial trough
+on each side of a peak; a decaying filter tail does not count as a ninth cycle.
+Timing tolerances and the expected eight-cycle burst are unchanged. Synthetic
+seven-, eight-, nine- and continuing-cycle controls distinguish incorrect
+bursts; DC and decay alone count as zero. Run them with:
+
+```sh
+python3 -m unittest discover -s verification -p test_verify.py -v
+```
+
+The earlier [failed rerun](verification/evidence/runs/2026-10-15-failed.json)
+is preserved. [Issue #85](https://github.com/code198x/code-samples/issues/85)
+links the independent core-timing defect and the probe/observer corrections.
+The new result remains an emulator observation, not listening or hardware
+verification.
