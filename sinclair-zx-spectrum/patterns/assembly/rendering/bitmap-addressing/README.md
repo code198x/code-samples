@@ -69,3 +69,18 @@ Manual*, UM008011-0816, instruction tables are the timing reference used by the
 pattern; Sinclair's *ZX Spectrum BASIC Programming*, chapter 24, describes
 screen memory order. A 384-byte line table is an alternative when lookup speed
 matters more than memory.
+
+## Released-tool CI run
+
+The Pattern evidence workflow also runs this unchanged observer on Ubuntu
+24.04 x86-64 with the published Asm198x 0.0.65 and Emu198x Spectrum 0.34.0
+binaries. Both archive hashes are pinned and checked before execution. The
+job includes a wrong-checksum control and requires the full output, timing
+and assembled-mutation checks above. CI does not install Pasmo, so the earlier
+record remains the separate alternate-assembler comparison.
+
+The uploaded compact result identifies source, observer, executable and binary
+hashes. Its companion release-input report records tags, archive hashes, host
+and samples revision. They are retained for 14 days; the committed historical
+record is preserved. This is one tested released-tool combination for this
+fixture, not a claim that every family tool version or Spectrum model works.
