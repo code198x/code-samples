@@ -1,0 +1,9 @@
+# Detect stale pattern evidence and execute AABB in CI
+
+Scope agreed for #90: check the existing five selected records against their declared sources/observers, and run the inexpensive AABB observer. No new evidence record schema, tool dependency, emulator provisioning or article flag.
+
+1. Add `scripts/pattern-evidence.json` selecting the same five effective records and 18 bindings as the reviewed freshness audit. Add `scripts/check-pattern-evidence.py` to compare actual source/observer hashes, reject missing/malformed/empty or reduced selections, distinguish matching recorded inputs from runtime execution, and emit a useful failing report. Historical results remain untouched.
+2. Add `scripts/test_pattern_evidence.py` with temporary isolated fixtures: unchanged inputs pass; modified routine/observer, missing record/source/key, empty selection and omitted fixture/binding fail through the CLI. Test a deliberately broken AABB in an isolated copied sample through its real observer, requiring the expected diagnostic and no stale passing result.
+3. Add `.github/workflows/pattern-evidence.yml` using the existing checkout/setup-python/upload-artifact actions, Python 3.14 and bounded jobs on every PR/push. Separate recorded-binding checks from fresh AABB behaviour; preserve reports as CI artefacts. Use no path filter that can omit an affected binding. Confirm actual hosted counts/results after pushing.
+4. Document local commands, record refresh and selection ownership in `README.md`, including the limits of hash equality and which observers are unexecuted by this workflow. Run Ruff, CLI controls and the exact AABB command; preserve source/observer identities in existing records.
+5. Commit/push a reviewable PR linked to #90 and #111/#72. Inspect hosted reports, remove task-owned temporary copies/caches and leave unrelated work untouched. Do not merge without approval.
