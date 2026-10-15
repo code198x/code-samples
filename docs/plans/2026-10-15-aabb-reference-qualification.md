@@ -1,0 +1,9 @@
+# Execute the AABB pattern's declared contract
+
+Continue #120 after the Spectrum fixture. The cross-platform pattern is schematic pseudocode, so the bounded runnable target is a Python 3.13+ integer reference, not an unchosen retro dialect. Keep the published half-open/empty-box and 32x24-cell contracts; no new collision algorithm, dependency or timing claim.
+
+1. Add `cross-platform/patterns/physics/aabb-collision/aabb.py` as a direct reference implementation of the existing narrow phase, one-based bucket indexing, four forward neighbour directions and complete candidate enumeration. Declare integer arithmetic, empty dimensions, input rejection, object identities and rebuilding ownership. A rejected bucket must stop candidate generation before returning a partial result.
+2. Add `verification/verify.py` using occupied integer-pixel sets as the independent collision oracle. Cover signed small coordinates and empty dimensions exhaustively within a bounded space, edge contact, sums above 255, all grid cells/edges, maximum extents, unsupported boxes, candidate uniqueness/completeness and rebuilt moving scenes. Reject missing-bottom-left and 8-bit-wrap mutations. Require nonzero counts and retain source/observer hashes and counts.
+3. Add a complete command-line caller, README, source baseline identity and compact results. Verify with Python and Ruff. Label host-only limits explicitly.
+4. Update the website with a link to the runnable reference and its evidence, preserving schematic pseudocode and existing target-width warning. Run the production build and check generated text.
+5. Commit/push separate sample and website changes, open PRs, link all new evidence from #120 and remove task-owned scratch. Leave machine-specific ports, hardware tests and new PR merging for an explicit next step.

@@ -1,0 +1,6 @@
+{
+  "website_revision": "d00f45c6047932dddbb36c2df1e0414114684616",
+  "website_file": "src/content/patterns/cross-platform/physics/aabb-collision.mdx",
+  "website_file_sha256": "5cbfef11941b630dea4b20739a8b11842de434a9b2bce242d63e9796d8c4ebf3",
+  "adaptation": "Python integer reference of the corrected published pseudocode; no retro-port claim"
+}
