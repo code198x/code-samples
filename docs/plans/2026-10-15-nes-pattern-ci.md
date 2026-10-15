@@ -1,0 +1,9 @@
+# Execute NES square-wave behaviour with released tools in CI
+
+Approved scope: extend Pattern evidence with the existing firmware-free seven-case NTSC NROM pulse fixture, following the merged Spectrum job. Use the same pinned Asm198x 0.0.65 / Emu198x 0.34.0 release family; no new dependency, qualification schema or observer rewrite.
+
+1. Read the existing observer and release assets. Verify published archive checksums and layouts for macOS aarch64 and Linux x86-64. Run the unchanged seven-case observer locally against downloaded release binaries, checking pitch, silence, length expiry, CPU status reads and deliberately wrong WAV-header controls. Bound the whole invocation and clean up task-owned processes if it times out.
+2. Add a separate Ubuntu 24.04 NES job in `.github/workflows/pattern-evidence.yml`, using checksum-pinned archives, a wrong-checksum control and the established Python/tool setup. Require seven nonempty cases, both WAV controls and a successful result. Upload compact result and release/host/source identities for 14 days; do not upload WAVs or generated ROMs.
+3. Update `README.md` and the NES sample README with the exact CI scope and reproduction path. Preserve the observer and historical records when compatible; investigate and explain any failure before changing them. Keep the existing five-record hash guard intact.
+4. Commit/push a reviewable PR. Inspect actual hosted reports: source/tool hashes, seven case results, pitch/time measurements and negative controls; compare canonical ROMs across the two hosts. Run existing guard regressions, then link evidence from #111/#72 without claiming all hosts/models or original hardware/listening qualification.
+5. Remove all task-owned release downloads, generated ROMs/WAVs, logs and Python caches after compact verification evidence is retained. Do not merge new work without approval.

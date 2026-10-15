@@ -67,3 +67,24 @@ passes all seven cases, both playback-time checks and the deliberately
 mislabelled WAV controls on Emu198x revision
 `dd7af3bbe1f9ff90b05070891ce5305a70369296`. The earlier record remains
 available; neither run is a listening or original-hardware check.
+
+## Released-tool CI run
+
+Pattern evidence runs the existing seven-case observer on Ubuntu 24.04
+x86-64 using published Asm198x 0.0.65 and Emu198x NES 0.34.0 binaries.
+Archive hashes are pinned and checked before extraction. A deliberately
+incorrect checksum must be rejected, all seven case names must be present,
+and both wrong-WAV-header controls must report rejection before the compact
+result and release-input report are uploaded. No external firmware is needed.
+
+To reproduce with those tools installed, put the selected Asm198x on PATH:
+
+```sh
+python3 verification/verify.py --emulator /path/to/emu198x-nes --output /tmp/nes-square-wave
+```
+
+The result identifies source, observer, ROM, capture and tool hashes. The
+companion CI report identifies release tags, archive hashes, host and checkout
+revision. Artefacts are retained for 14 days; committed historical records are
+preserved. This tests NTSC NROM, rendering off, pulse 1. It does not qualify
+PAL/Dendy, other mappers, all hosts, physical hardware or listening.

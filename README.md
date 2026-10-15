@@ -106,10 +106,16 @@ old hashes to silence the guard. Changing the selected scope also requires
 an explicit update to the checker's required fixture/binding counts and its
 regression tests.
 
-CI uploads the binding report, fresh AABB result and Spectrum result/release
-identities with 14-day retention.
+A separate NES job uses published Asm198x 0.0.65 and Emu198x NES 0.34.0
+binaries under the same checksum policy on Ubuntu 24.04 x86-64. It requires
+seven NTSC NROM pulse-1 cases and both wrong-WAV-header controls. It measures
+captured PCM and guest status reads; it does not establish listening, original
+hardware, PAL/Dendy or other mapper behaviour. No firmware is required.
+
+CI uploads the binding report, fresh AABB result and Spectrum/NES results
+and release identities with 14-day retention.
 The sample-local committed records remain the durable historical evidence.
-C64, NES and Amiga pattern observers are not executed by this workflow. Broader runtime,
+C64 and Amiga pattern observers are not executed by this workflow. Broader runtime,
 release-toolchain and firmware-dependent qualification stays separate.
 
 ### Executable curriculum proofs
