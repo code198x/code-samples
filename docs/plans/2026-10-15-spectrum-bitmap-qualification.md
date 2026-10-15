@@ -1,0 +1,9 @@
+# Execute the Bitmap Addressing pattern
+
+Approved scope: qualify the corrected routine from website #691/#697, then continue #120. Preserve its algorithm and contract; no core change, dependency or schema addition.
+
+1. Move the actual MDX listing unchanged into `sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc`. Add `caller.asm` with a 48K snapshot entry, DI, uncontended code/stack, explicit result buffer and completion marker. Verify the extracted instructions are unchanged.
+2. Add `verification/verify.py` using existing Asm198x snapshot and Emu198x script/profile interfaces. Exhaust all 49,152 pixel coordinates in bounded batches, compare against an independently enumerated physical-screen layout, verify next-line results for every valid input, check BC/DE/stack preservation and completion, and check code identity. Measure 117 T-states for address conversion and the three next-row paths under declared conditions. Confirm the prohibited bottom-row step reaches attributes in a separate characterisation.
+3. Reject an assembled wrong-base mutation and a next-line mutation. Require positive observation counts and no truncated/incomplete execution. Optionally compare with the already installed Pasmo without adding a dependency. Retain compact source/binary/tool/observer hashes and results; remove scratch snapshots, logs and unused ROM after inspection.
+4. Write the sample README with contracts, licence/provenance, exact commands and limits. Replace the website listing with CodeFromFile, state measured coverage and precise limits. Verify generated code and text with a production build.
+5. Commit/push the sample and website changes separately, open PRs and link evidence from #120. Do not merge new PRs without approval. Continue to the AABB fixture after the Spectrum evidence is concrete.

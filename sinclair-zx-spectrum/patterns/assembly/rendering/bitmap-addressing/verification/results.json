@@ -1,0 +1,348 @@
+{
+  "status": "passed",
+  "target": "48K PAL; code $8000, buffer $9000, stack $FF00; DI",
+  "method": "Asm198x RAM snapshot; exhaustive outputs; Emu198x dynamic cycle profile",
+  "limits": "Synthetic unused ROM; no ROM boot, tape load, contention or hardware test. Row 191 is excluded from pixel_down calls by its contract.",
+  "source_sha256": {
+    "caller.asm": "c3cdf6e56e889892abdbd26f66dfd8cb5db34be441f6c6c49b073a0fe51299f4",
+    "bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
+    "verify.py": "c1d37cfc4bd5db850814581a0f9d92c975834a3d0b7f405740c46c8d2d222eb0"
+  },
+  "tools": {
+    "assembler": {
+      "path": "/opt/homebrew/Cellar/asm198x/0.0.64/bin/asm198x",
+      "sha256": "2286f8ba5ac3648a15cad0940acf62c6aa578c81808ed0ced7ee7bbb7aba65ee"
+    },
+    "emulator": {
+      "path": "/opt/homebrew/Cellar/emu198x-spectrum/0.32.5/bin/emu198x-spectrum",
+      "sha256": "51fe786fb9cec0b552b67125abc11e28f062f6105cb75fb01b923cffbcd81f89"
+    },
+    "pasmo": {
+      "path": "/usr/local/bin/pasmo",
+      "sha256": "e9628f5c32f3c74a963c649781e6cb87e9eaeb4bbfe7b52d3de27f4986bbf136"
+    }
+  },
+  "pixel_inputs_checked": 49152,
+  "valid_next_row_pixel_inputs_checked": 48896,
+  "distinct_next_row_addresses_checked": 6112,
+  "cases": [
+    {
+      "rows": [
+        0,
+        15
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "c5d2098ce3a7d5dd5b953e63a4222121f0cb1a0bf8415bcc1a12781d35be07e7",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        16,
+        31
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "953c27e683ac80fe83424164632cbcf6a8b71207e0da45bfb333eec787eb0111",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        32,
+        47
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "6a6789e559ec6386cebdb1f806351b89eb7044acea49cf0b622eb41411d2c749",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        48,
+        63
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "677148c3efe3aa1d10e7460e22ea180d525ab5cacf87953be88fea88f14c745f",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 121600
+        }
+      }
+    },
+    {
+      "rows": [
+        64,
+        79
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "438d2fe63aa4b2c51df84bc405b65cbc9b0925b87abbcc0193a207246b85960b",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        80,
+        95
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "375b66a3318d08d8565c8a88180e40da5367ee7a90df13ab1dc96fe09ac8453c",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        96,
+        111
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "c238f1a70c1f04d61c32608bc2860f7f575db52a329c959365255a8b5db95636",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        112,
+        127
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "0559da0fad4f679f60c31ab16de05348b449fe38995c737d0237b29fdbb7f639",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 121600
+        }
+      }
+    },
+    {
+      "rows": [
+        128,
+        143
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "158c2f2acca758483a7f298cdb40bcef2c8d688f21b0cf5307106ab3c5cdfd5b",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        144,
+        159
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "6f0d601afab0ce843ce5f0d128c683ed4db2f05d5c020b01d890ae380b934414",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        160,
+        175
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "845125177e7ee4059a5c9575e0401d614ddf8d84ae0c6509397371195cb352e4",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 4096,
+          "measured_t_states": 126464
+        }
+      }
+    },
+    {
+      "rows": [
+        176,
+        191
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "e8100d4cd9bdc74d3e436d5c3f9b3ab135858f80002c0ccd9cac8b794f4520f9",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 4096,
+          "measured_t_states": 479232
+        },
+        "pixel_down": {
+          "completed_calls": 3840,
+          "measured_t_states": 109824
+        }
+      }
+    }
+  ],
+  "bottom_row_characterisation": {
+    "rows": [
+      191,
+      191
+    ],
+    "binary_sha256": "bce03aea57c3f82783120baf441738a81a0e812676c6796a648bcc8c8d4ea9d2",
+    "snapshot_sha256": "91c13d4b6e23b22b532107a89927feb878ec20ff9e4a1dd3f9c47f500558f42c",
+    "result_bytes_sha256": "67887032bff649c97da5e290fc36cc4aa40c8c16de43609257cf8de0a3073869",
+    "routines": {
+      "pixel_addr": {
+        "completed_calls": 256,
+        "measured_t_states": 29952
+      },
+      "pixel_down": {
+        "completed_calls": 256,
+        "measured_t_states": 11776
+      }
+    }
+  },
+  "timing_path_probes": [
+    {
+      "rows": [
+        0,
+        0
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "16160cbf607424eb4887360b80976d824243735610b7a4883b7efaa856a6cdd5",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 256,
+          "measured_t_states": 29952
+        },
+        "pixel_down": {
+          "completed_calls": 256,
+          "measured_t_states": 6656
+        }
+      }
+    },
+    {
+      "rows": [
+        7,
+        7
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "a75e4c16db11794f99217d6eb69779c25a0bd6049981d2753d2e0aff8e7f8d55",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 256,
+          "measured_t_states": 29952
+        },
+        "pixel_down": {
+          "completed_calls": 256,
+          "measured_t_states": 16640
+        }
+      }
+    },
+    {
+      "rows": [
+        63,
+        63
+      ],
+      "binary_sha256": "7bd0fa2c0ea799e992f1fa232346bd569ae29505a2150c409aa604bc67a8b2a8",
+      "snapshot_sha256": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+      "result_bytes_sha256": "53a8958c0ac9ba39ab928f69dadf06a0fb864ecec02d4c01322f3ef75f2a7f51",
+      "routines": {
+        "pixel_addr": {
+          "completed_calls": 256,
+          "measured_t_states": 29952
+        },
+        "pixel_down": {
+          "completed_calls": 256,
+          "measured_t_states": 11776
+        }
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "wrong-base",
+      "rejected": true,
+      "failure": "pixel_addr mismatch at (0,0)"
+    },
+    {
+      "mutation": "wrong-row",
+      "rejected": true,
+      "failure": "pixel_down mismatch at (0,7)"
+    }
+  ]
+}
