@@ -121,3 +121,82 @@ jobs:
             ${{ runner.temp }}/pattern-evidence/spectrum-release-inputs.json
           if-no-files-found: error
           retention-days: 14
+
+  nes-behaviour:
+    name: NES fresh audio behaviour (released tools)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      ASM198X_TAG: asm198x-v0.0.65
+      EMU198X_TAG: v0.34.0
+      ASM198X_ARCHIVE_SHA256: '02cd6c868f100a37d46fe6283927b13583594e620f966c0865f3f0a705f2d20e'
+      EMU198X_ARCHIVE_SHA256: '2e29c5bdedd54e361fce571844e8fbb70cc38c0e95dfbac2f086b0cca2021f14'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Download and verify pinned release archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pattern-tools"
+          cd "$RUNNER_TEMP/pattern-tools"
+          asm_archive=asm198x-x86_64-unknown-linux-gnu.tar.xz
+          emu_archive=emu198x-nes-x86_64-unknown-linux-gnu.tar.gz
+          curl --fail --silent --show-error --location --max-time 45 \
+            "https://github.com/asm198x/asm198x/releases/download/$ASM198X_TAG/$asm_archive" -o "$asm_archive"
+          curl --fail --silent --show-error --location --max-time 45 \
+            "https://github.com/emu198x/emu198x/releases/download/$EMU198X_TAG/$emu_archive" -o "$emu_archive"
+          printf '%s  %s\n' "$ASM198X_ARCHIVE_SHA256" "$asm_archive" | sha256sum --check --strict
+          printf '%s  %s\n' "$EMU198X_ARCHIVE_SHA256" "$emu_archive" | sha256sum --check --strict
+          # The same checksum command must reject a deliberately wrong digest.
+          if printf '%064d  %s\n' 0 "$asm_archive" | sha256sum --check --status; then
+            echo 'Checksum control accepted an incorrect digest' >&2
+            exit 1
+          fi
+          tar -xJf "$asm_archive"
+          tar -xzf "$emu_archive"
+          mkdir -p bin
+          install -m 755 asm198x-x86_64-unknown-linux-gnu/asm198x bin/asm198x
+          install -m 755 emu198x-nes-x86_64-unknown-linux-gnu/emu198x-nes bin/emu198x-nes
+          echo "$RUNNER_TEMP/pattern-tools/bin" >> "$GITHUB_PATH"
+      - name: Execute seven pulse-audio cases and WAV-header controls
+        run: python nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/verify.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-nes" --output "$RUNNER_TEMP/pattern-evidence/nes"
+      - name: Record the released tool combination and host
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import platform
+          from pathlib import Path
+          result_path = Path(os.environ["RUNNER_TEMP"]) / "pattern-evidence/nes/results.json"
+          result = json.loads(result_path.read_text())
+          expected = {"held-a4", "octave", "low-negate-sweep", "low-sweep-00-mutes", "timer-below-8-mutes", "load-before-enable", "length-expires"}
+          if result["status"] != "passed" or len(result["cases"]) != 7 or {c["name"] for c in result["cases"]} != expected:
+              raise ValueError("NES run must pass all seven declared cases")
+          if set(result["negative_control"]["rejections"]) != {"duration", "pitch"} or not all(result["negative_control"]["rejections"].values()):
+              raise ValueError("Both deliberately incorrect WAV-header checks must reject")
+          report = {
+              "samples_revision": os.environ["GITHUB_SHA"],
+              "runner_os": os.environ["RUNNER_OS"],
+              "host": platform.platform(),
+              "python": platform.python_version(),
+              "release_tags": {"asm198x": os.environ["ASM198X_TAG"], "emu198x-nes": os.environ["EMU198X_TAG"]},
+              "linux_archive_sha256": {"asm198x": os.environ["ASM198X_ARCHIVE_SHA256"], "emu198x-nes": os.environ["EMU198X_ARCHIVE_SHA256"]},
+              "incorrect_checksum_rejected": True,
+              "limits": "This Ubuntu x86-64 released pair and NTSC NROM/rendering-off pulse-1 fixture only; no PAL/Dendy, other mapper, hardware, listening or family-wide version-set qualification."
+          }
+          path = Path(os.environ["RUNNER_TEMP"]) / "pattern-evidence/nes-release-inputs.json"
+          path.write_text(json.dumps(report, indent=2) + "\n")
+          PY
+      - uses: actions/upload-artifact@v7
+        if: success()
+        with:
+          name: pattern-nes-fresh-behaviour
+          path: |
+            ${{ runner.temp }}/pattern-evidence/nes/results.json
+            ${{ runner.temp }}/pattern-evidence/nes-release-inputs.json
+          if-no-files-found: error
+          retention-days: 14
