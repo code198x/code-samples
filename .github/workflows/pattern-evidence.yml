@@ -1,0 +1,51 @@
+name: Pattern evidence
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recorded-inputs:
+    name: Recorded pattern inputs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check guard failure modes
+        run: python -m unittest discover -s scripts -p test_pattern_evidence.py -v
+      - name: Compare the five selected records with their inputs
+        run: python scripts/check-pattern-evidence.py --output "$RUNNER_TEMP/pattern-evidence/recorded-inputs.json"
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: pattern-recorded-inputs
+          path: ${{ runner.temp }}/pattern-evidence/recorded-inputs.json
+          if-no-files-found: error
+          retention-days: 14
+
+  aabb-behaviour:
+    name: AABB fresh behaviour
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Execute the independent pixel-oracle checks and negative cases
+        run: python cross-platform/patterns/physics/aabb-collision/verification/verify.py --output "$RUNNER_TEMP/pattern-evidence/aabb"
+      - uses: actions/upload-artifact@v7
+        if: success()
+        with:
+          name: pattern-aabb-fresh-behaviour
+          path: ${{ runner.temp }}/pattern-evidence/aabb/results.json
+          if-no-files-found: error
+          retention-days: 14

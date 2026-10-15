@@ -67,6 +67,44 @@ Use each sample's `README.md`, Makefile, or script as the local authority for ex
 
 This repo contains sample-local capture and test support where needed, but not every sample has the same level of automation. If a workflow depends on emulator screenshots, audio, scripts, or MCP, prefer the documented Emu198x capture path for that platform.
 
+### Selected pattern evidence
+
+The Pattern evidence workflow checks five selected samples: C64 Hardware
+Sprites, NES Square Wave, Amiga Playing a Sample, Spectrum Bitmap Addressing
+and the cross-platform AABB Python reference. It runs on every pull request
+and push to main/master, so a path filter cannot hide a changed input.
+
+```sh
+python3 scripts/check-pattern-evidence.py
+python3 -m unittest discover -s scripts -p test_pattern_evidence.py -v
+python3 cross-platform/patterns/physics/aabb-collision/verification/verify.py --output /tmp/aabb-check
+```
+
+Use Python 3.14, as CI does; no Python packages or firmware are required.
+The first command compares 18 declared source/observer/helper hashes with
+existing execution records. `recorded_inputs_match` means those recorded
+inputs match current files. It does not mean the machines were rerun or that
+current tool binaries, firmware or other configurations are qualified.
+`--output /path/to/report.json` retains the same report printed to stdout.
+A stale or missing input returns a nonzero exit and a diagnostic naming the
+fixture. Missing/malformed records and reduced or duplicate selections fail.
+The separate AABB job freshly executes its independent occupied-pixel oracle
+and negative cases; this is Python host behaviour, not retro CPU execution.
+
+`scripts/pattern-evidence.json` selects existing records and hash fields;
+it is an adapter for these five samples, not a new execution-record schema.
+After changing a declared source or observer, rerun that sample's documented
+verifier and review the new result. Preserve historical runs and point the
+selection to the new record when it has a new filename. Do not merely replace
+old hashes to silence the guard. Changing the selected scope also requires
+an explicit update to the checker's required fixture/binding counts and its
+regression tests.
+
+CI uploads the binding report and fresh AABB result with 14-day retention.
+The sample-local committed records remain the durable historical evidence.
+Other pattern observers are not executed by this workflow. Broader runtime,
+release-toolchain and firmware-dependent qualification stays separate.
+
 ### Executable curriculum proofs
 
 Versioned proof manifests connect selected lessons to primary evidence and the

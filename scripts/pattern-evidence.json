@@ -1,0 +1,155 @@
+[
+  {
+    "name": "c64",
+    "record": "commodore-64/patterns/assembly/rendering/hardware-sprites/verification/runs/2026-10-15-macos.json",
+    "bindings": [
+      {
+        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/demo.asm",
+        "record_keys": [
+          "sources",
+          "demo.asm"
+        ]
+      },
+      {
+        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/sprite.inc",
+        "record_keys": [
+          "sources",
+          "sprite.inc"
+        ]
+      },
+      {
+        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/shape.inc",
+        "record_keys": [
+          "sources",
+          "shape.inc"
+        ]
+      },
+      {
+        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/verification/verify.py",
+        "record_keys": [
+          "sources",
+          "verification/verify.py"
+        ]
+      },
+      {
+        "path": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py",
+        "record_keys": [
+          "png_reader_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "nes",
+    "record": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/evidence/results.json",
+    "bindings": [
+      {
+        "path": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/demo.asm",
+        "record_keys": [
+          "sources",
+          "demo.asm"
+        ]
+      },
+      {
+        "path": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/square-wave.inc",
+        "record_keys": [
+          "sources",
+          "square-wave.inc"
+        ]
+      },
+      {
+        "path": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/verify.py",
+        "record_keys": [
+          "sources",
+          "verification/verify.py"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "amiga",
+    "record": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/evidence/runs/2026-10-15-reconciled.json",
+    "bindings": [
+      {
+        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/demo.asm",
+        "record_keys": [
+          "sources",
+          "demo.asm"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/paula-sample.inc",
+        "record_keys": [
+          "sources",
+          "paula-sample.inc"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/probe.asm",
+        "record_keys": [
+          "sources",
+          "probe.asm"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/verify.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/test_verify.py",
+        "record_keys": [
+          "observer_controls_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "spectrum",
+    "record": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/results.json",
+    "bindings": [
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/caller.asm",
+        "record_keys": [
+          "source_sha256",
+          "caller.asm"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc",
+        "record_keys": [
+          "source_sha256",
+          "bitmap-addressing.inc"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/verify.py",
+        "record_keys": [
+          "source_sha256",
+          "verify.py"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "aabb",
+    "record": "cross-platform/patterns/physics/aabb-collision/verification/results.json",
+    "bindings": [
+      {
+        "path": "cross-platform/patterns/physics/aabb-collision/aabb.py",
+        "record_keys": [
+          "sources_sha256",
+          "aabb.py"
+        ]
+      },
+      {
+        "path": "cross-platform/patterns/physics/aabb-collision/verification/verify.py",
+        "record_keys": [
+          "sources_sha256",
+          "verify.py"
+        ]
+      }
+    ]
+  }
+]
