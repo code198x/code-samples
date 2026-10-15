@@ -64,3 +64,11 @@ Device: channel allocation. Abacus, *Amiga System Programmer's Guide*,
 chapter 1: odd bus cycles reserved for DMA, including audio. Results are emulator observations, not hardware tests. They make no
 claim about which stereo jack carries channel 0: primary sources disagree
 (emu198x#1514). Listening remains a human check.
+
+The [15 October 2026 rerun](verification/evidence/runs/2026-10-15-failed.json)
+passes the three pitch observations and the DMA-cost comparison, then fails
+the first interrupt-gap assertion with `AssertionError: 140`. The retained
+success above is a different run; the current failure does not qualify the
+remaining interrupt or one-shot checks. [Issue #85](https://github.com/code198x/code-samples/issues/85)
+tracks reconciliation of the guest acknowledgement trace and the observer's
+expectation. No assertion or emulator timing has been changed.
