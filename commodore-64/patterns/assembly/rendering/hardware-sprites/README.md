@@ -38,7 +38,13 @@ alignment. A mutation that omits setting X bit 8 must fail the picture check.
 
 [Results](verification/results.json) and [execution output](verification/execution.log)
 record 20 passing captures and the rejected mutation on 10 October 2026.
-Source and tool hashes identify the run. The PNG reader is reused from the
+Source and tool hashes identify the run.
+
+On macOS the verifier runs VICE through the system `script` command so that
+its output has a terminal. VICE 3.10 can crash in its startup logger when
+stdout is a pipe, before it reads the monitor commands. `script` preserves
+the child exit status; a VICE failure, a missing capture or a wrong picture
+still fails the verifier. The PNG reader is reused from the
 adjacent sprite-multiplexing verifier; its hash is retained separately.
 
 Tools: Asm198x v0.0.58, ACME 0.97, VICE 3.10 and Emu198x built from

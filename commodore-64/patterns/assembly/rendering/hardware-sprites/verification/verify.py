@@ -10,6 +10,7 @@ import importlib.util
 import json
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -122,30 +123,42 @@ def run_vice(
             ]
         )
     )
+    command = [
+        args.vice,
+        "-console",
+        "-default",
+        "-model",
+        "c64" if model == "pal" else "ntsc",
+        "-warp",
+        "+sound",
+        "-logfile",
+        str(dest / f"vice-{model}.log"),
+        "-limitcycles",
+        "4000000",
+        "-initbreak",
+        "ready",
+        "-moncommands",
+        str(monitor),
+    ]
+    if sys.platform == "darwin":
+        # VICE 3.10's startup logger can dereference a null decolourised string
+        # when stdout is a pipe. A terminal avoids that upstream logger path.
+        # macOS script forwards the child exit status; verify.py still requires
+        # zero exit, exact register/pixel observations and the negative control.
+        command = ["/usr/bin/script", "-q", "/dev/null", *command]
     result = subprocess.run(
-        [
-            args.vice,
-            "-console",
-            "-default",
-            "-model",
-            "c64" if model == "pal" else "ntsc",
-            "-warp",
-            "+sound",
-            "-logfile",
-            str(dest / f"vice-{model}.log"),
-            "-limitcycles",
-            "4000000",
-            "-initbreak",
-            "ready",
-            "-moncommands",
-            str(monitor),
-        ],
+        command,
+        stdin=subprocess.DEVNULL,
         capture_output=True,
         text=True,
         timeout=60,
         check=False,
     )
-    require(result.returncode == 0, f"VICE exit {result.returncode}: {result.stderr}")
+    (dest / f"vice-{model}-console.log").write_text(result.stdout + result.stderr)
+    require(
+        result.returncode == 0,
+        f"VICE exit {result.returncode}: {result.stderr}\n{result.stdout[-4000:]}",
+    )
     return shot, list(dump.read_bytes())
 
 
