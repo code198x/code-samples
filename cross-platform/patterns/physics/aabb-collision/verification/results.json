@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "target": "Python integer reference; host-only execution",
+  "python_version": "3.14.3",
+  "sources_sha256": {
+    "aabb.py": "f5acdc2de116b716cfb98678f2a18329716a83e03f23450a04714a221ab316ed",
+    "verify.py": "ad9a8a66086aac8dae38e85332e47495ddc0c7faf1f4e32d3ceefdc66d6a7766"
+  },
+  "narrow_phase_ordered_pairs": 160000,
+  "small_box_count": 400,
+  "integer_width_and_edge_cases": 4,
+  "all_grid_cells_checked": 64,
+  "unsupported_integer_boxes_rejected": 8,
+  "scenes_checked": 155,
+  "candidate_pairs_observed": 7112,
+  "negative_controls": [
+    {
+      "mutation": "missing-bottom-left",
+      "rejected": true
+    },
+    {
+      "mutation": "eight-bit-wrap",
+      "rejected": true
+    }
+  ],
+  "limits": "Bounded input enumeration and generated scenes, not an exhaustive proof of all scenes. No retro machine execution, coordinate overflow emulation or timing claim."
+}
