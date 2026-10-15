@@ -61,3 +61,9 @@ Hardware sources: NESdev Wiki, [APU Pulse](https://www.nesdev.org/wiki/APU_Pulse
 [APU DMC](https://www.nesdev.org/wiki/APU_DMC), as extracted to the 198x
 reference library on 2026-04-22. These are community hardware research. The
 results are emulator observations, not original-hardware tests or listening.
+
+The [15 October 2026 rerun](verification/evidence/runs/2026-10-15.json)
+passes all seven cases, both playback-time checks and the deliberately
+mislabelled WAV controls on Emu198x revision
+`dd7af3bbe1f9ff90b05070891ce5305a70369296`. The earlier record remains
+available; neither run is a listening or original-hardware check.

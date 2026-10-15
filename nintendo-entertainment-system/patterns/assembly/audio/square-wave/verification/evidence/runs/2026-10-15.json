@@ -1,0 +1,174 @@
+{
+  "target": "NTSC NES, NROM, rendering off; pulse 1 only",
+  "method": "Complete ROMs in emu198x-nes --mcp; CPU reads of $4015; PCM in emulated time and WAV playback time",
+  "emulator_sha256": "d40468d248c3d180ca8d7b1357f0baaca2776db00588445eb71abdaf6add821a",
+  "assembler_sha256": "2286f8ba5ac3648a15cad0940acf62c6aa578c81808ed0ced7ee7bbb7aba65ee",
+  "sources": {
+    "demo.asm": "03c033550f78a005a4f795e2af4f6cce3b0948ed03fb0df4573c87b9b195a892",
+    "square-wave.inc": "756b9fbedea88a3638f74a1697ead6aa0e90b41892b69e981c00fb9f36806d48",
+    "verification/verify.py": "205051fe163302c7a6b1f08f728dcb6702abee8e87bb0141a5dbb0400107ad76"
+  },
+  "frames_per_case": 120,
+  "cases": [
+    {
+      "name": "held-a4",
+      "timer": 253,
+      "status_4015": 1,
+      "source_sha256": "03c033550f78a005a4f795e2af4f6cce3b0948ed03fb0df4573c87b9b195a892",
+      "rom_sha256": "66da9863e0d3f33e7182f4e7d314fb6a0f761acf3c49c6ad165bdbc647b23fb2",
+      "wav_sha256": "c51391d93d305b8da9265e1279230dc636c51120cc08142f4c301ccdf2c103ea",
+      "header_rate": 48000,
+      "effective_rate": 48001.2,
+      "sample_count": 95845,
+      "playback_seconds": 1.996771,
+      "emulated_seconds": 1.996722,
+      "checks": [
+        "$4015 bit 0 reads 1 after 120 frames",
+        "WAV playback duration within 2 ms of emulated time",
+        "Pitch within 0.5% of 1789773/(16*(t+1)), held to the end",
+        "WAV playback pitch within 0.5% of timer frequency"
+      ],
+      "frequency_hz": 440.41,
+      "expected_hz": 440.4,
+      "playback_frequency_hz": 440.4
+    },
+    {
+      "name": "octave",
+      "timer": 126,
+      "status_4015": 1,
+      "source_sha256": "9fbc85dcc08a58bcef5f22988792d7966c14220e3338d28c8462b88c374317d3",
+      "rom_sha256": "7fb93db21224cde3557f9614be6c9f79a120e921f283fc77002588034ec9c012",
+      "wav_sha256": "edfff15f371efabd9e9308d644f857182d3e4896cc6338824bf212db9a326145",
+      "header_rate": 48000,
+      "effective_rate": 48001.2,
+      "sample_count": 95845,
+      "playback_seconds": 1.996771,
+      "emulated_seconds": 1.996722,
+      "checks": [
+        "$4015 bit 0 reads 1 after 120 frames",
+        "WAV playback duration within 2 ms of emulated time",
+        "Pitch within 0.5% of 1789773/(16*(t+1)), held to the end",
+        "WAV playback pitch within 0.5% of timer frequency"
+      ],
+      "frequency_hz": 880.82,
+      "expected_hz": 880.79,
+      "playback_frequency_hz": 880.8
+    },
+    {
+      "name": "low-negate-sweep",
+      "timer": 1024,
+      "status_4015": 1,
+      "source_sha256": "69663c8b6bf143f92ce0026565385cf4e7855c39d86b8be98c070a0b48a248df",
+      "rom_sha256": "e9afdd2bd056777f0c8e9e1d4948f0dffcaaff8a19e193538a4ff5d568bcc0ee",
+      "wav_sha256": "ff2d766b50079ce867f43e5760b88d023c9316ccd9400bf6e1bc0ad1a7b04c28",
+      "header_rate": 48000,
+      "effective_rate": 48001.2,
+      "sample_count": 95845,
+      "playback_seconds": 1.996771,
+      "emulated_seconds": 1.996722,
+      "checks": [
+        "$4015 bit 0 reads 1 after 120 frames",
+        "WAV playback duration within 2 ms of emulated time",
+        "Pitch within 0.5% of 1789773/(16*(t+1)), held to the end",
+        "WAV playback pitch within 0.5% of timer frequency"
+      ],
+      "frequency_hz": 109.14,
+      "expected_hz": 109.13,
+      "playback_frequency_hz": 109.13
+    },
+    {
+      "name": "low-sweep-00-mutes",
+      "timer": 1024,
+      "status_4015": 1,
+      "source_sha256": "ba1a4b0d775a1eb2f16411da402af79e215e6469109a7c256571f698a3d65beb",
+      "rom_sha256": "26326d29d359e3247e6d80e33df7ad9a2e74033bde441691c821de31f65e0f71",
+      "wav_sha256": "edb340766c9ea975d51bb65fbe16f6ae15d4b2871bd805e3253913da414c046d",
+      "header_rate": 48000,
+      "effective_rate": 48001.2,
+      "sample_count": 95845,
+      "playback_seconds": 1.996771,
+      "emulated_seconds": 1.996722,
+      "checks": [
+        "$4015 bit 0 reads 1 after 120 frames",
+        "WAV playback duration within 2 ms of emulated time",
+        "Silent: no waveform crossings"
+      ]
+    },
+    {
+      "name": "timer-below-8-mutes",
+      "timer": 7,
+      "status_4015": 1,
+      "source_sha256": "0b8d7cc72d94765190ed1ccc0eb0f5595088281014be23bba089e67140c0c3c7",
+      "rom_sha256": "d34b75826b5230d8390befcb08fe92b07761f1557bababe90c319304c8286932",
+      "wav_sha256": "5933cffbfe015bfff056ff22e93bd91d2226a0d6bf7b814d35b183b05e53a059",
+      "header_rate": 48000,
+      "effective_rate": 48001.2,
+      "sample_count": 95845,
+      "playback_seconds": 1.996771,
+      "emulated_seconds": 1.996722,
+      "checks": [
+        "$4015 bit 0 reads 1 after 120 frames",
+        "WAV playback duration within 2 ms of emulated time",
+        "Silent: no waveform crossings"
+      ]
+    },
+    {
+      "name": "load-before-enable",
+      "timer": 253,
+      "status_4015": 0,
+      "source_sha256": "af1bb4a532f86b12f64f06135c0d6cf18df51908074641a8c269544cd6d1e097",
+      "rom_sha256": "d200d69895623faae3cc6a30565da72cdb328274f437ba90ffe812122e36a762",
+      "wav_sha256": "5933cffbfe015bfff056ff22e93bd91d2226a0d6bf7b814d35b183b05e53a059",
+      "header_rate": 48000,
+      "effective_rate": 48001.2,
+      "sample_count": 95845,
+      "playback_seconds": 1.996771,
+      "emulated_seconds": 1.996722,
+      "checks": [
+        "$4015 bit 0 reads 0 after 120 frames",
+        "WAV playback duration within 2 ms of emulated time",
+        "Silent: no waveform crossings"
+      ]
+    },
+    {
+      "name": "length-expires",
+      "timer": 253,
+      "status_4015": 0,
+      "source_sha256": "af0ae960b28501aca1af33ce3f73dbb2238a9f9bbc30385e64357d7fe4d65426",
+      "rom_sha256": "ed38f9b137d79e3fbf307c3bba02bfe5a5199dede7f598c7b242feb596d64c04",
+      "wav_sha256": "579dfccb85239475dbaf90acaf7d9686c81605899392844f87710ddf2fbeea3e",
+      "header_rate": 48000,
+      "effective_rate": 48001.2,
+      "sample_count": 95845,
+      "playback_seconds": 1.996771,
+      "emulated_seconds": 1.996722,
+      "checks": [
+        "$4015 bit 0 reads 0 after 120 frames",
+        "WAV playback duration within 2 ms of emulated time",
+        "Tone stops after ten half-frame clocks (75-84 ms)",
+        "Level is unchanged until the cut: no fade",
+        "WAV playback pitch within 0.5% of timer frequency"
+      ],
+      "frequency_hz": 440.38,
+      "tone_seconds": 0.0817,
+      "playback_tone_seconds": 0.0818,
+      "playback_frequency_hz": 440.37
+    }
+  ],
+  "limits": "Emulator observations; no original-hardware or listening claim.",
+  "negative_control": {
+    "wav_sha256": "7c809161f138176f99cf489c34faf6789fef288f56487506f43291132a2ff262",
+    "rejections": {
+      "duration": "WAV duration 1.959339s differs from emulated 1.996722s by more than 2 ms",
+      "pitch": "WAV playback pitch 448.81 Hz, expected 440.40 Hz"
+    }
+  },
+  "audio_timebase": [
+    {
+      "wav_header_hz": 48000,
+      "samples_per_emulated_second": 48001.2
+    }
+  ],
+  "status": "passed",
+  "emulator_revision": "dd7af3bbe1f9ff90b05070891ce5305a70369296"
+}
