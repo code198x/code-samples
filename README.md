@@ -89,7 +89,13 @@ current tool binaries, firmware or other configurations are qualified.
 A stale or missing input returns a nonzero exit and a diagnostic naming the
 fixture. Missing/malformed records and reduced or duplicate selections fail.
 The separate AABB job freshly executes its independent occupied-pixel oracle
-and negative cases; this is Python host behaviour, not retro CPU execution.
+and negative cases; this is Python host behaviour. A Spectrum job executes the
+existing Bitmap Addressing observer with Asm198x 0.0.65 and Emu198x Spectrum
+0.34.0 release binaries on Ubuntu 24.04 x86-64. Its archive SHA-256 values are
+pinned in the workflow and checked before extraction; a wrong-checksum control
+must fail. This uses an unused synthetic ROM and a 48K PAL RAM snapshot, not a
+ROM boot, contention or hardware test. Missing tools or failed downloads fail
+the job without a fallback to another installed version.
 
 `scripts/pattern-evidence.json` selects existing records and hash fields;
 it is an adapter for these five samples, not a new execution-record schema.
@@ -100,9 +106,10 @@ old hashes to silence the guard. Changing the selected scope also requires
 an explicit update to the checker's required fixture/binding counts and its
 regression tests.
 
-CI uploads the binding report and fresh AABB result with 14-day retention.
+CI uploads the binding report, fresh AABB result and Spectrum result/release
+identities with 14-day retention.
 The sample-local committed records remain the durable historical evidence.
-Other pattern observers are not executed by this workflow. Broader runtime,
+C64, NES and Amiga pattern observers are not executed by this workflow. Broader runtime,
 release-toolchain and firmware-dependent qualification stays separate.
 
 ### Executable curriculum proofs
