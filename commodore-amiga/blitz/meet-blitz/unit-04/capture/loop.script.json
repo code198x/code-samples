@@ -39,7 +39,7 @@
  },
  {
   "action": "type_string",
-  "text": "; A loop draws ten bars; a decision picks out the middle one.\nBLITZ\n  BitMap 0,320,256,3\n  Cls 0\n  For x = 0 To 9\n    c = 2\n    If x = 5 Then c = 5\n    Boxf x*30+10, 90, x*30+30, 160, c\n  Next\n  VWait 100\n  Slice 0,44,3\n  Show 0\n  MouseWait\n"
+  "text": "; A loop draws ten bars; a decision picks out the middle one.\nVWait 100\nBLITZ\n  BitMap 0,320,256,3\n  Cls 0\n  For x = 0 To 9\n    c = 2\n    If x = 5 Then c = 5\n    Boxf x*30+10, 90, x*30+30, 160, c\n  Next\n  Slice 0,44,3\n  Show 0\n  MouseWait\n"
  },
  {
   "action": "run_frames",

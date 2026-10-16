@@ -1,4 +1,5 @@
 ; A loop draws ten bars; a decision picks out the middle one.
+VWait 100
 BLITZ
   BitMap 0,320,256,3
   Cls 0
@@ -7,7 +8,6 @@ BLITZ
     If x = 5 Then c = 5
     Boxf x*30+10, 90, x*30+30, 160, c
   Next
-  VWait 100
   Slice 0,44,3
   Show 0
   MouseWait
