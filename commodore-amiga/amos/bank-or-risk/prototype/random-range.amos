@@ -1,0 +1,13 @@
+Hide
+Cls 0
+Dim BINS(7)
+Randomize 12345
+For I=1 To 2000
+   FACE=Rnd(6)+1
+   Inc BINS(FACE)
+Next I
+Print "Probe: Rnd(6)+1, seed 12345"
+For I=1 To 7
+   Print I;": ";BINS(I)
+Next I
+Wait Key
