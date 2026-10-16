@@ -1,7 +1,10 @@
 # Angle of attack
 
-User-approved Maths for Games prototype, with six focused teaching pages awaiting review. A host-side mathematical
-experiment; no native machine, assembler or emulator is involved. Not published.
+The user-approved six-part [Aiming and movement sequence](https://code198x.com/craft/maths-for-games/unit-06/)
+is published in Maths for Games. This directory maintains its host-side mathematical
+experiment and standalone teaching pages; no native machine, assembler or emulator
+is involved. The [release record](https://github.com/code198x/docs/blob/main/specifications/experiments/aiming.md)
+records approval and website integration.
 
 Serve this directory, then open the printed address:
 
@@ -59,8 +62,9 @@ Open `lessons.html?step=1` on the same server. Six pages introduce coordinates,
 right triangles, sine/cosine, radians, atan2 aiming and fixed-point movement.
 `lesson-content.mjs` contains the worked teaching copy; `lessons.mjs` supplies the
 focused controls and geometry, sharing `model.mjs` for the two shooting experiments.
-The complete playground is unchanged. These are local teaching drafts, not
-published website lessons.
+The complete playground remains available for exploration. The public curriculum
+uses this maintained model and focused controls; its teaching prose lives in the
+website repository. The standalone pages retain their own teaching copy.
 
 Run `node verify-lessons.mjs /tmp/aiming-lessons` with the same browser dependencies
 and local server as the original check. Evidence lives in `verification/lessons/`.
