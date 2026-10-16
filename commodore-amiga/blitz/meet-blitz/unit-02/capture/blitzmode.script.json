@@ -39,7 +39,7 @@
  },
  {
   "action": "type_string",
-  "text": "; Blitz mode takes over the whole machine for full-speed graphics.\nBLITZ\n  BitMap 0,320,256,3\n  Cls 0\n  Boxf 40,50,200,160,2\n  Circle 240,110,55,5\n  VWait 100\n  Slice 0,44,3\n  Show 0\n  MouseWait\n"
+  "text": "; Let disk activity finish before entering Blitz mode.\nVWait 100\nBLITZ\n  BitMap 0,320,256,3\n  Cls 0\n  Boxf 40,50,200,160,2\n  Circle 240,110,55,5\n  Slice 0,44,3\n  Show 0\n  MouseWait\n"
  },
  {
   "action": "run_frames",
