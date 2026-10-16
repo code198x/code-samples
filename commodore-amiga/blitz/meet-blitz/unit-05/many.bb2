@@ -1,4 +1,5 @@
-; Eighty objects, all moving every frame. Compiled Blitz does it smoothly.
+; Redraw eighty circles using two alternating bitmaps.
+VWait 100
 BLITZ
   BitMap 0,320,256,3
   BitMap 1,320,256,3
