@@ -271,3 +271,21 @@ Both listings and the reused assembly source are MIT licensed. No firmware or
 snapshot assets are required in this repository. The omitted-FORMAT and
 omitted-BASIC-reload controls are authored copies made by the qualification
 runner, preserving this source file.
+
+## Export and a fresh boot
+
+`export.bas` is a separate MIT fixture for reopening a modified disk in a new
+machine. Build it with the commands above, substituting `export.bas` and a new
+output image path. It also saves the 136-byte diagnostic as `VERIFY.BIN`.
+`CAT` should list `ROUND.BIN`, `VERIFY.BIN` and `RESUME`, with `169K free`.
+
+After the same FORMAT/save/NEW sequence, explicitly export drive A to a new
+EDSK path. Cold boot another +3 with that exported disk, choose **+3 BASIC**,
+and enter `LOAD "RESUME"`. The saved BASIC autoloads both verifier code and
+generated data before calling the verifier. Completion is the same striped
+screen, green border, `5A 5B` and `$8080` loop. No code retained in the previous
+machine's RAM is needed for this route.
+
+The umbrella consumer must validate the actual exported file, original source
+immutability and fresh Emu/reference execution. A successful source build or
+same-session reload alone cannot qualify export/reopen.
