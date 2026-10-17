@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Play the bank-or-risk design trial: one die, five rounds, thirty points.">
+<title>Bank or risk — playtest</title>
+<style>
+:root { color-scheme: dark; --paper: #0c151c; --board: #101f29; --ink: #e8eef0; --muted: #a9bbc6; --line: #526774; --gold: #f4c674; --cyan: #75dbd2; --danger: #ffb3a5; font-family: system-ui, -apple-system, sans-serif; color: var(--ink); background: var(--paper); font-size: 17px; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: min(100%, 1080px); margin: auto; padding: 32px; }
+header { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-bottom: 24px; }
+h1 { margin: 0; font-size: clamp(2rem, 6vw, 3.5rem); letter-spacing: -.03em; line-height: 1.1; }
+h2 { font-size: 1.2rem; margin: 0 0 12px; }
+p { line-height: 1.6; margin: 0 0 12px; }
+header p { margin: 0; color: var(--muted); }
+a { color: var(--cyan); text-underline-offset: .2em; }
+.board { background: var(--board); padding: 28px; border: 1px solid var(--line); }
+.scoreline { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+.scoreline p { margin: 0; color: var(--muted); font-size: .85rem; }
+.scoreline strong { display: block; color: var(--ink); font-size: clamp(1.4rem, 4vw, 2rem); font-variant-numeric: tabular-nums; }
+#score { color: inherit; font-size: inherit; font-weight: inherit; }
+.scoreline strong span:not(#score) { font-size: 1rem; color: var(--muted); font-weight: 400; }
+.play { display: grid; grid-template-columns: 180px minmax(0, 1fr); align-items: center; gap: 32px; padding: 32px 0; }
+.die { width: 154px; height: 154px; background: #f4eee1; border-radius: 18px; padding: 20px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; }
+.pip { background: #15252e; border-radius: 50%; visibility: hidden; }
+.pip.on { visibility: visible; }
+.die-wrap p { font-size: .9rem; color: var(--muted); margin: 10px 0 0; }
+.total-label { color: var(--muted); margin-bottom: 0; }
+#total { font-size: clamp(3rem, 9vw, 5rem); line-height: 1.15; font-weight: 700; font-variant-numeric: tabular-nums; }
+#total span { color: var(--muted); font-size: 1.1rem; font-weight: 400; }
+#status { min-height: 3.3em; max-width: 50ch; margin: 10px 0 0; }
+.board[data-outcome="bust"] #total { color: var(--danger); }
+.board[data-phase="result"] #status { color: var(--gold); }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; }
+button { font: inherit; font-weight: 650; min-height: 48px; border: 1px solid var(--line); border-radius: 6px; padding: 12px 22px; color: var(--ink); background: transparent; cursor: pointer; touch-action: manipulation; }
+button.primary { color: var(--paper); background: var(--gold); border-color: var(--gold); }
+button:disabled { color: var(--muted); border-color: var(--line); background: transparent; cursor: default; }
+button small { font-weight: 400; }
+button[hidden] { display: none; }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
+::selection { background: var(--gold); color: var(--paper); }
+@media (hover: hover) { button:hover:not(:disabled) { background: #29404e; } button.primary:hover:not(:disabled) { background: #ffda96; } }
+#keyboard-help { margin: 14px 0 0; color: var(--muted); font-size: .8rem; }
+.history { margin-top: 26px; }
+.history ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
+.history li { border-top: 1px solid var(--line); padding: 10px 0; display: flex; gap: 12px; justify-content: space-between; font-size: .9rem; }
+.history li span:last-child { white-space: nowrap; color: var(--gold); }
+.support { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 28px; }
+.support p { font-size: .9rem; color: var(--muted); max-width: 65ch; }
+#sound { font-size: .85rem; padding: 8px 14px; margin-top: 4px; }
+footer { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 18px; }
+footer p { color: var(--muted); font-size: .8rem; }
+@media (max-width: 600px) { main { padding: 24px 16px; } .board { padding: 20px 16px; } .scoreline { gap: 12px; } .play { grid-template-columns: 104px minmax(0, 1fr); gap: 16px; padding: 26px 0; } .die { width: 100px; height: 100px; padding: 14px; gap: 5px; border-radius: 12px; } .support { grid-template-columns: 1fr; gap: 22px; } .controls button { flex: 1 1 auto; padding: 12px 16px; } #status { min-height: 5em; } }
+</style>
+</head>
+<body>
+<main>
+<header><h1>Bank or risk</h1><p>One die. Five rounds. Thirty points.</p></header>
+<section class="board" aria-label="Game board" data-phase="title" data-outcome="">
+<div class="scoreline">
+<p>Secured score<strong><span id="score">0</span> <span>/ 30</span></strong></p>
+<p>Round<strong id="round">1 of 5</strong></p>
+<p>Rounds left<strong id="remaining">5</strong></p>
+</div>
+<div class="play">
+<div class="die-wrap"><div class="die" role="img" aria-label="No roll yet" id="die"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></div><p id="last-roll">No roll yet</p></div>
+<div><p class="total-label">Current total</p><div id="total"><span id="total-value" style="font: inherit; color: inherit">0</span> <span>/ limit 10</span></div><p id="status" role="status" aria-live="polite" aria-atomic="true">Can you secure 30 points? Start a challenge, then roll once.</p></div>
+</div>
+<div class="controls" aria-label="Game controls">
+<button id="start" class="primary">Start challenge</button>
+<button id="roll" class="primary" hidden>Roll <small>(R)</small></button>
+<button id="bank" hidden disabled>Bank <small>(B)</small></button>
+<button id="next" class="primary" hidden>Next round</button>
+<button id="replay" class="primary" hidden>Play again</button>
+<button id="quit" hidden>End challenge <small>(Q)</small></button>
+</div>
+<p id="keyboard-help">Keyboard: R to roll, B to bank, Space to start or continue, A to play again, Q to end.</p>
+<section class="history" aria-label="Completed rounds"><h2>Your rounds</h2><p id="empty-history">Your secured points will appear here.</p><ol id="history"></ol></section>
+</section>
+<div class="support">
+<section><h2>Keep it, or risk it?</h2><p>Roll to add 1–6 to your current total. Bank to secure those points and finish the round. Go over 10 and that round earns zero. Exactly 10 banks automatically.</p><p>Reach 30 secured points within five rounds. A bust keeps your earlier points. If the rounds left cannot get you to 30, the challenge ends early. Take your time: there’s no timer.</p><button id="sound" aria-pressed="false">Sound off</button></section>
+<section><h2>What do you think?</h2><p>Does choosing another roll feel tempting? Does a bust leave you wanting to recover? After a few challenges, would you change anything about the target or the pace?</p><p>Nothing is recorded or sent. Share your impressions in our conversation.</p></section>
+</div>
+<footer><p>Browser design playtest for the proposed AMOS opening. This runs JavaScript, not AMOS, and does not verify Amiga graphics, sound or input behaviour.</p></footer>
+<noscript><p>This game needs JavaScript enabled. The rules above remain available to read.</p></noscript>
+</main>
+<script id="rules">
+"use strict";
+const BankOrRisk = (() => {
+  const LIMIT = 10;
+  const TARGET = 30;
+  const ROUNDS = 5;
+  function initial(phase = "title") {
+    return { phase, total: 0, face: 0, score: 0, completed: 0, award: 0, outcome: "", history: [] };
+  }
+  function finish(state, outcome) {
+    const award = outcome === "bust" ? 0 : state.total;
+    const score = state.score + award;
+    const completed = state.completed + 1;
+    const ending = score >= TARGET ? "success" : score + LIMIT * (ROUNDS - completed) < TARGET ? "unreachable" : "";
+    return { ...state, award, score, completed, outcome, ending, phase: ending ? "result" : "round", history: [...state.history, { round: completed, total: state.total, award, score, outcome }] };
+  }
+  function act(state, action, face) {
+    if (action === "quit") return initial();
+    if (action === "start" && state.phase === "title") return initial("active");
+    if (action === "replay" && state.phase === "result") return initial("active");
+    if (action === "next" && state.phase === "round") return { ...state, phase: "active", total: 0, face: 0, award: 0, outcome: "" };
+    if (state.phase !== "active") return state;
+    if (action === "bank") return state.total > 0 ? finish(state, "bank") : state;
+    if (action !== "roll") return state;
+    if (!Number.isInteger(face) || face < 1 || face > 6) throw new RangeError("A roll must be an integer from 1 through 6.");
+    const rolled = { ...state, face, total: state.total + face };
+    return rolled.total > LIMIT ? finish(rolled, "bust") : rolled.total === LIMIT ? finish(rolled, "perfect") : rolled;
+  }
+  function randomFace(random = crypto) {
+    const sample = new Uint32Array(1);
+    do { random.getRandomValues(sample); } while (sample[0] >= 4294967292);
+    return sample[0] % 6 + 1;
+  }
+  return { initial, act, randomFace };
+})();
+</script>
+<script id="interface">
+"use strict";
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const board = document.querySelector(".board");
+  const buttons = ["start", "roll", "bank", "next", "replay", "quit"];
+  const patterns = [[], [4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]];
+  const held = new Set();
+  let state = BankOrRisk.initial();
+  let sound = false;
+  let audio;
+  function cue(outcome) {
+    if (!sound) return;
+    try {
+      audio ??= new (window.AudioContext || window.webkitAudioContext)();
+      void audio.resume().catch(() => { sound = false; soundLabel(); });
+      const oscillator = audio.createOscillator();
+      const gain = audio.createGain();
+      oscillator.frequency.value = outcome === "success" ? 880 : outcome === "bust" ? 160 : 520;
+      gain.gain.setValueAtTime(0, audio.currentTime);
+      gain.gain.linearRampToValueAtTime(.08, audio.currentTime + .01);
+      gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .18);
+      oscillator.connect(gain).connect(audio.destination);
+      oscillator.start();
+      oscillator.stop(audio.currentTime + .2);
+    } catch { sound = false; soundLabel(); }
+  }
+  function soundLabel() {
+    $("sound").textContent = sound ? "Sound on" : "Sound off";
+    $("sound").setAttribute("aria-pressed", String(sound));
+  }
+  function message() {
+    const result = state.outcome === "bust" ? `Bust at ${state.total}. Zero secured this round.` : state.outcome === "perfect" ? "Perfect 10! Ten points secured automatically." : `${state.award} points secured this round.`;
+    if (state.phase === "title") return "Can you secure 30 points? Start a challenge, then roll once.";
+    if (state.phase === "result") return state.ending === "success" ? `${result} You reached ${state.score} points. Challenge complete!` : `${result} With ${5 - state.completed} rounds left, the most you could reach is ${state.score + 10 * (5 - state.completed)}. The target is out of reach.`;
+    if (state.phase === "round") return `${result} Your secured score is ${state.score}. Continue when you’re ready.`;
+    return state.total ? "Bank these points, or risk another roll?" : "Roll once before you can bank.";
+  }
+  function render() {
+    board.dataset.phase = state.phase;
+    board.dataset.outcome = state.outcome;
+    $("score").textContent = state.score;
+    $("round").textContent = `${state.phase === "active" || state.phase === "title" ? state.completed + 1 : state.completed} of 5`;
+    $("remaining").textContent = 5 - state.completed;
+    $("total-value").textContent = state.total;
+    $("last-roll").textContent = state.face ? `Last roll: ${state.face}` : "No roll yet";
+    $("die").setAttribute("aria-label", state.face ? `Die showing ${state.face}` : "No roll yet");
+    [...$("die").children].forEach((pip, index) => pip.classList.toggle("on", patterns[state.face].includes(index)));
+    $("status").textContent = message();
+    const visible = state.phase === "title" ? ["start"] : state.phase === "active" ? ["roll", "bank", "quit"] : state.phase === "round" ? ["next", "quit"] : ["replay", "quit"];
+    for (const name of buttons) $(name).hidden = !visible.includes(name);
+    $("bank").disabled = state.total === 0;
+    $("empty-history").hidden = state.history.length > 0;
+    $("history").replaceChildren(...state.history.map((round) => {
+      const row = document.createElement("li");
+      const detail = document.createElement("span");
+      const points = document.createElement("span");
+      detail.textContent = `Round ${round.round} · ${round.outcome === "bust" ? `Bust at ${round.total}` : round.outcome === "perfect" ? "Perfect 10" : `Banked ${round.total}`}`;
+      points.textContent = `+${round.award} → ${round.score}`;
+      row.append(detail, points);
+      return row;
+    }));
+  }
+  function dispatch(action) {
+    const before = state;
+    state = BankOrRisk.act(state, action, action === "roll" && state.phase === "active" ? BankOrRisk.randomFace() : undefined);
+    if (state === before) return;
+    if (state.completed > before.completed) cue(state.ending === "success" ? "success" : state.outcome);
+    render();
+    if (state.phase !== before.phase) {
+      const primary = buttons.map($).find((button) => !button.hidden && !button.disabled);
+      primary.focus({ preventScroll: true });
+    }
+  }
+  for (const action of buttons) $(action).addEventListener("click", () => dispatch(action));
+  $("sound").addEventListener("click", () => { sound = !sound; soundLabel(); if (sound) cue("bank"); });
+  document.addEventListener("keydown", (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.isComposing) return;
+    const key = event.key.toLowerCase();
+    const buttonActivation = (key === " " || key === "enter") && event.target instanceof HTMLButtonElement;
+    const shortcut = { r: "roll", b: "bank", q: "quit", a: "replay", " ": state.phase === "title" ? "start" : "next" }[key];
+    if (!buttonActivation && !shortcut) return;
+    event.preventDefault();
+    if (event.repeat || held.has(event.code)) return;
+    held.add(event.code);
+    if (buttonActivation) { if (!event.target.disabled && !event.target.hidden) event.target.click(); }
+    else dispatch(shortcut);
+  });
+  document.addEventListener("keyup", (event) => { held.delete(event.code); });
+  window.addEventListener("blur", () => held.clear());
+  render();
+})();
+</script>
+</body>
+</html>
