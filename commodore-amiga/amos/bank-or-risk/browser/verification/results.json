@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Range endpoints, 9/10 boundary, one-time award, empty/invalid input and held R",
+    "Exact-target success, stable ending, held replay, complete reset and quit",
+    "Bust at 11 preserves 4; contributions 4/0/6/10/10 win in round five",
+    "Unreachable target ends after three busts",
+    "All six die faces match their printed value",
+    "Real Web Audio oscillators: once-only bank/bust/success cues; final success replaces bank; mute toggle",
+    "Pointer controls, focused Enter, held Space across a round transition",
+    "Desktop/mobile: no horizontal overflow or axe violations",
+    "Offline file opens without network requests or page errors"
+  ],
+  "errors": [],
+  "networkRequests": 0
+}
