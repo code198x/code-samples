@@ -301,7 +301,13 @@ build198x plus3 --basic loader.bas --code fdc-commands.bin --load-address 32768 
 ```
 
 Mount a disposable writable copy in drive A and select **Loader**. The guest
-seeks track 39, writes computed `$42` bytes to sector 2, then uses Write Deleted
+seeks track 39 and polls Sense Interrupt until drive A reports normal seek-end
+at PCN39. It drains other-drive results and retries a no-pending `$80` result;
+MSR CB also drains Emu's existing extra `$00` byte. This compatibility handling
+does not qualify that extra byte as hardware behaviour. Runner limits bound
+polling, without assuming a physical seek duration.
+
+The guest writes computed `$42` bytes to sector 2, then uses Write Deleted
 Data to write computed `$A5` bytes to sector 1. Read Deleted Data must recover
 all 512 bytes. Read Track must return the two represented payloads. Scan Equal,
 Low or Equal and High or Equal compare sector 2 with `$42`, `$43` and `$41`
