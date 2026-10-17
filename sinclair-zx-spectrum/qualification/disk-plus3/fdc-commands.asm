@@ -24,21 +24,7 @@
         ld hl,seek_command
         ld e,3
         call command
-        ld de,16384
-seek_delay:
-        dec de
-        ld a,d
-        or e
-        jr nz,seek_delay
-        ld hl,sense_command
-        ld e,1
-        call command
-        ld hl,$7060
-        ld e,2
-        call read_result
-        ld a,($7061)
-        cp 39
-        jp nz,failed
+        call wait_seek
 
         ld a,$24
         xor $66
@@ -164,6 +150,58 @@ seek_delay:
         inc a
         ld ($7001),a
         jp complete
+
+; Poll actual completion. Sense's no-pending $80 is one byte on the
+; controller/reference. Emu's existing $80,$00 representation is drained using
+; MSR CB, without pretending it is a completed seek or a fixed physical delay.
+wait_seek:
+        ld hl,sense_command
+        ld e,1
+        call command
+        ld hl,$7060
+        ld e,1
+        call read_result
+        ld a,($7060)
+        cp $80
+        jr z,seek_no_pending
+        ld e,1
+        call read_result
+        ld bc,$2ffd
+        in a,(c)
+        bit 4,a
+        jp nz,failed
+        ld a,($7060)
+        and 3
+        jr nz,seek_retry
+        ld a,($7060)
+        and $f8
+        cp $20
+        jp nz,failed
+        ld a,($7061)
+        cp 39
+        jp nz,failed
+        ret
+seek_no_pending:
+        ld bc,$2ffd
+seek_drain_poll:
+        in a,(c)
+        bit 4,a
+        jr z,seek_retry
+        bit 7,a
+        jr z,seek_drain_poll
+        bit 6,a
+        jp z,failed
+        ld e,1
+        call read_result
+        in a,(c)
+        bit 4,a
+        jp nz,failed
+seek_retry:
+        ; Short polling backoff, not an assumed drive step/seek duration.
+        ld b,0
+seek_backoff:
+        djnz seek_backoff
+        jr wait_seek
 
 ; HL points to the just-read seven-byte result. Ignore only IC and EOT;
 ; preserve every raw result for the host rather than claiming hardware CHRN.
