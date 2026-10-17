@@ -289,3 +289,40 @@ machine's RAM is needed for this route.
 The umbrella consumer must validate the actual exported file, original source
 immutability and fresh Emu/reference execution. A successful source build or
 same-session reload alone cannot qualify export/reopen.
+
+## Guest execution of five controller commands
+
+`fdc-commands.asm` cold-loads through the same `loader.bas`. It then issues
+controller commands itself, using guest IN/OUT instructions:
+
+```sh
+asm198x --dialect pasmo --cpu z80 fdc-commands.asm -o fdc-commands.bin
+build198x plus3 --basic loader.bas --code fdc-commands.bin --load-address 32768 -o fdc-commands.dsk --format json
+```
+
+Mount a disposable writable copy in drive A and select **Loader**. The guest
+seeks track 39, writes computed `$42` bytes to sector 2, then uses Write Deleted
+Data to write computed `$A5` bytes to sector 1. Read Deleted Data must recover
+all 512 bytes. Read Track must return the two represented payloads. Scan Equal,
+Low or Equal and High or Equal compare sector 2 with `$42`, `$43` and `$41`
+respectively. Each comparison consumes 512 processor bytes; the three expected
+ST2 results are `$08`, `$00`, `$00`.
+
+Only after those checks does it draw the striped screen, compute `5A 5B` at
+`$7000`, and loop at `$8FF0`. `$7002` advances through stages 1–5; `$7003=1`
+means failure. Six seven-byte results at `$7020` preserve Write Deleted, Read
+Deleted, Read Track and the three Scan results in that order. Track 39 must be
+outside the loader/CODE allocations, as the umbrella runner independently checks.
+The source image stays immutable; modifications exist only in live media or a
+new explicit export. Polling is bounded by the runner's emulated-frame and host
+limits. A red failure loop or a polling timeout cannot qualify.
+
+This is an implementation regression for one sector-model configuration. The
+standard track has ascending IDs, so this guest does not independently test
+unusual physical order, raw gaps/flux/index timing or real drive pacing. No-TC
+Write CHRN and exact hardware Scan status remain separate conformance questions
+([Emu #1813](https://github.com/emu198x/emu198x/issues/1813),
+[#1814](https://github.com/emu198x/emu198x/issues/1814)). Raw CHRN is retained
+without asserting the disputed Write convention. Stock MAME's known Scan
+failures must remain failed reference observations. No whole-FDC equivalence
+follows from guest completion. The assembly is MIT licensed and includes no ROMs.
