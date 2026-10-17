@@ -11,6 +11,11 @@
         ld ($7001),a
         ld ($7002),a
         ld ($7003),a
+        ld hl,$7020
+        ld de,$7021
+        ld bc,41
+        ld (hl),a
+        ldir
         ld bc,$1ffd
         ld a,8
         out (c),a
@@ -73,6 +78,7 @@ seek_delay:
 
 ; This standard track stores IDs 1,2,...9 in physical order. This case checks
 ; two returned payloads, not unusual physical order or reconstructed raw gaps.
+; Requested R=2 matches the final returned ID; it is not a start-sector selector.
         ld hl,track_command
         call command9
         ld hl,$b000
@@ -304,7 +310,7 @@ sense_command:        db $08
 normal_command:       db $45,0,39,0,2,2,2,$2a,$ff
 deleted_command:      db $49,0,39,0,1,2,1,$2a,$ff
 read_deleted_command: db $4c,0,39,0,1,2,1,$2a,$ff
-track_command:        db $42,0,39,0,1,2,2,$2a,$ff
+track_command:        db $42,0,39,0,2,2,2,$2a,$ff
 equal_command:        db $51,0,39,0,2,2,2,$2a,1
 low_command:          db $59,0,39,0,2,2,2,$2a,1
 high_command:         db $5d,0,39,0,2,2,2,$2a,1
