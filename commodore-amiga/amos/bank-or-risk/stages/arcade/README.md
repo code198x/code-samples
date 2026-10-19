@@ -176,3 +176,8 @@ this new presentation and an uncoached learner trial remain separate work.
 The [complete-display stage](complete-display.md) continues from this first
 animation checkpoint. It addresses visible clears and partial redraws by
 building a complete hidden picture before displaying it.
+
+The following [typography stages](typography.md) introduce ROM graphical text,
+then custom title lettering and larger score digits. `styled-board.amos` is the
+current endpoint; the earlier sources retain each explained step. The font pass
+has a drawing cost, so input-window checks use its own native timing evidence.

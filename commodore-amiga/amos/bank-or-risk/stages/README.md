@@ -279,5 +279,6 @@ bridge: finish all five rounds, retain an in-program personal best, record five
 awards, offer one rescue and add a short reveal/target acknowledgement. Their
 `feedback.amos` completes those rules. The [arcade stages](arcade/README.md)
 then introduce a brighter palette, spaced board and slowing die reveal in three
-separate steps; `arcade/rolling-die.amos` is the current endpoint. Earlier sources
+separate steps. Complete-frame buffering and typography then lead to
+`arcade/styled-board.amos`, the current endpoint. Earlier sources
 retain their explained rules and presentation as working stages.
