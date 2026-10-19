@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "routines": [
+    {
+      "routine": "text-utilities",
+      "source_sha256": "64ae09109405a2bd7fff6776d50431bc276f5e08afef264fa2544781594f1522"
+    },
+    {
+      "routine": "progress-bar",
+      "source_sha256": "5155a0edbb02227c41b0b32fe570ae0662ee7b7589f141286f70d66c500ef085"
+    },
+    {
+      "routine": "screen-frame",
+      "source_sha256": "987d2c0a8f00ac796dbcc370c88997fc2414fff554ce8e088d340862dbee5c1f"
+    },
+    {
+      "routine": "seven-segment-digits",
+      "source_sha256": "54896d7b82956c9e60ce96d93adde46d9cee778dbf097cca3f6b92169fb03d1d"
+    }
+  ],
+  "observer_sha256": "a56c4b56ea8363e20d0797624e163ee87d575e214baa65c03071cb557d6524d5",
+  "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+  "firmware_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+  "limits": "Spectrum48K ROM TAP loading, declared valid inputs and exact static display footprints. No speed or original-hardware qualification. Seven-segment rendering adds lit segments; caller clears its old rectangle before replacing a digit."
+}
