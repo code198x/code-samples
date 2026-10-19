@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "sound_negative_rejected": true,
+  "machine_id": "jupiter-ace",
+  "server": {
+    "name": "emu198x-jupiter-ace",
+    "version": "0.38.3"
+  },
+  "sound": "478 120 BEEP: ROM-generated blocking tone, actual PCM captured",
+  "drawing": "BOX uses three text rows and preserves the running count on the stack",
+  "configuration": "Stock 3 KiB Jupiter Ace, pinned FORTH ROM",
+  "startup": "Fresh ROM boot; definitions entered line by line with compile settling, then TURNS",
+  "idle_frames": 120,
+  "held_key_frames": 120,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "negative_control": {
+    "type": "bypass-key",
+    "idle_guard_rejected": true,
+    "observed_turn": 1
+  },
+  "firmware_sha256": {
+    "forth": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d"
+  },
+  "emulator_sha256": "d4c71890afb013fed3946570e1aa3f16abafa064416616405ddcf7b84c5a214a",
+  "sources": {
+    "jupiter-ace/patterns/forth/capabilities/input-drawing-sound/demo.fth": "4dfd2f2cb1f682f491e6cb1763d7dc05b845c8c94f320656f9f6842fe39880e0",
+    "scripts/verify-ace-capabilities.py": "3c43c81a0689d0c0c7ddd61dc9eb22a74c5ac4768854c13ae0a65e24577568ac",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Untimed FORTH key/display path, one cell of state. No frame clock, deadline, original-hardware or whole-emulator claim."
+}

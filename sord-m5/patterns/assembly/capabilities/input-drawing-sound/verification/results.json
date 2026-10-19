@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "sord-m5",
+  "configuration": "Sord M5 NTSC, monitor-started cartridge",
+  "server": {
+    "name": "emu198x-sord-m5",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "sord-m5/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "ab8a07eea6c6a19033d7cba3205f0bc74210cc85d2463b4d0f2d5a43466b23be",
+    "sord-m5/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "033369bb0e9d8e2eaf6a161f205951eadef1c317a874933ff190c658d3d16d5e",
+    "sord-m5/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "c18074b82c015aad4be0c67c757f93d490c5ab4e49c154de6b65e0783c48f761",
+    "sord-m5/patterns/assembly/capabilities/input-drawing-sound/Makefile": "52c0941c69ee5b0f7acf5bfe6da2ba2020619554b1a8ee6718823b5150235007"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "41f74ed088029a04961ad1f9282db40e3f427a3413696a4a00d8a37521e48925",
+  "binary_sha256": "6a47a0794df19a7801970607225898459232a1bbbb15b53717f32faa4828f05e",
+  "firmware_sha256": "1289e87a1c14a4b5a93db50dd482efe453ad15e445cbd82bb859a5e0520100e5",
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 25633,
+    "rate": 48000,
+    "channel_ranges": [
+      12752
+    ],
+    "ac_power": [
+      3697148.3962413617
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

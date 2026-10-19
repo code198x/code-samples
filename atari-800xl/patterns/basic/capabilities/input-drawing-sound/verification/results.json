@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "atari-800xl",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-atari-800xl",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "atari-800xl/patterns/basic/capabilities/input-drawing-sound/demo.bas": "9ac6bcb0105cfce73622648288b04282721d7fc72465fed5c19106ac9f256c35"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "9f95ebdc9b78f3d130affe5999ed1a4494d9c4c18bc99aae40475b9f2ac10b0e",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 110542,
+    "rate": 48000,
+    "channel_ranges": [
+      12951
+    ],
+    "ac_power": [
+      3913350.584754985
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 110543,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

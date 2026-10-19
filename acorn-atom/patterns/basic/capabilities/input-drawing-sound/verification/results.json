@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "acorn-atom",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-acorn-atom",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "acorn-atom/patterns/basic/capabilities/input-drawing-sound/demo.bas": "996fc3466b292416254dbff9a22d38a9bd178a6e460e90ac5a34174dd4099aab"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "cd5416c1a43f9d009c8ac8b2e301378881cd58a749a78638863c96a731811f9c",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 140160,
+    "rate": 48000,
+    "channel_ranges": [
+      32768
+    ],
+    "ac_power": [
+      132129767.02738976
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 140160,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

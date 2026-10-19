@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "machine_id": "sinclair-zx80",
+  "server": {
+    "name": "emu198x-sinclair-zx80",
+    "version": "0.38.3"
+  },
+  "configuration": "Stock PAL ROM, 1024 bytes RAM, keyword keyboard entry",
+  "startup_kind": "stock-basic-keyword-entry",
+  "idle_frames": 120,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "nonzero_initialisation_states": [
+    7,
+    8
+  ],
+  "negative_control": {
+    "type": "wrong-addition",
+    "accepted_turn_guard_rejected": true,
+    "observed_turn": 2
+  },
+  "keyboard_pacing": {
+    "hold_frames": 10,
+    "release_frames": 30
+  },
+  "firmware_sha256": "9374711cb6a5fd53c1c98d1d20ecb444d01d621a322f3d066ef216d515ac5161",
+  "emulator_sha256": "9a3b331e872b1f6d32a293e40e924de7903a20b33e391ac16614be1c1eda0050",
+  "sources": {
+    "sinclair-zx80/patterns/basic/capabilities/input-drawing-sound/demo.bas": "7faf1c751a2fde3715ac2669518e281bae7472b71c77505825051b5090fd5853",
+    "scripts/verify-zx-capabilities.py": "ca48266f74f7e835c582e4946f0a2bc33249e6c9f5615436954837ddf426de87",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "sound": "hardware-absent on the stock configuration",
+  "drawing": "Three PRINT rows form a text-cell box; captures retained",
+  "limits": "An untimed numeric running total: submitted values are added, not restricted to 0/1. ROM-serviced input and display, no real-time or physical-hardware claim."
+}

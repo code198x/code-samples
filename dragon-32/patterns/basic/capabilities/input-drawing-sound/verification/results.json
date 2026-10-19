@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "dragon-32",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-dragon",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "dragon-32/patterns/basic/capabilities/input-drawing-sound/demo.bas": "0f9e72d11f641bbb914348d667ad58b4a94f6ceb38a2f9a85788c5af08297b74"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "4737a2c06ce3664092c27df1eea3fce5a617de72a0300d50fd6537e2ccf26e55",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 124007,
+    "rate": 48000,
+    "channel_ranges": [
+      22937
+    ],
+    "ac_power": [
+      10564873.113375291
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 124007,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

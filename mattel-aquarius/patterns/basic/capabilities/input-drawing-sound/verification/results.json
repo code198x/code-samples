@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "mattel-aquarius",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-mattel-aquarius",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "mattel-aquarius/patterns/basic/capabilities/input-drawing-sound/demo.bas": "698a8f420523116228cb594a0eae6127d93182b29bf31e31a9c8ba9e0dd97db7"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "639063da82e0e7e7b2eb3e093977118baaedfc03e306550d5b9c79069461797f",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 108614,
+    "rate": 48000,
+    "channel_ranges": [
+      32768
+    ],
+    "ac_power": [
+      85480900.0487917
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 108613,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

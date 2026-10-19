@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "oric-atmos",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-oric-atmos",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "oric-atmos/patterns/basic/capabilities/input-drawing-sound/demo.bas": "20bdd467666638c917fa56f832ee1e474dac07a391187ec5e0bb58296118efde"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "206c1d04fb94798aec4532ec96b74cf83a38fbff35921848195971ebcde7c8ab",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 133120,
+    "rate": 48000,
+    "channel_ranges": [
+      9632
+    ],
+    "ac_power": [
+      2499564.1092808847
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 133120,
+    "rate": 48000,
+    "channel_ranges": [
+      9632
+    ],
+    "ac_power": [
+      46047.373580521744
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

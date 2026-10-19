@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "coleco-colecovision",
+  "configuration": "NTSC ColecoVision, pinned BIOS, title-skipping cartridge",
+  "server": {
+    "name": "emu198x-colecovision",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "a60f91a8986b7e76df206c71220655c5e966ab644b73a135cfc9f4fc3c2e8b7c",
+    "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "033369bb0e9d8e2eaf6a161f205951eadef1c317a874933ff190c658d3d16d5e",
+    "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "7094c06d07a45a7f0fa5e596a307a41896d2aa95ad289623648e5b6593c2fa91",
+    "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/Makefile": "bdd8da6c220fd9e34113fadd143d604c68152046e5dc29534a3f806fc3ba400a"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "253beb8a7c6f6fcb4aca0f2a169cbd359a34b9413334be5696d1c2179f7f19b9",
+  "binary_sha256": "5ff39930260b18c0f9ba6735952affa8fa71bc45a5bcf20325174e0c829834a4",
+  "firmware_sha256": "990bf1956f10207d8781b619eb74f89b00d921c8d45c95c334c16c8cceca09ad",
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 25633,
+    "rate": 48000,
+    "channel_ranges": [
+      12752
+    ],
+    "ac_power": [
+      3697148.3962413617
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

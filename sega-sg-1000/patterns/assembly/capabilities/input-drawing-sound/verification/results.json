@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "sega-sg-1000",
+  "configuration": "NTSC stock cartridge configuration",
+  "server": {
+    "name": "emu198x-sega-sg-1000",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "364e8a7b7b08df0d60fa85137b65ce465f0ed35f25d0edc41cb332f7c89a8d88",
+    "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "033369bb0e9d8e2eaf6a161f205951eadef1c317a874933ff190c658d3d16d5e",
+    "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "4f3e73770d6e304e98040dbc715971324b7528ec1889259b9c6681bfee546fec",
+    "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound/Makefile": "e1f5825e47fd5254e054bba6a79b70e52e6edeab00ea90ca946bdf3d6a907037"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "c8b42378b85664ad725e56260d357afc9bf44283070cc4d71d167049226c667f",
+  "binary_sha256": "f80b39741c32d25fd67d7e9684d6f1e943e42cd8346089a19e8f1b56f5b1e9fd",
+  "firmware_sha256": null,
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 25633,
+    "rate": 48000,
+    "channel_ranges": [
+      12736
+    ],
+    "ac_power": [
+      3753870.290203726
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

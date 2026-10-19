@@ -14,6 +14,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  capability-inventory:
+    name: Retained capability evidence (30 machines)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Validate the complete retained inventory
+        run: python scripts/check-capability-coverage.py
+      - name: Prove incomplete and altered claims fail
+        run: python -m unittest discover -s scripts -p test_capability_coverage.py -v
+
   recorded-inputs:
     name: Recorded pattern inputs
     runs-on: ubuntu-latest

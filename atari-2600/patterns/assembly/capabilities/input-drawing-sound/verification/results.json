@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "atari-2600",
+  "configuration": "NTSC 4 KiB cartridge",
+  "server": {
+    "name": "emu198x-atari-2600",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "atari-2600/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "41bfd35e044e913e60ca3fd1d0d95c1f9a855aeecd067d62b805b75daa128eb1",
+    "atari-2600/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "ac6cdb669cd68ebe7fcb1d1fe7da5853ab2d150ee55a56d9b5e212d4e6763007",
+    "atari-2600/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "16954bdd23710645968e79fdb65414b5605bfe73c839a8ee4f422f455daee101",
+    "atari-2600/patterns/assembly/capabilities/input-drawing-sound/Makefile": "4864a7b1ea5da9578196ec721d5e9d498ec899f82197cf3834d4eb3ec7af2d2f"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "2cc5557fd474435f21c5ad41cca6eb5d82999407ac7012e9a4a0f4bf539144fe",
+  "binary_sha256": "62f4e82bfa2f714fd007ef0a9208fdb757974c6af6824bc2d684392a4be1c855",
+  "firmware_sha256": null,
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "TIA playfield bar changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 16768,
+    "rate": 31440,
+    "channel_ranges": [
+      21843
+    ],
+    "ac_power": [
+      46964990.09344316
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "redirect PF1 write to unused RIOT RAM, preserving instruction cost",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

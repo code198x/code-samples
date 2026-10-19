@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "commodore-vic-20",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-commodore-vic-20",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "commodore-vic-20/patterns/basic/capabilities/input-drawing-sound/demo.bas": "d5278bba8b90c12a9f1277c711fb3efb172af575655351767bee2e11800ada24"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "8bf6ff57ed57bd77302f5426ed814afdbc0030f152e1336a958b27121a293083",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 129505,
+    "rate": 48000,
+    "channel_ranges": [
+      19225
+    ],
+    "ac_power": [
+      3889498.971699832
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 129506,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}
