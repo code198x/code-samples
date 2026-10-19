@@ -14,9 +14,14 @@ on:
       - 'scripts/validate-c64-basic.py'
       - 'scripts/validate-bas.sh'
 
+concurrency:
+  group: validate-c64-basic-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
     - name: Checkout code
