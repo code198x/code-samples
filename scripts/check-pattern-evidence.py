@@ -14,14 +14,28 @@ SELECTION = Path(__file__).with_name("pattern-evidence.json")
 REQUIRED_BINDINGS = {"c64": 5, "nes": 3, "amiga": 5, "spectrum": 3, "aabb": 2}
 
 
-def inspect(root: Path, fixtures: Any) -> dict[str, Any]:
+AUDIT_SELECTION = Path(__file__).with_name("routine-audit-evidence.json")
+AUDIT_BINDINGS = {
+    "z80": 9,
+    "basic": 5,
+    "amiga-lines": 2,
+    "amiga-edges": 3,
+    "amiga-music": 4,
+    "nes-movement": 2,
+    "c64-scroll": 2,
+    "spectrum-states": 4,
+}
+
+
+def inspect(
+    root: Path, fixtures: Any, required_bindings: dict[str, int] | None = None
+) -> dict[str, Any]:
+    required = REQUIRED_BINDINGS if required_bindings is None else required_bindings
     if not isinstance(fixtures, list) or not all(isinstance(f, dict) for f in fixtures):
         raise ValueError("Selection must be a list of fixture objects")
     names = [f.get("name") for f in fixtures]
-    if len(names) != len(REQUIRED_BINDINGS) or set(names) != set(REQUIRED_BINDINGS):
-        raise ValueError(
-            "Selection must contain c64, nes, amiga, spectrum and aabb once each"
-        )
+    if len(names) != len(required) or set(names) != set(required):
+        raise ValueError("Selection must contain " + ", ".join(required) + " once each")
     observations = []
     failures = []
     for fixture in fixtures:
@@ -29,13 +43,8 @@ def inspect(root: Path, fixtures: Any) -> dict[str, Any]:
         checks = []
         try:
             bindings = fixture["bindings"]
-            if (
-                not isinstance(bindings, list)
-                or len(bindings) != REQUIRED_BINDINGS[name]
-            ):
-                raise ValueError(
-                    f"Expected {REQUIRED_BINDINGS[name]} declared bindings"
-                )
+            if not isinstance(bindings, list) or len(bindings) != required[name]:
+                raise ValueError(f"Expected {required[name]} declared bindings")
             paths = [binding["path"] for binding in bindings]
             if len(set(paths)) != len(paths):
                 raise ValueError("Duplicate source binding")
@@ -44,6 +53,8 @@ def inspect(root: Path, fixtures: Any) -> dict[str, Any]:
             record = json.loads(raw)
             if not isinstance(record, dict) or not record:
                 raise ValueError("Execution record must be a nonempty object")
+            if required_bindings is not None and record.get("status") != "passed":
+                raise ValueError("Audit record must describe a passing execution")
             for binding in bindings:
                 expected = record
                 keys = binding["record_keys"]
@@ -109,12 +120,19 @@ def main() -> int:
     )
     parser.add_argument("--selection", type=Path, default=SELECTION)
     parser.add_argument("--output", type=Path)
+    parser.add_argument(
+        "--audit", action="store_true", help="Check all eight routine-audit records"
+    )
     args = parser.parse_args()
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.unlink(missing_ok=True)
     try:
-        report = inspect(args.root, json.loads(args.selection.read_text()))
+        report = inspect(
+            args.root,
+            json.loads((AUDIT_SELECTION if args.audit else args.selection).read_text()),
+            AUDIT_BINDINGS if args.audit else None,
+        )
     except (OSError, KeyError, TypeError, ValueError) as error:
         report = {
             "status": "invalid_selection",

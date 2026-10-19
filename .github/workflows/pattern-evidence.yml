@@ -39,6 +39,10 @@ jobs:
           python-version: '3.14'
       - name: Compare the five selected records with their inputs
         run: python scripts/check-pattern-evidence.py --output "$RUNNER_TEMP/pattern-evidence/recorded-inputs.json"
+      - name: Validate all eight routine-audit records and failure controls
+        run: |
+          python scripts/check-pattern-evidence.py --audit --output "$RUNNER_TEMP/pattern-evidence/routine-audit-inputs.json"
+          python -m unittest discover -s scripts -p test_routine_audit.py -v
       - name: Check guard failure modes
         run: python -m unittest discover -s scripts -p test_pattern_evidence.py -v
       - uses: actions/upload-artifact@v7
