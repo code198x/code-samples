@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "system": "amiga",
+  "server": {
+    "name": "emu198x-amiga",
+    "version": "0.34.2"
+  },
+  "startup": "Cold ADF boot, A500 OCS PAL, KS1.3",
+  "firmware_sha256": {
+    "kickstart": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+  },
+  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "b6a15607882f3e8240d8d1f9385f58ed0c472f71b0ca255c015ad82c965813df",
+  "binary_sha256": "baccf61ac6dba5edbdf6eebdde7acdb4f3b3370db30317cfd9bd9c08725ae494",
+  "sources": {
+    "commodore-amiga/patterns/assembly/framework/game-loop/demo.asm": "9e831c6a32380c15a5a746bba92b7cab387de09f2e1485a1c97a26ba3c41388d",
+    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce",
+    "commodore-amiga/patterns/assembly/framework/game-loop/Makefile": "c8e59dcb49b8c31f42122e324e6b613a5edafa136c3ae920ea7f1a561f79d637",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc": "dadc861126e0e37b21ff68a2186fe91ce5d850ed8ed99ea4085baf4f650a643a"
+  },
+  "normal_updates_in_30_frames": 30,
+  "over_budget_updates_in_30_frames": 5,
+  "over_budget_last_frame_delta": null,
+  "recovered_updates_in_30_frames": 30,
+  "negative_control": {
+    "intervention": "replace wait_frame with return",
+    "updates_in_10_frames": 3421,
+    "same_rate_guard_rejected": true
+  },
+  "limits": "Native-emulator configuration evidence. Not original hardware, full emulator conformance or a runtime cost benchmark. Polling loops discard missed boundaries; interrupt-byte clocks require <256 frames between samples.",
+  "kickstart_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+}

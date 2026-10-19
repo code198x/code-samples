@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "system": "electron",
+  "server": {
+    "name": "emu198x-acorn-electron",
+    "version": "0.34.2"
+  },
+  "startup": "Fresh Electron OS/BASIC boot; same typed loader and executable; executable bytes compared excluding declared state",
+  "firmware_sha256": {
+    "mos": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4",
+    "basic": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
+  },
+  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "68961b5a98ad0c93859fcd36fb523431d8e5995eb3039084acda451653346d81",
+  "binary_sha256": "bbe2aa4c739f8f653d284aae7f7d10cbdd6eea9c4d2ae2cc3a39badd0565f823",
+  "sources": {
+    "bbc-micro/patterns/assembly/framework/game-loop/demo.asm": "22b1feea3b51987e8135c2be5b95114bc942f9fa2fbbe1c9c326bb99f126432d",
+    "bbc-micro/patterns/assembly/framework/game-loop/frame.inc": "1be91c5fac2dce415184eac1e8a51dcdee5af85f874e8ac1e9aa5b3acbe3532b",
+    "bbc-micro/patterns/assembly/framework/game-loop/Makefile": "c41f159ba2209c1a3449cb3912ba898b1f7980160646e135b773cb0b65b15797",
+    "bbc-micro/patterns/assembly/framework/game-loop/loader.py": "9e75533d16e66e7f7c636b9e41a72e99ec979504f05ef40d15f45d4d0cfdb3dd",
+    "bbc-micro/patterns/assembly/framework/game-loop/build/loader.bas": "c8367e516c706e13c668b39710a7d05e700776d6f7764828375f4689d6f46ff8"
+  },
+  "normal_updates_in_30_frames": 30,
+  "over_budget_updates_in_30_frames": 5,
+  "over_budget_last_frame_delta": null,
+  "recovered_updates_in_30_frames": 30,
+  "negative_control": {
+    "intervention": "replace wait_frame with return",
+    "updates_in_10_frames": 100,
+    "same_rate_guard_rejected": true
+  },
+  "limits": "Native-emulator configuration evidence. Not original hardware, full emulator conformance or a runtime cost benchmark. Polling loops discard missed boundaries; interrupt-byte clocks require <256 frames between samples."
+}

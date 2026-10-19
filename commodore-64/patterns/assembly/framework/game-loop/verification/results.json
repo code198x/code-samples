@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "system": "c64",
+  "server": {
+    "name": "emu198x-c64",
+    "version": "0.34.2"
+  },
+  "startup": "PRG imported after ROM boot, typed RUN",
+  "firmware_sha256": {
+    "kernal.rom": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721",
+    "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
+    "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
+  },
+  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "502556e91b1d7e809bf173f250d934a1c7431b63ac77a88b71837de341144db7",
+  "binary_sha256": "115d891b1df9804decf8f4a03ae55d22fc3d71791d8ff70a4fc8ec0721a4cfed",
+  "sources": {
+    "commodore-64/patterns/assembly/framework/game-loop/demo.asm": "177188cd7b6defe69902484f025ddc6ab611276b90c167a67f6f31cd3e183dba",
+    "commodore-64/patterns/assembly/framework/game-loop/frame.inc": "a51095d4ccf26bcfa087f48a00c87979eae7b9f132dc1753dfbe77a65c8f2858",
+    "commodore-64/patterns/assembly/framework/game-loop/Makefile": "9cbf6c18d7063536e3c0a8ad853289f71c3bd53a0eda030ac5232f16e9e3e65c",
+    "commodore-64/patterns/assembly/input/joystick-reading/joystick.inc": "1783dc758f76ba4b165f86aa5e637a5fdaf7ae675c46c80144f20c797f9388a5"
+  },
+  "normal_updates_in_30_frames": 30,
+  "over_budget_updates_in_30_frames": 8,
+  "over_budget_last_frame_delta": null,
+  "recovered_updates_in_30_frames": 30,
+  "negative_control": {
+    "intervention": "replace wait_frame with return",
+    "updates_in_10_frames": 973,
+    "same_rate_guard_rejected": true
+  },
+  "limits": "Native-emulator configuration evidence. Not original hardware, full emulator conformance or a runtime cost benchmark. Polling loops discard missed boundaries; interrupt-byte clocks require <256 frames between samples."
+}
