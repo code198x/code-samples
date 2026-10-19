@@ -9,7 +9,7 @@
   90 REM   LET r=10: GO SUB 3100
  100 REM
 3000 REM === Centre text t$ on row r ===
-3010 PRINT AT r,(32-LEN t$)/2;t$
+3010 PRINT AT r,INT ((32-LEN t$)/2);t$
 3020 RETURN
 3100 REM === Clear row r (cols 2-29) ===
 3110 PRINT AT r,2;"                            "
