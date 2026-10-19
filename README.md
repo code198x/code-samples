@@ -67,6 +67,27 @@ Use each sample's `README.md`, Makefile, or script as the local authority for ex
 
 This repo contains sample-local capture and test support where needed, but not every sample has the same level of automation. If a workflow depends on emulator screenshots, audio, scripts, or MCP, prefer the documented Emu198x capture path for that platform.
 
+### C64 primer BASIC starters
+
+The C64 build job also validates the assembled Meet the Machine starters.
+For a local check, build the primer programs, then run the independent-fixture
+regression tests and the assembled-file checker:
+
+```sh
+for source in commodore-64/assembly/meet-the-machine/unit-*/*.asm; do
+  acme -f cbm -o "${source%.asm}.prg" "$source"
+done
+python3 -m unittest discover -s scripts -p test_c64_starters.py -v
+python3 scripts/check-c64-starters.py
+```
+
+The checker derives the BASIC end-marker address from the line terminator,
+checks its next-line pointer and verifies that SYS reaches the machine code
+at $080d. Missing builds and empty source discovery fail. The retained petcat
+prefix is independent of both assemblers; the original faulty pointer and
+truncated/misplaced entries must reject. These are file-structure checks, not
+proof of execution, disk loading or original-hardware behaviour.
+
 ### Selected pattern evidence
 
 The Pattern evidence workflow checks five selected samples: C64 Hardware

@@ -89,6 +89,11 @@ jobs:
             exit 1
           fi
 
+      - name: Validate C64 primer BASIC starters
+        run: |
+          python3 -m unittest discover -s scripts -p test_c64_starters.py -v
+          python3 scripts/check-c64-starters.py
+
   build-zx-spectrum:
     name: Build ZX Spectrum Assembly
     runs-on: ubuntu-latest

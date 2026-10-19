@@ -2,7 +2,7 @@
 ; Assemble with: acme -f cbm -o colour.prg colour.asm
 
 *= $0801
-!byte $0c,$08,$0a,$00,$9e,$32,$30,$36,$31,$00,$00,$00
+!byte $0b,$08,$0a,$00,$9e,$32,$30,$36,$31,$00,$00,$00
 
 *= $080d
         lda #$a0        ; a solid block ...

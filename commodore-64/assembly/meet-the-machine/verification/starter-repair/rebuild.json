@@ -1,0 +1,252 @@
+{
+  "assembler_release": "0.0.71",
+  "archive_sha256": "97435c1c1aaa349be4d6e1e354030306f7e909e00c14a6f21b2f6d634402978d",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "cases": [
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-01/border.asm",
+      "source_sha256": "9442f2ea3b44632be62b51629dac01365bcb111bdc8e3ab4024c682e43b7be92",
+      "before_sha256": "166bdbecfb91f2d49a2138a92cc6b1fbdd155785f6b6b5ef2db648f10a4d19d7",
+      "after_sha256": "90a4d7dc0f03e8ad8e8964c55e3489e3deb439f76a1f2905bc8194897a6bb7c2",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-02/longer-trip.asm",
+      "source_sha256": "fa54341c35b390ded2cd0dff94f362d8285854b710390ab6e4f9653b5313dc4b",
+      "before_sha256": "28103b74916203238a054d5f7e50ac0dbd9ba3f5d2edf3dd4fbb8e74eb7e967e",
+      "after_sha256": "e4db27c588360ea3b252a6aa227ccf0d9eea2b7d4c99a54b556776791a1915b5",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-02/registers.asm",
+      "source_sha256": "c2cf5344f2156ca7dc0a269bef62d182f467ffdb91727bc304b1dc222e139cb7",
+      "before_sha256": "a9c30d48f2e663f0306f4081f37329cb689e5104af705ef69abaa2d14212896d",
+      "after_sha256": "8334b31bee10cb9e20035f7d1a7df8289ac2bed3b50ee5c88bf1dbfe5c1762fe",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-03/letter.asm",
+      "source_sha256": "6e59cca8df2c1418cfc0f47fcffd5d13983652c87b4f03f957a247e13807238f",
+      "before_sha256": "a6ca1bf90b7cc99b3c6b327ddcb3e5968be751f001ab8ab4a476c066665560da",
+      "after_sha256": "9ada719c9f7035832adcfcc55c0b7cff8157d35483bf78885df341119a07e740",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-04/numbered-boxes.asm",
+      "source_sha256": "3e573e1f7357db43358ed9d280a59fcde887ce2e893471344a3e31e4d85e976a",
+      "before_sha256": "26a29663c3a9895e220c8bff68732a55e0c0b4ed71674895c0eb1ac0e3ab4592",
+      "after_sha256": "192c975593b9a0269de97545c86788e85038c2e4f9d9101a5d8d8aafe8810845",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-04/two-boxes.asm",
+      "source_sha256": "9b96300ec87f1414494d1f3f3ab4f3d1585eb541000ef6ea14fe0926d35aa536",
+      "before_sha256": "632e017794ce2a21219abf6b40aa216fea68aee83527f988154cf6b240bd5458",
+      "after_sha256": "c1398321356a653cc0190caaed2157e8572e1f4cb516b4e8e840597b3c491c1d",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-05/screen-is-memory.asm",
+      "source_sha256": "ea0f58ff470a268e168fdde0f369eafb7ba95ce698b833984f9e46afd4737d6e",
+      "before_sha256": "bcf78b26345149dc864fd59e09d4ec00f5012fe5937374e6aadc285038ac7562",
+      "after_sha256": "0f4db1e0884dc65bd05a1ee3183ee7a92839a4fd8aa01edc0fb2975f540cd388",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-06/colour-block.asm",
+      "source_sha256": "2089131573eacc56880fb229f2251fae1f73072978c9c022aa5b3671af1fa580",
+      "before_sha256": "0b4106d380c65f4a0db8b5048235105b60eaabe4061da2e75c5c66e5ccf6d8a0",
+      "after_sha256": "7d3ccf3a9173ee346a2a2719126cfa6a54d7ccb11fb0f75ba1fc120c50f596b9",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-06/colour-map.asm",
+      "source_sha256": "ff66d07786fdb86d7c57103e6dfb99da82c83619694f7f5e1cd9a44dad71085b",
+      "before_sha256": "b3f6d12df522c3ecc845dcb6ffa0f417ef8be0aeb7730c4343036936f0315e82",
+      "after_sha256": "be0d47d5ff534a98c9949930ebf4eb0946085fb869fac59b20f7c6e2ebd69f58",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-07/test-and-jump.asm",
+      "source_sha256": "9e6081a6ad885c6906286590154e66721967da0300d14919ad71b3d873e0912b",
+      "before_sha256": "67bd5208fd7eb344522cb10232c207e1d78e81a1810ff442e95ec61ea986e178",
+      "after_sha256": "18ae3dad09bac410a629c821a7fe03d13621841657a22dff3c6bbe5563a3aecf",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-07/three-way.asm",
+      "source_sha256": "fb76d3dcfedbf5d415439bf8395ad5ec69f053676a746aa60bf5dd757180c7f3",
+      "before_sha256": "6fab21668fca02e2766b0acef57f8638680a51e5aa9cb53926007994c9558e95",
+      "after_sha256": "dddc33635d6c12e242f2f31ac386156e90339ad8af775afbecb8779145bce879",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-08/read-joystick.asm",
+      "source_sha256": "58c7ab831e9d9236696e01c55bd86efa06cf11ab47bd28f81faa4505d09062d4",
+      "before_sha256": "82a27f3b6916f87c3bcbc99e990409eed2692677a6337f10369f97c772c75841",
+      "after_sha256": "2ddd48eeb1ec35aa4d844b7669a478ba3a4339f65ea0105a5ced875307dc22a0",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-09/a-finger.asm",
+      "source_sha256": "f577a0486ad6812f8090211f40ebbe6a713f37b1bffd02f48b67d3dd2f159082",
+      "before_sha256": "e2077961a64702d42aef3e0ba314ab8688f384b40ef023bac807649918190b75",
+      "after_sha256": "df07d9e89c1aca7bae9e60e0db41ae2c82f58309980f7d1824be426dff337bd8",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-10/counted-loop.asm",
+      "source_sha256": "a9bdf6951eb9886dc3c5f70eac746bc494c4ea3350f90a53d3fbc62ff55e1bfa",
+      "before_sha256": "f173951cdd92a866306f52b58cc6abfcd2c599d7b7e5902c104c21e004641012",
+      "after_sha256": "420131a54746fa2051cecc7e1ebbe641256281ba6cb303f8836e564bf57ab827",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-11/call-and-return.asm",
+      "source_sha256": "f5482d65250beaead6fb7731796db6d4ef64be3b98c658f86c22f27d00d4d881",
+      "before_sha256": "d5b3fc53b3700c8f59bf7dae5e7bd5289a666fcfaf35812e5cac569e43243b50",
+      "after_sha256": "e4cd54224a5366e2d840179f688508a157c0c2a4c7114f3433bee127cddb6566",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-12/arithmetic.asm",
+      "source_sha256": "80a0c892c846f7fe7d7782161a05c0aebe3f70403376fb23441469eac8fccacb",
+      "before_sha256": "9b245dec8eb3a2f09cc83a4c522068dce4e5f5d09d93f692e0e7c5c33fb035c8",
+      "after_sha256": "b50cb46aa98dad7541042225685ab3548c57412564c7039913064428ea9dd0df",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-13/working-with-bits.asm",
+      "source_sha256": "177dd108cb4634a9c65a6b445d65cd7be3d37a08d249af5b729a276cf6cae1ed",
+      "before_sha256": "21e4caea5b902f2b3b3aad8e4cb3f6d9af6da411f25af9d531f873f272c0e707",
+      "after_sha256": "3e78f9698ae2d5c8093ca8175a2b73771edd0afa1a0461aa68cf7060e5f6188e",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-14/bigger-than-a-byte.asm",
+      "source_sha256": "afa61c4d3569f967040b85fde95e71aa327b69f58528b3835cedd2f4973f2477",
+      "before_sha256": "36429af6acbf1660d7622e1abdaa0cd30f5c97a5cc9643bd4b7805f3b6faaef4",
+      "after_sha256": "e3679e2bce9407b80aa81ff482d9f95dc1e68b99ebdfc933fa7d43dabe47bf2d",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-15/sid.asm",
+      "source_sha256": "719ef92eba45fafca99e4c63b8e6ea5fd47af3b32577c2d302fb53a8a3488ec1",
+      "before_sha256": "52be8794524781151393d9e705c7583199e866e3f1ef77b715e158bd28739f9c",
+      "after_sha256": "c0cb71faedee07167bdb55fec3bc9565f0ba9b6adb2d2f1ed8f274b6b04d1380",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    },
+    {
+      "source": "commodore-64/assembly/meet-the-machine/unit-16/no-safety-net.asm",
+      "source_sha256": "17b61dd1efcd9c87c5a0b264a217a91c8fb55508a0b461b176eb2d6496dd3830",
+      "before_sha256": "7e4b607746c8217927f4bd2381b75e409e78f11ea7c46c7788992a8c79c63204",
+      "after_sha256": "b4f64503b6f6736a4e181420e5831ac4b03c31d60352e3709be54e77c9b1dabc",
+      "changed_offsets": [
+        2
+      ],
+      "unchanged_code_after_starter": true,
+      "acme_agrees": true
+    }
+  ],
+  "website_default_pin": {
+    "version": "0.0.57",
+    "archive_sha256": "980b3643f5dccc61a819b5a47a8ccf378c0886cb4d9bee5d9004e771781f225a",
+    "unit_one_matches_current_build": true
+  },
+  "acme_version": "This is ACME, release 0.97 (\"Zem\"), 28 June 2020\n  Platform independent version.",
+  "petcat_version": "petcat (VICE 3.10)",
+  "baseline_chain_rejections": 20,
+  "corrected_chain_passes": 20,
+  "browser_candidate_programs": [
+    {
+      "name": "red.prg",
+      "sha256": "90a4d7dc0f03e8ad8e8964c55e3489e3deb439f76a1f2905bc8194897a6bb7c2"
+    },
+    {
+      "name": "green.prg",
+      "sha256": "3c949b9a826e53f87efd0e342b1717c08e010c9194a37673b59521fd9d3c2a72"
+    }
+  ],
+  "acme_sha256": "7be6afb147f75c974a48a0540cdb8affc0760ed94bed4d822d95c7e8ee4bb35c",
+  "petcat_sha256": "60e416e6824843c8dd788aef5e763ff92dcf11f36f4e2d7a956858c4c4c59cc1",
+  "host": {
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n",
+    "arch": "arm64"
+  }
+}
