@@ -243,7 +243,7 @@ receipt = {
     "composition": observations,
     "turn_cases": len(cases),
     "negative_control": "held-state mutation retriggered on second held sample; positive caller did not",
-    "other_machines": "Source assembly/link checks only; no execution claim",
+    "other_machines": "This recipe only assembles the other-machine fragments; their execution records are pattern-library-spectrum.json, pattern-library-amiga.json and pattern-library-nes.json",
     "sources": {
         str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for m in [

@@ -1,0 +1,1938 @@
+{
+  "status": "passed",
+  "server": {
+    "name": "emu198x-nes",
+    "version": "0.34.2"
+  },
+  "configuration": "NTSC NROM, cartridge reset, controller 1, DMC disabled",
+  "emulator_sha256": "b0ccc36502069a03025bfa1ad12673c266f79fc056b94758bda5a042f7400f00",
+  "binary_sha256": "cce9ef23c71c04acdf38eec38a9e929992e1bd5a4e9129d113871559a35a0ec2",
+  "sources": {
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/use.asm": "31c60834186a144cddb66fe3348a0a53bdfa41f26b42f5a6ae08898cac9e49de",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/demo.asm": "ca463da352d102f66d1ca0a757d58f4ab72b30985b6478301834f02a6772371f",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/check.asm": "aa004d22cac572ef67cf394f3161af6d2e7e5b4d5b747f6c3c025f5d56ea8f21",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/tone.inc": "44d265544ca5c1e631df9c35d191bcda09c6fdff42f24aba00e3195cfa8430a1",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/input.inc": "5f0c09cff25558981904113065f9f898a42bcad85914e6cde5309ac5da11c1b2",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/presses.inc": "e6480b3f798c09b6431f9fc2e77c159125892264a07de5d591a30c91504ce74d"
+  },
+  "input_checks": [
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 1,
+      "updates": 11
+    },
+    {
+      "input": 128,
+      "held": 128,
+      "new": 128,
+      "triggers": 2,
+      "updates": 12
+    },
+    {
+      "input": 128,
+      "held": 128,
+      "new": 0,
+      "triggers": 2,
+      "updates": 13
+    },
+    {
+      "input": 136,
+      "held": 136,
+      "new": 8,
+      "triggers": 2,
+      "updates": 14
+    },
+    {
+      "input": 8,
+      "held": 8,
+      "new": 0,
+      "triggers": 2,
+      "updates": 15
+    },
+    {
+      "input": 136,
+      "held": 136,
+      "new": 128,
+      "triggers": 3,
+      "updates": 16
+    },
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 3,
+      "updates": 17
+    },
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 3,
+      "updates": 18
+    },
+    {
+      "input": 1,
+      "held": 1,
+      "new": 1,
+      "triggers": 3,
+      "updates": 19
+    },
+    {
+      "input": 2,
+      "held": 2,
+      "new": 2,
+      "triggers": 3,
+      "updates": 20
+    },
+    {
+      "input": 3,
+      "held": 3,
+      "new": 1,
+      "triggers": 3,
+      "updates": 21
+    },
+    {
+      "input": 4,
+      "held": 4,
+      "new": 4,
+      "triggers": 3,
+      "updates": 22
+    },
+    {
+      "input": 5,
+      "held": 5,
+      "new": 1,
+      "triggers": 3,
+      "updates": 23
+    },
+    {
+      "input": 6,
+      "held": 6,
+      "new": 2,
+      "triggers": 3,
+      "updates": 24
+    },
+    {
+      "input": 7,
+      "held": 7,
+      "new": 1,
+      "triggers": 3,
+      "updates": 25
+    },
+    {
+      "input": 8,
+      "held": 8,
+      "new": 8,
+      "triggers": 3,
+      "updates": 26
+    },
+    {
+      "input": 9,
+      "held": 9,
+      "new": 1,
+      "triggers": 3,
+      "updates": 27
+    },
+    {
+      "input": 10,
+      "held": 10,
+      "new": 2,
+      "triggers": 3,
+      "updates": 28
+    },
+    {
+      "input": 11,
+      "held": 11,
+      "new": 1,
+      "triggers": 3,
+      "updates": 29
+    },
+    {
+      "input": 12,
+      "held": 12,
+      "new": 4,
+      "triggers": 3,
+      "updates": 30
+    },
+    {
+      "input": 13,
+      "held": 13,
+      "new": 1,
+      "triggers": 3,
+      "updates": 31
+    },
+    {
+      "input": 14,
+      "held": 14,
+      "new": 2,
+      "triggers": 3,
+      "updates": 32
+    },
+    {
+      "input": 15,
+      "held": 15,
+      "new": 1,
+      "triggers": 3,
+      "updates": 33
+    },
+    {
+      "input": 16,
+      "held": 16,
+      "new": 16,
+      "triggers": 3,
+      "updates": 34
+    },
+    {
+      "input": 17,
+      "held": 17,
+      "new": 1,
+      "triggers": 3,
+      "updates": 35
+    },
+    {
+      "input": 18,
+      "held": 18,
+      "new": 2,
+      "triggers": 3,
+      "updates": 36
+    },
+    {
+      "input": 19,
+      "held": 19,
+      "new": 1,
+      "triggers": 3,
+      "updates": 37
+    },
+    {
+      "input": 20,
+      "held": 20,
+      "new": 4,
+      "triggers": 3,
+      "updates": 38
+    },
+    {
+      "input": 21,
+      "held": 21,
+      "new": 1,
+      "triggers": 3,
+      "updates": 39
+    },
+    {
+      "input": 22,
+      "held": 22,
+      "new": 2,
+      "triggers": 3,
+      "updates": 40
+    },
+    {
+      "input": 23,
+      "held": 23,
+      "new": 1,
+      "triggers": 3,
+      "updates": 41
+    },
+    {
+      "input": 24,
+      "held": 24,
+      "new": 8,
+      "triggers": 3,
+      "updates": 42
+    },
+    {
+      "input": 25,
+      "held": 25,
+      "new": 1,
+      "triggers": 3,
+      "updates": 43
+    },
+    {
+      "input": 26,
+      "held": 26,
+      "new": 2,
+      "triggers": 3,
+      "updates": 44
+    },
+    {
+      "input": 27,
+      "held": 27,
+      "new": 1,
+      "triggers": 3,
+      "updates": 45
+    },
+    {
+      "input": 28,
+      "held": 28,
+      "new": 4,
+      "triggers": 3,
+      "updates": 46
+    },
+    {
+      "input": 29,
+      "held": 29,
+      "new": 1,
+      "triggers": 3,
+      "updates": 47
+    },
+    {
+      "input": 30,
+      "held": 30,
+      "new": 2,
+      "triggers": 3,
+      "updates": 48
+    },
+    {
+      "input": 31,
+      "held": 31,
+      "new": 1,
+      "triggers": 3,
+      "updates": 49
+    },
+    {
+      "input": 32,
+      "held": 32,
+      "new": 32,
+      "triggers": 3,
+      "updates": 50
+    },
+    {
+      "input": 33,
+      "held": 33,
+      "new": 1,
+      "triggers": 3,
+      "updates": 51
+    },
+    {
+      "input": 34,
+      "held": 34,
+      "new": 2,
+      "triggers": 3,
+      "updates": 52
+    },
+    {
+      "input": 35,
+      "held": 35,
+      "new": 1,
+      "triggers": 3,
+      "updates": 53
+    },
+    {
+      "input": 36,
+      "held": 36,
+      "new": 4,
+      "triggers": 3,
+      "updates": 54
+    },
+    {
+      "input": 37,
+      "held": 37,
+      "new": 1,
+      "triggers": 3,
+      "updates": 55
+    },
+    {
+      "input": 38,
+      "held": 38,
+      "new": 2,
+      "triggers": 3,
+      "updates": 56
+    },
+    {
+      "input": 39,
+      "held": 39,
+      "new": 1,
+      "triggers": 3,
+      "updates": 57
+    },
+    {
+      "input": 40,
+      "held": 40,
+      "new": 8,
+      "triggers": 3,
+      "updates": 58
+    },
+    {
+      "input": 41,
+      "held": 41,
+      "new": 1,
+      "triggers": 3,
+      "updates": 59
+    },
+    {
+      "input": 42,
+      "held": 42,
+      "new": 2,
+      "triggers": 3,
+      "updates": 60
+    },
+    {
+      "input": 43,
+      "held": 43,
+      "new": 1,
+      "triggers": 3,
+      "updates": 61
+    },
+    {
+      "input": 44,
+      "held": 44,
+      "new": 4,
+      "triggers": 3,
+      "updates": 62
+    },
+    {
+      "input": 45,
+      "held": 45,
+      "new": 1,
+      "triggers": 3,
+      "updates": 63
+    },
+    {
+      "input": 46,
+      "held": 46,
+      "new": 2,
+      "triggers": 3,
+      "updates": 64
+    },
+    {
+      "input": 47,
+      "held": 47,
+      "new": 1,
+      "triggers": 3,
+      "updates": 65
+    },
+    {
+      "input": 48,
+      "held": 48,
+      "new": 16,
+      "triggers": 3,
+      "updates": 66
+    },
+    {
+      "input": 49,
+      "held": 49,
+      "new": 1,
+      "triggers": 3,
+      "updates": 67
+    },
+    {
+      "input": 50,
+      "held": 50,
+      "new": 2,
+      "triggers": 3,
+      "updates": 68
+    },
+    {
+      "input": 51,
+      "held": 51,
+      "new": 1,
+      "triggers": 3,
+      "updates": 69
+    },
+    {
+      "input": 52,
+      "held": 52,
+      "new": 4,
+      "triggers": 3,
+      "updates": 70
+    },
+    {
+      "input": 53,
+      "held": 53,
+      "new": 1,
+      "triggers": 3,
+      "updates": 71
+    },
+    {
+      "input": 54,
+      "held": 54,
+      "new": 2,
+      "triggers": 3,
+      "updates": 72
+    },
+    {
+      "input": 55,
+      "held": 55,
+      "new": 1,
+      "triggers": 3,
+      "updates": 73
+    },
+    {
+      "input": 56,
+      "held": 56,
+      "new": 8,
+      "triggers": 3,
+      "updates": 74
+    },
+    {
+      "input": 57,
+      "held": 57,
+      "new": 1,
+      "triggers": 3,
+      "updates": 75
+    },
+    {
+      "input": 58,
+      "held": 58,
+      "new": 2,
+      "triggers": 3,
+      "updates": 76
+    },
+    {
+      "input": 59,
+      "held": 59,
+      "new": 1,
+      "triggers": 3,
+      "updates": 77
+    },
+    {
+      "input": 60,
+      "held": 60,
+      "new": 4,
+      "triggers": 3,
+      "updates": 78
+    },
+    {
+      "input": 61,
+      "held": 61,
+      "new": 1,
+      "triggers": 3,
+      "updates": 79
+    },
+    {
+      "input": 62,
+      "held": 62,
+      "new": 2,
+      "triggers": 3,
+      "updates": 80
+    },
+    {
+      "input": 63,
+      "held": 63,
+      "new": 1,
+      "triggers": 3,
+      "updates": 81
+    },
+    {
+      "input": 64,
+      "held": 64,
+      "new": 64,
+      "triggers": 3,
+      "updates": 82
+    },
+    {
+      "input": 65,
+      "held": 65,
+      "new": 1,
+      "triggers": 3,
+      "updates": 83
+    },
+    {
+      "input": 66,
+      "held": 66,
+      "new": 2,
+      "triggers": 3,
+      "updates": 84
+    },
+    {
+      "input": 67,
+      "held": 67,
+      "new": 1,
+      "triggers": 3,
+      "updates": 85
+    },
+    {
+      "input": 68,
+      "held": 68,
+      "new": 4,
+      "triggers": 3,
+      "updates": 86
+    },
+    {
+      "input": 69,
+      "held": 69,
+      "new": 1,
+      "triggers": 3,
+      "updates": 87
+    },
+    {
+      "input": 70,
+      "held": 70,
+      "new": 2,
+      "triggers": 3,
+      "updates": 88
+    },
+    {
+      "input": 71,
+      "held": 71,
+      "new": 1,
+      "triggers": 3,
+      "updates": 89
+    },
+    {
+      "input": 72,
+      "held": 72,
+      "new": 8,
+      "triggers": 3,
+      "updates": 90
+    },
+    {
+      "input": 73,
+      "held": 73,
+      "new": 1,
+      "triggers": 3,
+      "updates": 91
+    },
+    {
+      "input": 74,
+      "held": 74,
+      "new": 2,
+      "triggers": 3,
+      "updates": 92
+    },
+    {
+      "input": 75,
+      "held": 75,
+      "new": 1,
+      "triggers": 3,
+      "updates": 93
+    },
+    {
+      "input": 76,
+      "held": 76,
+      "new": 4,
+      "triggers": 3,
+      "updates": 94
+    },
+    {
+      "input": 77,
+      "held": 77,
+      "new": 1,
+      "triggers": 3,
+      "updates": 95
+    },
+    {
+      "input": 78,
+      "held": 78,
+      "new": 2,
+      "triggers": 3,
+      "updates": 96
+    },
+    {
+      "input": 79,
+      "held": 79,
+      "new": 1,
+      "triggers": 3,
+      "updates": 97
+    },
+    {
+      "input": 80,
+      "held": 80,
+      "new": 16,
+      "triggers": 3,
+      "updates": 98
+    },
+    {
+      "input": 81,
+      "held": 81,
+      "new": 1,
+      "triggers": 3,
+      "updates": 99
+    },
+    {
+      "input": 82,
+      "held": 82,
+      "new": 2,
+      "triggers": 3,
+      "updates": 100
+    },
+    {
+      "input": 83,
+      "held": 83,
+      "new": 1,
+      "triggers": 3,
+      "updates": 101
+    },
+    {
+      "input": 84,
+      "held": 84,
+      "new": 4,
+      "triggers": 3,
+      "updates": 102
+    },
+    {
+      "input": 85,
+      "held": 85,
+      "new": 1,
+      "triggers": 3,
+      "updates": 103
+    },
+    {
+      "input": 86,
+      "held": 86,
+      "new": 2,
+      "triggers": 3,
+      "updates": 104
+    },
+    {
+      "input": 87,
+      "held": 87,
+      "new": 1,
+      "triggers": 3,
+      "updates": 105
+    },
+    {
+      "input": 88,
+      "held": 88,
+      "new": 8,
+      "triggers": 3,
+      "updates": 106
+    },
+    {
+      "input": 89,
+      "held": 89,
+      "new": 1,
+      "triggers": 3,
+      "updates": 107
+    },
+    {
+      "input": 90,
+      "held": 90,
+      "new": 2,
+      "triggers": 3,
+      "updates": 108
+    },
+    {
+      "input": 91,
+      "held": 91,
+      "new": 1,
+      "triggers": 3,
+      "updates": 109
+    },
+    {
+      "input": 92,
+      "held": 92,
+      "new": 4,
+      "triggers": 3,
+      "updates": 110
+    },
+    {
+      "input": 93,
+      "held": 93,
+      "new": 1,
+      "triggers": 3,
+      "updates": 111
+    },
+    {
+      "input": 94,
+      "held": 94,
+      "new": 2,
+      "triggers": 3,
+      "updates": 112
+    },
+    {
+      "input": 95,
+      "held": 95,
+      "new": 1,
+      "triggers": 3,
+      "updates": 113
+    },
+    {
+      "input": 96,
+      "held": 96,
+      "new": 32,
+      "triggers": 3,
+      "updates": 114
+    },
+    {
+      "input": 97,
+      "held": 97,
+      "new": 1,
+      "triggers": 3,
+      "updates": 115
+    },
+    {
+      "input": 98,
+      "held": 98,
+      "new": 2,
+      "triggers": 3,
+      "updates": 116
+    },
+    {
+      "input": 99,
+      "held": 99,
+      "new": 1,
+      "triggers": 3,
+      "updates": 117
+    },
+    {
+      "input": 100,
+      "held": 100,
+      "new": 4,
+      "triggers": 3,
+      "updates": 118
+    },
+    {
+      "input": 101,
+      "held": 101,
+      "new": 1,
+      "triggers": 3,
+      "updates": 119
+    },
+    {
+      "input": 102,
+      "held": 102,
+      "new": 2,
+      "triggers": 3,
+      "updates": 120
+    },
+    {
+      "input": 103,
+      "held": 103,
+      "new": 1,
+      "triggers": 3,
+      "updates": 121
+    },
+    {
+      "input": 104,
+      "held": 104,
+      "new": 8,
+      "triggers": 3,
+      "updates": 122
+    },
+    {
+      "input": 105,
+      "held": 105,
+      "new": 1,
+      "triggers": 3,
+      "updates": 123
+    },
+    {
+      "input": 106,
+      "held": 106,
+      "new": 2,
+      "triggers": 3,
+      "updates": 124
+    },
+    {
+      "input": 107,
+      "held": 107,
+      "new": 1,
+      "triggers": 3,
+      "updates": 125
+    },
+    {
+      "input": 108,
+      "held": 108,
+      "new": 4,
+      "triggers": 3,
+      "updates": 126
+    },
+    {
+      "input": 109,
+      "held": 109,
+      "new": 1,
+      "triggers": 3,
+      "updates": 127
+    },
+    {
+      "input": 110,
+      "held": 110,
+      "new": 2,
+      "triggers": 3,
+      "updates": 128
+    },
+    {
+      "input": 111,
+      "held": 111,
+      "new": 1,
+      "triggers": 3,
+      "updates": 129
+    },
+    {
+      "input": 112,
+      "held": 112,
+      "new": 16,
+      "triggers": 3,
+      "updates": 130
+    },
+    {
+      "input": 113,
+      "held": 113,
+      "new": 1,
+      "triggers": 3,
+      "updates": 131
+    },
+    {
+      "input": 114,
+      "held": 114,
+      "new": 2,
+      "triggers": 3,
+      "updates": 132
+    },
+    {
+      "input": 115,
+      "held": 115,
+      "new": 1,
+      "triggers": 3,
+      "updates": 133
+    },
+    {
+      "input": 116,
+      "held": 116,
+      "new": 4,
+      "triggers": 3,
+      "updates": 134
+    },
+    {
+      "input": 117,
+      "held": 117,
+      "new": 1,
+      "triggers": 3,
+      "updates": 135
+    },
+    {
+      "input": 118,
+      "held": 118,
+      "new": 2,
+      "triggers": 3,
+      "updates": 136
+    },
+    {
+      "input": 119,
+      "held": 119,
+      "new": 1,
+      "triggers": 3,
+      "updates": 137
+    },
+    {
+      "input": 120,
+      "held": 120,
+      "new": 8,
+      "triggers": 3,
+      "updates": 138
+    },
+    {
+      "input": 121,
+      "held": 121,
+      "new": 1,
+      "triggers": 3,
+      "updates": 139
+    },
+    {
+      "input": 122,
+      "held": 122,
+      "new": 2,
+      "triggers": 3,
+      "updates": 140
+    },
+    {
+      "input": 123,
+      "held": 123,
+      "new": 1,
+      "triggers": 3,
+      "updates": 141
+    },
+    {
+      "input": 124,
+      "held": 124,
+      "new": 4,
+      "triggers": 3,
+      "updates": 142
+    },
+    {
+      "input": 125,
+      "held": 125,
+      "new": 1,
+      "triggers": 3,
+      "updates": 143
+    },
+    {
+      "input": 126,
+      "held": 126,
+      "new": 2,
+      "triggers": 3,
+      "updates": 144
+    },
+    {
+      "input": 127,
+      "held": 127,
+      "new": 1,
+      "triggers": 3,
+      "updates": 145
+    },
+    {
+      "input": 128,
+      "held": 128,
+      "new": 128,
+      "triggers": 4,
+      "updates": 146
+    },
+    {
+      "input": 129,
+      "held": 129,
+      "new": 1,
+      "triggers": 4,
+      "updates": 147
+    },
+    {
+      "input": 130,
+      "held": 130,
+      "new": 2,
+      "triggers": 4,
+      "updates": 148
+    },
+    {
+      "input": 131,
+      "held": 131,
+      "new": 1,
+      "triggers": 4,
+      "updates": 149
+    },
+    {
+      "input": 132,
+      "held": 132,
+      "new": 4,
+      "triggers": 4,
+      "updates": 150
+    },
+    {
+      "input": 133,
+      "held": 133,
+      "new": 1,
+      "triggers": 4,
+      "updates": 151
+    },
+    {
+      "input": 134,
+      "held": 134,
+      "new": 2,
+      "triggers": 4,
+      "updates": 152
+    },
+    {
+      "input": 135,
+      "held": 135,
+      "new": 1,
+      "triggers": 4,
+      "updates": 153
+    },
+    {
+      "input": 136,
+      "held": 136,
+      "new": 8,
+      "triggers": 4,
+      "updates": 154
+    },
+    {
+      "input": 137,
+      "held": 137,
+      "new": 1,
+      "triggers": 4,
+      "updates": 155
+    },
+    {
+      "input": 138,
+      "held": 138,
+      "new": 2,
+      "triggers": 4,
+      "updates": 156
+    },
+    {
+      "input": 139,
+      "held": 139,
+      "new": 1,
+      "triggers": 4,
+      "updates": 157
+    },
+    {
+      "input": 140,
+      "held": 140,
+      "new": 4,
+      "triggers": 4,
+      "updates": 158
+    },
+    {
+      "input": 141,
+      "held": 141,
+      "new": 1,
+      "triggers": 4,
+      "updates": 159
+    },
+    {
+      "input": 142,
+      "held": 142,
+      "new": 2,
+      "triggers": 4,
+      "updates": 160
+    },
+    {
+      "input": 143,
+      "held": 143,
+      "new": 1,
+      "triggers": 4,
+      "updates": 161
+    },
+    {
+      "input": 144,
+      "held": 144,
+      "new": 16,
+      "triggers": 4,
+      "updates": 162
+    },
+    {
+      "input": 145,
+      "held": 145,
+      "new": 1,
+      "triggers": 4,
+      "updates": 163
+    },
+    {
+      "input": 146,
+      "held": 146,
+      "new": 2,
+      "triggers": 4,
+      "updates": 164
+    },
+    {
+      "input": 147,
+      "held": 147,
+      "new": 1,
+      "triggers": 4,
+      "updates": 165
+    },
+    {
+      "input": 148,
+      "held": 148,
+      "new": 4,
+      "triggers": 4,
+      "updates": 166
+    },
+    {
+      "input": 149,
+      "held": 149,
+      "new": 1,
+      "triggers": 4,
+      "updates": 167
+    },
+    {
+      "input": 150,
+      "held": 150,
+      "new": 2,
+      "triggers": 4,
+      "updates": 168
+    },
+    {
+      "input": 151,
+      "held": 151,
+      "new": 1,
+      "triggers": 4,
+      "updates": 169
+    },
+    {
+      "input": 152,
+      "held": 152,
+      "new": 8,
+      "triggers": 4,
+      "updates": 170
+    },
+    {
+      "input": 153,
+      "held": 153,
+      "new": 1,
+      "triggers": 4,
+      "updates": 171
+    },
+    {
+      "input": 154,
+      "held": 154,
+      "new": 2,
+      "triggers": 4,
+      "updates": 172
+    },
+    {
+      "input": 155,
+      "held": 155,
+      "new": 1,
+      "triggers": 4,
+      "updates": 173
+    },
+    {
+      "input": 156,
+      "held": 156,
+      "new": 4,
+      "triggers": 4,
+      "updates": 174
+    },
+    {
+      "input": 157,
+      "held": 157,
+      "new": 1,
+      "triggers": 4,
+      "updates": 175
+    },
+    {
+      "input": 158,
+      "held": 158,
+      "new": 2,
+      "triggers": 4,
+      "updates": 176
+    },
+    {
+      "input": 159,
+      "held": 159,
+      "new": 1,
+      "triggers": 4,
+      "updates": 177
+    },
+    {
+      "input": 160,
+      "held": 160,
+      "new": 32,
+      "triggers": 4,
+      "updates": 178
+    },
+    {
+      "input": 161,
+      "held": 161,
+      "new": 1,
+      "triggers": 4,
+      "updates": 179
+    },
+    {
+      "input": 162,
+      "held": 162,
+      "new": 2,
+      "triggers": 4,
+      "updates": 180
+    },
+    {
+      "input": 163,
+      "held": 163,
+      "new": 1,
+      "triggers": 4,
+      "updates": 181
+    },
+    {
+      "input": 164,
+      "held": 164,
+      "new": 4,
+      "triggers": 4,
+      "updates": 182
+    },
+    {
+      "input": 165,
+      "held": 165,
+      "new": 1,
+      "triggers": 4,
+      "updates": 183
+    },
+    {
+      "input": 166,
+      "held": 166,
+      "new": 2,
+      "triggers": 4,
+      "updates": 184
+    },
+    {
+      "input": 167,
+      "held": 167,
+      "new": 1,
+      "triggers": 4,
+      "updates": 185
+    },
+    {
+      "input": 168,
+      "held": 168,
+      "new": 8,
+      "triggers": 4,
+      "updates": 186
+    },
+    {
+      "input": 169,
+      "held": 169,
+      "new": 1,
+      "triggers": 4,
+      "updates": 187
+    },
+    {
+      "input": 170,
+      "held": 170,
+      "new": 2,
+      "triggers": 4,
+      "updates": 188
+    },
+    {
+      "input": 171,
+      "held": 171,
+      "new": 1,
+      "triggers": 4,
+      "updates": 189
+    },
+    {
+      "input": 172,
+      "held": 172,
+      "new": 4,
+      "triggers": 4,
+      "updates": 190
+    },
+    {
+      "input": 173,
+      "held": 173,
+      "new": 1,
+      "triggers": 4,
+      "updates": 191
+    },
+    {
+      "input": 174,
+      "held": 174,
+      "new": 2,
+      "triggers": 4,
+      "updates": 192
+    },
+    {
+      "input": 175,
+      "held": 175,
+      "new": 1,
+      "triggers": 4,
+      "updates": 193
+    },
+    {
+      "input": 176,
+      "held": 176,
+      "new": 16,
+      "triggers": 4,
+      "updates": 194
+    },
+    {
+      "input": 177,
+      "held": 177,
+      "new": 1,
+      "triggers": 4,
+      "updates": 195
+    },
+    {
+      "input": 178,
+      "held": 178,
+      "new": 2,
+      "triggers": 4,
+      "updates": 196
+    },
+    {
+      "input": 179,
+      "held": 179,
+      "new": 1,
+      "triggers": 4,
+      "updates": 197
+    },
+    {
+      "input": 180,
+      "held": 180,
+      "new": 4,
+      "triggers": 4,
+      "updates": 198
+    },
+    {
+      "input": 181,
+      "held": 181,
+      "new": 1,
+      "triggers": 4,
+      "updates": 199
+    },
+    {
+      "input": 182,
+      "held": 182,
+      "new": 2,
+      "triggers": 4,
+      "updates": 200
+    },
+    {
+      "input": 183,
+      "held": 183,
+      "new": 1,
+      "triggers": 4,
+      "updates": 201
+    },
+    {
+      "input": 184,
+      "held": 184,
+      "new": 8,
+      "triggers": 4,
+      "updates": 202
+    },
+    {
+      "input": 185,
+      "held": 185,
+      "new": 1,
+      "triggers": 4,
+      "updates": 203
+    },
+    {
+      "input": 186,
+      "held": 186,
+      "new": 2,
+      "triggers": 4,
+      "updates": 204
+    },
+    {
+      "input": 187,
+      "held": 187,
+      "new": 1,
+      "triggers": 4,
+      "updates": 205
+    },
+    {
+      "input": 188,
+      "held": 188,
+      "new": 4,
+      "triggers": 4,
+      "updates": 206
+    },
+    {
+      "input": 189,
+      "held": 189,
+      "new": 1,
+      "triggers": 4,
+      "updates": 207
+    },
+    {
+      "input": 190,
+      "held": 190,
+      "new": 2,
+      "triggers": 4,
+      "updates": 208
+    },
+    {
+      "input": 191,
+      "held": 191,
+      "new": 1,
+      "triggers": 4,
+      "updates": 209
+    },
+    {
+      "input": 192,
+      "held": 192,
+      "new": 64,
+      "triggers": 4,
+      "updates": 210
+    },
+    {
+      "input": 193,
+      "held": 193,
+      "new": 1,
+      "triggers": 4,
+      "updates": 211
+    },
+    {
+      "input": 194,
+      "held": 194,
+      "new": 2,
+      "triggers": 4,
+      "updates": 212
+    },
+    {
+      "input": 195,
+      "held": 195,
+      "new": 1,
+      "triggers": 4,
+      "updates": 213
+    },
+    {
+      "input": 196,
+      "held": 196,
+      "new": 4,
+      "triggers": 4,
+      "updates": 214
+    },
+    {
+      "input": 197,
+      "held": 197,
+      "new": 1,
+      "triggers": 4,
+      "updates": 215
+    },
+    {
+      "input": 198,
+      "held": 198,
+      "new": 2,
+      "triggers": 4,
+      "updates": 216
+    },
+    {
+      "input": 199,
+      "held": 199,
+      "new": 1,
+      "triggers": 4,
+      "updates": 217
+    },
+    {
+      "input": 200,
+      "held": 200,
+      "new": 8,
+      "triggers": 4,
+      "updates": 218
+    },
+    {
+      "input": 201,
+      "held": 201,
+      "new": 1,
+      "triggers": 4,
+      "updates": 219
+    },
+    {
+      "input": 202,
+      "held": 202,
+      "new": 2,
+      "triggers": 4,
+      "updates": 220
+    },
+    {
+      "input": 203,
+      "held": 203,
+      "new": 1,
+      "triggers": 4,
+      "updates": 221
+    },
+    {
+      "input": 204,
+      "held": 204,
+      "new": 4,
+      "triggers": 4,
+      "updates": 222
+    },
+    {
+      "input": 205,
+      "held": 205,
+      "new": 1,
+      "triggers": 4,
+      "updates": 223
+    },
+    {
+      "input": 206,
+      "held": 206,
+      "new": 2,
+      "triggers": 4,
+      "updates": 224
+    },
+    {
+      "input": 207,
+      "held": 207,
+      "new": 1,
+      "triggers": 4,
+      "updates": 225
+    },
+    {
+      "input": 208,
+      "held": 208,
+      "new": 16,
+      "triggers": 4,
+      "updates": 226
+    },
+    {
+      "input": 209,
+      "held": 209,
+      "new": 1,
+      "triggers": 4,
+      "updates": 227
+    },
+    {
+      "input": 210,
+      "held": 210,
+      "new": 2,
+      "triggers": 4,
+      "updates": 228
+    },
+    {
+      "input": 211,
+      "held": 211,
+      "new": 1,
+      "triggers": 4,
+      "updates": 229
+    },
+    {
+      "input": 212,
+      "held": 212,
+      "new": 4,
+      "triggers": 4,
+      "updates": 230
+    },
+    {
+      "input": 213,
+      "held": 213,
+      "new": 1,
+      "triggers": 4,
+      "updates": 231
+    },
+    {
+      "input": 214,
+      "held": 214,
+      "new": 2,
+      "triggers": 4,
+      "updates": 232
+    },
+    {
+      "input": 215,
+      "held": 215,
+      "new": 1,
+      "triggers": 4,
+      "updates": 233
+    },
+    {
+      "input": 216,
+      "held": 216,
+      "new": 8,
+      "triggers": 4,
+      "updates": 234
+    },
+    {
+      "input": 217,
+      "held": 217,
+      "new": 1,
+      "triggers": 4,
+      "updates": 235
+    },
+    {
+      "input": 218,
+      "held": 218,
+      "new": 2,
+      "triggers": 4,
+      "updates": 236
+    },
+    {
+      "input": 219,
+      "held": 219,
+      "new": 1,
+      "triggers": 4,
+      "updates": 237
+    },
+    {
+      "input": 220,
+      "held": 220,
+      "new": 4,
+      "triggers": 4,
+      "updates": 238
+    },
+    {
+      "input": 221,
+      "held": 221,
+      "new": 1,
+      "triggers": 4,
+      "updates": 239
+    },
+    {
+      "input": 222,
+      "held": 222,
+      "new": 2,
+      "triggers": 4,
+      "updates": 240
+    },
+    {
+      "input": 223,
+      "held": 223,
+      "new": 1,
+      "triggers": 4,
+      "updates": 241
+    },
+    {
+      "input": 224,
+      "held": 224,
+      "new": 32,
+      "triggers": 4,
+      "updates": 242
+    },
+    {
+      "input": 225,
+      "held": 225,
+      "new": 1,
+      "triggers": 4,
+      "updates": 243
+    },
+    {
+      "input": 226,
+      "held": 226,
+      "new": 2,
+      "triggers": 4,
+      "updates": 244
+    },
+    {
+      "input": 227,
+      "held": 227,
+      "new": 1,
+      "triggers": 4,
+      "updates": 245
+    },
+    {
+      "input": 228,
+      "held": 228,
+      "new": 4,
+      "triggers": 4,
+      "updates": 246
+    },
+    {
+      "input": 229,
+      "held": 229,
+      "new": 1,
+      "triggers": 4,
+      "updates": 247
+    },
+    {
+      "input": 230,
+      "held": 230,
+      "new": 2,
+      "triggers": 4,
+      "updates": 248
+    },
+    {
+      "input": 231,
+      "held": 231,
+      "new": 1,
+      "triggers": 4,
+      "updates": 249
+    },
+    {
+      "input": 232,
+      "held": 232,
+      "new": 8,
+      "triggers": 4,
+      "updates": 250
+    },
+    {
+      "input": 233,
+      "held": 233,
+      "new": 1,
+      "triggers": 4,
+      "updates": 251
+    },
+    {
+      "input": 234,
+      "held": 234,
+      "new": 2,
+      "triggers": 4,
+      "updates": 252
+    },
+    {
+      "input": 235,
+      "held": 235,
+      "new": 1,
+      "triggers": 4,
+      "updates": 253
+    },
+    {
+      "input": 236,
+      "held": 236,
+      "new": 4,
+      "triggers": 4,
+      "updates": 254
+    },
+    {
+      "input": 237,
+      "held": 237,
+      "new": 1,
+      "triggers": 4,
+      "updates": 255
+    },
+    {
+      "input": 238,
+      "held": 238,
+      "new": 2,
+      "triggers": 4,
+      "updates": 256
+    },
+    {
+      "input": 239,
+      "held": 239,
+      "new": 1,
+      "triggers": 4,
+      "updates": 257
+    },
+    {
+      "input": 240,
+      "held": 240,
+      "new": 16,
+      "triggers": 4,
+      "updates": 258
+    },
+    {
+      "input": 241,
+      "held": 241,
+      "new": 1,
+      "triggers": 4,
+      "updates": 259
+    },
+    {
+      "input": 242,
+      "held": 242,
+      "new": 2,
+      "triggers": 4,
+      "updates": 260
+    },
+    {
+      "input": 243,
+      "held": 243,
+      "new": 1,
+      "triggers": 4,
+      "updates": 261
+    },
+    {
+      "input": 244,
+      "held": 244,
+      "new": 4,
+      "triggers": 4,
+      "updates": 262
+    },
+    {
+      "input": 245,
+      "held": 245,
+      "new": 1,
+      "triggers": 4,
+      "updates": 263
+    },
+    {
+      "input": 246,
+      "held": 246,
+      "new": 2,
+      "triggers": 4,
+      "updates": 264
+    },
+    {
+      "input": 247,
+      "held": 247,
+      "new": 1,
+      "triggers": 4,
+      "updates": 265
+    },
+    {
+      "input": 248,
+      "held": 248,
+      "new": 8,
+      "triggers": 4,
+      "updates": 266
+    },
+    {
+      "input": 249,
+      "held": 249,
+      "new": 1,
+      "triggers": 4,
+      "updates": 267
+    },
+    {
+      "input": 250,
+      "held": 250,
+      "new": 2,
+      "triggers": 4,
+      "updates": 268
+    },
+    {
+      "input": 251,
+      "held": 251,
+      "new": 1,
+      "triggers": 4,
+      "updates": 269
+    },
+    {
+      "input": 252,
+      "held": 252,
+      "new": 4,
+      "triggers": 4,
+      "updates": 270
+    },
+    {
+      "input": 253,
+      "held": 253,
+      "new": 1,
+      "triggers": 4,
+      "updates": 271
+    },
+    {
+      "input": 254,
+      "held": 254,
+      "new": 2,
+      "triggers": 4,
+      "updates": 272
+    },
+    {
+      "input": 255,
+      "held": 255,
+      "new": 1,
+      "triggers": 4,
+      "updates": 273
+    }
+  ],
+  "sound_checks": [
+    {
+      "stage": "release",
+      "rate": 48000,
+      "frames": 6389,
+      "channels": 1,
+      "span": 5500,
+      "tail_span": 0,
+      "rising_crossings": 7,
+      "frequency_hz": 440.3669724770642,
+      "sha256": "1677fb0662f34d23ee787e327d5c1de974896a772a93acee2ed98c282dc5fc96",
+      "native_video_frames": 8,
+      "updates_advanced": 7,
+      "new_sound_events": 0
+    },
+    {
+      "stage": "press",
+      "rate": 48000,
+      "frames": 6390,
+      "channels": 1,
+      "span": 7606,
+      "tail_span": 5494,
+      "rising_crossings": 45,
+      "frequency_hz": 440.3669724770642,
+      "sha256": "d98acdb97f4b6698adaef1124cb0e03fff52f8461414863dcadaa149e277cb29",
+      "native_video_frames": 8,
+      "updates_advanced": 7,
+      "new_sound_events": 1
+    },
+    {
+      "stage": "hold",
+      "rate": 48000,
+      "frames": 6389,
+      "channels": 1,
+      "span": 5500,
+      "tail_span": 5495,
+      "rising_crossings": 59,
+      "frequency_hz": 440.3669724770642,
+      "sha256": "d0625f37de1fb037ebced98d64c3c24edca7e987585e26b7a21411ca2b8351c5",
+      "native_video_frames": 8,
+      "updates_advanced": 7,
+      "new_sound_events": 0,
+      "expected_hz": 440.3968996062992
+    },
+    {
+      "stage": "stop",
+      "rate": 48000,
+      "frames": 6390,
+      "channels": 1,
+      "span": 5489,
+      "tail_span": 0,
+      "rising_crossings": 6,
+      "frequency_hz": 440.3669724770642,
+      "sha256": "23237b7d967cbf738498c0af0a1424d4bcca8fcfab58b5f8ab0879514ab25faa",
+      "native_video_frames": 8,
+      "updates_advanced": 6,
+      "new_sound_events": 0
+    },
+    {
+      "stage": "repress",
+      "rate": 48000,
+      "frames": 6389,
+      "channels": 1,
+      "span": 7608,
+      "tail_span": 5494,
+      "rising_crossings": 45,
+      "frequency_hz": 440.3669724770642,
+      "sha256": "3ca43da9c8548f88be68cbfa7aec0bacb3c52bc78dc308607300b6685efc6c27",
+      "native_video_frames": 8,
+      "updates_advanced": 7,
+      "new_sound_events": 1
+    }
+  ],
+  "held_on_entry_triggers": 1,
+  "negative_control": "History cleared while action held: extra event observed; count guard rejected it",
+  "limits": "Emulator observations on the named configuration; no original-hardware or listening claim.",
+  "input_scope": "All button-mask combinations plus held/released/repressed sequence"
+}
