@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "command_cases": 105,
+  "invalid_configurations": 17,
+  "custom_vocabulary_cases": 12,
+  "not_ready_cases": 1,
+  "extra_word_mutant_rejected": true,
+  "sources": {
+    "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas": "eab4ebb2fc16218a5124b57881e21449082359fc61953ed659f54d73b8cde9fa",
+    "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas": "77bc579eb7f358c4bba8428150b33a73717039fd645bea8ebc7634f0066fbbb7",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "observer_sha256": "f300f6dc0d14929a841692f0b7d95fdb6781230e9620825649248dd6aa5cf580",
+  "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+  "firmware_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+  "build198x_sha256": "097892fa8ed3ac02ba60e85204712dc92ec3e03b18bbfe4c55806c80c33b2303",
+  "limits": "Execute the BASIC parser under the 48K ROM against independent command rules.\n\nFirmware stays local. These checks qualify the parser's declared input grammar,\nnot a whole adventure engine, unrestricted character encoding or original hardware.\n"
+}

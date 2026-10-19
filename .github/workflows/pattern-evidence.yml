@@ -43,6 +43,10 @@ jobs:
         run: |
           python scripts/check-pattern-evidence.py --audit --output "$RUNNER_TEMP/pattern-evidence/routine-audit-inputs.json"
           python -m unittest discover -s scripts -p test_routine_audit.py -v
+      - name: Check adventure-parser evidence and configuration controls
+        run: |
+          python scripts/check-pattern-evidence.py --parser --output "$RUNNER_TEMP/pattern-evidence/parser-recorded-inputs.json"
+          python -m unittest discover -s scripts -p test_adventure_parser.py -v
       - name: Check guard failure modes
         run: python -m unittest discover -s scripts -p test_pattern_evidence.py -v
       - uses: actions/upload-artifact@v7
@@ -113,6 +117,8 @@ jobs:
           echo "$RUNNER_TEMP/pattern-tools/bin" >> "$GITHUB_PATH"
       - name: Execute exhaustive bitmap outputs and timing probes
         run: python sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/verify.py --output "$RUNNER_TEMP/pattern-evidence/spectrum"
+      - name: Execute the counted-byte adventure parser
+        run: python scripts/verify-z80-adventure-parser.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-spectrum" --output "$RUNNER_TEMP/pattern-evidence/adventure-parser"
       - name: Record the released tool combination and host
         shell: bash
         run: |
@@ -141,6 +147,7 @@ jobs:
           path: |
             ${{ runner.temp }}/pattern-evidence/spectrum/results.json
             ${{ runner.temp }}/pattern-evidence/spectrum-release-inputs.json
+            ${{ runner.temp }}/pattern-evidence/adventure-parser/results.json
           if-no-files-found: error
           retention-days: 14
 
