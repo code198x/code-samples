@@ -209,3 +209,9 @@ For loop and `BR_TURNNO`; their earlier audits still identify those sources.
 They are alternative implementations, not the next file a learner must copy.
 Use this folder's `ready-screen.amos` as the endpoint for the continuous
 opening → session → presentation teaching route.
+
+
+The [replay-value extension](../replay-value/README.md) then changes the game to
+finish all five rounds, keep a personal best, show its five awards and offer one
+rescue. It introduces each change separately and retains this version as the
+working earlier stage.

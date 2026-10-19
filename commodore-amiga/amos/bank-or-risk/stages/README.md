@@ -271,3 +271,11 @@ than layering another set of voices. Replay and quit use Play Off to stop any
 remaining tail. Those operations never wait for the sound to finish. Native
 checks cover the named held-key and immediate-transition windows; they do not
 establish every keyboard configuration or subjective sound quality.
+
+## Extend the replay goal
+
+The [replay-value stages](replay-value/README.md) continue after the presentation
+bridge: finish all five rounds, retain an in-program personal best, record five
+awards, offer one rescue and add a short reveal/target acknowledgement. Their
+`feedback.amos` is the extended endpoint. Earlier sources retain the explained
+early-ending rules as a working stage; the extension changes those deliberately.
