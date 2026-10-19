@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "rows": 25,
+  "columns_per_row": 40,
+  "fine_steps": 8,
+  "source_sha256": "041dfc4920412081950b94984c75a92bce26d88bde4e3746fa83783847efcac7",
+  "observer_sha256": "fd4b0ac6c99b243f624021a6f552fd010141fde8b8fb50738f48408e307f6b60",
+  "emulator_sha256": "b2d89fd24accc68f693376061cd4f7afcc58a5db70a8fcd3677fa58d55b27d3e",
+  "binary_sha256": "7e29f685e49a0e95885b66c2dd0d0b602c630a922e32b8ef3d3c3e445c9488cc",
+  "limits": "PAL C64 ROM-boot/PRG import with typed RUN. CPU and memory/register effects only; no tear-free display or timing-budget qualification."
+}
