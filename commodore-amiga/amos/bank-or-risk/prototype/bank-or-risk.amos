@@ -3,6 +3,16 @@ Curs Off
 Palette $000,$FFF
 Paper 0
 Pen 1
+Play Off
+Wave 1 To 15
+Volume 24
+Set Envel 1,0 To 1,63
+Set Envel 1,1 To 9,0
+Set Envel 1,2 To 1,0
+Set Envel 1,3 To 1,0
+Set Envel 1,4 To 1,0
+Set Envel 1,5 To 1,0
+Set Envel 1,6 To 1,0
 BR_CAP=10
 BR_GOAL=30
 BR_MAXTURN=5
@@ -23,6 +33,7 @@ Until BR_K$=" " Or BR_K$="Q"
 If BR_K$="Q" Then BR_APPQUIT=-1
 Randomize Timer
 While BR_APPQUIT=0
+   Play Off
    BR_BANKED=0
    For BR_TURNNO=1 To BR_MAXTURN
       BR_TOTAL=0
@@ -77,6 +88,7 @@ While BR_APPQUIT=0
             BR_MSG$="Target out of reach this time."
          End If
       End If
+      Gosub BR_SOUND_RESULT
       If BR_SESSIONFIN<>0 Then Exit
       Gosub BR_DRAW_STATE
       Repeat
@@ -92,6 +104,7 @@ While BR_APPQUIT=0
       If BR_K$="Q" Then BR_APPQUIT=-1
    Until BR_K$="A" Or BR_APPQUIT
 Wend
+Play Off
 Show
 End
 
@@ -195,5 +208,17 @@ If BR_LASTROLL=6
    Bar 276,70 To 280,74
    Bar 248,84 To 252,88
    Bar 276,84 To 280,88
+End If
+Return
+
+BR_SOUND_RESULT:
+If BR_SESSIONFIN=1
+   Play 61,0
+Else
+   If BR_AWARD=0
+      Play 25,0
+   Else
+      Play 49,0
+   End If
 End If
 Return

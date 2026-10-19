@@ -145,3 +145,119 @@ the live controls with its own finish prompt. In the full game, active play,
 between-round results and final results show their appropriate controls.
 Keep each line within the 40 text columns; a line that wraps can overwrite the
 next part of the board. A later text change needs another native display check.
+
+## Hear one short tone
+
+`short-tone.amos`, merged into a blank project as `short-tone.asc`, is the sound
+checkpoint. F2 checks syntax; F1 runs it. Expect one fading tone, then silence
+while the text and finish prompt remain. A key finishes the program. This is a
+sound experiment for the game, not another scoring rule.
+
+`Play Off` first stops any earlier note. `Wave 1 To 15` selects AMOS's built-in
+sine wave for all four sound channels. A channel is one independently controlled
+sound output. Their selection values are 1, 2, 4 and 8; adding them gives 15,
+which selects all four, including outputs on both sides of the stereo pair.
+No sample file or instrument bank is needed. The original manual calls this
+selection a bit mask; binary notation is optional here.
+
+Pitch is how high or low a tone sounds; its frequency counts waveform repeats
+per second. A Play pitch is a numbered note, not that repetition count.
+
+`Volume 24` sets the overall level, on a scale from 0 (silent) to 63. Start at a
+comfortable listening level. `Play 49,0` starts pitch 49 with **zero instruction
+delay**: execution continues immediately. The second argument is not the tone's
+length. The next Print statements run while the tone is playing.
+
+The seven `Set Envel` lines define how the sine wave's level changes over time.
+They describe one sound, not seven notes. Each line names wave 1, a phase from
+0 to 6, that phase's duration, and its ending level. Duration units are fiftieths
+of a second in the manual; the checked configuration is PAL.
+
+- Phase 0 rises to envelope level 63 over one unit.
+- Phase 1 fades to zero over nine units.
+- Phases 2–6 each stay at zero for one unit. Setting all of them avoids inheriting
+  an old envelope definition.
+
+The envelope's peak is scaled by the overall Volume setting. The first two
+phases define about a fifth of a second of sound; the remaining phases are
+silent. `Wait Key` keeps the program open after starting the tone; it does
+not keep the tone sounding. The final `Play Off` also stops playback if a key
+ends the experiment before the fade finishes.
+
+Change one thing at a time, predict, then run:
+
+- Change only `Play 49,0` to `Play 37,0`. The frequency halves (an octave lower); the
+  fade is unchanged. Restore 49.
+- Change only `Volume 24` to `Volume 12`. It is quieter, with the same pitch and
+  fade. Restore 24.
+- Change only `Set Envel 1,1 To 9,0` to `Set Envel 1,1 To 18,0`. The downward
+  fade lasts longer. Restore 9.
+- Change Volume to 0. The program still reaches its text and finish prompt, but
+  the tone is silent. Restore 24 before comparing game cues.
+
+These variations have separate native captures in the
+[sound record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-sound).
+Pitch and amplitude measurements establish those changes; they do not judge
+which sound a learner will prefer. The original [Music chapter](https://amospromanual.dev/08-01-music.html)
+defines Wave, Volume, Play, Play Off and Set Envel.
+
+## Attach banking, then busting, to an event
+
+These later checkpoints assume the once-only round award and session values
+are understood. Each file is a complete game with the board and controls already
+explained. They add sound in separate edits, rather than supplying a hidden
+sound engine. Merge each ASCII file into a blank project as `bank-cue.asc`,
+`bust-cue.asc` or `success-cue.asc`; check with F2 and run with F1.
+
+`bank-cue.amos` adds the same setup after `Pen 1`, a call to `BR_SOUND_RESULT`
+after the round award and session decision, and the labelled routine at the end:
+
+```text
+BR_SOUND_RESULT:
+If BR_AWARD>0 Then Play 49,0
+Return
+```
+
+It also stops sound when a new challenge begins and before returning to the
+editor. Run the game, roll once and bank with B. Expect one tone and an unchanged
+result while waiting. Holding B, pressing an unrelated key or redrawing must not
+award more points or repeat the cue. Exact 10 also banks and uses the same tone.
+At this stage, winning still uses the ordinary bank cue.
+
+`bust-cue.amos` changes only that sound routine:
+
+```text
+BR_SOUND_RESULT:
+If BR_AWARD=0
+   Play 25,0
+Else
+   Play 49,0
+End If
+Return
+```
+
+A bust now uses a lower pitch; a bank keeps pitch 49. The call happens only after
+a completed round, so zero here means a bust. B before rolling does not complete
+a round and never reaches this call. Do not move it into the redraw routine or
+key-reading loop: those can run without a new result. No Wait is added to the
+game. The envelope ends the cue while the game can accept the next choice.
+
+## Give success its own cue
+
+`success-cue.amos` is identical to the maintained prototype at this checkpoint.
+It adds an outer decision around the bank/bust choices: if `BR_SESSIONFIN=1`,
+play pitch 61; otherwise choose the existing bank or bust cue. Success therefore
+**replaces** the final bank cue. It does not queue a second tone after it.
+The session decision must be computed before this routine is called.
+
+Three perfect rounds should produce two bank tones and one higher success tone.
+Three opening busts produce three low bust tones; the final text explains why
+the target is out of reach. There is no additional failure cue in this version.
+The picture, numbers and wording carry every result with Volume set to 0.
+
+The call is beside the once-only award, not beside a Print statement. Waiting
+and invalid keys cause no new sound. A new Play uses the same channels rather
+than layering another set of voices. Replay and quit use Play Off to stop any
+remaining tail. Those operations never wait for the sound to finish. Native
+checks cover the named held-key and immediate-transition windows; they do not
+establish every keyboard configuration or subjective sound quality.

@@ -1,0 +1,27 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+Locate 1,2
+Print "ONE SHORT TONE"
+Play Off
+Wave 1 To 15
+Volume 24
+Set Envel 1,0 To 1,63
+Set Envel 1,1 To 9,0
+Set Envel 1,2 To 1,0
+Set Envel 1,3 To 1,0
+Set Envel 1,4 To 1,0
+Set Envel 1,5 To 1,0
+Set Envel 1,6 To 1,0
+Play 49,0
+Locate 1,5
+Print "The program continues during sound."
+Locate 1,8
+Print "Press a key to finish."
+Wait Key
+Play Off
+Show
+End
