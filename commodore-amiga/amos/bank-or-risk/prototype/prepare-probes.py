@@ -44,7 +44,7 @@ def prepare(destination: Path) -> None:
     if any(destination.iterdir()):
         raise ValueError("Use an empty output directory; existing files are preserved")
     source = Path(__file__).with_name("bank-or-risk.amos").read_text()
-    if source.count("FACE=Rnd(5)+1") != 1 or source.count("   BANKED=0\n") != 1:
+    if source.count("BR_FACE=Rnd(5)+1") != 1 or source.count("   BR_BANKED=0\n") != 1:
         raise ValueError("Source changed; review the probe transformation")
     manifest = {
         "status": "Prepared native test inputs, not execution results",
@@ -61,8 +61,8 @@ def prepare(destination: Path) -> None:
         values = case["rolls"]
         if not values or any(not 1 <= value <= 6 for value in values):
             raise ValueError(f"Invalid prescribed die values: {name}")
-        probe = source.replace("FACE=Rnd(5)+1", "Read FACE").replace(
-            "   BANKED=0\n", "   BANKED=0\n   Restore\n"
+        probe = source.replace("BR_FACE=Rnd(5)+1", "Read BR_FACE").replace(
+            "   BR_BANKED=0\n", "   BR_BANKED=0\n   Restore\n"
         )
         probe += "\nData " + ",".join(map(str, values)) + "\n"
         path = destination / f"{name}.asc"

@@ -1,68 +1,86 @@
 # Bank or risk AMOS prototype
 
-**Prepared source, not yet executed in AMOS.** The native computer-control
-connection failed before reaching an app. This listing is a proposed endpoint
-for the agreed first game: limit 10, at most five rounds, target 30. Syntax,
-layout, input, save/reopen and play remain unverified in the original runtime.
+**Native rules and input checks pass in the named Emu198x configuration.** The
+text-first prototype implements the accepted first game's limit 10, at most five
+rounds and target 30. It is deliberately silent. Die artwork, palette/readability
+work, event sounds and replacement lessons remain to be developed and checked.
 
-Use the [game brief](https://github.com/code198x/docs/blob/amiga-course-and-tooling-briefs/platforms/commodore-amiga/games/bank-or-risk/brief.md)
-for the rules and acceptance requirements. No lesson sequence or new language
-implementation is supplied here. This text-first version is deliberately silent.
+The [native execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-emu198x)
+retains scripts, input identities, captures, observations and media checks.
+This qualifies AMOS Professional 2.00 on Emu198x 0.34.2 at revision
+`6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c`, PAL A1200, stock 2 MiB chip RAM,
+no fast RAM, and the recorded Kickstart 3.1 image. It is separate from the earlier
+FS-UAE baseline and does not establish minimum hardware requirements or learner
+understanding.
 
 ## Source and controls
 
-`bank-or-risk.amos` contains ASCII source, not a tokenised AMOS project. Copy it
-to the mounted Tools drive as `bank.asc`, then use the editor's **Merge ASCII**
-operation. Do not assume a normal tokenised-project load accepts these bytes.
-Save the imported program as a native AMOS project and independently reopen it
-before claiming persistence. These steps reuse the earlier checked import route;
-this particular program has not completed it.
+`bank-or-risk.amos` is ASCII source, not a tokenised AMOS project. Put it on a
+native disk as `bank.asc` and use **Merge ASCII** (`Amiga`+`Shift`+`M`). A path
+change in the requester can need Return to accept the directory and another
+Return to select the file. F2 checks syntax; F1 runs it. Explain the exact disk
+and keyboard route for the environment used by the lesson.
 
-The execution baseline is AMOS Professional 2.00 from official revision
-`533b4b1f5acd604814513f78e02c7b4796cb0531`, FS-UAE 3.2.35, PAL A1200/68020,
-2 MB chip and 8 MB fast memory, Kickstart and Workbench 3.1. The baseline is not
-a minimum hardware claim. Use the published
-[AMOS setup](https://code198x.com/systems/commodore-amiga/amos/getting-started/)
-and lawfully supplied firmware and OS media.
+SPACE starts; R rolls, B banks after a roll, SPACE continues after a round,
+A starts a fresh challenge at a final result, and Q finishes. In the checked
+configuration, Return after Q completes the return to the editor; allow its
+screen transition to finish. Results stay visible until the relevant new choice.
 
-Press F1 after importing. SPACE starts; R requests a roll, B banks after a roll,
-SPACE continues after a completed round, A starts a new challenge at a result,
-and Q finishes. AMOS normally shows its end-of-program requester; Return returns
-to the editor in the checked opening workflow. The new program's controls still
-require a native run.
+The source waits for release of the previous key, clears the keyboard buffer
+and accepts a fresh event. Native checks held R for 60/90 frames and B, SPACE
+and A for 90 frames. Those checks did not produce duplicate rolls, awards or
+actions across the tested transitions. They are observations on this setup,
+not a claim about every keyboard or runtime configuration.
 
-The source waits for release of the previous key before clearing the keyboard
-buffer and accepting the next event. This is intended to prevent a held R, B,
-SPACE or A from acting repeatedly or crossing a phase boundary. Verify those
-cases in AMOS; reading this routine does not establish that the behaviour works.
+Game identifiers use `BR_` so they cannot begin with AMOS command words.
+The original names included `READ_FRESH`, `DRAW_STATE`, `MAXTURN`, `TOTAL` and
+`REMAIN`; native tokenisation exposed command-prefix collisions. The reduced
+failure and successful naming probe are retained in the execution record.
+See the original manual's [naming rules](https://amospromanual.dev/05-01-the-bare-bones.html).
+Removing the prefixes reproduces the original source exactly; scoring and input
+logic are unchanged.
 
-## Random range and input sources
+## Native checks
 
-The [AMOS Professional manual, Maths](https://amospromanual.dev/05-03-maths.html#rnd)
-defines `Rnd(n)` as including the specified upper bound. The proposed die is
-therefore `Rnd(5)+1`, not `Rnd(6)+1`. `Randomize Timer` seeds the generator after
-the title input; it is not a claim of physical randomness or measured fairness.
+Four prescribed-roll copies were imported and run through AMOS:
+
+- Three perfect rounds secure 30 and end successfully in round 3.
+- Contributions 4, 0, 6, 10, 10 recover to 30 on round 5. The bust displays 11,
+  awards zero and preserves the earlier secured 4.
+- Rolls 1, 6, 2, 1 display totals 1, 7, 9, 10; exact 10 banks once.
+- Three busts at 12 leave the target unreachable after round 3.
+
+Additional checks cover B and invalid input at zero, a stable result, replay,
+held/released keys, ordinary random play and quit from each phase. Save As
+created a 3,728-byte native `bank.amos`; the exported work disk passed filesystem
+verification. A separate cold boot loaded that saved file through native Load,
+ran it, rolled and banked, then returned to the editor. That persistence check
+uses the saved program, not restoration of the original edited session.
+
+The original AMOS input disk fails a bitmap-bounds check and the first Save
+attempt reported a write-protected boot volume. The successful persistence
+check used a fresh filesystem with all 78 original file contents preserved,
+plus this source, mounted writable in emulator memory from boot. The pass did
+not isolate those two setup changes as causes of the earlier failure. Original
+media was not modified or redistributed. Use a verified writable work disk for
+saving; the audit gives the reproducible route and exact limits.
+
+## Random range and prescribed rolls
+
+The [original Maths chapter](https://amospromanual.dev/05-03-maths.html#rnd)
+defines `Rnd(n)` as including the upper bound. The die uses `Rnd(5)+1`.
+`Randomize Timer` seeds it after the title input. The ordinary native run
+observed a valid roll; neither that observation nor the prescribed copies proves
+random fairness or all possible generator outputs.
+
+Run `python3 prepare-probes.py <empty-output-directory>` to generate the four
+copies and their manifest. The generator changes only the die supplier to
+`Read BR_FACE`, restores DATA at a new challenge and appends prescribed values.
+The manifest records expected outcomes; actual observations belong in the audit.
+Ruff and exact transformation/hash checks pass, including refusal to overwrite
+a nonempty destination.
 
 The [keyboard chapter](https://amospromanual.dev/10-01-using-the-keyboard.html)
-defines `Inkey$`, `Scancode`, `Key State` and `Clear Key`. The source saves the
-scan code immediately after the input loop; native testing must check key release
-and any repeat/buffer behaviour on the pinned configuration.
-
-## Native probes to run
-
-Run `python3 prepare-probes.py <empty-output-directory>` from this directory to
-generate fixed-roll copies and their expected input/result manifest. Each copy
-changes only the die supplier, resets its DATA cursor at a new challenge and
-appends the prescribed data. The ordinary game remains random. These copies are
-test fixtures, not recordings or proof of execution.
-
-The probes cover exact 10, overshoot, a bust preserving earlier points, recovery,
-success on the fifth round and an unreachable target. Also inspect ordinary
-random play, invalid input, B before the first roll, held/released keys, waiting
-without action, replay and quit at every phase. Reopen a saved native project in
-a fresh editor session, then play again.
-
-Do not use the fixture generator, host rules model or file hashes as a substitute
-for syntax checking and executing these programs in AMOS. Preserve actual inputs,
-source identity, screenshots, outcomes and failures when the native connection
-is available.
+defines `Inkey$`, `Scancode`, `Key State` and `Clear Key`. Further environments,
+graphics, sounds and teaching stages need their own execution checks. The
+separate browser playtest's acceptance does not qualify those additions.

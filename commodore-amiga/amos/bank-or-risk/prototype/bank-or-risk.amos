@@ -2,11 +2,11 @@ Hide
 Curs Off
 Paper 0
 Pen 1
-CAP=10
-GOAL=30
-MAXTURN=5
-LASTSC=-1
-APPQUIT=0
+BR_CAP=10
+BR_GOAL=30
+BR_MAXTURN=5
+BR_LASTSC=-1
+BR_APPQUIT=0
 Cls 0
 Locate 1,2
 Print "BANK OR RISK"
@@ -17,108 +17,108 @@ Print "Exactly 10 banks automatically."
 Locate 1,10
 Print "SPACE starts. Q returns to editor."
 Repeat
-   Gosub READ_FRESH
-Until K$=" " Or K$="Q"
-If K$="Q" Then APPQUIT=-1
+   Gosub BR_READ_FRESH
+Until BR_K$=" " Or BR_K$="Q"
+If BR_K$="Q" Then BR_APPQUIT=-1
 Randomize Timer
-While APPQUIT=0
-   BANKED=0
-   For TURNNO=1 To MAXTURN
-      TOTAL=0
-      LASTROLL=0
-      AWARD=0
-      HANDFIN=0
-      SESSIONFIN=0
-      MSG$="Roll once before you can bank."
+While BR_APPQUIT=0
+   BR_BANKED=0
+   For BR_TURNNO=1 To BR_MAXTURN
+      BR_TOTAL=0
+      BR_LASTROLL=0
+      BR_AWARD=0
+      BR_HANDFIN=0
+      BR_SESSIONFIN=0
+      BR_MSG$="Roll once before you can bank."
       Repeat
-         Gosub DRAW_STATE
-         Gosub READ_FRESH
-         If K$="Q"
-            APPQUIT=-1
+         Gosub BR_DRAW_STATE
+         Gosub BR_READ_FRESH
+         If BR_K$="Q"
+            BR_APPQUIT=-1
             Exit
          End If
-         If K$="R"
-            FACE=Rnd(5)+1
-            LASTROLL=FACE
-            TOTAL=TOTAL+FACE
-            MSG$="Bank it or risk another roll?"
-            If TOTAL>CAP
-               AWARD=0
-               HANDFIN=-1
-               MSG$="Bust! This round secures zero."
+         If BR_K$="R"
+            BR_FACE=Rnd(5)+1
+            BR_LASTROLL=BR_FACE
+            BR_TOTAL=BR_TOTAL+BR_FACE
+            BR_MSG$="Bank it or risk another roll?"
+            If BR_TOTAL>BR_CAP
+               BR_AWARD=0
+               BR_HANDFIN=-1
+               BR_MSG$="Bust! This round secures zero."
             Else
-               If TOTAL=CAP
-                  AWARD=TOTAL
-                  HANDFIN=-1
-                  MSG$="Perfect 10. Secured automatically."
+               If BR_TOTAL=BR_CAP
+                  BR_AWARD=BR_TOTAL
+                  BR_HANDFIN=-1
+                  BR_MSG$="Perfect 10. Secured automatically."
                End If
             End If
          End If
-         If K$="B"
-            If TOTAL>0
-               AWARD=TOTAL
-               HANDFIN=-1
-               MSG$="Banked. These points are safe."
+         If BR_K$="B"
+            If BR_TOTAL>0
+               BR_AWARD=BR_TOTAL
+               BR_HANDFIN=-1
+               BR_MSG$="Banked. These points are safe."
             Else
-               MSG$="Roll once before you can bank."
+               BR_MSG$="Roll once before you can bank."
             End If
          End If
-      Until HANDFIN
-      If APPQUIT Then Exit
-      BANKED=BANKED+AWARD
-      REMAIN=MAXTURN-TURNNO
-      If BANKED>=GOAL
-         SESSIONFIN=1
-         MSG$="Target reached. You made it!"
+      Until BR_HANDFIN
+      If BR_APPQUIT Then Exit
+      BR_BANKED=BR_BANKED+BR_AWARD
+      BR_REMAIN=BR_MAXTURN-BR_TURNNO
+      If BR_BANKED>=BR_GOAL
+         BR_SESSIONFIN=1
+         BR_MSG$="Target reached. You made it!"
       Else
-         If BANKED+CAP*REMAIN<GOAL
-            SESSIONFIN=-1
-            MSG$="Target out of reach this time."
+         If BR_BANKED+BR_CAP*BR_REMAIN<BR_GOAL
+            BR_SESSIONFIN=-1
+            BR_MSG$="Target out of reach this time."
          End If
       End If
-      If SESSIONFIN<>0 Then Exit
-      Gosub DRAW_STATE
+      If BR_SESSIONFIN<>0 Then Exit
+      Gosub BR_DRAW_STATE
       Repeat
-         Gosub READ_FRESH
-         If K$="Q" Then APPQUIT=-1
-      Until K$=" " Or APPQUIT
-      If APPQUIT Then Exit
-   Next TURNNO
-   If APPQUIT Then Exit
-   Gosub DRAW_STATE
+         Gosub BR_READ_FRESH
+         If BR_K$="Q" Then BR_APPQUIT=-1
+      Until BR_K$=" " Or BR_APPQUIT
+      If BR_APPQUIT Then Exit
+   Next BR_TURNNO
+   If BR_APPQUIT Then Exit
+   Gosub BR_DRAW_STATE
    Repeat
-      Gosub READ_FRESH
-      If K$="Q" Then APPQUIT=-1
-   Until K$="A" Or APPQUIT
+      Gosub BR_READ_FRESH
+      If BR_K$="Q" Then BR_APPQUIT=-1
+   Until BR_K$="A" Or BR_APPQUIT
 Wend
 Show
 End
 
-DRAW_STATE:
+BR_DRAW_STATE:
 Cls 0
 Locate 1,1
 Print "BANK OR RISK"
 Locate 1,3
-Print "Round ";TURNNO;" of ";MAXTURN
+Print "Round ";BR_TURNNO;" of ";BR_MAXTURN
 Locate 1,4
-Print "Limit ";CAP;"   Target ";GOAL
+Print "Limit ";BR_CAP;"   Target ";BR_GOAL
 Locate 1,6
-Print "Secured score: ";BANKED
+Print "Secured score: ";BR_BANKED
 Locate 1,8
-Print "Current total: ";TOTAL
+Print "Current total: ";BR_TOTAL
 Locate 1,9
-Print "Last roll:     ";LASTROLL
-If HANDFIN
+Print "Last roll:     ";BR_LASTROLL
+If BR_HANDFIN
    Locate 1,11
-   Print "Round secured: ";AWARD
+   Print "Round secured: ";BR_AWARD
 End If
 Locate 1,14
-Print MSG$
+Print BR_MSG$
 Locate 1,18
-If SESSIONFIN<>0
+If BR_SESSIONFIN<>0
    Print "A new challenge   Q quit"
 Else
-   If HANDFIN
+   If BR_HANDFIN
       Print "SPACE next round  Q quit"
    Else
       Print "R roll   B bank   Q quit"
@@ -126,16 +126,16 @@ Else
 End If
 Return
 
-READ_FRESH:
-If LASTSC>=0
+BR_READ_FRESH:
+If BR_LASTSC>=0
    Repeat
       Wait Vbl
-   Until Key State(LASTSC)=0
+   Until Key State(BR_LASTSC)=0
 End If
 Clear Key
 Repeat
-   K$=Upper$(Inkey$)
+   BR_K$=Upper$(Inkey$)
    Wait Vbl
-Until K$<>""
-LASTSC=Scancode
+Until BR_K$<>""
+BR_LASTSC=Scancode
 Return
