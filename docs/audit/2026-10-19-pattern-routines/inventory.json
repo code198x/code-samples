@@ -430,7 +430,7 @@
     },
     {
       "entry": "commodore-64/assembly/rendering/smooth-scrolling",
-      "page_sha256": "491afb2aa6903187d39f469cf4849405bc046fd35341cec722c0a391fcdec1d4",
+      "page_sha256": "a6d5257c138f8fcbb4b6ed2776e92c9cc0d713e3e437e0fc6bec07785e16efea",
       "declared_status": "maintained routine, executed on a ROM-booted PAL C64 emulator.",
       "source_includes": [
         {
@@ -482,7 +482,7 @@
     },
     {
       "entry": "commodore-amiga/assembly/audio/four-channel-music",
-      "page_sha256": "2e06d5a52d462d7b4d0e0a073737330e562ed4469020f28941b96170b3ad5fb6",
+      "page_sha256": "b61a0400fc79d16c969eca53629148593dcb4df3290aaccd089e907447909ae0",
       "declared_status": "assembled and emulator-executed on the named configuration.",
       "source_includes": [
         {
@@ -517,7 +517,7 @@
     },
     {
       "entry": "commodore-amiga/assembly/audio/one-shot-samples",
-      "page_sha256": "8e7974dcf7e691e9ba17d590d7f409e9fc2e190fb7e1a2e24fcbfb4c07718d44",
+      "page_sha256": "8d19e53ebba7b5b506757d662d5d10680d50604237de8cc93427915d3f536748",
       "declared_status": "illustrative interrupt adapter.",
       "source_includes": [],
       "source_closure": {},
@@ -636,7 +636,7 @@
     },
     {
       "entry": "commodore-amiga/assembly/framework/system-takeover",
-      "page_sha256": "53c231be4c6fcbf5204121f4665328d39e8a91f6ab9b9debf92a6bc0c54b37af",
+      "page_sha256": "b1fa3feb68750e09e69831ffd6792a6230f090d6a052fbbab845b16735f23a0f",
       "declared_status": "an excerpt from an executed exclusive caller.",
       "source_includes": [
         {
@@ -690,7 +690,7 @@
     },
     {
       "entry": "commodore-amiga/assembly/input/joystick-edge-detection",
-      "page_sha256": "4e25097179c2f97e9d1c1631965546286f5590a99c317c46877ee38d3f5f52b9",
+      "page_sha256": "4a966cca6e60d06074f69a6b1a03eb70b0e6d365b75d72e9ab6ae8f8b4860b8b",
       "declared_status": "the maintained reader is reused by executed Amiga callers; the edge adapter has a 1,024-case CPU/state check.",
       "source_includes": [
         {
@@ -803,7 +803,7 @@
     },
     {
       "entry": "commodore-amiga/assembly/rendering/blitter-line-draw",
-      "page_sha256": "ec2ad03b54f50ad4f097a1e11411b7e98a5f94d693131e0914610a27638fb886",
+      "page_sha256": "34c58a5a1175b4f572851947bccea100d02a1017c724f02f9ae42d729acfc235",
       "declared_status": "assembled and executed through the actual blitter on an A500 OCS PAL configuration.",
       "source_includes": [
         {
@@ -1362,7 +1362,7 @@
     },
     {
       "entry": "cross-platform/rendering/sprite-animation",
-      "page_sha256": "a9487bea832e33142fe2aa04c4e97f877482fb0986382a04887bb70e5efd3020",
+      "page_sha256": "b8a32a049a0a8371dc7bcb003594f1c6945bdffa54af654cb08f60b7f7e2a5f0",
       "declared_status": "the maintained Z80 routine is CPU-executed; the other examples are illustrative.",
       "source_includes": [
         {
@@ -1633,7 +1633,7 @@
     },
     {
       "entry": "nintendo-nes/assembly/physics/sprite-movement-bounds",
-      "page_sha256": "012b87eced8e50e9a553b9283dea2727458fc1ea59e630da8d936a1bed1b1ca5",
+      "page_sha256": "67748c4f44b5644be5e64ee40a4412216ff574cf1522c2e92acb26ab94fab714",
       "declared_status": "maintained movement routine, executed on NTSC NROM.",
       "source_includes": [
         {
@@ -1767,7 +1767,7 @@
     },
     {
       "entry": "nintendo-nes/assembly/rendering/sprite-zero-split",
-      "page_sha256": "1248bba8b07722defa108da60b09172b01959ad767ab09ecac2edb09d6e4bf08",
+      "page_sha256": "23aa9b014c09f52f3dfa7c8f93f66a7842a632ee310e3ddaea6203503683b78e",
       "declared_status": "illustrative integration sketch.",
       "source_includes": [],
       "source_closure": {},
@@ -2129,7 +2129,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/framework/state-machine-loop",
-      "page_sha256": "5a95f1ed9f13c2ef471bf95bce4ec1c5abfbc423ff027cc7766e669f422f1981",
+      "page_sha256": "5139d0b708d19eace4252d2eacec13816b72f7cdd2ad26066e9ab17221b8380d",
       "declared_status": "complete maintained caller, executed through the 48K ROM.",
       "source_includes": [
         {
@@ -2153,7 +2153,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/input/keyboard-reading",
-      "page_sha256": "0137c75a2d43068121ff95fc1e245ebdfbf5cda9f5f8f0bc59fbb71801f73f40",
+      "page_sha256": "7f634e1de71e2b242e304b4cd6e418e06754e3dbe83bd08463b00d29fd2923f3",
       "declared_status": "the maintained matrix reader is reused by executed 48K callers.",
       "source_includes": [
         {
@@ -2231,7 +2231,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/rendering/attribute-writing",
-      "page_sha256": "cb564ef995ccdfe969d63f592855275d72e0b646aafe8a3560c05eb057246b16",
+      "page_sha256": "b3f96b9ac3ccabbaf73a97a3a5ee7cb30b522ca5cfe2cb52b4e5510e76b71f6c",
       "declared_status": "maintained Z80 routines, executed in a bounded CPU fixture.",
       "source_includes": [
         {
@@ -2283,7 +2283,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/rendering/character-printing",
-      "page_sha256": "208067a932d1471553d966f857bd51785fd9285c7ab76660add3b8e393927891",
+      "page_sha256": "b42fa4b8effafc27c1aaf66b8498864ea3516f6675ecd42a3d08d1c85309423d",
       "declared_status": "maintained routines, executed in a bounded Z80 fixture.",
       "source_includes": [
         {
@@ -2316,7 +2316,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/rendering/masked-sprites",
-      "page_sha256": "5396f8abf1d39f6ea696edfad92404ce473da957abf519b6206e42b31984261c",
+      "page_sha256": "3f59775a3d5cf1e226eb7ff02622810c58a5078fed032ed235b6734aa5ff6f03",
       "declared_status": "maintained Z80 routines, executed in a bounded CPU fixture.",
       "source_includes": [
         {
@@ -2344,7 +2344,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/rendering/numeric-display",
-      "page_sha256": "c0824ba8f35bd524ad5036ea5df5d719ceeba6d685f39aa59feefe40ce1580bd",
+      "page_sha256": "f1a26f639c2689a07bdfea2e4330932ca7c8f266a95eb4d1eae9947e199b5e28",
       "declared_status": "maintained Z80 routines, executed in a bounded CPU fixture.",
       "source_includes": [
         {
@@ -2372,7 +2372,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/basic/framework/screen-frame",
-      "page_sha256": "e815a8c73d4fda8f40ca12bb1244f678c2edf5fb2082d789af6a6d4a8025a183",
+      "page_sha256": "61572d3455614b04afe71fa592fdab189ece43cb522f55ad4a8bf8819348db6c",
       "declared_status": "maintained BASIC subroutine.",
       "source_includes": [
         {
@@ -2392,7 +2392,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/basic/framework/text-utilities",
-      "page_sha256": "7cde1c68f69819842b9af66d71fb916de76e97f0dbf298f26b23aa6c51968029",
+      "page_sha256": "a38ee1139b63efaa36b9e16b2ceea74fff4c8e8b43890cd57bd6a094c479d79a",
       "declared_status": "maintained BASIC subroutine.",
       "source_includes": [
         {
@@ -2412,7 +2412,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/basic/rendering/progress-bar",
-      "page_sha256": "8d921a2d349d1486e3071ee5f7e1fdc76f318d9ff824dc8635ee3458bbae2a15",
+      "page_sha256": "20a0ef3766043133732dc91873a39eb649ed0d49c1d77a84bf933ee039444a5a",
       "declared_status": "maintained BASIC subroutine.",
       "source_includes": [
         {
@@ -2438,7 +2438,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/basic/rendering/seven-segment-digits",
-      "page_sha256": "673af68c6d8e5228540c3401f39053e1756a82c10a9a1339cc681a8451931240",
+      "page_sha256": "12af3ce3fd41d23eb6fcc74d4f606c1b3bcbca91154f9a2f6b553a9f358477ff",
       "declared_status": "maintained BASIC subroutine.",
       "source_includes": [
         {
@@ -3733,5 +3733,7 @@
   ],
   "coverage_limits": "30 retained systems revalidated structurally against registry and source/evidence hashes; no fresh 30-emulator replay this audit. Sound executed on28; stock ZX80/ZX81 have no speaker.",
   "website_base": "82ace206cb62419bb51a02c65a1eecf716586b90",
-  "samples_base": "e8e445b7d51e7292edb1a8503db467f032a1fee1"
+  "samples_base": "e8e445b7d51e7292edb1a8503db467f032a1fee1",
+  "reviewed_website_revision": "d0057a67a07d2497531bfc35269ea5f1b065bb58",
+  "reviewed_samples_revision": "790123e55224f4f42fb110bc34618ab37734d73c"
 }
