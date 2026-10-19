@@ -1,0 +1,206 @@
+[
+  {
+    "name": "parser-basic",
+    "record": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/verification/results.json",
+    "bindings": [
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas"
+        ]
+      },
+      {
+        "path": "scripts/verify-game-loops.py",
+        "record_keys": [
+          "sources",
+          "scripts/verify-game-loops.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-adventure-parser.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "parser-z80",
+    "record": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/verification/results.json",
+    "bindings": [
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/parser.inc",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/parser.inc"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/vocabulary.json",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/vocabulary.json"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/generate_vocabulary.py",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/generate_vocabulary.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-z80-library-routines.py",
+        "record_keys": [
+          "sources",
+          "scripts/verify-z80-library-routines.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-adventure-parser.py",
+        "record_keys": [
+          "sources",
+          "scripts/verify-adventure-parser.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-game-loops.py",
+        "record_keys": [
+          "sources",
+          "scripts/verify-game-loops.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-z80-adventure-parser.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "parser-callers",
+    "record": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/verification/callers/results.json",
+    "bindings": [
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/demo.bas",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/demo.bas"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/Makefile",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/Makefile"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/demo.asm",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/demo.asm"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/parser.inc",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/parser.inc"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/vocabulary.json",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/vocabulary.json"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/generate_vocabulary.py",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/generate_vocabulary.py"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/Makefile",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/Makefile"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/character-printing/characters.inc",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/rendering/character-printing/characters.inc"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/numeric-display/numeric.inc",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/rendering/numeric-display/numeric.inc"
+        ]
+      },
+      {
+        "path": "scripts/verify-adventure-parser.py",
+        "record_keys": [
+          "sources",
+          "scripts/verify-adventure-parser.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-basic-library-routines.py",
+        "record_keys": [
+          "sources",
+          "scripts/verify-basic-library-routines.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-game-loops.py",
+        "record_keys": [
+          "sources",
+          "scripts/verify-game-loops.py"
+        ]
+      },
+      {
+        "path": "scripts/verify-adventure-callers.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      }
+    ]
+  }
+]

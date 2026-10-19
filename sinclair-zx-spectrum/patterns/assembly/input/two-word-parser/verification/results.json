@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "command_cases": 109,
+  "not_ready_cases": 1,
+  "custom_vocabulary_cases": 4,
+  "extra_word_mutant_rejected": true,
+  "parser_code_bytes": 342,
+  "parser_state_bytes": 16,
+  "sources": {
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/parser.inc": "418c8040b79f3ad5c6d029cba950e3a31f031f45055b34fc6d7f953869c9ead4",
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/vocabulary.json": "bf4be59d7fb94b4ca21cea8de6075886313f51200ca5fec764873981807f7af0",
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/generate_vocabulary.py": "8cd05d70feabc57c327d4138a140ca423b415f7ec4a83e7725724eee2e6edae1",
+    "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
+    "scripts/verify-adventure-parser.py": "f300f6dc0d14929a841692f0b7d95fdb6781230e9620825649248dd6aa5cf580",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "observer_sha256": "ab35ab872cdd9e2c2ea1ad8f7e86eeba7fb99e94428b35f0c91bb5f152622d01",
+  "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+  "limits": "Run the counted-byte Z80 parser against the same independent command oracle.\n\n48K RAM snapshot, synthetic ROM, DI, code/stack in uncontended RAM. This is not\nROM keyboard, timing/contention, original-hardware or complete-game evidence.\n"
+}

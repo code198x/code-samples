@@ -26,6 +26,9 @@ AUDIT_BINDINGS = {
     "spectrum-states": 4,
 }
 
+PARSER_SELECTION = Path(__file__).with_name("adventure-parser-evidence.json")
+PARSER_BINDINGS = {"parser-basic": 4, "parser-z80": 7, "parser-callers": 16}
+
 
 def inspect(
     root: Path, fixtures: Any, required_bindings: dict[str, int] | None = None
@@ -123,15 +126,28 @@ def main() -> int:
     parser.add_argument(
         "--audit", action="store_true", help="Check all eight routine-audit records"
     )
+    parser.add_argument(
+        "--parser", action="store_true", help="Check the three adventure-parser records"
+    )
     args = parser.parse_args()
+    if args.parser and args.audit:
+        parser.error("Choose either --parser or --audit")
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.unlink(missing_ok=True)
     try:
         report = inspect(
             args.root,
-            json.loads((AUDIT_SELECTION if args.audit else args.selection).read_text()),
-            AUDIT_BINDINGS if args.audit else None,
+            json.loads(
+                (
+                    PARSER_SELECTION
+                    if args.parser
+                    else AUDIT_SELECTION
+                    if args.audit
+                    else args.selection
+                ).read_text()
+            ),
+            PARSER_BINDINGS if args.parser else AUDIT_BINDINGS if args.audit else None,
         )
     except (OSError, KeyError, TypeError, ValueError) as error:
         report = {
