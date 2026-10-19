@@ -2,7 +2,7 @@
   "status": "passed",
   "routine_cases": {
     "spectrum": 7,
-    "nes": 10,
+    "nes": 11,
     "bbc": 5
   },
   "mutants_rejected": [
@@ -26,7 +26,7 @@
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61"
   },
-  "observer_sha256": "4753ea9da0cfec04a3b420b5ea5fbf6ac7a4042cb996463f2c541413a8df6c32",
+  "observer_sha256": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
   "captures": {
     "bbc.png": "2303de6ac046e18eb137e12ff5d2231b01a9f1a3fbd943a04fff3cdc77b4c6bb",
     "nes.png": "f8bff51f03496be3a24769d674373d84feee52bb5a1da1f6058325a0b487a839",
