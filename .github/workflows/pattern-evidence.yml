@@ -57,6 +57,10 @@ jobs:
           python -m unittest discover -s scripts -p test_sprite_lifecycle.py -v
       - name: Check guard failure modes
         run: python -m unittest discover -s scripts -p test_pattern_evidence.py -v
+      - name: Verify clipping evidence bindings and failure modes
+        run: |
+          python scripts/check-sprite-clipping.py
+          python -m unittest discover -s scripts -p test_sprite_clipping.py -v
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -129,6 +133,8 @@ jobs:
         run: python scripts/verify-spectrum-lifecycle.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-spectrum" --output "$RUNNER_TEMP/pattern-evidence/sprite-lifecycle"
       - name: Execute the counted-byte adventure parser
         run: python scripts/verify-z80-adventure-parser.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-spectrum" --output "$RUNNER_TEMP/pattern-evidence/adventure-parser"
+      - name: Execute signed clipping and cropped-image checks
+        run: python scripts/verify-spectrum-clipping.py --emulator emu198x-spectrum --output "$RUNNER_TEMP/pattern-evidence/spectrum-clipping"
       - name: Record the released tool combination and host
         shell: bash
         run: |
@@ -157,6 +163,7 @@ jobs:
           path: |
             ${{ runner.temp }}/pattern-evidence/spectrum/results.json
             ${{ runner.temp }}/pattern-evidence/spectrum-release-inputs.json
+            ${{ runner.temp }}/pattern-evidence/spectrum-clipping/results.json
             ${{ runner.temp }}/pattern-evidence/adventure-parser/results.json
             ${{ runner.temp }}/pattern-evidence/sprite-lifecycle/results.json
           if-no-files-found: error

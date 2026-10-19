@@ -1,0 +1,3 @@
+mask: dc.w $0ff0,$0ff0,$3ffc,$3ffc,$7ffe,$7ffe,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$ffff,$7ffe,$7ffe,$3ffc,$3ffc,$0ff0,$0ff0
+image_a: dc.w $0ff0,$0000,$2aa8,$1554,$7ffe,$0000,$aaaa,$5555,$ffff,$0000,$aaaa,$5555,$ffff,$0000,$aaaa,$5555,$ffff,$0000,$aaaa,$5555,$ffff,$0000,$aaaa,$5555,$ffff,$0000,$2aaa,$5554,$3ffc,$0000,$0aa0,$0550
+image_b: dc.w $0ff0,$0ff0,$1554,$1554,$7ffe,$7ffe,$5555,$5555,$ffff,$ffff,$5555,$5555,$ffff,$ffff,$5555,$5555,$ffff,$ffff,$5555,$5555,$ffff,$ffff,$5555,$5555,$ffff,$ffff,$5554,$5554,$3ffc,$3ffc,$0550,$0550

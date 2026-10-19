@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "cases": {
+    "spectrum": {
+      "axis_cases": 220,
+      "native_scenes": 1,
+      "objects_per_scene": 9
+    },
+    "bbc": {
+      "axis_cases": 220,
+      "native_scenes": 1,
+      "objects_per_scene": 9
+    },
+    "amiga": {
+      "axis_cases": 220,
+      "native_scenes": 1,
+      "objects_per_scene": 9
+    }
+  },
+  "rejected_controls": {
+    "spectrum-axis": "Axis output/input/guard mismatch at (-32768, 0, 256)",
+    "spectrum-source-crop": "spectrum cropped image mismatch",
+    "bbc-axis": "Axis output/input/guard mismatch at (-32768, 0, 256)",
+    "bbc-source-crop": "bbc cropped image mismatch",
+    "amiga-axis": "Axis output/input/guard mismatch at (-32768, 0, 256)",
+    "amiga-source-crop": "amiga cropped image mismatch"
+  },
+  "sources": {
+    "bbc-micro/patterns/assembly/rendering/clipped-sprites/Makefile": "721bb2d0204ae13cb67624cbdbabab02aa3155abfde30a92aeabf6486663c8d3",
+    "bbc-micro/patterns/assembly/rendering/clipped-sprites/clip.inc": "a71fd6554f74115dcb2069f98b174f54485dc45c2f2a483e1af5976b72bfcd20",
+    "bbc-micro/patterns/assembly/rendering/clipped-sprites/demo.asm": "ec95a9e0cd4b4d7379f031dfc36d44d21aebae5dcb2b408bed8344b2e836c2fc",
+    "bbc-micro/patterns/assembly/rendering/clipped-sprites/draw.inc": "4d5a0fe1d84e9d3000092339c53c7db7cd79d09fbe21b7ed9acbf68758715dbc",
+    "bbc-micro/patterns/assembly/rendering/clipped-sprites/loader.py": "bade96de1b3724eaa5f68addd4f0d9099fdf154d507d153c8a1a54595150f329",
+    "bbc-micro/patterns/assembly/rendering/clipped-sprites/shapes.inc": "1932b7f6d7542d6e132eab1349d3af9c455e8faeff1755ae4f18e35a9590fae2",
+    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/Makefile": "db0a9eb1b8dcaf7562e84e6c2f755319f5dbd3610871742d2306070bb0e51033",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/clip.inc": "0c98dcba5c5e9297b275583dff212e221ce4535e0b52f95b79816932e6a5aaca",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/demo.asm": "61102f9cf88283591df1b85697d122e425cf500cb04fa5d95fe37ad4ebdbf402",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/draw.inc": "528903e83f1c1adf58d731915e3920cddf15474ce7f77b47a0ec62dacecf6f43",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/shapes.inc": "153ecaaca5924c8cd2fd61ed65c7ee5e6980c5e6b14ded6d1485191ea0faa30d",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-rendering-families.py": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
+    "scripts/verify-sprite-lifecycle.py": "9756dbf035ee59a7cde1a729d8f4290976faf546b3308442eb164c332f743a9e",
+    "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/Makefile": "bbaade6aa9824a0ce12b30a91c83e2a599d737a5a86ebf835e8213f69398c4fd",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/clip.inc": "08800d6676a9fcae1ffdbb24ee352f75bcc0385cc7527d406dd9cb4bc888fcad",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/demo.asm": "df13958a3d0ae926c2ded3aced9dc8f2eadcd32a441f091fb396e56c2d0f9007",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/draw.inc": "834d0d52355241b3bc3617b3d1b738acd45b4c5caa32f0b1f40fea0fc84266ec",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/shapes.inc": "a5565733a319bd18fe1ae13b7e17b2b26c6f3454ca53ea5d1807562e0a59824b"
+  },
+  "observer_sha256": "5cfabd5723a2d442d2674f40bde29b4a630c5bac222f29a0b97b8c5179844f93",
+  "tools": {
+    "assembler": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+    "build198x": "62cb2470ae88d239881f63251502f53b122c9b415f48795c1786a6ffccd941c4",
+    "spectrum": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+    "bbc": "24efc5795a38306a22e39e111b9ff44e210798b860c5223230e9ab9c774e6faf",
+    "amiga": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb"
+  },
+  "firmware": {
+    "rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+    "mos": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "basic": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "kickstart": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+  },
+  "captures": {
+    "spectrum.png": "84e08435b4a3048e8aa042b4a734311838c2cd7c555260668a534f97d2be763d",
+    "bbc.png": "364d9e5b2ea2e96072c60c2086cfeeec5d3119a35176d55af4297ed963df15de",
+    "amiga.png": "096d1a6838b462d6d07205b37a204fb0fda65371019650c2929b278e4bdc55a3"
+  },
+  "limits": "Verify signed clipping and aligned masked drawing in three guest CPUs.\n\nSpectrum 48K PAL, BBC Model B MOS1.20/BASICII MODE4, A500 OCS PAL/KS1.3.\nNo original-hardware, arbitrary-X, display-deadline or whole-game budget claim.\nFirmware and synthetic snapshots stay local. Every emulator is closed.\n"
+}
