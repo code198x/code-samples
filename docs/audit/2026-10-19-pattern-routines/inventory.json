@@ -717,7 +717,7 @@
     },
     {
       "entry": "commodore-amiga/assembly/input/joystick-reading",
-      "page_sha256": "663e2b197ecd84bf70dbdd9b20aa8a1be64b6178bd61f1db1659f3053ea89502",
+      "page_sha256": "468eb43fb6b3c965311f60a04d4fe5f56ad2b25239dcb49c96fabe0c2c95f955",
       "declared_status": "the maintained reader is reused by executed Amiga callers.",
       "source_includes": [
         {
@@ -921,7 +921,7 @@
     },
     {
       "entry": "commodore-amiga/assembly/rendering/sprite-control-words",
-      "page_sha256": "58f5165a9d3b86ce6c50b856587e74fddef35dec607e85521869fdc022a60817",
+      "page_sha256": "702237e1c94b16ac8459a606da85122a75f7a2e5f7411757bdc73c2f4214a4a6",
       "declared_status": "illustrative code.",
       "source_includes": [],
       "source_closure": {},
@@ -1591,7 +1591,7 @@
     },
     {
       "entry": "nintendo-nes/assembly/framework/reset-sequence",
-      "page_sha256": "16af94d55590c119d0dc4bb6f653416b717efe34a2030d4536a6e0f4508c2b4c",
+      "page_sha256": "d57ed54aea17d8a73dd7b564f404d408052330d02f9f646f454f2317b5a443c2",
       "declared_status": "illustrative code.",
       "source_includes": [],
       "source_closure": {},
@@ -1633,7 +1633,7 @@
     },
     {
       "entry": "nintendo-nes/assembly/physics/sprite-movement-bounds",
-      "page_sha256": "67748c4f44b5644be5e64ee40a4412216ff574cf1522c2e92acb26ab94fab714",
+      "page_sha256": "f2a1963431c2c2425f87183f1b30088f803063a37c8b32ab7cf286e87d737c58",
       "declared_status": "maintained movement routine, executed on NTSC NROM.",
       "source_includes": [
         {
@@ -1688,7 +1688,7 @@
     },
     {
       "entry": "nintendo-nes/assembly/rendering/multi-sprite-oam",
-      "page_sha256": "a94f819fdb1d53314b4dab08314465e4382a4615551e1cae520913c75bf44243",
+      "page_sha256": "d4e2211ef2f94c766bd5d3459187c53b5c62fd1e3e6cdfa34021bada2632e19b",
       "declared_status": "illustrative code.",
       "source_includes": [],
       "source_closure": {},
@@ -2153,7 +2153,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/input/keyboard-reading",
-      "page_sha256": "7f634e1de71e2b242e304b4cd6e418e06754e3dbe83bd08463b00d29fd2923f3",
+      "page_sha256": "f203fab1c06f9def3bea45b436c267a0d3ff790fd51947d325d81966dc28c9dc",
       "declared_status": "the maintained matrix reader is reused by executed 48K callers.",
       "source_includes": [
         {
@@ -2231,7 +2231,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/rendering/attribute-writing",
-      "page_sha256": "b3f96b9ac3ccabbaf73a97a3a5ee7cb30b522ca5cfe2cb52b4e5510e76b71f6c",
+      "page_sha256": "5d8e54c7ee08ac5b19b0e7a34018381d8f37c30368ab0077c3eaec915ea9a8a3",
       "declared_status": "maintained Z80 routines, executed in a bounded CPU fixture.",
       "source_includes": [
         {
@@ -2344,7 +2344,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/rendering/numeric-display",
-      "page_sha256": "f1a26f639c2689a07bdfea2e4330932ca7c8f266a95eb4d1eae9947e199b5e28",
+      "page_sha256": "fe338e098d8df9868f3ed46e77acf30a8b0096de221ec59ccacb019fb2055a17",
       "declared_status": "maintained Z80 routines, executed in a bounded CPU fixture.",
       "source_includes": [
         {
@@ -2372,7 +2372,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/basic/framework/screen-frame",
-      "page_sha256": "61572d3455614b04afe71fa592fdab189ece43cb522f55ad4a8bf8819348db6c",
+      "page_sha256": "89ba8ae157dd8838e5e682542490c2a78263ef5a611efa0691a73647cb2a76c1",
       "declared_status": "maintained BASIC subroutine.",
       "source_includes": [
         {
@@ -3734,6 +3734,6 @@
   "coverage_limits": "30 retained systems revalidated structurally against registry and source/evidence hashes; no fresh 30-emulator replay this audit. Sound executed on28; stock ZX80/ZX81 have no speaker.",
   "website_base": "82ace206cb62419bb51a02c65a1eecf716586b90",
   "samples_base": "e8e445b7d51e7292edb1a8503db467f032a1fee1",
-  "reviewed_website_revision": "3cf2b576688d708788d4dafa11219089dc60a5e9",
+  "reviewed_website_revision": "8d2e0f752112c5723858239bd3b9f9dd509e83e2",
   "reviewed_samples_revision": "790123e55224f4f42fb110bc34618ab37734d73c"
 }
