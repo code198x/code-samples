@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+from __future__ import annotations
+
+import unittest
+
+from fixture import cases, command, make
+
+
+class FixtureTests(unittest.TestCase):
+    def test_converts_boot_lengths_without_changing_payloads(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        for i in range(39):
+            start = 256 + i * 4864
+            base[start : start + 12] = b"Track-Info\r\n"
+            base[start + 256 : start + 4864] = bytes([i]) * 4608
+        for case in cases():
+            with self.subTest(case=case["id"]):
+                image = make(bytes(base), case)
+                self.assertEqual(len(command(case)), 9)
+                self.assertEqual(image[48:50], base[48:50])
+                for i in range(39):
+                    start = 256 + i * 4864
+                    self.assertEqual(
+                        image[start + 256 : start + 4864],
+                        base[start + 256 : start + 4864],
+                    )
+                    for s in range(9):
+                        self.assertEqual(
+                            image[start + 30 + s * 8 : start + 32 + s * 8],
+                            bytes([0, 2]),
+                        )
+                self.assertEqual(len(image), 256 + sum(image[52:92]) * 256)
+
+    def test_wrong_base_rejected(self) -> None:
+        for value in (b"", bytes(194816), b"MV - CPC"):
+            with self.assertRaises(ValueError):
+                make(value, cases()[0])
+
+
+if __name__ == "__main__":
+    unittest.main()
