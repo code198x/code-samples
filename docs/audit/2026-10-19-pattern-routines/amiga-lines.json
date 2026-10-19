@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "octants": 8,
+  "pixels_per_line": 32,
+  "source_sha256": "d69c550dc1aad8bc04788692b9c9e2a618d503137a36c08f9d8b27048b206e48",
+  "observer_sha256": "d76cdd8bae5741d799c5b625b385824ec3f000be4fc558a910cc1ffac941e704",
+  "binary_sha256": "64b539df49dc64de02fa0bfe40134dd5897e587ecb2783230d6ed4af8b65b6bc",
+  "emulator_sha256": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb",
+  "firmware_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53",
+  "limits": "Boot an original caller and compare actual blitter output with line geometry.\n\nA500 OCS PAL with local Kickstart1.3; no original-hardware conformance claim.\nThe line oracle permits all eight octant encodings but requires every encoding\nproduce a different correct reflection. It does not copy the blitter error loop.\n"
+}
