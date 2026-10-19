@@ -1,0 +1,130 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+BR_CAP=10
+BR_LASTSC=-1
+Randomize Timer
+BR_BANKED=0
+Repeat
+   BR_TOTAL=0
+   BR_LASTROLL=0
+   BR_AWARD=0
+   BR_HANDFIN=0
+   BR_MSG$="Roll once before you can bank."
+   Repeat
+      Cls 0
+      Locate 0,0
+      Print "ROUND PRACTICE"
+      Print "Total: ";BR_TOTAL;"  Limit: ";BR_CAP
+      Print "Last roll: ";BR_LASTROLL
+      Print "Secured: ";BR_BANKED
+      Gosub BR_DRAW_DIE
+      Locate 0,14
+      Print BR_MSG$
+      Locate 0,17
+      Print "R roll   B bank   Q quit"
+      Gosub BR_READ_FRESH
+      If BR_K$="Q"
+         Show
+         End
+      End If
+      If BR_K$="R"
+         BR_FACE=Rnd(5)+1
+         BR_LASTROLL=BR_FACE
+         BR_TOTAL=BR_TOTAL+BR_FACE
+         BR_MSG$="Bank it or risk another roll?"
+         If BR_TOTAL>BR_CAP
+            BR_AWARD=0
+            BR_HANDFIN=-1
+            BR_MSG$="Bust! This round secures zero."
+         End If
+         If BR_TOTAL=BR_CAP
+            BR_AWARD=BR_TOTAL
+            BR_HANDFIN=-1
+            BR_MSG$="Perfect 10. Secured automatically."
+         End If
+      End If
+      If BR_K$="B"
+         If BR_TOTAL>0
+            BR_AWARD=BR_TOTAL
+            BR_HANDFIN=-1
+            BR_MSG$="Banked. These points are safe."
+         End If
+      End If
+   Until BR_HANDFIN
+   BR_BANKED=BR_BANKED+BR_AWARD
+   Cls 0
+   Locate 0,0
+   Print "ROUND FINISHED"
+   Print "Total: ";BR_TOTAL
+   Print "This round secured: ";BR_AWARD
+   Print "Last roll: ";BR_LASTROLL
+   Print "Secured: ";BR_BANKED
+   Gosub BR_DRAW_DIE
+   Locate 0,14
+   Print BR_MSG$
+   Locate 0,17
+   Print "SPACE next round   Q quit"
+   Repeat
+      Gosub BR_READ_FRESH
+   Until BR_K$=" " Or BR_K$="Q"
+Until BR_K$="Q"
+Show
+End
+
+BR_READ_FRESH:
+If BR_LASTSC>=0
+   Repeat
+      Wait Vbl
+   Until Key State(BR_LASTSC)=0
+End If
+Clear Key
+Repeat
+   BR_K$=Upper$(Inkey$)
+   Wait Vbl
+Until BR_K$<>""
+BR_LASTSC=Scancode
+Return
+
+BR_DRAW_DIE:
+Ink 0
+Bar 240,48 To 288,96
+Ink 1
+Box 240,48 To 288,96
+If BR_LASTROLL=1
+   Bar 262,70 To 266,74
+End If
+If BR_LASTROLL=2
+   Bar 248,56 To 252,60
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=3
+   Bar 248,56 To 252,60
+   Bar 262,70 To 266,74
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=4
+   Bar 248,56 To 252,60
+   Bar 276,56 To 280,60
+   Bar 248,84 To 252,88
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=5
+   Bar 248,56 To 252,60
+   Bar 276,56 To 280,60
+   Bar 262,70 To 266,74
+   Bar 248,84 To 252,88
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=6
+   Bar 248,56 To 252,60
+   Bar 276,56 To 280,60
+   Bar 248,70 To 252,74
+   Bar 276,70 To 280,74
+   Bar 248,84 To 252,88
+   Bar 276,84 To 280,88
+End If
+Return

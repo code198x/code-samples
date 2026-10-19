@@ -1,0 +1,25 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+Print "SUPPLIED SCORE TRACE"
+BR_BANKED=0
+BR_TOTAL=4
+BR_AWARD=BR_TOTAL
+BR_BANKED=BR_BANKED+BR_AWARD
+Print "First total: ";BR_TOTAL
+Print "Secured: ";BR_BANKED
+BR_TOTAL=0
+Print "Next round starts at: ";BR_TOTAL
+Print "Secured stays: ";BR_BANKED
+BR_TOTAL=11
+BR_AWARD=0
+BR_BANKED=BR_BANKED+BR_AWARD
+Print "Bust total: ";BR_TOTAL
+Print "Bust award: ";BR_AWARD
+Print "Secured stays: ";BR_BANKED
+Wait Key
+Show
+End
