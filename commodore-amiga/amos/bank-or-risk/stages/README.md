@@ -83,3 +83,65 @@ defines the coordinate system, `Ink`, `Box`, `Bar` and palette notation. Its
 [Keyboard chapter](https://amospromanual.dev/10-01-using-the-keyboard.html)
 defines `Wait Key`. These checked fragments are authoring material; the full
 beginner route still needs the earlier message/save steps and later game steps.
+
+## Give this round its own space
+
+`round-board.amos` is a supplied display, not another game. Merge it into a
+blank project as `rboard.asc`, check with F2 and run with F1. It shows a total of
+4, limit 10 and last roll 4. The words ONE ROUND and the supplied-value message
+make its scope visible. It has no session score, target or round count yet.
+
+The box from `0,64` to `223,111` groups this round's values. Its text starts at
+column 1 on rows 9, 11 and 12. The existing die stays on the right. A label names
+the value next to it: a roll is not the running total. Keep the text inside the
+box when you vary a label. `Ink 1` explicitly selects white for its outline;
+`Box` draws the border without filling over its contents.
+
+Change only `BR_TOTAL=4` to `BR_TOTAL=7`. The total becomes 7 and the die still
+shows 4: changing a total is not a new roll. Restore 4. To show a finished bank
+instead, change `BR_HANDFIN=0` to `BR_HANDFIN=-1` and `BR_AWARD=0` to
+`BR_AWARD=4`. The round now says it secures 4. In AMOS, -1 is true and 0 is false;
+the decision displays either the award or the at-risk explanation. These edits
+supply a test state; they do not implement banking input or score updates.
+
+The die routine is the previously explained face selection. The `Gosub` visits
+it and `Return` resumes after the call. It reads `BR_LASTROLL`, changes only the
+die area and leaves the numbers alone. No new face is chosen while displaying.
+
+## Add the challenge after its values are understood
+
+`challenge-board.amos`, merged as `cboard.asc` in a blank project, supplies the
+bust after banking 4 in round 1, then rolling 6 and 5 in round 2. Expect this:
+
+- Secured 4 and target 30 in the upper box; round 2 of 5.
+- Current round total 11, limit 10, this round secured 0 in the lower box.
+- Last roll 5 beside five pips; three rounds after this one.
+- A bust explanation and a supplied-result prompt. Any key finishes this snapshot.
+
+The supplied assignments describe one moment. They do not play those rounds.
+Read them before the call to `BR_DRAW_STATE`, which clears and redraws the whole
+board from the stored values. Its `Return` comes back to the supplied-result
+prompt. The boxes separate values by their jobs; they do not perform scoring.
+The full prototype uses the same display routine with live values.
+
+`BR_MAXTURN-BR_TURNNO` subtracts the current round number from the maximum. In
+round 2 of 5 that is 3 later rounds. Counting later rounds keeps the current
+round separate. The renderer calculates it from those two values every time;
+it does not depend on a remaining-round value last updated after scoring.
+At an ending the label changes to **Unused rounds**, because the challenge has
+finished even if its maximum allowed more rounds. Success and failure remain
+explained by the result text. The display decision does not end the game.
+
+For a supplied perfect result in round 3, change `BR_BANKED=4` to 30,
+`BR_TURNNO=2` to 3, `BR_TOTAL=11` to 10, `BR_LASTROLL=5` to 6, `BR_AWARD=0`
+to 10, `BR_SESSIONFIN=0` to 1 and the message to `Target reached. You made it!`.
+Keep `BR_HANDFIN=-1`. Predict secured 30, round total 10, last roll 6, this round
+secured 10 and two unused rounds, then run and compare. Those different numbers
+have different jobs; copying one score into every field would hide a fault.
+
+The message box uses pixels `0,128` to `319,151`, with text on row 17. The control
+box uses `0,160` to `319,183`, with text on row 21. The supplied snapshot replaces
+the live controls with its own finish prompt. In the full game, active play,
+between-round results and final results show their appropriate controls.
+Keep each line within the 40 text columns; a line that wraps can overwrite the
+next part of the board. A later text change needs another native display check.

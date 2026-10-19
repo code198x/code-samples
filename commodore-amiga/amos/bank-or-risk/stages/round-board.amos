@@ -1,0 +1,77 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+BR_CAP=10
+BR_TOTAL=4
+BR_LASTROLL=4
+BR_HANDFIN=0
+BR_AWARD=0
+Cls 0
+Locate 1,1
+Print "ONE ROUND"
+Ink 1
+Box 0,64 To 223,111
+Locate 1,9
+Print "Round total: ";BR_TOTAL
+Locate 1,11
+Print "Limit: ";BR_CAP
+Locate 1,12
+If BR_HANDFIN
+   Print "This round secured: ";BR_AWARD
+Else
+   Print "At risk until you bank."
+End If
+Locate 29,4
+Print "Last roll"
+Locate 31,13
+Print BR_LASTROLL
+Gosub BR_DRAW_DIE
+Locate 1,17
+Print "Supplied total, not live play."
+Locate 1,21
+Print "Press a key to finish."
+Wait Key
+Show
+End
+
+BR_DRAW_DIE:
+Ink 0
+Bar 240,48 To 288,96
+Ink 1
+Box 240,48 To 288,96
+If BR_LASTROLL=1
+   Bar 262,70 To 266,74
+End If
+If BR_LASTROLL=2
+   Bar 248,56 To 252,60
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=3
+   Bar 248,56 To 252,60
+   Bar 262,70 To 266,74
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=4
+   Bar 248,56 To 252,60
+   Bar 276,56 To 280,60
+   Bar 248,84 To 252,88
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=5
+   Bar 248,56 To 252,60
+   Bar 276,56 To 280,60
+   Bar 262,70 To 266,74
+   Bar 248,84 To 252,88
+   Bar 276,84 To 280,88
+End If
+If BR_LASTROLL=6
+   Bar 248,56 To 252,60
+   Bar 276,56 To 280,60
+   Bar 248,70 To 252,74
+   Bar 276,70 To 280,74
+   Bar 248,84 To 252,88
+   Bar 276,84 To 280,88
+End If
+Return
