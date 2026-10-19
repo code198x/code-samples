@@ -1,0 +1,12 @@
+# Audit existing Pattern Library routines
+
+Scope: all 83 current Pattern Library entries, their maintained source and reused dependencies, and the 25 additional capability callers in samples PR #111. Include the five draft compositions and website PR #848. Inspect lessons when an entry claims reuse or teaching coverage; this is not a rewrite of every lesson program.
+
+1. Inventory every entry and source/include dependency using `src/content/patterns/**/*.mdx`, `*/patterns/**`, and referenced lesson files. Record exact website/samples commits, inline versus maintained code, build/execution evidence, and each entry's contract. Keep machine-specific and illustrative code distinct.
+2. Read the code and explanation together. Check initialisation/call order, inputs/outputs, preserved/clobbered registers, flags, state, address/range limits, loop termination, CPU/IRQ/display/audio ownership, and whether a reader can lift the implementation without hidden dependencies.
+3. Run existing retained-evidence checks and meaningful behavioural verifiers. Add independent boundary/sequence oracles where a routine's behaviour is otherwise untested; prove each new guard rejects an intentionally wrong case. Use actual CPU/machine execution for hardware claims. Keep build-only and restricted-firmware results explicit.
+4. Reproduce defects before changing their implementation. Fix one coherent group at a time; update affected explanations, exercise the failing case and reasonable neighbours, requalify dependent callers where needed. Preserve historical evidence rather than rewriting hashes to create a pass.
+5. Retain an itemised audit covering every entry and standalone probe, with exact evidence and unresolved limitations. Check changed web pages/code rendering at desktop/phone sizes and run the normal production checks. Do not claim the whole library is verified from selected fixtures.
+6. Commit and push verified slices on `audit/pattern-routines`, stacked on the current draft branches. Create linked draft PRs, update the existing tracker, retain review outputs, then inspect and remove all task-owned checkouts/processes/caches. No merge/deployment approval is inferred.
+
+Task-owned checkouts: `/tmp/pattern-routine-audit-samples`, `/tmp/pattern-routine-audit-website`. Scratch: the current chat's `work/pattern-routine-audit`. Review outputs: `outputs/pattern-routine-audit`. No new dependencies.

@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "routine": "keyboard",
+      "status": "passed",
+      "cases": 32,
+      "source": "sinclair-zx-spectrum/patterns/assembly/input/keyboard-reading/keyboard-code.inc",
+      "source_sha256": "408784db8b995aa7b71744d14f05a7b26ba8d24bcd1adeb26b32fb295030a2af"
+    },
+    {
+      "routine": "characters",
+      "status": "passed",
+      "cases": 772,
+      "source": "sinclair-zx-spectrum/patterns/assembly/rendering/character-printing/characters.inc",
+      "source_sha256": "c3e4bd3086a65e2f86dbecf0c003b0f0a2469ead041e5f6878848c047bf2f12f"
+    },
+    {
+      "routine": "attributes",
+      "status": "passed",
+      "cases": 5,
+      "source": "sinclair-zx-spectrum/patterns/assembly/rendering/attribute-writing/attributes.inc",
+      "source_sha256": "8f1e9ce40a0eb0a781b3513f4282729a25faae8af5497564fdd5bcf9a02d353c"
+    },
+    {
+      "routine": "masked",
+      "status": "passed",
+      "cases": 4,
+      "source": "sinclair-zx-spectrum/patterns/assembly/rendering/masked-sprites/masked.inc",
+      "source_sha256": "344c460f648671a7c0a8deff620629c5f7ae781befe5d7b954bd464a8c1f1f20"
+    },
+    {
+      "routine": "numbers",
+      "status": "passed",
+      "cases": 1100,
+      "source": "sinclair-zx-spectrum/patterns/assembly/rendering/numeric-display/numeric.inc",
+      "source_sha256": "f4eeb0c84c3c83be04df68aff44a97aced115f95c2d18b8e301b45d78a59948e"
+    },
+    {
+      "routine": "animation",
+      "status": "passed",
+      "cases": 25,
+      "source": "cross-platform/patterns/rendering/sprite-animation/z80.inc",
+      "source_sha256": "8ff675b2f2118f25f427037e1322dd1ffaf8a390345e908754c8f2707db69657"
+    }
+  ],
+  "observer_sha256": "7cca32d3a11b0657d1b8d7f606f818d2a0b0718d8617f140e3f6476ed651b146",
+  "tools": {
+    "assembler": {
+      "sha256": "2286f8ba5ac3648a15cad0940acf62c6aa578c81808ed0ced7ee7bbb7aba65ee",
+      "name": "asm198x"
+    },
+    "emulator": {
+      "sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+      "name": "emu198x-spectrum"
+    }
+  },
+  "input_dependency_sha256": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda",
+  "bitmap_dependency_sha256": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
+  "limits": "Execute library routines against independent byte, text and rectangle oracles.\n\nSynthetic ROM with test glyphs, DI and uncontended 48K RAM. This is CPU/routine evidence,\nnot ROM boot, keyboard input, video timing or original-hardware qualification.\n"
+}
