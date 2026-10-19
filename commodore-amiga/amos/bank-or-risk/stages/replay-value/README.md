@@ -195,5 +195,9 @@ filesystem before cold boot; a running snapshot is not proof of native saving.
 
 The [execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-replay-value)
 separates prescribed cases, random play, audio measurements and persistence.
-These sources implement the agreed extension. Human play/listening feedback,
-authored replacement lessons and beginner learning outcomes remain pending.
+The user played this endpoint and reported that it works well, then requested
+further presentation work. Explicit listening preference, authored replacement
+lessons and beginner learning outcomes remain pending.
+
+The [arcade guide](../arcade/README.md) continues from `feedback.amos` with
+separate colour, layout and animated-roll stages. It keeps these rules intact.

@@ -277,5 +277,7 @@ establish every keyboard configuration or subjective sound quality.
 The [replay-value stages](replay-value/README.md) continue after the presentation
 bridge: finish all five rounds, retain an in-program personal best, record five
 awards, offer one rescue and add a short reveal/target acknowledgement. Their
-`feedback.amos` is the extended endpoint. Earlier sources retain the explained
-early-ending rules as a working stage; the extension changes those deliberately.
+`feedback.amos` completes those rules. The [arcade stages](arcade/README.md)
+then introduce a brighter palette, spaced board and slowing die reveal in three
+separate steps; `arcade/rolling-die.amos` is the current endpoint. Earlier sources
+retain their explained rules and presentation as working stages.
