@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "system": "nes",
+  "server": {
+    "name": "emu198x-nes",
+    "version": "0.34.2"
+  },
+  "startup": "NTSC NROM reset",
+  "firmware_sha256": {},
+  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "443939d595a3f33ee4cc6248c493b2be0a39d472351725e8dd2bb362d0a87872",
+  "binary_sha256": "7635c853aafc05b21cb70a639f5b04130f6bc8a3618bd362805c0d3b141eaacb",
+  "sources": {
+    "nintendo-entertainment-system/patterns/assembly/framework/game-loop/demo.asm": "9d71c95a2783055e5161f9e0bf479d4e903e8835a3705e612a7e4d67f6c135fa",
+    "nintendo-entertainment-system/patterns/assembly/framework/game-loop/frame.inc": "35b326cc5614f5a28a40f3dd3b0dfc77d55a78ecee01c47baef6c0adf13ef38e",
+    "nintendo-entertainment-system/patterns/assembly/framework/game-loop/Makefile": "8c35d6fd58a0c0c2ed23db6ae4e3dc29e31a288d3fc28442524bfdb2a146a19d",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/input.inc": "5f0c09cff25558981904113065f9f898a42bcad85914e6cde5309ac5da11c1b2"
+  },
+  "normal_updates_in_30_frames": 30,
+  "over_budget_updates_in_30_frames": 11,
+  "over_budget_last_frame_delta": 3,
+  "recovered_updates_in_30_frames": 30,
+  "negative_control": {
+    "intervention": "assemble caller with wait call replaced by three NOPs",
+    "updates_in_10_frames": 1086,
+    "same_rate_guard_rejected": true
+  },
+  "limits": "Native-emulator configuration evidence. Not original hardware, full emulator conformance or a runtime cost benchmark. Polling loops discard missed boundaries; interrupt-byte clocks require <256 frames between samples."
+}

@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "system": "spectrum",
+  "server": {
+    "name": "emu198x-spectrum",
+    "version": "0.32.5"
+  },
+  "startup": "48K snapshot; separate tape qualification required",
+  "firmware_sha256": {
+    "48k": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
+  },
+  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "51fe786fb9cec0b552b67125abc11e28f062f6105cb75fb01b923cffbcd81f89",
+  "binary_sha256": "14ddfad362553a54feda17aa62e9156add3f642c4b1bd2c8d361357a29c73d9e",
+  "sources": {
+    "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/demo.asm": "39a2c2fcd68d9c7ddcf412804d4f8eda974a3a7e653ba5289826a6fc0035b024",
+    "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc": "e71788e7988d26c0a681cdded7c5d8aa93ae898a98e25939c9b4c04c4ce05233",
+    "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/Makefile": "a438df118cd1017a07cb5cb1d144852346b9888010af18bbd905c9b7e4c45f0d",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda"
+  },
+  "normal_updates_in_30_frames": 30,
+  "over_budget_updates_in_30_frames": 9,
+  "over_budget_last_frame_delta": 3,
+  "recovered_updates_in_30_frames": 30,
+  "negative_control": {
+    "intervention": "replace wait_frame with return",
+    "updates_in_10_frames": 1322,
+    "same_rate_guard_rejected": true
+  },
+  "limits": "Native-emulator configuration evidence. Not original hardware, full emulator conformance or a runtime cost benchmark. Polling loops discard missed boundaries; interrupt-byte clocks require <256 frames between samples.",
+  "fresh_rom_tape": {
+    "status": "passed",
+    "updates_in_30_frames": 30,
+    "tap_sha256": "c267a348d0fb948a3ba24594c78c593efc3adb16369c1849c8b569b2bb2750f2",
+    "transport_sha256": "357530a58ed8bd48ba505ba4b999d1d92651c075fd552cd3be09afaf3bc277e6"
+  }
+}
