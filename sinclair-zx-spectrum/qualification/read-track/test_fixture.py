@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 from fixture import cases, command, make
 
@@ -31,6 +32,13 @@ class FixtureTests(unittest.TestCase):
                             bytes([0, 2]),
                         )
                 self.assertEqual(len(image), 256 + sum(image[52:92]) * 256)
+
+    def test_standalone_default_matches_first_case(self) -> None:
+        source = Path(__file__).parent / "case.inc"
+        values = list(
+            map(int, source.read_text().strip().removeprefix("db ").split(","))
+        )
+        self.assertEqual(values, command(cases()[0]))
 
     def test_wrong_base_rejected(self) -> None:
         for value in (b"", bytes(194816), b"MV - CPC"):

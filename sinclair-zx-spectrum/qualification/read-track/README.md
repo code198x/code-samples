@@ -13,7 +13,8 @@ and replaces track39. The small loader/CODE files fit in the preserved tracks;
 the umbrella verifier checks the original filesystem and exact boot payloads.
 This is fixture rearrangement, not a production mastering option.
 
-The recipe writes `case.inc` with nine command bytes alongside a copy of
+A checked-in `case.inc` selects N0/DTL1 for standalone sample builds.
+The recipe writes a case-specific `case.inc` with nine command bytes alongside a copy of
 `diagnostic.asm`; Asm198x assembles that source at $8000. Build198x `plus3`
 masters `loader.bas` and CODE, then `fixture.make` authors the EDSK test track.
 `$7000`/`$7001` receive a constructed completion signature; `$7002` holds the
