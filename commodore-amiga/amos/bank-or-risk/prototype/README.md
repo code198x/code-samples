@@ -2,7 +2,8 @@
 
 **Native rules and input checks pass in the named Emu198x configuration.** The
 text-first prototype implements the accepted first game's limit 10, at most five
-rounds and target 30. It is deliberately silent. Die artwork, event sounds and replacement lessons remain to be developed and checked.
+rounds and target 30. It is deliberately silent. Event sounds and replacement lessons remain to be
+developed and checked.
 
 The [native execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-emu198x)
 retains scripts, input identities, captures, observations and media checks.
@@ -24,6 +25,11 @@ SPACE starts; R rolls, B banks after a roll, SPACE continues after a round,
 A starts a fresh challenge at a final result, and Q finishes. In the checked
 configuration, Return after Q completes the return to the editor; allow its
 screen transition to finish. Results stay visible until the relevant new choice.
+
+The [drawing checkpoints](../stages/README.md) separate a fixed outline and pip
+from supplied faces 1–6. The game calls `BR_DRAW_DIE` with the stored last roll;
+it draws no new random value and changes no score. An empty outline means no
+roll yet. The numeric last roll remains visible.
 
 The source waits for release of the previous key, clears the keyboard buffer
 and accepts a fresh event. Native checks held R for 60/90 frames and B, SPACE
@@ -67,11 +73,17 @@ media was not modified or redistributed. Use a verified writable work disk for
 saving; the audit gives the reproducible route and exact limits.
 
 The [palette execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-palette)
-checks the explicit black/white palette in the same native configuration. The
-maintained source and two prescribed-roll copies pass syntax checking. Title,
+checks the explicit black/white palette in the same native configuration at
+revision `e4f86e0`. That source and two prescribed-roll copies pass syntax checking. Title,
 active play, bank, bust and success screens retain readable text and numbers.
-The source diff from `0c55096` is exactly the palette statement; the historical
+At that revision, the source diff from `0c55096` is exactly the palette statement; the historical
 save/reopen result above applies to that earlier revision.
+
+The [drawing execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-die)
+checks the fixed fragment, all six supplied faces, and the game picture beside
+its numeric roll. It covers clearing old pips, empty round/replay states and
+retained faces at bank, bust, success and failure. The game change adds only a
+drawing call and routine; the existing scoring and input source is identical.
 
 ## Random range and prescribed rolls
 
@@ -81,8 +93,9 @@ defines `Rnd(n)` as including the upper bound. The die uses `Rnd(5)+1`.
 observed a valid roll; neither that observation nor the prescribed copies proves
 random fairness or all possible generator outputs.
 
-Run `python3 prepare-probes.py <empty-output-directory>` to generate the four
-copies and their manifest. The generator changes only the die supplier to
+Run `python3 prepare-probes.py <empty-output-directory>` to generate five
+copies, including a supplied sequence covering all six die faces, and their
+manifest. The generator changes only the die supplier to
 `Read BR_FACE`, restores DATA at a new challenge and appends prescribed values.
 The manifest records expected outcomes; actual observations belong in the audit.
 Ruff and exact transformation/hash checks pass, including refusal to overwrite
