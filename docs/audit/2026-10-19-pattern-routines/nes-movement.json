@@ -1,0 +1,91 @@
+{
+  "status": "passed",
+  "cases": 3984,
+  "button_masks": 16,
+  "source_sha256": "a15ede08debb127271e9ba92dc4f6a69f58e3fee5e1ef6cdbe2628712f376b8a",
+  "observer_sha256": "272ffbe7ec9f21502ecf34c5c4eec2a6200eeb2b262e6efc2fc33373654912d9",
+  "emulator_sha256": "e30e3c819679f293c32ff372c1c3599e348aec30f6dc04082225bce9f74a5b76",
+  "records": [
+    {
+      "buttons": 0,
+      "binary_sha256": "f107de6365418b301e63855d4e4f6e93cf4715d56e0108b5c68ba0f371309e2e",
+      "cases": 249
+    },
+    {
+      "buttons": 1,
+      "binary_sha256": "6ab198dca9b89ab9296adf77f1f5fef0b8b75c36140668a01bf8d120582915f5",
+      "cases": 249
+    },
+    {
+      "buttons": 2,
+      "binary_sha256": "8a2c5f8a73215c1df0ecd4720dde14eef47a418ed7dcfb30b2e6f593cb55544c",
+      "cases": 249
+    },
+    {
+      "buttons": 3,
+      "binary_sha256": "0372120b9344169505805f58479e740de6b7c2ec6cd651f89d9d992568356e0b",
+      "cases": 249
+    },
+    {
+      "buttons": 4,
+      "binary_sha256": "ad3bd9e555c144fb7fbb1dbcf353f00a7f639d5be82a2c5a7264749236e2caf8",
+      "cases": 249
+    },
+    {
+      "buttons": 5,
+      "binary_sha256": "ffb19a6728296f5fae018a9026440523d45869e1e33fb90ff03d85b2f12cc4fe",
+      "cases": 249
+    },
+    {
+      "buttons": 6,
+      "binary_sha256": "e58f84aafb83e525559536d9663aef064194157fb9c2f723191f00db87bf39d1",
+      "cases": 249
+    },
+    {
+      "buttons": 7,
+      "binary_sha256": "4dbf3b724de3cf1ff2239ef66bff2e19c1d47ca685201ced7723b5b3871528c5",
+      "cases": 249
+    },
+    {
+      "buttons": 8,
+      "binary_sha256": "821ff1d3b3d902328825006752363db14f5368040167f5ba1eb2c0a62f8ccb2c",
+      "cases": 249
+    },
+    {
+      "buttons": 9,
+      "binary_sha256": "73206e5b54a0a949d62ec879cae7bddeab9c8ab758306d9079c82c1cc413e7a1",
+      "cases": 249
+    },
+    {
+      "buttons": 10,
+      "binary_sha256": "a830606052740ad351e1f8c3c5c2b3db39390593ac496aef4a334c94f781ffc5",
+      "cases": 249
+    },
+    {
+      "buttons": 11,
+      "binary_sha256": "487a7eba274f0fd47c91c068d1a33e9bb198ea008404ee988fdf9b4ac853830c",
+      "cases": 249
+    },
+    {
+      "buttons": 12,
+      "binary_sha256": "3b6e5b8dde3b6b1f4fc9187b2f0f2d0e315fabc7b33df557f6bd77ffc7358b62",
+      "cases": 249
+    },
+    {
+      "buttons": 13,
+      "binary_sha256": "9221a111b15d309b852a309f3602f96008cfcc43af9120dfb97641508e691c8e",
+      "cases": 249
+    },
+    {
+      "buttons": 14,
+      "binary_sha256": "1fc09e72c80c3939e7d9405509150a9eb04c0d30c18df9e1f63006bec7678338",
+      "cases": 249
+    },
+    {
+      "buttons": 15,
+      "binary_sha256": "523f652715ea782e3bfa3e050f87c7ebba2f3ba8055c0d2614eb4d4784294766",
+      "cases": 249
+    }
+  ],
+  "limits": "CPU/state checks on NTSC NROM; rendering disabled, no controller hardware input or original-hardware claim. Opposing directions follow the documented sequential order."
+}
