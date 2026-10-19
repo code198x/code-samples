@@ -84,11 +84,15 @@ defines the coordinate system, `Ink`, `Box`, `Bar` and palette notation. Its
 [Keyboard chapter](https://amospromanual.dev/10-01-using-the-keyboard.html)
 defines `Wait Key`. These checked fragments are authoring material. The
 [opening checkpoints](opening/README.md) supply the earlier message/save and
-input route through one round; later session-scoring steps remain separate work.
+input route through one round.
 
 The [session checkpoints](session/README.md) develop secured points, completed
 rounds, success, impossibility and replay after the one-round opening. They
-separate routine extraction and next-round continuation from scoring.
+separate routine extraction and next-round continuation from scoring. The
+[presentation bridge](presentation/README.md) continues that route through a
+shared display, grouped board, separate event cues and ready screen. It keeps
+the completed-round counter. Its endpoint is `presentation/ready-screen.amos`;
+the older top-level cue sources below retain their For-based implementation.
 
 ## Give this round its own space
 
