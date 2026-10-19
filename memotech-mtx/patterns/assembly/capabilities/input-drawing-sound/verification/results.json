@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "memotech-mtx",
+  "configuration": "MTX500 PAL, stock OS/BASIC, typed DATA/POKE loader and USR($E000)",
+  "server": {
+    "name": "emu198x-memotech-mtx",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "536688e337126c649a6914adc4f39d15e34d3d00cff6f103e2f3d0595692fdc2",
+    "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "033369bb0e9d8e2eaf6a161f205951eadef1c317a874933ff190c658d3d16d5e",
+    "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "d3045b17ab0e2c791c7a632265af223c44db75cd8ee72fa51fc0064c6a79018e",
+    "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/Makefile": "db9bc9b939de1fc0f30539461eec3694647b83fcf747c258bfcb1378ffb67c72"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "00390980f6d527128217fd4909ba79f42d3b8b6d8f3a72e2be4126bd5155fb52",
+  "binary_sha256": "2b7e8b000ab0f6241afd67e784d45f58c3329d6fb8e120c0c57fb5aa019a2c13",
+  "firmware_sha256": "e93edd8490f320c1828f879460a857f393ce15213fa8d8cc853beb700bc71b0f",
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 30622,
+    "rate": 48000,
+    "channel_ranges": [
+      12817
+    ],
+    "ac_power": [
+      3731894.850854627
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

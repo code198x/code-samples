@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "msx",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-msx",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "msx/patterns/basic/capabilities/input-drawing-sound/demo.bas": "e4e41daa7bb1b8c6be609e75e479bcbc6021c20e784ccf407342a9542ca1f33c"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "c6c7f75203fcca79022f234d0b682904d5aaf5fd8befb27c8dd3628fd5e9d382",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      10922
+    ],
+    "ac_power": [
+      7820271.886979046
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

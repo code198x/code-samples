@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "tatung-einstein",
+  "configuration": "Einstein TC-01 PAL, stock MOS 1.2, Ctrl-BREAK disk boot",
+  "server": {
+    "name": "emu198x-tatung-einstein",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "d4abcf59d058223edfe5e398be899403a568c80e23e9960049b93bcc5330b99e",
+    "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "9239a36f03e4f17b471bdb396aa1035923be562b03eb6c5af65e904712655cf0",
+    "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "cc950847b42d03d88b3efe4f75f521b83cb768978c5bf304d024c360e3c14d2b",
+    "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/Makefile": "65cda2cfae7d81af21a08849efabf61e937d89745d0998e26f202a96688f1543"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "dd9dd6f41f72a0f42b246bc231b1ce85b2e1c3f1361ab9fc592f4b88742d260e",
+  "binary_sha256": "82e3951c45465e9fc227bb1d6ef5578f148c8a034f9ffe8c63839206a7252c64",
+  "firmware_sha256": "401d0e0bf6f64ba82e68137525749171fbcf9bd9055a49e5ac9a47941a6a0ae1",
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 32768,
+    "rate": 48000,
+    "channel_ranges": [
+      10922
+    ],
+    "ac_power": [
+      10779062.405003935
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

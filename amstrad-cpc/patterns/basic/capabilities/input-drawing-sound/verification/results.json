@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "amstrad-cpc",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-amstrad-cpc",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "amstrad-cpc/patterns/basic/capabilities/input-drawing-sound/demo.bas": "2a450888c2c70bc0fe7180780b4a93da39306e76baa25f13042ec8b3ba2c5110"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "95e20e542ec84a5b36efaae83d21025aec1df315a3de9030dfd3b876e2a9642a",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      9632
+    ],
+    "ac_power": [
+      1533806.4478529482
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

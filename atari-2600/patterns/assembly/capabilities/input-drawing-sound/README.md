@@ -1,0 +1,17 @@
+# Input, drawing and sound — atari-2600
+
+Press **Fire**. A new press moves a TIA playfield bar, positioned through PF1 during the software-generated field; holding it does not repeat. Release and press again to restore the original position. A short sound uses **TIA channel 0** while display/input service continues.
+
+This extends the maintained `framework/input-loop` caller. `demo.asm` retains its startup and input handling; `picture.inc` owns display setup and drawing; `sound.inc` owns the sound channel and a frame-serviced duration. Include each once, call initialisation before entering the loop, and keep other writers out of those resources. The caller takes over until reset.
+
+`picture.inc` establishes the display state before the main loop. `sound.inc` sets the duration on an accepted press and services it once per loop update. These simple probes own the whole display and the stated sound channel. They do not arbitrate with a music player or preserve an underlying game scene.
+
+Run `make` here with Asm198x available. Sega builds finish a standard 32 KiB cartridge checksum. Use the framework caller's loading and model notes: MTX uses the stock BASIC DATA/POKE/USR route and Einstein uses a stock MOS disk boot; they do not assert cassette or CP/M support. Cartridge systems use their normal reset/firmware entry, with the explicit 7800 authentication limitation retained from its input caller.
+
+The Atari 2600 produces its own field. Its overscan work window is two scanlines, followed by 27 explicit waits; together with the initial overscan line this leaves 30. This is a bounded diagnostic kernel, not room for arbitrary game work. The 5200 and 7800 retain hardware display service.
+
+From the repository root, run `python3 scripts/verify-hardware-capabilities.py --only atari-2600 --native /path/to/native/binaries`. Supply firmware separately with `--firmware-root`. The verifier checks idle/press/hold/release state, captures a fixed-background drawing change and its restoration, records actual PCM, and requires separately omitted drawing and sound calls to fail their original guards. It checks full MTX program loads in chunks rather than assuming one debug read returns an unbounded region.
+
+`verification/results.json` records source, binary, firmware and emulator identities. This is evidence for one named configuration. A changing PCM signal establishes sound output; it does not establish pitch accuracy or every sound mode.
+
+The drawing negative control redirects the PF1 write into unused RIOT RAM. It preserves instruction cost: removing the whole routine would shorten the software field and change an unfilled alpha row, which is not evidence of drawing.

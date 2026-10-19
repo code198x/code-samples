@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "sega-master-system",
+  "configuration": "NTSC stock cartridge configuration",
+  "server": {
+    "name": "emu198x-sega-master-system",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "sega-master-system/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "364e8a7b7b08df0d60fa85137b65ce465f0ed35f25d0edc41cb332f7c89a8d88",
+    "sega-master-system/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "2b13ed6e38d36014e6d81cdaea57e00079635b252ad02b9545385d72ffc196f6",
+    "sega-master-system/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "4f3e73770d6e304e98040dbc715971324b7528ec1889259b9c6681bfee546fec",
+    "sega-master-system/patterns/assembly/capabilities/input-drawing-sound/Makefile": "635b5bf406f751bc0a930d9175342f84aedf226f9c8c17c50b67920a38877397"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "455ffc612a0f631a7b119552449d62c423df3dc41ccfd0db1ffecf06397fb0b7",
+  "binary_sha256": "537d265eda6c1e54692ee844d5ffa6c2ea04cf62bda1cfdb703e1befd03d582c",
+  "firmware_sha256": null,
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 25633,
+    "rate": 48000,
+    "channel_ranges": [
+      12737
+    ],
+    "ac_power": [
+      3727736.485383693
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

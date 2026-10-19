@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "machine_id": "atari-7800",
+  "configuration": "NTSC 48 KiB cartridge reset without BIOS authentication",
+  "server": {
+    "name": "emu198x-atari-7800",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "atari-7800/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "b21f794d1a977a19d539b05601bf4f2cc1eab233f1343c59470e70fc32dcf5a1",
+    "atari-7800/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "fe7160eb480baa785a3cc7537d59baf5ab4faa158eabacefa507d0b0bd612ce0",
+    "atari-7800/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "9ae50c2992587db6eeb4ebd367baa7c8b1c4d7fbb0e9fd59101b7e540fb6765b",
+    "atari-7800/patterns/assembly/capabilities/input-drawing-sound/Makefile": "8b70bffe4ef8364f485f2b0a0c330e0c9c804ef0b2c612fbc7613952ea405766"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "068eaa6d4cdd81af7b74d3ba44bcd1f0f6a57916241852d3515eda6fab2dfbaa",
+  "binary_sha256": "42cdca94918a301e85527cddce8858d31b5469c5aa77935c6fc2430111977ed1",
+  "firmware_sha256": null,
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "MARIA direct object column changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 16758,
+    "rate": 31400,
+    "channel_ranges": [
+      21843
+    ],
+    "ac_power": [
+      46992233.13271131
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

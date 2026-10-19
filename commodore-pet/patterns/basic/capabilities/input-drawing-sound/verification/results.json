@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "system": "commodore-pet",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-commodore-pet",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "commodore-pet/patterns/basic/capabilities/input-drawing-sound/demo.bas": "c3852adac00091b3f21639eb5e2f5f9b88e7979f7fef4f5914cff8e058d7970e"
+  },
+  "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+  "emulator_sha256": "f4ea24dc750deaa5aa9f25448bf4dad50e4c70196ff4aabec130af414f8be9cc",
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 129807,
+    "rate": 48000,
+    "channel_ranges": [
+      32768
+    ],
+    "ac_power": [
+      63500859.78931168
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 129807,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

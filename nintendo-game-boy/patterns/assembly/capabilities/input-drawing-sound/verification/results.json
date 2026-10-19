@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "machine_id": "nintendo-game-boy",
+  "configuration": "DMG default reset, no boot ROM",
+  "server": {
+    "name": "emu198x-game-boy",
+    "version": "0.38.3"
+  },
+  "sources": {
+    "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "ccd43e05ef3e9e01296d33b241a2fdf82b86fc2fd58debff8f6d62d9ea4c3be8",
+    "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/picture.inc": "0538c8c230374f153334cd5a689d89e6e1cde914788e00db0c075060025f107f",
+    "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "19e24a3cbc1d6d514ea2278e787513c20c16a8913e4c7e68f5cdef0b03d91855",
+    "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/Makefile": "c1ccd6d57e14bb1da59fc764ebd8cc9f898a9cbd2272f281815a0479ae4ac1b0"
+  },
+  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "emulator_sha256": "f812ab7db5603cc628809c0e7cc049bf12a7f2dcf0623dca1e2da7f18675ea0e",
+  "binary_sha256": "0923be477735bfbcb3c65d00060dbdc4f3efe7f285d7214077c1d6cd422ac2c9",
+  "firmware_sha256": null,
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "Background tile changes position and restores; fixed palette",
+  "sound": {
+    "frames": 25717,
+    "rate": 48000,
+    "channel_ranges": [
+      16384,
+      16384
+    ],
+    "ac_power": [
+      14678509.629188022,
+      14678509.629188022
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}
