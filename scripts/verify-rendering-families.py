@@ -126,6 +126,10 @@ def nes_fixture(
         "attr": bytes((i % 4) | ((i % 2) * 64) for i in range(64)),
         "active": bytes(int(i % 5 != 0) for i in range(64)),
     }
+    # Exercise all 64 output slots, not just a 64-entry list with omissions.
+    if count == 64 and first == 0:
+        arrays["active"] = bytes([1] * 64)
+        arrays["y"] = bytes([99] * 64)
     code = (NO / "oam.inc").read_text()
     if broken:
         code = code.replace(
@@ -433,6 +437,7 @@ def main() -> None:
         (9, 8),
         (12, 11),
         (63, 32),
+        (64, 0),
         (64, 63),
         (64, 255),
         (65, 0),

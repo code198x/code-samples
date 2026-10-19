@@ -30,7 +30,7 @@ def sha(p: Path) -> str:
 def validate(root: Path, record: dict) -> None:
     if record.get("status") != "passed" or record.get("routine_cases") != {
         "spectrum": 7,
-        "nes": 10,
+        "nes": 11,
         "bbc": 5,
     }:
         raise ValueError("Missing or failed rendering case groups")
