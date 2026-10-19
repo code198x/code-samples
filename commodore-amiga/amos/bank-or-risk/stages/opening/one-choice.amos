@@ -1,0 +1,18 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+Print "R roll   B bank   Q quit"
+Clear Key
+BR_K$=Upper$(Input$(1))
+Print "Key: ";BR_K$
+If BR_K$="R" Then Print "Roll requested."
+If BR_K$="B" Then Print "Bank requested."
+If BR_K$="Q" Then Print "Quit requested."
+Print "No score changes in this program."
+Clear Key
+Wait Key
+Show
+End

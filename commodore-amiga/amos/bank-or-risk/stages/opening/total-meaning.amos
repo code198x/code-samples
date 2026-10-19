@@ -1,0 +1,16 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+Print "SUPPLIED TOTAL"
+BR_CAP=10
+BR_TOTAL=9
+Print "Total: ";BR_TOTAL
+If BR_TOTAL<BR_CAP Then Print "Still at risk."
+If BR_TOTAL=BR_CAP Then Print "Perfect. Bank automatically."
+If BR_TOTAL>BR_CAP Then Print "Bust. Award zero."
+Wait Key
+Show
+End

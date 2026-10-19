@@ -1,0 +1,16 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+Print "SUPPLIED VALUES"
+BR_TOTAL=4
+Print "Old total: ";BR_TOTAL
+BR_FACE=3
+Print "Roll: ";BR_FACE
+BR_TOTAL=BR_TOTAL+BR_FACE
+Print "New total: ";BR_TOTAL
+Wait Key
+Show
+End

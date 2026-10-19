@@ -1,0 +1,16 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+Print "ONE DIE RESULT"
+Print "Press a key to choose a roll."
+Wait Key
+Randomize Timer
+BR_FACE=Rnd(5)+1
+Print "Roll: ";BR_FACE
+Clear Key
+Wait Key
+Show
+End

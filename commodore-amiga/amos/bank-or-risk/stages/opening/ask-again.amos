@@ -1,0 +1,15 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+Print "R roll   B bank   Q quit"
+Print "This experiment does not score."
+Clear Key
+Repeat
+   BR_K$=Upper$(Input$(1))
+   Print "Key: ";BR_K$
+Until BR_K$="Q"
+Show
+End
