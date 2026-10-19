@@ -1,0 +1,516 @@
+{
+  "status": "passed",
+  "configuration": "A500 OCS PAL, Kickstart1.3, cold-boot ADF, Fire on physical port2",
+  "rows_checked": 8,
+  "negative_dma_rejected": true,
+  "positive": {
+    "observations": [
+      {
+        "updates": 1,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 2,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 3,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 4,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 5,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 6,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 7,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 8,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 9,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 10,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 11,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 12,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 13,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 14,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 15,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 16,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 17,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 18,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 19,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 20,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 21,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 22,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 23,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 24,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 25,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 26,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 27,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 28,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 29,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 30,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 31,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 32,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 33,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 34,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 35,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 36,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 37,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 38,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 39,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 40,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 41,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 42,
+        "periods": [
+          285,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 43,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 44,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 45,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 46,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 47,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 48,
+        "periods": [
+          339,
+          428,
+          339,
+          856
+        ]
+      },
+      {
+        "updates": 49,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 50,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 51,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 52,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 53,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 54,
+        "periods": [
+          428,
+          339,
+          285,
+          856
+        ]
+      },
+      {
+        "updates": 55,
+        "periods": [
+          339,
+          339,
+          285,
+          856
+        ]
+      }
+    ],
+    "audio_sha256": "eb33ff0208675ac13149a2c35852703c0bf00b56b058d656bd09af61475989a6",
+    "binary_sha256": "430bb034dfc5cb5d2bceb89cd1c73cc746eacb363f9ddf4b3719e91d480e8a76"
+  },
+  "sources": {
+    "commodore-amiga/patterns/assembly/audio/four-channel-music/demo.asm": "8645886c3a3fa2a47110a66a6679e58196b2dd5e9b9ca9a9c551727e0b10e72d",
+    "commodore-amiga/patterns/assembly/audio/four-channel-music/music.inc": "095400e0fcc9c70e664cfff564b0d645826eca9929f6c1b86cf1028b16e09bc8",
+    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce"
+  },
+  "observer_sha256": "1e4868c430d663b9e48498236b778e9448e548a600c78e2ea28c835735bedfc8",
+  "emulator_sha256": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb",
+  "firmware_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53",
+  "limits": "Named configuration and bounded waveform sequencer only. No MOD-format, tracker effects, original-hardware or pitch-accuracy qualification."
+}
