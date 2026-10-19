@@ -1,0 +1,38 @@
+.segment "CODE"
+; Half-open boxes [left,top,right,bottom]; all edges unsigned bytes.
+; Reject empty/reversed boxes and touching edges. Returns C=1 on overlap.
+; Changes A/flags; preserves X/Y. No arithmetic inside the test.
+boxes_overlap:
+    lda rect_a
+    cmp rect_a+2
+    bcs boxes_apart
+    lda rect_a+1
+    cmp rect_a+3
+    bcs boxes_apart
+    lda rect_b
+    cmp rect_b+2
+    bcs boxes_apart
+    lda rect_b+1
+    cmp rect_b+3
+    bcs boxes_apart
+    lda rect_a
+    cmp rect_b+2
+    bcs boxes_apart
+    lda rect_b
+    cmp rect_a+2
+    bcs boxes_apart
+    lda rect_a+1
+    cmp rect_b+3
+    bcs boxes_apart
+    lda rect_b+1
+    cmp rect_a+3
+    bcs boxes_apart
+    sec
+    rts
+boxes_apart:
+    clc
+    rts
+rect_b: .byte 10,5,11,6
+.segment "BSS"
+rect_a: .res 4
+.segment "CODE"

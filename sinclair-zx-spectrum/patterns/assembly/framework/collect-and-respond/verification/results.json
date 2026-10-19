@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "system": "spectrum",
+  "startup": "48K snapshot; TAP is built separately and requires tape execution qualification",
+  "server": {
+    "name": "emu198x-spectrum",
+    "version": "0.38.3"
+  },
+  "emulator_sha256": "fa5a9dc110bf2158dac1e82999c9acbb1691adc61b7fe0c126da0272ace12992",
+  "firmware_sha256": {
+    "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
+  },
+  "binary_sha256": "963486675010be8b044e723e3defcbd910d35dc31037ac0a8b933672714190a0",
+  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "sources": {
+    "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/sound-beep.inc": "275fdad2e271244623ca2984b89f8d84d71351368593192036452170c4ca975a",
+    "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/Makefile": "6b2c75a52b6f2f95c1d346911ae6c8199257d5b5a34ccd9059dfdcf1c649420e",
+    "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/collision.inc": "92acef3241115618c0667469d354b453416cdc86cf7c7620859192de051a488c",
+    "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/demo.asm": "bbb393c24b8e7a4288ccec7c2cb542fa66d727256a4a21dc789e3dbee4a7a104",
+    "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/draw.inc": "003cd35627f9350edc7b7405e98797ffdf7929c9f13798cbe5706d178d5807f9",
+    "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/rules.inc": "4407b6a39002d8d26eb10d030dbbf517603788f14ea12d3d062dd79fc9e9550a",
+    "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/sound.inc": "97e89e11d38eb2fad9c8bc5d4323c8b0c0a833b0fe2e4cc055c7094986f37ac7",
+    "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc": "e71788e7988d26c0a681cdded7c5d8aa93ae898a98e25939c9b4c04c4ce05233",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda"
+  },
+  "initial": {
+    "player_x": 2,
+    "player_y": 5,
+    "score": 0,
+    "item_active": 1,
+    "pressed": 0,
+    "released": 0
+  },
+  "collected": {
+    "player_x": 10,
+    "player_y": 5,
+    "score": 1,
+    "item_active": 0,
+    "pressed": 0,
+    "released": 0
+  },
+  "bounds": {
+    "left": 0,
+    "up": 0,
+    "right": 15,
+    "down": 9
+  },
+  "held_restart_allows_movement": true,
+  "audio": {
+    "frames": 79290,
+    "rate": 44100,
+    "channel_ranges": [
+      37501
+    ],
+    "ac_power": [
+      1204840.5020922634
+    ]
+  },
+  "negative_collection_rejected": true,
+  "limits": "Emulator configuration evidence; audio amplitude establishes changing output, not pitch accuracy or hardware conformance. Cell overlap tests one shared occupied cell; not a pixel-mask test. Snapshot startup on Spectrum is distinct from tape loading.",
+  "fresh_rom_tape": {
+    "status": "passed",
+    "updates_in_30_frames": 30,
+    "tap_sha256": "80f1db0e35be72edb678296cfb598398b33bcf7b1c42b09ecddc6b679f2c0a4c",
+    "transport_sha256": "357530a58ed8bd48ba505ba4b999d1d92651c075fd552cd3be09afaf3bc277e6"
+  }
+}

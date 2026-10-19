@@ -1,0 +1,12 @@
+controls: !byte 0
+previous: !byte 0
+pressed: !byte 0
+released: !byte 0
+player_x: !byte 0
+player_y: !byte 0
+item_active: !byte 0
+score: !byte 0
+move_delay: !byte 0
+sound_ticks: !byte 0
+old_x: !byte 0
+old_y: !byte 0

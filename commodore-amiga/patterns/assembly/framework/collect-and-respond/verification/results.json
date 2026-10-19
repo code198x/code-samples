@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "system": "amiga",
+  "startup": "Cold boot original ADF; A500 OCS PAL/Kickstart 1.3",
+  "server": {
+    "name": "emu198x-amiga",
+    "version": "0.38.3"
+  },
+  "emulator_sha256": "a3350d755a40ed7a4ca2f58807dea1cb518690ccef81126c146f1782c4dd7426",
+  "firmware_sha256": {
+    "kick13.rom": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+  },
+  "binary_sha256": "ce91c9d3468f09fe65ea2cb061d62fe4d5fa492edb3faf511a8088821668c029",
+  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "sources": {
+    "commodore-amiga/patterns/assembly/audio/playing-a-sample/paula-sample.inc": "a6c1dcda0cc8e9bc864f44cc8e4795cc9cfbe27bfdd63ecad0f8d4a081b9b8d9",
+    "commodore-amiga/patterns/assembly/framework/collect-and-respond/Makefile": "1f45f8bc65d41a5a0f3ca0096b9557b3426977c87e3be1a5d516571a9d309347",
+    "commodore-amiga/patterns/assembly/framework/collect-and-respond/collision.inc": "7c5f70668cdd91d167ae1c6c903b07fb34f237136300006dd4b0d9f413a6324e",
+    "commodore-amiga/patterns/assembly/framework/collect-and-respond/demo.asm": "7daf6f34ded68190ecb32593fe65fdd68815cb2385f1cad52e1a7b3f55dd5731",
+    "commodore-amiga/patterns/assembly/framework/collect-and-respond/draw.inc": "762cce78414ae79d6fcddf99fcbcfba736f51331c937633cd1e01676c687a241",
+    "commodore-amiga/patterns/assembly/framework/collect-and-respond/rules.inc": "136541fbcbc694a4445cda7824107358e8abe2ab1f164ed006406b211440faca",
+    "commodore-amiga/patterns/assembly/framework/collect-and-respond/sound.inc": "ed481d05b6bb1e086886e65bd8e89a84f32a43970f25066ddd70a1e82927f92d",
+    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc": "dadc861126e0e37b21ff68a2186fe91ce5d850ed8ed99ea4085baf4f650a643a"
+  },
+  "initial": {
+    "player_x": 2,
+    "player_y": 5,
+    "score": 0,
+    "item_active": 1,
+    "pressed": 0,
+    "released": 0
+  },
+  "collected": {
+    "player_x": 10,
+    "player_y": 5,
+    "score": 1,
+    "item_active": 0,
+    "pressed": 0,
+    "released": 0
+  },
+  "bounds": {
+    "left": 0,
+    "up": 0,
+    "right": 15,
+    "down": 9
+  },
+  "held_restart_allows_movement": true,
+  "audio": {
+    "frames": 90095,
+    "rate": 48000,
+    "channel_ranges": [
+      0,
+      32369
+    ],
+    "ac_power": [
+      0.0,
+      11211950.354747763
+    ]
+  },
+  "negative_collection_rejected": true,
+  "limits": "Emulator configuration evidence; audio amplitude establishes changing output, not pitch accuracy or hardware conformance. Cell overlap tests one shared occupied cell; not a pixel-mask test. Snapshot startup on Spectrum is distinct from tape loading."
+}
