@@ -377,7 +377,38 @@ next_number:
             columns == [3 + digits] * limit,
             f"{digits}-digit routine did not return the advanced column",
         )
-    return 1100
+    for name in ["variable", "bcd"]:
+        body = ""
+        for value in range(100):
+            if name == "variable":
+                call = f"ld a,{value}\n    call print_number"
+            else:
+                packed = (value // 10) * 16 + value % 10
+                call = f"ld a,{packed}\n    ld (score_bcd),a\n    call print_score_bcd\n    call add_ten_bcd\n    ld (${0xC100 + value * 2:04x}),a\n    ld a,0\n    adc a,0\n    ld (${0xC101 + value * 2:04x}),a"
+            body += f"    ld b,10\n    ld c,3\n    {call}\n    ld a,c\n    ld (${0xC000 + value:04x}),a\n"
+        reads = [(0xB000, 190 if name == "variable" else 200), (0xC000, 100)]
+        if name == "bcd":
+            reads.append((0xC100, 200))
+        actual = execute(folder / name, caller(body, code, SINK), reads, args)
+        expected = "".join(
+            str(v) if name == "variable" else f"{v:02d}" for v in range(100)
+        ).encode()
+        require(bytes(actual[0]) == expected, f"{name} digit sequence mismatch")
+        require(
+            actual[1]
+            == [3 + (len(str(v)) if name == "variable" else 2) for v in range(100)],
+            f"{name} advanced column mismatch",
+        )
+        if name == "bcd":
+            expected_bcd = []
+            for value in range(100):
+                next_value = (value + 10) % 100
+                expected_bcd += [
+                    (next_value // 10) * 16 + next_value % 10,
+                    int(value >= 90),
+                ]
+            require(actual[2] == expected_bcd, "BCD increment/wrap/carry mismatch")
+    return 1300
 
 
 def animation(folder: Path, code: str, args: argparse.Namespace) -> int:
