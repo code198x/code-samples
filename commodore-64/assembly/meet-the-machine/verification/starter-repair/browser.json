@@ -1,0 +1,205 @@
+{
+  "browser": "155.0.8059.80",
+  "route": "https://code198x.com/systems/commodore-64/assembly/meet-the-machine/unit-01/",
+  "checks": [
+    {
+      "name": "missing firmware has visible guidance",
+      "status": "Choose KERNAL ROM to start this model. Firmware is not included."
+    },
+    {
+      "name": "corrected red PRG executes after firmware boot and RUN",
+      "picture": {
+        "width": 416,
+        "height": 312,
+        "rgba": [
+          136,
+          57,
+          50,
+          255
+        ]
+      }
+    },
+    {
+      "name": "insertion alone does not execute replacement",
+      "picture": {
+        "width": 416,
+        "height": 312,
+        "rgba": [
+          136,
+          57,
+          50,
+          255
+        ]
+      }
+    },
+    {
+      "name": "local green PRG executes after restart and RUN",
+      "picture": {
+        "width": 416,
+        "height": 312,
+        "rgba": [
+          85,
+          160,
+          73,
+          255
+        ]
+      }
+    },
+    {
+      "name": "close returns focus to lesson run control"
+    }
+  ],
+  "errors": [],
+  "blockedWrites": [
+    {
+      "method": "POST",
+      "url": "https://code198x.com"
+    }
+  ],
+  "firmware": [
+    {
+      "name": "kernal",
+      "bytes": 8192,
+      "sha256": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721"
+    },
+    {
+      "name": "basic",
+      "bytes": 8192,
+      "sha256": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d"
+    },
+    {
+      "name": "chargen",
+      "bytes": 4096,
+      "sha256": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
+    }
+  ],
+  "responseHashes": [
+    {
+      "url": "https://code198x.com/_astro/UnitLayout.astro_astro_type_script_index_0_lang.BQ0OlrW4.js",
+      "status": 200,
+      "bytes": 1969,
+      "sha256": "978458dc0cf8f12e5850f63cc26a0f6255e746ad40626347482783bfe66c168e"
+    },
+    {
+      "url": "https://code198x.com/_astro/RunPanel.astro_astro_type_script_index_0_lang.nZJwSgtc.js",
+      "status": 200,
+      "bytes": 2680,
+      "sha256": "445fdce81634bbbd61f86d06f35bc98a51baa2ae3f5a4b721980da00d9079814"
+    },
+    {
+      "url": "https://code198x.com/_astro/ClientRouter.astro_astro_type_script_index_0_lang.C1dAp4S4.js",
+      "status": 200,
+      "bytes": 16354,
+      "sha256": "fae65db7d0bf84ede963b9c59e2922bc74ff4753ba07a8abddc73ac9b728fddd"
+    },
+    {
+      "url": "https://code198x.com/_astro/CodeFromFile.astro_astro_type_script_index_0_lang.jDU9rnHI.js",
+      "status": 200,
+      "bytes": 106,
+      "sha256": "bdc7d74ec20bb49149757d911ea69069abc0a358b8be72431443ece11e7fd9e0"
+    },
+    {
+      "url": "https://code198x.com/_astro/load-player.Bd90k-et.js",
+      "status": 200,
+      "bytes": 671,
+      "sha256": "5e44145cffe99bf077599e8361df7af8cc235e4ad1434dc288615f4a22e5f2d4"
+    },
+    {
+      "url": "https://code198x.com/_astro/lesson-listing.DFJVwx_j.js",
+      "status": 200,
+      "bytes": 1546,
+      "sha256": "5a1bb50e70834dc1038c7566939237ed0884c7450bb6992609ef7e5dad7bdbae"
+    },
+    {
+      "url": "https://code198x.com/emulators/embed.js",
+      "status": 200,
+      "bytes": 3320,
+      "sha256": "0b79a1e5e70d69d8386cc80208676a2a08414addc5db4481f951b026c0fa6e41"
+    },
+    {
+      "url": "https://code198x.com/emulators/preferences.js",
+      "status": 200,
+      "bytes": 517,
+      "sha256": "de6931b2f8210a6d0d4e6507a93f84fdf8c434b50ff703e773268ee767889dbd"
+    },
+    {
+      "url": "https://code198x.com/emulators/player.js",
+      "status": 200,
+      "bytes": 27986,
+      "sha256": "00b236cf30c5aeec5ed1ea610ada2100765e3aba354d62dcdac9f8fb060dc2b7"
+    },
+    {
+      "url": "https://code198x.com/emulators/mouse.js",
+      "status": 200,
+      "bytes": 3714,
+      "sha256": "db645b3d843a1536152308f9b8b86f1a49b3398afe1d48b71cc4ec31ba3ec065"
+    },
+    {
+      "url": "https://code198x.com/emulators/session-controls.js",
+      "status": 200,
+      "bytes": 5678,
+      "sha256": "414601754025b3591d4edc7bb0f7baba8b17e3f011dfed1411ccc45e665907e0"
+    },
+    {
+      "url": "https://code198x.com/emulators/player-extras.js",
+      "status": 200,
+      "bytes": 5885,
+      "sha256": "739a75ea85dc8dda0a970eb18bf53979dbcf87c115fa7048d5df265adea78a9b"
+    },
+    {
+      "url": "https://code198x.com/emulators/save-file.js",
+      "status": 200,
+      "bytes": 3083,
+      "sha256": "951d2e397a308956f5c1e0251be4883d6d0a35a915d8e83749c8d117bcc4d96f"
+    },
+    {
+      "url": "https://code198x.com/emulators/storage.js",
+      "status": 200,
+      "bytes": 1535,
+      "sha256": "f1a944a3e45eca0fd8c6e2adb4ac1078a481104890e3498b03cbb78fb6c446c1"
+    },
+    {
+      "url": "https://code198x.com/code-samples/commodore-64/assembly/meet-the-machine/unit-01/border.prg",
+      "status": 200,
+      "bytes": 22,
+      "sha256": "166bdbecfb91f2d49a2138a92cc6b1fbdd155785f6b6b5ef2db648f10a4d19d7"
+    },
+    {
+      "url": "https://code198x.com/emulators/worker.js",
+      "status": 200,
+      "bytes": 5972,
+      "sha256": "415536deb22e0f0c108835651c108269fd651f89ee1e287c4a960931f43d80fa"
+    },
+    {
+      "url": "https://code198x.com/emulators/modules/commodore/emu198x_commodore_web.js",
+      "status": 200,
+      "bytes": 17709,
+      "sha256": "f7811bbce603f6d290b6e2b3fd67223a9a28f91fce97e93b458fcea632ff9be9"
+    },
+    {
+      "url": "https://code198x.com/emulators/modules/commodore/emu198x_commodore_web_bg.wasm",
+      "status": 200,
+      "bytes": 1514303,
+      "sha256": "092f553a817c01e5ea6a727782cee7244500c736458f9377c624d144fd0c2669"
+    },
+    {
+      "url": "https://code198x.com/emulators/worker.js",
+      "status": 200,
+      "bytes": 5972,
+      "sha256": "415536deb22e0f0c108835651c108269fd651f89ee1e287c4a960931f43d80fa"
+    },
+    {
+      "url": "https://code198x.com/emulators/modules/commodore/emu198x_commodore_web.js",
+      "status": 200,
+      "bytes": 17709,
+      "sha256": "f7811bbce603f6d290b6e2b3fd67223a9a28f91fce97e93b458fcea632ff9be9"
+    },
+    {
+      "url": "https://code198x.com/emulators/modules/commodore/emu198x_commodore_web_bg.wasm",
+      "status": 200,
+      "bytes": 1514303,
+      "sha256": "092f553a817c01e5ea6a727782cee7244500c736458f9377c624d144fd0c2669"
+    }
+  ],
+  "passed": true
+}
