@@ -7,8 +7,13 @@ one playable round. The round has no target or session score yet, so it does not
 have the full challenge's pressure to keep taking risks.
 
 These are complete ASCII programs and authoring notes for the agreed teaching
-map, not published replacement lessons. Start each file in a blank AMOS
-Professional editor project. Use **Merge ASCII** (Amiga+Shift+M), select the
+map, not published replacement lessons. The
+[first lesson pair](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/platforms/commodore-amiga/games/bank-or-risk/lesson-drafts)
+is a separate beginner-facing review draft: type and change the message, then
+save it on a data disk and reopen it from a fresh AMOS session. It does not
+replace the checked authoring route below or establish a learner-trial result.
+
+Start each file in a blank AMOS Professional editor project. Use **Merge ASCII** (Amiga+Shift+M), select the
 file's `.asc` copy on your work disk, F2 to check syntax, and F1 to run. Merging
 into an existing listing adds to it. Replace the whole listing when moving to
 a separately named checkpoint unless an edit below says otherwise.
