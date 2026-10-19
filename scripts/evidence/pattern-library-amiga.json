@@ -8,9 +8,9 @@
   "emulator_sha256": "9a03ac7df2b962c05f8f666964f510e62af98e2ccdbdcd3d2405fb78f14242da",
   "binary_sha256": "0b541d02394325098b66b1ede0bc54a6fa231903be3006d8d72e17b1e52a994f",
   "sources": {
-    "commodore-amiga/patterns/assembly/framework/input-to-sound/use.asm": "e3c1a85071c41f9931670984e31c9bd7d022f801e95e1c93a105630c095fa12f",
-    "commodore-amiga/patterns/assembly/framework/input-to-sound/demo.asm": "6bb5df832b65cfd2973aa8b09e84088cd5eaf60440c07a7749891d9ffd5cb7a3",
-    "commodore-amiga/patterns/assembly/framework/input-to-sound/check.asm": "eb6a1a5386721162a78753f1e1431c97834c3af07600c38a1ee8f9e6a49f8d4c",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/use.inc": "e3c1a85071c41f9931670984e31c9bd7d022f801e95e1c93a105630c095fa12f",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/demo.asm": "93a77960a42b3fddeb8db72a4ba05f9dbe2c1c1c7c991f987e863e25bfebd817",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/check.asm": "f999fba91115c6d08160166378053107cd214a72ccd52099ce777747d7b7166e",
     "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc": "dadc861126e0e37b21ff68a2186fe91ce5d850ed8ed99ea4085baf4f650a643a",
     "commodore-amiga/patterns/assembly/framework/input-to-sound/presses.inc": "a1b7a5bc00905c171c7cf9ae772fc3121e734c03f9608a84c7790b9332643e1c",
     "commodore-amiga/patterns/assembly/audio/playing-a-sample/paula-sample.inc": "a6c1dcda0cc8e9bc864f44cc8e4795cc9cfbe27bfdd63ecad0f8d4a081b9b8d9"

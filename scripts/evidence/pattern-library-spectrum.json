@@ -8,9 +8,9 @@
   "emulator_sha256": "51fe786fb9cec0b552b67125abc11e28f062f6105cb75fb01b923cffbcd81f89",
   "binary_sha256": "11309f55bb96926c39bf0bd442610f5fe2a2d81fc398bdb0b8dfd4b01000fb7d",
   "sources": {
-    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/use.asm": "28b04208be8eb30d405c0a82f57da0a8a5b759198ba84faaa3a75031853d3fc3",
-    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/demo.asm": "e86959f23336defd8bde60334f3359f645b7a5d9de9d24896728f4678dcc6526",
-    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/check.asm": "bc432e9567fada7cc83485c04853888c0a64749e32b5b6ccf5c8829a8bf829ba",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/use.inc": "28b04208be8eb30d405c0a82f57da0a8a5b759198ba84faaa3a75031853d3fc3",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/demo.asm": "42940ca22559a11dacfe9adb85de3d51a754a8a4f634e11641a200cc3f0dfb82",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/check.asm": "ec45eff8ca21ba521331262bf148ac036acb3a3f06c73f0479e019fa098d0236",
     "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda",
     "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/presses.inc": "1bbfc9ff4ef40c9eac3738b67b55caff61f228358e1ea228b9a598f939b00273",
     "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/sound-beep.inc": "275fdad2e271244623ca2984b89f8d84d71351368593192036452170c4ca975a"

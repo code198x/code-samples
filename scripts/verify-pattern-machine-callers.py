@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REL = Path("patterns/assembly/framework/input-to-sound")
 SYSTEMS = {
     "spectrum": "sinclair-zx-spectrum",
-    "nes": "nintendo-nes",
+    "nes": "nintendo-entertainment-system",
     "amiga": "commodore-amiga",
 }
 
