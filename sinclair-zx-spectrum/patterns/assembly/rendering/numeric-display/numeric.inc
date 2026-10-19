@@ -1,10 +1,10 @@
 ; Pasmo syntax. Supply print_char: A=ASCII, B=row, C=column; preserve BC/DE/HL.
 ; Inputs must fit the display: two digits C<=30, three digits C<=29.
 ; Callers own coordinates and display; no memory allocation or ROM calls here.
-; print_two_digits A=0.numeric_99, print_three_digits HL=0.numeric_999.
+; print_two_digits A=0..99, print_three_digits HL=0..999.
 ; Both preserve B/DE and return C advanced by their digit count; AF changes.
 ; print_three_digits also changes HL to the remainder after hundreds.
-; print_number A=0.numeric_99 advances C by one or two; preserves B/DE/HL.
+; print_number A=0..99 advances C by one or two; preserves B/DE/HL.
 ; print_score_bcd needs a valid packed-BCD score_bcd byte and C<=30; C advances2.
 ; =============================================================================
 ; NUMERIC DISPLAY - ZX SPECTRUM

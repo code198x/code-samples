@@ -32,9 +32,9 @@
     {
       "routine": "numbers",
       "status": "passed",
-      "cases": 1100,
+      "cases": 1300,
       "source": "sinclair-zx-spectrum/patterns/assembly/rendering/numeric-display/numeric.inc",
-      "source_sha256": "f4eeb0c84c3c83be04df68aff44a97aced115f95c2d18b8e301b45d78a59948e"
+      "source_sha256": "d039079779fd9afecb32c86115a3dba881b3a2bb25fdbd3beba428eebb4f298d"
     },
     {
       "routine": "animation",
@@ -44,7 +44,7 @@
       "source_sha256": "8ff675b2f2118f25f427037e1322dd1ffaf8a390345e908754c8f2707db69657"
     }
   ],
-  "observer_sha256": "7cca32d3a11b0657d1b8d7f606f818d2a0b0718d8617f140e3f6476ed651b146",
+  "observer_sha256": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
   "tools": {
     "assembler": {
       "sha256": "2286f8ba5ac3648a15cad0940acf62c6aa578c81808ed0ced7ee7bbb7aba65ee",
