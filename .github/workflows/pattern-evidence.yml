@@ -51,6 +51,10 @@ jobs:
         run: |
           python scripts/check-rendering-evidence.py
           python -m unittest discover -s scripts -p test_rendering_evidence.py -v
+      - name: Check sprite-lifecycle records and failure controls
+        run: |
+          python scripts/check-sprite-lifecycle.py
+          python -m unittest discover -s scripts -p test_sprite_lifecycle.py -v
       - name: Check guard failure modes
         run: python -m unittest discover -s scripts -p test_pattern_evidence.py -v
       - uses: actions/upload-artifact@v7
@@ -121,6 +125,8 @@ jobs:
           echo "$RUNNER_TEMP/pattern-tools/bin" >> "$GITHUB_PATH"
       - name: Execute exhaustive bitmap outputs and timing probes
         run: python sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/verify.py --output "$RUNNER_TEMP/pattern-evidence/spectrum"
+      - name: Execute Spectrum rectangle and overlap lifecycle checks
+        run: python scripts/verify-spectrum-lifecycle.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-spectrum" --output "$RUNNER_TEMP/pattern-evidence/sprite-lifecycle"
       - name: Execute the counted-byte adventure parser
         run: python scripts/verify-z80-adventure-parser.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-spectrum" --output "$RUNNER_TEMP/pattern-evidence/adventure-parser"
       - name: Record the released tool combination and host
@@ -152,6 +158,7 @@ jobs:
             ${{ runner.temp }}/pattern-evidence/spectrum/results.json
             ${{ runner.temp }}/pattern-evidence/spectrum-release-inputs.json
             ${{ runner.temp }}/pattern-evidence/adventure-parser/results.json
+            ${{ runner.temp }}/pattern-evidence/sprite-lifecycle/results.json
           if-no-files-found: error
           retention-days: 14
 
