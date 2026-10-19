@@ -4,6 +4,8 @@ Working source code, assets, capture helpers, and sample projects for Code198x c
 
 This repo is code-first support for the website catalogues. Do not treat this README as the module/status source of truth; current module and unit availability lives in the website repo under `src/content/modules/` and `src/content/units/`.
 
+See [runnable probe coverage](docs/probe-coverage.md) for separately qualified examples and the complete 30-machine target. A probe does not establish a full curriculum track.
+
 ## Current layout
 
 ```text
