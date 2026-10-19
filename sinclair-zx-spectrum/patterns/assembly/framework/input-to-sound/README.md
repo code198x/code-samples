@@ -1,17 +1,27 @@
 # Input, new presses and sound: sinclair-zx-spectrum
 
-An unpublished Pattern Library prototype. Read the comments in every routine and caller before including them. Keep state in writable memory and include each file once.
+`input.inc` and `presses.inc` are reusable routines; `use.asm` shows their integration with the sound driver. Include each once, initialise state in writable memory and follow the register/resource contracts in the files. `demo.asm` is now a complete launchable caller; `check.asm` remains an assembly-only wrapper for the fragment.
 
-`input.inc` and `presses.inc` are reusable routines. `use.asm` is an integration fragment for an existing machine program, not a complete boot program. `check.asm` includes the pieces for an assembly check; it does not provide startup, frame synchronisation or a complete game.
+## Build and run
+
+Build with `make` in this folder. Load `build/demo.tap` with the 48K ROM's `LOAD ""`, or use `build/demo.sna` for a quick start. QAOP moves the held-control bits; a new Space press plays one short click and changes the border. Holding Space does not retrigger. The demo enables the ROM interrupt only around `HALT`, then disables it before input and the blocking beep. Reset to leave.
+
+The relative driver includes are deliberate. Keep the repository folder layout, or adjust those paths when moving the code into your own project.
+
+## What was executed
+
+Emu198x 0.32.5: 48K PAL, snapshot startup; ROM tape boot checked separately. 39 input stages check held values, new-press behaviour and event counts. Five captured audio windows check release, press, hold, stop and repress while the update counter continues. A deliberately cleared history while the action remains held produces an extra event, and the same count guard rejects it.
+
+The Spectrum matrix covers all 32 QAOP/Space masks. A separate fresh ROM tape load also responds to Space, keeps its count stable while held and responds again after release. The beeper blocks only for the click; `use.asm` itself keeps interrupts disabled. The full demo explicitly enables the ROM interrupt before each HALT.
+
+Run the bounded recipe from the repository root, providing your installed emulator binaries and existing Kickstart file:
 
 ```sh
-asm198x --dialect pasmo --cpu z80 check.asm -o check.bin
+python3 scripts/verify-pattern-machine-callers.py \
+  --spectrum /path/to/emu198x-spectrum \
+  --nes /path/to/emu198x-nes \
+  --amiga /path/to/emu198x-amiga \
+  --kickstart /path/to/kick13.rom
 ```
 
-Run that command in this folder. The relative sound include points at the existing sound-beep pattern. The caller keeps interrupts disabled; do not use HALT to wait for interrupts in this state. The beep blocks the CPU. All ULA output writers must share ula_output. Initialise the previous-controls byte before updates.
-
-## Verification
-
-From the repository root, run `python3 scripts/check-pattern-library-prototype.py` with Asm198x and VICE x64sc installed. Output is bounded and saved in the C64 demo's ignored build directory. It assembles all machine fragments and executes the C64 composition with simulated joystick pins. It also executes 58 original local-turn cases. The script fails if a required observation or output is missing or wrong.
-
-The receipt is `scripts/evidence/pattern-library-prototype.json`. C64 composition checks are VICE 3.10 PAL observations, entered at $0810 after ROM boot. The new Spectrum, Amiga and NES combinations have assembly/link checks only, with no execution claim. The reused sound drivers and C64 joystick reader have their own evidence. Original-hardware validation remains separate.
+Use `--only spectrum` to run this machine alone. Build198x defaults to PATH; `--build198x` accepts an explicit path. No firmware is distributed. Captures and logs stay in the ignored build directory. The committed receipt is `scripts/evidence/pattern-library-spectrum.json`. These are emulator observations on the named configurations, not original-hardware or subjective listening checks.

@@ -1,19 +1,27 @@
 # Input, new presses and sound: commodore-amiga
 
-An unpublished Pattern Library prototype. Read the comments in every routine and caller before including them. Keep state in writable memory and include each file once.
+`input.inc` and `presses.inc` are reusable routines; `use.asm` shows their integration with the sound driver. Include each once, initialise state in writable memory and follow the register/resource contracts in the files. `demo.asm` is now a complete launchable caller; `check.asm` remains an assembly-only wrapper for the fragment.
 
-`input.inc` and `presses.inc` are reusable routines. `use.asm` is an integration fragment for an existing machine program, not a complete boot program. `check.asm` includes the pieces for an assembly check; it does not provide startup, frame synchronisation or a complete game.
+## Build and run
+
+Build with `make` in this folder, with Asm198x and Build198x on PATH. Boot `build/demo.adf` on an A500 OCS PAL configuration with Kickstart 1.3. Physical port 2 Fire starts the looping sample; release stops DMA. A new press changes the background. The demonstration takes over custom interrupts, DMA, channel 0 and the input port; reset to leave. Its counters expose each direction/Fire edge while the normal frame loop keeps running.
+
+The relative driver includes are deliberate. Keep the repository folder layout, or adjust those paths when moving the code into your own project.
+
+## What was executed
+
+Emu198x 0.34.2: A500 OCS PAL, Kickstart 1.3, cold ADF boot, physical port 2. 25 input stages check held values, new-press behaviour and event counts. Five captured audio windows check release, press, hold, stop and repress while the update counter continues. A deliberately cleared history while the action remains held produces an extra event, and the same count guard rejects it.
+
+The Amiga matrix covers all nine normal stick positions with Fire released/held, plus a hold/release sequence. Opposing directions are excluded because the emulator input adapter resolves them before the port read. Per-bit counters preserve the first-frame edges while the full native clock runs; no instruction-breakpoint timing is needed. Audio checks allow a 24-frame recording window so the emulator's decaying filter tail can settle after DMA stops; the final silence threshold remains strict. This does not claim instantaneous muting or a one-shot sample driver.
+
+Run the bounded recipe from the repository root, providing your installed emulator binaries and existing Kickstart file:
 
 ```sh
-asm198x --dialect vasm --exe check.asm -o check
+python3 scripts/verify-pattern-machine-callers.py \
+  --spectrum /path/to/emu198x-spectrum \
+  --nes /path/to/emu198x-nes \
+  --amiga /path/to/emu198x-amiga \
+  --kickstart /path/to/kick13.rom
 ```
 
-Run that command in this folder. The wrapper checks a Hunk executable with chip-memory sample data; it is not a boot disk or OS-safe program. Start inside a hardware-owning program; A5=$DFF000. Initialise input with audio channel 0 off, wait a frame, then call update_input once per PAL frame. The sample loops until release. The fixed period 424 and frame interval satisfy the driver's off-time requirement. Preserve disk/control bits when changing CIA-A direction bit 7.
-
-The input routine preserves the original horizontal JOY1DAT bits and decodes only vertical bits. Physical port 2 Fire is CIA-A bit 7. The earlier article's Fire table must not be used for this caller. See Commodore-Amiga, Hardware Reference Manual, third edition, chapter 8, controller ports and Fire Button.
-
-## Verification
-
-From the repository root, run `python3 scripts/check-pattern-library-prototype.py` with Asm198x and VICE x64sc installed. Output is bounded and saved in the C64 demo's ignored build directory. It assembles all machine fragments and executes the C64 composition with simulated joystick pins. It also executes 58 original local-turn cases. The script fails if a required observation or output is missing or wrong.
-
-The receipt is `scripts/evidence/pattern-library-prototype.json`. C64 composition checks are VICE 3.10 PAL observations, entered at $0810 after ROM boot. The new Spectrum, Amiga and NES combinations have assembly/link checks only, with no execution claim. The reused sound drivers and C64 joystick reader have their own evidence. Original-hardware validation remains separate.
+Use `--only amiga` to run this machine alone. Build198x defaults to PATH; `--build198x` accepts an explicit path. No firmware is distributed. Captures and logs stay in the ignored build directory. The committed receipt is `scripts/evidence/pattern-library-amiga.json`. These are emulator observations on the named configurations, not original-hardware or subjective listening checks.

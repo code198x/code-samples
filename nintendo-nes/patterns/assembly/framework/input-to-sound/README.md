@@ -1,17 +1,27 @@
 # Input, new presses and sound: nintendo-nes
 
-An unpublished Pattern Library prototype. Read the comments in every routine and caller before including them. Keep state in writable memory and include each file once.
+`input.inc` and `presses.inc` are reusable routines; `use.asm` shows their integration with the sound driver. Include each once, initialise state in writable memory and follow the register/resource contracts in the files. `demo.asm` is now a complete launchable caller; `check.asm` remains an assembly-only wrapper for the fragment.
 
-`input.inc` and `presses.inc` are reusable routines. `use.asm` is an integration fragment for an existing machine program, not a complete boot program. `check.asm` includes the pieces for an assembly check; it does not provide startup, frame synchronisation or a complete game.
+## Build and run
+
+Build with `make` in this folder, then load `build/demo.nes` on an NTSC NES configuration. Controller 1 A starts pulse 1; releasing A silences it. A new press changes the background colour. The complete reset code clears RAM, disables NMI/DMC, waits for the PPU and initialises the caller. Reset to leave.
+
+The relative driver includes are deliberate. Keep the repository folder layout, or adjust those paths when moving the code into your own project.
+
+## What was executed
+
+Emu198x 0.34.2: NTSC NROM, cartridge reset, controller 1, DMC disabled. 263 input stages check held values, new-press behaviour and event counts. Five captured audio windows check release, press, hold, stop and repress while the update counter continues. A deliberately cleared history while the action remains held produces an extra event, and the same count guard rejects it.
+
+The NES matrix covers all 256 controller masks. The simple reader assumes no DMC sample DMA. The caller owns pulse 1 and the APU enable shadow; it must not compete with an NMI/music driver. The fixed pitch targets NTSC.
+
+Run the bounded recipe from the repository root, providing your installed emulator binaries and existing Kickstart file:
 
 ```sh
-asm198x --dialect ca65 check.asm -o check.nes
+python3 scripts/verify-pattern-machine-callers.py \
+  --spectrum /path/to/emu198x-spectrum \
+  --nes /path/to/emu198x-nes \
+  --amiga /path/to/emu198x-amiga \
+  --kickstart /path/to/kick13.rom
 ```
 
-Run that command in this folder. This only checks assembly/linking; the wrapper is not a playable ROM. Include the three .inc files once in your own ca65 program with BSS/ROM layout, reset code and vectors. Call initialise_input, then update_input once per update. No DMC; no concurrent NMI/music writes to pulse 1. The caller initially disables all audio and owns apu_enable from startup. A=$80 differs from the C64 Fire mask.
-
-## Verification
-
-From the repository root, run `python3 scripts/check-pattern-library-prototype.py` with Asm198x and VICE x64sc installed. Output is bounded and saved in the C64 demo's ignored build directory. It assembles all machine fragments and executes the C64 composition with simulated joystick pins. It also executes 58 original local-turn cases. The script fails if a required observation or output is missing or wrong.
-
-The receipt is `scripts/evidence/pattern-library-prototype.json`. C64 composition checks are VICE 3.10 PAL observations, entered at $0810 after ROM boot. The new Spectrum, Amiga and NES combinations have assembly/link checks only, with no execution claim. The reused sound drivers and C64 joystick reader have their own evidence. Original-hardware validation remains separate.
+Use `--only nes` to run this machine alone. Build198x defaults to PATH; `--build198x` accepts an explicit path. No firmware is distributed. Captures and logs stay in the ignored build directory. The committed receipt is `scripts/evidence/pattern-library-nes.json`. These are emulator observations on the named configurations, not original-hardware or subjective listening checks.

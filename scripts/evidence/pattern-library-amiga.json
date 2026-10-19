@@ -1,0 +1,448 @@
+{
+  "status": "passed",
+  "server": {
+    "name": "emu198x-amiga",
+    "version": "0.34.2"
+  },
+  "configuration": "A500 OCS PAL, Kickstart 1.3, cold ADF boot, physical port 2",
+  "emulator_sha256": "9a03ac7df2b962c05f8f666964f510e62af98e2ccdbdcd3d2405fb78f14242da",
+  "binary_sha256": "0b541d02394325098b66b1ede0bc54a6fa231903be3006d8d72e17b1e52a994f",
+  "sources": {
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/use.asm": "e3c1a85071c41f9931670984e31c9bd7d022f801e95e1c93a105630c095fa12f",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/demo.asm": "6bb5df832b65cfd2973aa8b09e84088cd5eaf60440c07a7749891d9ffd5cb7a3",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/check.asm": "eb6a1a5386721162a78753f1e1431c97834c3af07600c38a1ee8f9e6a49f8d4c",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc": "dadc861126e0e37b21ff68a2186fe91ce5d850ed8ed99ea4085baf4f650a643a",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/presses.inc": "a1b7a5bc00905c171c7cf9ae772fc3121e734c03f9608a84c7790b9332643e1c",
+    "commodore-amiga/patterns/assembly/audio/playing-a-sample/paula-sample.inc": "a6c1dcda0cc8e9bc864f44cc8e4795cc9cfbe27bfdd63ecad0f8d4a081b9b8d9"
+  },
+  "input_checks": [
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 1,
+      "updates": 64,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "input": 16,
+      "held": 16,
+      "new": 0,
+      "triggers": 2,
+      "updates": 67,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "input": 16,
+      "held": 16,
+      "new": 0,
+      "triggers": 2,
+      "updates": 70,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "input": 24,
+      "held": 18,
+      "new": 0,
+      "triggers": 2,
+      "updates": 73,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "input": 8,
+      "held": 2,
+      "new": 0,
+      "triggers": 2,
+      "updates": 76,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "input": 24,
+      "held": 18,
+      "new": 0,
+      "triggers": 3,
+      "updates": 79,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 3,
+      "updates": 82,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 3,
+      "updates": 85,
+      "edge_counts": [
+        0,
+        0,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 1,
+      "held": 256,
+      "new": 0,
+      "triggers": 3,
+      "updates": 88,
+      "edge_counts": [
+        1,
+        0,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 2,
+      "held": 1,
+      "new": 0,
+      "triggers": 3,
+      "updates": 91,
+      "edge_counts": [
+        1,
+        1,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 4,
+      "held": 512,
+      "new": 0,
+      "triggers": 3,
+      "updates": 94,
+      "edge_counts": [
+        1,
+        1,
+        1,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 5,
+      "held": 768,
+      "new": 0,
+      "triggers": 3,
+      "updates": 97,
+      "edge_counts": [
+        2,
+        1,
+        1,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 6,
+      "held": 513,
+      "new": 0,
+      "triggers": 3,
+      "updates": 100,
+      "edge_counts": [
+        2,
+        2,
+        1,
+        1,
+        3
+      ]
+    },
+    {
+      "input": 8,
+      "held": 2,
+      "new": 0,
+      "triggers": 3,
+      "updates": 103,
+      "edge_counts": [
+        2,
+        2,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": 9,
+      "held": 258,
+      "new": 0,
+      "triggers": 3,
+      "updates": 106,
+      "edge_counts": [
+        3,
+        2,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": 10,
+      "held": 3,
+      "new": 0,
+      "triggers": 3,
+      "updates": 109,
+      "edge_counts": [
+        3,
+        3,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": 16,
+      "held": 16,
+      "new": 0,
+      "triggers": 4,
+      "updates": 112,
+      "edge_counts": [
+        3,
+        3,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "input": 17,
+      "held": 272,
+      "new": 0,
+      "triggers": 4,
+      "updates": 115,
+      "edge_counts": [
+        4,
+        3,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "input": 18,
+      "held": 17,
+      "new": 0,
+      "triggers": 4,
+      "updates": 118,
+      "edge_counts": [
+        4,
+        4,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "input": 20,
+      "held": 528,
+      "new": 0,
+      "triggers": 4,
+      "updates": 121,
+      "edge_counts": [
+        4,
+        4,
+        2,
+        2,
+        4
+      ]
+    },
+    {
+      "input": 21,
+      "held": 784,
+      "new": 0,
+      "triggers": 4,
+      "updates": 124,
+      "edge_counts": [
+        5,
+        4,
+        2,
+        2,
+        4
+      ]
+    },
+    {
+      "input": 22,
+      "held": 529,
+      "new": 0,
+      "triggers": 4,
+      "updates": 127,
+      "edge_counts": [
+        5,
+        5,
+        2,
+        2,
+        4
+      ]
+    },
+    {
+      "input": 24,
+      "held": 18,
+      "new": 0,
+      "triggers": 4,
+      "updates": 130,
+      "edge_counts": [
+        5,
+        5,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "input": 25,
+      "held": 274,
+      "new": 0,
+      "triggers": 4,
+      "updates": 133,
+      "edge_counts": [
+        6,
+        5,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "input": 26,
+      "held": 19,
+      "new": 0,
+      "triggers": 4,
+      "updates": 136,
+      "edge_counts": [
+        6,
+        6,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "sound_checks": [
+    {
+      "stage": "release",
+      "rate": 48000,
+      "frames": 23003,
+      "channels": 2,
+      "span": 31070,
+      "tail_span": 7,
+      "rising_crossings": 0,
+      "frequency_hz": 0,
+      "sha256": "ea1d27881f3d809742ae48b69a7eb124c52c1ebfc0f00245e5feb3da2d67e839",
+      "native_video_frames": 24,
+      "updates_advanced": 24,
+      "new_sound_events": 0
+    },
+    {
+      "stage": "press",
+      "rate": 48000,
+      "frames": 23003,
+      "channels": 2,
+      "span": 46794,
+      "tail_span": 32241,
+      "rising_crossings": 250,
+      "frequency_hz": 521.7391304347826,
+      "sha256": "7760fe414afcd2f66351d01d501a5a9f834c150c6df2348dc1a89facabc2c8c9",
+      "native_video_frames": 24,
+      "updates_advanced": 24,
+      "new_sound_events": 1
+    },
+    {
+      "stage": "hold",
+      "rate": 48000,
+      "frames": 23003,
+      "channels": 2,
+      "span": 32236,
+      "tail_span": 32236,
+      "rising_crossings": 251,
+      "frequency_hz": 521.7391304347826,
+      "sha256": "044fc432ef798fc4c9abf73c8172fba6fa8244d10dd03465ca86ec4406c3adb9",
+      "native_video_frames": 24,
+      "updates_advanced": 24,
+      "new_sound_events": 0,
+      "expected_hz": 522.832399764151
+    },
+    {
+      "stage": "stop",
+      "rate": 48000,
+      "frames": 23003,
+      "channels": 2,
+      "span": 22481,
+      "tail_span": 3,
+      "rising_crossings": 1,
+      "frequency_hz": 0,
+      "sha256": "ea8c13cc816fe72d17be9995c7c4a4c729693645ea8843e304d70355453208ac",
+      "native_video_frames": 24,
+      "updates_advanced": 24,
+      "new_sound_events": 0
+    },
+    {
+      "stage": "repress",
+      "rate": 48000,
+      "frames": 23003,
+      "channels": 2,
+      "span": 38359,
+      "tail_span": 32239,
+      "rising_crossings": 250,
+      "frequency_hz": 521.7391304347826,
+      "sha256": "83427c37c5a39774637e9c944cb29e8a6657db13a469323d4eb919dc6453b8dd",
+      "native_video_frames": 24,
+      "updates_advanced": 24,
+      "new_sound_events": 1
+    }
+  ],
+  "held_on_entry_triggers": 1,
+  "negative_control": "History cleared while action held: extra event observed; count guard rejected it",
+  "limits": "Emulator observations on the named configuration; no original-hardware or listening claim.",
+  "input_scope": "Nine normal stick positions with and without Fire; opposing directions excluded because the host adapter resolves them",
+  "kickstart_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+}

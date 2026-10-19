@@ -1,0 +1,377 @@
+{
+  "status": "passed",
+  "server": {
+    "name": "emu198x-spectrum",
+    "version": "0.32.5"
+  },
+  "configuration": "48K PAL, snapshot startup; ROM tape boot checked separately",
+  "emulator_sha256": "51fe786fb9cec0b552b67125abc11e28f062f6105cb75fb01b923cffbcd81f89",
+  "binary_sha256": "11309f55bb96926c39bf0bd442610f5fe2a2d81fc398bdb0b8dfd4b01000fb7d",
+  "sources": {
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/use.asm": "28b04208be8eb30d405c0a82f57da0a8a5b759198ba84faaa3a75031853d3fc3",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/demo.asm": "e86959f23336defd8bde60334f3359f645b7a5d9de9d24896728f4678dcc6526",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/check.asm": "bc432e9567fada7cc83485c04853888c0a64749e32b5b6ccf5c8829a8bf829ba",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/presses.inc": "1bbfc9ff4ef40c9eac3738b67b55caff61f228358e1ea228b9a598f939b00273",
+    "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/sound-beep.inc": "275fdad2e271244623ca2984b89f8d84d71351368593192036452170c4ca975a"
+  },
+  "input_checks": [
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 1,
+      "updates": 14
+    },
+    {
+      "input": 16,
+      "held": 16,
+      "new": 16,
+      "triggers": 2,
+      "updates": 15
+    },
+    {
+      "input": 16,
+      "held": 16,
+      "new": 0,
+      "triggers": 2,
+      "updates": 16
+    },
+    {
+      "input": 24,
+      "held": 24,
+      "new": 8,
+      "triggers": 2,
+      "updates": 17
+    },
+    {
+      "input": 8,
+      "held": 8,
+      "new": 0,
+      "triggers": 2,
+      "updates": 18
+    },
+    {
+      "input": 24,
+      "held": 24,
+      "new": 16,
+      "triggers": 3,
+      "updates": 19
+    },
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 3,
+      "updates": 20
+    },
+    {
+      "input": 0,
+      "held": 0,
+      "new": 0,
+      "triggers": 3,
+      "updates": 21
+    },
+    {
+      "input": 1,
+      "held": 1,
+      "new": 1,
+      "triggers": 3,
+      "updates": 22
+    },
+    {
+      "input": 2,
+      "held": 2,
+      "new": 2,
+      "triggers": 3,
+      "updates": 23
+    },
+    {
+      "input": 3,
+      "held": 3,
+      "new": 1,
+      "triggers": 3,
+      "updates": 24
+    },
+    {
+      "input": 4,
+      "held": 4,
+      "new": 4,
+      "triggers": 3,
+      "updates": 25
+    },
+    {
+      "input": 5,
+      "held": 5,
+      "new": 1,
+      "triggers": 3,
+      "updates": 26
+    },
+    {
+      "input": 6,
+      "held": 6,
+      "new": 2,
+      "triggers": 3,
+      "updates": 27
+    },
+    {
+      "input": 7,
+      "held": 7,
+      "new": 1,
+      "triggers": 3,
+      "updates": 28
+    },
+    {
+      "input": 8,
+      "held": 8,
+      "new": 8,
+      "triggers": 3,
+      "updates": 29
+    },
+    {
+      "input": 9,
+      "held": 9,
+      "new": 1,
+      "triggers": 3,
+      "updates": 30
+    },
+    {
+      "input": 10,
+      "held": 10,
+      "new": 2,
+      "triggers": 3,
+      "updates": 31
+    },
+    {
+      "input": 11,
+      "held": 11,
+      "new": 1,
+      "triggers": 3,
+      "updates": 32
+    },
+    {
+      "input": 12,
+      "held": 12,
+      "new": 4,
+      "triggers": 3,
+      "updates": 33
+    },
+    {
+      "input": 13,
+      "held": 13,
+      "new": 1,
+      "triggers": 3,
+      "updates": 34
+    },
+    {
+      "input": 14,
+      "held": 14,
+      "new": 2,
+      "triggers": 3,
+      "updates": 35
+    },
+    {
+      "input": 15,
+      "held": 15,
+      "new": 1,
+      "triggers": 3,
+      "updates": 36
+    },
+    {
+      "input": 16,
+      "held": 16,
+      "new": 16,
+      "triggers": 4,
+      "updates": 37
+    },
+    {
+      "input": 17,
+      "held": 17,
+      "new": 1,
+      "triggers": 4,
+      "updates": 38
+    },
+    {
+      "input": 18,
+      "held": 18,
+      "new": 2,
+      "triggers": 4,
+      "updates": 39
+    },
+    {
+      "input": 19,
+      "held": 19,
+      "new": 1,
+      "triggers": 4,
+      "updates": 40
+    },
+    {
+      "input": 20,
+      "held": 20,
+      "new": 4,
+      "triggers": 4,
+      "updates": 41
+    },
+    {
+      "input": 21,
+      "held": 21,
+      "new": 1,
+      "triggers": 4,
+      "updates": 42
+    },
+    {
+      "input": 22,
+      "held": 22,
+      "new": 2,
+      "triggers": 4,
+      "updates": 43
+    },
+    {
+      "input": 23,
+      "held": 23,
+      "new": 1,
+      "triggers": 4,
+      "updates": 44
+    },
+    {
+      "input": 24,
+      "held": 24,
+      "new": 8,
+      "triggers": 4,
+      "updates": 45
+    },
+    {
+      "input": 25,
+      "held": 25,
+      "new": 1,
+      "triggers": 4,
+      "updates": 46
+    },
+    {
+      "input": 26,
+      "held": 26,
+      "new": 2,
+      "triggers": 4,
+      "updates": 47
+    },
+    {
+      "input": 27,
+      "held": 27,
+      "new": 1,
+      "triggers": 4,
+      "updates": 48
+    },
+    {
+      "input": 28,
+      "held": 28,
+      "new": 4,
+      "triggers": 4,
+      "updates": 49
+    },
+    {
+      "input": 29,
+      "held": 29,
+      "new": 1,
+      "triggers": 4,
+      "updates": 50
+    },
+    {
+      "input": 30,
+      "held": 30,
+      "new": 2,
+      "triggers": 4,
+      "updates": 51
+    },
+    {
+      "input": 31,
+      "held": 31,
+      "new": 1,
+      "triggers": 4,
+      "updates": 52
+    }
+  ],
+  "sound_checks": [
+    {
+      "stage": "release",
+      "rate": 44100,
+      "frames": 7048,
+      "channels": 1,
+      "span": 0,
+      "tail_span": 0,
+      "rising_crossings": 0,
+      "frequency_hz": 0,
+      "sha256": "e670b089dbf75e98f3780fd3958d40848dc1deab3c30d4fb06415f0a00c9eb72",
+      "native_video_frames": 8,
+      "updates_advanced": 8,
+      "new_sound_events": 0
+    },
+    {
+      "stage": "press",
+      "rate": 44100,
+      "frames": 7048,
+      "channels": 1,
+      "span": 38424,
+      "tail_span": 0,
+      "rising_crossings": 12,
+      "frequency_hz": 1050.0,
+      "sha256": "0b254ac9e9dd5d1f7310f21b7995150e61942ab11ebeb0d21f72727658ea50b6",
+      "native_video_frames": 8,
+      "updates_advanced": 8,
+      "new_sound_events": 1,
+      "expected_hz": 1043.8413361169103
+    },
+    {
+      "stage": "hold",
+      "rate": 44100,
+      "frames": 7048,
+      "channels": 1,
+      "span": 0,
+      "tail_span": 0,
+      "rising_crossings": 0,
+      "frequency_hz": 0,
+      "sha256": "e670b089dbf75e98f3780fd3958d40848dc1deab3c30d4fb06415f0a00c9eb72",
+      "native_video_frames": 8,
+      "updates_advanced": 8,
+      "new_sound_events": 0
+    },
+    {
+      "stage": "stop",
+      "rate": 44100,
+      "frames": 7048,
+      "channels": 1,
+      "span": 0,
+      "tail_span": 0,
+      "rising_crossings": 0,
+      "frequency_hz": 0,
+      "sha256": "e670b089dbf75e98f3780fd3958d40848dc1deab3c30d4fb06415f0a00c9eb72",
+      "native_video_frames": 8,
+      "updates_advanced": 8,
+      "new_sound_events": 0
+    },
+    {
+      "stage": "repress",
+      "rate": 44100,
+      "frames": 7048,
+      "channels": 1,
+      "span": 38428,
+      "tail_span": 0,
+      "rising_crossings": 12,
+      "frequency_hz": 1050.0,
+      "sha256": "062aa58e98eeffa73b996cd4f0698a940d537699d593f765b7ea5f4148ca9c56",
+      "native_video_frames": 8,
+      "updates_advanced": 8,
+      "new_sound_events": 1,
+      "expected_hz": 1043.8413361169103
+    }
+  ],
+  "held_on_entry_triggers": 1,
+  "negative_control": "History cleared while action held: extra event observed; count guard rejected it",
+  "limits": "Emulator observations on the named configuration; no original-hardware or listening claim.",
+  "input_scope": "All button-mask combinations plus held/released/repressed sequence",
+  "tape_boot": {
+    "status": "passed",
+    "method": "Fresh 48K ROM, typed LOAD, normal tape playback",
+    "tap_sha256": "4d5c5ee58faf708458fd6fd3c56cc2d4241a88ba25d3d0d3812aefb420e7925c",
+    "space_events_after_loading": 2
+  }
+}
