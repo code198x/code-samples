@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "machine_id": "sinclair-zx81",
+  "server": {
+    "name": "emu198x-sinclair-zx81",
+    "version": "0.34.2"
+  },
+  "configuration": "Stock PAL ROM, 1024 bytes RAM, keyword keyboard entry",
+  "startup_kind": "stock-basic-keyword-entry",
+  "idle_frames": 120,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "nonzero_initialisation_states": [
+    7,
+    8
+  ],
+  "negative_control": {
+    "type": "wrong-addition",
+    "accepted_turn_guard_rejected": true,
+    "observed_turn": 2
+  },
+  "keyboard_pacing": {
+    "hold_frames": 10,
+    "release_frames": 30
+  },
+  "firmware_sha256": "14ad84f4243efcd41587ff46ab932d11087043e8d455a1ed2a227b9657828dfa",
+  "emulator_sha256": "ad80fa726ab96e936d43412ba3243fbd0341f8917e118b569ed5d66c480da0b2",
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "sources": {
+    "sinclair-zx81/patterns/basic/framework/command-loop/demo.bas": "04f91fe5e408b0c18c5160cbe24869f50b9cd50d3a3f6b5dcb18557b8e994a57",
+    "scripts/verify-zx-command-loops.py": "1a98fb34606222021467699d350c79edaaa79d7d581f03cc26c71758900e8c5b",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "An untimed numeric running total: submitted values are added, not restricted to 0/1. ROM-serviced input and display, no real-time or physical-hardware claim."
+}

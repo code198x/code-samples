@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "machine_id": "atari-2600",
+  "server": {
+    "name": "emu198x-atari-2600",
+    "version": "0.34.2"
+  },
+  "configuration": "NTSC 4 KiB cartridge",
+  "startup_kind": "cartridge-reset",
+  "normal_ticks_in_30_frames": 30,
+  "idle_frames": 120,
+  "held_frames": 120,
+  "accepted_press_states": [
+    1,
+    2
+  ],
+  "visible_feedback": {
+    "changed": true,
+    "restored": true
+  },
+  "negative_controls": {
+    "no-wait": {
+      "rejected": true,
+      "observed_delta": 106,
+      "binary_sha256": "14defe24a34c1b44c85c312814a8242fae5b6982bca5c3cd0bc6b24af5d85567"
+    },
+    "no-edge": {
+      "rejected": true,
+      "observed_delta": 30,
+      "binary_sha256": "85efac7070b0fda7278787915cdb435f4de2273f66c4ff9de5e3de586881eec6"
+    }
+  },
+  "firmware_sha256": {},
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "binary_sha256": "c568353ef3d655c6feb09df307a4c2e5d963fdc73d41bf5d5ebbab27f8f0bee7",
+  "emulator_sha256": "7b871a67d7620188eed409176b4158d1ea186dced44c917145347a9be1de1750",
+  "sources": {
+    "atari-2600/patterns/assembly/framework/input-loop/demo.asm": "4687fd5ebc305027785a3540dbb13a439165ec02ac251b1eb48b04df8e7a919e",
+    "atari-2600/patterns/assembly/framework/input-loop/Makefile": "0045fdfc773fa98900cbd078826f21fc610228ef892d0337277844f32125e85d",
+    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Named native configuration; untimed press-driven rules plus continuous display servicing. Not a deadline, hardware or whole-emulator qualification."
+}

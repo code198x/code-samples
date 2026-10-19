@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "machine_id": "spectravideo-svi-328",
+  "server": {
+    "name": "emu198x-spectravideo-svi-328",
+    "version": "0.34.2"
+  },
+  "configuration": "SVI-328 NTSC, typed-semicolon fix at emulator commit ab2e82189561dbd09150952f6818ef47278353f6",
+  "startup": "Fresh firmware reset; complete numbered BASIC program and RUN typed through keyboard",
+  "idle_frames_before_and_after_command": 120,
+  "invalid_command_state": 0,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "nonzero_initialisation_states": [
+    37,
+    38
+  ],
+  "byte_counter_wrap": [
+    254,
+    255,
+    0
+  ],
+  "screen_ram": {
+    "start": 40000,
+    "bytes": 1,
+    "decoder": "reserved byte above BASIC HIMEM"
+  },
+  "negative_control": {
+    "type": "bypass-command",
+    "idle_guard_rejected": true,
+    "observed_turn": 1
+  },
+  "firmware_sha256": {
+    "svi-328.rom": "407b47ff8c1ed31d8050600233ef8b70c495f5176d86f98511c4a0cee438f559"
+  },
+  "emulator_sha256": "c7b15d877dadcd1117bc1c11bf46f8881b8f7a5ef6186104c70e21ee49dd8c68",
+  "emulator_source_commit": "ab2e82189561dbd09150952f6818ef47278353f6",
+  "sources": {
+    "spectravideo-svi-328/patterns/basic/framework/command-loop/demo.bas": "08c83de5dd3e3a8f7eb4537f730f1753b4e4995b351e1591f5822c7c376f0c01",
+    "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Untimed numeric turn state and line-input/display path only. Firmware clocks/IRQs continue; no deadline, joystick, frame pacing, original-hardware or complete emulator claim."
+}

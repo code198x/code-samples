@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "machine_id": "atari-5200",
+  "server": {
+    "name": "emu198x-atari-5200",
+    "version": "0.34.2"
+  },
+  "configuration": "NTSC 32 KiB cartridge, pinned BIOS",
+  "startup_kind": "cartridge-reset",
+  "normal_ticks_in_30_frames": 30,
+  "idle_frames": 120,
+  "held_frames": 120,
+  "accepted_press_states": [
+    1,
+    2
+  ],
+  "visible_feedback": {
+    "changed": true,
+    "restored": true
+  },
+  "negative_controls": {
+    "no-wait": {
+      "rejected": true,
+      "observed_delta": 4167,
+      "binary_sha256": "2306c6458103a21592ed19f1998d287568e331f43e31ec87a15930fa6006593c"
+    },
+    "no-edge": {
+      "rejected": true,
+      "observed_delta": 30,
+      "binary_sha256": "8c745dce58fc18f1896e9d62c632b5560213cd6e7d413612066a0d6359b8849f"
+    }
+  },
+  "firmware_sha256": {
+    "atari-5200/5200.rom": "06b250f18983d058c0f156ce7ee88ae48b6eaf11e6f10f21dccf6ac7ffb6a6af"
+  },
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "binary_sha256": "b580c401be3a1f4a9e7af76c7476289aacfb26e4d1d4401593485eed4ff1c801",
+  "emulator_sha256": "9191e7c5a7d07435f5be4f38587ce10d91ddfc2b68b9889961a8d10a775bbd5c",
+  "sources": {
+    "atari-5200/patterns/assembly/framework/input-loop/demo.asm": "ddc49c4a4e393e19b779e815ce3bbeb259798500abcf28e9ed39b262c802ebaf",
+    "atari-5200/patterns/assembly/framework/input-loop/Makefile": "db9c6aa4d90ce7b04e8eca5979f2296963946ea4fc95d500fd78972bd2d9829d",
+    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Named native configuration; untimed press-driven rules plus continuous display servicing. Not a deadline, hardware or whole-emulator qualification."
+}

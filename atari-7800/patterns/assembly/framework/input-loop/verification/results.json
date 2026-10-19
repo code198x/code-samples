@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "machine_id": "atari-7800",
+  "server": {
+    "name": "emu198x-atari-7800",
+    "version": "0.34.2"
+  },
+  "configuration": "NTSC 48 KiB cartridge reset without BIOS authentication",
+  "startup_kind": "cartridge-reset",
+  "normal_ticks_in_30_frames": 30,
+  "idle_frames": 120,
+  "held_frames": 120,
+  "accepted_press_states": [
+    1,
+    2
+  ],
+  "visible_feedback": {
+    "changed": true,
+    "restored": true
+  },
+  "negative_controls": {
+    "no-wait": {
+      "rejected": true,
+      "observed_delta": 4337,
+      "binary_sha256": "8acaa3b05d834391ee6abe6e39c745b89e5603f9fbb4ff6b9490cf02446c6564"
+    },
+    "no-edge": {
+      "rejected": true,
+      "observed_delta": 30,
+      "binary_sha256": "806fd69938b9969d87828f3875f6965faa24c2ca1ab3db3668223e1b648fd6a2"
+    }
+  },
+  "firmware_sha256": {},
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "binary_sha256": "de13c82ce960339972a8d6198bb1ade2f5567cef2385016bce177de11de77e72",
+  "emulator_sha256": "79e35872ed67065cd5188c7f89b1a644f42a4f257ad579e139402e8a17700ede",
+  "sources": {
+    "atari-7800/patterns/assembly/framework/input-loop/demo.asm": "be0723d934b437528972bf071032ca769bc63e7f31546edcef73269e8d5f3f1d",
+    "atari-7800/patterns/assembly/framework/input-loop/Makefile": "db9c6aa4d90ce7b04e8eca5979f2296963946ea4fc95d500fd78972bd2d9829d",
+    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Named native configuration; untimed press-driven rules plus continuous display servicing. Not a deadline, hardware or whole-emulator qualification."
+}

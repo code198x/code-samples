@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "machine_id": "memotech-mtx",
+  "server": {
+    "name": "emu198x-memotech-mtx",
+    "version": "0.34.2"
+  },
+  "configuration": "MTX500 PAL, stock OS/BASIC, typed DATA/POKE loader and USR($E000)",
+  "startup_kind": "stock-basic-poke-usr",
+  "normal_ticks_in_30_frames": 30,
+  "idle_frames": 120,
+  "held_frames": 120,
+  "accepted_press_states": [
+    1,
+    2
+  ],
+  "visible_feedback": {
+    "changed": true,
+    "restored": true
+  },
+  "negative_controls": {
+    "no-wait": {
+      "rejected": true,
+      "observed_delta": 3798,
+      "binary_sha256": "63f0fea7c0848b401767963dff98b038018fec53b8863f03a7f3b305b6c09df9"
+    },
+    "no-edge": {
+      "rejected": true,
+      "observed_delta": 30,
+      "binary_sha256": "d81ff4d10cfd5b59b057218caa5fef6447c322158b8927637116e68acef4b8cd"
+    }
+  },
+  "firmware_sha256": {
+    "memotech-mtx/mtx.rom": "e93edd8490f320c1828f879460a857f393ce15213fa8d8cc853beb700bc71b0f"
+  },
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "binary_sha256": "595842302a841b7612fdd707dc9bfeee9fa544fd7c59ae60967f39eb1c72a4ab",
+  "emulator_sha256": "6f9589efb04c4708413ac1131d47402bb37924520a803cf93e0016c6f249078f",
+  "sources": {
+    "memotech-mtx/patterns/assembly/framework/input-loop/demo.asm": "3e1a2889a69901271f35e86202a60747c52ff322080def83e33b638584c90123",
+    "memotech-mtx/patterns/assembly/framework/input-loop/Makefile": "556d68eb1e145245208a1f2e644e6b0eb88d92925ec97a5fcc153ad1a89f1579",
+    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/build-stock-probe.py": "b6314275a92e128dc88ce2a1e5950b45e9243c5b3293a60471e47407294e1e84"
+  },
+  "limits": "Named native configuration; untimed press-driven rules plus continuous display servicing. Not a deadline, hardware or whole-emulator qualification."
+}

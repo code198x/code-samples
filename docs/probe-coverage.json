@@ -9,8 +9,9 @@
     {
       "machine_id": "acorn-atom",
       "crate": "emu198x-acorn-atom",
-      "status": "planned",
-      "next_check": "Qualify Atom-specific firmware, keyboard input and display wait; MOS calls do not transfer."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "acorn-atom/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "acorn-bbc-micro",
@@ -29,38 +30,44 @@
     {
       "machine_id": "amstrad-cpc",
       "crate": "emu198x-amstrad-cpc",
-      "status": "planned",
-      "next_check": "Start with CPC464 firmware and a typed or loaded caller; specify firmware versus direct CRTC ownership."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "amstrad-cpc/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "atari-2600",
       "crate": "emu198x-atari-2600",
-      "status": "planned",
-      "next_check": "Build a cartridge whose kernel services display and input; separate game progression from mandatory video work."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "atari-2600/patterns/assembly/framework/input-loop/verification/results.json"
     },
     {
       "machine_id": "atari-5200",
       "crate": "emu198x-atari-5200",
-      "status": "planned",
-      "next_check": "Qualify BIOS cartridge entry and analogue controller ranges; do not reuse digital-only input assumptions."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "atari-5200/patterns/assembly/framework/input-loop/verification/results.json"
     },
     {
       "machine_id": "atari-7800",
       "crate": "emu198x-atari-7800",
-      "status": "planned",
-      "next_check": "Qualify cartridge header, TIA/MARIA ownership and controller input."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "atari-7800/patterns/assembly/framework/input-loop/verification/results.json"
     },
     {
       "machine_id": "atari-800xl",
       "crate": "emu198x-atari-800xl",
-      "status": "planned",
-      "next_check": "Specify OS/XL memory mapping, cartridge or loader entry, keyboard/joystick and display-list ownership."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "atari-800xl/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "coleco-colecovision",
       "crate": "emu198x-colecovision",
-      "status": "planned",
-      "next_check": "Qualify BIOS/cartridge entry and controller multiplexing before reusing TMS9918-facing code."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "coleco-colecovision/patterns/assembly/framework/input-loop/verification/results.json"
     },
     {
       "machine_id": "commodore-amiga",
@@ -79,50 +86,58 @@
     {
       "machine_id": "commodore-pet",
       "crate": "emu198x-commodore-pet",
-      "status": "planned",
-      "next_check": "Specify model, RAM, BASIC/KERNAL and keyboard; begin with input/output without imposing a video timer."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "commodore-pet/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "commodore-vic-20",
       "crate": "emu198x-commodore-vic-20",
-      "status": "planned",
-      "next_check": "Specify PAL/NTSC and RAM configuration, loader, joystick and VIA/display ownership."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "commodore-vic-20/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "dragon",
       "crate": "emu198x-dragon",
-      "status": "planned",
-      "next_check": "Specify Dragon model and BASIC/firmware, keyboard and 6809 caller; qualify load route."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "dragon-32/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "jupiter-ace",
       "crate": "emu198x-jupiter-ace",
-      "status": "planned",
-      "next_check": "Qualify FORTH entry, keyboard and display servicing; add timing only under an explicit contract."
+      "status": "qualified",
+      "probe": "key-driven-forth",
+      "record": "jupiter-ace/patterns/forth/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "mattel-aquarius",
       "crate": "emu198x-mattel-aquarius",
-      "status": "planned",
-      "next_check": "Qualify firmware or cartridge entry and keyboard/display services."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "mattel-aquarius/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "memotech-mtx",
       "crate": "emu198x-memotech-mtx",
-      "status": "planned",
-      "next_check": "Specify firmware, banking and CTC/VDP ownership; qualify keyboard and program loading."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "memotech-mtx/patterns/assembly/framework/input-loop/verification/results.json"
     },
     {
       "machine_id": "microsoft-msx1",
       "crate": "emu198x-msx",
-      "status": "planned",
-      "next_check": "Specify MSX1 firmware/model and cartridge-versus-BASIC route; BIOS and direct VDP ownership differ."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "msx/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "nintendo-game-boy",
       "crate": "emu198x-game-boy",
-      "status": "planned",
-      "next_check": "Qualify cartridge/reset, joypad selection and LCD access; deadline uses an explicit clock policy."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "nintendo-game-boy/patterns/assembly/framework/input-loop/verification/results.json"
     },
     {
       "machine_id": "nintendo-nes",
@@ -134,8 +149,9 @@
     {
       "machine_id": "oric",
       "crate": "emu198x-oric-atmos",
-      "status": "planned",
-      "next_check": "Specify model/firmware and loading; preserve or take over OS keyboard/IRQ explicitly."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "oric-atmos/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "sega-game-gear",
@@ -168,32 +184,37 @@
     {
       "machine_id": "sinclair-zx80",
       "crate": "emu198x-sinclair-zx80",
-      "status": "planned",
-      "next_check": "Qualify display and keyboard servicing; waiting for input must account for video generation."
+      "status": "qualified",
+      "probe": "numeric-running-total",
+      "record": "sinclair-zx80/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "sinclair-zx81",
       "crate": "emu198x-sinclair-zx81",
-      "status": "planned",
-      "next_check": "Qualify firmware/RAM and SLOW/FAST display ownership, input and loading."
+      "status": "qualified",
+      "probe": "numeric-running-total",
+      "record": "sinclair-zx81/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "sord-m5",
       "crate": "emu198x-sord-m5",
-      "status": "planned",
-      "next_check": "Qualify BIOS/cartridge entry, keyboard/controller and TMS9918 ownership."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "sord-m5/patterns/assembly/framework/input-loop/verification/results.json"
     },
     {
       "machine_id": "spectravideo-svi-328",
       "crate": "emu198x-spectravideo-svi-328",
-      "status": "planned",
-      "next_check": "Qualify firmware/loading and keyboard/joystick; do not infer an MSX-compatible contract."
+      "status": "qualified",
+      "probe": "command-driven",
+      "record": "spectravideo-svi-328/patterns/basic/framework/command-loop/verification/results.json"
     },
     {
       "machine_id": "tatung-einstein",
       "crate": "emu198x-tatung-einstein",
-      "status": "planned",
-      "next_check": "Specify ROM/monitor versus disk OS entry, keyboard, CTC/VDP and loader."
+      "status": "qualified",
+      "probe": "input-driven-with-frame-service",
+      "record": "tatung-einstein/patterns/assembly/framework/input-loop/verification/results.json"
     }
   ]
 }

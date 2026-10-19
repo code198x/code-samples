@@ -69,6 +69,75 @@ class ProbeCoverageTests(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             self.check(self.data)
 
+    def command_record(self, probe: str = "command-driven") -> dict:
+        import hashlib
+
+        source = self.root / "caller.bas"
+        source.write_text("10 INPUT A\n")
+        proof = {
+            "status": "passed",
+            "server": {"name": "binary-one"},
+            "sources": {"caller.bas": hashlib.sha256(source.read_bytes()).hexdigest()},
+            "accepted_command_states": [1, 2],
+            "negative_control": {
+                "type": "bypass-command",
+                "idle_guard_rejected": True,
+                "observed_turn": 1,
+            },
+        }
+        self.data["systems"][0].update(
+            status="qualified", probe=probe, record="proof.json"
+        )
+        self.data["systems"][0].pop("next_check")
+        return proof
+
+    def retained_check(self, proof: dict) -> tuple[int, int]:
+        from unittest.mock import patch
+
+        (self.root / "proof.json").write_text(json.dumps(proof))
+        with patch.object(MODULE, "ROOT", self.root):
+            return self.check(self.data)
+
+    def test_command_record_needs_a_failing_idle_control(self) -> None:
+        proof = self.command_record()
+        self.assertEqual(self.retained_check(proof), (1, 1))
+        for key, value in [
+            ("idle_guard_rejected", False),
+            ("observed_turn", 0),
+            ("observed_turn", True),
+            ("type", "unrecognised"),
+        ]:
+            with self.subTest(key=key, value=value):
+                bad = copy.deepcopy(proof)
+                bad["negative_control"][key] = value
+                with self.assertRaises(ValueError):
+                    self.retained_check(bad)
+
+    def test_numeric_record_needs_both_real_and_rejected_additions(self) -> None:
+        proof = self.command_record("numeric-running-total")
+        proof["nonzero_initialisation_states"] = [7, 8]
+        proof["negative_control"] = {
+            "type": "wrong-addition",
+            "accepted_turn_guard_rejected": True,
+            "observed_turn": 2,
+        }
+        self.assertEqual(self.retained_check(proof), (1, 1))
+        proof["negative_control"]["observed_turn"] = 1
+        with self.assertRaises(ValueError):
+            self.retained_check(proof)
+
+    def test_changed_source_cannot_keep_a_qualified_claim(self) -> None:
+        proof = self.command_record()
+        (self.root / "caller.bas").write_text("10 GOTO 10\n")
+        with self.assertRaisesRegex(ValueError, "Source missing or changed"):
+            self.retained_check(proof)
+
+    def test_missing_accepted_states_cannot_keep_a_qualified_claim(self) -> None:
+        proof = self.command_record()
+        proof["accepted_command_states"] = []
+        with self.assertRaises(ValueError):
+            self.retained_check(proof)
+
 
 if __name__ == "__main__":
     unittest.main()
