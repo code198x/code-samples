@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "routine_cases": {
+    "spectrum": 7,
+    "nes": 10,
+    "bbc": 5
+  },
+  "mutants_rejected": [
+    "spectrum",
+    "nes",
+    "bbc"
+  ],
+  "sources": {
+    "sinclair-zx-spectrum/patterns/assembly/rendering/software-scrolling/scroll.inc": "dc2665051951236dac7442b3ec69c2b54ad30d2193ca58f92e1108e27df87194",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/software-scrolling/demo.asm": "1afbb2c9ed94b99b493cce7135a57fdc30e310780b74436cbfe767b0eedbb747",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/software-scrolling/Makefile": "f59d04c2a0cc0bfab05c133672b242e20d407bc6b1971f8bba67e445234af81c",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
+    "nintendo-entertainment-system/patterns/assembly/rendering/nametable-scrolling/scroll.inc": "e4b0d95164bc75f247687ca8bf2ed59c6f249cde5d25532a637ce6ac27b2c93f",
+    "nintendo-entertainment-system/patterns/assembly/rendering/nametable-scrolling/demo.asm": "ff22b485232a910f716e968daf4d7dae7b3c56f45364c49c6a7479af233739e3",
+    "nintendo-entertainment-system/patterns/assembly/rendering/nametable-scrolling/Makefile": "c83ff3b33af41026811bbd81ba4ea690a68e2344f80b736e026ef4a7465274a2",
+    "nintendo-entertainment-system/patterns/assembly/rendering/multi-sprite-oam/oam.inc": "34522053a120631ab810793d080300744553081f691515cae0e5192275c44feb",
+    "bbc-micro/patterns/assembly/rendering/masked-sprites/masked.inc": "a9a70252a7d387b203989a8d684a48a64ecc2d6bddf0676c3a80c8bf5c39d449",
+    "bbc-micro/patterns/assembly/rendering/masked-sprites/demo.asm": "66282c0c3ebb0502c66cf5b965f0b0dbf3ac402ea44ad15ee33740c04f51625c",
+    "bbc-micro/patterns/assembly/rendering/masked-sprites/loader.py": "bade96de1b3724eaa5f68addd4f0d9099fdf154d507d153c8a1a54595150f329",
+    "bbc-micro/patterns/assembly/rendering/masked-sprites/Makefile": "4664b11819a8c9f258e779bd5df938c6b1cf2bfaa1eda9a370a82e11f3d18810",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61"
+  },
+  "observer_sha256": "4753ea9da0cfec04a3b420b5ea5fbf6ac7a4042cb996463f2c541413a8df6c32",
+  "captures": {
+    "bbc.png": "2303de6ac046e18eb137e12ff5d2231b01a9f1a3fbd943a04fff3cdc77b4c6bb",
+    "nes.png": "f8bff51f03496be3a24769d674373d84feee52bb5a1da1f6058325a0b487a839",
+    "spectrum.png": "5ea85917ff76e7f0d6b91e6bd79534e61b411595b875585c4fabeb26e160806c"
+  },
+  "tools": {
+    "assembler": "f546f460f43d25ccbf84edffec100b7b2fe1d69b38477dddb88ce1c008ca3570",
+    "spectrum": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+    "nes": "e30e3c819679f293c32ff372c1c3599e348aec30f6dc04082225bce9f74a5b76",
+    "bbc": "24efc5795a38306a22e39e111b9ff44e210798b860c5223230e9ab9c774e6faf"
+  },
+  "firmware": {
+    "rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+    "mos": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "basic": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
+  },
+  "limits": "Execute scrolling and sprite routines; retain bounded machine evidence.\n\nFirmware remains local. Routine checks compare complete memory spans with independent\nexpectations. Caller captures establish a running scene, not tear-free original\nhardware, every timing standard, or a worst-case frame budget.\n"
+}

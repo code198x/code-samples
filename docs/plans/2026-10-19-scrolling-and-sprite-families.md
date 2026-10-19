@@ -1,0 +1,13 @@
+# Scrolling and sprites as cross-platform families
+
+Approved direction: shared techniques with explicit machine implementations; preserve direct URLs, reuse existing code, explain both hardware support and ways beyond it. A complete library family does not mean every technique is implemented on every machine in one change.
+
+1. Inventory current rendering patterns, sample contracts and execution records; retain a machine/technique coverage table. Check hardware claims against primary manuals in the reference library and existing cited syntheses.
+2. Add reusable code and complete callers for the clearest gaps: Spectrum pixel-band software scrolling; NES nametable scrolling and bounded OAM building with overload rotation; BBC Micro MODE4 byte-aligned masked sprites with background restoration. Existing C64 scroll/multiplexer and Amiga blitter/sprite entries remain their own implementations. Do not silently promote illustrative examples to qualified code.
+3. Execute the new routines against independent memory/pixel expectations, verify source preservation and bounds, and require deliberately broken variants to fail. Build and run complete callers where the target loader exists. Record exact tools/configurations and qualification limits.
+4. Add cross-platform rendering/scrolling and rendering/sprites family entries, maintain original routes and machine entry points, and add links from relevant existing patterns. Cover camera/world/screen coordinates, coarse/fine and streaming, hardware/software objects, restoration/overlap/clipping, multiplexing and overload costs. Include original emulator captures where they teach the mechanism.
+5. Validate code inclusions, content links, production build and affected desktop/phone pages with existing tooling. Push small verified commits and open review PRs. Do not merge or deploy this new tranche without approval.
+
+Primary planned paths: sinclair-zx-spectrum/patterns/assembly/rendering/software-scrolling/, nintendo-entertainment-system/patterns/assembly/rendering/nametable-scrolling/, nintendo-entertainment-system/patterns/assembly/rendering/multi-sprite-oam/, bbc-micro/patterns/assembly/rendering/masked-sprites/, scripts/verify-rendering-families.py, docs/rendering-families.md; website src/content/patterns/cross-platform/rendering/{scrolling,sprites}.mdx and corresponding machine pages. Adapt exact file choices only after checking existing source.
+
+No new dependencies, schema migrations, curriculum tracks, fabricated frame budgets or bulk catalogue migration. Temporary worktrees /tmp/render-patterns-samples and /tmp/render-patterns-website, verification/build tools and servers belong to this task; retain evidence and remote commits, then remove them before reporting completion.

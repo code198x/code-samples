@@ -47,6 +47,10 @@ jobs:
         run: |
           python scripts/check-pattern-evidence.py --parser --output "$RUNNER_TEMP/pattern-evidence/parser-recorded-inputs.json"
           python -m unittest discover -s scripts -p test_adventure_parser.py -v
+      - name: Check rendering-family records and guard failure modes
+        run: |
+          python scripts/check-rendering-evidence.py
+          python -m unittest discover -s scripts -p test_rendering_evidence.py -v
       - name: Check guard failure modes
         run: python -m unittest discover -s scripts -p test_pattern_evidence.py -v
       - uses: actions/upload-artifact@v7
@@ -190,6 +194,8 @@ jobs:
           install -m 755 asm198x-x86_64-unknown-linux-gnu/asm198x bin/asm198x
           install -m 755 emu198x-nes-x86_64-unknown-linux-gnu/emu198x-nes bin/emu198x-nes
           echo "$RUNNER_TEMP/pattern-tools/bin" >> "$GITHUB_PATH"
+      - name: Execute OAM packing and camera-wrap controls
+        run: python scripts/verify-nes-rendering.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-nes" --output "$RUNNER_TEMP/pattern-evidence/nes-rendering"
       - name: Execute seven pulse-audio cases and WAV-header controls
         run: python nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/verify.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-nes" --output "$RUNNER_TEMP/pattern-evidence/nes"
       - name: Record the released tool combination and host
@@ -226,6 +232,7 @@ jobs:
           name: pattern-nes-fresh-behaviour
           path: |
             ${{ runner.temp }}/pattern-evidence/nes/results.json
+            ${{ runner.temp }}/pattern-evidence/nes-rendering/results.json
             ${{ runner.temp }}/pattern-evidence/nes-release-inputs.json
           if-no-files-found: error
           retention-days: 14
