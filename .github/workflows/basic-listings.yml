@@ -17,10 +17,15 @@ env:
   # builds the same Makefiles at deploy time: bump the two together.
   BUILD198X_VERSION: v0.2.9
 
+concurrency:
+  group: basic-listings-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   basic:
     name: Lint and build BASIC listings
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
