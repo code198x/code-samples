@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "machine_id": "atari-800xl",
+  "server": {
+    "name": "emu198x-atari-800xl",
+    "version": "0.34.2"
+  },
+  "configuration": "800XL NTSC, pinned OS/BASIC, GRAPHICS 0",
+  "startup": "Fresh firmware reset; complete numbered BASIC program and RUN typed through keyboard",
+  "idle_frames_before_and_after_command": 120,
+  "invalid_command_state": 0,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "nonzero_initialisation_states": [
+    37,
+    38
+  ],
+  "byte_counter_wrap": null,
+  "screen_ram": {
+    "start": "SAVMSC ($58/$59)",
+    "bytes": 960,
+    "decoder": "ANTIC internal screen codes, inverse bit masked; live SAVMSC"
+  },
+  "negative_control": {
+    "type": "bypass-command",
+    "idle_guard_rejected": true,
+    "observed_turn": 1
+  },
+  "firmware_sha256": {
+    "atarixl.rom": "a77050b2d81db2d11eaa3dbafd8ec2531b478abcc3bcc4b0d846b634e885edb1",
+    "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0"
+  },
+  "emulator_sha256": "ce1f027f649861bb856b27524de23775daeaeafa89378be85f1bf97ebe88bc7a",
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "sources": {
+    "atari-800xl/patterns/basic/framework/command-loop/demo.bas": "1d6d618236024dcbe9c26c58ef3d26f37ff73067feb9415d2b06439a6bab2ab6",
+    "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Untimed numeric turn state and line-input/display path only. Firmware clocks/IRQs continue; no deadline, joystick, frame pacing, original-hardware or complete emulator claim."
+}

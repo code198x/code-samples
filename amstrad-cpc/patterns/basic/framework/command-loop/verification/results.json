@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "machine_id": "amstrad-cpc",
+  "server": {
+    "name": "emu198x-amstrad-cpc",
+    "version": "0.34.2"
+  },
+  "configuration": "CPC464 PAL, MODE 1",
+  "startup": "Fresh firmware reset; complete numbered BASIC program and RUN typed through keyboard",
+  "idle_frames_before_and_after_command": 120,
+  "invalid_command_state": 0,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "nonzero_initialisation_states": [
+    37,
+    38
+  ],
+  "byte_counter_wrap": [
+    254,
+    255,
+    0
+  ],
+  "screen_ram": {
+    "start": 40000,
+    "bytes": 1,
+    "decoder": "reserved byte above BASIC HIMEM"
+  },
+  "negative_control": {
+    "type": "bypass-command",
+    "idle_guard_rejected": true,
+    "observed_turn": 1
+  },
+  "firmware_sha256": {
+    "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e"
+  },
+  "emulator_sha256": "62728ba5bc79077f13afc1a3b28e06e1962075534017e07c6908dc11235ec6c5",
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "sources": {
+    "amstrad-cpc/patterns/basic/framework/command-loop/demo.bas": "6a1b42460add7b9d94cb0cf7e2c5faf6a534fd6e57150c28a253bfd819f53c6c",
+    "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Untimed numeric turn state and line-input/display path only. Firmware clocks/IRQs continue; no deadline, joystick, frame pacing, original-hardware or complete emulator claim."
+}

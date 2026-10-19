@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "machine_id": "jupiter-ace",
+  "server": {
+    "name": "emu198x-jupiter-ace",
+    "version": "0.34.2"
+  },
+  "configuration": "Stock 3 KiB Jupiter Ace, pinned FORTH ROM",
+  "startup": "Fresh ROM boot; definitions entered line by line with compile settling, then TURNS",
+  "idle_frames": 120,
+  "held_key_frames": 120,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "negative_control": {
+    "type": "bypass-key",
+    "idle_guard_rejected": true,
+    "observed_turn": 1
+  },
+  "firmware_sha256": {
+    "forth": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d"
+  },
+  "emulator_sha256": "2e7ce7674fedf613ab105cdbc905deb850a17c87b5eae72f879fd1bada6d1256",
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "sources": {
+    "jupiter-ace/patterns/forth/framework/command-loop/demo.fth": "5fcea19dfe45051b6689d8b01dfd0a282c08075a022054186863671746b936ea",
+    "scripts/verify-ace-command-loop.py": "bd09e9a83d668f61bc67ad93ebd50ceab9aff3c9878d5959d836739e92f2e729",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Untimed FORTH key/display path, one cell of state. No frame clock, deadline, original-hardware or whole-emulator claim."
+}

@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "machine_id": "commodore-pet",
+  "server": {
+    "name": "emu198x-commodore-pet",
+    "version": "0.34.2"
+  },
+  "configuration": "40-column PET",
+  "startup": "Fresh firmware reset; complete numbered BASIC program and RUN typed through keyboard",
+  "idle_frames_before_and_after_command": 120,
+  "invalid_command_state": 0,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "nonzero_initialisation_states": [
+    37,
+    38
+  ],
+  "byte_counter_wrap": null,
+  "screen_ram": {
+    "start": 32768,
+    "bytes": 1000,
+    "decoder": "PETSCII screen codes, inverse bit masked"
+  },
+  "negative_control": {
+    "type": "bypass-command",
+    "idle_guard_rejected": true,
+    "observed_turn": 1
+  },
+  "firmware_sha256": {
+    "basic.rom": "5b426b5c50350e5d50c4308a81288bb34f310d7384bcc43c66a0e18716a4cdbe",
+    "kernal.rom": "056d5e84a6e4f2b5b40a4109f49515c2496a4bf99139a9f59abe486ded5cd03d",
+    "chargen.rom": "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "editor.rom": "5338b1dffebd695f6110c9995e16f7536bb63a909c2a0062b4789de46904ade9"
+  },
+  "emulator_sha256": "530c94d72062cdb92c2c805ce4308a4338f9cf591610ceeb4ed4618aaf0939a2",
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "sources": {
+    "commodore-pet/patterns/basic/framework/command-loop/demo.bas": "91176f6ad724dafecb77de9650a65ad46630f2ca8cdfbac85e616bcca3356256",
+    "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Untimed numeric turn state and line-input/display path only. Firmware clocks/IRQs continue; no deadline, joystick, frame pacing, original-hardware or complete emulator claim."
+}

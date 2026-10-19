@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "machine_id": "commodore-vic-20",
+  "server": {
+    "name": "emu198x-commodore-vic-20",
+    "version": "0.34.2"
+  },
+  "configuration": "PAL VIC-20, unexpanded",
+  "startup": "Fresh firmware reset; complete numbered BASIC program and RUN typed through keyboard",
+  "idle_frames_before_and_after_command": 120,
+  "invalid_command_state": 0,
+  "accepted_command_states": [
+    1,
+    2
+  ],
+  "nonzero_initialisation_states": [
+    37,
+    38
+  ],
+  "byte_counter_wrap": null,
+  "screen_ram": {
+    "start": 7680,
+    "bytes": 506,
+    "decoder": "PETSCII screen codes, inverse bit masked"
+  },
+  "negative_control": {
+    "type": "bypass-command",
+    "idle_guard_rejected": true,
+    "observed_turn": 1
+  },
+  "firmware_sha256": {
+    "basic.rom": "8be2d882e0eeb1c6923a43660236ea69d43ca8a3bd0613b1b6c910601584fbed",
+    "kernal.rom": "ff6d1416b91a71f5240a5bb8adc9fdc1b955374c48322ca47b3e436334f168fb",
+    "chargen.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502"
+  },
+  "emulator_sha256": "5cd343d7320d509ec68a1626dc842193eb0e63ea0a7ec379070b50d1a7581912",
+  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "sources": {
+    "commodore-vic-20/patterns/basic/framework/command-loop/demo.bas": "91176f6ad724dafecb77de9650a65ad46630f2ca8cdfbac85e616bcca3356256",
+    "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "limits": "Untimed numeric turn state and line-input/display path only. Firmware clocks/IRQs continue; no deadline, joystick, frame pacing, original-hardware or complete emulator claim."
+}

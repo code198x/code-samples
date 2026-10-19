@@ -64,11 +64,38 @@ def check(manifest: Path, registry: Path) -> tuple[int, int]:
                 c["rejected"] is True for c in controls.values()
             ):
                 raise ValueError("Turn probe lacks rejected timing/input controls")
-        elif (
-            proof.get("negative_control", {}).get("same_rate_guard_rejected")
-            is not True
-        ):
-            raise ValueError("Frame probe lacks rejected negative control")
+        else:
+            control = proof.get("negative_control", {})
+            if row.get("probe") in ("command-driven", "key-driven-forth"):
+                expected_type = (
+                    "bypass-command"
+                    if row["probe"] == "command-driven"
+                    else "bypass-key"
+                )
+                if (
+                    control.get("type") != expected_type
+                    or control.get("idle_guard_rejected") is not True
+                    or type(control.get("observed_turn")) is not int
+                    or control["observed_turn"] == 0
+                    or proof.get("accepted_command_states") != [1, 2]
+                ):
+                    raise ValueError(
+                        "Command probe lacks a rejected input control or accepted states"
+                    )
+            elif row.get("probe") == "numeric-running-total":
+                if (
+                    control.get("type") != "wrong-addition"
+                    or control.get("accepted_turn_guard_rejected") is not True
+                    or type(control.get("observed_turn")) is not int
+                    or control["observed_turn"] == 1
+                    or proof.get("accepted_command_states") != [1, 2]
+                    or proof.get("nonzero_initialisation_states") != [7, 8]
+                ):
+                    raise ValueError(
+                        "Numeric caller lacks a rejected addition control or nonzero run"
+                    )
+            elif control.get("same_rate_guard_rejected") is not True:
+                raise ValueError("Frame probe lacks rejected negative control")
         qualified += 1
     return len(rows), qualified
 

@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "machine_id": "tatung-einstein",
+  "server": {
+    "name": "emu198x-tatung-einstein",
+    "version": "0.34.2"
+  },
+  "configuration": "Einstein TC-01 PAL, stock MOS 1.2, Ctrl-BREAK disk boot",
+  "startup_kind": "stock-mos-disk-boot",
+  "normal_ticks_in_30_frames": 30,
+  "idle_frames": 120,
+  "held_frames": 120,
+  "accepted_press_states": [
+    1,
+    2
+  ],
+  "visible_feedback": {
+    "changed": true,
+    "restored": true
+  },
+  "negative_controls": {
+    "no-wait": {
+      "rejected": true,
+      "observed_delta": 3242,
+      "binary_sha256": "db515fdb366751d53af3bc3278895a34695e7cad0e53f961e4d786640994f6d5"
+    },
+    "no-edge": {
+      "rejected": true,
+      "observed_delta": 30,
+      "binary_sha256": "96d4dff8897062e3016763671d9dcd09b3c364f7076a9dd802f6baa5f16de652"
+    }
+  },
+  "firmware_sha256": {
+    "tatung-einstein/einstein.rom": "401d0e0bf6f64ba82e68137525749171fbcf9bd9055a49e5ac9a47941a6a0ae1"
+  },
+  "emulator_source_commit": "57a7453eeb3452d9f2be7ba4a453c13baa521a58",
+  "binary_sha256": "38654ea9c86dd8dd7352eb1ba47648a15b43f42c01b8fb452126056f6c4e667d",
+  "emulator_sha256": "8a19dd6c2821f8d99f082dabcfb398acb25c09f9a03a5d9294200c513c1e46c5",
+  "sources": {
+    "tatung-einstein/patterns/assembly/framework/input-loop/demo.asm": "1824d35b68634697031cf62cba2ef2b2f286a2535583ff6c6cdf9af41770aecf",
+    "tatung-einstein/patterns/assembly/framework/input-loop/Makefile": "09bf0c104841ee7289e4bb127234f98a4c6332576f7544512f8ecbab11b1bb23",
+    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/build-stock-probe.py": "b6314275a92e128dc88ce2a1e5950b45e9243c5b3293a60471e47407294e1e84"
+  },
+  "limits": "Named native configuration; untimed press-driven rules plus continuous display servicing. Not a deadline, hardware or whole-emulator qualification."
+}
