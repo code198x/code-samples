@@ -757,19 +757,19 @@
     },
     {
       "entry": "commodore-amiga/assembly/physics/sprite-movement-bounds",
-      "page_sha256": "cdb4d9977d85647e54048ec7013de01629fca0141ff33244deb06cc0a213e103",
+      "page_sha256": "26aee006c8ff4cd24f0992f337561c110ab5f26bff0bb8d3865c9eeba9e09c95",
       "declared_status": "illustrative code.",
       "source_includes": [],
       "source_closure": {},
       "inline_blocks": [
         {
           "language": "m68k",
-          "sha256": "065c0d9276d8c545c41c3c6ac919b4eca04415f5c316f4fb6ed468be6ef1fa4a",
+          "sha256": "5a5fdbc689d049cc334d8b988f7d6a3aa38af98a7a233232c69c113a7acbc21f",
           "lines": 60
         },
         {
           "language": "m68k",
-          "sha256": "fa5a7f7e2367296ffc37b07552aa0f78693f02f307ef972e7221d40a5f3c6b28",
+          "sha256": "e0b50f14711503feb5d29a2f3b68ef326f5224101ef92952a18b507d2b3a9622",
           "lines": 6
         },
         {
@@ -779,7 +779,7 @@
         }
       ],
       "review": "source and explanation review; configuration limits retained",
-      "review_notes": "Reviewed representation, comparison and bounds with the listed inputs. Retain the stated preconditions; illustrative alternatives do not gain an execution claim from a nearby verified routine.",
+      "review_notes": "Illustrative reject-crossing policy, rather than saturation, is now explicit. Correct maintained read_controls glue, writable signed coordinates, beam convention and register effects; complete display caller still required.",
       "audit_execution_records": [],
       "next_verification": "Supply and assemble a complete caller, then execute boundary/sequence/ownership cases on the named machine. This listing is not runtime-qualified."
     },
@@ -2190,7 +2190,7 @@
     },
     {
       "entry": "sinclair-zx-spectrum/assembly/physics/grid-movement-bounds",
-      "page_sha256": "cfa298f5642125e41172ec2b52206d74749ef62a26664d9c72e4d481e1369dd9",
+      "page_sha256": "ffdfda6f9cb283b85836c404c46baa76091479d3c75b8fa20bb56a1d70ab4481",
       "declared_status": "illustrative code.",
       "source_includes": [],
       "source_closure": {},
@@ -2207,7 +2207,7 @@
         }
       ],
       "review": "source and explanation review; configuration limits retained",
-      "review_notes": "Reviewed representation, comparison and bounds with the listed inputs. Retain the stated preconditions; illustrative alternatives do not gain an execution claim from a nearby verified routine.",
+      "review_notes": "Explicit 0\u20137 initial bounds, held versus press policy, shared direction byte and intentionally empty drawing hooks. Complete rendering caller still required; no execution claim.",
       "audit_execution_records": [],
       "next_verification": "Supply and assemble a complete caller, then execute boundary/sequence/ownership cases on the named machine. This listing is not runtime-qualified."
     },
@@ -3734,6 +3734,6 @@
   "coverage_limits": "30 retained systems revalidated structurally against registry and source/evidence hashes; no fresh 30-emulator replay this audit. Sound executed on28; stock ZX80/ZX81 have no speaker.",
   "website_base": "82ace206cb62419bb51a02c65a1eecf716586b90",
   "samples_base": "e8e445b7d51e7292edb1a8503db467f032a1fee1",
-  "reviewed_website_revision": "d0057a67a07d2497531bfc35269ea5f1b065bb58",
+  "reviewed_website_revision": "3cf2b576688d708788d4dafa11219089dc60a5e9",
   "reviewed_samples_revision": "790123e55224f4f42fb110bc34618ab37734d73c"
 }
