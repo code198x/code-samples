@@ -24,7 +24,7 @@ def run(command: list[str], cwd: Path) -> str:
 base = "patterns/assembly/framework/input-to-sound"
 for machine, flags in [
     ("sinclair-zx-spectrum", ["--dialect", "pasmo", "--cpu", "z80"]),
-    ("nintendo-nes", ["--dialect", "ca65"]),
+    ("nintendo-entertainment-system", ["--dialect", "ca65"]),
     ("commodore-amiga", ["--dialect", "vasm", "--exe"]),
 ]:
     run(
@@ -182,7 +182,7 @@ source += (
     'done: jmp done\n!source "'
     + str(turn / "local-turn.inc")
     + '"\n!source "'
-    + str(turn / "use.asm")
+    + str(turn / "use.inc")
     + '"\nresults: !fill '
     + str(len(cases))
     + ",0\n"
@@ -249,15 +249,15 @@ receipt = {
         for m in [
             "commodore-64",
             "sinclair-zx-spectrum",
-            "nintendo-nes",
+            "nintendo-entertainment-system",
             "commodore-amiga",
         ]
         for p in (ROOT / m / base).glob("*")
         if p.is_file() and p.suffix in [".inc", ".asm"]
     },
 }
-receipt["sources"][str((turn / "use.asm").relative_to(ROOT))] = hashlib.sha256(
-    (turn / "use.asm").read_bytes()
+receipt["sources"][str((turn / "use.inc").relative_to(ROOT))] = hashlib.sha256(
+    (turn / "use.inc").read_bytes()
 ).hexdigest()
 receipt["sources"][str((turn / "local-turn.inc").relative_to(ROOT))] = hashlib.sha256(
     (turn / "local-turn.inc").read_bytes()

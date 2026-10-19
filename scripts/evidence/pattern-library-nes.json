@@ -8,12 +8,12 @@
   "emulator_sha256": "b0ccc36502069a03025bfa1ad12673c266f79fc056b94758bda5a042f7400f00",
   "binary_sha256": "cce9ef23c71c04acdf38eec38a9e929992e1bd5a4e9129d113871559a35a0ec2",
   "sources": {
-    "nintendo-nes/patterns/assembly/framework/input-to-sound/use.asm": "31c60834186a144cddb66fe3348a0a53bdfa41f26b42f5a6ae08898cac9e49de",
-    "nintendo-nes/patterns/assembly/framework/input-to-sound/demo.asm": "ca463da352d102f66d1ca0a757d58f4ab72b30985b6478301834f02a6772371f",
-    "nintendo-nes/patterns/assembly/framework/input-to-sound/check.asm": "aa004d22cac572ef67cf394f3161af6d2e7e5b4d5b747f6c3c025f5d56ea8f21",
-    "nintendo-nes/patterns/assembly/framework/input-to-sound/tone.inc": "44d265544ca5c1e631df9c35d191bcda09c6fdff42f24aba00e3195cfa8430a1",
-    "nintendo-nes/patterns/assembly/framework/input-to-sound/input.inc": "5f0c09cff25558981904113065f9f898a42bcad85914e6cde5309ac5da11c1b2",
-    "nintendo-nes/patterns/assembly/framework/input-to-sound/presses.inc": "e6480b3f798c09b6431f9fc2e77c159125892264a07de5d591a30c91504ce74d"
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/use.inc": "31c60834186a144cddb66fe3348a0a53bdfa41f26b42f5a6ae08898cac9e49de",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/demo.asm": "0ed59fea48498e68b9fb184765402e8858026c2326e2c221ad856b0a5749fe08",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/check.asm": "18430bd39a6e2cd551aa45c7510ee8e5854d316c66f8701c04b419e12588b15d",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/tone.inc": "44d265544ca5c1e631df9c35d191bcda09c6fdff42f24aba00e3195cfa8430a1",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/input.inc": "5f0c09cff25558981904113065f9f898a42bcad85914e6cde5309ac5da11c1b2",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/presses.inc": "e6480b3f798c09b6431f9fc2e77c159125892264a07de5d591a30c91504ce74d"
   },
   "input_checks": [
     {

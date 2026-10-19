@@ -73,7 +73,7 @@ irq:
 .include "input.inc"
 .include "presses.inc"
 .include "tone.inc"
-.include "use.asm"
+.include "use.inc"
 .segment "VECTORS"
     .word nmi,reset,irq
 .segment "CHARS"

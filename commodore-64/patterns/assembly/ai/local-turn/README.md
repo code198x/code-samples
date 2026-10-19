@@ -1,6 +1,6 @@
 # Target selection and a legal local turn
 
-Original 6502 code and board, motivated by the Pac-Man study. Include local-turn.inc and use.asm once in writable program memory. Call move_one_turn at a decision tick, not independently in every consumer. The file comments define coordinate bounds, state, register changes, tie order and the no-move result.
+Original 6502 code and board, motivated by the Pac-Man study. Include local-turn.inc and use.inc once in writable program memory. Call move_one_turn at a decision tick, not independently in every consumer. The file comments define coordinate bounds, state, register changes, tie order and the no-move result.
 
 choose_target updates the target. choose_turn returns choice without moving. move_one_turn is the optional caller that applies the chosen adjacent step. A new target rule can reuse the chooser. The current two-row offset assumes Up; direction-sensitive anticipation is a further extension.
 

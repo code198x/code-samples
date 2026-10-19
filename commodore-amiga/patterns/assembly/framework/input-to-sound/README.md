@@ -1,6 +1,6 @@
 # Input, new presses and sound: commodore-amiga
 
-`input.inc` and `presses.inc` are reusable routines; `use.asm` shows their integration with the sound driver. Include each once, initialise state in writable memory and follow the register/resource contracts in the files. `demo.asm` is now a complete launchable caller; `check.asm` remains an assembly-only wrapper for the fragment.
+`input.inc` and `presses.inc` are reusable routines; `use.inc` shows their integration with the sound driver. Include each once, initialise state in writable memory and follow the register/resource contracts in the files. `demo.asm` is now a complete launchable caller; `check.asm` remains an assembly-only wrapper for the fragment.
 
 ## Build and run
 
