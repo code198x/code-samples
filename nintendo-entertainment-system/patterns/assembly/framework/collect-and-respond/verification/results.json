@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "system": "nes",
+  "startup": "NTSC NROM cartridge reset",
+  "server": {
+    "name": "emu198x-nes",
+    "version": "0.38.3"
+  },
+  "emulator_sha256": "85c35a5cb58c297f750d6a383a4e1b942df55d8a21f19764f96bc4fc0b7fd6cb",
+  "firmware_sha256": {},
+  "binary_sha256": "a6bb99070e4895029ae511899277b17ea19d185980a57ab1fcd36ce95a8b8d2f",
+  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "sources": {
+    "nintendo-entertainment-system/patterns/assembly/audio/square-wave/square-wave.inc": "756b9fbedea88a3638f74a1697ead6aa0e90b41892b69e981c00fb9f36806d48",
+    "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond/Makefile": "aa0d47a29bc1fe1548e300c11b27457bbc67100853676a29cf1f0412501be7d1",
+    "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond/collision.inc": "e7b65c5c4901068223a03cc30be21c3366f263a5793be8ea9e1cbcabbd8c3146",
+    "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond/demo.asm": "307f25df796f5cb52121c9be5c134cef5c6550258b9e7c93d7279cb260ee545d",
+    "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond/draw.inc": "4561de2a7c412100b87c96086f148faa306135e6e84600f8fd7b66c835738934",
+    "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond/rules.inc": "5a839a1811080a85b7e6abe20202e9dff811dd1e5f15239c70a90a5b2661888f",
+    "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond/sound.inc": "062d04bdfff54552d619e8bc698cb240edec5d17192ff1c25c90967461543597",
+    "nintendo-entertainment-system/patterns/assembly/framework/game-loop/frame.inc": "35b326cc5614f5a28a40f3dd3b0dfc77d55a78ecee01c47baef6c0adf13ef38e",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/input.inc": "5f0c09cff25558981904113065f9f898a42bcad85914e6cde5309ac5da11c1b2"
+  },
+  "initial": {
+    "player_x": 2,
+    "player_y": 5,
+    "score": 0,
+    "item_active": 1,
+    "pressed": 0,
+    "released": 0
+  },
+  "collected": {
+    "player_x": 10,
+    "player_y": 5,
+    "score": 1,
+    "item_active": 0,
+    "pressed": 0,
+    "released": 0
+  },
+  "bounds": {
+    "left": 0,
+    "up": 0,
+    "right": 15,
+    "down": 9
+  },
+  "held_restart_allows_movement": true,
+  "audio": {
+    "frames": 73479,
+    "rate": 48000,
+    "channel_ranges": [
+      7560
+    ],
+    "ac_power": [
+      526719.3143883866
+    ]
+  },
+  "negative_collection_rejected": true,
+  "limits": "Emulator configuration evidence; audio amplitude establishes changing output, not pitch accuracy or hardware conformance. Cell overlap tests one shared occupied cell; not a pixel-mask test. Snapshot startup on Spectrum is distinct from tape loading."
+}

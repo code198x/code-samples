@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "system": "c64",
+  "startup": "ROM boot and PRG import; snapshot resumes imported BASIC state; typed RUN",
+  "server": {
+    "name": "emu198x-c64",
+    "version": "0.38.3"
+  },
+  "emulator_sha256": "6b8a4eec00631d23b927429a844a302eee57dfb6e03335f3cf7c437148bc1b1a",
+  "firmware_sha256": {
+    "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
+    "kernal.rom": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721",
+    "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
+  },
+  "binary_sha256": "842ec8bd0a70b75be90bf4ff7530ac9f4838ded67ee592f56dae769b081c4954",
+  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "sources": {
+    "commodore-64/patterns/assembly/audio/sid-note-trigger/sid-note.inc": "e46ac2a5130017ebc5b466d2f3295fb0463ab2a93344ca4437dcc7ade7a80049",
+    "commodore-64/patterns/assembly/framework/collect-and-respond/Makefile": "961e7ade6b348813a1c79ab3f41268c5a24ec5819e1813fc09640c8d2672fd11",
+    "commodore-64/patterns/assembly/framework/collect-and-respond/collision.inc": "67a1349d3e2990d2012b334d723baad77e495c81673a9570bc188bc780495971",
+    "commodore-64/patterns/assembly/framework/collect-and-respond/demo.asm": "5c54a60aac7fbe3a65ab5e2d749b3af2bd66bbf190947ac601c3cd70f629a935",
+    "commodore-64/patterns/assembly/framework/collect-and-respond/draw.inc": "9a4e290dedeebb43be7cbf82266f48ff0ac4a516884536aa6ac22f1a9dcca8f6",
+    "commodore-64/patterns/assembly/framework/collect-and-respond/rules.inc": "5a839a1811080a85b7e6abe20202e9dff811dd1e5f15239c70a90a5b2661888f",
+    "commodore-64/patterns/assembly/framework/collect-and-respond/sound.inc": "3c5c1b3dfe6466e0e31c23139bfb63f9cca4f029c1ef603b466bb1c67eb763f7",
+    "commodore-64/patterns/assembly/framework/collect-and-respond/state.inc": "14b982944ac8e5c49f7dc3826969d0fa3359c5735ca401b3900dee40af936cb1",
+    "commodore-64/patterns/assembly/framework/game-loop/frame.inc": "a51095d4ccf26bcfa087f48a00c87979eae7b9f132dc1753dfbe77a65c8f2858",
+    "commodore-64/patterns/assembly/input/joystick-reading/joystick.inc": "1783dc758f76ba4b165f86aa5e637a5fdaf7ae675c46c80144f20c797f9388a5"
+  },
+  "initial": {
+    "player_x": 2,
+    "player_y": 5,
+    "score": 0,
+    "item_active": 1,
+    "pressed": 0,
+    "released": 0
+  },
+  "collected": {
+    "player_x": 10,
+    "player_y": 5,
+    "score": 1,
+    "item_active": 0,
+    "pressed": 0,
+    "released": 0
+  },
+  "bounds": {
+    "left": 0,
+    "up": 0,
+    "right": 15,
+    "down": 9
+  },
+  "held_restart_allows_movement": true,
+  "audio": {
+    "frames": 90974,
+    "rate": 48000,
+    "channel_ranges": [
+      7241
+    ],
+    "ac_power": [
+      374100.17221532547
+    ]
+  },
+  "negative_collection_rejected": true,
+  "limits": "Emulator configuration evidence; audio amplitude establishes changing output, not pitch accuracy or hardware conformance. Cell overlap tests one shared occupied cell; not a pixel-mask test. Snapshot startup on Spectrum is distinct from tape loading."
+}
