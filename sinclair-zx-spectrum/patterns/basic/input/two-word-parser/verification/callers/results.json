@@ -1,0 +1,151 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "caller": "BASIC",
+      "command": "TAKE KEY",
+      "visible": "cannot see"
+    },
+    {
+      "caller": "BASIC",
+      "command": "GET LIGHT",
+      "visible": "Taken."
+    },
+    {
+      "caller": "BASIC",
+      "command": "EXAMINE LAMP",
+      "visible": "no switch"
+    },
+    {
+      "caller": "BASIC",
+      "command": "GO NORTH",
+      "visible": "narrow hall"
+    },
+    {
+      "caller": "BASIC",
+      "command": "GO NORTH",
+      "visible": "locked"
+    },
+    {
+      "caller": "BASIC",
+      "command": "TAKE KEY",
+      "visible": "Taken."
+    },
+    {
+      "caller": "BASIC",
+      "command": "GO NORTH",
+      "visible": "courtyard"
+    },
+    {
+      "caller": "BASIC",
+      "command": "INVENTORY",
+      "visible": "small key"
+    },
+    {
+      "caller": "BASIC",
+      "command": "GO SOUTH",
+      "visible": "narrow hall"
+    },
+    {
+      "caller": "BASIC",
+      "command": "DROP KEY",
+      "visible": "Dropped."
+    },
+    {
+      "caller": "BASIC",
+      "command": "GO NORTH",
+      "visible": "courtyard"
+    },
+    {
+      "caller": "BASIC",
+      "command": "TAKE LAM",
+      "visible": "do not know the noun"
+    },
+    {
+      "caller": "BASIC",
+      "command": "LOOK EXTRA",
+      "visible": "does not take a noun"
+    },
+    {
+      "caller": "BASIC ambiguity variation",
+      "command": "TAKE LAMP",
+      "visible": "Two match"
+    },
+    {
+      "caller": "Z80",
+      "command": "take lamp",
+      "result": [
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "caller": "Z80",
+      "command": "LOOK",
+      "result": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "caller": "Z80",
+      "command": "TAKE",
+      "result": [
+        7,
+        0,
+        0
+      ]
+    },
+    {
+      "caller": "Z80",
+      "command": "TAKE LAMP EXTRA",
+      "result": [
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "caller": "Z80",
+      "command": "SEARCH",
+      "result": [
+        0,
+        10,
+        0
+      ]
+    },
+    {
+      "caller": "Z80",
+      "command": "GO ROCK",
+      "result": [
+        0,
+        2,
+        6
+      ]
+    }
+  ],
+  "editor_overflow_rejected": true,
+  "sources": {
+    "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/demo.bas": "8b7e6414334e7f0786055fc18cd1dd8f2c86f4afb54c8adb1aac952cc0949d80",
+    "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas": "eab4ebb2fc16218a5124b57881e21449082359fc61953ed659f54d73b8cde9fa",
+    "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas": "77bc579eb7f358c4bba8428150b33a73717039fd645bea8ebc7634f0066fbbb7",
+    "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/Makefile": "6fc227d12485ec9e1104b6ed04af3413ee3dc5ea8ed0de6aa332f6b8dbc2c5de",
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/demo.asm": "38856d18b0d8735d07119c91036e238d61a2be1aa6af2a8cde53cb68da3e9e69",
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/parser.inc": "418c8040b79f3ad5c6d029cba950e3a31f031f45055b34fc6d7f953869c9ead4",
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/vocabulary.json": "bf4be59d7fb94b4ca21cea8de6075886313f51200ca5fec764873981807f7af0",
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/generate_vocabulary.py": "8cd05d70feabc57c327d4138a140ca423b415f7ec4a83e7725724eee2e6edae1",
+    "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/Makefile": "2bb56a37cd1afaf21a09614570a39d063dd05016596b16e10a2ec8e0adebc58b",
+    "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc": "e71788e7988d26c0a681cdded7c5d8aa93ae898a98e25939c9b4c04c4ce05233",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/character-printing/characters.inc": "c3e4bd3086a65e2f86dbecf0c003b0f0a2469ead041e5f6878848c047bf2f12f",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/numeric-display/numeric.inc": "d039079779fd9afecb32c86115a3dba881b3a2bb25fdbd3beba428eebb4f298d",
+    "scripts/verify-adventure-parser.py": "f300f6dc0d14929a841692f0b7d95fdb6781230e9620825649248dd6aa5cf580",
+    "scripts/verify-basic-library-routines.py": "a56c4b56ea8363e20d0797624e163ee87d575e214baa65c03071cb557d6524d5",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "observer_sha256": "69bb7737161b20c3fb141dc0167f3af4a79af668c12d05fa4f66917f27e88fc4",
+  "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+  "firmware_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+  "limits": "ROM-load the unmodified BASIC adventure and Z80 command inspector; type commands.\n\nPixel text is decoded from the configured ROM font; Z80 results are read from\nnamed state. These are paced keyboard tests, not a guarantee for every typing speed.\n"
+}

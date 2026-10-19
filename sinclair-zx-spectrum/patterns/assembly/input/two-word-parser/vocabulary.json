@@ -1,0 +1,112 @@
+{
+  "verbs": [
+    {
+      "word": "LOOK",
+      "id": 1,
+      "noun_policy": 0
+    },
+    {
+      "word": "L",
+      "id": 1,
+      "noun_policy": 0
+    },
+    {
+      "word": "GO",
+      "id": 2,
+      "noun_policy": 1
+    },
+    {
+      "word": "TAKE",
+      "id": 3,
+      "noun_policy": 1
+    },
+    {
+      "word": "GET",
+      "id": 3,
+      "noun_policy": 1
+    },
+    {
+      "word": "DROP",
+      "id": 4,
+      "noun_policy": 1
+    },
+    {
+      "word": "INVENTORY",
+      "id": 5,
+      "noun_policy": 0
+    },
+    {
+      "word": "I",
+      "id": 5,
+      "noun_policy": 0
+    },
+    {
+      "word": "EXAMINE",
+      "id": 6,
+      "noun_policy": 1
+    },
+    {
+      "word": "X",
+      "id": 6,
+      "noun_policy": 1
+    },
+    {
+      "word": "QUIT",
+      "id": 7,
+      "noun_policy": 0
+    },
+    {
+      "word": "HELP",
+      "id": 8,
+      "noun_policy": 0
+    },
+    {
+      "word": "WAIT",
+      "id": 9,
+      "noun_policy": 0
+    },
+    {
+      "word": "SEARCH",
+      "id": 10,
+      "noun_policy": 2
+    }
+  ],
+  "nouns": [
+    {
+      "word": "LAMP",
+      "id": 1
+    },
+    {
+      "word": "LIGHT",
+      "id": 1
+    },
+    {
+      "word": "KEY",
+      "id": 2
+    },
+    {
+      "word": "NORTH",
+      "id": 3
+    },
+    {
+      "word": "N",
+      "id": 3
+    },
+    {
+      "word": "SOUTH",
+      "id": 4
+    },
+    {
+      "word": "S",
+      "id": 4
+    },
+    {
+      "word": "DOOR",
+      "id": 5
+    },
+    {
+      "word": "ROCK",
+      "id": 6
+    }
+  ]
+}

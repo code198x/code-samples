@@ -1,0 +1,12 @@
+# A reusable two-word adventure parser
+
+Approved design: a complete, vocabulary-driven component, beginning in Spectrum BASIC with a compact Z80 counterpart. No universal-machine API, fixed adventure vocabulary, new dependency, route category or binding-policy change.
+
+1. Reuse existing BASIC/TAP, Z80 snapshot and ROM-input verification transports. Sources live in `sinclair-zx-spectrum/patterns/{basic,assembly}/input/two-word-parser/`. Inventory existing adventure/input coverage before adding pages.
+2. Define a shared semantic contract: ASCII case-insensitive exact aliases, bounded input, at most two space-separated tokens, canonical IDs, verb arity, explicit failures, deterministic reset on every call. Parser recognises vocabulary; caller resolves world objects and rules. Document precedence, ownership, initialisation and limits.
+3. Implement BASIC parser/init, editable vocabulary, complete original three-room caller and Makefile. Validate configuration values and aliases; distinguish malformed DATA interpreter errors from parser results. Verify real ROM-loaded BASIC against an independent command oracle, sequences, alias edits, invalid config and deliberate broken behaviour. Run an actual command through the input UI.
+4. Implement Z80 parser with a declared input/table/state contract and equivalent semantic cases, including no overread/overwrite and consecutive calls. Keep its representation machine-specific; document additional vocabulary and input-editor obligations rather than hide them behind an interpreter.
+5. Add BASIC/assembly Pattern Library entries through CodeFromFile and existing schemas, usable include/init/call examples, status/error table, a complete-game path, cost evidence and branches toward richer parsing. Link naturally to the Adventure study and text-adventure genre. Advanced designs are explicitly alternatives/proposals where no implementation exists.
+6. Verify production build, changed-page desktop/phone reading, code rendering and accessibility. Retain source/observer/tool hashes and evidence. Push linked draft PRs stacked on the routine audit, update tracker117, keep unpublished pending review, and clean task-owned worktrees/processes/downloads after verified remote retention.
+
+Task worktrees: `/tmp/adventure-parser-samples`, `/tmp/adventure-parser-website`; scratch in this chat's `work/adventure-parser`; review deliverables in `outputs/adventure-parser`.
