@@ -152,8 +152,15 @@ label, save the native .amos program, and verify that disk before the independen
 reopen. Boot the original AMOS runtime separately, insert the data disk, then
 Load the program. A snapshot restore is not a native Load test.
 
-Native saving of this larger endpoint remains unqualified: the data-disk
-trial produced an invalid exported filesystem after the media change.
-[Emu198x #1877](https://github.com/emu198x/emu198x/issues/1877) tracks that
-reproduction. The independent reopen described above remains a required check;
-the earlier endpoint’s storage success does not qualify this one.
+The [native storage follow-up](https://github.com/emu198x/docs/tree/a35897e2b965b6ec20063d4e2749bce1d412b1cf/plans/2026-10-19-amiga-native-save-investigation/fix) verifies this larger endpoint on Emu198x
+source `6ff929f366e8762d5d5b9dadf53367b2cc692821`: valid native Save, independent
+cold Load, syntax check, run, roll and bank. The
+[fix](https://github.com/emu198x/emu198x/pull/1881) preserves the disk-change
+notification; the earlier pinned runtime still fails that route. Version 0.34.2
+alone does not identify the corrected build.
+
+In the requester, select the data disk's directory explicitly rather than the
+removed system volume. After loading, return the system disk if AMOS requests
+it for runtime/font access. The audit used scripted host insertion/export;
+a learner-facing setup must explain the host's disk-export operation before
+asking anyone to close a session. No uncoached learner trial is established.
