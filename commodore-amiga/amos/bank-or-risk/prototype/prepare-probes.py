@@ -6,6 +6,15 @@ import json
 from pathlib import Path
 
 CASES = {
+    "die-faces": {
+        "rolls": [1, 2, 3, 4, 5, 6],
+        "actions": "SPACE R R R R SPACE R R SPACE",
+        "expected": (
+            "Faces 1, 2, 3, 4 give totals 1, 3, 6, 10 and bank 10. "
+            "Next round faces 5, 6 give totals 5, 11 and bust; secured 10 stays. "
+            "SPACE starts round 3 with last roll 0 and an empty outline."
+        ),
+    },
     "perfect-success": {
         "rolls": [4, 6, 4, 6, 4, 6],
         "actions": "SPACE R R SPACE R R SPACE R R",
