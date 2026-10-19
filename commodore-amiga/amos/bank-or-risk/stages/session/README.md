@@ -252,9 +252,13 @@ variable names. During active play the current round is BR_DONE+1; after its
 award, the just-completed round is BR_DONE. Do not globally rename BR_DONE to
 BR_TURNNO and expect the display and remaining-round calculation to agree.
 
-A later integration step must explain that conversion or adapt the board to
-this explicit counter, then recheck presentation, sound and storage. The full
-prototype's earlier checks do not qualify an untested join. These sources reach
-the accepted 10/5/30 challenge with a die and replay; they do not add new game
-mechanics or replace public lessons. Human understanding still needs a learner
-trial, and native sound preference still needs human listening review.
+The [presentation guide](../presentation/README.md) adapts the board to this
+explicit counter. It extracts the shared display, groups the values, adds each
+sound cue and introduces a ready screen in separate complete sources. It keeps
+the session loops and fresh-key routine. Use that route to continue; the older
+For-based endpoint is an alternative implementation.
+
+These sources reach the accepted 10/5/30 challenge with a die and replay; they
+do not add new game mechanics or replace public lessons. Human understanding
+still needs a learner trial, and native sound preference still needs human
+listening review.
