@@ -110,6 +110,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
+      - name: Generate the adventure parser vocabulary
+        working-directory: sinclair-zx-spectrum/patterns/assembly/input/two-word-parser
+        run: make build/vocabulary.inc
+
       - name: Build ZX Spectrum assembly files
         run: |
           echo "Building ZX Spectrum assembly files..."
