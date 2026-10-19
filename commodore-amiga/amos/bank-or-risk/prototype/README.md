@@ -2,8 +2,8 @@
 
 **Native rules and input checks pass in the named Emu198x configuration.** The
 text-first prototype implements the accepted first game's limit 10, at most five
-rounds and target 30. It is deliberately silent. Event sounds and replacement lessons remain to be
-developed and checked.
+rounds and target 30. It now includes the explained die, board and short result
+cues. Human listening acceptance and remaining replacement lessons are pending.
 
 The [native execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-emu198x)
 retains scripts, input identities, captures, observations and media checks.
@@ -93,6 +93,17 @@ from revision `b3998ba`; scoring, input and die drawing are identical.
 The [board checkpoints](../stages/README.md#give-this-round-its-own-space) explain
 the layout and exact supplied-state edits.
 
+The [sound record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-sound)
+retains native PCM for the tone variations and bank/bust/success events. Success
+replaces the final bank cue. Seventeen required recording checks pass; the nine
+muted/audible perfect-run screens are byte-identical. Held-key, waiting, invalid
+input, immediate continuation and ready-prompt replay/quit windows are recorded.
+The earliest ending key can be cleared by the existing fresh-choice handover;
+the silent baseline does the same. The audit distinguishes those windows and
+does not claim subjective sound quality or a complete latency bound.
+See the [sound checkpoints](../stages/README.md#hear-one-short-tone) for the
+parameter experiment and complete bank, bust and success versions.
+
 ## Random range and prescribed rolls
 
 The [original Maths chapter](https://amospromanual.dev/05-03-maths.html#rnd)
@@ -111,5 +122,5 @@ a nonempty destination.
 
 The [keyboard chapter](https://amospromanual.dev/10-01-using-the-keyboard.html)
 defines `Inkey$`, `Scancode`, `Key State` and `Clear Key`. Further environments,
-graphics, sounds and teaching stages need their own execution checks. The
+later graphics/sound changes and teaching stages need their own execution checks. The
 separate browser playtest's acceptance does not qualify those additions.
