@@ -124,3 +124,12 @@ The [keyboard chapter](https://amospromanual.dev/10-01-using-the-keyboard.html)
 defines `Inkey$`, `Scancode`, `Key State` and `Clear Key`. Further environments,
 later graphics/sound changes and teaching stages need their own execution checks. The
 separate browser playtest's acceptance does not qualify those additions.
+
+The [endpoint persistence record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-persistence)
+checks native Save As and independent cold-boot Load of the sound-enabled source
+at revision `1fa0675`. The reopened game rolls and banks four points with its
+short cue, then returns to the editor. A separately saved prescribed-roll copy
+compares nine game states and bank/bank/success cues before and after saving.
+The maintained source and fixed-roll copy remain distinct. Licensed media and
+native saved programs are excluded from the public audit. Human listening/play
+acceptance and the learner trial remain pending.
