@@ -85,6 +85,14 @@ its numeric roll. It covers clearing old pips, empty round/replay states and
 retained faces at bank, bust, success and failure. The game change adds only a
 drawing call and routine; the existing scoring and input source is identical.
 
+The [board execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-board)
+checks the grouped round/session display and two supplied-state snapshots.
+Current total, round award and secured points stay distinct; final results
+label any remaining capacity as unused rounds. Only `BR_DRAW_STATE` changes
+from revision `b3998ba`; scoring, input and die drawing are identical.
+The [board checkpoints](../stages/README.md#give-this-round-its-own-space) explain
+the layout and exact supplied-state edits.
+
 ## Random range and prescribed rolls
 
 The [original Maths chapter](https://amospromanual.dev/05-03-maths.html#rnd)
