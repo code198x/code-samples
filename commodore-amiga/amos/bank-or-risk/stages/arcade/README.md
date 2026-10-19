@@ -172,3 +172,7 @@ reopen the native program through the [storage route](../opening/README.md#keep-
 requiring a valid exported filesystem before cold boot. No public lessons are
 replaced. The user's earlier play feedback supports the game; acceptance of
 this new presentation and an uncoached learner trial remain separate work.
+
+The [complete-display stage](complete-display.md) continues from this first
+animation checkpoint. It addresses visible clears and partial redraws by
+building a complete hidden picture before displaying it.
