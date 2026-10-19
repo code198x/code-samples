@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "configuration": "VICE 3.10 PAL C64, monitor-loaded PRG, entered at $0810 after ROM boot; simulated control-port pins",
+  "composition": [
+    {
+      "held": 0,
+      "note_frames": 0,
+      "triggers": 0,
+      "sid_control": 64
+    },
+    {
+      "held": 16,
+      "note_frames": 6,
+      "triggers": 1,
+      "sid_control": 65
+    },
+    {
+      "held": 16,
+      "note_frames": 5,
+      "triggers": 1,
+      "sid_control": 65
+    },
+    {
+      "held": 16,
+      "note_frames": 4,
+      "triggers": 1,
+      "sid_control": 65
+    },
+    {
+      "held": 16,
+      "note_frames": 3,
+      "triggers": 1,
+      "sid_control": 65
+    },
+    {
+      "held": 16,
+      "note_frames": 2,
+      "triggers": 1,
+      "sid_control": 65
+    },
+    {
+      "held": 16,
+      "note_frames": 1,
+      "triggers": 1,
+      "sid_control": 65
+    },
+    {
+      "held": 16,
+      "note_frames": 0,
+      "triggers": 1,
+      "sid_control": 64
+    },
+    {
+      "held": 0,
+      "note_frames": 0,
+      "triggers": 1,
+      "sid_control": 64
+    },
+    {
+      "held": 16,
+      "note_frames": 6,
+      "triggers": 2,
+      "sid_control": 65
+    },
+    {
+      "held": 24,
+      "note_frames": 5,
+      "triggers": 2,
+      "sid_control": 65
+    },
+    {
+      "held": 8,
+      "note_frames": 4,
+      "triggers": 2,
+      "sid_control": 65
+    },
+    {
+      "held": 24,
+      "note_frames": 6,
+      "triggers": 3,
+      "sid_control": 65
+    },
+    {
+      "held": 0,
+      "note_frames": 5,
+      "triggers": 3,
+      "sid_control": 65
+    }
+  ],
+  "turn_cases": 58,
+  "negative_control": "held-state mutation retriggered on second held sample; positive caller did not",
+  "other_machines": "Source assembly/link checks only; no execution claim",
+  "sources": {
+    "commodore-64/patterns/assembly/framework/input-to-sound/demo.asm": "33451927d165d38ac3b14a863a17c482f90efe54b445e2690c7cae9fd6d8fdec",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/use.asm": "28b04208be8eb30d405c0a82f57da0a8a5b759198ba84faaa3a75031853d3fc3",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/check.asm": "bc432e9567fada7cc83485c04853888c0a64749e32b5b6ccf5c8829a8bf829ba",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/presses.inc": "1bbfc9ff4ef40c9eac3738b67b55caff61f228358e1ea228b9a598f939b00273",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/use.asm": "31c60834186a144cddb66fe3348a0a53bdfa41f26b42f5a6ae08898cac9e49de",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/check.asm": "aa004d22cac572ef67cf394f3161af6d2e7e5b4d5b747f6c3c025f5d56ea8f21",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/tone.inc": "44d265544ca5c1e631df9c35d191bcda09c6fdff42f24aba00e3195cfa8430a1",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/input.inc": "5f0c09cff25558981904113065f9f898a42bcad85914e6cde5309ac5da11c1b2",
+    "nintendo-nes/patterns/assembly/framework/input-to-sound/presses.inc": "e6480b3f798c09b6431f9fc2e77c159125892264a07de5d591a30c91504ce74d",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/use.asm": "e3c1a85071c41f9931670984e31c9bd7d022f801e95e1c93a105630c095fa12f",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/check.asm": "eb6a1a5386721162a78753f1e1431c97834c3af07600c38a1ee8f9e6a49f8d4c",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc": "dadc861126e0e37b21ff68a2186fe91ce5d850ed8ed99ea4085baf4f650a643a",
+    "commodore-amiga/patterns/assembly/framework/input-to-sound/presses.inc": "a1b7a5bc00905c171c7cf9ae772fc3121e734c03f9608a84c7790b9332643e1c",
+    "commodore-64/patterns/assembly/ai/local-turn/use.asm": "21c3c8d4a4fd3c638f3fa71742c6a4091f0f6c0643dc8ff677ebf8f028e3507c",
+    "commodore-64/patterns/assembly/ai/local-turn/local-turn.inc": "670a888fc4e3885bcce38220120fee5f54d340c02eace1b0174b66e0282da525"
+  }
+}
