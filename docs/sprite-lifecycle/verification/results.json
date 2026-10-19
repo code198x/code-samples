@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "cases": {
+    "spectrum": {
+      "rectangles": 7,
+      "overlaps": 4
+    },
+    "amiga": {
+      "rectangles": 7,
+      "overlaps": 1
+    },
+    "bbc": {
+      "overlaps": 3
+    }
+  },
+  "rejected_controls": {
+    "spectrum-save": "Spectrum rectangle mismatch",
+    "spectrum-order": "Spectrum overlap/restoration mismatch",
+    "amiga-mask": "Amiga save/draw/restore mismatch: composite",
+    "amiga-order": "Amiga save/draw/restore mismatch: picture",
+    "bbc-order": "BBC overlap/restoration mismatch"
+  },
+  "sources": {
+    "bbc-micro/patterns/assembly/rendering/masked-sprites/masked.inc": "a9a70252a7d387b203989a8d684a48a64ecc2d6bddf0676c3a80c8bf5c39d449",
+    "bbc-micro/patterns/assembly/rendering/sprite-lifecycle/Makefile": "7aa60933465cfa8f9c7a61d89e567fc8565ca0bc8f708571447bae6f54247874",
+    "bbc-micro/patterns/assembly/rendering/sprite-lifecycle/background.inc": "7a9990f5caf559e4559c64b90513907c3e16540cd450ddca5c1c0d41deedc730",
+    "bbc-micro/patterns/assembly/rendering/sprite-lifecycle/demo.asm": "926513494aa56ed56c912998dae60f77f73764dbb5661312986c63b3ef4b726b",
+    "bbc-micro/patterns/assembly/rendering/sprite-lifecycle/loader.py": "bade96de1b3724eaa5f68addd4f0d9099fdf154d507d153c8a1a54595150f329",
+    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce",
+    "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/Makefile": "f33e978773daebdae4327292012d08efca538892ae54b4b5ee8569753baa67a5",
+    "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/bob.inc": "578482e45d445ce1b42be2120ac9c5c9de22249532fc891e2fa1c82a27f340cd",
+    "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/demo.asm": "8ef5eefb9b6fe54dc9560c139fb16dc58009da34d05df23a460a34129a9e734d",
+    "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/shapes.inc": "dc504b3456b7c1c90d1ae01513f5936582776313823b5c858ad3ee1319535633",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-rendering-families.py": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
+    "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/masked-sprites/masked.inc": "344c460f648671a7c0a8deff620629c5f7ae781befe5d7b954bd464a8c1f1f20",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/Makefile": "45894fe9149579009f3eb3f659ee5269c43bfb9f2281b3cb469228cee9124e2e",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/background.inc": "7c090e5c9e6240362c931692880a22aa49fd3457c5383b6b992f4087f50ce50b",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/demo.asm": "5bb785abb73d49d71c8462cb4f27bff0c46968cb8c2514347eae6dca0d5d6dda",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/shapes.inc": "b7c829201861ea6e419f0b820c988144111a7f80802b5f224c0fd5eb72f552d9"
+  },
+  "observer_sha256": "9756dbf035ee59a7cde1a729d8f4290976faf546b3308442eb164c332f743a9e",
+  "tools": {
+    "assembler": "f546f460f43d25ccbf84edffec100b7b2fe1d69b38477dddb88ce1c008ca3570",
+    "build198x": "248bed66d985f433c20f2cfb439a02cb0382a26bc8b44762270d785e80879e93",
+    "spectrum": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+    "bbc": "24efc5795a38306a22e39e111b9ff44e210798b860c5223230e9ab9c774e6faf",
+    "amiga": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb"
+  },
+  "firmware": {
+    "rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+    "mos": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "basic": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "kickstart": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+  },
+  "captures": {
+    "amiga.png": "8f6937e153be0e015ed74f3b08b8024bc01d74b2dd6e72b9b0a7dd85cf77626e",
+    "bbc.png": "07e61325dc409e565afaf662cd04fdb5203b211006c19342d4dd656ca070ca7b",
+    "spectrum.png": "f3ca2f2d4d6a969c2d4fcb3b7949be55f188f42abcd91a8e000f8c1e2c46923f"
+  },
+  "limits": "Execute software-object save/draw/restore against independent byte oracles.\n\nSpectrum 48K CPU fixtures plus ROM tape, BBC Model B/MODE4 and A500 OCS PAL\nwith local Kickstart1.3. No original-hardware, tear-free or whole-game frame\nbudget claim. Firmware stays local; every emulator is closed after its run.\n"
+}
