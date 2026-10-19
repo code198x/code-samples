@@ -10,6 +10,12 @@
         ld ($7002),a
         ld ($7003),a
         ld ($7004),a
+        ld hl,$a000          ; execution-created no-payload guard
+        ld b,16
+seed_guard:
+        ld (hl),$c3
+        inc hl
+        djnz seed_guard
         ld bc,$1ffd
         ld a,$0c             ; motor on; normal ROM/RAM configuration
         out (c),a
