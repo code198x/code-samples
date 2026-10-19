@@ -1,0 +1,32 @@
+name: Probe coverage
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retained-records:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+      - name: Read the pinned emulator registry
+        uses: actions/checkout@v7
+        with:
+          repository: emu198x/emu198x
+          ref: 6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c
+          path: emulator-registry
+          sparse-checkout: docs/status/systems.toml
+          sparse-checkout-cone-mode: false
+      - name: Check every machine and retained source identity
+        run: python scripts/check-probe-coverage.py --registry emulator-registry/docs/status/systems.toml
+      - name: Prove omissions and unsupported claims fail
+        run: python -m unittest discover -s scripts -p test_probe_coverage.py -v

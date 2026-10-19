@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "machine_id": "sega-sg-1000",
+  "startup": "32 KiB homebrew cartridge, reset, default model; no firmware",
+  "server": {
+    "name": "emu198x-sega-sg-1000",
+    "version": "0.34.2"
+  },
+  "untimed_idle_frames": 120,
+  "held_frames_without_repeat": 30,
+  "normal_ticks_in_30_frames": 30,
+  "countdown_before": {
+    "turns": 2,
+    "ticks": 4,
+    "remaining": 116,
+    "timed": 1,
+    "previous": 0,
+    "expiries": 0
+  },
+  "countdown_after": {
+    "turns": 2,
+    "ticks": 34,
+    "remaining": 86,
+    "timed": 1,
+    "previous": 0,
+    "expiries": 0
+  },
+  "expired_without_input": {
+    "turns": 3,
+    "ticks": 122,
+    "remaining": 118,
+    "timed": 1,
+    "previous": 0,
+    "expiries": 1
+  },
+  "action_restarts_deadline": {
+    "turns": 4,
+    "ticks": 124,
+    "remaining": 118,
+    "timed": 1,
+    "previous": 16,
+    "expiries": 1
+  },
+  "timer_disabled_frames": 150,
+  "visible_feedback": {
+    "changed_after_action": true,
+    "restored_after_even_turns": true,
+    "width": 280,
+    "height": 240,
+    "raster_sha256": {
+      "even": "a8c78a98f4c702a729fbc4fc7ad481966364c77d6045fcdc52cdde8feb6b571c",
+      "odd": "7f7544b910f0528a5397a87a10f186978a9d29b1bb1f675a8fa15e61bfabce00"
+    }
+  },
+  "limits": "Default-model emulator evidence; polling collapses missed frame announcements. A deadline is 120 accepted ticks, not a universal two seconds. No original hardware, rendered tile/sprite path or whole-emulator claim.",
+  "emulator_sha256": "543eb853c9e58b0ff87146028a474ef085e2c03a47a78e6bb89496cf76d2d848",
+  "binary_sha256": "67edd64b8bb017a5a8a90de59e34fa40da56d4ae48ee4448a818871e028ba8f0",
+  "sources_sha256": {
+    "sega-sg-1000/patterns/assembly/framework/turn-deadline/demo.asm": "540fb48a7a960b603c261eeda0543f30e6c14e0284675267465966130b1bf0fb",
+    "sega-sg-1000/patterns/assembly/framework/turn-deadline/frame.inc": "dadd35ee72520ea54ae8608077462421793fd11964f29c76c65579ddaa590deb",
+    "sega-sg-1000/patterns/assembly/framework/turn-deadline/Makefile": "a80f886b3cba0ae31876750cc5086c827b1f2425bbecbb51f76e6efa4815885b",
+    "cross-platform/assembly/framework/turn-deadline/turn.inc": "a03f3c309e58889da667cabca145105d407a37cef6cbb04baf751dcd7b89c4cc",
+    "scripts/build-sega-probe.py": "ea7f375b2c9f7549e9bcc0add9db92218f624d43f727e68c27074bb1c7465a2b",
+    "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "negative_controls": {
+    "no-wait": {
+      "rejected": true,
+      "observed_delta": 1660
+    },
+    "no-edge": {
+      "rejected": true,
+      "observed_delta": 5318
+    }
+  }
+}
