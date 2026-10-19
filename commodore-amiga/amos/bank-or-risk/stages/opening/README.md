@@ -56,7 +56,13 @@ saving does not turn that original file into the native program.
 
 Export the modified work disk to a new disk-image file if using the checked
 Emu198x route. Guest writes stay in emulator memory until exported. The audit
-uses its `save_disk` tool and records the sidecar output name. Keep that export.
+uses its `save_disk` tool and records the sidecar output name. Let guest disk
+activity finish before exporting. In that tool route, validate the exported
+filesystem before closing the edited session: the check confirms that file
+contents and the disk's bookkeeping agree. A closed Save As requester alone
+does not establish this. If validation fails, preserve the edited session,
+allow pending writes to finish and export again to a new path. Keep the verified
+export.
 Then end the session, start AMOS from the exported work disk and use **Load**
 (Amiga+L) to open `welcome.amos`. F2 and F1 should show the changed question.
 Loading the old ASCII source or restoring the edited session would not check
@@ -237,8 +243,9 @@ finish automatically. With `BR_FACE=6`, two presses show total 12, last roll 6
 and award 0. Restore the random assignment afterwards. These deliberate
 suppliers are not hidden random results and do not require DATA or a generator.
 
-This round is a useful checkpoint, not the finished game's challenge. Keeping
-secured points across rounds, awarding once, counting completed rounds, testing
-the target and impossibility, and replaying a session still need their own
-teaching sources. Existing board and sound checkpoints fit after those values
-and transitions are explained. Human beginner understanding still needs a trial.
+This round is a useful checkpoint, not the finished game's challenge. Continue
+with the [session checkpoints](../session/README.md) for keeping secured points,
+awarding once, counting completed rounds, testing the target and impossibility,
+and replaying. Those complete sources separate next-round continuation from
+scoring. The presentation join still needs its own teaching step and native
+checks. Human beginner understanding still needs a trial.
