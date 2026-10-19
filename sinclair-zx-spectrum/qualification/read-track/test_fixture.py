@@ -4,7 +4,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from fixture import cases, command, make
+from fixture import cases, command, make, missing_entry_case
 
 
 class FixtureTests(unittest.TestCase):
@@ -39,6 +39,20 @@ class FixtureTests(unittest.TestCase):
             map(int, source.read_text().strip().removeprefix("db ").split(","))
         )
         self.assertEqual(values, command(cases()[0]))
+
+    def test_missing_entry_is_zero_table_and_no_track_block(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        image = make(bytes(base), missing_entry_case())
+        self.assertEqual(image[48:50], base[48:50])
+        self.assertEqual(image[52:91], bytes([19]) * 39)
+        self.assertEqual(image[91:256], bytes(165))
+        self.assertEqual(len(image), 256 + 39 * 4864)
+        for cylinder in range(39):
+            start = 256 + cylinder * 4864
+            self.assertEqual(
+                image[start + 256 : start + 4864], base[start + 256 : start + 4864]
+            )
 
     def test_wrong_base_rejected(self) -> None:
         for value in (b"", bytes(194816), b"MV - CPC"):

@@ -33,6 +33,18 @@ def cases() -> list[dict]:
     ]
 
 
+def missing_entry_case() -> dict:
+    """Valid EDSK omission; decoded as an empty track, not a raw missing DAM."""
+    return {
+        "id": "missing-entry",
+        "n": 2,
+        "dtl": 255,
+        "fields": [],
+        "eot": 1,
+        "missing_entry": True,
+    }
+
+
 def command(case: dict) -> list[int]:
     return [0x42, 0, 39, 0, 1, case["n"], case["eot"], 42, case["dtl"]]
 
@@ -50,6 +62,10 @@ def make(base: bytes, case: dict) -> bytes:
         for sector in range(9):
             boot[30 + 8 * sector : 32 + 8 * sector] = bytes([0, 2])
         tracks.append(bytes(boot))
+    if case.get("missing_entry"):
+        for i, data in enumerate(tracks):
+            header[52 + i] = len(data) // 256
+        return bytes(header) + b"".join(tracks)
     track = bytearray(256)
     track[:12] = b"Track-Info\r\n"
     track[16:18] = bytes([39, 0])

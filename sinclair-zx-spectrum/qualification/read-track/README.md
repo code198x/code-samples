@@ -31,3 +31,14 @@ model. They do not establish physical timing, raw gaps/flux or all Read Track
 semantics. Firmware is never included.
 
 Run fixture checks here with `python3.14 -m unittest test_fixture`.
+
+
+The v2 umbrella campaign also calls the additive `missing_entry_case()` fixture.
+Its track39 EDSK table entry is zero and there is no track block. This is a valid
+container omission decoded as an empty track placeholder, not a raw missing DAM
+or ID mark. The guest seeds16 bytes of $c3 at $a000 before command service. The
+new case must return zero payload bytes, leave those guards unchanged, drain
+seven result bytes, recover with a real next command and signal completion.
+The existing `cases()` list and checked-in N0/DTL1 default remain unchanged.
+The missing-entry raw reference result is recorded separately from the released
+Emu regression expectation; no physical search-time or chip equivalence follows.
