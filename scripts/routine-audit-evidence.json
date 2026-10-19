@@ -1,0 +1,264 @@
+[
+  {
+    "name": "z80",
+    "record": "docs/audit/2026-10-19-pattern-routines/z80.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-z80-library-routines.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/input/keyboard-reading/keyboard-code.inc",
+        "record_keys": [
+          "cases",
+          0,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/character-printing/characters.inc",
+        "record_keys": [
+          "cases",
+          1,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/attribute-writing/attributes.inc",
+        "record_keys": [
+          "cases",
+          2,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/masked-sprites/masked.inc",
+        "record_keys": [
+          "cases",
+          3,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/numeric-display/numeric.inc",
+        "record_keys": [
+          "cases",
+          4,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "cross-platform/patterns/rendering/sprite-animation/z80.inc",
+        "record_keys": [
+          "cases",
+          5,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc",
+        "record_keys": [
+          "input_dependency_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc",
+        "record_keys": [
+          "bitmap_dependency_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "basic",
+    "record": "docs/audit/2026-10-19-pattern-routines/basic.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-basic-library-routines.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/text-utilities.bas",
+        "record_keys": [
+          "routines",
+          0,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/progress-bar.bas",
+        "record_keys": [
+          "routines",
+          1,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/screen-frame.bas",
+        "record_keys": [
+          "routines",
+          2,
+          "source_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/basic/seven-segment-digits.bas",
+        "record_keys": [
+          "routines",
+          3,
+          "source_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "amiga-lines",
+    "record": "docs/audit/2026-10-19-pattern-routines/amiga-lines.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-amiga-library-routines.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/rendering/blitter-line-draw/line.inc",
+        "record_keys": [
+          "source_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "amiga-music",
+    "record": "docs/audit/2026-10-19-pattern-routines/amiga-music.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-amiga-music.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/audio/four-channel-music/demo.asm",
+        "record_keys": [
+          "sources",
+          "commodore-amiga/patterns/assembly/audio/four-channel-music/demo.asm"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/audio/four-channel-music/music.inc",
+        "record_keys": [
+          "sources",
+          "commodore-amiga/patterns/assembly/audio/four-channel-music/music.inc"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc",
+        "record_keys": [
+          "sources",
+          "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "nes-movement",
+    "record": "docs/audit/2026-10-19-pattern-routines/nes-movement.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-nes-movement.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "nintendo-entertainment-system/patterns/assembly/physics/sprite-movement-bounds/movement.inc",
+        "record_keys": [
+          "source_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "c64-scroll",
+    "record": "docs/audit/2026-10-19-pattern-routines/c64-scroll.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-c64-scroll.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "commodore-64/patterns/assembly/rendering/smooth-scrolling/scroll.inc",
+        "record_keys": [
+          "source_sha256"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "spectrum-states",
+    "record": "docs/audit/2026-10-19-pattern-routines/spectrum-states.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-spectrum-states.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/framework/state-machine-loop/demo.asm",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/framework/state-machine-loop/demo.asm"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc"
+        ]
+      },
+      {
+        "path": "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc",
+        "record_keys": [
+          "sources",
+          "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "amiga-edges",
+    "record": "docs/audit/2026-10-19-pattern-routines/amiga-edges.json",
+    "bindings": [
+      {
+        "path": "scripts/verify-amiga-edges.py",
+        "record_keys": [
+          "observer_sha256"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/input/joystick-edge-detection/edges.inc",
+        "record_keys": [
+          "sources",
+          "commodore-amiga/patterns/assembly/input/joystick-edge-detection/edges.inc"
+        ]
+      },
+      {
+        "path": "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc",
+        "record_keys": [
+          "sources",
+          "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc"
+        ]
+      }
+    ]
+  }
+]
