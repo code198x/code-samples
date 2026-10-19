@@ -2,8 +2,7 @@
 
 **Native rules and input checks pass in the named Emu198x configuration.** The
 text-first prototype implements the accepted first game's limit 10, at most five
-rounds and target 30. It is deliberately silent. Die artwork, palette/readability
-work, event sounds and replacement lessons remain to be developed and checked.
+rounds and target 30. It is deliberately silent. Die artwork, event sounds and replacement lessons remain to be developed and checked.
 
 The [native execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-emu198x)
 retains scripts, input identities, captures, observations and media checks.
@@ -37,12 +36,14 @@ The original names included `READ_FRESH`, `DRAW_STATE`, `MAXTURN`, `TOTAL` and
 `REMAIN`; native tokenisation exposed command-prefix collisions. The reduced
 failure and successful naming probe are retained in the execution record.
 See the original manual's [naming rules](https://amospromanual.dev/05-01-the-bare-bones.html).
-Removing the prefixes reproduces the original source exactly; scoring and input
-logic are unchanged.
+The naming correction preserved scoring and input logic. The subsequent palette
+change adds only `Palette $000,$FFF` before `Paper 0` and `Pen 1`: entry 0 is
+black and entry 1 is white, so text does not inherit the editor palette.
 
 ## Native checks
 
-Four prescribed-roll copies were imported and run through AMOS:
+At samples revision `0c55096`, four prescribed-roll copies were imported and run
+through AMOS:
 
 - Three perfect rounds secure 30 and end successfully in round 3.
 - Contributions 4, 0, 6, 10, 10 recover to 30 on round 5. The bust displays 11,
@@ -54,7 +55,7 @@ Additional checks cover B and invalid input at zero, a stable result, replay,
 held/released keys, ordinary random play and quit from each phase. Save As
 created a 3,728-byte native `bank.amos`; the exported work disk passed filesystem
 verification. A separate cold boot loaded that saved file through native Load,
-ran it, rolled and banked, then returned to the editor. That persistence check
+ran it, rolled and banked, then returned to the editor. That persistence check at revision `0c55096`
 uses the saved program, not restoration of the original edited session.
 
 The original AMOS input disk fails a bitmap-bounds check and the first Save
@@ -64,6 +65,13 @@ plus this source, mounted writable in emulator memory from boot. The pass did
 not isolate those two setup changes as causes of the earlier failure. Original
 media was not modified or redistributed. Use a verified writable work disk for
 saving; the audit gives the reproducible route and exact limits.
+
+The [palette execution record](https://github.com/code198x/docs/tree/amiga-course-and-tooling-briefs/audit/2026-10-amos-bank-or-risk-palette)
+checks the explicit black/white palette in the same native configuration. The
+maintained source and two prescribed-roll copies pass syntax checking. Title,
+active play, bank, bust and success screens retain readable text and numbers.
+The source diff from `0c55096` is exactly the palette statement; the historical
+save/reopen result above applies to that earlier revision.
 
 ## Random range and prescribed rolls
 
