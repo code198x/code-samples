@@ -1,0 +1,5 @@
+Cls 0
+Print "BANK OR RISK"
+Print "Can you secure 30 points?"
+Wait Key
+End

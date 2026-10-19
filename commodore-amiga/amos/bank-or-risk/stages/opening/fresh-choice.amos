@@ -1,0 +1,27 @@
+Hide
+Curs Off
+Palette $000,$FFF
+Paper 0
+Pen 1
+Cls 0
+BR_LASTSC=-1
+BR_COUNT=0
+Print "R counts a fresh press. Q quits."
+Repeat
+   If BR_LASTSC>=0
+      Repeat
+         Wait Vbl
+      Until Key State(BR_LASTSC)=0
+   End If
+   Clear Key
+   Repeat
+      BR_K$=Upper$(Inkey$)
+      Wait Vbl
+   Until BR_K$<>""
+   BR_LASTSC=Scancode
+   If BR_K$="R" Then BR_COUNT=BR_COUNT+1
+   Locate 0,3
+   Print "Accepted R presses: ";BR_COUNT
+Until BR_K$="Q"
+Show
+End

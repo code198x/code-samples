@@ -1,0 +1,5 @@
+Cls 0
+Print "BANK OR RISK"
+Print "Bank points or risk another roll."
+Wait Key
+End

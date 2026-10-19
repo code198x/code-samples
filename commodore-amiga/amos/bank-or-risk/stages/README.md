@@ -1,6 +1,7 @@
 # Draw a die, then match its face
 
-These are two small AMOS programs from the bank-or-risk opening. The first draws
+Begin with the [message-to-one-round route](opening/README.md) if you are new to
+AMOS. These are two small AMOS programs from the bank-or-risk opening. The first draws
 one fixed pip. The second draws a supplied number from 1 to 6. Neither rolls a
 random die or plays a game. The [prototype](../prototype/README.md) connects the
 picture to the stored roll without adding rules.
@@ -81,8 +82,9 @@ as a new roll.
 The original AMOS Professional Manual's [Graphics chapter](https://amospromanual.dev/06-04-graphics.html)
 defines the coordinate system, `Ink`, `Box`, `Bar` and palette notation. Its
 [Keyboard chapter](https://amospromanual.dev/10-01-using-the-keyboard.html)
-defines `Wait Key`. These checked fragments are authoring material; the full
-beginner route still needs the earlier message/save steps and later game steps.
+defines `Wait Key`. These checked fragments are authoring material. The
+[opening checkpoints](opening/README.md) supply the earlier message/save and
+input route through one round; later session-scoring steps remain separate work.
 
 ## Give this round its own space
 
