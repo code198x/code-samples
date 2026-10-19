@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "observations": [
+    {
+      "state": 0,
+      "game_ticks": 0
+    },
+    {
+      "state": 1,
+      "game_ticks": 7
+    },
+    {
+      "state": 1,
+      "game_ticks": 27
+    },
+    {
+      "state": 3,
+      "game_ticks": 36
+    },
+    {
+      "state": 3,
+      "game_ticks": 36
+    },
+    {
+      "state": 1,
+      "game_ticks": 43
+    },
+    {
+      "state": 2,
+      "game_ticks": 52
+    },
+    {
+      "state": 0,
+      "game_ticks": 52
+    },
+    {
+      "state": 0,
+      "game_ticks": 52
+    },
+    {
+      "state": 1,
+      "game_ticks": 7
+    }
+  ],
+  "sources": {
+    "sinclair-zx-spectrum/patterns/assembly/framework/state-machine-loop/demo.asm": "1b2b9b8cde5a81425ac0ab99849e44a85f1dcc4809ff978cfdce596af52f14c9",
+    "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc": "e71788e7988d26c0a681cdded7c5d8aa93ae898a98e25939c9b4c04c4ce05233",
+    "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda"
+  },
+  "observer_sha256": "9a098f1c8ed2a8d0d5f9f2a61ae3e899d2caac670d169208fbe9e2290adf7d5c",
+  "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+  "limits": "48K ROM TAP loading, real Q/Space, state transitions and held/released behaviour. Not a complete game, elapsed-time clock, OS-return or original-hardware qualification."
+}
