@@ -61,6 +61,11 @@ jobs:
         run: |
           python scripts/check-sprite-clipping.py
           python -m unittest discover -s scripts -p test_sprite_clipping.py -v
+      - name: Verify prepared assets and phase evidence bindings
+        run: |
+          python cross-platform/patterns/rendering/pre-shifted-sprites/verification/verify.py --output "$RUNNER_TEMP/pattern-evidence/prepared-phases.json"
+          python scripts/check-sprite-phases.py
+          python -m unittest discover -s scripts -p test_sprite_phases.py -v
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -135,6 +140,8 @@ jobs:
         run: python scripts/verify-z80-adventure-parser.py --emulator "$RUNNER_TEMP/pattern-tools/bin/emu198x-spectrum" --output "$RUNNER_TEMP/pattern-evidence/adventure-parser"
       - name: Execute signed clipping and cropped-image checks
         run: python scripts/verify-spectrum-clipping.py --emulator emu198x-spectrum --output "$RUNNER_TEMP/pattern-evidence/spectrum-clipping"
+      - name: Execute pixel-positioned phase checks
+        run: python scripts/verify-spectrum-phases.py --emulator emu198x-spectrum --output "$RUNNER_TEMP/pattern-evidence/spectrum-phases"
       - name: Record the released tool combination and host
         shell: bash
         run: |
@@ -164,6 +171,7 @@ jobs:
             ${{ runner.temp }}/pattern-evidence/spectrum/results.json
             ${{ runner.temp }}/pattern-evidence/spectrum-release-inputs.json
             ${{ runner.temp }}/pattern-evidence/spectrum-clipping/results.json
+            ${{ runner.temp }}/pattern-evidence/spectrum-phases/results.json
             ${{ runner.temp }}/pattern-evidence/adventure-parser/results.json
             ${{ runner.temp }}/pattern-evidence/sprite-lifecycle/results.json
           if-no-files-found: error

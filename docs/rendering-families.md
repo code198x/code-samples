@@ -8,10 +8,10 @@ Shared family entries connect machine-specific code; absence of an implementatio
 - C64 fine/coarse text scrolling: reuse the existing maintained routine and PAL memory/register evidence. Coarse-step presentation budgeting remains open.
 - NES nametable scrolling: new include and complete NTSC NROM scene; 512-pixel repeating world, no endless column/attribute streaming. Retains the original website route.
 - C64 hardware sprites and fixed-band multiplexer: reuse their existing per-configuration evidence. They are not arbitrary-Y scheduling or same-line over-capacity.
-- Spectrum masked sprite: reuse the maintained drawing primitive with the new explicit-buffer rectangle helpers and a two-object save/draw/restore caller. Aligned 16x16 clipping now has a separate executed wrapper; arbitrary pixel shifts and attribute restoration remain open.
+- Spectrum masked sprite: reuse the maintained drawing primitive with the new explicit-buffer rectangle helpers and a two-object save/draw/restore caller. Aligned 16x16 clipping now has a separate executed wrapper; prepared 16x16 pixel phases are now executed; runtime shifting and attribute restoration remain open.
 - NES OAM builder: new complete-page packing, hiding, validation and optional rotation. Sixty-four slots do not remove the eight-entry scanline limit. Single-tile 8x8 objects only.
-- BBC Micro MODE4 masked object: new byte-aligned 8x8 primitive, one save slot and complete MOS-synchronised caller. A separate 16x16 clipped wrapper covers the full normal MODE4 mapping; other mappings/modes need their own checks.
-- Amiga: new word-aligned one-plane blitter save/draw/restore routines and an executed A500 OCS PAL caller. The existing shifted cookie-cut and hardware-sprite-control entries remain illustrative; word-aligned one-plane clipping now has a separate executed wrapper; complete scrolling, shifted/colour bobs and sprite DMA reuse remain gaps.
+- BBC Micro MODE4 masked object: new byte-aligned 8x8 primitive, one save slot and complete MOS-synchronised caller. A separate 16x16 clipped wrapper covers the full normal MODE4 mapping; prepared eight-phase pixel positioning is now executed; other mappings/modes need their own checks.
+- Amiga: new word-aligned one-plane blitter save/draw/restore routines and an executed A500 OCS PAL caller. The existing shifted cookie-cut and hardware-sprite-control entries remain illustrative; word-aligned one-plane clipping now has a separate executed wrapper; prepared sixteen-phase pixel positioning is now executed; complete scrolling, hardware-shifted/colour bobs and sprite DMA reuse remain gaps.
 
 ## Every currently probed machine
 
@@ -20,7 +20,7 @@ This table records reusable-family coverage, not a hardware support matrix. For 
 | Registry machine | Scrolling | Sprites |
 | --- | --- | --- |
 | `acorn-atom` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
-| `acorn-bbc-micro` | Complete scrolling caller remains open; MOS loop is a scheduling building block. | MODE4 byte-aligned drawing and explicit-buffer overlapping-object lifecycle executed; aligned 16x16 clipping executed; pixel shifts and CRTC-aware mapping open. |
+| `acorn-bbc-micro` | Complete scrolling caller remains open; MOS loop is a scheduling building block. | MODE4 byte-aligned drawing and explicit-buffer overlapping-object lifecycle executed; aligned 16x16 clipping executed; prepared pixel phases executed; runtime shifts and CRTC-aware mapping open. |
 | `acorn-electron` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `amstrad-cpc` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `atari-2600` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
@@ -28,7 +28,7 @@ This table records reusable-family coverage, not a hardware support matrix. For 
 | `atari-7800` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `atari-800xl` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `coleco-colecovision` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
-| `commodore-amiga` | Complete scrolling caller remains open; existing blitter-copy listing illustrative. | New word-aligned bob lifecycle executed; sprite-control/shifted listings remain illustrative, and word-aligned one-plane clipping executed; DMA reuse/colour/shifts remain open. |
+| `commodore-amiga` | Complete scrolling caller remains open; existing blitter-copy listing illustrative. | New word-aligned bob lifecycle executed; sprite-control/shifted listings remain illustrative, and word-aligned one-plane clipping executed; prepared pixel phases executed; DMA reuse/colour/hardware shifts remain open. |
 | `commodore-c64` | Existing fine/coarse shift: memory/register evidence; presentation budget open. | Existing hardware sprites and fixed two-band multiplexing: PAL/NTSC evidence; arbitrary-Y scheduler open. |
 | `commodore-pet` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `commodore-vic-20` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
@@ -43,7 +43,7 @@ This table records reusable-family coverage, not a hardware support matrix. For 
 | `sega-game-gear` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `sega-master-system` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `sega-sg-1000` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
-| `sinclair-zx-spectrum` | Pixel-band scroll: new code and execution; full map/attribute streamer remains open. | Masked drawing plus explicit-buffer rectangle restoration executed; aligned clipping executed; pre-shifting and attribute restoration remain open. |
+| `sinclair-zx-spectrum` | Pixel-band scroll: new code and execution; full map/attribute streamer remains open. | Masked drawing plus explicit-buffer rectangle restoration executed; aligned clipping executed; prepared pixel phases executed; runtime shifting and attribute restoration remain open. |
 | `sinclair-zx80` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `sinclair-zx81` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
 | `sord-m5` | No dedicated implementation in this tranche; inventory and qualify the display path. | No dedicated implementation in this tranche; inventory hardware limits and software alternatives. |
@@ -65,3 +65,5 @@ verification/results.json records independent bitmap, OAM and background-restora
 Do not confuse a correct memory transformation, a running screenshot and a measured frame deadline. Account for the full update, including coarse boundaries, interrupt service, audio and object removal. Advanced branches need concrete code and their own workload evidence before being labelled implemented.
 
 [Clipping verification](sprite-clipping/verification/results.json) adds signed interval and cropped-image checks without changing the existing rendering or lifecycle records.
+
+[Prepared-phase verification](sprite-phases/verification/results.json) records all pixel phases, native galleries, source-bank preservation and rejected phase/stride/signed-division variants. Prepared phases and runtime/hardware shifting are separate implementations with different memory and integration costs.
