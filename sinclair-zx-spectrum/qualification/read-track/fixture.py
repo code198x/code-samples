@@ -64,6 +64,20 @@ def n2_dtl_cases() -> list[dict]:
     ]
 
 
+def n0_dtl_cases() -> list[dict]:
+    """Complete the N0 DTL boundary values beside existing DTL1/127."""
+    return [
+        {
+            "id": f"n0-dtl{dtl}",
+            "n": 0,
+            "dtl": dtl,
+            "fields": [(1, 0, 128, 33)],
+            "eot": 1,
+        }
+        for dtl in (0, 128, 255)
+    ]
+
+
 def command(case: dict) -> list[int]:
     return [0x42, 0, 39, 0, 1, case["n"], case["eot"], 42, case["dtl"]]
 

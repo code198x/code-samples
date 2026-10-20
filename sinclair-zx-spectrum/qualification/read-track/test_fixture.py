@@ -9,6 +9,7 @@ from fixture import (
     command,
     make,
     missing_entry_case,
+    n0_dtl_cases,
     n2_dtl_cases,
     reverse_size_case,
 )
@@ -87,6 +88,24 @@ class FixtureTests(unittest.TestCase):
             image[start + 24 : start + 32], bytes([39, 0, 1, 2, 0, 0, 0, 2])
         )
         self.assertEqual(image[start + 256 : start + 768], bytes([33]) * 512)
+
+    def test_all_five_n0_dtl_values_share_the_same_sector(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        variants = [*cases()[:2], *n0_dtl_cases()]
+        self.assertEqual(
+            sorted(command(case)[-1] for case in variants), [0, 1, 127, 128, 255]
+        )
+        reference = variants[0]
+        for case in variants:
+            self.assertEqual(command(case)[:-1], command(reference)[:-1])
+            image = make(bytes(base), case)
+            self.assertEqual(image, make(bytes(base), reference))
+            start = 256 + 39 * 4864
+            self.assertEqual(
+                image[start + 24 : start + 32], bytes([39, 0, 1, 0, 0, 0, 128, 0])
+            )
+            self.assertEqual(image[start + 256 : start + 384], bytes([33]) * 128)
 
     def test_wrong_base_rejected(self) -> None:
         for value in (b"", bytes(194816), b"MV - CPC"):

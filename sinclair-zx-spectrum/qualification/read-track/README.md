@@ -55,3 +55,9 @@ with 512 represented bytes of $21, commanded as N2 with DTL255 and DTL1.
 The native test track is identical; only the last guest command byte differs.
 The umbrella campaign checks every byte, all seven results and command recovery,
 and compares the pair within each runtime. This is bounded sector-image evidence.
+
+`n0_dtl_cases()` completes the v5 N0 DTL boundary values: 0, 128 and 255,
+beside the existing 1 and 127 cases. All five use identical recorded N0 fields
+with 128 represented bytes of $21; only the final guest command byte changes.
+The umbrella checks every returned byte, seven results and recovery, then
+compares the five cases within each runtime. Hardware timing remains unqualified.
