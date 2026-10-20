@@ -1,7 +1,7 @@
 ; SPDX-License-Identifier: MIT
 ; Original reset caller, not manufacturer firmware or an OS-loaded program.
 *=$e000
-BP=$0070
+BP=$70
 COMMAND=$0800
 PIXEL_WIDTH=320
 PIXEL_HEIGHT=200
