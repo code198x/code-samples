@@ -111,10 +111,30 @@ def verify(root: Path) -> int:
                         oracle.PNG.raster(png) != oracle.expected_pixels(cfg),
                         "Negative control passed pixel oracle",
                     )
+    bitmap_ids = (
+        {
+            c["machine_id"]
+            for c in json.loads(
+                (
+                    root
+                    / "cross-platform/patterns/rendering/bitmap-regions/systems.json"
+                ).read_text()
+            )
+        }
+        if (
+            root / "cross-platform/patterns/rendering/bitmap-regions/systems.json"
+        ).exists()
+        else set()
+    )
     for row in inventory:
         if row["machine_id"] not in ids:
             require(
-                row["region_drawing"]["status"] == "not-yet-qualified",
+                row["region_drawing"]["status"]
+                == (
+                    "executed-cpu-bitmap"
+                    if row["machine_id"] in bitmap_ids
+                    else "not-yet-qualified"
+                ),
                 "Unexecuted machine promoted",
             )
     return len(ids)

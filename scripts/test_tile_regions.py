@@ -25,6 +25,7 @@ class RegionEvidenceFailures(unittest.TestCase):
         files = {
             "docs/tilemaps/coverage.json",
             "docs/capability-coverage.json",
+            "cross-platform/patterns/rendering/bitmap-regions/systems.json",
             "scripts/verify-tile-regions.py",
             "scripts/verify-tilemaps.py",
             "scripts/verify-game-loops.py",
@@ -57,6 +58,9 @@ class RegionEvidenceFailures(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.temp.cleanup()
+
+    def test_unmodified_evidence_passes(self) -> None:
+        self.assertEqual(G.verify(self.root), 9)
 
     def test_changed_kernel_fails(self) -> None:
         p = self.root / "cross-platform/patterns/rendering/tile-region/region.inc"

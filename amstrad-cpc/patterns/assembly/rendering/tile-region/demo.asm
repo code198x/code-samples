@@ -1,0 +1,460 @@
+org 0
+NR equ 17280
+RESULT equ 17152
+MAP equ 17648
+MAP_W equ 12
+MAP_H equ 8
+TILE_COUNT equ 4
+CELL_BYTES equ 2
+SCREEN_COLS equ 40
+SCREEN_ROWS equ 25
+X_STEP equ 2
+start:
+    di
+    ld sp,$bf00
+    ; MODE 1; upper ROM disabled, lower ROM remains for this reset fixture.
+    ld bc,$7f89
+    out (c),c
+    ld bc,$bc00
+    out (c),c
+    ld bc,$bd3f
+    out (c),c
+    ld bc,$bc01
+    out (c),c
+    ld bc,$bd28
+    out (c),c
+    ld bc,$bc02
+    out (c),c
+    ld bc,$bd2e
+    out (c),c
+    ld bc,$bc03
+    out (c),c
+    ld bc,$bd8e
+    out (c),c
+    ld bc,$bc04
+    out (c),c
+    ld bc,$bd26
+    out (c),c
+    ld bc,$bc05
+    out (c),c
+    ld bc,$bd00
+    out (c),c
+    ld bc,$bc06
+    out (c),c
+    ld bc,$bd19
+    out (c),c
+    ld bc,$bc07
+    out (c),c
+    ld bc,$bd1e
+    out (c),c
+    ld bc,$bc08
+    out (c),c
+    ld bc,$bd00
+    out (c),c
+    ld bc,$bc09
+    out (c),c
+    ld bc,$bd07
+    out (c),c
+    ld bc,$bc0a
+    out (c),c
+    ld bc,$bd00
+    out (c),c
+    ld bc,$bc0b
+    out (c),c
+    ld bc,$bd00
+    out (c),c
+    ld bc,$bc0c
+    out (c),c
+    ld bc,$bd30
+    out (c),c
+    ld bc,$bc0d
+    out (c),c
+    ld bc,$bd00
+    out (c),c
+    ld bc,$7f00
+    out (c),c
+    ld c,84
+    out (c),c
+    ld bc,$7f01
+    out (c),c
+    ld c,75
+    out (c),c
+    ld bc,$7f02
+    out (c),c
+    ld c,82
+    out (c),c
+    ld bc,$7f03
+    out (c),c
+    ld c,85
+    out (c),c
+    ld bc,$7f10
+    out (c),c
+    ld c,$54
+    out (c),c
+    ld hl,$c000
+    ld de,$c001
+    ld bc,$3fff
+    ld (hl),0
+    ldir
+    ld hl,initial_map
+    ld de,MAP
+    ld bc,96
+    ldir
+    ld a,$a5
+    ld (MAP+96),a
+    ld hl,$bff0
+    ld b,16
+clear_guard:
+    ld (hl),a
+    inc hl
+    djnz clear_guard
+case_0:
+    ld a,2
+    ld (NR+0),a
+    ld a,1
+    ld (NR+1),a
+    ld a,4
+    ld (NR+2),a
+    ld a,3
+    ld (NR+3),a
+    ld a,5
+    ld (NR+4),a
+    ld a,3
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+1),a
+case_1:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,6
+    ld (NR+2),a
+    ld a,4
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+2),a
+case_2:
+    ld a,11
+    ld (NR+0),a
+    ld a,7
+    ld (NR+1),a
+    ld a,39
+    ld (NR+2),a
+    ld a,24
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+3),a
+case_3:
+    ld a,12
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+4),a
+case_4:
+    ld a,0
+    ld (NR+0),a
+    ld a,8
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+5),a
+case_5:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,40
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+6),a
+case_6:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,25
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+7),a
+case_7:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,0
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+8),a
+case_8:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,0
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+9),a
+case_9:
+    ld a,11
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,2
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+10),a
+case_10:
+    ld a,0
+    ld (NR+0),a
+    ld a,7
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,2
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+11),a
+case_11:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,39
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,2
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+12),a
+case_12:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,24
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,2
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+13),a
+case_13:
+    ld a,255
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,2
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+14),a
+case_14:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,255
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,2
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+15),a
+case_15:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,255
+    ld (NR+3),a
+    ld a,1
+    ld (NR+4),a
+    ld a,2
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+16),a
+case_16:
+    ld a,0
+    ld (NR+0),a
+    ld a,0
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,255
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+17),a
+case_17:
+    ld a,255
+    ld (MAP+13),a
+    ld a,0
+    ld (NR+0),a
+    ld a,1
+    ld (NR+1),a
+    ld a,0
+    ld (NR+2),a
+    ld a,0
+    ld (NR+3),a
+    ld a,2
+    ld (NR+4),a
+    ld a,1
+    ld (NR+5),a
+    call region_draw
+    ld a,(NR+6)
+    or 128
+    ld (RESULT+18),a
+diagnostic_done:
+    ld a,239
+    ld (RESULT),a
+finished:
+    halt
+    jp finished
+include "../../../../../cross-platform/patterns/rendering/bitmap-regions/z80.inc"
+initial_map:
+db 0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1,0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1,0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1,0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1
+TILES:
+db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+db 160,160,80,80,160,160,80,80,160,160,80,80,160,160,80,80
+db 15,15,8,1,8,1,8,1,8,1,8,1,8,1,15,15
+db 136,17,68,34,34,68,17,136,17,136,34,68,68,34,136,17
+bitmap_lo:
+db 0,0,0,0,0,0,0,0,80,80,80,80,80,80,80,80
+db 160,160,160,160,160,160,160,160,240,240,240,240,240,240,240,240
+db 64,64,64,64,64,64,64,64,144,144,144,144,144,144,144,144
+db 224,224,224,224,224,224,224,224,48,48,48,48,48,48,48,48
+db 128,128,128,128,128,128,128,128,208,208,208,208,208,208,208,208
+db 32,32,32,32,32,32,32,32,112,112,112,112,112,112,112,112
+db 192,192,192,192,192,192,192,192,16,16,16,16,16,16,16,16
+db 96,96,96,96,96,96,96,96,176,176,176,176,176,176,176,176
+db 0,0,0,0,0,0,0,0,80,80,80,80,80,80,80,80
+db 160,160,160,160,160,160,160,160,240,240,240,240,240,240,240,240
+db 64,64,64,64,64,64,64,64,144,144,144,144,144,144,144,144
+db 224,224,224,224,224,224,224,224,48,48,48,48,48,48,48,48
+db 128,128,128,128,128,128,128,128
+bitmap_hi:
+db 192,200,208,216,224,232,240,248,192,200,208,216,224,232,240,248
+db 192,200,208,216,224,232,240,248,192,200,208,216,224,232,240,248
+db 193,201,209,217,225,233,241,249,193,201,209,217,225,233,241,249
+db 193,201,209,217,225,233,241,249,194,202,210,218,226,234,242,250
+db 194,202,210,218,226,234,242,250,194,202,210,218,226,234,242,250
+db 195,203,211,219,227,235,243,251,195,203,211,219,227,235,243,251
+db 195,203,211,219,227,235,243,251,196,204,212,220,228,236,244,252
+db 196,204,212,220,228,236,244,252,196,204,212,220,228,236,244,252
+db 197,205,213,221,229,237,245,253,197,205,213,221,229,237,245,253
+db 197,205,213,221,229,237,245,253,197,205,213,221,229,237,245,253
+db 198,206,214,222,230,238,246,254,198,206,214,222,230,238,246,254
+db 198,206,214,222,230,238,246,254,199,207,215,223,231,239,247,255
+db 199,207,215,223,231,239,247,255

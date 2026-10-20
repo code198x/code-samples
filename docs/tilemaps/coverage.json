@@ -12,7 +12,10 @@
       "record": "acorn-atom/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cpu-bitmap",
+        "mode": "256\u00d7192 monochrome",
+        "implementation": "acorn-atom/patterns/assembly/rendering/tile-region",
+        "record": "acorn-atom/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -25,7 +28,10 @@
       "record": "bbc-micro/patterns/assembly/rendering/tile-map/verification/results.json",
       "stock_loader": "not-qualified-by-synthetic-reset-fixture",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cpu-bitmap",
+        "mode": "MODE 4",
+        "implementation": "bbc-micro/patterns/assembly/rendering/tile-region",
+        "record": "bbc-micro/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -51,7 +57,10 @@
       "record": "amstrad-cpc/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cpu-bitmap",
+        "mode": "MODE 1",
+        "implementation": "amstrad-cpc/patterns/assembly/rendering/tile-region",
+        "record": "amstrad-cpc/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -184,7 +193,10 @@
       "record": "dragon-32/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cpu-bitmap",
+        "mode": "PMODE 4",
+        "implementation": "dragon-32/patterns/assembly/rendering/tile-region",
+        "record": "dragon-32/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
