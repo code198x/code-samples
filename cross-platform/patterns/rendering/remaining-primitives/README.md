@@ -36,6 +36,11 @@ D0–D7/A1/CCR and leaves SR interrupt-mask bits unchanged. Reserve a conservati
 
 6502 defines PIXEL_WIDTH/HEIGHT and PIXEL_BYTE_STEP (1 for Atom, 8 for Electron
 and C64). Include 6502.inc once and the complete caller's bitmap_lo/hi row tables.
+Use a two-digit zero-page constant for BP, such as $70: ACME retains literal
+width, so $0070 cannot serve as its indirect zero-page operand even though the
+value is equal. ACME and the qualified Asm198x build now produce identical
+executables for all three maintained 6502 callers.
+
 Those trusted tables must cover every compiled row. The 68000 defines
 BITMAP_BASE and PIXEL_WIDTH/HEIGHT and includes m68000.inc once; this backend
 specifically uses forty consecutive bytes per row. Changing one address does not

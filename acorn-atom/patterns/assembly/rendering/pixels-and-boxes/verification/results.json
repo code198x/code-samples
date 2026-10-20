@@ -4172,7 +4172,7 @@
     "cross-platform/patterns/rendering/remaining-primitives/systems.json": "07a5bbac57525c7308ed8893339fc74738fbd8111f07b675546c940b250ed638",
     "cross-platform/patterns/rendering/remaining-primitives/toolchain.json": "477344f222615ee0468753d1ca687e4a1116c36f22b8e3c6691a8791c66ef4cf",
     "cross-platform/patterns/rendering/remaining-primitives/6502.inc": "0cbe79987daf781cf5700e1047664073dbf9938ac3211039c6d9459349a81ee8",
-    "acorn-atom/patterns/assembly/rendering/pixels-and-boxes/demo.asm": "4cf880be7c8a0cf7fe6bc00fff26c39f683a0cd0f65aecc925db654836719826",
+    "acorn-atom/patterns/assembly/rendering/pixels-and-boxes/demo.asm": "17c73010cb1129ea24cff0d116d9c3b9d94e53c6e54aa93c20845fda7d819cdb",
     "acorn-atom/patterns/assembly/rendering/pixels-and-boxes/Makefile": "c35bfb973fc3010f73cf82b5af8c090753edf23b6e87997d30b2388a2f112adf",
     "scripts/verify-remaining-primitives.py": "0e605016659e1c0b60f3e877e15ec83da29123c4dd36d86bcca6bc73451e63b5",
     "scripts/check-remaining-primitives.py": "1abe0e48707ee122afce5e97f19191688bfaab06458ce1f73765c225b0086eb5",
