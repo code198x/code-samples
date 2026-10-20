@@ -35,7 +35,7 @@ once; XOR therefore leaves them visible. Write counts count stores, not changed
 bits, CPU cycles or a frame budget. `bp_read` returns the stored bit; presentation
 attributes can change the colour it produces.
 
-Clobbers A/X/Y/P; clears decimal mode. BP must be zero page. The component is
+Clobbers A/X/Y/P. Decimal mode must be off; the complete caller uses CLD before drawing. BP must be zero page. The component is
 non-re-entrant and does not alter interrupt enables or negotiate OS ownership.
 Reserve a conservative 64-byte stack budget in addition to your application's
 calls/IRQs. This is not evidence for an OS-loaded program or tear-free drawing.
