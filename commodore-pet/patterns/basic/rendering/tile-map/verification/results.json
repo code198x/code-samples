@@ -1,0 +1,42 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "commodore-pet",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "commodore-pet/patterns/basic/rendering/tile-map/demo.bas": "cb325e6269c933f395d8ee09619fb145d38b1043eb61b157b2b9b7539406345c",
+    "commodore-pet/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "dad52777424bea924fa06f6ab5e12040c617156fcfc51f098bb5cdeee4decb97",
+  "firmware": {
+    "basic.rom": "5b426b5c50350e5d50c4308a81288bb34f310d7384bcc43c66a0e18716a4cdbe",
+    "char.rom": "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "editor.rom": "5338b1dffebd695f6110c9995e16f7536bb63a909c2a0062b4789de46904ade9",
+    "chargen.rom": "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "kernal.rom": "056d5e84a6e4f2b5b40a4109f49515c2496a4bf99139a9f59abe486ded5cd03d"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "1309ae5a99d182f92dbdd32929e9fa6884bbe5a36e70400f384f425941f0e3ef",
+    "reference.png": "1309ae5a99d182f92dbdd32929e9fa6884bbe5a36e70400f384f425941f0e3ef",
+    "wrong-stride.png": "dbabe64d4a383f149d8d2890bb5a81c0b6b4b314346720e709d523542a7ef060",
+    "queries.png": "4af1cf29545040b21d9144e1cd07a8aa358849d3775253d88c1e7a73ec29281a",
+    "queries-reference.png": "4af1cf29545040b21d9144e1cd07a8aa358849d3775253d88c1e7a73ec29281a",
+    "writes.png": "ea2b2d293bc933da412753ffeee46a7cd3c589a4799dab098e9f1d51181fa0a5",
+    "writes-reference.png": "ea2b2d293bc933da412753ffeee46a7cd3c589a4799dab098e9f1d51181fa0a5",
+    "pixels.png": "e78abb8d128daca862eff0d0fda5eb4f9ce3223886781e0b3eef87a5b575299d",
+    "pixels-reference.png": "e78abb8d128daca862eff0d0fda5eb4f9ce3223886781e0b3eef87a5b575299d",
+    "region.png": "8c3e448d7dce73ed3ea0f8deaa070d0e765963f3a1912f9d0f11d62bad658fc0",
+    "region-reference.png": "8c3e448d7dce73ed3ea0f8deaa070d0e765963f3a1912f9d0f11d62bad658fc0"
+  }
+}

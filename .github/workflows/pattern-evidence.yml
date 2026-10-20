@@ -66,6 +66,10 @@ jobs:
           python cross-platform/patterns/rendering/pre-shifted-sprites/verification/verify.py --output "$RUNNER_TEMP/pattern-evidence/prepared-phases.json"
           python scripts/check-sprite-phases.py
           python -m unittest discover -s scripts -p test_sprite_phases.py -v
+      - name: Verify thirty-system tile-map evidence and failure controls
+        run: |
+          python scripts/check-tilemaps.py
+          python -m unittest discover -s scripts -p test_tilemaps.py -v
       - uses: actions/upload-artifact@v7
         if: always()
         with:

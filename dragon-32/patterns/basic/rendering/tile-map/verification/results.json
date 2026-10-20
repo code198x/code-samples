@@ -1,0 +1,40 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "dragon-32",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "dragon-32/patterns/basic/rendering/tile-map/demo.bas": "4d9b88ad75a9a48faebd55fd3f8c2899f4cec46ddf2a583b49e35639b293509d",
+    "dragon-32/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "3a44a4e890d538f5df93b8ec7d533ee8259c936b52b33d830c12ccde1d55495f",
+  "firmware": {
+    "dragon64-compat.rom": "706d3865234494332afebd83ec78e8736b072b5e9fa503f977d5a343218f4347",
+    "dragon64.rom": "c3d0b8fd92020c939ec97388402d10b3890e6e26455963d50cc00b5f9cd68fa5",
+    "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "df58d840e05a09dc74ad321e20f39e57facabc2e3d7262ebbfe5e56ba89e98b3",
+    "reference.png": "df58d840e05a09dc74ad321e20f39e57facabc2e3d7262ebbfe5e56ba89e98b3",
+    "wrong-stride.png": "64c213a9e0a26f07ae899cc5442d7e90a9383b33dae7f8c34c208de518e35f97",
+    "queries.png": "ac8f02427992eb6cc71a2c4b34a3658c5de08c1ccbd3dc2264b54fe2dca8110c",
+    "queries-reference.png": "ac8f02427992eb6cc71a2c4b34a3658c5de08c1ccbd3dc2264b54fe2dca8110c",
+    "writes.png": "f2304369c4608a8e24fca847fdcdbb17768c9854a44cacdd0c9a75f3147fa0c1",
+    "writes-reference.png": "f2304369c4608a8e24fca847fdcdbb17768c9854a44cacdd0c9a75f3147fa0c1",
+    "pixels.png": "50ee41533c43389d3b78b02db6f7682260fa6c036e91aff11da543583be378a5",
+    "pixels-reference.png": "50ee41533c43389d3b78b02db6f7682260fa6c036e91aff11da543583be378a5",
+    "region.png": "f2e5c3b5995a15984e2806f0089c3d85bbe2a15ec562b4680f614901e08be15c",
+    "region-reference.png": "f2e5c3b5995a15984e2806f0089c3d85bbe2a15ec562b4680f614901e08be15c"
+  }
+}

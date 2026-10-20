@@ -1,0 +1,52 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "oric-atmos",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "oric-atmos/patterns/basic/rendering/tile-map/demo.bas": "4d9b88ad75a9a48faebd55fd3f8c2899f4cec46ddf2a583b49e35639b293509d",
+    "oric-atmos/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68",
+    "scripts/tilemap_oric_entry.py": "0300cf6bf9c9883f290faed76e03b4090af67721044eae2404272aa7bf83760f"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "a96593d4707689386f373bc965646d50f1067d3b00d4695758f1c788ce4d187c",
+  "firmware": {
+    "oric.rom": "4ee38987c85ab007761cfd382f1c726c41a0a47dfddc6c3700d503dca150bfda"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "keyboard_readback_repairs": [
+    10,
+    1,
+    9,
+    12,
+    2,
+    11,
+    1,
+    13,
+    2,
+    12,
+    1
+  ],
+  "captures": {
+    "demo.png": "c94306d4ec5613008bf1544fb5e790175727b48304dc5aacb58623c40a8ca37e",
+    "reference.png": "c94306d4ec5613008bf1544fb5e790175727b48304dc5aacb58623c40a8ca37e",
+    "wrong-stride.png": "185c3cc2d4ce5af603b66c69922df55a1254ba76a58c9f8799e98c508c13a60a",
+    "queries.png": "3fbb35f03ada565cc8a33cf51f9613b861be185594b75c7095728473ef35ddc5",
+    "queries-reference.png": "3fbb35f03ada565cc8a33cf51f9613b861be185594b75c7095728473ef35ddc5",
+    "writes.png": "e101e764462c1347e36e480662cafa696c2c658a6a387c7b91bb1ead65d500ae",
+    "writes-reference.png": "e101e764462c1347e36e480662cafa696c2c658a6a387c7b91bb1ead65d500ae",
+    "pixels.png": "6afed688ba6f88a2d7f9239184307ba425de0396ab99841bdf90f98acd0a1206",
+    "pixels-reference.png": "6afed688ba6f88a2d7f9239184307ba425de0396ab99841bdf90f98acd0a1206",
+    "region.png": "1054c3534b370359ed1c69e1d5961b8ea6647917c88cd1848d5395d1d3f4bf72",
+    "region-reference.png": "1054c3534b370359ed1c69e1d5961b8ea6647917c88cd1848d5395d1d3f4bf72"
+  }
+}

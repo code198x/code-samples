@@ -1,0 +1,38 @@
+{
+  "case_counts": {
+    "queries": 46,
+    "writes": 56,
+    "pixels": 9,
+    "region": 7
+  },
+  "status": "passed",
+  "system": "acorn-atom",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "acorn-atom/patterns/basic/rendering/tile-map/demo.bas": "e3d89426d151856ce5f47b5aa7feb3991a84d29ff66a4d0a6abdc758087f8a9a",
+    "acorn-atom/patterns/basic/rendering/tile-map/routines.bas": "a976ff88c575acd576a44fd179de311a76033df609d567b90a0257142e234033"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "b59b872359cf183e8576e33fb2dc5b3c16d6840f4ae171c52d08dcc447e4da32",
+  "firmware": {
+    "atom.rom": "c3810e3c70b035ba16ce40a6786723a548b89f2547eacc45c63a01c0337a1d47"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "d407d9745d495bfb88c2eba3ff2046a9ed96113c32fb36b77f954b47d8519924",
+    "reference.png": "d407d9745d495bfb88c2eba3ff2046a9ed96113c32fb36b77f954b47d8519924",
+    "wrong-stride.png": "7435a70a7b1a5761c5926607b7b612ea14873ef6f7ac0d705042a953f9ac851b",
+    "queries.png": "739dfc966c67bdbb664e64bc3f3d0ccda6ea3394a2caad010753f81178e7b9bc",
+    "queries-reference.png": "739dfc966c67bdbb664e64bc3f3d0ccda6ea3394a2caad010753f81178e7b9bc",
+    "writes.png": "6e748e3323f5b0ddf1d553bb990e4156c229f7225db05d729b2ab54f7834df7a",
+    "writes-reference.png": "6e748e3323f5b0ddf1d553bb990e4156c229f7225db05d729b2ab54f7834df7a",
+    "pixels.png": "ef7ed691ee33ec28d297ff568e74f87272ac0499e9df616cad6e563898b7ab34",
+    "pixels-reference.png": "ef7ed691ee33ec28d297ff568e74f87272ac0499e9df616cad6e563898b7ab34",
+    "region.png": "48a68a8324bb83d1eee3e0d3af63452792e2d9a45a5a1b51cf0bbfe17546a152",
+    "region-reference.png": "48a68a8324bb83d1eee3e0d3af63452792e2d9a45a5a1b51cf0bbfe17546a152"
+  }
+}

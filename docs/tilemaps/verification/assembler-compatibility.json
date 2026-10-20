@@ -1,0 +1,106 @@
+{
+  "assembler_version": "0.0.65",
+  "comparison_version": "0.0.71",
+  "systems": [
+    {
+      "machine_id": "acorn-bbc-micro",
+      "fixture_sha256": "5ba7b5203ad2c0f5aa502006ecfb8040b654c83cec1c8d637de78716dd9851ba",
+      "identical": true
+    },
+    {
+      "machine_id": "acorn-electron",
+      "fixture_sha256": "5ba7b5203ad2c0f5aa502006ecfb8040b654c83cec1c8d637de78716dd9851ba",
+      "identical": true
+    },
+    {
+      "machine_id": "commodore-c64",
+      "fixture_sha256": "f02991fda70115d593f10f57cd7a66e6d7b62a63b51da202aa7a5eb9c3f0c7f1",
+      "identical": true
+    },
+    {
+      "machine_id": "atari-2600",
+      "fixture_sha256": "aae70257e5618e068a8b505f6cfc7807a2c42288b09d18b3ff47fa3eeda9d9ac",
+      "identical": true
+    },
+    {
+      "machine_id": "atari-5200",
+      "fixture_sha256": "827a15fa079cf9abfa1f5e47eaa389bfd1481e8dac419cb3815ec996dd74ae9d",
+      "identical": true
+    },
+    {
+      "machine_id": "atari-7800",
+      "fixture_sha256": "aa4b482227cf8f8c44513ac1c2a28ff0566b2d2147a346f4b71a006186f50eae",
+      "identical": true
+    },
+    {
+      "machine_id": "nintendo-nes",
+      "fixture_sha256": "e9bf10121e3ccc78e04b5434b34ca74f100b3a2d9eadbfb447e8927a06172348",
+      "identical": true
+    },
+    {
+      "machine_id": "sinclair-zx-spectrum",
+      "fixture_sha256": "d12e09590c41401ed8a50805e140fb8f486b515bab607c3c7ee9bcf9edf48707",
+      "identical": true
+    },
+    {
+      "machine_id": "jupiter-ace",
+      "fixture_sha256": "4ccad0dda32971454737c61d98abe53755f3922bcd29d587b2702e0c95267a0e",
+      "identical": true
+    },
+    {
+      "machine_id": "sinclair-zx80",
+      "fixture_sha256": "8781cac2690c511e79dee50ee3b86125d5e936b0e6d83b403cb5c7b48aa2cefc",
+      "identical": true
+    },
+    {
+      "machine_id": "sinclair-zx81",
+      "fixture_sha256": "5910f73ecdc2921b1ad5e74f8ad79369fe79a288567830905df20fe62b4ce1cc",
+      "identical": true
+    },
+    {
+      "machine_id": "coleco-colecovision",
+      "fixture_sha256": "34a6217522aa2b5f1113141a54781b4435a385e89b45901f5f12124ea4b06652",
+      "identical": true
+    },
+    {
+      "machine_id": "sord-m5",
+      "fixture_sha256": "150ac1ebb8b426fb1ffa90a2a2f139fa58ce3f67f0610e2bba8c10912d7ed524",
+      "identical": true
+    },
+    {
+      "machine_id": "memotech-mtx",
+      "fixture_sha256": "6af0bd16ab17e1d223bb6afb47204d63b9d91585f87b65054707d0a4622f8958",
+      "identical": true
+    },
+    {
+      "machine_id": "tatung-einstein",
+      "fixture_sha256": "8301f8cdb2b241c4f62491641d9ffa0ba5d61eb15a29637da47ba5c87a04f775",
+      "identical": true
+    },
+    {
+      "machine_id": "sega-master-system",
+      "fixture_sha256": "c5f449014448040bc5d01e854544752f057c6dde1b63a75a2f1a30004b010874",
+      "identical": true
+    },
+    {
+      "machine_id": "sega-game-gear",
+      "fixture_sha256": "077b5ce19fe9df70c28b1b454f87dd8e96f1d5b6d719620eb318ce86a72c82a8",
+      "identical": true
+    },
+    {
+      "machine_id": "sega-sg-1000",
+      "fixture_sha256": "c5f449014448040bc5d01e854544752f057c6dde1b63a75a2f1a30004b010874",
+      "identical": true
+    },
+    {
+      "machine_id": "nintendo-game-boy",
+      "fixture_sha256": "e86be7f8b074bf4b83699fb0886f4fc8bafb7786dbedba081b8681e311c127bc",
+      "identical": true
+    },
+    {
+      "machine_id": "commodore-amiga",
+      "fixture_sha256": "fdd4af13c7f15d0771fb1e47a8495194f4bbd062542a9e9b09358726ed927ce3",
+      "identical": true
+    }
+  ]
+}

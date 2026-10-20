@@ -1,0 +1,40 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "msx",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "msx/patterns/basic/rendering/tile-map/demo.bas": "e368d5c613c72ec3b87f1717fcc86f6801588f202ee877ccc33f88926728381b",
+    "msx/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "f7b3db903360f644d3d64e771ab0addce9c1706119bf1c1227c4d1f94b1d6df9",
+  "firmware": {
+    "msx.rom": "3b33130d959337be63182c4eae217797774b52322f8eb9e35ab20747412ed417",
+    "cbios_logo_msx1.rom": "8ad88a4653e26bdbd4c38329fe0a115846e9aa0866b0ac1fe1dd2c260c9932b3",
+    "cbios_main_msx1.rom": "921d35edf143f1fde8e53570f92f85e05854610d6a5ea76cce881f2f9040cd9c"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "6cd76ec5ad938a9a39970bce712dae7b47aab976c8e2a53bf795e797347a3178",
+    "reference.png": "6cd76ec5ad938a9a39970bce712dae7b47aab976c8e2a53bf795e797347a3178",
+    "wrong-stride.png": "dd8855475cb0df5a0ba5064f8c04e170b4d84d3d568539e557499f56564ffc3e",
+    "queries.png": "02f048de289707e3af9332be3fc8c489fc81535d8a4963d73bf871db295fbcd5",
+    "queries-reference.png": "02f048de289707e3af9332be3fc8c489fc81535d8a4963d73bf871db295fbcd5",
+    "writes.png": "3d22fafafa0afe434d618b19afdfbde1c8cd3f9914586e1d4ec102fcb635a87a",
+    "writes-reference.png": "3d22fafafa0afe434d618b19afdfbde1c8cd3f9914586e1d4ec102fcb635a87a",
+    "pixels.png": "8a2d37479edcc714dc7c5245c2119bf761f024e33916ed980841b0e5f1470a01",
+    "pixels-reference.png": "8a2d37479edcc714dc7c5245c2119bf761f024e33916ed980841b0e5f1470a01",
+    "region.png": "3f3d026e206175952972482ab73be05c3b6d9c36f1d1442a5f20661f87e64d28",
+    "region-reference.png": "3f3d026e206175952972482ab73be05c3b6d9c36f1d1442a5f20661f87e64d28"
+  }
+}
