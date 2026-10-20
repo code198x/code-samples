@@ -74,6 +74,10 @@ jobs:
         run: |
           python scripts/check-tile-regions.py
           python -m unittest discover -s scripts -p test_tile_regions.py -v
+      - name: Check bitmap-region evidence and isolated rejection controls
+        run: |
+          python scripts/check-bitmap-regions.py
+          python -m unittest discover -s scripts -p test_bitmap_regions.py -v
       - uses: actions/upload-artifact@v7
         if: always()
         with:
