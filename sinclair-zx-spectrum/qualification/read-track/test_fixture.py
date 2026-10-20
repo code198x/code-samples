@@ -4,7 +4,14 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from fixture import cases, command, make, missing_entry_case, reverse_size_case
+from fixture import (
+    cases,
+    command,
+    make,
+    missing_entry_case,
+    n2_dtl_cases,
+    reverse_size_case,
+)
 
 
 class FixtureTests(unittest.TestCase):
@@ -66,6 +73,20 @@ class FixtureTests(unittest.TestCase):
         )
         self.assertEqual(image[start + 256 : start + 384], bytes([33]) * 128)
         self.assertEqual(len(image), 256 + 39 * 4864 + 512)
+
+    def test_nonzero_n_dtl_changes_only_the_last_command_byte(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        standard, short = n2_dtl_cases()
+        self.assertEqual(command(standard)[:-1], command(short)[:-1])
+        self.assertEqual((command(standard)[-1], command(short)[-1]), (255, 1))
+        image = make(bytes(base), standard)
+        self.assertEqual(image, make(bytes(base), short))
+        start = 256 + 39 * 4864
+        self.assertEqual(
+            image[start + 24 : start + 32], bytes([39, 0, 1, 2, 0, 0, 0, 2])
+        )
+        self.assertEqual(image[start + 256 : start + 768], bytes([33]) * 512)
 
     def test_wrong_base_rejected(self) -> None:
         for value in (b"", bytes(194816), b"MV - CPC"):
