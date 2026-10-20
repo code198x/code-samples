@@ -1,0 +1,83 @@
+[
+  {
+    "machine_id": "spectrum",
+    "folder": "sinclair-zx-spectrum",
+    "cpu": "z80",
+    "kind": "rom",
+    "origin": 0,
+    "size": 16384,
+    "base": 16384,
+    "width": 256,
+    "height": 192,
+    "context": 28672,
+    "command": 28928,
+    "family": "pixels-and-boxes",
+    "binary": "emu198x-spectrum"
+  },
+  {
+    "machine_id": "acorn-bbc-micro",
+    "folder": "bbc-micro",
+    "cpu": "6502",
+    "kind": "mos",
+    "origin": 49152,
+    "size": 16384,
+    "base": 22528,
+    "width": 320,
+    "height": 256,
+    "context": 64,
+    "command": 768,
+    "family": "pixels-and-boxes",
+    "binary": "emu198x-acorn-bbc-micro"
+  },
+  {
+    "machine_id": "dragon",
+    "folder": "dragon-32",
+    "cpu": "6809",
+    "kind": "rom",
+    "origin": 32768,
+    "size": 16384,
+    "base": 1536,
+    "width": 256,
+    "height": 192,
+    "context": 896,
+    "command": 768,
+    "family": "pixels-and-boxes",
+    "binary": "emu198x-dragon"
+  },
+  {
+    "machine_id": "commodore-vic-20",
+    "folder": "commodore-vic-20",
+    "cpu": "6502",
+    "kind": "kernal",
+    "origin": 57344,
+    "size": 8192,
+    "context": 64,
+    "command": 5632,
+    "family": "custom-glyphs",
+    "binary": "emu198x-commodore-vic-20"
+  },
+  {
+    "machine_id": "msx",
+    "folder": "msx",
+    "cpu": "z80",
+    "kind": "bios",
+    "origin": 0,
+    "size": 32768,
+    "context": 61440,
+    "command": 61696,
+    "family": "custom-glyphs",
+    "binary": "emu198x-msx"
+  },
+  {
+    "machine_id": "game-boy",
+    "folder": "nintendo-game-boy",
+    "cpu": "sm83",
+    "kind": "rom",
+    "origin": 336,
+    "size": 32768,
+    "context": 49152,
+    "command": 49408,
+    "family": "custom-glyphs",
+    "binary": "emu198x-game-boy"
+  }
+]
