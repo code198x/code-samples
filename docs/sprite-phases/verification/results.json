@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "cases": {
+    "spectrum": {
+      "phases": 8,
+      "draws": 40,
+      "asset_bytes": 784
+    },
+    "bbc": {
+      "phases": 8,
+      "draws": 40,
+      "asset_bytes": 784
+    },
+    "amiga": {
+      "phases": 16,
+      "draws": 80,
+      "asset_bytes": 2176
+    }
+  },
+  "host": {
+    "status": "passed",
+    "pixel_samples": {
+      "spectrum": 3072,
+      "bbc": 3072,
+      "amiga": 8192
+    },
+    "rejected_payload_controls": {
+      "spectrum-mask": "Prepared pixel mismatch",
+      "spectrum-image": "Transparent image-bit mismatch",
+      "bbc-mask": "Prepared pixel mismatch",
+      "bbc-image": "Transparent image-bit mismatch",
+      "amiga-mask": "Prepared pixel mismatch",
+      "amiga-image": "Transparent image-bit mismatch"
+    },
+    "invalid_inputs_rejected": 5
+  },
+  "rejected_controls": {
+    "spectrum-phase": "spectrum phase bitmap mismatch",
+    "spectrum-stride": "spectrum phase bitmap mismatch",
+    "spectrum-floor": "spectrum phase bitmap mismatch",
+    "bbc-phase": "bbc phase bitmap mismatch",
+    "bbc-stride": "bbc phase bitmap mismatch",
+    "bbc-floor": "bbc phase bitmap mismatch",
+    "amiga-phase": "amiga phase bitmap mismatch",
+    "amiga-stride": "amiga phase bitmap mismatch",
+    "amiga-floor": "amiga phase bitmap mismatch"
+  },
+  "sources": {
+    "bbc-micro/patterns/assembly/rendering/clipped-sprites/clip.inc": "a71fd6554f74115dcb2069f98b174f54485dc45c2f2a483e1af5976b72bfcd20",
+    "bbc-micro/patterns/assembly/rendering/pre-shifted-sprites/Makefile": "2c53a804e1e99d06e20f901ee5b009d54df6b7deb33fa5bb08112ca3c3dccf6c",
+    "bbc-micro/patterns/assembly/rendering/pre-shifted-sprites/demo.asm": "88320ee73d9dfc79c94578b3cc5687114b8c13368637ad4ccfdc65112c4f8212",
+    "bbc-micro/patterns/assembly/rendering/pre-shifted-sprites/draw.inc": "4d6e928acad97576f762c939633506bc874123c3b329428ac5f05156402a1d2c",
+    "bbc-micro/patterns/assembly/rendering/pre-shifted-sprites/loader.py": "cc643c0d5c51667e5d368b39931e205296edb47c943424f87109d5fdfff50b23",
+    "bbc-micro/patterns/assembly/rendering/pre-shifted-sprites/phase.inc": "ac554a460a42a27023b01b09a4f58834754d58099f23360fefdc4e97fed2ce3b",
+    "bbc-micro/patterns/assembly/rendering/pre-shifted-sprites/phases.inc": "c9ddcccd98554ba67461a9f566637bc6cb2139acb69e77981e3ea00a15a4ed66",
+    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/clip.inc": "0c98dcba5c5e9297b275583dff212e221ce4535e0b52f95b79816932e6a5aaca",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/draw.inc": "528903e83f1c1adf58d731915e3920cddf15474ce7f77b47a0ec62dacecf6f43",
+    "commodore-amiga/patterns/assembly/rendering/pre-shifted-sprites/Makefile": "e2fc77108c64d707b21a33d3a2d5878a40d204ef2c5a6540d65f246094c6117d",
+    "commodore-amiga/patterns/assembly/rendering/pre-shifted-sprites/demo.asm": "60a72fbdbbb24c97ed10784e1a5cd8d2e1cec9d11fbf77219e9bce2074797380",
+    "commodore-amiga/patterns/assembly/rendering/pre-shifted-sprites/phase.inc": "85255371e82ed56d68b32b102f25d7156ceda40b8352c27f07b9c302021478b3",
+    "commodore-amiga/patterns/assembly/rendering/pre-shifted-sprites/phases.inc": "a7a7d8827d122d8ffc95b0de64b9286d008a1cb5d392e893f3051e1c20772bc5",
+    "cross-platform/patterns/rendering/pre-shifted-sprites/prepare.py": "37ea8157a10f74318fcd44cc25572f45ea72202bb286c52e350d18b7a1c3e1f3",
+    "cross-platform/patterns/rendering/pre-shifted-sprites/sprite.json": "8cb80d2bad3f13e8816b827a1cc946a5175b805857f376fb90c06674e884ec5e",
+    "cross-platform/patterns/rendering/pre-shifted-sprites/verification/verify.py": "756f857968d09d74988bb54ec387c85219a5f0cb8486572387667f18427988ee",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-rendering-families.py": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
+    "scripts/verify-sprite-clipping.py": "5cfabd5723a2d442d2674f40bde29b4a630c5bac222f29a0b97b8c5179844f93",
+    "scripts/verify-sprite-lifecycle.py": "9756dbf035ee59a7cde1a729d8f4290976faf546b3308442eb164c332f743a9e",
+    "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/clip.inc": "08800d6676a9fcae1ffdbb24ee352f75bcc0385cc7527d406dd9cb4bc888fcad",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/pre-shifted-sprites/Makefile": "f21fe6de72af13140f41ffab7fdf629e038b6b151cc45a3c76c8abe3908e377e",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/pre-shifted-sprites/demo.asm": "d991179de1821f3d0ece1583c1ac6197de1970005deb32c1320a6c1449e9cc33",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/pre-shifted-sprites/draw.inc": "b570829c41b204f9388f051651f8e91b1613fb3a87f3e4fe30a69b89302345ce",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/pre-shifted-sprites/phase.inc": "e58259e70f75d51c515297f85e5f90315f71d02d816ddc549500aab67b4ed3cc",
+    "sinclair-zx-spectrum/patterns/assembly/rendering/pre-shifted-sprites/phases.inc": "889c5a085d8d3b12cac66a098fa0ebbe353bf41dea5b45b03b460493fce8a269"
+  },
+  "observer_sha256": "0d5f84b074fe2e6f0d4c127896c4f39640fc0a2d9d97456e89a53e53d653aaae",
+  "tools": {
+    "assembler": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+    "build198x": "62cb2470ae88d239881f63251502f53b122c9b415f48795c1786a6ffccd941c4",
+    "spectrum": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+    "bbc": "24efc5795a38306a22e39e111b9ff44e210798b860c5223230e9ab9c774e6faf",
+    "amiga": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb"
+  },
+  "firmware": {
+    "rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+    "mos": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "basic": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "kickstart": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+  },
+  "captures": {
+    "spectrum.png": "b058277eb93d3fc8fcfb127288694af6121ce4a8e6726f2fccef6eb61be65d8d",
+    "bbc.png": "57521447a64f7a01172dd3ad0fe4540d56d5ad2a70efe7f0812d08370ab0284a",
+    "amiga.png": "b1a286089e85b3ce9f790d7d054f539607d06d0402f94f5c1bd51b57ddb3b1d2"
+  },
+  "limits": "Compare pixel-positioned masked sprites with an independent pixel oracle.\n\n48K PAL ROM/tape, Model B MOS1.20/BASICII MODE4 and A500 OCS PAL/KS1.3.\nStatic phase galleries with frame servicing; no motion cadence, original-hardware\nor whole-game frame-budget claim. Firmware and injected snapshots stay local.\n"
+}

@@ -1,0 +1,13 @@
+# Pixel-positioned Spectrum sprites
+
+Build `make ASM198X=/path/to/asm198x`; load build/demo.tap on a 48K PAL machine. The caller owns bitmap/attributes and stack at $ff00, uses ROM IM1/HALT afterwards, and requires reset to leave.
+
+Include phase.inc, draw.inc, ../clipped-sprites/clip.inc and ../bitmap-addressing/bitmap-addressing.inc once. Include a generated phase bank once. `draw_pixel_sprite` takes IX -> 32 exclusive context bytes: signed PIXEL X at +0, signed Y at +14, and an eight-entry phase pointer table at +28. Context X/table are consumed: they become signed byte X and the selected source pointer. Reload all three inputs for every call; retain logical game coordinates separately.
+
+AF/BC/DE/HL change; IX/IY survive. Source/table/context/code/stack must be disjoint from bitmap and each other. The prepared source has three byte columns and sixteen rows, 96 KEEP-mask/image bytes; attributes are untouched. Include routines own no interrupts or display timing; exclude concurrent workspace users. The wrapper selects X mod8 and uses arithmetic division (floor) for signed byte X. A negative pixel X must not become a large positive address.
+
+Each complete bank is 784 bytes: eight 96-byte phases plus sixteen pointer bytes, compared with 64 unshifted mask/image bytes. All phases have the same six-byte source stride, including the fully transparent padding at phase0. A fully inside padded rectangle is 24x16; a save-under background needs up to 48 bytes per object (separate from its 96-byte source). The existing save_rect/restore_rect helpers accept this three-byte width; retain the old clipped dimensions/address. Per-row stack pointers use four bytes, with wrapper/routine call returns and IRQ needs in addition.
+
+The original art is `cross-platform/patterns/rendering/pre-shifted-sprites/sprite.json`: sixteen strings of sixteen samples. `.` is transparent, `0` opaque off, `1` opaque ink. Run `make regenerate` to replace generated phases.inc, and `make check-assets` to reject a stale generated file. `prepare.py --prefix another_sprite` gives another bank distinct assembly labels; pass its table to the same runtime routine. No image packages are required.
+
+Pre-shifting moves work to asset preparation and spends memory. The complete phase gallery is static and continues frame waits; it proves pixel placement, clipping and source preservation, not animation cadence or an entire game's frame budget. Runtime shifting, fewer stored phases or specialised hardware can be better choices under different budgets. Execution evidence is in `docs/sprite-phases/verification/`; firmware and snapshots remain local.
