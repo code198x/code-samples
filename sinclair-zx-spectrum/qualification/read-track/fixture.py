@@ -78,6 +78,14 @@ def n0_dtl_cases() -> list[dict]:
     ]
 
 
+def ordinary_size_cases() -> list[dict]:
+    """Complete ordinary N0–5 fields beside existing N0/N2/N5 cases."""
+    return [
+        {"id": f"n{n}", "n": n, "dtl": 255, "fields": [(1, n, 128 << n, 33)], "eot": 1}
+        for n in (1, 3, 4)
+    ]
+
+
 def command(case: dict) -> list[int]:
     return [0x42, 0, 39, 0, 1, case["n"], case["eot"], 42, case["dtl"]]
 

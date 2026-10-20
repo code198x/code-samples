@@ -11,6 +11,7 @@ from fixture import (
     missing_entry_case,
     n0_dtl_cases,
     n2_dtl_cases,
+    ordinary_size_cases,
     reverse_size_case,
 )
 
@@ -106,6 +107,23 @@ class FixtureTests(unittest.TestCase):
                 image[start + 24 : start + 32], bytes([39, 0, 1, 0, 0, 0, 128, 0])
             )
             self.assertEqual(image[start + 256 : start + 384], bytes([33]) * 128)
+
+    def test_ordinary_sizes_encode_matching_chrn_and_complete_data(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        variants = ordinary_size_cases()
+        self.assertEqual([case["id"] for case in variants], ["n1", "n3", "n4"])
+        for case, n, length in zip(variants, (1, 3, 4), (256, 1024, 2048), strict=True):
+            image = make(bytes(base), case)
+            start = 256 + 39 * 4864
+            self.assertEqual(command(case), [66, 0, 39, 0, 1, n, 1, 42, 255])
+            self.assertEqual(
+                image[start + 24 : start + 32],
+                bytes([39, 0, 1, n, 0, 0]) + length.to_bytes(2, "little"),
+            )
+            self.assertEqual(image[start + 256 :], bytes([33]) * length)
+            self.assertEqual(len(image), 256 + sum(image[52:92]) * 256)
+            self.assertLess(len(image) - start, 6250)
 
     def test_wrong_base_rejected(self) -> None:
         for value in (b"", bytes(194816), b"MV - CPC"):
