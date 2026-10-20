@@ -66,8 +66,14 @@
         call settle
         ld a,4              ; deliberately before SIS: documented Invalid
         call send
-        xor a
+        ld bc,$2ffd         ; observe early opcode rejection before parameter
+        in a,(c)
+        and $c0
+        cp $c0
+        jr z,ordering_result
+        xor a               ; reference may consume the complete command first
         call send
+ordering_result:
         call record
         ld a,8
         ld ($7003),a
