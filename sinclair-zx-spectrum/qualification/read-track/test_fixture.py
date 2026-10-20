@@ -7,6 +7,7 @@ from pathlib import Path
 from fixture import (
     cases,
     command,
+    duplicate_id_cases,
     make,
     missing_entry_case,
     n0_dtl_cases,
@@ -124,6 +125,21 @@ class FixtureTests(unittest.TestCase):
             self.assertEqual(image[start + 256 :], bytes([33]) * length)
             self.assertEqual(len(image), 256 + sum(image[52:92]) * 256)
             self.assertLess(len(image) - start, 6250)
+
+    def test_duplicate_ids_preserve_both_copies_in_physical_order(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        forward, reverse = duplicate_id_cases()
+        self.assertEqual(command(forward), [66, 0, 39, 0, 1, 2, 2, 42, 255])
+        self.assertEqual(command(forward), command(reverse))
+        a, b = [make(bytes(base), case) for case in (forward, reverse)]
+        start = 256 + 39 * 4864
+        self.assertEqual(a[: start + 256], b[: start + 256])
+        descriptor = bytes([39, 0, 1, 2, 0, 0, 0, 2])
+        self.assertEqual(a[start + 24 : start + 40], descriptor * 2)
+        self.assertEqual(a[start + 256 :], bytes([33]) * 512 + bytes([34]) * 512)
+        self.assertEqual(b[start + 256 :], bytes([34]) * 512 + bytes([33]) * 512)
+        self.assertEqual(len(a), 256 + sum(a[52:92]) * 256)
 
     def test_wrong_base_rejected(self) -> None:
         for value in (b"", bytes(194816), b"MV - CPC"):

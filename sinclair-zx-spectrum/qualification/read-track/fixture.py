@@ -86,6 +86,26 @@ def ordinary_size_cases() -> list[dict]:
     ]
 
 
+def duplicate_id_cases() -> list[dict]:
+    """Same R1/N2 ID twice; distinguish the physical copies by payload."""
+    return [
+        {
+            "id": "duplicate-forward",
+            "n": 2,
+            "dtl": 255,
+            "fields": [(1, 2, 512, 33), (1, 2, 512, 34)],
+            "eot": 2,
+        },
+        {
+            "id": "duplicate-reverse",
+            "n": 2,
+            "dtl": 255,
+            "fields": [(1, 2, 512, 34), (1, 2, 512, 33)],
+            "eot": 2,
+        },
+    ]
+
+
 def command(case: dict) -> list[int]:
     return [0x42, 0, 39, 0, 1, case["n"], case["eot"], 42, case["dtl"]]
 

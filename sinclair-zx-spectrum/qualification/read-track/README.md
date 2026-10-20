@@ -67,3 +67,10 @@ for the v6 campaign, completing ordinary N0–5 sizes beside existing N0/N2/N5.
 Single R1 fields contain 256, 1024 and 2048 bytes of $21, with EOT1 and DTL255.
 The guest transfers every byte and all seven results before a following command.
 N6/N7 density/safety and other field/order/timing questions remain separate.
+
+`duplicate_id_cases()` adds the v7 physical-order contrast: two fields both
+recorded R1/N2, with EOT2 and DTL255. Distinct 512-byte payloads of $21/$22
+are reversed in the second disk. Commands and native descriptors are identical;
+only the physical payload order changes. The guest must return both copies,
+drain seven results and recover with a following command. This does not qualify
+all duplicate-ID software or physical timing.
