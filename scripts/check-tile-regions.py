@@ -134,6 +134,14 @@ def verify(root: Path) -> int:
         if architecture_path.exists()
         else set()
     )
+    cell_path = (
+        root / "cross-platform/patterns/rendering/character-regions/systems.json"
+    )
+    cell_ids = (
+        {c["machine_id"] for c in json.loads(cell_path.read_text())}
+        if cell_path.exists()
+        else set()
+    )
     for row in inventory:
         if row["machine_id"] not in ids:
             require(
@@ -143,6 +151,8 @@ def verify(root: Path) -> int:
                     if row["machine_id"] in bitmap_ids
                     else "executed-native-adapter"
                     if row["machine_id"] in architecture_ids
+                    else "executed-cell-region"
+                    if row["machine_id"] in cell_ids
                     else "not-yet-qualified"
                 ),
                 "Unexecuted machine promoted",

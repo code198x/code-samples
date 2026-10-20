@@ -44,7 +44,10 @@
       "record": "acorn-electron/patterns/assembly/rendering/tile-map/verification/results.json",
       "stock_loader": "not-qualified-by-synthetic-reset-fixture",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cell-region",
+        "mode": "MODE 4 bitmap",
+        "implementation": "acorn-electron/patterns/assembly/rendering/tile-region",
+        "record": "acorn-electron/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -173,7 +176,10 @@
       "record": "commodore-pet/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cell-region",
+        "mode": "40-column character ROM",
+        "implementation": "commodore-pet/patterns/assembly/rendering/tile-region",
+        "record": "commodore-pet/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -186,7 +192,10 @@
       "record": "commodore-vic-20/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cell-region",
+        "mode": "PAL unexpanded 22x23 RAM characters",
+        "implementation": "commodore-vic-20/patterns/assembly/rendering/tile-region",
+        "record": "commodore-vic-20/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -228,7 +237,10 @@
       "record": "mattel-aquarius/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-cell-region",
+        "mode": "40x25 character ROM and colour RAM",
+        "implementation": "mattel-aquarius/patterns/assembly/rendering/tile-region",
+        "record": "mattel-aquarius/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
