@@ -62,6 +62,7 @@ def check(c: dict, root: Path = ROOT) -> None:
         require(sha(out / name) == digest, "Observation changed: " + name)
     tools = json.loads((root / S.relative_to(ROOT) / "toolchain.json").read_text())
     tool = next(t for t in tools if t["tool"] == c["binary"])
+    assembler = next(t for t in tools if t["tool"] == "asm198x")
     for variant in ["positive", "fault"]:
         r = record[variant]
         require(
@@ -76,6 +77,10 @@ def check(c: dict, root: Path = ROOT) -> None:
         require(
             r["pixel_faults"] == 0 if variant == "positive" else r["pixel_faults"] > 0,
             "Missing visible failure control",
+        )
+        require(
+            r["assembler_sha256"] == assembler["binary_sha256"],
+            "Wrong released assembler",
         )
         count = (
             94

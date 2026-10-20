@@ -8,6 +8,8 @@ import importlib.util
 import io
 import json
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -50,6 +52,26 @@ class DrawingEvidence(unittest.TestCase):
             self.assertRaises((AssertionError, FileNotFoundError, KeyError)),
         ):
             C.check(cfg, root)
+
+    def test_unknown_system_cannot_pass_without_execution(self):
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/verify-drawing-foundations.py"),
+                "--native",
+                "/not-used",
+                "--assembler",
+                "/not-used",
+                "--system",
+                "does-not-exist",
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("No matching system", result.stderr)
 
     def test_sources_must_match(self):
         cfg, root, _, record = self.fixture()

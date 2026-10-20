@@ -1233,7 +1233,8 @@
       ]
     ],
     "fixture_sha256": "b3cb64f9101fac8008fb21cf2db27615209b4b6fb7a3bcce1231d023306965ef",
-    "emulator_sha256": "f744a6fa42c031e8ab1f2e46e1c6ef382540cec3e93ce2160cb93be9c107c519"
+    "emulator_sha256": "f744a6fa42c031e8ab1f2e46e1c6ef382540cec3e93ce2160cb93be9c107c519",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "fault": {
     "cases": [
@@ -2469,16 +2470,17 @@
       ]
     ],
     "fixture_sha256": "036569df4048d0425e88394bb284d510d630e49e2feab5f8ef5cf093e6851eca",
-    "emulator_sha256": "f744a6fa42c031e8ab1f2e46e1c6ef382540cec3e93ce2160cb93be9c107c519"
+    "emulator_sha256": "f744a6fa42c031e8ab1f2e46e1c6ef382540cec3e93ce2160cb93be9c107c519",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "sources": {
     "sinclair-zx-spectrum/patterns/assembly/rendering/pixels-and-boxes/demo.asm": "d65946f46f438597a5da50d9aa624c8a27cc177d707c73ebb5d2fdcec51bb7b0",
     "cross-platform/patterns/rendering/drawing-foundations/build.py": "cfbf989199992722de2966491e0d97e7b962e5b7dfbc28d336f822f6f0ad93f2",
     "cross-platform/patterns/rendering/drawing-foundations/systems.json": "f4b2925432b450701ac0f1ac484c8c3bed46ad1d111e8b2abfa055030c53ec7e",
-    "scripts/verify-drawing-foundations.py": "2eb5fce6dbfdd75f8f9da8aecb901384e9f2fa5bd0c3f5bf47ee595dc0c9027a",
+    "scripts/verify-drawing-foundations.py": "514e90fd52c12db2de0250b793122e2933fc78b3d78d37280929ce44578f61f2",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
-    "scripts/check-drawing-foundations.py": "7c23ce0de2433f2f191169d726e6eac794e9e02a68e6efb63230c71aae980e1e",
+    "scripts/check-drawing-foundations.py": "28232108802302350e0a0eca9a1f0d2303c19ffecfcb6468ceeb097485a734b7",
     "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "7be0fe1dc788fd97ffacded1bd6b4fb0d5b80105dee976831baea8b6bf71565e",
     "cross-platform/patterns/rendering/drawing-foundations/z80.inc": "e2f892c19e3cf09c8d81d45aefdeb20c773e2013f27c31811eaedc667bc4669d",
     "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02"

@@ -1237,7 +1237,8 @@
       ]
     ],
     "fixture_sha256": "8561a400b8bba86764bdb821d32c5aabc2044d44b0595a9ae76da9e3f7cb962b",
-    "emulator_sha256": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409"
+    "emulator_sha256": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "fault": {
     "cases": [
@@ -2477,16 +2478,17 @@
       ]
     ],
     "fixture_sha256": "9d39df5f6ca9ae3eaefbc179c10de00ed05467b14dc104dd40a16cb233cebe1b",
-    "emulator_sha256": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409"
+    "emulator_sha256": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "sources": {
     "dragon-32/patterns/assembly/rendering/pixels-and-boxes/demo.asm": "61153bbba3054a4ad530fc32cfc9fc6bc6f92d5f052d9806d93f6b5cf4899526",
     "cross-platform/patterns/rendering/drawing-foundations/build.py": "cfbf989199992722de2966491e0d97e7b962e5b7dfbc28d336f822f6f0ad93f2",
     "cross-platform/patterns/rendering/drawing-foundations/systems.json": "f4b2925432b450701ac0f1ac484c8c3bed46ad1d111e8b2abfa055030c53ec7e",
-    "scripts/verify-drawing-foundations.py": "2eb5fce6dbfdd75f8f9da8aecb901384e9f2fa5bd0c3f5bf47ee595dc0c9027a",
+    "scripts/verify-drawing-foundations.py": "514e90fd52c12db2de0250b793122e2933fc78b3d78d37280929ce44578f61f2",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
-    "scripts/check-drawing-foundations.py": "7c23ce0de2433f2f191169d726e6eac794e9e02a68e6efb63230c71aae980e1e",
+    "scripts/check-drawing-foundations.py": "28232108802302350e0a0eca9a1f0d2303c19ffecfcb6468ceeb097485a734b7",
     "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "7be0fe1dc788fd97ffacded1bd6b4fb0d5b80105dee976831baea8b6bf71565e",
     "cross-platform/patterns/rendering/drawing-foundations/6809.inc": "065ce2d43d07e70f5703251781df72c81012bdd8ed0f3b08e51541a88b33af4b"
   },

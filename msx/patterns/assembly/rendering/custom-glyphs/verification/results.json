@@ -175,7 +175,8 @@
     "fault_mismatches": 0,
     "pixel_faults": 0,
     "fixture_sha256": "93b943e909704ebe7081d06378017dbf3c6251c334c75807446059765bbbb197",
-    "emulator_sha256": "a6bc980cbfda17db144c8bc129c2a785c3ace7644f7ad30a96a05dd3088dc500"
+    "emulator_sha256": "a6bc980cbfda17db144c8bc129c2a785c3ace7644f7ad30a96a05dd3088dc500",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "fault": {
     "cases": [
@@ -353,16 +354,17 @@
     "fault_mismatches": 15,
     "pixel_faults": 5,
     "fixture_sha256": "393b4b22ec09af1532f66925d43d800ed5dc5bcab3b5de8189d8209f7b0bed19",
-    "emulator_sha256": "a6bc980cbfda17db144c8bc129c2a785c3ace7644f7ad30a96a05dd3088dc500"
+    "emulator_sha256": "a6bc980cbfda17db144c8bc129c2a785c3ace7644f7ad30a96a05dd3088dc500",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "sources": {
     "msx/patterns/assembly/rendering/custom-glyphs/demo.asm": "f858997be1a907ec391c231a53bb36775d3338ea90df729fa70e751c62b60cd6",
     "cross-platform/patterns/rendering/drawing-foundations/build.py": "cfbf989199992722de2966491e0d97e7b962e5b7dfbc28d336f822f6f0ad93f2",
     "cross-platform/patterns/rendering/drawing-foundations/systems.json": "f4b2925432b450701ac0f1ac484c8c3bed46ad1d111e8b2abfa055030c53ec7e",
-    "scripts/verify-drawing-foundations.py": "2eb5fce6dbfdd75f8f9da8aecb901384e9f2fa5bd0c3f5bf47ee595dc0c9027a",
+    "scripts/verify-drawing-foundations.py": "514e90fd52c12db2de0250b793122e2933fc78b3d78d37280929ce44578f61f2",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
-    "scripts/check-drawing-foundations.py": "7c23ce0de2433f2f191169d726e6eac794e9e02a68e6efb63230c71aae980e1e",
+    "scripts/check-drawing-foundations.py": "28232108802302350e0a0eca9a1f0d2303c19ffecfcb6468ceeb097485a734b7",
     "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "7be0fe1dc788fd97ffacded1bd6b4fb0d5b80105dee976831baea8b6bf71565e",
     "msx/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "bb7eea6ec18c814694a8380d81c99f93bfc7bd0986aba8a9639bb883235ab816"
   },
