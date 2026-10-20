@@ -106,6 +106,10 @@ jobs:
         run: |
           python scripts/check-remaining-primitives.py
           python -m unittest discover -s scripts -p test_remaining_primitives.py -v
+      - name: Check Amiga wide-pointer bitmap text and corruption controls
+        run: |
+          python scripts/check-amiga-bitmap-text.py
+          python -m unittest discover -s scripts -p test_amiga_bitmap_text.py -v
       - uses: actions/upload-artifact@v7
         if: always()
         with:
