@@ -475,12 +475,23 @@ def glyph_run(m, c: dict, out: Path, variant: str) -> dict:
         require(glyph_memory(m, c) == before, "Live LCD rejection modified VRAM")
         records.append({"kind": "live-rejection", "accepted": False, "writes": 0})
     require(
-        variant == "positive" or faults > 0, "Completed wrong-slot build was not caught"
+        variant == "positive" or (faults > 0 and pixel_faults > 0),
+        "Completed wrong-slot build was not caught in memory and pixels",
     )
     return {"cases": records, "fault_mismatches": faults, "pixel_faults": pixel_faults}
 
 
 def verify(c: dict, args) -> None:
+    tools = json.loads((SHARED / "toolchain.json").read_text())
+    expected = {t["tool"]: t["binary_sha256"] for t in tools}
+    require(
+        T.sha(args.native / c["binary"]) == expected[c["binary"]],
+        "Unqualified emulator executable",
+    )
+    require(
+        T.sha(Path(args.assembler)) == expected["asm198x"],
+        "Unqualified assembler executable",
+    )
     folder = ROOT / c["folder"] / "patterns/assembly/rendering" / c["family"]
     out = folder / "build/verification"
     out.mkdir(parents=True, exist_ok=True)
@@ -510,6 +521,7 @@ def verify(c: dict, args) -> None:
             )
             result["fixture_sha256"] = T.sha(image)
             result["emulator_sha256"] = T.sha(args.native / c["binary"])
+            result["assembler_sha256"] = T.sha(Path(args.assembler))
             records[variant] = result
         finally:
             m.close()
@@ -556,6 +568,8 @@ if __name__ == "__main__":
     p.add_argument("--assembler", required=True)
     p.add_argument("--system")
     a = p.parse_args()
-    for c in json.loads((SHARED / "systems.json").read_text()):
-        if a.system is None or c["machine_id"] == a.system:
-            verify(c, a)
+    configs = json.loads((SHARED / "systems.json").read_text())
+    selected = [c for c in configs if a.system is None or c["machine_id"] == a.system]
+    require(bool(selected), "No matching system; nothing was executed")
+    for c in selected:
+        verify(c, a)

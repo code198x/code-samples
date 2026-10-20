@@ -200,7 +200,7 @@ guards and selected **whole native framebuffers**, including borders/crops.
 Completed wrong-mask builds on all three bitmap targets and wrong-slot builds on
 all three glyph targets fail both memory and visible-output comparisons. The
 retained check reruns the independent models, checks source/tool identities, and
-fails on missing calls or altered observations. Unit controls also rehash corrupt
+fails on missing calls or altered observations. Nine unit controls also reject an unknown-system run and rehash corrupt
 memory to prove a matching checksum cannot replace the independent model.
 
 These are original reset-fixture results, not stock-OS coexistence, loading,

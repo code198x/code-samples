@@ -186,7 +186,8 @@
     "fault_mismatches": 0,
     "pixel_faults": 0,
     "fixture_sha256": "fec2b745d24ac8ce285b4eba7a1c167826745d4668213f14173914792e8afe81",
-    "emulator_sha256": "e1db898b568a50406934f2b378a3b2e78847f2aeb7741cec8bb5e6f178a1bdc6"
+    "emulator_sha256": "e1db898b568a50406934f2b378a3b2e78847f2aeb7741cec8bb5e6f178a1bdc6",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "fault": {
     "cases": [
@@ -375,16 +376,17 @@
     "fault_mismatches": 16,
     "pixel_faults": 5,
     "fixture_sha256": "31701bc0385a87b9f91cd935a23ec724ae248edf0ea1e6475146e36a0a41694a",
-    "emulator_sha256": "e1db898b568a50406934f2b378a3b2e78847f2aeb7741cec8bb5e6f178a1bdc6"
+    "emulator_sha256": "e1db898b568a50406934f2b378a3b2e78847f2aeb7741cec8bb5e6f178a1bdc6",
+    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
   },
   "sources": {
     "commodore-vic-20/patterns/assembly/rendering/custom-glyphs/demo.asm": "6d870572fdec539f8bdad22658019099e78c555e3144c0c716f7808535d7e4d9",
     "cross-platform/patterns/rendering/drawing-foundations/build.py": "cfbf989199992722de2966491e0d97e7b962e5b7dfbc28d336f822f6f0ad93f2",
     "cross-platform/patterns/rendering/drawing-foundations/systems.json": "f4b2925432b450701ac0f1ac484c8c3bed46ad1d111e8b2abfa055030c53ec7e",
-    "scripts/verify-drawing-foundations.py": "2eb5fce6dbfdd75f8f9da8aecb901384e9f2fa5bd0c3f5bf47ee595dc0c9027a",
+    "scripts/verify-drawing-foundations.py": "514e90fd52c12db2de0250b793122e2933fc78b3d78d37280929ce44578f61f2",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
-    "scripts/check-drawing-foundations.py": "7c23ce0de2433f2f191169d726e6eac794e9e02a68e6efb63230c71aae980e1e",
+    "scripts/check-drawing-foundations.py": "28232108802302350e0a0eca9a1f0d2303c19ffecfcb6468ceeb097485a734b7",
     "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "7be0fe1dc788fd97ffacded1bd6b4fb0d5b80105dee976831baea8b6bf71565e",
     "commodore-vic-20/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "52cba5e9ede7ee597fb38128f3983ab1bb133b894309903d0b9e9c67a4bd641c"
   },
