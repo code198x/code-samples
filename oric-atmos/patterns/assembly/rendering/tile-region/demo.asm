@@ -1,0 +1,1425 @@
+*=$c000
+NR=112
+RESULT=1536
+MAP=1264
+MAP_W=12
+MAP_H=8
+TILE_COUNT=4
+CELL_BYTES=1
+SCREEN_COLS=38
+SCREEN_ROWS=25
+X_STEP=1
+start:
+    sei
+    cld
+    ldx #$ff
+    txs
+    lda #<40960
+    sta NR+20
+    lda #>40960
+    sta NR+21
+    lda #64
+    ldx #0
+clear_0:
+    sta $a000,x
+    inx
+    bne clear_0
+    lda #64
+    ldx #0
+clear_1:
+    sta $a100,x
+    inx
+    bne clear_1
+    lda #64
+    ldx #0
+clear_2:
+    sta $a200,x
+    inx
+    bne clear_2
+    lda #64
+    ldx #0
+clear_3:
+    sta $a300,x
+    inx
+    bne clear_3
+    lda #64
+    ldx #0
+clear_4:
+    sta $a400,x
+    inx
+    bne clear_4
+    lda #64
+    ldx #0
+clear_5:
+    sta $a500,x
+    inx
+    bne clear_5
+    lda #64
+    ldx #0
+clear_6:
+    sta $a600,x
+    inx
+    bne clear_6
+    lda #64
+    ldx #0
+clear_7:
+    sta $a700,x
+    inx
+    bne clear_7
+    lda #64
+    ldx #0
+clear_8:
+    sta $a800,x
+    inx
+    bne clear_8
+    lda #64
+    ldx #0
+clear_9:
+    sta $a900,x
+    inx
+    bne clear_9
+    lda #64
+    ldx #0
+clear_10:
+    sta $aa00,x
+    inx
+    bne clear_10
+    lda #64
+    ldx #0
+clear_11:
+    sta $ab00,x
+    inx
+    bne clear_11
+    lda #64
+    ldx #0
+clear_12:
+    sta $ac00,x
+    inx
+    bne clear_12
+    lda #64
+    ldx #0
+clear_13:
+    sta $ad00,x
+    inx
+    bne clear_13
+    lda #64
+    ldx #0
+clear_14:
+    sta $ae00,x
+    inx
+    bne clear_14
+    lda #64
+    ldx #0
+clear_15:
+    sta $af00,x
+    inx
+    bne clear_15
+    lda #64
+    ldx #0
+clear_16:
+    sta $b000,x
+    inx
+    bne clear_16
+    lda #64
+    ldx #0
+clear_17:
+    sta $b100,x
+    inx
+    bne clear_17
+    lda #64
+    ldx #0
+clear_18:
+    sta $b200,x
+    inx
+    bne clear_18
+    lda #64
+    ldx #0
+clear_19:
+    sta $b300,x
+    inx
+    bne clear_19
+    lda #64
+    ldx #0
+clear_20:
+    sta $b400,x
+    inx
+    bne clear_20
+    lda #64
+    ldx #0
+clear_21:
+    sta $b500,x
+    inx
+    bne clear_21
+    lda #64
+    ldx #0
+clear_22:
+    sta $b600,x
+    inx
+    bne clear_22
+    lda #64
+    ldx #0
+clear_23:
+    sta $b700,x
+    inx
+    bne clear_23
+    lda #64
+    ldx #0
+clear_24:
+    sta $b800,x
+    inx
+    bne clear_24
+    lda #64
+    ldx #0
+clear_25:
+    sta $b900,x
+    inx
+    bne clear_25
+    lda #64
+    ldx #0
+clear_26:
+    sta $ba00,x
+    inx
+    bne clear_26
+    lda #64
+    ldx #0
+clear_27:
+    sta $bb00,x
+    inx
+    bne clear_27
+    lda #64
+    ldx #0
+clear_28:
+    sta $bc00,x
+    inx
+    bne clear_28
+    lda #64
+    ldx #0
+clear_29:
+    sta $bd00,x
+    inx
+    bne clear_29
+    lda #64
+    ldx #0
+clear_30:
+    sta $be00,x
+    inx
+    bne clear_30
+    ldx #63
+clear_tail:
+    sta $bf00,x
+    dex
+    bpl clear_tail
+    lda #0
+    ldx #0
+clear_chars:
+    sta $9800,x
+    sta $9900,x
+    sta $9a00,x
+    sta $9b00,x
+    inx
+    bne clear_chars
+    lda #32
+    ldx #0
+clear_text:
+    sta $bf00,x
+    inx
+    bne clear_text
+    ldx #63
+    lda #64
+restore_bitmap_tail:
+    sta $bf00,x
+    dex
+    bpl restore_bitmap_tail
+    lda #16
+    sta $a000
+    lda #7
+    sta $a001
+    lda #16
+    sta $a028
+    lda #7
+    sta $a029
+    lda #16
+    sta $a050
+    lda #7
+    sta $a051
+    lda #16
+    sta $a078
+    lda #7
+    sta $a079
+    lda #16
+    sta $a0a0
+    lda #7
+    sta $a0a1
+    lda #16
+    sta $a0c8
+    lda #7
+    sta $a0c9
+    lda #16
+    sta $a0f0
+    lda #7
+    sta $a0f1
+    lda #16
+    sta $a118
+    lda #7
+    sta $a119
+    lda #16
+    sta $a140
+    lda #7
+    sta $a141
+    lda #16
+    sta $a168
+    lda #7
+    sta $a169
+    lda #16
+    sta $a190
+    lda #7
+    sta $a191
+    lda #16
+    sta $a1b8
+    lda #7
+    sta $a1b9
+    lda #16
+    sta $a1e0
+    lda #7
+    sta $a1e1
+    lda #16
+    sta $a208
+    lda #7
+    sta $a209
+    lda #16
+    sta $a230
+    lda #7
+    sta $a231
+    lda #16
+    sta $a258
+    lda #7
+    sta $a259
+    lda #16
+    sta $a280
+    lda #7
+    sta $a281
+    lda #16
+    sta $a2a8
+    lda #7
+    sta $a2a9
+    lda #16
+    sta $a2d0
+    lda #7
+    sta $a2d1
+    lda #16
+    sta $a2f8
+    lda #7
+    sta $a2f9
+    lda #16
+    sta $a320
+    lda #7
+    sta $a321
+    lda #16
+    sta $a348
+    lda #7
+    sta $a349
+    lda #16
+    sta $a370
+    lda #7
+    sta $a371
+    lda #16
+    sta $a398
+    lda #7
+    sta $a399
+    lda #16
+    sta $a3c0
+    lda #7
+    sta $a3c1
+    lda #16
+    sta $a3e8
+    lda #7
+    sta $a3e9
+    lda #16
+    sta $a410
+    lda #7
+    sta $a411
+    lda #16
+    sta $a438
+    lda #7
+    sta $a439
+    lda #16
+    sta $a460
+    lda #7
+    sta $a461
+    lda #16
+    sta $a488
+    lda #7
+    sta $a489
+    lda #16
+    sta $a4b0
+    lda #7
+    sta $a4b1
+    lda #16
+    sta $a4d8
+    lda #7
+    sta $a4d9
+    lda #16
+    sta $a500
+    lda #7
+    sta $a501
+    lda #16
+    sta $a528
+    lda #7
+    sta $a529
+    lda #16
+    sta $a550
+    lda #7
+    sta $a551
+    lda #16
+    sta $a578
+    lda #7
+    sta $a579
+    lda #16
+    sta $a5a0
+    lda #7
+    sta $a5a1
+    lda #16
+    sta $a5c8
+    lda #7
+    sta $a5c9
+    lda #16
+    sta $a5f0
+    lda #7
+    sta $a5f1
+    lda #16
+    sta $a618
+    lda #7
+    sta $a619
+    lda #16
+    sta $a640
+    lda #7
+    sta $a641
+    lda #16
+    sta $a668
+    lda #7
+    sta $a669
+    lda #16
+    sta $a690
+    lda #7
+    sta $a691
+    lda #16
+    sta $a6b8
+    lda #7
+    sta $a6b9
+    lda #16
+    sta $a6e0
+    lda #7
+    sta $a6e1
+    lda #16
+    sta $a708
+    lda #7
+    sta $a709
+    lda #16
+    sta $a730
+    lda #7
+    sta $a731
+    lda #16
+    sta $a758
+    lda #7
+    sta $a759
+    lda #16
+    sta $a780
+    lda #7
+    sta $a781
+    lda #16
+    sta $a7a8
+    lda #7
+    sta $a7a9
+    lda #16
+    sta $a7d0
+    lda #7
+    sta $a7d1
+    lda #16
+    sta $a7f8
+    lda #7
+    sta $a7f9
+    lda #16
+    sta $a820
+    lda #7
+    sta $a821
+    lda #16
+    sta $a848
+    lda #7
+    sta $a849
+    lda #16
+    sta $a870
+    lda #7
+    sta $a871
+    lda #16
+    sta $a898
+    lda #7
+    sta $a899
+    lda #16
+    sta $a8c0
+    lda #7
+    sta $a8c1
+    lda #16
+    sta $a8e8
+    lda #7
+    sta $a8e9
+    lda #16
+    sta $a910
+    lda #7
+    sta $a911
+    lda #16
+    sta $a938
+    lda #7
+    sta $a939
+    lda #16
+    sta $a960
+    lda #7
+    sta $a961
+    lda #16
+    sta $a988
+    lda #7
+    sta $a989
+    lda #16
+    sta $a9b0
+    lda #7
+    sta $a9b1
+    lda #16
+    sta $a9d8
+    lda #7
+    sta $a9d9
+    lda #16
+    sta $aa00
+    lda #7
+    sta $aa01
+    lda #16
+    sta $aa28
+    lda #7
+    sta $aa29
+    lda #16
+    sta $aa50
+    lda #7
+    sta $aa51
+    lda #16
+    sta $aa78
+    lda #7
+    sta $aa79
+    lda #16
+    sta $aaa0
+    lda #7
+    sta $aaa1
+    lda #16
+    sta $aac8
+    lda #7
+    sta $aac9
+    lda #16
+    sta $aaf0
+    lda #7
+    sta $aaf1
+    lda #16
+    sta $ab18
+    lda #7
+    sta $ab19
+    lda #16
+    sta $ab40
+    lda #7
+    sta $ab41
+    lda #16
+    sta $ab68
+    lda #7
+    sta $ab69
+    lda #16
+    sta $ab90
+    lda #7
+    sta $ab91
+    lda #16
+    sta $abb8
+    lda #7
+    sta $abb9
+    lda #16
+    sta $abe0
+    lda #7
+    sta $abe1
+    lda #16
+    sta $ac08
+    lda #7
+    sta $ac09
+    lda #16
+    sta $ac30
+    lda #7
+    sta $ac31
+    lda #16
+    sta $ac58
+    lda #7
+    sta $ac59
+    lda #16
+    sta $ac80
+    lda #7
+    sta $ac81
+    lda #16
+    sta $aca8
+    lda #7
+    sta $aca9
+    lda #16
+    sta $acd0
+    lda #7
+    sta $acd1
+    lda #16
+    sta $acf8
+    lda #7
+    sta $acf9
+    lda #16
+    sta $ad20
+    lda #7
+    sta $ad21
+    lda #16
+    sta $ad48
+    lda #7
+    sta $ad49
+    lda #16
+    sta $ad70
+    lda #7
+    sta $ad71
+    lda #16
+    sta $ad98
+    lda #7
+    sta $ad99
+    lda #16
+    sta $adc0
+    lda #7
+    sta $adc1
+    lda #16
+    sta $ade8
+    lda #7
+    sta $ade9
+    lda #16
+    sta $ae10
+    lda #7
+    sta $ae11
+    lda #16
+    sta $ae38
+    lda #7
+    sta $ae39
+    lda #16
+    sta $ae60
+    lda #7
+    sta $ae61
+    lda #16
+    sta $ae88
+    lda #7
+    sta $ae89
+    lda #16
+    sta $aeb0
+    lda #7
+    sta $aeb1
+    lda #16
+    sta $aed8
+    lda #7
+    sta $aed9
+    lda #16
+    sta $af00
+    lda #7
+    sta $af01
+    lda #16
+    sta $af28
+    lda #7
+    sta $af29
+    lda #16
+    sta $af50
+    lda #7
+    sta $af51
+    lda #16
+    sta $af78
+    lda #7
+    sta $af79
+    lda #16
+    sta $afa0
+    lda #7
+    sta $afa1
+    lda #16
+    sta $afc8
+    lda #7
+    sta $afc9
+    lda #16
+    sta $aff0
+    lda #7
+    sta $aff1
+    lda #16
+    sta $b018
+    lda #7
+    sta $b019
+    lda #16
+    sta $b040
+    lda #7
+    sta $b041
+    lda #16
+    sta $b068
+    lda #7
+    sta $b069
+    lda #16
+    sta $b090
+    lda #7
+    sta $b091
+    lda #16
+    sta $b0b8
+    lda #7
+    sta $b0b9
+    lda #16
+    sta $b0e0
+    lda #7
+    sta $b0e1
+    lda #16
+    sta $b108
+    lda #7
+    sta $b109
+    lda #16
+    sta $b130
+    lda #7
+    sta $b131
+    lda #16
+    sta $b158
+    lda #7
+    sta $b159
+    lda #16
+    sta $b180
+    lda #7
+    sta $b181
+    lda #16
+    sta $b1a8
+    lda #7
+    sta $b1a9
+    lda #16
+    sta $b1d0
+    lda #7
+    sta $b1d1
+    lda #16
+    sta $b1f8
+    lda #7
+    sta $b1f9
+    lda #16
+    sta $b220
+    lda #7
+    sta $b221
+    lda #16
+    sta $b248
+    lda #7
+    sta $b249
+    lda #16
+    sta $b270
+    lda #7
+    sta $b271
+    lda #16
+    sta $b298
+    lda #7
+    sta $b299
+    lda #16
+    sta $b2c0
+    lda #7
+    sta $b2c1
+    lda #16
+    sta $b2e8
+    lda #7
+    sta $b2e9
+    lda #16
+    sta $b310
+    lda #7
+    sta $b311
+    lda #16
+    sta $b338
+    lda #7
+    sta $b339
+    lda #16
+    sta $b360
+    lda #7
+    sta $b361
+    lda #16
+    sta $b388
+    lda #7
+    sta $b389
+    lda #16
+    sta $b3b0
+    lda #7
+    sta $b3b1
+    lda #16
+    sta $b3d8
+    lda #7
+    sta $b3d9
+    lda #16
+    sta $b400
+    lda #7
+    sta $b401
+    lda #16
+    sta $b428
+    lda #7
+    sta $b429
+    lda #16
+    sta $b450
+    lda #7
+    sta $b451
+    lda #16
+    sta $b478
+    lda #7
+    sta $b479
+    lda #16
+    sta $b4a0
+    lda #7
+    sta $b4a1
+    lda #16
+    sta $b4c8
+    lda #7
+    sta $b4c9
+    lda #16
+    sta $b4f0
+    lda #7
+    sta $b4f1
+    lda #16
+    sta $b518
+    lda #7
+    sta $b519
+    lda #16
+    sta $b540
+    lda #7
+    sta $b541
+    lda #16
+    sta $b568
+    lda #7
+    sta $b569
+    lda #16
+    sta $b590
+    lda #7
+    sta $b591
+    lda #16
+    sta $b5b8
+    lda #7
+    sta $b5b9
+    lda #16
+    sta $b5e0
+    lda #7
+    sta $b5e1
+    lda #16
+    sta $b608
+    lda #7
+    sta $b609
+    lda #16
+    sta $b630
+    lda #7
+    sta $b631
+    lda #16
+    sta $b658
+    lda #7
+    sta $b659
+    lda #16
+    sta $b680
+    lda #7
+    sta $b681
+    lda #16
+    sta $b6a8
+    lda #7
+    sta $b6a9
+    lda #16
+    sta $b6d0
+    lda #7
+    sta $b6d1
+    lda #16
+    sta $b6f8
+    lda #7
+    sta $b6f9
+    lda #16
+    sta $b720
+    lda #7
+    sta $b721
+    lda #16
+    sta $b748
+    lda #7
+    sta $b749
+    lda #16
+    sta $b770
+    lda #7
+    sta $b771
+    lda #16
+    sta $b798
+    lda #7
+    sta $b799
+    lda #16
+    sta $b7c0
+    lda #7
+    sta $b7c1
+    lda #16
+    sta $b7e8
+    lda #7
+    sta $b7e9
+    lda #16
+    sta $b810
+    lda #7
+    sta $b811
+    lda #16
+    sta $b838
+    lda #7
+    sta $b839
+    lda #16
+    sta $b860
+    lda #7
+    sta $b861
+    lda #16
+    sta $b888
+    lda #7
+    sta $b889
+    lda #16
+    sta $b8b0
+    lda #7
+    sta $b8b1
+    lda #16
+    sta $b8d8
+    lda #7
+    sta $b8d9
+    lda #16
+    sta $b900
+    lda #7
+    sta $b901
+    lda #16
+    sta $b928
+    lda #7
+    sta $b929
+    lda #16
+    sta $b950
+    lda #7
+    sta $b951
+    lda #16
+    sta $b978
+    lda #7
+    sta $b979
+    lda #16
+    sta $b9a0
+    lda #7
+    sta $b9a1
+    lda #16
+    sta $b9c8
+    lda #7
+    sta $b9c9
+    lda #16
+    sta $b9f0
+    lda #7
+    sta $b9f1
+    lda #16
+    sta $ba18
+    lda #7
+    sta $ba19
+    lda #16
+    sta $ba40
+    lda #7
+    sta $ba41
+    lda #16
+    sta $ba68
+    lda #7
+    sta $ba69
+    lda #16
+    sta $ba90
+    lda #7
+    sta $ba91
+    lda #16
+    sta $bab8
+    lda #7
+    sta $bab9
+    lda #16
+    sta $bae0
+    lda #7
+    sta $bae1
+    lda #16
+    sta $bb08
+    lda #7
+    sta $bb09
+    lda #16
+    sta $bb30
+    lda #7
+    sta $bb31
+    lda #16
+    sta $bb58
+    lda #7
+    sta $bb59
+    lda #16
+    sta $bb80
+    lda #7
+    sta $bb81
+    lda #16
+    sta $bba8
+    lda #7
+    sta $bba9
+    lda #16
+    sta $bbd0
+    lda #7
+    sta $bbd1
+    lda #16
+    sta $bbf8
+    lda #7
+    sta $bbf9
+    lda #16
+    sta $bc20
+    lda #7
+    sta $bc21
+    lda #16
+    sta $bc48
+    lda #7
+    sta $bc49
+    lda #16
+    sta $bc70
+    lda #7
+    sta $bc71
+    lda #16
+    sta $bc98
+    lda #7
+    sta $bc99
+    lda #16
+    sta $bcc0
+    lda #7
+    sta $bcc1
+    lda #16
+    sta $bce8
+    lda #7
+    sta $bce9
+    lda #16
+    sta $bd10
+    lda #7
+    sta $bd11
+    lda #16
+    sta $bd38
+    lda #7
+    sta $bd39
+    lda #16
+    sta $bd60
+    lda #7
+    sta $bd61
+    lda #16
+    sta $bd88
+    lda #7
+    sta $bd89
+    lda #16
+    sta $bdb0
+    lda #7
+    sta $bdb1
+    lda #16
+    sta $bdd8
+    lda #7
+    sta $bdd9
+    lda #16
+    sta $be00
+    lda #7
+    sta $be01
+    lda #16
+    sta $be28
+    lda #7
+    sta $be29
+    lda #16
+    sta $be50
+    lda #7
+    sta $be51
+    lda #16
+    sta $be78
+    lda #7
+    sta $be79
+    lda #16
+    sta $bea0
+    lda #7
+    sta $bea1
+    lda #16
+    sta $bec8
+    lda #7
+    sta $bec9
+    lda #16
+    sta $bef0
+    lda #7
+    sta $bef1
+    lda #16
+    sta $bf18
+    lda #7
+    sta $bf19
+    lda #30
+    sta $bfdf
+    ldx #95
+copy_map:
+    lda initial_map,x
+    sta MAP,x
+    dex
+    bpl copy_map
+    lda #165
+    sta $9ff0
+    sta $9ff1
+    sta $9ff2
+    sta $9ff3
+    sta $9ff4
+    sta $9ff5
+    sta $9ff6
+    sta $9ff7
+    sta $9ff8
+    sta $9ff9
+    sta $9ffa
+    sta $9ffb
+    sta $9ffc
+    sta $9ffd
+    sta $9ffe
+    sta $9fff
+    lda #165
+    sta $bf40
+    sta $bf41
+    sta $bf42
+    sta $bf43
+    sta $bf44
+    sta $bf45
+    sta $bf46
+    sta $bf47
+    sta $bf48
+    sta $bf49
+    sta $bf4a
+    sta $bf4b
+    sta $bf4c
+    sta $bf4d
+    sta $bf4e
+    sta $bf4f
+case_0:
+    lda #2
+    sta NR+0
+    lda #1
+    sta NR+1
+    lda #4
+    sta NR+2
+    lda #3
+    sta NR+3
+    lda #5
+    sta NR+4
+    lda #3
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+1
+case_1:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #6
+    sta NR+2
+    lda #4
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+2
+case_2:
+    lda #11
+    sta NR+0
+    lda #7
+    sta NR+1
+    lda #37
+    sta NR+2
+    lda #24
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+3
+case_3:
+    lda #12
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+4
+case_4:
+    lda #0
+    sta NR+0
+    lda #8
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+5
+case_5:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #38
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+6
+case_6:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #25
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+7
+case_7:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #0
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+8
+case_8:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #0
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+9
+case_9:
+    lda #11
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #2
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+10
+case_10:
+    lda #0
+    sta NR+0
+    lda #7
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #2
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+11
+case_11:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #37
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #2
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+12
+case_12:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #24
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #2
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+13
+case_13:
+    lda #255
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #2
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+14
+case_14:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #255
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #2
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+15
+case_15:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #255
+    sta NR+3
+    lda #1
+    sta NR+4
+    lda #2
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+16
+case_16:
+    lda #0
+    sta NR+0
+    lda #0
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #255
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+17
+case_17:
+    lda #255
+    sta MAP+13
+    lda #0
+    sta NR+0
+    lda #1
+    sta NR+1
+    lda #0
+    sta NR+2
+    lda #0
+    sta NR+3
+    lda #2
+    sta NR+4
+    lda #1
+    sta NR+5
+    jsr region_draw
+    lda NR+6
+    ora #128
+    sta RESULT+18
+diagnostic_done:
+    lda #239
+    sta RESULT
+finished:
+    jmp finished
+!source "../../../../../cross-platform/patterns/rendering/bitmap-regions/6502.inc"
+initial_map:
+!byte 0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1,0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1,0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1,0,1,2,3,0,1,2,3,0,1,2,3,2,3,0,1,2,3,0,1,2,3,0,1
+TILES:
+!byte 64,64,64,64,64,64,64,64
+!byte 106,85,106,85,106,85,106,85
+!byte 127,97,97,97,97,97,97,127
+!byte 97,82,76,76,82,97,64,64
+bitmap_lo:
+!byte 2,42,82,122,162,202,242,26,66,106,146,186,226,10,50,90
+!byte 130,170,210,250,34,74,114,154,194,234,18,58,98,138,178,218
+!byte 2,42,82,122,162,202,242,26,66,106,146,186,226,10,50,90
+!byte 130,170,210,250,34,74,114,154,194,234,18,58,98,138,178,218
+!byte 2,42,82,122,162,202,242,26,66,106,146,186,226,10,50,90
+!byte 130,170,210,250,34,74,114,154,194,234,18,58,98,138,178,218
+!byte 2,42,82,122,162,202,242,26,66,106,146,186,226,10,50,90
+!byte 130,170,210,250,34,74,114,154,194,234,18,58,98,138,178,218
+!byte 2,42,82,122,162,202,242,26,66,106,146,186,226,10,50,90
+!byte 130,170,210,250,34,74,114,154,194,234,18,58,98,138,178,218
+!byte 2,42,82,122,162,202,242,26,66,106,146,186,226,10,50,90
+!byte 130,170,210,250,34,74,114,154,194,234,18,58,98,138,178,218
+!byte 2,42,82,122,162,202,242,26
+bitmap_hi:
+!byte 160,160,160,160,160,160,160,161,161,161,161,161,161,162,162,162
+!byte 162,162,162,162,163,163,163,163,163,163,164,164,164,164,164,164
+!byte 165,165,165,165,165,165,165,166,166,166,166,166,166,167,167,167
+!byte 167,167,167,167,168,168,168,168,168,168,169,169,169,169,169,169
+!byte 170,170,170,170,170,170,170,171,171,171,171,171,171,172,172,172
+!byte 172,172,172,172,173,173,173,173,173,173,174,174,174,174,174,174
+!byte 175,175,175,175,175,175,175,176,176,176,176,176,176,177,177,177
+!byte 177,177,177,177,178,178,178,178,178,178,179,179,179,179,179,179
+!byte 180,180,180,180,180,180,180,181,181,181,181,181,181,182,182,182
+!byte 182,182,182,182,183,183,183,183,183,183,184,184,184,184,184,184
+!byte 185,185,185,185,185,185,185,186,186,186,186,186,186,187,187,187
+!byte 187,187,187,187,188,188,188,188,188,188,189,189,189,189,189,189
+!byte 190,190,190,190,190,190,190,191
+!fill $fffa-*,0
+!word start,start,start

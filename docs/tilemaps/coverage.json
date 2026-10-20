@@ -112,7 +112,10 @@
       "record": "atari-800xl/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-native-adapter",
+        "mode": "ANTIC F with explicit LMS rows",
+        "implementation": "atari-800xl/patterns/assembly/rendering/tile-region",
+        "record": "atari-800xl/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -141,7 +144,10 @@
       "record": "commodore-amiga/patterns/assembly/rendering/tile-map/verification/results.json",
       "stock_loader": "not-qualified-by-synthetic-reset-fixture",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-native-adapter",
+        "mode": "A500 PAL, two bitplanes; CPU and blitter",
+        "implementation": "commodore-amiga/patterns/assembly/rendering/tile-region",
+        "record": "commodore-amiga/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -267,7 +273,10 @@
       "record": "nintendo-game-boy/patterns/assembly/rendering/tile-map/verification/results.json",
       "stock_loader": "not-qualified-by-synthetic-reset-fixture",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-native-adapter",
+        "mode": "DMG background map; LCD-off transfers",
+        "implementation": "nintendo-game-boy/patterns/assembly/rendering/tile-region",
+        "record": "nintendo-game-boy/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {
@@ -293,7 +302,10 @@
       "record": "oric-atmos/patterns/basic/rendering/tile-map/verification/results.json",
       "stock_loader": "stock-interpreter-keyboard",
       "region_drawing": {
-        "status": "not-yet-qualified"
+        "status": "executed-native-adapter",
+        "mode": "HIRES with two attribute columns",
+        "implementation": "oric-atmos/patterns/assembly/rendering/tile-region",
+        "record": "oric-atmos/patterns/assembly/rendering/tile-region/verification/results.json"
       }
     },
     {

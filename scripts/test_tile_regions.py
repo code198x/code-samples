@@ -26,6 +26,7 @@ class RegionEvidenceFailures(unittest.TestCase):
             "docs/tilemaps/coverage.json",
             "docs/capability-coverage.json",
             "cross-platform/patterns/rendering/bitmap-regions/systems.json",
+            "cross-platform/patterns/rendering/region-architectures/systems.json",
             "scripts/verify-tile-regions.py",
             "scripts/verify-tilemaps.py",
             "scripts/verify-game-loops.py",

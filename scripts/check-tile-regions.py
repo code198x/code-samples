@@ -126,6 +126,14 @@ def verify(root: Path) -> int:
         ).exists()
         else set()
     )
+    architecture_path = (
+        root / "cross-platform/patterns/rendering/region-architectures/systems.json"
+    )
+    architecture_ids = (
+        {c["machine_id"] for c in json.loads(architecture_path.read_text())}
+        if architecture_path.exists()
+        else set()
+    )
     for row in inventory:
         if row["machine_id"] not in ids:
             require(
@@ -133,6 +141,8 @@ def verify(root: Path) -> int:
                 == (
                     "executed-cpu-bitmap"
                     if row["machine_id"] in bitmap_ids
+                    else "executed-native-adapter"
+                    if row["machine_id"] in architecture_ids
                     else "not-yet-qualified"
                 ),
                 "Unexecuted machine promoted",

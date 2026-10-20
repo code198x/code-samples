@@ -78,6 +78,10 @@ jobs:
         run: |
           python scripts/check-bitmap-regions.py
           python -m unittest discover -s scripts -p test_bitmap_regions.py -v
+      - name: Check native adapters and backend failure controls
+        run: |
+          python scripts/check-region-architectures.py
+          python -m unittest discover -s scripts -p test_region_architectures.py -v
       - uses: actions/upload-artifact@v7
         if: always()
         with:
