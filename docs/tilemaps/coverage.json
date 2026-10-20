@@ -10,7 +10,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "acorn-atom/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "acorn-bbc-micro",
@@ -20,7 +23,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "bbc-micro/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "acorn-electron",
@@ -30,7 +36,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "acorn-electron/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "amstrad-cpc",
@@ -40,7 +49,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "amstrad-cpc/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "atari-2600",
@@ -50,7 +62,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "atari-2600/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "atari-5200",
@@ -60,7 +75,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "atari-5200/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "atari-7800",
@@ -70,7 +88,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "atari-7800/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "atari-800xl",
@@ -80,7 +101,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "atari-800xl/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "coleco-colecovision",
@@ -90,7 +114,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "coleco-colecovision/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "tms",
+        "implementation": "coleco-colecovision/patterns/assembly/rendering/tile-region",
+        "record": "coleco-colecovision/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "commodore-amiga",
@@ -100,7 +130,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "commodore-amiga/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "commodore-c64",
@@ -110,7 +143,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "commodore-64/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "commodore-pet",
@@ -120,7 +156,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "commodore-pet/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "commodore-vic-20",
@@ -130,7 +169,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "commodore-vic-20/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "dragon",
@@ -140,7 +182,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "dragon-32/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "jupiter-ace",
@@ -150,7 +195,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "jupiter-ace/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "mattel-aquarius",
@@ -160,7 +208,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "mattel-aquarius/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "memotech-mtx",
@@ -170,7 +221,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "memotech-mtx/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "tms",
+        "implementation": "memotech-mtx/patterns/assembly/rendering/tile-region",
+        "record": "memotech-mtx/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "microsoft-msx1",
@@ -180,7 +237,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "msx/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "tms",
+        "implementation": "msx/patterns/assembly/rendering/tile-region",
+        "record": "msx/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "nintendo-game-boy",
@@ -190,7 +253,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "nintendo-game-boy/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "nintendo-nes",
@@ -200,7 +266,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "nintendo-entertainment-system/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "oric",
@@ -210,7 +279,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "oric-atmos/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "sega-game-gear",
@@ -220,7 +292,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "sega-game-gear/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "gg",
+        "implementation": "sega-game-gear/patterns/assembly/rendering/tile-region",
+        "record": "sega-game-gear/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "sega-master-system",
@@ -230,7 +308,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "sega-master-system/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "sms",
+        "implementation": "sega-master-system/patterns/assembly/rendering/tile-region",
+        "record": "sega-master-system/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "sega-sg-1000",
@@ -240,7 +324,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "sega-sg-1000/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "tms",
+        "implementation": "sega-sg-1000/patterns/assembly/rendering/tile-region",
+        "record": "sega-sg-1000/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "sinclair-zx-spectrum",
@@ -250,7 +340,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "sinclair-zx-spectrum/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "sinclair-zx80",
@@ -260,7 +353,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "sinclair-zx80/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "sinclair-zx81",
@@ -270,7 +366,10 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "sinclair-zx81/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "not-yet-qualified"
+      }
     },
     {
       "machine_id": "sord-m5",
@@ -280,7 +379,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "sord-m5/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "tms",
+        "implementation": "sord-m5/patterns/assembly/rendering/tile-region",
+        "record": "sord-m5/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "spectravideo-svi-328",
@@ -290,7 +395,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "basic-numeric-map",
       "record": "spectravideo-svi-328/patterns/basic/rendering/tile-map/verification/results.json",
-      "stock_loader": "stock-interpreter-keyboard"
+      "stock_loader": "stock-interpreter-keyboard",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "tms",
+        "implementation": "spectravideo-svi-328/patterns/assembly/rendering/tile-region",
+        "record": "spectravideo-svi-328/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     },
     {
       "machine_id": "tatung-einstein",
@@ -300,7 +411,13 @@
       "native_graphics": "not-qualified-by-map-query-evidence",
       "kind": "native-byte-map",
       "record": "tatung-einstein/patterns/assembly/rendering/tile-map/verification/results.json",
-      "stock_loader": "not-qualified-by-synthetic-reset-fixture"
+      "stock_loader": "not-qualified-by-synthetic-reset-fixture",
+      "region_drawing": {
+        "status": "executed-native-vdp",
+        "mode": "tms",
+        "implementation": "tatung-einstein/patterns/assembly/rendering/tile-region",
+        "record": "tatung-einstein/patterns/assembly/rendering/tile-region/verification/results.json"
+      }
     }
   ]
 }
