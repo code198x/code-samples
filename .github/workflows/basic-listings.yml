@@ -48,3 +48,26 @@ jobs:
         run: |
           build198x --version
           scripts/check-basic.sh
+
+      - name: Install the publishing assembler
+        run: |
+          set -euo pipefail
+          name=asm198x-x86_64-unknown-linux-gnu
+          base=https://github.com/asm198x/asm198x/releases/download/asm198x-v0.0.65
+          cd "$RUNNER_TEMP"
+          curl -fsSL -o "$name.tar.xz" "$base/$name.tar.xz"
+          curl -fsSL -o "$name.tar.xz.sha256" "$base/$name.tar.xz.sha256"
+          grep -v '^[[:space:]]*$' "$name.tar.xz.sha256" | sha256sum -c -
+          tar xJf "$name.tar.xz"
+          install -m 755 "$name/asm198x" bin/asm198x
+
+      - name: Build Amiga downloads with the publishing tools
+        run: |
+          set -euo pipefail
+          count=0
+          while IFS= read -r file; do
+            make -C "$(dirname "$file")"
+            count=$((count + 1))
+          done < <(find commodore-amiga -name Makefile -not -path '*/_*' | sort)
+          test "$count" -gt 0
+          echo "Built $count Amiga publishing Makefiles"

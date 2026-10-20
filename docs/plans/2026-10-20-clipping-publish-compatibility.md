@@ -1,0 +1,3 @@
+# Restore the clipping download build
+
+Deployment39378801179 fails because the publishing pipeline installs Build198x0.2.9 (`build198x adf`), while the new sample defaults to the standalone `build198x-adf` interface. Restore the established default and expose an empty ADF_SUBCOMMAND for the newer standalone executable. No dependency changes. Build both real tool paths, compare the resulting program bytes and boot the legacy-mastered disk, then refresh the retained input record with a full execution run. Push a focused fix PR, require applicable CI green and merge with an exact head guard. Re-run publishing and verify live content plus downloadable ADF. Preserve the separate pre-shifted-sprite batch.
