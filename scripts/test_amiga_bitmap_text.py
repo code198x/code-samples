@@ -1,0 +1,95 @@
+"""Retained text checks reject missing records and rehashed incorrect outcomes."""
+
+from __future__ import annotations
+
+import hashlib
+import importlib.util
+import json
+import shutil
+import tempfile
+import unittest
+import zlib
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location(
+    "amiga_text_check", ROOT / "scripts/check-amiga-bitmap-text.py"
+)
+assert spec and spec.loader
+C = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(C)
+
+
+class AmigaBitmapText(unittest.TestCase):
+    def fixture(self) -> tuple[dict[str, Any], Path, dict[str, Any]]:
+        cfg = json.loads((C.S / "system.json").read_text())
+        td = tempfile.TemporaryDirectory()
+        self.addCleanup(td.cleanup)
+        folder = Path(td.name) / "verification"
+        shutil.copytree(
+            ROOT
+            / cfg["folder"]
+            / "patterns/assembly/rendering/bitmap-text/verification",
+            folder,
+        )
+        return cfg, folder, json.loads((folder / "results.json").read_text())
+
+    def reject(self, c: dict[str, Any], folder: Path | None, r: dict[str, Any]) -> None:
+        (folder / "results.json").write_text(json.dumps(r))
+        with self.assertRaises((AssertionError, KeyError, FileNotFoundError)):
+            C.check(c, folder)
+
+    def test_empty_cases(self) -> None:
+        c, f, r = self.fixture()
+        r["positive"]["cases"] = []
+        self.reject(c, f, r)
+
+    def test_missing_source(self) -> None:
+        c, f, r = self.fixture()
+        r["sources"].pop(next(iter(r["sources"])))
+        self.reject(c, f, r)
+
+    def test_missing_completion(self) -> None:
+        c, f, r = self.fixture()
+        r["positive"]["cases"][0]["mailbox"] = "0100"
+        self.reject(c, f, r)
+
+    def test_missing_capture_and_manifest_entry(self) -> None:
+        c, f, r = self.fixture()
+        name = r["positive"]["cases"][0].pop("capture")
+        r["artifacts"].pop(name)
+        self.reject(c, f, r)
+
+    def test_rehashed_bitmap_damage(self) -> None:
+        c, f, r = self.fixture()
+        name = r["positive"]["cases"][0]["memory"]
+        data = bytearray(zlib.decompress((f / name).read_bytes()))
+        data[0] ^= 1
+        (f / name).write_bytes(zlib.compress(data))
+        r["artifacts"][name] = hashlib.sha256((f / name).read_bytes()).hexdigest()
+        self.reject(c, f, r)
+
+    def test_corrupt_font_source(self) -> None:
+        c, f, r = self.fixture()
+        r["positive"]["cases"][0]["rom_font"] = "00" * 512
+        self.reject(c, f, r)
+
+    def test_missing_fault(self) -> None:
+        c, f, r = self.fixture()
+        r["faults"].pop("advance-fault")
+        self.reject(c, f, r)
+
+    def test_correct_bitmap_cannot_count_as_failed_control(self) -> None:
+        c, f, r = self.fixture()
+        o = r["faults"]["glyph-fault"]
+        grid = [bytearray(c["width"]) for _ in range(c["height"])]
+        C.M.evaluate(c, grid, o["request"])
+        name = o["memory"]
+        (f / name).write_bytes(zlib.compress(C.M.P.packed(c, grid)))
+        r["artifacts"][name] = hashlib.sha256((f / name).read_bytes()).hexdigest()
+        self.reject(c, f, r)
+
+
+if __name__ == "__main__":
+    unittest.main()

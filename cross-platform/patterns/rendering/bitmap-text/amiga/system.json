@@ -1,0 +1,21 @@
+{
+  "machine_id": "commodore-amiga",
+  "folder": "commodore-amiga",
+  "binary": "emu198x-amiga",
+  "kind": "kickstart",
+  "origin": 16252936,
+  "size": 524288,
+  "base": 65536,
+  "width": 320,
+  "height": 256,
+  "xstep": 1,
+  "context": 8192,
+  "command": 8448,
+  "cpu": "m68000",
+  "order": "big",
+  "length": 10240,
+  "family": "bitmap-text",
+  "pen_max": 1,
+  "t": 8704,
+  "data": 24577
+}
