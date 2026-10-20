@@ -42,3 +42,10 @@ seven result bytes, recover with a real next command and signal completion.
 The existing `cases()` list and checked-in N0/DTL1 default remain unchanged.
 The missing-entry raw reference result is recorded separately from the released
 Emu regression expectation; no physical search-time or chip equivalence follows.
+
+The v3 campaign additionally calls `reverse_size_case()`: the guest commands N2
+(512 bytes) while the EDSK descriptor records N0 with128 data bytes. The existing
+program and standalone default are unchanged. The host checks the full512-byte
+Emu-model transfer, including every zero-padding byte after the128 represented
+bytes, all seven result bytes and recovery. Independent MAME observations remain
+separate; this does not establish magnetic field length or hardware CRC/timing.

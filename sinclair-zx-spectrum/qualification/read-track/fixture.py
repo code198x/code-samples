@@ -45,6 +45,17 @@ def missing_entry_case() -> dict:
     }
 
 
+def reverse_size_case() -> dict:
+    """Command N2 independently from a recorded N0 field and128 data bytes."""
+    return {
+        "id": "command2-recorded0",
+        "n": 2,
+        "dtl": 255,
+        "fields": [(1, 0, 128, 33)],
+        "eot": 1,
+    }
+
+
 def command(case: dict) -> list[int]:
     return [0x42, 0, 39, 0, 1, case["n"], case["eot"], 42, case["dtl"]]
 

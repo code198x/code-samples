@@ -4,7 +4,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from fixture import cases, command, make, missing_entry_case
+from fixture import cases, command, make, missing_entry_case, reverse_size_case
 
 
 class FixtureTests(unittest.TestCase):
@@ -53,6 +53,19 @@ class FixtureTests(unittest.TestCase):
             self.assertEqual(
                 image[start + 256 : start + 4864], base[start + 256 : start + 4864]
             )
+
+    def test_command_and_native_sector_size_are_independent(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        case = reverse_size_case()
+        image = make(bytes(base), case)
+        start = 256 + 39 * 4864
+        self.assertEqual(command(case)[5], 2)
+        self.assertEqual(
+            image[start + 24 : start + 32], bytes([39, 0, 1, 0, 0, 0, 128, 0])
+        )
+        self.assertEqual(image[start + 256 : start + 384], bytes([33]) * 128)
+        self.assertEqual(len(image), 256 + 39 * 4864 + 512)
 
     def test_wrong_base_rejected(self) -> None:
         for value in (b"", bytes(194816), b"MV - CPC"):
