@@ -33,7 +33,7 @@
     "bbc-micro/patterns/assembly/rendering/clipped-sprites/loader.py": "bade96de1b3724eaa5f68addd4f0d9099fdf154d507d153c8a1a54595150f329",
     "bbc-micro/patterns/assembly/rendering/clipped-sprites/shapes.inc": "1932b7f6d7542d6e132eab1349d3af9c455e8faeff1755ae4f18e35a9590fae2",
     "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce",
-    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/Makefile": "db0a9eb1b8dcaf7562e84e6c2f755319f5dbd3610871742d2306070bb0e51033",
+    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/Makefile": "2880a8cebc0a4c8d2795da64fb03dd609cafd87b64fb6510b74859e5258a4b9a",
     "commodore-amiga/patterns/assembly/rendering/clipped-sprites/clip.inc": "0c98dcba5c5e9297b275583dff212e221ce4535e0b52f95b79816932e6a5aaca",
     "commodore-amiga/patterns/assembly/rendering/clipped-sprites/demo.asm": "61102f9cf88283591df1b85697d122e425cf500cb04fa5d95fe37ad4ebdbf402",
     "commodore-amiga/patterns/assembly/rendering/clipped-sprites/draw.inc": "528903e83f1c1adf58d731915e3920cddf15474ce7f77b47a0ec62dacecf6f43",
