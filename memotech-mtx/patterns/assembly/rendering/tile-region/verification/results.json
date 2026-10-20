@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "machine_id": "memotech-mtx",
+  "configuration": "Original reset diagnostic; VDP registers, VRAM, pattern/colour tables and foreground CPU owned by caller; display blanked during drawing",
+  "mode": "tms",
+  "sources": {
+    "memotech-mtx/patterns/assembly/rendering/tile-region/demo.asm": "731954e104abac7390206b795dcf4c5bd3eb7012aa7f34bb865077e0647d96af",
+    "cross-platform/patterns/rendering/tile-region/region.inc": "b5f1f77f8746498bb8eb0920bf5121b7129f73be247f2988ed5c87069ce0a0d3",
+    "cross-platform/patterns/rendering/tile-region/systems.json": "1c542edac15a7b48ad78ce51f76470b1a1e26b6195e84f7fb656839e9eb7ca8c",
+    "cross-platform/patterns/rendering/tile-region/build.py": "d9c4d5bd2984716e70d887323a71f10bcb3fdbc32889eb8f1912c899df0c0458",
+    "cross-platform/patterns/rendering/tile-map/z80.inc": "bac98f7023aba3e9647037e755aa44bd99783f62c7dae091f11fca3b78cae3d1",
+    "scripts/verify-tile-regions.py": "42425156437a4e08d909047194be78fc74961f6d36251e5177b598fb42923559",
+    "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "e42ad303b8a8181e3692902e7a561a6374491a3c7cd08247e074a3e71a9ca9ba",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "case_count": 22,
+  "readback_bytes": 800,
+  "pixel_comparison": "Whole decoded raw native framebuffer, including borders or Game Gear window",
+  "completed_negative_controls": [
+    "wrong-stride",
+    "unsafe-destination"
+  ],
+  "limits": "Emu198x 0.39.0 selected machine/default video model only. No original hardware, stock-OS loader, IRQ coexistence, VBlank throughput or concurrent-map modification qualification."
+}

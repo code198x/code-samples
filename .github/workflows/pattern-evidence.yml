@@ -70,6 +70,10 @@ jobs:
         run: |
           python scripts/check-tilemaps.py
           python -m unittest discover -s scripts -p test_tilemaps.py -v
+      - name: Verify nine native VDP region implementations
+        run: |
+          python scripts/check-tile-regions.py
+          python -m unittest discover -s scripts -p test_tile_regions.py -v
       - uses: actions/upload-artifact@v7
         if: always()
         with:

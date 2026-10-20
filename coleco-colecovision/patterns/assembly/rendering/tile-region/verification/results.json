@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "machine_id": "coleco-colecovision",
+  "configuration": "Original reset diagnostic; VDP registers, VRAM, pattern/colour tables and foreground CPU owned by caller; display blanked during drawing",
+  "mode": "tms",
+  "sources": {
+    "coleco-colecovision/patterns/assembly/rendering/tile-region/demo.asm": "342211b18510b86c5f96c93ff2e2c762750169cae4684a73440d8792672fa633",
+    "cross-platform/patterns/rendering/tile-region/region.inc": "b5f1f77f8746498bb8eb0920bf5121b7129f73be247f2988ed5c87069ce0a0d3",
+    "cross-platform/patterns/rendering/tile-region/systems.json": "1c542edac15a7b48ad78ce51f76470b1a1e26b6195e84f7fb656839e9eb7ca8c",
+    "cross-platform/patterns/rendering/tile-region/build.py": "d9c4d5bd2984716e70d887323a71f10bcb3fdbc32889eb8f1912c899df0c0458",
+    "cross-platform/patterns/rendering/tile-map/z80.inc": "bac98f7023aba3e9647037e755aa44bd99783f62c7dae091f11fca3b78cae3d1",
+    "scripts/verify-tile-regions.py": "42425156437a4e08d909047194be78fc74961f6d36251e5177b598fb42923559",
+    "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "023a5427600b0dd27b6b5dba40929cb23472676bebcdf15254a770de8c86e9b0",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "case_count": 22,
+  "readback_bytes": 800,
+  "pixel_comparison": "Whole decoded raw native framebuffer, including borders or Game Gear window",
+  "completed_negative_controls": [
+    "wrong-stride",
+    "unsafe-destination"
+  ],
+  "limits": "Emu198x 0.39.0 selected machine/default video model only. No original hardware, stock-OS loader, IRQ coexistence, VBlank throughput or concurrent-map modification qualification."
+}
