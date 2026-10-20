@@ -7,6 +7,7 @@ from pathlib import Path
 from fixture import (
     cases,
     command,
+    distinct_id_cases,
     duplicate_id_cases,
     make,
     missing_entry_case,
@@ -137,6 +138,23 @@ class FixtureTests(unittest.TestCase):
         self.assertEqual(a[: start + 256], b[: start + 256])
         descriptor = bytes([39, 0, 1, 2, 0, 0, 0, 2])
         self.assertEqual(a[start + 24 : start + 40], descriptor * 2)
+        self.assertEqual(a[start + 256 :], bytes([33]) * 512 + bytes([34]) * 512)
+        self.assertEqual(b[start + 256 :], bytes([34]) * 512 + bytes([33]) * 512)
+        self.assertEqual(len(a), 256 + sum(a[52:92]) * 256)
+
+    def test_distinct_ids_and_payloads_reverse_together(self) -> None:
+        base = bytearray(194816)
+        base[:8] = b"MV - CPC"
+        forward, reverse = distinct_id_cases()
+        self.assertEqual(command(forward), [66, 0, 39, 0, 1, 2, 2, 42, 255])
+        self.assertEqual(command(forward), command(reverse))
+        a, b = [make(bytes(base), case) for case in (forward, reverse)]
+        start = 256 + 39 * 4864
+        self.assertEqual(a[:start], b[:start])
+        first = bytes([39, 0, 1, 2, 0, 0, 0, 2])
+        second = bytes([39, 0, 2, 2, 0, 0, 0, 2])
+        self.assertEqual(a[start + 24 : start + 40], first + second)
+        self.assertEqual(b[start + 24 : start + 40], second + first)
         self.assertEqual(a[start + 256 :], bytes([33]) * 512 + bytes([34]) * 512)
         self.assertEqual(b[start + 256 :], bytes([34]) * 512 + bytes([33]) * 512)
         self.assertEqual(len(a), 256 + sum(a[52:92]) * 256)

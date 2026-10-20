@@ -106,6 +106,26 @@ def duplicate_id_cases() -> list[dict]:
     ]
 
 
+def distinct_id_cases() -> list[dict]:
+    """Reverse distinct physical IDs and their data with the same EOT2 command."""
+    return [
+        {
+            "id": "distinct-forward",
+            "n": 2,
+            "dtl": 255,
+            "fields": [(1, 2, 512, 33), (2, 2, 512, 34)],
+            "eot": 2,
+        },
+        {
+            "id": "distinct-reverse",
+            "n": 2,
+            "dtl": 255,
+            "fields": [(2, 2, 512, 34), (1, 2, 512, 33)],
+            "eot": 2,
+        },
+    ]
+
+
 def command(case: dict) -> list[int]:
     return [0x42, 0, 39, 0, 1, case["n"], case["eot"], 42, case["dtl"]]
 

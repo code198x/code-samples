@@ -74,3 +74,10 @@ are reversed in the second disk. Commands and native descriptors are identical;
 only the physical payload order changes. The guest must return both copies,
 drain seven results and recover with a following command. This does not qualify
 all duplicate-ID software or physical timing.
+
+`distinct_id_cases()` adds physical R1/$21 then R2/$22, and the reversed
+R2/$22 then R1/$21 order. Both command R1/N2, EOT2, DTL255 and carry two512-byte
+fields. ID descriptors and data move together; boot tracks and guest command stay
+identical. This differs from `reverse-wrap`, which consumes three fields. The
+umbrella v8 campaign records complete payload/results per engine; no raw timing
+or whole-operation claim follows from this finite sector-image fixture.
