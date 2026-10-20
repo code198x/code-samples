@@ -1,0 +1,4379 @@
+{
+  "machine_id": "acorn-atom",
+  "positive": {
+    "startup": {
+      "memory": "startup.dat.z",
+      "context": "0d001b005b00350000010000010000000d001b005b00350007e00420010b0b0035008b8607e0e0004600340000000000",
+      "mailbox": "00ef",
+      "guards": [
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "ffffffffffffffffffffffffffffffff"
+      ],
+      "request": {
+        "id": "startup",
+        "kind": "box",
+        "coords": [
+          13,
+          27,
+          91,
+          53
+        ],
+        "op": 0
+      },
+      "capture": "startup.png"
+    },
+    "cases": [
+      {
+        "memory": "000-pixel.dat.z",
+        "context": "1800110000000000000100a502a5a5a51800110019001200ff8080800303030012002382ff80800001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "000-pixel",
+        "request": {
+          "id": "000-pixel",
+          "kind": "pixel",
+          "coords": [
+            24,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2,
+        "capture": "000-pixel.png"
+      },
+      {
+        "memory": "001-read.dat.z",
+        "context": "1800110000000000000101a503a5a5a51800110019001200ff8080800303030011002382ff80800000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "001-read",
+        "request": {
+          "id": "001-read",
+          "kind": "read",
+          "coords": [
+            24,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "002-hspan.dat.z",
+        "context": "18001d0023000000000100a504a5a5a518001d0023001e00ffe08020030404001e00a483ffe0e00002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "002-hspan",
+        "request": {
+          "id": "002-hspan",
+          "kind": "hspan",
+          "coords": [
+            24,
+            29,
+            35,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "003-pixel.dat.z",
+        "context": "1800110000000000020100a502a5a5a51800110019001200ff8080800303030012002382ff80800001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "003-pixel",
+        "request": {
+          "id": "003-pixel",
+          "kind": "pixel",
+          "coords": [
+            24,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "004-read.dat.z",
+        "context": "1800110000000000000100a503a5a5a51800110019001200ff8080800303030011002382ff80800000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "004-read",
+        "request": {
+          "id": "004-read",
+          "kind": "read",
+          "coords": [
+            24,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "005-hspan.dat.z",
+        "context": "18001d0023000000020100a504a5a5a518001d0023001e00ffe08020030404001e00a483ffe0e00002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "005-hspan",
+        "request": {
+          "id": "005-hspan",
+          "kind": "hspan",
+          "coords": [
+            24,
+            29,
+            35,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "006-pixel.dat.z",
+        "context": "1800110000000000010100a502a5a5a51800110019001200ff8080800303030012002382ff80800001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "006-pixel",
+        "request": {
+          "id": "006-pixel",
+          "kind": "pixel",
+          "coords": [
+            24,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "007-read.dat.z",
+        "context": "1800110000000000000100a503a5a5a51800110019001200ff8080800303030011002382ff80800000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "007-read",
+        "request": {
+          "id": "007-read",
+          "kind": "read",
+          "coords": [
+            24,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "008-hspan.dat.z",
+        "context": "18001d0023000000010100a504a5a5a518001d0023001e00ffe08020030404001e00a483ffe0e00002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "008-hspan",
+        "request": {
+          "id": "008-hspan",
+          "kind": "hspan",
+          "coords": [
+            24,
+            29,
+            35,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "009-pixel.dat.z",
+        "context": "1900110000000000000100a502a5a5a5190011001a0012007fc0404003030300120023827fc0400001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "009-pixel",
+        "request": {
+          "id": "009-pixel",
+          "kind": "pixel",
+          "coords": [
+            25,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "010-read.dat.z",
+        "context": "1900110000000000000101a503a5a5a5190011001a0012007fc0404003030300110023827fc0400000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "010-read",
+        "request": {
+          "id": "010-read",
+          "kind": "read",
+          "coords": [
+            25,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "011-hspan.dat.z",
+        "context": "19001d0024000000000100a504a5a5a519001d0024001e007ff04010030404001e00a4837ff0f00002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "011-hspan",
+        "request": {
+          "id": "011-hspan",
+          "kind": "hspan",
+          "coords": [
+            25,
+            29,
+            36,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "012-pixel.dat.z",
+        "context": "1900110000000000020100a502a5a5a5190011001a0012007fc0404003030300120023827fc0400001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "012-pixel",
+        "request": {
+          "id": "012-pixel",
+          "kind": "pixel",
+          "coords": [
+            25,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "013-read.dat.z",
+        "context": "1900110000000000000100a503a5a5a5190011001a0012007fc0404003030300110023827fc0400000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "013-read",
+        "request": {
+          "id": "013-read",
+          "kind": "read",
+          "coords": [
+            25,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "014-hspan.dat.z",
+        "context": "19001d0024000000020100a504a5a5a519001d0024001e007ff04010030404001e00a4837ff0f00002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "014-hspan",
+        "request": {
+          "id": "014-hspan",
+          "kind": "hspan",
+          "coords": [
+            25,
+            29,
+            36,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "015-pixel.dat.z",
+        "context": "1900110000000000010100a502a5a5a5190011001a0012007fc0404003030300120023827fc0400001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "015-pixel",
+        "request": {
+          "id": "015-pixel",
+          "kind": "pixel",
+          "coords": [
+            25,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "016-read.dat.z",
+        "context": "1900110000000000000100a503a5a5a5190011001a0012007fc0404003030300110023827fc0400000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "016-read",
+        "request": {
+          "id": "016-read",
+          "kind": "read",
+          "coords": [
+            25,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2,
+        "capture": "016-read.png"
+      },
+      {
+        "memory": "017-hspan.dat.z",
+        "context": "19001d0024000000010100a504a5a5a519001d0024001e007ff04010030404001e00a4837ff0f00002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "017-hspan",
+        "request": {
+          "id": "017-hspan",
+          "kind": "hspan",
+          "coords": [
+            25,
+            29,
+            36,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "018-pixel.dat.z",
+        "context": "1a00110000000000000100a502a5a5a51a0011001b0012003fe0202003030300120023823fe0200001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "018-pixel",
+        "request": {
+          "id": "018-pixel",
+          "kind": "pixel",
+          "coords": [
+            26,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "019-read.dat.z",
+        "context": "1a00110000000000000101a503a5a5a51a0011001b0012003fe0202003030300110023823fe0200000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "019-read",
+        "request": {
+          "id": "019-read",
+          "kind": "read",
+          "coords": [
+            26,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "020-hspan.dat.z",
+        "context": "1a001d0025000000000100a504a5a5a51a001d0025001e003ff82008030404001e00a4833ff8f80002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "020-hspan",
+        "request": {
+          "id": "020-hspan",
+          "kind": "hspan",
+          "coords": [
+            26,
+            29,
+            37,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "021-pixel.dat.z",
+        "context": "1a00110000000000020100a502a5a5a51a0011001b0012003fe0202003030300120023823fe0200001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "021-pixel",
+        "request": {
+          "id": "021-pixel",
+          "kind": "pixel",
+          "coords": [
+            26,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "022-read.dat.z",
+        "context": "1a00110000000000000100a503a5a5a51a0011001b0012003fe0202003030300110023823fe0200000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "022-read",
+        "request": {
+          "id": "022-read",
+          "kind": "read",
+          "coords": [
+            26,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "023-hspan.dat.z",
+        "context": "1a001d0025000000020100a504a5a5a51a001d0025001e003ff82008030404001e00a4833ff8f80002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "023-hspan",
+        "request": {
+          "id": "023-hspan",
+          "kind": "hspan",
+          "coords": [
+            26,
+            29,
+            37,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "024-pixel.dat.z",
+        "context": "1a00110000000000010100a502a5a5a51a0011001b0012003fe0202003030300120023823fe0200001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "024-pixel",
+        "request": {
+          "id": "024-pixel",
+          "kind": "pixel",
+          "coords": [
+            26,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "025-read.dat.z",
+        "context": "1a00110000000000000100a503a5a5a51a0011001b0012003fe0202003030300110023823fe0200000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "025-read",
+        "request": {
+          "id": "025-read",
+          "kind": "read",
+          "coords": [
+            26,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "026-hspan.dat.z",
+        "context": "1a001d0025000000010100a504a5a5a51a001d0025001e003ff82008030404001e00a4833ff8f80002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "026-hspan",
+        "request": {
+          "id": "026-hspan",
+          "kind": "hspan",
+          "coords": [
+            26,
+            29,
+            37,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "027-pixel.dat.z",
+        "context": "1b00110000000000000100a502a5a5a51b0011001c0012001ff0101003030300120023821ff0100001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "027-pixel",
+        "request": {
+          "id": "027-pixel",
+          "kind": "pixel",
+          "coords": [
+            27,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "028-read.dat.z",
+        "context": "1b00110000000000000101a503a5a5a51b0011001c0012001ff0101003030300110023821ff0100000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "028-read",
+        "request": {
+          "id": "028-read",
+          "kind": "read",
+          "coords": [
+            27,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "029-hspan.dat.z",
+        "context": "1b001d0026000000000100a504a5a5a51b001d0026001e001ffc1004030404001e00a4831ffcfc0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "029-hspan",
+        "request": {
+          "id": "029-hspan",
+          "kind": "hspan",
+          "coords": [
+            27,
+            29,
+            38,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "030-pixel.dat.z",
+        "context": "1b00110000000000020100a502a5a5a51b0011001c0012001ff0101003030300120023821ff0100001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "030-pixel",
+        "request": {
+          "id": "030-pixel",
+          "kind": "pixel",
+          "coords": [
+            27,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "031-read.dat.z",
+        "context": "1b00110000000000000100a503a5a5a51b0011001c0012001ff0101003030300110023821ff0100000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "031-read",
+        "request": {
+          "id": "031-read",
+          "kind": "read",
+          "coords": [
+            27,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "032-hspan.dat.z",
+        "context": "1b001d0026000000020100a504a5a5a51b001d0026001e001ffc1004030404001e00a4831ffcfc0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "032-hspan",
+        "request": {
+          "id": "032-hspan",
+          "kind": "hspan",
+          "coords": [
+            27,
+            29,
+            38,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2,
+        "capture": "032-hspan.png"
+      },
+      {
+        "memory": "033-pixel.dat.z",
+        "context": "1b00110000000000010100a502a5a5a51b0011001c0012001ff0101003030300120023821ff0100001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "033-pixel",
+        "request": {
+          "id": "033-pixel",
+          "kind": "pixel",
+          "coords": [
+            27,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "034-read.dat.z",
+        "context": "1b00110000000000000100a503a5a5a51b0011001c0012001ff0101003030300110023821ff0100000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "034-read",
+        "request": {
+          "id": "034-read",
+          "kind": "read",
+          "coords": [
+            27,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "035-hspan.dat.z",
+        "context": "1b001d0026000000010100a504a5a5a51b001d0026001e001ffc1004030404001e00a4831ffcfc0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "035-hspan",
+        "request": {
+          "id": "035-hspan",
+          "kind": "hspan",
+          "coords": [
+            27,
+            29,
+            38,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "036-pixel.dat.z",
+        "context": "1c00110000000000000100a502a5a5a51c0011001d0012000ff8080803030300120023820ff8080001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "036-pixel",
+        "request": {
+          "id": "036-pixel",
+          "kind": "pixel",
+          "coords": [
+            28,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "037-read.dat.z",
+        "context": "1c00110000000000000101a503a5a5a51c0011001d0012000ff8080803030300110023820ff8080000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "037-read",
+        "request": {
+          "id": "037-read",
+          "kind": "read",
+          "coords": [
+            28,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "038-hspan.dat.z",
+        "context": "1c001d0027000000000100a504a5a5a51c001d0027001e000ffe0802030404001e00a4830ffefe0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "038-hspan",
+        "request": {
+          "id": "038-hspan",
+          "kind": "hspan",
+          "coords": [
+            28,
+            29,
+            39,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "039-pixel.dat.z",
+        "context": "1c00110000000000020100a502a5a5a51c0011001d0012000ff8080803030300120023820ff8080001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "039-pixel",
+        "request": {
+          "id": "039-pixel",
+          "kind": "pixel",
+          "coords": [
+            28,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "040-read.dat.z",
+        "context": "1c00110000000000000100a503a5a5a51c0011001d0012000ff8080803030300110023820ff8080000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "040-read",
+        "request": {
+          "id": "040-read",
+          "kind": "read",
+          "coords": [
+            28,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "041-hspan.dat.z",
+        "context": "1c001d0027000000020100a504a5a5a51c001d0027001e000ffe0802030404001e00a4830ffefe0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "041-hspan",
+        "request": {
+          "id": "041-hspan",
+          "kind": "hspan",
+          "coords": [
+            28,
+            29,
+            39,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "042-pixel.dat.z",
+        "context": "1c00110000000000010100a502a5a5a51c0011001d0012000ff8080803030300120023820ff8080001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "042-pixel",
+        "request": {
+          "id": "042-pixel",
+          "kind": "pixel",
+          "coords": [
+            28,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "043-read.dat.z",
+        "context": "1c00110000000000000100a503a5a5a51c0011001d0012000ff8080803030300110023820ff8080000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "043-read",
+        "request": {
+          "id": "043-read",
+          "kind": "read",
+          "coords": [
+            28,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "044-hspan.dat.z",
+        "context": "1c001d0027000000010100a504a5a5a51c001d0027001e000ffe0802030404001e00a4830ffefe0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "044-hspan",
+        "request": {
+          "id": "044-hspan",
+          "kind": "hspan",
+          "coords": [
+            28,
+            29,
+            39,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "045-pixel.dat.z",
+        "context": "1d00110000000000000100a502a5a5a51d0011001e00120007fc0404030303001200238207fc040001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "045-pixel",
+        "request": {
+          "id": "045-pixel",
+          "kind": "pixel",
+          "coords": [
+            29,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "046-read.dat.z",
+        "context": "1d00110000000000000101a503a5a5a51d0011001e00120007fc0404030303001100238207fc040000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "046-read",
+        "request": {
+          "id": "046-read",
+          "kind": "read",
+          "coords": [
+            29,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "047-hspan.dat.z",
+        "context": "1d001d0028000000000100a504a5a5a51d001d0028001e0007ff0401030404001e00a48307ffff0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "047-hspan",
+        "request": {
+          "id": "047-hspan",
+          "kind": "hspan",
+          "coords": [
+            29,
+            29,
+            40,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "048-pixel.dat.z",
+        "context": "1d00110000000000020100a502a5a5a51d0011001e00120007fc0404030303001200238207fc040001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "048-pixel",
+        "request": {
+          "id": "048-pixel",
+          "kind": "pixel",
+          "coords": [
+            29,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2,
+        "capture": "048-pixel.png"
+      },
+      {
+        "memory": "049-read.dat.z",
+        "context": "1d00110000000000000100a503a5a5a51d0011001e00120007fc0404030303001100238207fc040000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "049-read",
+        "request": {
+          "id": "049-read",
+          "kind": "read",
+          "coords": [
+            29,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "050-hspan.dat.z",
+        "context": "1d001d0028000000020100a504a5a5a51d001d0028001e0007ff0401030404001e00a48307ffff0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "050-hspan",
+        "request": {
+          "id": "050-hspan",
+          "kind": "hspan",
+          "coords": [
+            29,
+            29,
+            40,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "051-pixel.dat.z",
+        "context": "1d00110000000000010100a502a5a5a51d0011001e00120007fc0404030303001200238207fc040001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "051-pixel",
+        "request": {
+          "id": "051-pixel",
+          "kind": "pixel",
+          "coords": [
+            29,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "052-read.dat.z",
+        "context": "1d00110000000000000100a503a5a5a51d0011001e00120007fc0404030303001100238207fc040000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "052-read",
+        "request": {
+          "id": "052-read",
+          "kind": "read",
+          "coords": [
+            29,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "053-hspan.dat.z",
+        "context": "1d001d0028000000010100a504a5a5a51d001d0028001e0007ff0401030404001e00a48307ffff0002001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "053-hspan",
+        "request": {
+          "id": "053-hspan",
+          "kind": "hspan",
+          "coords": [
+            29,
+            29,
+            40,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "054-pixel.dat.z",
+        "context": "1e00110000000000000100a502a5a5a51e0011001f00120003fe0202030303001200238203fe020001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "054-pixel",
+        "request": {
+          "id": "054-pixel",
+          "kind": "pixel",
+          "coords": [
+            30,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "055-read.dat.z",
+        "context": "1e00110000000000000101a503a5a5a51e0011001f00120003fe0202030303001100238203fe020000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "055-read",
+        "request": {
+          "id": "055-read",
+          "kind": "read",
+          "coords": [
+            30,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "056-hspan.dat.z",
+        "context": "1e001d0029000000000100a504a5a5a51e001d0029001e0003800280030505001e00a5830380800003001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "056-hspan",
+        "request": {
+          "id": "056-hspan",
+          "kind": "hspan",
+          "coords": [
+            30,
+            29,
+            41,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "057-pixel.dat.z",
+        "context": "1e00110000000000020100a502a5a5a51e0011001f00120003fe0202030303001200238203fe020001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "057-pixel",
+        "request": {
+          "id": "057-pixel",
+          "kind": "pixel",
+          "coords": [
+            30,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "058-read.dat.z",
+        "context": "1e00110000000000000100a503a5a5a51e0011001f00120003fe0202030303001100238203fe020000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "058-read",
+        "request": {
+          "id": "058-read",
+          "kind": "read",
+          "coords": [
+            30,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "059-hspan.dat.z",
+        "context": "1e001d0029000000020100a504a5a5a51e001d0029001e0003800280030505001e00a5830380800003001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "059-hspan",
+        "request": {
+          "id": "059-hspan",
+          "kind": "hspan",
+          "coords": [
+            30,
+            29,
+            41,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "060-pixel.dat.z",
+        "context": "1e00110000000000010100a502a5a5a51e0011001f00120003fe0202030303001200238203fe020001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "060-pixel",
+        "request": {
+          "id": "060-pixel",
+          "kind": "pixel",
+          "coords": [
+            30,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "061-read.dat.z",
+        "context": "1e00110000000000000100a503a5a5a51e0011001f00120003fe0202030303001100238203fe020000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "061-read",
+        "request": {
+          "id": "061-read",
+          "kind": "read",
+          "coords": [
+            30,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "062-hspan.dat.z",
+        "context": "1e001d0029000000010100a504a5a5a51e001d0029001e0003800280030505001e00a5830380800003001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "062-hspan",
+        "request": {
+          "id": "062-hspan",
+          "kind": "hspan",
+          "coords": [
+            30,
+            29,
+            41,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "063-pixel.dat.z",
+        "context": "1f00110000000000000100a502a5a5a51f0011002000120001ff0101030303001200238201ff010001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "063-pixel",
+        "request": {
+          "id": "063-pixel",
+          "kind": "pixel",
+          "coords": [
+            31,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "064-read.dat.z",
+        "context": "1f00110000000000000101a503a5a5a51f0011002000120001ff0101030303001100238201ff010000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "064-read",
+        "request": {
+          "id": "064-read",
+          "kind": "read",
+          "coords": [
+            31,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2,
+        "capture": "064-read.png"
+      },
+      {
+        "memory": "065-hspan.dat.z",
+        "context": "1f001d002a000000000100a504a5a5a51f001d002a001e0001c00140030505001e00a58301c0c00003001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "065-hspan",
+        "request": {
+          "id": "065-hspan",
+          "kind": "hspan",
+          "coords": [
+            31,
+            29,
+            42,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "066-pixel.dat.z",
+        "context": "1f00110000000000020100a502a5a5a51f0011002000120001ff0101030303001200238201ff010001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "066-pixel",
+        "request": {
+          "id": "066-pixel",
+          "kind": "pixel",
+          "coords": [
+            31,
+            17,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "067-read.dat.z",
+        "context": "1f00110000000000000100a503a5a5a51f0011002000120001ff0101030303001100238201ff010000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "067-read",
+        "request": {
+          "id": "067-read",
+          "kind": "read",
+          "coords": [
+            31,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "068-hspan.dat.z",
+        "context": "1f001d002a000000020100a504a5a5a51f001d002a001e0001c00140030505001e00a58301c0c00003001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "068-hspan",
+        "request": {
+          "id": "068-hspan",
+          "kind": "hspan",
+          "coords": [
+            31,
+            29,
+            42,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "069-pixel.dat.z",
+        "context": "1f00110000000000010100a502a5a5a51f0011002000120001ff0101030303001200238201ff010001001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "069-pixel",
+        "request": {
+          "id": "069-pixel",
+          "kind": "pixel",
+          "coords": [
+            31,
+            17,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "070-read.dat.z",
+        "context": "1f00110000000000000100a503a5a5a51f0011002000120001ff0101030303001100238201ff010000001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "070-read",
+        "request": {
+          "id": "070-read",
+          "kind": "read",
+          "coords": [
+            31,
+            17,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "071-hspan.dat.z",
+        "context": "1f001d002a000000010100a504a5a5a51f001d002a001e0001c00140030505001e00a58301c0c00003001d00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "071-hspan",
+        "request": {
+          "id": "071-hspan",
+          "kind": "hspan",
+          "coords": [
+            31,
+            29,
+            42,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "072-fill.dat.z",
+        "context": "1800320038003a00000100a500a5a5a51800320038003a00ffff8001030606003a002687ffffff0020003900a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "072-fill",
+        "request": {
+          "id": "072-fill",
+          "kind": "fill",
+          "coords": [
+            24,
+            50,
+            56,
+            58
+          ],
+          "op": 0,
+          "workload": true
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "073-fill.dat.z",
+        "context": "1900320039003a00000100a500a5a5a51900320039003a007f804080030707003a0027877f80800028003900a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "073-fill",
+        "request": {
+          "id": "073-fill",
+          "kind": "fill",
+          "coords": [
+            25,
+            50,
+            57,
+            58
+          ],
+          "op": 0,
+          "workload": true
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "074-pixel.dat.z",
+        "context": "0000000001000100000100a502a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "074-pixel",
+        "request": {
+          "id": "074-pixel",
+          "kind": "pixel",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "075-pixel.dat.z",
+        "context": "ff00bf000001c000000100a502a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "075-pixel",
+        "request": {
+          "id": "075-pixel",
+          "kind": "pixel",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "076-pixel.dat.z",
+        "context": "0500640013006900000100a502a5a5a5050064000600650007fc0404000000006500808c07fc040001006400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "076-pixel",
+        "request": {
+          "id": "076-pixel",
+          "kind": "pixel",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "077-pixel.dat.z",
+        "context": "0000000001000100010100a502a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "077-pixel",
+        "request": {
+          "id": "077-pixel",
+          "kind": "pixel",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "078-pixel.dat.z",
+        "context": "ff00bf000001c000010100a502a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "078-pixel",
+        "request": {
+          "id": "078-pixel",
+          "kind": "pixel",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "079-pixel.dat.z",
+        "context": "0500640013006900010100a502a5a5a5050064000600650007fc0404000000006500808c07fc040001006400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "079-pixel",
+        "request": {
+          "id": "079-pixel",
+          "kind": "pixel",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "080-pixel.dat.z",
+        "context": "0000000001000100020100a502a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "080-pixel",
+        "request": {
+          "id": "080-pixel",
+          "kind": "pixel",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 2
+        },
+        "observed_frames": 2,
+        "capture": "080-pixel.png"
+      },
+      {
+        "memory": "081-pixel.dat.z",
+        "context": "ff00bf000001c000020100a502a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "081-pixel",
+        "request": {
+          "id": "081-pixel",
+          "kind": "pixel",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "082-pixel.dat.z",
+        "context": "0500640013006900020100a502a5a5a5050064000600650007fc0404000000006500808c07fc040001006400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "082-pixel",
+        "request": {
+          "id": "082-pixel",
+          "kind": "pixel",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "083-read.dat.z",
+        "context": "0000000001000100000101a503a5a5a50000000001000100ff8080800000000000000080ff80800000000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "083-read",
+        "request": {
+          "id": "083-read",
+          "kind": "read",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "084-read.dat.z",
+        "context": "ff00bf000001c000000101a503a5a5a5ff00bf000001c00001ff01011f1f1f00bf00ff9701ff01000000bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "084-read",
+        "request": {
+          "id": "084-read",
+          "kind": "read",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "085-read.dat.z",
+        "context": "0500640013006900000101a503a5a5a5050064000600650007fc0404000000006400808c07fc040000006400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "085-read",
+        "request": {
+          "id": "085-read",
+          "kind": "read",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "086-hspan.dat.z",
+        "context": "0000000001000100000100a504a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "086-hspan",
+        "request": {
+          "id": "086-hspan",
+          "kind": "hspan",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "087-hspan.dat.z",
+        "context": "ff00bf000001c000000100a504a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "087-hspan",
+        "request": {
+          "id": "087-hspan",
+          "kind": "hspan",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "088-hspan.dat.z",
+        "context": "0500640013006900000100a504a5a5a5050064001300650007e00420000202006500828c07e0e00003006400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "088-hspan",
+        "request": {
+          "id": "088-hspan",
+          "kind": "hspan",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "089-hspan.dat.z",
+        "context": "0000000001000100010100a504a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "089-hspan",
+        "request": {
+          "id": "089-hspan",
+          "kind": "hspan",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "090-hspan.dat.z",
+        "context": "ff00bf000001c000010100a504a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "090-hspan",
+        "request": {
+          "id": "090-hspan",
+          "kind": "hspan",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "091-hspan.dat.z",
+        "context": "0500640013006900010100a504a5a5a5050064001300650007e00420000202006500828c07e0e00003006400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "091-hspan",
+        "request": {
+          "id": "091-hspan",
+          "kind": "hspan",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "092-hspan.dat.z",
+        "context": "0000000001000100020100a504a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "092-hspan",
+        "request": {
+          "id": "092-hspan",
+          "kind": "hspan",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "093-hspan.dat.z",
+        "context": "ff00bf000001c000020100a504a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "093-hspan",
+        "request": {
+          "id": "093-hspan",
+          "kind": "hspan",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "094-hspan.dat.z",
+        "context": "0500640013006900020100a504a5a5a5050064001300650007e00420000202006500828c07e0e00003006400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "094-hspan",
+        "request": {
+          "id": "094-hspan",
+          "kind": "hspan",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "095-vspan.dat.z",
+        "context": "0000000001000100000100a505a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "095-vspan",
+        "request": {
+          "id": "095-vspan",
+          "kind": "vspan",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "096-vspan.dat.z",
+        "context": "ff00bf000001c000000100a505a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "096-vspan",
+        "request": {
+          "id": "096-vspan",
+          "kind": "vspan",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 0
+        },
+        "observed_frames": 2,
+        "capture": "096-vspan.png"
+      },
+      {
+        "memory": "097-vspan.dat.z",
+        "context": "0500640013006900000100a505a5a5a5050064000600690007fc0404000000006900008d07fc040005006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "097-vspan",
+        "request": {
+          "id": "097-vspan",
+          "kind": "vspan",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "098-vspan.dat.z",
+        "context": "0000000001000100010100a505a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "098-vspan",
+        "request": {
+          "id": "098-vspan",
+          "kind": "vspan",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "099-vspan.dat.z",
+        "context": "ff00bf000001c000010100a505a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "099-vspan",
+        "request": {
+          "id": "099-vspan",
+          "kind": "vspan",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "100-vspan.dat.z",
+        "context": "0500640013006900010100a505a5a5a5050064000600690007fc0404000000006900008d07fc040005006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "100-vspan",
+        "request": {
+          "id": "100-vspan",
+          "kind": "vspan",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "101-vspan.dat.z",
+        "context": "0000000001000100020100a505a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "101-vspan",
+        "request": {
+          "id": "101-vspan",
+          "kind": "vspan",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "102-vspan.dat.z",
+        "context": "ff00bf000001c000020100a505a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "102-vspan",
+        "request": {
+          "id": "102-vspan",
+          "kind": "vspan",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "103-vspan.dat.z",
+        "context": "0500640013006900020100a505a5a5a5050064000600690007fc0404000000006900008d07fc040005006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "103-vspan",
+        "request": {
+          "id": "103-vspan",
+          "kind": "vspan",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "104-box.dat.z",
+        "context": "0000000001000100000100a501a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "104-box",
+        "request": {
+          "id": "104-box",
+          "kind": "box",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "105-box.dat.z",
+        "context": "ff00bf000001c000000100a501a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "105-box",
+        "request": {
+          "id": "105-box",
+          "kind": "box",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "106-box.dat.z",
+        "context": "0500640013006900000100a501a5a5a5050064001300690007e00420000202006900028d07e0e0000c006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "106-box",
+        "request": {
+          "id": "106-box",
+          "kind": "box",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "107-box.dat.z",
+        "context": "0000000001000100010100a501a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "107-box",
+        "request": {
+          "id": "107-box",
+          "kind": "box",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "108-box.dat.z",
+        "context": "ff00bf000001c000010100a501a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "108-box",
+        "request": {
+          "id": "108-box",
+          "kind": "box",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "109-box.dat.z",
+        "context": "0500640013006900010100a501a5a5a5050064001300690007e00420000202006900028d07e0e0000c006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "109-box",
+        "request": {
+          "id": "109-box",
+          "kind": "box",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "110-box.dat.z",
+        "context": "0000000001000100020100a501a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "110-box",
+        "request": {
+          "id": "110-box",
+          "kind": "box",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "111-box.dat.z",
+        "context": "ff00bf000001c000020100a501a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "111-box",
+        "request": {
+          "id": "111-box",
+          "kind": "box",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "112-box.dat.z",
+        "context": "0500640013006900020100a501a5a5a5050064001300690007e00420000202006900028d07e0e0000c006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "112-box",
+        "request": {
+          "id": "112-box",
+          "kind": "box",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 2
+        },
+        "observed_frames": 2,
+        "capture": "112-box.png"
+      },
+      {
+        "memory": "113-fill.dat.z",
+        "context": "0000000001000100000100a500a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "113-fill",
+        "request": {
+          "id": "113-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "114-fill.dat.z",
+        "context": "ff00bf000001c000000100a500a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "114-fill",
+        "request": {
+          "id": "114-fill",
+          "kind": "fill",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "115-fill.dat.z",
+        "context": "0500640013006900000100a500a5a5a5050064001300690007e00420000202006900028d07e0e0000f006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "115-fill",
+        "request": {
+          "id": "115-fill",
+          "kind": "fill",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "116-fill.dat.z",
+        "context": "0000000001000100010100a500a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "116-fill",
+        "request": {
+          "id": "116-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "117-fill.dat.z",
+        "context": "ff00bf000001c000010100a500a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "117-fill",
+        "request": {
+          "id": "117-fill",
+          "kind": "fill",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "118-fill.dat.z",
+        "context": "0500640013006900010100a500a5a5a5050064001300690007e00420000202006900028d07e0e0000f006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "118-fill",
+        "request": {
+          "id": "118-fill",
+          "kind": "fill",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "119-fill.dat.z",
+        "context": "0000000001000100020100a500a5a5a50000000001000100ff8080800000000001000080ff80800001000000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "119-fill",
+        "request": {
+          "id": "119-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "120-fill.dat.z",
+        "context": "ff00bf000001c000020100a500a5a5a5ff00bf000001c00001ff01011f1f1f00c000ff9701ff01000100bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "120-fill",
+        "request": {
+          "id": "120-fill",
+          "kind": "fill",
+          "coords": [
+            255,
+            191,
+            256,
+            192
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "121-fill.dat.z",
+        "context": "0500640013006900020100a500a5a5a5050064001300690007e00420000202006900028d07e0e0000f006800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "121-fill",
+        "request": {
+          "id": "121-fill",
+          "kind": "fill",
+          "coords": [
+            5,
+            100,
+            19,
+            105
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "122-box.dat.z",
+        "context": "030007001b000900020100a501a5a5a5030007001b0009001fe0102000030300090003811fe0e00008000800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "122-box",
+        "request": {
+          "id": "122-box",
+          "kind": "box",
+          "coords": [
+            3,
+            7,
+            27,
+            9
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "123-vspan.dat.z",
+        "context": "0700070000000900000100a505a5a5a5070007000800090001ff0101000000000900008101ff010002000800a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "123-vspan",
+        "request": {
+          "id": "123-vspan",
+          "kind": "vspan",
+          "coords": [
+            7,
+            7,
+            0,
+            9
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "124-box.dat.z",
+        "context": "030008001b000a00020100a501a5a5a5030008001b000a001fe01020000303000a0023811fe0e00008000900a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "124-box",
+        "request": {
+          "id": "124-box",
+          "kind": "box",
+          "coords": [
+            3,
+            8,
+            27,
+            10
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "125-vspan.dat.z",
+        "context": "0700080000000a00000100a505a5a5a50700080008000a0001ff0101000000000a00208101ff010002000900a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "125-vspan",
+        "request": {
+          "id": "125-vspan",
+          "kind": "vspan",
+          "coords": [
+            7,
+            8,
+            0,
+            10
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "126-box.dat.z",
+        "context": "03000f001b001100020100a501a5a5a503000f001b0011001fe0102000030300110003821fe0e00008001000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "126-box",
+        "request": {
+          "id": "126-box",
+          "kind": "box",
+          "coords": [
+            3,
+            15,
+            27,
+            17
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "127-vspan.dat.z",
+        "context": "07000f0000001100000100a505a5a5a507000f000800110001ff0101000000001100008201ff010002001000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "127-vspan",
+        "request": {
+          "id": "127-vspan",
+          "kind": "vspan",
+          "coords": [
+            7,
+            15,
+            0,
+            17
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "128-box.dat.z",
+        "context": "030010001b001200020100a501a5a5a5030010001b0012001fe0102000030300120023821fe0e00008001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "128-box",
+        "request": {
+          "id": "128-box",
+          "kind": "box",
+          "coords": [
+            3,
+            16,
+            27,
+            18
+          ],
+          "op": 2
+        },
+        "observed_frames": 2,
+        "capture": "128-box.png"
+      },
+      {
+        "memory": "129-vspan.dat.z",
+        "context": "0700100000001200000100a505a5a5a5070010000800120001ff0101000000001200208201ff010002001100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "129-vspan",
+        "request": {
+          "id": "129-vspan",
+          "kind": "vspan",
+          "coords": [
+            7,
+            16,
+            0,
+            18
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "130-box.dat.z",
+        "context": "03007f001b008100020100a501a5a5a503007f001b0081001fe0102000030300810003901fe0e00008008000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "130-box",
+        "request": {
+          "id": "130-box",
+          "kind": "box",
+          "coords": [
+            3,
+            127,
+            27,
+            129
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "131-vspan.dat.z",
+        "context": "07007f0000008100000100a505a5a5a507007f000800810001ff0101000000008100009001ff010002008000a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "131-vspan",
+        "request": {
+          "id": "131-vspan",
+          "kind": "vspan",
+          "coords": [
+            7,
+            127,
+            0,
+            129
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "132-box.dat.z",
+        "context": "030080001b008200020100a501a5a5a5030080001b0082001fe0102000030300820023901fe0e00008008100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "132-box",
+        "request": {
+          "id": "132-box",
+          "kind": "box",
+          "coords": [
+            3,
+            128,
+            27,
+            130
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "133-vspan.dat.z",
+        "context": "0700800000008200000100a505a5a5a5070080000800820001ff0101000000008200209001ff010002008100a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "133-vspan",
+        "request": {
+          "id": "133-vspan",
+          "kind": "vspan",
+          "coords": [
+            7,
+            128,
+            0,
+            130
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "134-fill.dat.z",
+        "context": "000000000001c000000100a500a5a5a5000000000001c000ffff8001001f1f00c000ff97ffffff000018bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "134-fill",
+        "request": {
+          "id": "134-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            256,
+            192
+          ],
+          "op": 0
+        },
+        "observed_frames": 32
+      },
+      {
+        "memory": "135-fill.dat.z",
+        "context": "000000000001c000010100a500a5a5a5000000000001c000ffff8001001f1f00c000ff97ffffff000018bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "135-fill",
+        "request": {
+          "id": "135-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            256,
+            192
+          ],
+          "op": 1
+        },
+        "observed_frames": 34
+      },
+      {
+        "memory": "136-fill.dat.z",
+        "context": "000000000001c000020100a500a5a5a5000000000001c000ffff8001001f1f00c000ff97ffffff000018bf00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "136-fill",
+        "request": {
+          "id": "136-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            256,
+            192
+          ],
+          "op": 2
+        },
+        "observed_frames": 34
+      },
+      {
+        "memory": "137-fill.dat.z",
+        "context": "0500050005000700000000a500a5a5a50500050005000700a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "137-fill",
+        "request": {
+          "id": "137-fill",
+          "kind": "fill",
+          "coords": [
+            5,
+            5,
+            5,
+            7
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "138-box.dat.z",
+        "context": "0500050005000700000000a501a5a5a50500050005000700a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "138-box",
+        "request": {
+          "id": "138-box",
+          "kind": "box",
+          "coords": [
+            5,
+            5,
+            5,
+            7
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "139-fill.dat.z",
+        "context": "0900050003000700000000a500a5a5a50900050003000700a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "139-fill",
+        "request": {
+          "id": "139-fill",
+          "kind": "fill",
+          "coords": [
+            9,
+            5,
+            3,
+            7
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "140-box.dat.z",
+        "context": "0900050003000700000000a501a5a5a50900050003000700a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "140-box",
+        "request": {
+          "id": "140-box",
+          "kind": "box",
+          "coords": [
+            9,
+            5,
+            3,
+            7
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "141-fill.dat.z",
+        "context": "0000000001010300000000a500a5a5a50000000001010300a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "141-fill",
+        "request": {
+          "id": "141-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            257,
+            3
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "142-box.dat.z",
+        "context": "0000000001010300000000a501a5a5a50000000001010300a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "142-box",
+        "request": {
+          "id": "142-box",
+          "kind": "box",
+          "coords": [
+            0,
+            0,
+            257,
+            3
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "143-fill.dat.z",
+        "context": "000000000100c100000000a500a5a5a5000000000100c100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "143-fill",
+        "request": {
+          "id": "143-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            1,
+            193
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "144-box.dat.z",
+        "context": "000000000100c100000000a501a5a5a5000000000100c100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "144-box",
+        "request": {
+          "id": "144-box",
+          "kind": "box",
+          "coords": [
+            0,
+            0,
+            1,
+            193
+          ],
+          "op": 0
+        },
+        "observed_frames": 2,
+        "capture": "144-box.png"
+      },
+      {
+        "memory": "145-fill.dat.z",
+        "context": "ffff000002000100000000a500a5a5a5ffff000002000100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "145-fill",
+        "request": {
+          "id": "145-fill",
+          "kind": "fill",
+          "coords": [
+            65535,
+            0,
+            2,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "146-box.dat.z",
+        "context": "ffff000002000100000000a501a5a5a5ffff000002000100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "146-box",
+        "request": {
+          "id": "146-box",
+          "kind": "box",
+          "coords": [
+            65535,
+            0,
+            2,
+            1
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "147-fill.dat.z",
+        "context": "0000ffff01000200000000a500a5a5a50000ffff01000200a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "147-fill",
+        "request": {
+          "id": "147-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            65535,
+            1,
+            2
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "148-box.dat.z",
+        "context": "0000ffff01000200000000a501a5a5a50000ffff01000200a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "148-box",
+        "request": {
+          "id": "148-box",
+          "kind": "box",
+          "coords": [
+            0,
+            65535,
+            1,
+            2
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "149-fill.dat.z",
+        "context": "0000000000000000000000a500a5a5a50000000000000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "149-fill",
+        "request": {
+          "id": "149-fill",
+          "kind": "fill",
+          "coords": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "150-box.dat.z",
+        "context": "0000000000000000000000a501a5a5a50000000000000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "150-box",
+        "request": {
+          "id": "150-box",
+          "kind": "box",
+          "coords": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "151-pixel.dat.z",
+        "context": "0500050011000d00030000a502a5a5a50500050006000600a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "151-pixel",
+        "request": {
+          "id": "151-pixel",
+          "kind": "pixel",
+          "coords": [
+            5,
+            5,
+            17,
+            13
+          ],
+          "op": 3
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "152-read.dat.z",
+        "context": "0500050011000d00030000a503a5a5a50500050006000600a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "152-read",
+        "request": {
+          "id": "152-read",
+          "kind": "read",
+          "coords": [
+            5,
+            5,
+            17,
+            13
+          ],
+          "op": 3
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "153-hspan.dat.z",
+        "context": "0500050011000d00030000a504a5a5a50500050011000600a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "153-hspan",
+        "request": {
+          "id": "153-hspan",
+          "kind": "hspan",
+          "coords": [
+            5,
+            5,
+            17,
+            13
+          ],
+          "op": 3
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "154-vspan.dat.z",
+        "context": "0500050011000d00030000a505a5a5a50500050006000d00a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "154-vspan",
+        "request": {
+          "id": "154-vspan",
+          "kind": "vspan",
+          "coords": [
+            5,
+            5,
+            17,
+            13
+          ],
+          "op": 3
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "155-fill.dat.z",
+        "context": "0500050011000d00030000a500a5a5a50500050011000d00a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "155-fill",
+        "request": {
+          "id": "155-fill",
+          "kind": "fill",
+          "coords": [
+            5,
+            5,
+            17,
+            13
+          ],
+          "op": 3
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "156-box.dat.z",
+        "context": "0500050011000d00030000a501a5a5a50500050011000d00a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "156-box",
+        "request": {
+          "id": "156-box",
+          "kind": "box",
+          "coords": [
+            5,
+            5,
+            17,
+            13
+          ],
+          "op": 3
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "157-read.dat.z",
+        "context": "0500050000000000010000a503a5a5a50500050006000600a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "157-read",
+        "request": {
+          "id": "157-read",
+          "kind": "read",
+          "coords": [
+            5,
+            5,
+            0,
+            0
+          ],
+          "op": 1
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "158-read.dat.z",
+        "context": "0500050000000000020000a503a5a5a50500050006000600a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "158-read",
+        "request": {
+          "id": "158-read",
+          "kind": "read",
+          "coords": [
+            5,
+            5,
+            0,
+            0
+          ],
+          "op": 2
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "159-pixel.dat.z",
+        "context": "0001000000000000000000a502a5a5a50001000001010100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "159-pixel",
+        "request": {
+          "id": "159-pixel",
+          "kind": "pixel",
+          "coords": [
+            256,
+            0,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "160-pixel.dat.z",
+        "context": "0000c00000000000000000a502a5a5a50000c0000100c100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "160-pixel",
+        "request": {
+          "id": "160-pixel",
+          "kind": "pixel",
+          "coords": [
+            0,
+            192,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2,
+        "capture": "160-pixel.png"
+      },
+      {
+        "memory": "161-read.dat.z",
+        "context": "0001000000000000000000a503a5a5a50001000001010100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "161-read",
+        "request": {
+          "id": "161-read",
+          "kind": "read",
+          "coords": [
+            256,
+            0,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "162-read.dat.z",
+        "context": "0000c00000000000000000a503a5a5a50000c0000100c100a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a50000a5a5a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "162-read",
+        "request": {
+          "id": "162-read",
+          "kind": "read",
+          "coords": [
+            0,
+            192,
+            0,
+            0
+          ],
+          "op": 0
+        },
+        "observed_frames": 2
+      },
+      {
+        "memory": "163-fill.dat.z",
+        "context": "1100150053002500000100a500a5a5a511001500530025007fe04020020a0a0025008a847fe0e00090002400a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "163-fill",
+        "request": {
+          "id": "163-fill",
+          "kind": "fill",
+          "coords": [
+            17,
+            21,
+            83,
+            37
+          ],
+          "op": 0,
+          "scene": true
+        },
+        "observed_frames": 2,
+        "capture": "163-fill.png"
+      },
+      {
+        "memory": "164-box.dat.z",
+        "context": "0d002f0071004f00000100a501a5a5a50d002f0071004f0007800480010e0e004f00ce890780800058004e00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "164-box",
+        "request": {
+          "id": "164-box",
+          "kind": "box",
+          "coords": [
+            13,
+            47,
+            113,
+            79
+          ],
+          "op": 0,
+          "scene": true
+        },
+        "observed_frames": 2,
+        "capture": "164-box.png"
+      },
+      {
+        "memory": "165-hspan.dat.z",
+        "context": "05006500fd000000000100a504a5a5a505006500fd00660007f80408001f1f006600bf8c07f8f80020006500a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "165-hspan",
+        "request": {
+          "id": "165-hspan",
+          "kind": "hspan",
+          "coords": [
+            5,
+            101,
+            253,
+            0
+          ],
+          "op": 0,
+          "scene": true
+        },
+        "observed_frames": 2,
+        "capture": "165-hspan.png"
+      },
+      {
+        "memory": "166-vspan.dat.z",
+        "context": "f30004000000bc00000100a505a5a5a5f3000400f400bc001ff010101e1e1e00bc007e971ff01000b800bb00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "166-vspan",
+        "request": {
+          "id": "166-vspan",
+          "kind": "vspan",
+          "coords": [
+            243,
+            4,
+            0,
+            188
+          ],
+          "op": 0,
+          "scene": true
+        },
+        "observed_frames": 2,
+        "capture": "166-vspan.png"
+      },
+      {
+        "memory": "167-box.dat.z",
+        "context": "e100a700ff00bf00000100a501a5a5a5e100a700ff00bf007ffe40021c1f1f00bf00df977ffefe003400be00a5a5a5a5",
+        "mailbox": "00ef",
+        "guards": [
+          "2b425970879eb5cce3fa11283f566d84",
+          "2b425970879eb5cce3fa11283f566d84",
+          "00000000000000000000000000000000",
+          "ffffffffffffffffffffffffffffffff"
+        ],
+        "id": "167-box",
+        "request": {
+          "id": "167-box",
+          "kind": "box",
+          "coords": [
+            225,
+            167,
+            255,
+            191
+          ],
+          "op": 0,
+          "scene": true
+        },
+        "observed_frames": 2,
+        "capture": "167-box.png"
+      }
+    ],
+    "guards": [
+      "2b425970879eb5cce3fa11283f566d84",
+      "2b425970879eb5cce3fa11283f566d84",
+      "00000000000000000000000000000000",
+      "ffffffffffffffffffffffffffffffff"
+    ],
+    "fixture_sha256": "061ad4f93d69cda8312e519b792407c3b935f5b961d6640ee27f8d25380fa63c",
+    "costs": {
+      "backend_bytes": 528,
+      "row_table_bytes": 384,
+      "context_bytes": 48,
+      "display_list_bytes": 0,
+      "display_list_allocation": 0
+    },
+    "reset_stub_sha256": null
+  },
+  "faults": {
+    "mask-fault": {
+      "memory": "mask-fault.dat.z",
+      "context": "00000c0000000000000100a502a5a5a500000c0001000d007f804040000000000d0080817f80000001000c00a5a5a5a5",
+      "mailbox": "00ef",
+      "guards": [
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "ffffffffffffffffffffffffffffffff"
+      ],
+      "request": {
+        "id": "mask-fault",
+        "kind": "pixel",
+        "coords": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "op": 0
+      },
+      "observed_frames": 2,
+      "capture": "mask-fault.png",
+      "memory_mismatches": 1,
+      "pixel_mismatches": 1,
+      "guard_before": [
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "ffffffffffffffffffffffffffffffff"
+      ],
+      "fixture_sha256": "8c53d638b934d0058fc399cfc7aeefc61e0732d883de212ac6ac93ade9fa3817"
+    },
+    "row-fault": {
+      "memory": "row-fault.dat.z",
+      "context": "00000c0000000000000100a502a5a5a500000c0001000d00ff808080000000000d008181ff80800001000c00a5a5a5a5",
+      "mailbox": "00ef",
+      "guards": [
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "ffffffffffffffffffffffffffffffff"
+      ],
+      "request": {
+        "id": "row-fault",
+        "kind": "pixel",
+        "coords": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "op": 0
+      },
+      "observed_frames": 2,
+      "capture": "row-fault.png",
+      "memory_mismatches": 2,
+      "pixel_mismatches": 2,
+      "guard_before": [
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "ffffffffffffffffffffffffffffffff"
+      ],
+      "fixture_sha256": "5b3596d2ceb5d221ae3421b07d5e576833baa9bde9236acf1f76412da4e94402"
+    }
+  },
+  "sources": {
+    "cross-platform/patterns/rendering/remaining-primitives/build.py": "f21afcb519cf92efb4733efb59beb0435d4bc616f90e481f09318dd71fa92c4e",
+    "cross-platform/patterns/rendering/remaining-primitives/model.py": "f81bbc9a177ece03ca5bef73229042464dd897a6183315018eb350e8931d4ede",
+    "cross-platform/patterns/rendering/remaining-primitives/cases.py": "877120afa0c0102615f29ee2bf2e04e69118659212bde85bda2b14321b667825",
+    "cross-platform/patterns/rendering/remaining-primitives/systems.json": "07a5bbac57525c7308ed8893339fc74738fbd8111f07b675546c940b250ed638",
+    "cross-platform/patterns/rendering/remaining-primitives/toolchain.json": "477344f222615ee0468753d1ca687e4a1116c36f22b8e3c6691a8791c66ef4cf",
+    "cross-platform/patterns/rendering/remaining-primitives/6502.inc": "0cbe79987daf781cf5700e1047664073dbf9938ac3211039c6d9459349a81ee8",
+    "acorn-atom/patterns/assembly/rendering/pixels-and-boxes/demo.asm": "4cf880be7c8a0cf7fe6bc00fff26c39f683a0cd0f65aecc925db654836719826",
+    "acorn-atom/patterns/assembly/rendering/pixels-and-boxes/Makefile": "c35bfb973fc3010f73cf82b5af8c090753edf23b6e87997d30b2388a2f112adf",
+    "scripts/verify-remaining-primitives.py": "0e605016659e1c0b60f3e877e15ec83da29123c4dd36d86bcca6bc73451e63b5",
+    "scripts/check-remaining-primitives.py": "1abe0e48707ee122afce5e97f19191688bfaab06458ce1f73765c225b0086eb5",
+    "scripts/verify-geometry.py": "bd894997d8d11e0cf4a22ee0a08c9bb13688185b8d2c77ee343c03d5e511ace8",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361"
+  },
+  "tools": {
+    "emu198x-acorn-atom": "bcea8f0447551e97750138a646fbb66f83c49aa6fb76cc7a883630d3bd3227cd",
+    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+  },
+  "artifacts": {
+    "045-pixel.dat.z": "30dc608de5377625df4a20cf2e4d270ee7e4c667a93e7263ffc0217c6cc49ae8",
+    "112-box.dat.z": "0c4de2abd8ee502e9ed3e17ba3cdd72782fa93e9df7e1cb647502b0cb69a8373",
+    "106-box.dat.z": "0c4de2abd8ee502e9ed3e17ba3cdd72782fa93e9df7e1cb647502b0cb69a8373",
+    "037-read.dat.z": "6ccc08a97c1ba5daa1aa3fa7c0ecff944432a66a332322662a9144f2e144d4bc",
+    "055-read.dat.z": "c6c12318cd9ddde4294856dd3073dbc7f6fb773538d4b8f6cf6e4a213270a3e0",
+    "077-pixel.dat.z": "7b75b0d374abcee8fa23c557159d5cffc349774a579a07faad4c632cbc74ffc8",
+    "049-read.dat.z": "f7ca1b741b54a7bcd5bbec52cc75d22422deb8363358e2665fd6957df1c423d6",
+    "145-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "165-hspan.png": "26f9435dc3cc10f47c0f8c8cb64f6a6c4352caa75be0f3a233d2055126d9abfc",
+    "080-pixel.png": "4223353951d15f971be96f6dc576b0a5258b9eea379b7ac46f5edc7983d0a455",
+    "163-fill.dat.z": "f7ae094aa0533942a3430da3e5e36679b9b8d35f97d6073f58bb6cf5fba90cf5",
+    "058-read.dat.z": "2167ec685d9605ce2ecef7efe67e09690ab695736e88ceff7177b343e1075cf4",
+    "136-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "012-pixel.dat.z": "226fd204026dfede2d9249dc0241812c0a4f64cc7bbb5be1962c380f5f332b10",
+    "123-vspan.dat.z": "22552dddadf91f8ce5b9eba9b932102dcac28dd5951397721552e9a0356341c0",
+    "150-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "064-read.png": "7b10bab777e47139a17d26cc36c5355709f1d62cce27e03667d262a55b6713f8",
+    "144-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "044-hspan.dat.z": "30dc608de5377625df4a20cf2e4d270ee7e4c667a93e7263ffc0217c6cc49ae8",
+    "039-pixel.dat.z": "122384cb442589a573d53be6ec19ed8d4db94817c9bf8054f80b950142e983c0",
+    "072-fill.dat.z": "9867508f916c6b0d4da2697eded63bc20c1b2a8e66254ba814415a29e0208d17",
+    "112-box.png": "e8a128952733cdf4d1278bbd56232fea494d5229796d459b3cb1079211d09579",
+    "041-hspan.dat.z": "30dc608de5377625df4a20cf2e4d270ee7e4c667a93e7263ffc0217c6cc49ae8",
+    "097-vspan.dat.z": "761a73dfdb63f14e1cc2573365e95eb1dbf765acbebc6ffc17e2359cef308f2d",
+    "153-hspan.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "162-read.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "092-hspan.dat.z": "410fe06dfac7815f7e553b30c6a120c7388420062da3c6188042931236a8d1ed",
+    "startup.dat.z": "4aeee18f98a84f50efd59bcd49ef5a61318e00071e49536940afa57764f9b52a",
+    "118-fill.dat.z": "d782b77ac86f28825b6bc771b04a57d031d47e826df38a125506c1eeef937d61",
+    "087-hspan.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "156-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "067-read.dat.z": "d030f0fdc3374b8307ecefd3fee6dc31de0e545e6c736e20906ac8019456a1e0",
+    "000-pixel.png": "3dc43eecd57b4388821b095c16d1c81e1c1304f5b66f108c2cfd7963c443f5f3",
+    "133-vspan.dat.z": "86946d4498f42920752e6e5e879aea242a00285e8dde82262191ff9513b4ba41",
+    "138-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "142-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "030-pixel.dat.z": "e820d2256c0ed4fc17504c55e02161c3439020dba1cdb49d53744bdc9d060d53",
+    "019-read.dat.z": "ec4433aad8e0152f16743259a25328885dd83692212cba69a351ec0955be1dd0",
+    "115-fill.dat.z": "0a6831eb37476e6daaf89b59b5d239309cebc65b7e21de351adcce09ab88504b",
+    "038-hspan.dat.z": "b4ffcef87d0ada30808e4526778e2ec9a613cb62373aa9b9dea21f51abfb9f27",
+    "101-vspan.dat.z": "c1624b662db6c4b41dc605be26940b3b69dec3544d5564b7b9360f356f310c40",
+    "158-read.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "084-read.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "160-pixel.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "107-box.dat.z": "44bb5bcf70071e080ce8f9ab3f581cc5700f60d3563baf131f1752425d0c5995",
+    "083-read.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "065-hspan.dat.z": "bf4bfbd10019590f63412a0dddadf8511936731b5e70aae7843401c5b1125751",
+    "102-vspan.dat.z": "ba7cd320be4996b87c9a654e557a501991804d29112cbdddefde83d170793877",
+    "147-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "148-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "151-pixel.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "132-box.dat.z": "43f0855f41e7a795ddc24ceca7bf5f05f995929330fd39caff823e46d12e1132",
+    "033-pixel.dat.z": "6ccc08a97c1ba5daa1aa3fa7c0ecff944432a66a332322662a9144f2e144d4bc",
+    "126-box.dat.z": "d51e04223cf54b9f64cc8dd4a1fbd49df3fd81326b0896c6d3bb7b7f248d3db1",
+    "096-vspan.png": "7ccc3705781c9227b91e48ecf449e17703b04ef068069743dd487b9fd14c2e05",
+    "139-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "078-pixel.dat.z": "442ad29f31f1ac3b3f9b4f779ff21623d644ce62d022af354d68a26047f46ac4",
+    "046-read.dat.z": "30dc608de5377625df4a20cf2e4d270ee7e4c667a93e7263ffc0217c6cc49ae8",
+    "091-hspan.dat.z": "17be704d1a15e074bbbd201c79c32bb484ded07182e796a3a2d41b07953c6b2a",
+    "152-read.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "160-pixel.png": "d1646b467a3b4c7f0e2fe18e86df7bc00c400d001d54e1b7bdcd6124da89e732",
+    "125-vspan.dat.z": "f77c647edd95d2da44a15c18f7e356a72c7d435bce75b4f447ace782456df519",
+    "013-read.dat.z": "226fd204026dfede2d9249dc0241812c0a4f64cc7bbb5be1962c380f5f332b10",
+    "164-box.dat.z": "f2615adeabbd2ca5aef9e9a649dee445f07475bc8435bf9f47bbfcb2dbd77b29",
+    "048-pixel.png": "319c4512b3a91644c277c8daa8f88b13a618ee1ea8464df42aca405b1b0f5a94",
+    "032-hspan.dat.z": "6ccc08a97c1ba5daa1aa3fa7c0ecff944432a66a332322662a9144f2e144d4bc",
+    "134-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "144-box.png": "d1646b467a3b4c7f0e2fe18e86df7bc00c400d001d54e1b7bdcd6124da89e732",
+    "047-hspan.dat.z": "98d164c20a7686ac15f3eff2c281dcd21a6012dc652c316e5d5a29da70273a79",
+    "157-read.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "043-read.dat.z": "30dc608de5377625df4a20cf2e4d270ee7e4c667a93e7263ffc0217c6cc49ae8",
+    "094-hspan.dat.z": "16dce6dc098278ec101894e7dae7df42ed1860df72b8937df21a583a4d5c1c47",
+    "080-pixel.dat.z": "640709d7f17188489d011eac2158799247eec62feb619a8533f1ba9d9cdaed51",
+    "016-read.dat.z": "ec4433aad8e0152f16743259a25328885dd83692212cba69a351ec0955be1dd0",
+    "088-hspan.dat.z": "16dce6dc098278ec101894e7dae7df42ed1860df72b8937df21a583a4d5c1c47",
+    "005-hspan.dat.z": "9b01f6ab0335e2e808fd240c790a4a84f0b251bace9095a24a73f29a4b8f326c",
+    "120-fill.dat.z": "f58a54d28df91cc7d6e5506aba6feace5dcc3a1448d36b101edb48a85c0391d4",
+    "117-fill.dat.z": "8c58a1119299d28c85f2b92c3a42371e13d6a63bd43e78065f6616e012d09dff",
+    "098-vspan.dat.z": "08932515cdfc9923c0d37d779ebcca9f9b9e07a293491b4c4d620d2f39fee136",
+    "074-pixel.dat.z": "ac755be82584ab6a408aa02d6ba3c08433dcecca2527cba7a7f9e49fc4f0ff15",
+    "129-vspan.dat.z": "5df2d6c613ee0b501e5f8d1de1210fc191c9b32fd29beb3b3fdcd258d2eb369a",
+    "007-read.dat.z": "9b01f6ab0335e2e808fd240c790a4a84f0b251bace9095a24a73f29a4b8f326c",
+    "018-pixel.dat.z": "ec4433aad8e0152f16743259a25328885dd83692212cba69a351ec0955be1dd0",
+    "052-read.dat.z": "c6c12318cd9ddde4294856dd3073dbc7f6fb773538d4b8f6cf6e4a213270a3e0",
+    "036-pixel.dat.z": "6ccc08a97c1ba5daa1aa3fa7c0ecff944432a66a332322662a9144f2e144d4bc",
+    "073-fill.dat.z": "442ad29f31f1ac3b3f9b4f779ff21623d644ce62d022af354d68a26047f46ac4",
+    "100-vspan.dat.z": "93abd4110abc96d81e53dc5dcb2f33195387b5474ad145bb55df3a89657d653f",
+    "row-fault.dat.z": "c0513597fba262f0c485ddc9d4237be1c62f1a4404873558e4cec7afe59113e2",
+    "017-hspan.dat.z": "ec4433aad8e0152f16743259a25328885dd83692212cba69a351ec0955be1dd0",
+    "003-pixel.dat.z": "4a822badb5e2e7a3d89657d7f022696f11f2b2245a69f604d20855b2a98b4766",
+    "040-read.dat.z": "122384cb442589a573d53be6ec19ed8d4db94817c9bf8054f80b950142e983c0",
+    "110-box.dat.z": "b3e70fc1542abf2b9d2cd368d4e84b772fc23fda364ec6c27b37bd6e38dc4df4",
+    "119-fill.dat.z": "8968d698049c481116ada870bcebf5656559e22d896915510f3c9f3761af2a5e",
+    "086-hspan.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "022-read.dat.z": "3947066f1b9d8c558fdba83395856f49e1a27a9fde23aa8be87cc585e1ff33c9",
+    "104-box.dat.z": "761a73dfdb63f14e1cc2573365e95eb1dbf765acbebc6ffc17e2359cef308f2d",
+    "128-box.dat.z": "0d6eb3787629947a9df0dfb46318b3203c77e5b310fce4f2a2af2cab08df8fc6",
+    "096-vspan.dat.z": "16dce6dc098278ec101894e7dae7df42ed1860df72b8937df21a583a4d5c1c47",
+    "024-pixel.dat.z": "e5a3909dad6ffe112539a2256c1d9f345953d6305e5d36ae47ad46f5bdcc916d",
+    "054-pixel.dat.z": "c6c12318cd9ddde4294856dd3073dbc7f6fb773538d4b8f6cf6e4a213270a3e0",
+    "127-vspan.dat.z": "370f8d042b525334d8187a0395722a88d4690266c4e0416b9ceafecd41ef3b86",
+    "004-read.dat.z": "4a822badb5e2e7a3d89657d7f022696f11f2b2245a69f604d20855b2a98b4766",
+    "146-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "093-hspan.dat.z": "b99e2fbebb93b3db2dfbbcc6c7e051e8788fd9197b3995f2d7d30d6329347295",
+    "085-read.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "167-box.dat.z": "f0aa9827f75aff2196d9860a5c6f5bd76bfc5e6acf1bd66616f60fe70d8ae18e",
+    "066-pixel.dat.z": "d030f0fdc3374b8307ecefd3fee6dc31de0e545e6c736e20906ac8019456a1e0",
+    "002-hspan.dat.z": "7ac4feff536362947c770c5409b63cf79c83abc0587315e5c6b93d507c21e811",
+    "048-pixel.dat.z": "f7ca1b741b54a7bcd5bbec52cc75d22422deb8363358e2665fd6957df1c423d6",
+    "109-box.dat.z": "ebbb8f87904eaf40e47add581e36ea880626d654cbd3ca26a94fed3c8da94527",
+    "114-fill.dat.z": "0c4de2abd8ee502e9ed3e17ba3cdd72782fa93e9df7e1cb647502b0cb69a8373",
+    "141-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "082-pixel.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "001-read.dat.z": "5ac6dfa2c015d5a1470ac7c7e8bbf6ffa7fef3e1d767f500e7acfc8a2e744fd7",
+    "051-pixel.dat.z": "c6c12318cd9ddde4294856dd3073dbc7f6fb773538d4b8f6cf6e4a213270a3e0",
+    "035-hspan.dat.z": "6ccc08a97c1ba5daa1aa3fa7c0ecff944432a66a332322662a9144f2e144d4bc",
+    "021-pixel.dat.z": "3947066f1b9d8c558fdba83395856f49e1a27a9fde23aa8be87cc585e1ff33c9",
+    "029-hspan.dat.z": "17b9b0f5048afacae6fcdf31f4bd8946aec2191f0ca0486cf09dc9c67fe71dea",
+    "166-vspan.png": "376e535eab41544e1948362df3d4c3e385fb160502f1aa08d53ac199e56a4512",
+    "059-hspan.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "165-hspan.dat.z": "26a0cdd0d41940451d7dbaa593bc60fc02086956eb87f67bfb4b84667a40b919",
+    "063-pixel.dat.z": "ebf3076a5e5fef6defeab2959bca4c446b6e1cf2813c83608745b4118b23178a",
+    "006-pixel.dat.z": "9b01f6ab0335e2e808fd240c790a4a84f0b251bace9095a24a73f29a4b8f326c",
+    "062-hspan.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "076-pixel.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "155-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "137-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "050-hspan.dat.z": "c6c12318cd9ddde4294856dd3073dbc7f6fb773538d4b8f6cf6e4a213270a3e0",
+    "startup.png": "ba65ac14cb2e7ac5e48705aa8ab6a9bbac1675be65bbbe4b53ad7c4b280c1313",
+    "020-hspan.dat.z": "c09267fc2744d749205c695be6d33d942845eb4421d4906f88e5ac9cddfa8b98",
+    "149-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "167-box.png": "249fcb235101529ccba6cab3878802caf0481c6d8aa694145137ed4ec454e087",
+    "row-fault.png": "9906c35e11f0f8de30f0be6c1bda8c9d7d7762ea00814b3b383e5dd4cca1f04b",
+    "010-read.dat.z": "79b74dd286ab938cc9c607d7225c49f85f2a0ed8abfce399d29010b9f9a768e7",
+    "140-box.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "161-read.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "069-pixel.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "mask-fault.png": "6a8c9530ad2c7c257cda52a9011392db130b74c614b9f9f723a42ab80df2dda8",
+    "130-box.dat.z": "5cb7af228cf5f436bc96be092907ce9719de86f7ded0aa70f642207e6c440e8a",
+    "016-read.png": "9c545b718dcba85ae7943d5339d5e407a18f7c63eb8b5d6694ac74c6d8d94ef5",
+    "053-hspan.dat.z": "c6c12318cd9ddde4294856dd3073dbc7f6fb773538d4b8f6cf6e4a213270a3e0",
+    "124-box.dat.z": "2813733dcc9f28bd09adfa3b34a1ee817af20b6ba7a6bd8799a0dc4d77f1e569",
+    "023-hspan.dat.z": "e5a3909dad6ffe112539a2256c1d9f345953d6305e5d36ae47ad46f5bdcc916d",
+    "099-vspan.dat.z": "bd7dff48b54130a848ce6c0e5e755358f6f5bd2118e18a2fd72ec594897ebd3c",
+    "105-box.dat.z": "761a73dfdb63f14e1cc2573365e95eb1dbf765acbebc6ffc17e2359cef308f2d",
+    "163-fill.png": "6c639865886c7f92bb673cec745f2ca24fd5e1b8132614e872943f28cb813b74",
+    "011-hspan.dat.z": "a1b93cf3b1fc90515e5c6da0ed1c1a62c6badab627c0019dbda4b98a1139b709",
+    "111-box.dat.z": "81090db957a57d9e564fa6bbadef0fd4845e3c385165d0c7a53fca433b2840e0",
+    "075-pixel.dat.z": "c7cb6c512275bd7aac185c258950df74287851e030a41211670f53c7215640c9",
+    "089-hspan.dat.z": "b9ee6ba16a2e032ba42dabb98c7e4c60c09357207ad4b1f6cf810374f320f625",
+    "060-pixel.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "128-box.png": "c18b10bcab428c785d5997171654f2d3583a86c1e0802a6300339771441bc345",
+    "121-fill.dat.z": "0a6831eb37476e6daaf89b59b5d239309cebc65b7e21de351adcce09ab88504b",
+    "116-fill.dat.z": "6b91d41bcd94ff8098a06b1d8dac2435a22a403adf00a5a6a1dbcdd05e97165d",
+    "mask-fault.dat.z": "fabd009952ef20850d0617faf847df19a71238753420c695f0048877d5690288",
+    "143-fill.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "108-box.dat.z": "92bb20a43cf17ab2625d292b33d76a638d102ab12fd8b043d0540a50813a5432",
+    "068-hspan.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "031-read.dat.z": "e820d2256c0ed4fc17504c55e02161c3439020dba1cdb49d53744bdc9d060d53",
+    "081-pixel.dat.z": "438f65c832c726cb5dd6f3de6bbb5dce46954804b6f7df45853fcfebe30262d9",
+    "064-read.dat.z": "ebf3076a5e5fef6defeab2959bca4c446b6e1cf2813c83608745b4118b23178a",
+    "113-fill.dat.z": "0c4de2abd8ee502e9ed3e17ba3cdd72782fa93e9df7e1cb647502b0cb69a8373",
+    "028-read.dat.z": "1a119ae8ee7c44ef83bdad0537ce792ce6f9c04fb67311b6a397b69cc92a659a",
+    "166-vspan.dat.z": "9e9537ec649fdd8b56e35b56246719b905472d6726de7db8ce0835e3832a8255",
+    "159-pixel.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "071-hspan.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "015-pixel.dat.z": "ec4433aad8e0152f16743259a25328885dd83692212cba69a351ec0955be1dd0",
+    "034-read.dat.z": "6ccc08a97c1ba5daa1aa3fa7c0ecff944432a66a332322662a9144f2e144d4bc",
+    "009-pixel.dat.z": "79b74dd286ab938cc9c607d7225c49f85f2a0ed8abfce399d29010b9f9a768e7",
+    "164-box.png": "35ce5f1c9f21dbc85bfc7f8164b41126e6891d4ccc82d2a1a7d6aa803ddc5cdb",
+    "090-hspan.dat.z": "aa2d60d8987de154beee8eaa1165626e29213ee23f3903112ac808cb0333c645",
+    "079-pixel.dat.z": "d74ccb0628114098d4e4a7c49e933f5042aae23cc1c9ee18a4b78f5d0cba345d",
+    "061-read.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "154-vspan.dat.z": "24e87fbbdc97551e2d34dcb8c890daf818d8ce52667cd6e65d7356f9caba4623",
+    "095-vspan.dat.z": "16dce6dc098278ec101894e7dae7df42ed1860df72b8937df21a583a4d5c1c47",
+    "027-pixel.dat.z": "1a119ae8ee7c44ef83bdad0537ce792ce6f9c04fb67311b6a397b69cc92a659a",
+    "057-pixel.dat.z": "2167ec685d9605ce2ecef7efe67e09690ab695736e88ceff7177b343e1075cf4",
+    "122-box.dat.z": "673ad453feffb3c84d05d6139e43bf16063b84a502e1bd2130aef20c72b02b89",
+    "032-hspan.png": "b6347fd4e0970f054d674978df2df602654d11b49236eee4b0c158473b1c2011",
+    "026-hspan.dat.z": "e5a3909dad6ffe112539a2256c1d9f345953d6305e5d36ae47ad46f5bdcc916d",
+    "042-pixel.dat.z": "30dc608de5377625df4a20cf2e4d270ee7e4c667a93e7263ffc0217c6cc49ae8",
+    "056-hspan.dat.z": "b19f2c87308da2c26f4710d20650b82023315cb0842dddf2a11f74a21ab827f5",
+    "070-read.dat.z": "122508daa50ee439e47af9b60ab19fa50f7a7f5ccc25540e554567d8279d051f",
+    "008-hspan.dat.z": "9b01f6ab0335e2e808fd240c790a4a84f0b251bace9095a24a73f29a4b8f326c",
+    "131-vspan.dat.z": "d3d5b14678a9d68b3cb44fe2cf828b40742fd10ea90748a68e6a8a7723b25e85",
+    "025-read.dat.z": "e5a3909dad6ffe112539a2256c1d9f345953d6305e5d36ae47ad46f5bdcc916d",
+    "000-pixel.dat.z": "5ac6dfa2c015d5a1470ac7c7e8bbf6ffa7fef3e1d767f500e7acfc8a2e744fd7",
+    "014-hspan.dat.z": "ec4433aad8e0152f16743259a25328885dd83692212cba69a351ec0955be1dd0",
+    "135-fill.dat.z": "fabd009952ef20850d0617faf847df19a71238753420c695f0048877d5690288",
+    "103-vspan.dat.z": "761a73dfdb63f14e1cc2573365e95eb1dbf765acbebc6ffc17e2359cef308f2d"
+  }
+}
