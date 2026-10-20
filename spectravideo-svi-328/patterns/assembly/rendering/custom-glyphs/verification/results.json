@@ -1,0 +1,1462 @@
+{
+  "machine_id": "spectravideo-svi-328",
+  "variants": {
+    "positive": {
+      "fixture_sha256": "b2b86d377aad616fca3e6e93de610a3aec70ee625b3c3a4d6be6cbdc476cc4f6",
+      "emulator_sha256": "518617c0af7ecdea0273f9a0657e55a0fce75fa911c98dc303e69b1b4fddf52a",
+      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "source_address": 33408,
+      "bulk_address": 717,
+      "kernel_bytes": 205,
+      "cases": [
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 99,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201630000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-0.dat.z",
+          "mismatch": false,
+          "capture": "positive-0.png"
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 2,
+            "cell": 66
+          },
+          "context": "808200000242000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-1.dat.z",
+          "mismatch": false,
+          "capture": "positive-1.png"
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201000000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-2.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 0,
+            "count": 1,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200010000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-3.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 1,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff010000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-4.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 255,
+            "cell": 767
+          },
+          "context": "80820000ffff020101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-5.dat.z",
+          "mismatch": false,
+          "capture": "positive-5.png"
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 254,
+            "count": 2,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082fe020000000110008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-6.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 2,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff020000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-7.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200000000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-8.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 768
+          },
+          "context": "808200000000030000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-9.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 65535
+          },
+          "context": "8082000000ffff0000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-10.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ffff0000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-11.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 255,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff000000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-12.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 7,
+            "cell": 65
+          },
+          "context": "808200000741000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-13.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 8,
+            "cell": 64
+          },
+          "context": "808200000840000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-14.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "bulk",
+            "first": 0,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "cd0200ff00000001f8078081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-15.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "bulk",
+            "first": 1,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "cd0201ff00000001f8078081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-16.dat.z",
+          "mismatch": false,
+          "capture": "positive-16.png"
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200000000000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-17.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 255,
+            "cell": 766
+          },
+          "context": "80820000fffe020101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-18.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "init",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082000000000001000b8081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-19.dat.z",
+          "mismatch": false,
+          "capture": "positive-19.png"
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201ff0000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-20.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 66
+          },
+          "context": "808200000142000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-21.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 67
+          },
+          "context": "808200000143000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-22.dat.z",
+          "mismatch": false
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 32
+          },
+          "context": "808200000120000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "positive-23.dat.z",
+          "mismatch": false,
+          "capture": "positive-23.png"
+        }
+      ],
+      "memory_faults": 0,
+      "pixel_faults": 0
+    },
+    "wrong-slot": {
+      "fixture_sha256": "e0d824a7d161a3d385b3d5cde7d069b75e264999d7688a4124b6c9a8f5d2eb0a",
+      "emulator_sha256": "518617c0af7ecdea0273f9a0657e55a0fce75fa911c98dc303e69b1b4fddf52a",
+      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "source_address": 33408,
+      "bulk_address": 718,
+      "kernel_bytes": 206,
+      "cases": [
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 99,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201630000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-0.dat.z",
+          "mismatch": true,
+          "capture": "wrong-slot-0.png"
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 2,
+            "cell": 66
+          },
+          "context": "808200000242000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-1.dat.z",
+          "mismatch": true,
+          "capture": "wrong-slot-1.png"
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201000000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-2.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 0,
+            "count": 1,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200010000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-3.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 1,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff010000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-4.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 255,
+            "cell": 767
+          },
+          "context": "80820000ffff020101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-5.dat.z",
+          "mismatch": true,
+          "capture": "wrong-slot-5.png"
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 254,
+            "count": 2,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082fe020000000110008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-6.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 2,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff020000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-7.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200000000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-8.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 768
+          },
+          "context": "808200000000030000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-9.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 65535
+          },
+          "context": "8082000000ffff0000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-10.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ffff0000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-11.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 255,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff000000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-12.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 7,
+            "cell": 65
+          },
+          "context": "808200000741000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-13.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 8,
+            "cell": 64
+          },
+          "context": "808200000840000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-14.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "bulk",
+            "first": 0,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "ce0200ff00000001f8078081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-15.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "bulk",
+            "first": 1,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "ce0201ff00000001f8078081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-16.dat.z",
+          "mismatch": true,
+          "capture": "wrong-slot-16.png"
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200000000000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-17.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 255,
+            "cell": 766
+          },
+          "context": "80820000fffe020101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-18.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "init",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082000000000001000b8081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-19.dat.z",
+          "mismatch": true,
+          "capture": "wrong-slot-19.png"
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201ff0000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-20.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 66
+          },
+          "context": "808200000142000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-21.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 67
+          },
+          "context": "808200000143000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-22.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 32
+          },
+          "context": "808200000120000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-slot-23.dat.z",
+          "mismatch": true,
+          "capture": "wrong-slot-23.png"
+        }
+      ],
+      "memory_faults": 24,
+      "pixel_faults": 5
+    },
+    "wrong-name": {
+      "fixture_sha256": "3ab8c9126811e2b7277ae4080d9acc9d297ba73cb0d268042e59fe3c571a9286",
+      "emulator_sha256": "518617c0af7ecdea0273f9a0657e55a0fce75fa911c98dc303e69b1b4fddf52a",
+      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "source_address": 33408,
+      "bulk_address": 717,
+      "kernel_bytes": 205,
+      "cases": [
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 99,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201630000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-0.dat.z",
+          "mismatch": true,
+          "capture": "wrong-name-0.png"
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 2,
+            "cell": 66
+          },
+          "context": "808200000242000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-1.dat.z",
+          "mismatch": true,
+          "capture": "wrong-name-1.png"
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201000000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-2.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 0,
+            "count": 1,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200010000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-3.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 1,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff010000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-4.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 255,
+            "cell": 767
+          },
+          "context": "80820000ffff020101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-5.dat.z",
+          "mismatch": true,
+          "capture": "wrong-name-5.png"
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 254,
+            "count": 2,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082fe020000000110008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-6.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 2,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff020000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-7.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200000000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-8.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 768
+          },
+          "context": "808200000000030000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-9.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 65535
+          },
+          "context": "8082000000ffff0000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-10.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "install",
+            "first": 255,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ffff0000000000008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-11.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 255,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082ff000000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-12.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 7,
+            "cell": 65
+          },
+          "context": "808200000741000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-13.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 8,
+            "cell": 64
+          },
+          "context": "808200000840000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-14.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "bulk",
+            "first": 0,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "cd0200ff00000001f8078081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-15.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "bulk",
+            "first": 1,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "cd0201ff00000001f8078081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-16.dat.z",
+          "mismatch": true,
+          "capture": "wrong-name-16.png"
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808200000000000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-17.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 255,
+            "cell": 766
+          },
+          "context": "80820000fffe020101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-18.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "init",
+            "first": 0,
+            "count": 0,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "8082000000000001000b8081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-19.dat.z",
+          "mismatch": true,
+          "capture": "wrong-name-19.png"
+        },
+        {
+          "call": {
+            "kind": "replace",
+            "first": 1,
+            "count": 255,
+            "code": 0,
+            "cell": 0
+          },
+          "context": "808201ff0000000108008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-20.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 66
+          },
+          "context": "808200000142000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-21.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 67
+          },
+          "context": "808200000143000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-22.dat.z",
+          "mismatch": true
+        },
+        {
+          "call": {
+            "kind": "select",
+            "first": 0,
+            "count": 0,
+            "code": 1,
+            "cell": 32
+          },
+          "context": "808200000120000101008081000000000000000000000000",
+          "source_ram": "0b30557a9fc4e90e204b6eb1d4ff02257da683ecc9321f78",
+          "source_rom_sha256": "8e0ecce8720815572835663d0fc69174a6d7a443f474cd04cc9b8b9ed7ceb5b1",
+          "cpu_guards": [
+            "a5a5a5a5a5a5a5a5",
+            "5a5a5a5a5a5a5a5a"
+          ],
+          "memory": "wrong-name-23.dat.z",
+          "mismatch": true,
+          "capture": "wrong-name-23.png"
+        }
+      ],
+      "memory_faults": 24,
+      "pixel_faults": 5
+    }
+  },
+  "sources": {
+    "cross-platform/patterns/rendering/tms-glyphs/systems.json": "48409ed2122bbeb82e00a2ec5f863575ac617f6dca226bd0b8f1936748c5d45a",
+    "cross-platform/patterns/rendering/tms-glyphs/toolchain.json": "ed8f7e761ae415761240d1003c93288f456a8580c9ea2308c6d56963d7e3cb32",
+    "cross-platform/patterns/rendering/tms-glyphs/build.py": "9b6ffdba63cf77e779e62f2b4bf4fed9e8ae35c735761bae233688296a3ad72c",
+    "cross-platform/patterns/rendering/tms-glyphs/model.py": "41cafaa5c99a34645d189ad3252e6629b6351e44cfbf45d1bc243df66f510733",
+    "spectravideo-svi-328/patterns/assembly/rendering/custom-glyphs/demo.asm": "40c3657e6f91405eb6a204a5e3a0147033c683a6bd441f7b6484eb8d0869e940",
+    "msx/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "bb7eea6ec18c814694a8380d81c99f93bfc7bd0986aba8a9639bb883235ab816",
+    "scripts/verify-tms-glyphs.py": "227ce80ac52093c03250d2fd3118925767b377ae00bd59a25ee5f07ed2b6dcad",
+    "scripts/check-tms-glyphs.py": "bdcbb1b356c71e24b99770df1ce415ff72c242b488a834d885f6eb31eb805823",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361"
+  },
+  "artifacts": {
+    "wrong-name-19.png": "e960fe6764814e7f6fd8355f6589cf34e68c93f92aa7cb9cabcae2aafe5eb324",
+    "wrong-name-7.dat.z": "e8c020dacf043e1967c9087c3257c12111c7ecfd107d9b94972ccb62423a0d5e",
+    "wrong-name-17.dat.z": "1ee916f615fc6cadf06d7d510b0c6af0b50a007fa7356ea2fdf4c81d7b242b19",
+    "wrong-name-5.dat.z": "137ba55ea33d329f593748b4290b15ac01b1e2607532c08e92f380a651d7e1c3",
+    "wrong-name-15.dat.z": "cdb2ced53111f52aceaf3489c319b3b4e136bf2b1a6778539eab2667a44e2806",
+    "wrong-slot-18.dat.z": "8cdbea805cde7f85eb662a804a0b0eecbbaf6b8a7842077387c975a2243c07a5",
+    "wrong-slot-19.png": "e960fe6764814e7f6fd8355f6589cf34e68c93f92aa7cb9cabcae2aafe5eb324",
+    "positive-18.dat.z": "a914735a859963942a29b54c41547edcda3c7e795b975dbb37ee5ead78262e3b",
+    "wrong-slot-5.png": "3e880838a7698e874e4208ee01f4d25fd11096a0e07ab8a461feb273adb5169f",
+    "wrong-slot-1.png": "11bf520460ebabf456d965550e048669cd6cac58e0e73d2f46789932a3d9f900",
+    "positive-21.dat.z": "3fe35e3e983033b29bc8b2fab607d852351969557efd809fae8858ff222180ca",
+    "wrong-name-11.dat.z": "e8c020dacf043e1967c9087c3257c12111c7ecfd107d9b94972ccb62423a0d5e",
+    "wrong-slot-21.dat.z": "71590f3806ddff102e6d25ef6fddfd7a2ed9a8a0904591d3c3953e4979246802",
+    "wrong-name-23.png": "a8fac1be17dfb9057ae494b3285c677672c807b4975386dde99ec73cf38a7ec0",
+    "wrong-name-1.dat.z": "60fd32138f36e935981fbe785fd36f903a66af97333ae97ca72ed772de172958",
+    "wrong-slot-0.png": "e960fe6764814e7f6fd8355f6589cf34e68c93f92aa7cb9cabcae2aafe5eb324",
+    "wrong-slot-8.dat.z": "006478a908f2ef05124fa30722ca27f131be8924eadcc40e7807b6c95672d6a9",
+    "wrong-slot-23.dat.z": "133545f4a3181c9b0a822e735a606103220c248e3c70e0c267126d11f4af9c09",
+    "wrong-name-13.dat.z": "b5d5abf5032fc438fdf3a35fce146f77d1fb505398f28016ac2aa94634bcaf3a",
+    "positive-8.dat.z": "2fa7195df973cfcd03e48c47bb16afb01e6f996320a0bbd6e62518d93660c255",
+    "wrong-name-3.dat.z": "bf7122c5e1ccc6fa9d8b54b23a7e09c91926edfc8ebe2dc102fb361e8b5b4739",
+    "wrong-slot-23.png": "e960fe6764814e7f6fd8355f6589cf34e68c93f92aa7cb9cabcae2aafe5eb324",
+    "positive-23.dat.z": "76fdf5165afc3614621b58087d19c531f004d914055e9d4ef6717597afe0b174",
+    "wrong-slot-19.dat.z": "a7bb715c36adafd0f807d5931864ed20db495694f0c6ca70e8f2548ea0425501",
+    "wrong-name-14.dat.z": "629685188172f72c64b339f58af7f5a46ee1fa56c6dd5008ab1841204f812a6b",
+    "wrong-name-4.dat.z": "6a56523a07ba44037139c5b901792bc9c4eed0e2e3ec9287253754d06d844ea4",
+    "positive-19.dat.z": "76a67b99ab0835ac998e2a0c8595c8ee7795f6f8e0d727e3e0983ec7c2ba04b3",
+    "wrong-name-16.dat.z": "1ee916f615fc6cadf06d7d510b0c6af0b50a007fa7356ea2fdf4c81d7b242b19",
+    "positive-5.png": "1a7f765bc757abb1a582ba655eb263328eef02cb37f7ae71cd16188bbb9deb95",
+    "wrong-name-6.dat.z": "e8c020dacf043e1967c9087c3257c12111c7ecfd107d9b94972ccb62423a0d5e",
+    "wrong-name-2.dat.z": "60fd32138f36e935981fbe785fd36f903a66af97333ae97ca72ed772de172958",
+    "wrong-slot-9.dat.z": "006478a908f2ef05124fa30722ca27f131be8924eadcc40e7807b6c95672d6a9",
+    "wrong-slot-22.dat.z": "0637c71a5d7046568127bc4951265bdbf362fb0c8a04e3c7d0487a2c0ab43cc9",
+    "wrong-name-12.dat.z": "044c858eda287d271fbffb519688892476eccab98b65a25f31706766d3729107",
+    "positive-9.dat.z": "2fa7195df973cfcd03e48c47bb16afb01e6f996320a0bbd6e62518d93660c255",
+    "positive-1.png": "0edc7451e94f0d00d88526fb4f2f373a9f529e10440bccba1bd3ebae69039086",
+    "positive-0.png": "3e880838a7698e874e4208ee01f4d25fd11096a0e07ab8a461feb273adb5169f",
+    "positive-22.dat.z": "15a75dcbeea29868778fb0b1f6abf2c003a0fa1365382a5c8a3158a89d716236",
+    "positive-20.dat.z": "a48f964f4ef62dbbf91c7fd414ea8446cb4a0cd799b18e8d1e724b97da0ffdff",
+    "wrong-name-0.dat.z": "3cb1a21348414aba5207938e4f86bfc27444b6f8d27f1bdbda65a3b757282102",
+    "positive-16.png": "222b6e42703905b2b1282c72dd289944a4ee3d4c44c8e9daa27ebf137c57603e",
+    "wrong-name-10.dat.z": "e8c020dacf043e1967c9087c3257c12111c7ecfd107d9b94972ccb62423a0d5e",
+    "wrong-slot-20.dat.z": "b4fa8b35172c190e3b50d23be2fb354d882c46604195f5cb542e2b697b6a16f5",
+    "positive-7.dat.z": "2fa7195df973cfcd03e48c47bb16afb01e6f996320a0bbd6e62518d93660c255",
+    "wrong-slot-initial.dat.z": "3fa9198784094913df3fe1c60c5c3e5d6b68a2d308ecd9036a615f1c6b38221c",
+    "wrong-slot-7.dat.z": "006478a908f2ef05124fa30722ca27f131be8924eadcc40e7807b6c95672d6a9",
+    "wrong-slot-11.dat.z": "006478a908f2ef05124fa30722ca27f131be8924eadcc40e7807b6c95672d6a9",
+    "wrong-name-21.dat.z": "436f2c726e4541dbc29a2e67f64279d8cef700dd2114892604d9611d875bfa05",
+    "positive-11.dat.z": "2fa7195df973cfcd03e48c47bb16afb01e6f996320a0bbd6e62518d93660c255",
+    "positive-13.dat.z": "28aff420b5b22a61db6f02d76ad8b0d4b543971507841d367577618e7ee4f625",
+    "wrong-name-0.png": "1a5e7f42d216dc6e981878c83ff370a47544d13a9a5867b5a54c2ecd2ad48859",
+    "wrong-name-23.dat.z": "2a08c9b66257d4ad60fd23a060067d3686e728a3ce39da0f67478d61ef38482d",
+    "wrong-slot-13.dat.z": "37d89c5d8df9be396c1f20f89dab235c39570ace69b17651dba99fe258a06799",
+    "wrong-name-1.png": "3d0a3200a39755824030b1a7b4ba3c64db929a6d8d439abaee38e64b4a2cdd05",
+    "positive-19.png": "e960fe6764814e7f6fd8355f6589cf34e68c93f92aa7cb9cabcae2aafe5eb324",
+    "wrong-slot-5.dat.z": "3e270d5ad3b434f9a61750cc81d75bd0d0630975c12eabd074e34ce12c937e8c",
+    "positive-5.dat.z": "ba88bd46a62520c5cce8e7c81316037e721ec6d8022e098d1fd8fa9e608400c5",
+    "wrong-slot-17.dat.z": "ef57edd90962b2b848537c59e3481d29dece525f620b7309f7292b2a9f2aecbc",
+    "positive-1.dat.z": "9359b227aed6088df775d2a9752861247425cf9853d796f876d997b9831c3e22",
+    "wrong-slot-1.dat.z": "36b5f256473aed204af1611c47c0832ce7376261a170e44a46858dadd0169dc6",
+    "wrong-name-5.png": "f6f829bf9b451d71cdbe4923a33535a001db47754834683f1e81e2f9f1b3ec9b",
+    "positive-17.dat.z": "d1c0c80789b1aaf306765643aedab23bf4dac5b9496d329d019736b71234d7a4",
+    "positive-15.dat.z": "6c80281db80c631dc85dbb2d24549048c21bade599e437b093964b7fb17c6490",
+    "wrong-name-initial.dat.z": "227859612a228fbbdb2bb9822f2e31851d75449a79c5b437d57e604365188e70",
+    "wrong-slot-3.dat.z": "2a8a35b41e450bfc5c6b656a6b125c1e7a3d37817f76a2b3fe89aec54bdc3f4b",
+    "positive-3.dat.z": "e7814515b1dc0854f6c24b62bd6736b22f10d023c7330d91ddb01805c9c73788",
+    "wrong-name-18.dat.z": "8bf5ad5e5d787a801e5ac3744248e18c529659f9ad212ed725be2bd22a6a556a",
+    "wrong-name-8.dat.z": "e8c020dacf043e1967c9087c3257c12111c7ecfd107d9b94972ccb62423a0d5e",
+    "positive-23.png": "c60a8dee99187075fd370990cf818005e3988dcb222b7317d565ea78e6d9b962",
+    "wrong-slot-15.dat.z": "ede06901e6f22ad1c516ace990febeaa86dc2e8854ab7285aaaa4dc6c44565e7",
+    "positive-12.dat.z": "c912a58d1941ded71accaa6201939cfc69cac7149ca1cd7210419b727d6b758b",
+    "wrong-slot-4.dat.z": "085ba7ed50d610d5372cc6a78ff2359994691da77d0a26979ff4bdec2225df74",
+    "positive-4.dat.z": "ff286ff968ac8f98bc82675a01d8efd1e5ad22af1973682e80b632d6f372fb5e",
+    "wrong-name-22.dat.z": "4ff629923af58dd45d101b72a60f210f79a2c442020b3f96ded77c1d588a6ec3",
+    "wrong-slot-12.dat.z": "850a9b131b1362ff40b06f8e67b0764fa373623a12f10d554e525614de439a41",
+    "wrong-slot-10.dat.z": "006478a908f2ef05124fa30722ca27f131be8924eadcc40e7807b6c95672d6a9",
+    "wrong-name-20.dat.z": "46bed2373339d62860ce650906c28005940fd53109001d192c43623021493342",
+    "positive-6.dat.z": "2fa7195df973cfcd03e48c47bb16afb01e6f996320a0bbd6e62518d93660c255",
+    "wrong-slot-6.dat.z": "006478a908f2ef05124fa30722ca27f131be8924eadcc40e7807b6c95672d6a9",
+    "positive-10.dat.z": "2fa7195df973cfcd03e48c47bb16afb01e6f996320a0bbd6e62518d93660c255",
+    "positive-14.dat.z": "ee2832d93475ebe01e329a9d90ac3a7d4a56ef8822e493c504a6d83079ddcfa2",
+    "wrong-slot-14.dat.z": "d0e7663c3bcf7f219b933702288f9bd96a48ab295737787b06bd820e2c786bb9",
+    "wrong-name-16.png": "d08c69e3ff9e4796a9704c1050ec41329fa273195058b9489b5f490b4ac85653",
+    "wrong-name-9.dat.z": "e8c020dacf043e1967c9087c3257c12111c7ecfd107d9b94972ccb62423a0d5e",
+    "wrong-slot-2.dat.z": "36b5f256473aed204af1611c47c0832ce7376261a170e44a46858dadd0169dc6",
+    "positive-2.dat.z": "9359b227aed6088df775d2a9752861247425cf9853d796f876d997b9831c3e22",
+    "wrong-name-19.dat.z": "a23156b94bc00223c8a6e3239c462ac0823077ca1db6200865ac82b20115b77e",
+    "positive-0.dat.z": "38a2705496d61157cb66ab724f9dd149274e72867e8e23ce6c53c879487efb02",
+    "wrong-slot-0.dat.z": "35e06bac3d8f0c0ca77c9ec42e26ad51dac17a1dc5cc67a4b62997ef9287011b",
+    "wrong-slot-16.dat.z": "ef57edd90962b2b848537c59e3481d29dece525f620b7309f7292b2a9f2aecbc",
+    "wrong-slot-16.png": "0fde734f7a53685c0af897e81af4959d76590fba03c8d20db9dd848cc778a7e5",
+    "positive-16.dat.z": "d1c0c80789b1aaf306765643aedab23bf4dac5b9496d329d019736b71234d7a4",
+    "positive-initial.dat.z": "072704c14bace204eaaa766c7089d0d7193fac5e2ede86ac3646c9b44c9ecb08"
+  }
+}
