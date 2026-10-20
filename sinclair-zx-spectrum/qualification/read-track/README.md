@@ -49,3 +49,9 @@ program and standalone default are unchanged. The host checks the full512-byte
 Emu-model transfer, including every zero-padding byte after the128 represented
 bytes, all seven result bytes and recovery. Independent MAME observations remain
 separate; this does not establish magnetic field length or hardware CRC/timing.
+
+`n2_dtl_cases()` adds the v4 paired contrast: an ordinary recorded N2 field
+with 512 represented bytes of $21, commanded as N2 with DTL255 and DTL1.
+The native test track is identical; only the last guest command byte differs.
+The umbrella campaign checks every byte, all seven results and command recovery,
+and compares the pair within each runtime. This is bounded sector-image evidence.

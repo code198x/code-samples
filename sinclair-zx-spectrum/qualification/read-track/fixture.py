@@ -56,6 +56,14 @@ def reverse_size_case() -> dict:
     }
 
 
+def n2_dtl_cases() -> list[dict]:
+    """Same ordinary N2 field; vary only the command's DTL byte."""
+    return [
+        {"id": "n2-dtl255", "n": 2, "dtl": 255, "fields": [(1, 2, 512, 33)], "eot": 1},
+        {"id": "n2-dtl1", "n": 2, "dtl": 1, "fields": [(1, 2, 512, 33)], "eot": 1},
+    ]
+
+
 def command(case: dict) -> list[int]:
     return [0x42, 0, 39, 0, 1, case["n"], case["eot"], 42, case["dtl"]]
 
