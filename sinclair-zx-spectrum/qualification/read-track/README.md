@@ -61,3 +61,9 @@ beside the existing 1 and 127 cases. All five use identical recorded N0 fields
 with 128 represented bytes of $21; only the final guest command byte changes.
 The umbrella checks every returned byte, seven results and recovery, then
 compares the five cases within each runtime. Hardware timing remains unqualified.
+
+`ordinary_size_cases()` adds matching commanded/recorded N1, N3 and N4 fields
+for the v6 campaign, completing ordinary N0–5 sizes beside existing N0/N2/N5.
+Single R1 fields contain 256, 1024 and 2048 bytes of $21, with EOT1 and DTL255.
+The guest transfers every byte and all seven results before a following command.
+N6/N7 density/safety and other field/order/timing questions remain separate.
