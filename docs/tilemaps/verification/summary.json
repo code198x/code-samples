@@ -1,0 +1,330 @@
+{
+  "emulator_source_revision": "373c85ad2b76aa6ac765776f9840b4d6951b3aed",
+  "registry_count": 30,
+  "basic_ports": 10,
+  "native_ports": 20,
+  "native_graphics_qualified": false,
+  "original_hardware_qualified": false,
+  "systems": [
+    {
+      "machine_id": "acorn-atom",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "acorn-atom/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "83880c636af2f3adb5f85b938877dc546c6ff6edc493c2db96e83f60a9ff23b3",
+      "case_counts": {
+        "queries": 46,
+        "writes": 56,
+        "pixels": 9,
+        "region": 7
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "acorn-bbc-micro",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "bbc-micro/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "dbfba110654293690360c9d053e8042244153a9dde04ab1b68a18cbf84aa7b13",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "acorn-electron",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "acorn-electron/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "37e493bac09b3c685fc561e7bb0ff0fba7e33d6a17291b99197a7f270b5d2e30",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "amstrad-cpc",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "amstrad-cpc/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "f314288e53f03a8151d52fd31ac0b20c869ca254e91e8d89828f1f9c3d0f1868",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "atari-2600",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "atari-2600/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "6ac3040492ca8ac0cc231c89e202d361ba73961745b3be935b58b5d7efe4c83a",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "atari-5200",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "atari-5200/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "b5fa7cd8b3422dfbd7b384418321f2383e740df4a578021d992439a8c17373b7",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "atari-7800",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "atari-7800/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "9970626d1768fc9ce340d198083d8cf95fc4c606091541719b840a04ec94e3d6",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "atari-800xl",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "atari-800xl/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "6f71315d2841e4de974b1b79d104be0437555113d2ca20c2d884de85c34c37bc",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "coleco-colecovision",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "coleco-colecovision/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "e70d302cf97fe52861fba81396e4045c5e1ce5e640180e176abca46fdd1b870f",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "commodore-amiga",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "commodore-amiga/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "77b36200802524331c2d2b1686d0d78953a44d910d5d35f2a7b8dd7db2e53d46",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "commodore-c64",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "commodore-64/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "90ef541b37787bd96c60192953b85d995ecd097856e7fe6c383d0bc4c79f1452",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "commodore-pet",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "commodore-pet/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "b3accabc17973ffb83332e156965e08c25a3d638390ddb68ee077851e4398335",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "commodore-vic-20",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "commodore-vic-20/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "421a4fe09d9d9b898e90ec7ef7f5db02189a3d1473af4a8d9a35f930034dc5cf",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "dragon",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "dragon-32/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "af3bf29bc4409a29a12a0c909842dbd7711a463df07a4951e64787f20a523fbb",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "jupiter-ace",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "jupiter-ace/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "57801599af9822193daf6a61403b8cf315cee4e6f2cf88bc5c7bc3e643630e6b",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "mattel-aquarius",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "mattel-aquarius/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "5729499214ed8d97846adc1769697ddf5193d4a2c5124e4013dc7917be200496",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "memotech-mtx",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "memotech-mtx/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "9fc235c8e9a4334eac23700bd5f31e5327c631ec0848ecb5c50e07f5001c23f7",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "microsoft-msx1",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "msx/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "ffa266a2ca1c12dd008ed6894cd8d54cc2e7e46834d69558e28d942bae8165e2",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "nintendo-game-boy",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "nintendo-game-boy/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "4282692778a0d4cc7ff38961d9e18ecaa64696c107e3436d1e7d4e700c5055f7",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "nintendo-nes",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "nintendo-entertainment-system/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "5a72e124502565b2f163ab13caa5f68dd44954738f8694976c388a2e5a8919ae",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "oric",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "oric-atmos/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "8d3041792cacfaf0f3aa1a7dce745ac31a985e2cd21fdf0106a42c628fb9a68d",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "sega-game-gear",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "sega-game-gear/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "d207da278233eb65804de9e67c0fc725f7a406bf0bd88824e64a4c637848b4fe",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "sega-master-system",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "sega-master-system/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "248e3ba824b3365343dae43b46613d7c02f4b04e7d084c90ee2bfc33b72d1ea5",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "sega-sg-1000",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "sega-sg-1000/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "ebd2304136c9bb16a29cffe9836e47732334a167b6de6a180098dc63028972c2",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "sinclair-zx-spectrum",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "sinclair-zx-spectrum/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "b54d0c5578259b1b1a8b537cafd1a62fc64dbcef3112b3deac6d5c1046bc36c2",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "sinclair-zx80",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "sinclair-zx80/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "d409569149deb80154b73baa92b815e146bead8a48f8d56fcbfaaef8ef53457c",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "sinclair-zx81",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "sinclair-zx81/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "3bdf73eceed2eea2891e2663e64e7ed6d118494de8ed18f1bbeb9d3f85595ce0",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "sord-m5",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "sord-m5/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "4330373b3910744d7d3d98f7bbebad56dd9660afe80f095cdd98c968b567913b",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    },
+    {
+      "machine_id": "spectravideo-svi-328",
+      "kind": "basic-numeric-map",
+      "status": "passed",
+      "record": "spectravideo-svi-328/patterns/basic/rendering/tile-map/verification/results.json",
+      "record_sha256": "79d69896bd9877e7888846e4e85546794a55bcb66cc8200cff196cde65a7cd28",
+      "case_counts": {
+        "queries": 48,
+        "writes": 57,
+        "pixels": 10,
+        "region": 8
+      },
+      "completed_negative_controls": 1
+    },
+    {
+      "machine_id": "tatung-einstein",
+      "kind": "native-byte-map",
+      "status": "passed",
+      "record": "tatung-einstein/patterns/assembly/rendering/tile-map/verification/results.json",
+      "record_sha256": "e9f161df0a3282e4ca93564325f18a1d385a0b60a8db0e7476851b8215771dea",
+      "case_counts": null,
+      "completed_negative_controls": 2
+    }
+  ]
+}

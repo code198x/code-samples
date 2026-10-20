@@ -1,0 +1,39 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "mattel-aquarius",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller; demo unexpanded, larger query harness uses 16 KB expansion",
+  "sources": {
+    "mattel-aquarius/patterns/basic/rendering/tile-map/demo.bas": "ef70b5e5a0b414e20af826049a62c416df4e9398497c160d6f0b0d8cffd12a69",
+    "mattel-aquarius/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "734cb480370cf564815e858a180a4e32b772459283b5ff412f4b895ec9c81c12",
+  "firmware": {
+    "aquarius-char.rom": "0bf4b08b4514f2c437d6f00e13499b6dab0e771c937ea2675df3ec52c8d9f29e",
+    "aquarius.rom": "277b2655a0599861302e6ec86b027c65a29e284fe7aadc296c4570498ab0e249"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "d9d1f2394dec5c66bdace732d0b7bda58a5c375a4b15bd46f0e777781895dfd3",
+    "reference.png": "d9d1f2394dec5c66bdace732d0b7bda58a5c375a4b15bd46f0e777781895dfd3",
+    "wrong-stride.png": "6eeb09289bbce547ca05746e9d82547f819422c97305853c5522ebaf7a66b4a7",
+    "queries.png": "6edd0faba3b288bc2ae68f4776ed8055329f8e1d979c4c6a2d42fda0681cb1e5",
+    "queries-reference.png": "6edd0faba3b288bc2ae68f4776ed8055329f8e1d979c4c6a2d42fda0681cb1e5",
+    "writes.png": "27de50e8b87e5fdb06a4ae5eb162a0d28ed557a8f480338e90e5b7bf409c08f3",
+    "writes-reference.png": "27de50e8b87e5fdb06a4ae5eb162a0d28ed557a8f480338e90e5b7bf409c08f3",
+    "pixels.png": "10a6c740516e4aed2510344f29b1df50ed3350b7db668f9947a6752b0cb0902f",
+    "pixels-reference.png": "10a6c740516e4aed2510344f29b1df50ed3350b7db668f9947a6752b0cb0902f",
+    "region.png": "2349904d2fab1dbef380c99936a96a4fb48ae4441c50a0e1fb4618864de0f228",
+    "region-reference.png": "2349904d2fab1dbef380c99936a96a4fb48ae4441c50a0e1fb4618864de0f228"
+  }
+}

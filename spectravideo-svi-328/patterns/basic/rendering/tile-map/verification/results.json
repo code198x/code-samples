@@ -1,0 +1,38 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "spectravideo-svi-328",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "spectravideo-svi-328/patterns/basic/rendering/tile-map/demo.bas": "e368d5c613c72ec3b87f1717fcc86f6801588f202ee877ccc33f88926728381b",
+    "spectravideo-svi-328/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "aefdf014efd354de62738c108440fab36a792321e0c1beac527d3f9e765dfbbd",
+  "firmware": {
+    "svi-328.rom": "407b47ff8c1ed31d8050600233ef8b70c495f5176d86f98511c4a0cee438f559"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "380b972b828006fa895bea1b68ef6e6adafd908350aeb52d9bc106daadf57d7d",
+    "reference.png": "380b972b828006fa895bea1b68ef6e6adafd908350aeb52d9bc106daadf57d7d",
+    "wrong-stride.png": "e6b46a08c0c6875352d1912df532b88f0974aa855fecc5403368078234256e81",
+    "queries.png": "5dede36308740e48f2fa4dbdfc45190cd433f453ae62ecedac7cf43ee8b542a5",
+    "queries-reference.png": "5dede36308740e48f2fa4dbdfc45190cd433f453ae62ecedac7cf43ee8b542a5",
+    "writes.png": "7347d16a9bb50ef2d97faf944ae07f7153ff5ed21fa9a38cd52159b89f172e91",
+    "writes-reference.png": "7347d16a9bb50ef2d97faf944ae07f7153ff5ed21fa9a38cd52159b89f172e91",
+    "pixels.png": "ef1f1d5b9f0e111a0107a4fd213d02dcc3829e5f7e1a378c5d2aa0b84b96f45f",
+    "pixels-reference.png": "ef1f1d5b9f0e111a0107a4fd213d02dcc3829e5f7e1a378c5d2aa0b84b96f45f",
+    "region.png": "78ae6b8e48fec276d2ada2cc6aa2635d652c8abd474abfa2131f8ed4b2566dac",
+    "region-reference.png": "78ae6b8e48fec276d2ada2cc6aa2635d652c8abd474abfa2131f8ed4b2566dac"
+  }
+}

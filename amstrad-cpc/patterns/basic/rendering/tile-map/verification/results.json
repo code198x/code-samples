@@ -1,0 +1,41 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "amstrad-cpc",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "amstrad-cpc/patterns/basic/rendering/tile-map/demo.bas": "4352ce999fa2afc65c62326ee0c5a3274ca061eb786056024497c3de403483de",
+    "amstrad-cpc/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "85b7f5fea6ffd7fbe28edb6ddc9413886cca6db98047a51af11640928493a3cf",
+  "firmware": {
+    "cpc6128.rom": "31c3668c67bea027dab698ece233c9434d9324f9ba7dac84db58f400b6689562",
+    "cpc664.rom": "1fcb20cf169f170774bf94954db9372c95edd038a5cb8e5199774552b93f8747",
+    "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e",
+    "cpcados.rom": "ea65e0fb44ee93ede4b6c507509b7e5ddf497fb7155023bea91ef229469fa04d"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "a9e6a6f13721276bb9137616f1b4f6663949c5aec3f71135d67b7b81a3cd1a1d",
+    "reference.png": "a9e6a6f13721276bb9137616f1b4f6663949c5aec3f71135d67b7b81a3cd1a1d",
+    "wrong-stride.png": "838aeb0ef174abf324dd4da4bfd29dfa5bf54aa1df09edf8aefc7ede9f4793ac",
+    "queries.png": "44601552300bce041f508fe8dc23dba99652a4b88fe5ea69243e5938c253429d",
+    "queries-reference.png": "44601552300bce041f508fe8dc23dba99652a4b88fe5ea69243e5938c253429d",
+    "writes.png": "7347aa3a70b00909bf2e90689b2c2682a60332d90aee6a530d8bbbbd79de4264",
+    "writes-reference.png": "7347aa3a70b00909bf2e90689b2c2682a60332d90aee6a530d8bbbbd79de4264",
+    "pixels.png": "1deb5d69bf949df65303f55e4ead5b92a07463c6306f252483369dbcfcd5813e",
+    "pixels-reference.png": "1deb5d69bf949df65303f55e4ead5b92a07463c6306f252483369dbcfcd5813e",
+    "region.png": "3b6c7c875a8f97f9dc0a0a23c9a116bdb54b0de146425ad33b425e379e3b90fd",
+    "region-reference.png": "3b6c7c875a8f97f9dc0a0a23c9a116bdb54b0de146425ad33b425e379e3b90fd"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "commodore-vic-20",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "commodore-vic-20/patterns/basic/rendering/tile-map/demo.bas": "cb325e6269c933f395d8ee09619fb145d38b1043eb61b157b2b9b7539406345c",
+    "commodore-vic-20/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "78e1c3ca31c5863b55b768aecbb0b3b52e60f1fa94629c31048d64c1dccd5963",
+  "firmware": {
+    "kernal-ntsc.rom": "8fc94bd895f488ac0ae1a52abdc32988cd63c777770b89a9d415513098535cc2",
+    "basic.rom": "8be2d882e0eeb1c6923a43660236ea69d43ca8a3bd0613b1b6c910601584fbed",
+    "char.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502",
+    "chargen.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502",
+    "kernal.rom": "ff6d1416b91a71f5240a5bb8adc9fdc1b955374c48322ca47b3e436334f168fb"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "bd38f7a3495942c9825ba5e8bfe8a45013cb6ff84283031a863482d3f5997a73",
+    "reference.png": "bd38f7a3495942c9825ba5e8bfe8a45013cb6ff84283031a863482d3f5997a73",
+    "wrong-stride.png": "7450a48615366848fd85aa9973c0b3c831220352db41e1a1a64d52d11acf4d4a",
+    "queries.png": "c9f0dd7dd3b4669751a3de21686b36e9387dbd73b64a065a1e9e7e359571a8a9",
+    "queries-reference.png": "c9f0dd7dd3b4669751a3de21686b36e9387dbd73b64a065a1e9e7e359571a8a9",
+    "writes.png": "b3d2defbf425d1dc562c460c51a0aec1ecbab0debb017672c6dc11479598f22a",
+    "writes-reference.png": "b3d2defbf425d1dc562c460c51a0aec1ecbab0debb017672c6dc11479598f22a",
+    "pixels.png": "6f0ade6e1c0d3449b0ae5ecc5b1e8a5352834b218b7f4f95d972fae94195b2a8",
+    "pixels-reference.png": "6f0ade6e1c0d3449b0ae5ecc5b1e8a5352834b218b7f4f95d972fae94195b2a8",
+    "region.png": "318adb78bb27efe35644899eb176fc371728e8614421fda09277ff60e9776707",
+    "region-reference.png": "318adb78bb27efe35644899eb176fc371728e8614421fda09277ff60e9776707"
+  }
+}

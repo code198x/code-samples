@@ -1,0 +1,40 @@
+{
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10,
+    "region": 8
+  },
+  "status": "passed",
+  "system": "atari-800xl",
+  "configuration": "Stock BASIC; keyboard-loaded text-region caller",
+  "sources": {
+    "atari-800xl/patterns/basic/rendering/tile-map/demo.bas": "cbc491eb9558d7ea987195d7f53cf09fec634175e8078527c519832a3b1c16fa",
+    "atari-800xl/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68"
+  },
+  "observer_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "emulator_sha256": "c78582a6fa613c1c8d14218af464bdea798e798b94c430b0c512f0ae6131a42b",
+  "firmware": {
+    "atarixl-hias-1.30.rom": "64f13699592f2c068e468dfb22c245c63b1317fd0f871aca798c29688424955d",
+    "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0",
+    "atarixl.rom": "a77050b2d81db2d11eaa3dbafd8ec2531b478abcc3bcc4b0d846b634e885edb1"
+  },
+  "demo_matches_independent_text_reference": true,
+  "wrong_stride_rejected": true,
+  "comparison": "Whole decoded native capture; verification caller holds after output before any ROM prompt",
+  "limits": "Text-cell rendering, not native bitmap/tile hardware, scrolling, frame timing or original-hardware verification.",
+  "captures": {
+    "demo.png": "aa4af406ea5cee4f20587d8f18258f8b3eea15252cce2ac4d1f398fdc63bc1c8",
+    "reference.png": "aa4af406ea5cee4f20587d8f18258f8b3eea15252cce2ac4d1f398fdc63bc1c8",
+    "wrong-stride.png": "b684f387f0116b87bdf9fde5e34ece347c3ea057ed68ea78289909fe6c16e04a",
+    "queries.png": "bf1e94c8bcfbcf9636e089b993398d2df7ed913285fb9f63f5ffc8a956088213",
+    "queries-reference.png": "bf1e94c8bcfbcf9636e089b993398d2df7ed913285fb9f63f5ffc8a956088213",
+    "writes.png": "5d3f270ede15916d2b3ad618cbe6538aadb345957ca194099003089aa0de76d4",
+    "writes-reference.png": "5d3f270ede15916d2b3ad618cbe6538aadb345957ca194099003089aa0de76d4",
+    "pixels.png": "6fe9c18883a2aa7f7e0132d58bd834b3d2240bbfb70714a542eed29a280ee1f3",
+    "pixels-reference.png": "6fe9c18883a2aa7f7e0132d58bd834b3d2240bbfb70714a542eed29a280ee1f3",
+    "region.png": "418b09ce23e9205eca5c10e13d9818c6659169628a8e01473842eba570f98b87",
+    "region-reference.png": "418b09ce23e9205eca5c10e13d9818c6659169628a8e01473842eba570f98b87"
+  }
+}
