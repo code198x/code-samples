@@ -1,0 +1,2 @@
+# Native memory observations are zlib-compressed binary data.
+*.dat.z binary
