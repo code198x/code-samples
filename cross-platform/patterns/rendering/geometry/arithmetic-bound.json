@@ -1,0 +1,10 @@
+{
+  "nonzero_radius_pairs": 65025,
+  "iterations": 12780841,
+  "maximum_absolute_native_error_value": 94739400,
+  "signed_bits": 32,
+  "maximum_pair": [
+    255,
+    253
+  ]
+}
