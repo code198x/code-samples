@@ -1,0 +1,51 @@
+[
+  {
+    "machine_id": "spectrum",
+    "code_and_inline_tables_bytes": 489,
+    "row_table_bytes": 0,
+    "scratch_bytes": 48,
+    "asset_bytes_per_glyph": 0,
+    "includes_spectrum_helper": true,
+    "existing_address_helper_bytes": 44
+  },
+  {
+    "machine_id": "acorn-bbc-micro",
+    "code_and_inline_tables_bytes": 526,
+    "row_table_bytes": 512,
+    "scratch_bytes": 48,
+    "asset_bytes_per_glyph": 0,
+    "includes_spectrum_helper": false
+  },
+  {
+    "machine_id": "dragon",
+    "code_and_inline_tables_bytes": 470,
+    "row_table_bytes": 0,
+    "scratch_bytes": 48,
+    "asset_bytes_per_glyph": 0,
+    "includes_spectrum_helper": false
+  },
+  {
+    "machine_id": "commodore-vic-20",
+    "code_and_inline_tables_bytes": 203,
+    "row_table_bytes": 0,
+    "scratch_bytes": 24,
+    "asset_bytes_per_glyph": 8,
+    "includes_spectrum_helper": false
+  },
+  {
+    "machine_id": "msx",
+    "code_and_inline_tables_bytes": 205,
+    "row_table_bytes": 0,
+    "scratch_bytes": 24,
+    "asset_bytes_per_glyph": 8,
+    "includes_spectrum_helper": false
+  },
+  {
+    "machine_id": "game-boy",
+    "code_and_inline_tables_bytes": 186,
+    "row_table_bytes": 0,
+    "scratch_bytes": 24,
+    "asset_bytes_per_glyph": 16,
+    "includes_spectrum_helper": false
+  }
+]
