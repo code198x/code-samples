@@ -68,10 +68,10 @@ send_command:
         jr z,data_done
         ld bc,$2ffd
 read_payload:
-        in a,(c)
-        and $f0
-        cp $f0
-        jr nz,payload_wait
+        in a,(c)            ; IN sets S from RQM: short bounded not-ready path
+        jp p,payload_wait
+        bit 5,a             ; available result ($d0) is not payload ($f0)
+        jp z,failed
 payload_ready:
         ld b,$3f
         ini                 ; service plus RAM store in 16T, not three instructions
@@ -80,14 +80,12 @@ payload_ready:
         or e
         jr z,data_done
         ld b,$2f
-        jr read_payload
+        jp read_payload
 payload_wait:
-        cp $d0
-        jp z,failed         ; result before expected byte count
         dec iy
         ld a,iyh
         or iyl
-        jr nz,read_payload
+        jp nz,read_payload
         jp failed
 data_done:
         pop iy

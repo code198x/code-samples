@@ -48,7 +48,7 @@ screen depend on bytes transferred by the controller. The original CODE does
 not contain the transferred data or the completed signature at its destination.
 
 At completion, addresses 28672–28673 contain 165,90, the final stage at28675 is5,
-and PC loops at33011. Trace records begin at28688; their count is at28674.
+and PC loops at33010. Trace records begin at28688; their count is at28674.
 Each command writes three five-byte records: stage/ST0/ST1/ST2/C,
 stage/H/R/N/following-MSR, then stage/count-low/count-high/destination-low/high.
 Setup Sense Interrupt records use the existing qualification layout.
