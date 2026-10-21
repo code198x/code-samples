@@ -169,6 +169,20 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  glyph-transform-records:
+    name: Glyph transform records and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Replay all four native glyph-transform records
+        run: python scripts/check-glyph-transform.py
+      - name: Check algebra and adversarial evidence controls
+        run: python -m unittest discover -s scripts -p test_glyph_transform.py -v
+
   scaled-text-records:
     name: Scaled bitmap text records and failure controls
     runs-on: ubuntu-latest

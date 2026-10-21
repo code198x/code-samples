@@ -1,0 +1,9 @@
+# Glyph flips and quarter-turn rotation
+
+1. Merge reviewed samples #152 at b3b5eb21, then rerun website #910's failed browser workflow. Inspect every applicable check and merge unchanged 9a9cab8 only after success. Verify merged state and live pages/assets.
+2. Add independent 8x8 glyph transform components for 6502, Z80 and 6809 under cross-platform/patterns/rendering/glyph-transform/. Transform one glyph into caller-owned storage: four clockwise quarter-turns, optional horizontal reflection after rotation, explicit bounds and scratch ownership. Snapshot eight input bytes before output so overlapping source/destination is supported. Reuse existing bitmap renderers/backends in Spectrum, BBC MODE 4, Dragon PMODE 4 and CPC MODE 1 callers.
+3. Verify actual native execution against an independent coordinate oracle, all eight transforms, asymmetric glyphs, overlap, invalid inputs, unchanged guards, inverse/identity properties, and a deliberately wrong coordinate mapping with repaired path. Retain captures and tool/source hashes. Compare native/publishing/reference assembler outputs.
+4. Extend existing bitmap-text articles with include/init/call, customisation, geometry, costs, wrong/fixed examples and qualified captures. Link Maths for Games without claiming planned lessons exist. Build, focused desktop/phone browser checks and existing content checks must pass.
+5. Update issue #126 and the coverage matrix accurately. Open source and website review PRs, push verified commits and attach links. Preserve unrelated work. Stop owned processes and remove verified temporary worktrees/tool caches after recording remote retention and evidence.
+
+Scope: transform glyph pixels, not the layout of a whole string; integer enlargement remains a separate renderer choice. No arbitrary angles, fractional resizing, universal cycle claims, dependencies or shared layout changes.
