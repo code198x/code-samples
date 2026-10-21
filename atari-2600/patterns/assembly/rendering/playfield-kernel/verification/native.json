@@ -1,4 +1,5 @@
 {
+  "predicted_symptom_match": true,
   "completed": true,
   "system": "atari-2600",
   "variant": "normal",

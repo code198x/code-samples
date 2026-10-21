@@ -101,3 +101,7 @@ Hardware source: Steve Wright, Atari, *Stella Programmer's Guide* (1979),
 pp. 2–3 (field timing), 10–11 (playfield), 39 (serial output bit-order diagram).
 See the [family comparison](../../../../../cross-platform/patterns/rendering/tia-maria/README.md)
 for reproduction and the contrasting MARIA contract.
+
+The separate `mistakes/` fragments show deliberately broken cases and tested
+fixes. They are excluded from the normal caller. The shared guide explains
+how to reproduce them; the website shows verified native captures and diagnosis.

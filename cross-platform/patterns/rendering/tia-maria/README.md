@@ -44,3 +44,29 @@ accuracy, every palette/video mode, live list publication or a maximum-load
 benchmark. The maths follows directly from packing, grid division, mirroring,
 zone offsets and finite work per raster; later high-level patterns can compose
 these components without erasing those differences.
+
+## Learn from a broken version
+
+The `mistakes/` folders contain deliberately wrong fragments and their fixes,
+indexed by `mistakes.json`. They are diagnostic material, not replacements for
+the reusable includes. The fresh verifier substitutes the exact fragments into
+a temporary caller, reaches its completion markers and checks a separately
+predicted full frame before accepting the intended failure. It also executes
+all six corrected fragments and requires the known-good output and timing.
+
+The 2600 cases reverse PF0 masks, delay the visible writes and add one overscan
+line. The last still looks normal: the 263-line field is exposed by the native
+clock measurement. The delayed writes affect PF0 and PF1 at band transitions
+in the left half; the repeated right half is ready in time.
+
+The 7800 cases fetch too few bytes, discard the requested position and damage
+the terminator. The terminator fixture plants a known third header and a second
+valid terminator; it never relies on an uncontrolled RAM walk. An additional
+retained too-wide control fetches an extra zero byte and changes the list even
+though this picture stays identical. A clean-looking still is not proof of a
+correct header or workload.
+
+Sixteen native observations are retained: three normal/reflected examples,
+seven broken controls and six repaired examples. Public gallery captures show
+six selected faults with symptoms, causes and fixes. Full-frame PNGs are
+unaltered; the normal working binaries and routine interfaces are unchanged.

@@ -37,8 +37,17 @@ def validate(root: Path = ROOT) -> int:
         variants = (
             ["native", "reflection", "wrong-bit", "wrong-period", "late-registers"]
             if system == "atari-2600"
-            else ["native", "wrong-width", "wrong-position"]
+            else [
+                "native",
+                "wrong-width",
+                "wrong-position",
+                "short-width",
+                "bad-terminator",
+            ]
         )
+        variants += [
+            c["variant"] + "-fixed" for c in V.MISTAKES if c["system"] == system
+        ]
         V.require(len(records) == len(variants), "Missing execution variants")
         for record, variant in zip(records, variants, strict=True):
             out = folder / "verification"
@@ -57,7 +66,18 @@ def validate(root: Path = ROOT) -> int:
             size, pixels = V.T.raster(frame)
             _, want_size, want_pixels = V.expected(system, variant == "reflection")
             V.require(size == want_size, "Capture geometry")
-            good = variant in ["native", "reflection"]
+            V.require(
+                record["variant"] == ("normal" if variant == "native" else variant),
+                "Variant identity",
+            )
+            good = variant in ["native", "reflection"] or variant.endswith("-fixed")
+            _, _, symptom_pixels = V.expected(
+                system, variant == "reflection", "" if good else variant
+            )
+            V.require(
+                record["predicted_symptom_match"] and pixels == symptom_pixels,
+                "Predicted diagnostic symptom",
+            )
             memory_ok = record["memory"] == record["expected_memory"]
             if system == "atari-2600":
                 want_memory = V.expected(system)[0]
@@ -84,7 +104,7 @@ def validate(root: Path = ROOT) -> int:
                         V.T.T.sha(folder / filename) == digest, "Native source binding"
                     )
             count += 1
-    V.require(count == 8, "No/partial records checked")
+    V.require(count == 16, "No/partial records checked")
     return count
 
 
