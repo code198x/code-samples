@@ -12,6 +12,12 @@ SPEC = importlib.util.spec_from_file_location(
 assert SPEC and SPEC.loader
 V = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(V)
+CUSTOM_SPEC = importlib.util.spec_from_file_location(
+    "custom", Path(__file__).with_name("verify-tia-maria-customise.py")
+)
+assert CUSTOM_SPEC and CUSTOM_SPEC.loader
+C = importlib.util.module_from_spec(CUSTOM_SPEC)
+CUSTOM_SPEC.loader.exec_module(C)
 ROOT = Path(__file__).resolve().parents[1]
 SHARED = Path("cross-platform/patterns/rendering/tia-maria/verification")
 
@@ -104,7 +110,34 @@ def validate(root: Path = ROOT) -> int:
                         V.T.T.sha(folder / filename) == digest, "Native source binding"
                     )
             count += 1
-    V.require(count == 16, "No/partial records checked")
+    for case, (machine, name, _) in C.CASES.items():
+        folder = root / machine / "patterns/assembly/rendering" / name / "customise"
+        record = json.loads((folder / "verification" / (case + ".json")).read_text())
+        V.require(
+            record["completed"]
+            and record["case"] == case
+            and record["system"] == machine,
+            "Custom caller identity/completion",
+        )
+        for source, digest in record["sources"].items():
+            V.require(V.T.T.sha(root / source) == digest, "Custom source binding")
+        frame = folder / "verification" / (case + ".png")
+        V.require(V.T.T.sha(frame) == record["frame_sha256"], "Custom image binding")
+        memory, size, pixels = C.expected(case)
+        V.require(
+            V.T.raster(frame) == (size, pixels), "Custom independent pixels/palette"
+        )
+        if case == "ships":
+            m = record["memory"]
+            g = m[0] + 256 * m[2]
+            memory = [g & 255, 29, g >> 8, 24, g & 255, 61, g >> 8, 100, 0, 0]
+        V.require(record["memory"] == memory, "Custom independent buffer/header")
+        V.require(
+            record["period_colour_clocks"] == (None if case == "ships" else 59736),
+            "Custom field timing",
+        )
+        count += 1
+    V.require(count == 19, "No/partial records checked")
     return count
 
 

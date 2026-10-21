@@ -70,3 +70,19 @@ Sixteen native observations are retained: three normal/reflected examples,
 seven broken controls and six repaired examples. Public gallery captures show
 six selected faults with symptoms, causes and fixes. Full-frame PNGs are
 unaltered; the normal working binaries and routine interfaces are unchanged.
+
+## Make it your own
+
+Both components have separate `customise/` callers and Makefiles. The TIA
+example adds maze walls, an original arrow, foreground colour and repeated /
+reflected views through the same kernel. The MARIA example changes the original
+shape, byte width, placements and palette selection while retaining the same
+static DMA ownership. The normal libraries/callers remain unchanged.
+
+Fresh customisation verification:
+`python3 scripts/verify-tia-maria-customise.py --tools /path/to/tools --output /path/to/output`.
+Three additional native observations bind source, destination and full frame;
+the TIA period remains 59736 colour clocks. The retained gate now checks nineteen
+observations in total, and corruption tests include the new source and images.
+Per-caller READMEs explain exact changes, work/storage costs and extensions that
+need new verification. These variations deepen the same two entries.
