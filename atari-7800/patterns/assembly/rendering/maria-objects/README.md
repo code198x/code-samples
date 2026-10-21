@@ -117,3 +117,7 @@ loading, every MARIA mode or a saturation benchmark.
 Primary: Atari, [*7800 Software Guide*](https://atarihq.com/danb/files/7800%20Software%20Guide.pdf),
 “Display List”, “Display List List”, “DMA Modes”, “Starting up the 7800” and
 Appendix 3 “MARIA Timing”. Reproduce with the [shared verification guide](../../../../../cross-platform/patterns/rendering/tia-maria/README.md).
+
+The separate `mistakes/` fragments show deliberately broken cases and tested
+fixes. They are excluded from the normal caller. The shared guide explains
+how to reproduce them; the website shows verified native captures and diagnosis.

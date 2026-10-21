@@ -28,8 +28,19 @@ CONFIG = {
 }
 
 
+MISTAKES = json.loads(
+    (ROOT / "cross-platform/patterns/rendering/tia-maria/mistakes.json").read_text()
+)
+
+
+def fragment(case: dict, fixed: bool = False, root: Path = ROOT) -> str:
+    text = (root / case["fragment"]).read_text()
+    marker = "FIX" if fixed else "WRONG"
+    return text.split("; BEGIN " + marker + "\n", 1)[1].split("\n; END " + marker, 1)[0]
+
+
 def expected(
-    system: str, reflected: bool = False
+    system: str, reflected: bool = False, symptom: str = ""
 ) -> tuple[list[int], tuple[int, int], bytes]:
     if system == "atari-2600":
         cells = [[0] * 20 for _ in range(24)]
@@ -71,7 +82,12 @@ def expected(
                 return False
             cx = x // 4
             cx = (39 - cx if reflected else cx - 20) if cx >= 20 else cx
-            return bool(cells[(y - 14) // 8][cx])
+            row = (y - 14) // 8
+            if symptom == "wrong-bit" and cx < 4:
+                cx = 3 - cx
+            if symptom == "late-registers" and x < 48 and (y - 14) % 8 == 0:
+                return row > 0 and bool(cells[row - 1][cx])
+            return bool(cells[row][cx])
     else:
         # Caller: two two-byte 160A objects, palette 0, at x32 and x152.
         memory = []  # header high byte depends on linked ROM placement
@@ -81,9 +97,21 @@ def expected(
         def on(x: int, y: int) -> bool:
             if not 50 <= y < 66:
                 return False
-            for origin in (32, 152):
+            origins = (
+                (0, 0)
+                if symptom == "wrong-position"
+                else (32, 152, 96)
+                if symptom == "bad-terminator"
+                else (32, 152)
+            )
+            for origin in origins:
                 local = (x - 27) // 2 - origin
-                if 1 <= local <= 5 and x >= 27 and rows[y - 50] & (1 << (5 - local)):
+                limit = 3 if symptom == "short-width" else 5
+                if (
+                    1 <= local <= limit
+                    and x >= 27
+                    and rows[y - 50] & (1 << (5 - local))
+                ):
                     return True
             return False
 
@@ -104,35 +132,37 @@ def verify(system: str, tools: Path, out: Path, mutation: str = "") -> dict:
         for path in folder.iterdir():
             if path.is_file():
                 (stage / path.name).write_bytes(path.read_bytes())
-        if mutation:
-            file, old, new = {
-                "wrong-bit": (
-                    "playfield.inc",
-                    "!byte $10,$20,$40,$80,",
-                    "!byte $80,$40,$20,$10,",
-                ),
-                "late-registers": (
-                    "kernel.inc",
-                    "    lda PF_BUFFER,y",
-                    "    !fill 12,$ea\n    lda PF_BUFFER,y",
-                ),
-                "wrong-period": ("demo.asm", "ldx #29", "ldx #30"),
-                "wrong-width": ("objects.inc", "lda #32\n    sec", "lda #31\n    sec"),
-                "wrong-position": (
-                    "objects.inc",
-                    "lda ML+6\n    sta (ML),y",
-                    "lda #0\n    sta (ML),y",
-                ),
-                "reflection": ("demo.asm", "sta $0a", "sta $0a"),
-            }[mutation]
-            path = stage / file
+        repaired = mutation.endswith("-fixed")
+        fault = mutation.removesuffix("-fixed")
+        case = next(
+            (c for c in MISTAKES if c["system"] == system and c["variant"] == fault),
+            None,
+        )
+        if case:
+            path = stage / case["target"]
             text = path.read_text()
-            if mutation == "reflection":
-                text = text.replace("    sta $0a", "    lda #1\n    sta $0a")
+            wrong, fix = fragment(case), fragment(case, True)
+            chosen = fix if repaired else wrong
+            if fault == "bad-terminator":
+                anchor = "    lda #>DLL"
+                require(text.count(anchor) == 1, "Terminator fixture anchor")
+                text = text.replace(anchor, chosen + "\n" + anchor)
             else:
-                require(text.count(old) == 1, "Mutation anchor must be unique")
-                text = text.replace(old, new)
+                require(text.count(fix) == 1, "Diagnostic replacement must match once")
+                text = text.replace(fix, chosen)
             path.write_text(text)
+        elif mutation == "wrong-width":
+            path = stage / "objects.inc"
+            text = path.read_text()
+            require(text.count("lda #32\n    sec") == 1, "Width anchor")
+            path.write_text(text.replace("lda #32\n    sec", "lda #31\n    sec"))
+        elif mutation == "reflection":
+            path = stage / "demo.asm"
+            path.write_text(
+                path.read_text().replace("    sta $0a", "    lda #1\n    sta $0a")
+            )
+        else:
+            require(not mutation, "Unknown diagnostic variant")
         subprocess.run(
             ["make", f"ASM198X={tools / 'asm198x'}"],
             cwd=stage,
@@ -193,7 +223,23 @@ def verify(system: str, tools: Path, out: Path, mutation: str = "") -> dict:
             machine.call("save_screenshot", path=str(capture))
             actual_size, actual_pixels = T.raster(capture)
             require(actual_size == size, f"Native geometry {actual_size}")
+            _, _, symptom_pixels = expected(
+                system, mutation == "reflection", fault if not repaired else ""
+            )
+            require(
+                actual_pixels == symptom_pixels,
+                "Capture does not show the independently predicted symptom",
+            )
+            if fault == "bad-terminator" and not repaired:
+                tail = machine.call("memory_read", addr=syms["LIST"] + 8, len=6)[
+                    "bytes"
+                ]
+                require(
+                    tail == [0, 30, syms["graphics"] >> 8, 96, 0, 0],
+                    "Bounded stray header and safety terminator",
+                )
             observation = {
+                "predicted_symptom_match": True,
                 "completed": True,
                 "system": system,
                 "variant": mutation or "normal",
@@ -261,11 +307,16 @@ def main() -> None:
         for mutation in (
             ["wrong-bit", "wrong-period", "late-registers"]
             if system == "atari-2600"
-            else ["wrong-width", "wrong-position"]
+            else ["wrong-width", "wrong-position", "short-width", "bad-terminator"]
         ):
             try:
                 verify(system, args.tools, out, mutation)
             except AssertionError as error:
+                observation = json.loads((out / (mutation + ".json")).read_text())
+                require(
+                    observation["completed"] and observation["predicted_symptom_match"],
+                    "Fault did not reach its predicted symptom",
+                )
                 records.append(
                     {
                         "system": system,
@@ -275,6 +326,8 @@ def main() -> None:
                 )
             else:
                 raise AssertionError(f"Faulty control {mutation} passed")
+        for case in [c for c in MISTAKES if c["system"] == system]:
+            records.append(verify(system, args.tools, out, case["variant"] + "-fixed"))
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "results.json").write_text(json.dumps(records, indent=2) + "\n")
     print(json.dumps(records, indent=2))

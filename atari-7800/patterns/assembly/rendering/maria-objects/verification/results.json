@@ -1,5 +1,6 @@
 [
   {
+    "predicted_symptom_match": true,
     "completed": true,
     "system": "atari-7800",
     "variant": "normal",
@@ -40,6 +41,7 @@
     }
   },
   {
+    "predicted_symptom_match": true,
     "completed": true,
     "system": "atari-7800",
     "variant": "wrong-width",
@@ -80,6 +82,7 @@
     }
   },
   {
+    "predicted_symptom_match": true,
     "completed": true,
     "system": "atari-7800",
     "variant": "wrong-position",
@@ -117,6 +120,211 @@
     "staged_source_sha256": {
       "demo.asm": "60701463581426854246b2ced6818dc6c40a66d69bcaae48b703b7c13656827c",
       "objects.inc": "9d57364b740a9e0f397ba942b7904115886485417c6099f814be8222b8455817"
+    }
+  },
+  {
+    "predicted_symptom_match": true,
+    "completed": true,
+    "system": "atari-7800",
+    "variant": "short-width",
+    "memory": [
+      0,
+      31,
+      66,
+      32,
+      0,
+      31,
+      66,
+      152,
+      0,
+      0
+    ],
+    "expected_memory": [
+      0,
+      30,
+      66,
+      32,
+      0,
+      30,
+      66,
+      152,
+      0,
+      0
+    ],
+    "frame_sha256": "387b4226ec2b02f23424b50ecc13d9dab7c6605555faf43fd966d424eab74e16",
+    "period_colour_clocks": null,
+    "frame_dimensions": [
+      374,
+      240
+    ],
+    "cart_sha256": "3d400b058e3aab3afff5f727ea436ca407844388992811c123d7938723246f74",
+    "staged_source_sha256": {
+      "demo.asm": "60701463581426854246b2ced6818dc6c40a66d69bcaae48b703b7c13656827c",
+      "objects.inc": "9f7a128d099af71d9f0b391e13447ac8eacc3a0aa2d846fb4638a6f422e55030"
+    }
+  },
+  {
+    "predicted_symptom_match": true,
+    "completed": true,
+    "system": "atari-7800",
+    "variant": "bad-terminator",
+    "memory": [
+      0,
+      30,
+      67,
+      32,
+      0,
+      30,
+      67,
+      152,
+      0,
+      30
+    ],
+    "expected_memory": [
+      0,
+      30,
+      67,
+      32,
+      0,
+      30,
+      67,
+      152,
+      0,
+      0
+    ],
+    "frame_sha256": "cd727494119bc3e98ff85fc0147e1a7b95e40efa2cffb926611f7c6a802ab81d",
+    "period_colour_clocks": null,
+    "frame_dimensions": [
+      374,
+      240
+    ],
+    "cart_sha256": "8f368909ada3ce3147811d9e4a0a1e0ae45982cb0b3513f40396f4dc81315268",
+    "staged_source_sha256": {
+      "demo.asm": "54e088712976a998c91716336b7d79f3f7a8c0846cf6787931412b45e9365152",
+      "objects.inc": "fc332b8bccff1749ed61f00a2a946ce073c27e84787e6bd5f27b0530f03ccd2c"
+    }
+  },
+  {
+    "predicted_symptom_match": true,
+    "completed": true,
+    "system": "atari-7800",
+    "variant": "short-width-fixed",
+    "memory": [
+      0,
+      30,
+      66,
+      32,
+      0,
+      30,
+      66,
+      152,
+      0,
+      0
+    ],
+    "expected_memory": [
+      0,
+      30,
+      66,
+      32,
+      0,
+      30,
+      66,
+      152,
+      0,
+      0
+    ],
+    "frame_sha256": "1b15dcdf05c5da13597a32d44f96499bc40cd2a89b7dfc2a86ec80bb7d274eb4",
+    "period_colour_clocks": null,
+    "frame_dimensions": [
+      374,
+      240
+    ],
+    "cart_sha256": "9ba7aca95be10a49c47b02ac0f0deea0a0610be21161fcfe0c15b3354c913d65",
+    "staged_source_sha256": {
+      "demo.asm": "60701463581426854246b2ced6818dc6c40a66d69bcaae48b703b7c13656827c",
+      "objects.inc": "fc332b8bccff1749ed61f00a2a946ce073c27e84787e6bd5f27b0530f03ccd2c"
+    }
+  },
+  {
+    "predicted_symptom_match": true,
+    "completed": true,
+    "system": "atari-7800",
+    "variant": "wrong-position-fixed",
+    "memory": [
+      0,
+      30,
+      66,
+      32,
+      0,
+      30,
+      66,
+      152,
+      0,
+      0
+    ],
+    "expected_memory": [
+      0,
+      30,
+      66,
+      32,
+      0,
+      30,
+      66,
+      152,
+      0,
+      0
+    ],
+    "frame_sha256": "1b15dcdf05c5da13597a32d44f96499bc40cd2a89b7dfc2a86ec80bb7d274eb4",
+    "period_colour_clocks": null,
+    "frame_dimensions": [
+      374,
+      240
+    ],
+    "cart_sha256": "9ba7aca95be10a49c47b02ac0f0deea0a0610be21161fcfe0c15b3354c913d65",
+    "staged_source_sha256": {
+      "demo.asm": "60701463581426854246b2ced6818dc6c40a66d69bcaae48b703b7c13656827c",
+      "objects.inc": "fc332b8bccff1749ed61f00a2a946ce073c27e84787e6bd5f27b0530f03ccd2c"
+    }
+  },
+  {
+    "predicted_symptom_match": true,
+    "completed": true,
+    "system": "atari-7800",
+    "variant": "bad-terminator-fixed",
+    "memory": [
+      0,
+      30,
+      67,
+      32,
+      0,
+      30,
+      67,
+      152,
+      0,
+      0
+    ],
+    "expected_memory": [
+      0,
+      30,
+      67,
+      32,
+      0,
+      30,
+      67,
+      152,
+      0,
+      0
+    ],
+    "frame_sha256": "1b15dcdf05c5da13597a32d44f96499bc40cd2a89b7dfc2a86ec80bb7d274eb4",
+    "period_colour_clocks": null,
+    "frame_dimensions": [
+      374,
+      240
+    ],
+    "cart_sha256": "9531c8f940941b379008213cb254ab60a2a17e3c903e02228dd6653e241444ce",
+    "staged_source_sha256": {
+      "demo.asm": "38e41f4292e616a5b23e6f76c5bec4493ca2f5c342ad19139a9e1c10ffbd0ef7",
+      "objects.inc": "fc332b8bccff1749ed61f00a2a946ce073c27e84787e6bd5f27b0530f03ccd2c"
     }
   }
 ]

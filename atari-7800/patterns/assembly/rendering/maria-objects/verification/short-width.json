@@ -1,0 +1,41 @@
+{
+  "predicted_symptom_match": true,
+  "completed": true,
+  "system": "atari-7800",
+  "variant": "short-width",
+  "memory": [
+    0,
+    31,
+    66,
+    32,
+    0,
+    31,
+    66,
+    152,
+    0,
+    0
+  ],
+  "expected_memory": [
+    0,
+    30,
+    66,
+    32,
+    0,
+    30,
+    66,
+    152,
+    0,
+    0
+  ],
+  "frame_sha256": "387b4226ec2b02f23424b50ecc13d9dab7c6605555faf43fd966d424eab74e16",
+  "period_colour_clocks": null,
+  "frame_dimensions": [
+    374,
+    240
+  ],
+  "cart_sha256": "3d400b058e3aab3afff5f727ea436ca407844388992811c123d7938723246f74",
+  "staged_source_sha256": {
+    "demo.asm": "60701463581426854246b2ced6818dc6c40a66d69bcaae48b703b7c13656827c",
+    "objects.inc": "9f7a128d099af71d9f0b391e13447ac8eacc3a0aa2d846fb4638a6f422e55030"
+  }
+}

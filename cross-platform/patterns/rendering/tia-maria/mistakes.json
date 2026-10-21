@@ -1,0 +1,38 @@
+[
+  {
+    "system": "atari-2600",
+    "variant": "wrong-bit",
+    "target": "playfield.inc",
+    "fragment": "atari-2600/patterns/assembly/rendering/playfield-kernel/mistakes/wrong-bit.inc"
+  },
+  {
+    "system": "atari-2600",
+    "variant": "late-registers",
+    "target": "kernel.inc",
+    "fragment": "atari-2600/patterns/assembly/rendering/playfield-kernel/mistakes/late-registers.inc"
+  },
+  {
+    "system": "atari-2600",
+    "variant": "wrong-period",
+    "target": "demo.asm",
+    "fragment": "atari-2600/patterns/assembly/rendering/playfield-kernel/mistakes/wrong-period.inc"
+  },
+  {
+    "system": "atari-7800",
+    "variant": "short-width",
+    "target": "objects.inc",
+    "fragment": "atari-7800/patterns/assembly/rendering/maria-objects/mistakes/short-width.inc"
+  },
+  {
+    "system": "atari-7800",
+    "variant": "wrong-position",
+    "target": "objects.inc",
+    "fragment": "atari-7800/patterns/assembly/rendering/maria-objects/mistakes/wrong-position.inc"
+  },
+  {
+    "system": "atari-7800",
+    "variant": "bad-terminator",
+    "target": "demo.asm",
+    "fragment": "atari-7800/patterns/assembly/rendering/maria-objects/mistakes/bad-terminator.inc"
+  }
+]
