@@ -22,14 +22,14 @@ contexts, initialise the font/pen fields in T, and use `prepare.inc` as a direct
 call. Define `TEXT_WIDTH`, `TEXT_HEIGHT`, `TEXT_PEN_MAX` and `TEXT_PACKED` as in the
 existing bitmap-text caller. Preserve the machine's backend helper/table too.
 
-Reserve **64 bytes at L**, **96 at T** and **48 at BP**, separately from the
+Reserve **64 bytes at TL**, **96 at T** and **48 at BP**, separately from the
 bitmap, source, font, code and stack. Only BP must be zero page on 6502. Layout
 uses BP+46/47 briefly for indirect reads; it holds no live pointer there across a
 renderer call. The unchanged text include defines the `t_*` aliases before the
 layout include. The two components share T+95's comparison scratch deliberately.
 Scratch needs no initialisation; public inputs do.
 
-| L offset | Meaning |
+| TL offset | Meaning |
 | --- | --- |
 | 0, 2 | Unsigned words: rectangle left, top |
 | 4, 6 | Unsigned words: rectangle width, height |
@@ -52,9 +52,9 @@ Words/counters use native order: little-endian on 6502/Z80, big-endian on 6809.
 Inputs 0..12 survive. T and BP are owned, clobbered workspaces: do not expect the
 renderer inputs or last-call outputs to survive layout. Reinitialise T's font,
 range, fallback, mode and pens before changing those choices. Layout supplies T's
-source, count, position and scissor from L; it does not preserve a former scissor.
+source, count, position and scissor from TL; it does not preserve a former scissor.
 
-Call `layout_measure` to return `8*length` at L+18 and accepted=1. It reads no
+Call `layout_measure` to return `8*length` at TL+18 and accepted=1. It reads no
 string/font, ignores the rectangle and clears the other outputs. Even 255 codes
 measure correctly as 2,040 pixels. It measures a single counted line: a line-feed
 byte is a glyph slot for this entry point, just as it is for `layout_line`.

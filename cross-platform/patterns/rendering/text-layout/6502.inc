@@ -1,40 +1,40 @@
 ; SPDX-License-Identifier: MIT
 ; Bounded counted 8x8 text layout over the unchanged bitmap-text component.
-; Include bitmap-text once; reserve L=64, T=96 and BP=48 separate bytes.
-; L inputs 0..12 survive. T/BP are owned workspaces. See README.md.
-l_left = L+0
-l_top = L+2
-l_width = L+4
-l_height = L+6
-l_align = L+8
-l_pitch = L+9
-l_source = L+10
-l_length = L+12
-l_status = L+13
-l_consumed = L+14
-l_lines = L+15
-l_last_count = L+16
-l_measured = L+18
-l_first_x = L+20
-l_last_x = L+22
-l_last_y = L+24
-l_calls = L+26
-l_writes = L+28
-l_mode = L+32
-l_pass = L+33
-l_i = L+34
-l_start = L+35
-l_count = L+36
-l_columns = L+37
-l_temp = L+38
-l_right = L+40
-l_bottom = L+42
-l_y = L+44
-l_x = L+46
-l_pointer = L+48
-l_code = L+50
-l_line_width = L+52
-l_work = L+54
+; Include bitmap-text once; reserve TL=64, T=96 and BP=48 separate bytes.
+; TL inputs 0..12 survive. T/BP are owned workspaces. See README.md.
+l_left = TL+0
+l_top = TL+2
+l_width = TL+4
+l_height = TL+6
+l_align = TL+8
+l_pitch = TL+9
+l_source = TL+10
+l_length = TL+12
+l_status = TL+13
+l_consumed = TL+14
+l_lines = TL+15
+l_last_count = TL+16
+l_measured = TL+18
+l_first_x = TL+20
+l_last_x = TL+22
+l_last_y = TL+24
+l_calls = TL+26
+l_writes = TL+28
+l_mode = TL+32
+l_pass = TL+33
+l_i = TL+34
+l_start = TL+35
+l_count = TL+36
+l_columns = TL+37
+l_temp = TL+38
+l_right = TL+40
+l_bottom = TL+42
+l_y = TL+44
+l_x = TL+46
+l_pointer = TL+48
+l_code = TL+50
+l_line_width = TL+52
+l_work = TL+54
 layout_measure:
     jsr layout_reset
     lda #$00

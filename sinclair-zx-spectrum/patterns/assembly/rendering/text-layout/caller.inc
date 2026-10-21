@@ -1,4 +1,4 @@
-L equ 29312
+TL equ 29312
 ; SPDX-License-Identifier: MIT
 ; Original reset caller. No manufacturer firmware is distributed.
 T equ $7200
