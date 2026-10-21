@@ -1,0 +1,14 @@
+[
+  {
+    "system": "atari-2600",
+    "rejected_calls": 6,
+    "positive_contracts": 4,
+    "whole_allocation_unchanged": true
+  },
+  {
+    "system": "atari-7800",
+    "rejected_calls": 7,
+    "positive_contracts": 2,
+    "whole_allocation_unchanged": true
+  }
+]
