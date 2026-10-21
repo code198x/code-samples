@@ -1,2 +1,4 @@
 # Native memory observations are zlib-compressed binary data.
 *.dat.z binary
+# Retained character-span readbacks contain arbitrary byte values, not text.
+**/rendering/fixed-characters/verification/*.bin binary
