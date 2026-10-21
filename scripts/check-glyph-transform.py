@@ -6,6 +6,7 @@ import importlib.util
 import json
 import zlib
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
@@ -17,7 +18,7 @@ spec.loader.exec_module(V)
 require = V.require
 
 
-def check(c, folder=None):
+def check(c: dict[str, Any], folder: Path | None = None) -> int:
     folder = (
         folder
         or ROOT
@@ -44,7 +45,7 @@ def check(c, folder=None):
     used = set()
     total = 0
 
-    def frame(rec, rows):
+    def frame(rec: dict[str, Any], rows: bytes) -> None:
         used.update([rec["memory"], rec["capture"]])
         grid = V.grid_for(c, rows)
         require(
@@ -158,7 +159,7 @@ def check(c, folder=None):
     return total
 
 
-def main():
+def main() -> None:
     total = 0
     for c in json.loads((V.S / "systems.json").read_text()):
         n = check(c)

@@ -8,7 +8,9 @@ import shutil
 import tempfile
 import unittest
 import zlib
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
@@ -21,14 +23,14 @@ M = C.V.M
 
 
 class Algebra(unittest.TestCase):
-    def test_known_corner(self):
+    def test_known_corner(self) -> None:
         rows = bytes([128] + [0] * 7)
         self.assertEqual(M.transform(rows, 1), bytes([1] + [0] * 7))
         self.assertEqual(M.transform(rows, 2), bytes([0] * 7 + [1]))
         self.assertEqual(M.transform(rows, 3), bytes([0] * 7 + [128]))
         self.assertEqual(M.transform(rows, 4), bytes([1] + [0] * 7))
 
-    def test_inverse_and_population(self):
+    def test_inverse_and_population(self) -> None:
         for row in [bytes([231, 129, 160, 8, 4, 3, 64, 255])] + [
             bytes((128 >> (bit % 8)) if y == bit // 8 else 0 for y in range(8))
             for bit in range(64)
@@ -41,7 +43,7 @@ class Algebra(unittest.TestCase):
                 inverse = flags if flags & 4 else (-flags) & 3
                 self.assertEqual(M.transform(t, inverse), row)
 
-    def test_rejects_invalid(self):
+    def test_rejects_invalid(self) -> None:
         for rows, flags in [
             (bytes(7), 0),
             (bytes(9), 1),
@@ -54,13 +56,13 @@ class Algebra(unittest.TestCase):
 
 class Retained(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         cls.configs = json.loads((C.V.S / "systems.json").read_text())
 
-    def test_all_machine_records(self):
+    def test_all_machine_records(self) -> None:
         self.assertGreater(sum(C.check(c) for c in self.configs), 2000)
 
-    def corrupt(self, change):
+    def corrupt(self, change: Callable[[dict[str, Any], Path], Any]) -> None:
         c = self.configs[0]
         original = (
             ROOT
@@ -78,34 +80,34 @@ class Retained(unittest.TestCase):
             ):
                 C.check(c, folder)
 
-    def test_missing_case(self):
+    def test_missing_case(self) -> None:
         self.corrupt(lambda r, f: r["variants"]["positive"]["cases"].pop())
 
-    def test_wrong_guard(self):
+    def test_wrong_guard(self) -> None:
         self.corrupt(
             lambda r, f: r["variants"]["positive"]["cases"][0].update(guards=[])
         )
 
-    def test_incomplete_call(self):
+    def test_incomplete_call(self) -> None:
         self.corrupt(
             lambda r, f: r["variants"]["positive"]["cases"][0].update(mailbox="04ef")
         )
 
-    def test_wrong_output(self):
+    def test_wrong_output(self) -> None:
         self.corrupt(
             lambda r, f: r["variants"]["positive"]["cases"][0].update(
                 after=r["variants"]["positive"]["cases"][0]["before"]
             )
         )
 
-    def test_stale_source(self):
+    def test_stale_source(self) -> None:
         self.corrupt(lambda r, f: r["sources"].update({"bogus": "0" * 64}))
 
-    def test_missing_variant(self):
+    def test_missing_variant(self) -> None:
         self.corrupt(lambda r, f: r["variants"].pop("rotation-fixed"))
 
-    def test_rehashed_bad_raster(self):
-        def change(r, f):
+    def test_rehashed_bad_raster(self) -> None:
+        def change(r: dict[str, Any], f: Path) -> None:
             rec = r["variants"]["positive"]["startup"]
             p = f / rec["memory"]
             data = bytearray(zlib.decompress(p.read_bytes()))
@@ -115,8 +117,8 @@ class Retained(unittest.TestCase):
 
         self.corrupt(change)
 
-    def test_good_capture_cannot_prove_fault(self):
-        def change(r, f):
+    def test_good_capture_cannot_prove_fault(self) -> None:
+        def change(r: dict[str, Any], f: Path) -> None:
             good = r["variants"]["rotation-fixed"]["startup"]["capture"]
             bad = r["variants"]["rotation-fault"]["startup"]["capture"]
             shutil.copyfile(f / good, f / bad)

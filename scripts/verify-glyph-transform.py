@@ -7,12 +7,13 @@ import importlib.util
 import json
 import zlib
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 S = ROOT / "cross-platform/patterns/rendering/glyph-transform"
 
 
-def load(name, path):
+def load(name: str, path: Path) -> Any:
     spec = importlib.util.spec_from_file_location(name, path)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -27,7 +28,7 @@ B = load("glyph_build", S / "build.py")
 require = V.require
 
 
-def sources(c):
+def sources(c: dict[str, Any]) -> list[Path]:
     folder = ROOT / c["folder"] / "patterns/assembly/rendering/glyph-transform"
     return sorted(
         set(
@@ -50,7 +51,7 @@ def sources(c):
     )
 
 
-def input_bytes(c, src, dst, flags):
+def input_bytes(c: dict[str, Any], src: int, dst: int, flags: int) -> bytes:
     return (
         src.to_bytes(2, c["order"])
         + dst.to_bytes(2, c["order"])
@@ -59,7 +60,7 @@ def input_bytes(c, src, dst, flags):
     )
 
 
-def draw_request(c, syms):
+def draw_request(c: dict[str, Any], syms: dict[str, int]) -> dict[str, Any]:
     return BASE.normal(
         c,
         {
@@ -78,7 +79,7 @@ def draw_request(c, syms):
     )
 
 
-def grid_for(c, rows):
+def grid_for(c: dict[str, Any], rows: bytes) -> list[bytearray]:
     grid = [bytearray(c["width"]) for _ in range(c["height"])]
     for y in range(32):
         for x in range(32):
@@ -86,7 +87,9 @@ def grid_for(c, rows):
     return grid
 
 
-def observe_frame(machine, c, out, name, rows):
+def observe_frame(
+    machine: Any, c: dict[str, Any], out: Path, name: str, rows: bytes
+) -> dict[str, str]:
     grid = grid_for(c, rows)
     packed = V.read(machine, c["base"], c["length"])
     require(packed == BASE.M.P.packed(c, grid), name + ": destination bitmap differs")
@@ -96,7 +99,9 @@ def observe_frame(machine, c, out, name, rows):
     return {"memory": path.name, "capture": name + ".png"}
 
 
-def execute(c, args, variant, out):
+def execute(
+    c: dict[str, Any], args: argparse.Namespace, variant: str, out: Path
+) -> dict[str, Any]:
     _, image = B.build(c["machine_id"], args.assembler, variant)
     syms = V.T.symbols(image.with_name("selected.sym"))
     machine = V.T.Machine(
@@ -225,7 +230,7 @@ def execute(c, args, variant, out):
         machine.close()
 
 
-def main():
+def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--native", type=Path, required=True)
     p.add_argument("--assembler", required=True)
