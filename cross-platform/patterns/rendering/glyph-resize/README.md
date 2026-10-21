@@ -1,6 +1,6 @@
 # Shrink an 8×8 glyph without changing its storage format
 
-Fit a small icon into a 5×7 box or squash it to 8×4. `glyph_resize` resamples one MSB-left, top-row-first eight-byte glyph into caller-owned storage. The result is still an eight-byte 8×8 cell: useful pixels occupy the top-left width×height rectangle and the rest is zero. It does not pack variable-width rows or change your renderer's advance.
+Fit a small icon into a 5×7 box or squash it to 8×4. `glyph_resize` resamples one MSB-left, top-row-first eight-byte glyph into caller-owned storage. The result is still an eight-byte 8×8 cell: useful pixels occupy the top-left width×height rectangle and the rest is zero. It does not pack variable-width rows or change your renderer's advance. The whole source cell is sampled, including blank margins. Requested width/height describe the sampling rectangle, not a measured tight ink box.
 
 ## Include, initialise, call
 
