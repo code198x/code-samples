@@ -1,0 +1,31 @@
+{
+  "case": "ships",
+  "system": "atari-7800",
+  "completed": true,
+  "memory": [
+    0,
+    29,
+    67,
+    24,
+    0,
+    61,
+    67,
+    100,
+    0,
+    0
+  ],
+  "size": [
+    374,
+    240
+  ],
+  "frame_sha256": "799c5ce931d4077361d6fceea7b8c3b9a5acabe54cf813cccaf4ef5c1a3d5251",
+  "cart_sha256": "1d18158cb96d6a8493c078932d1f3be2a16f3046740af89cfdd8ca52f906e852",
+  "period_colour_clocks": null,
+  "startup_code_bytes": 126,
+  "sources": {
+    "atari-7800/patterns/assembly/rendering/maria-objects/customise/ships.asm": "ee664131a99cce578eb436e85177f2728ad22ee079fffa79b83dca8916840371",
+    "atari-7800/patterns/assembly/rendering/maria-objects/customise/ship.inc": "b7ce48cb8745e0e361eca4dcd564dbfd8d5cca20ad487b77d9b1c706f8839d7e",
+    "atari-7800/patterns/assembly/rendering/maria-objects/customise/Makefile": "cddfea8df23f02df3d9548c882aabb69e9132fc9c73e9f0cba6823738bc0ead4",
+    "atari-7800/patterns/assembly/rendering/maria-objects/objects.inc": "fc332b8bccff1749ed61f00a2a946ce073c27e84787e6bd5f27b0530f03ccd2c"
+  }
+}

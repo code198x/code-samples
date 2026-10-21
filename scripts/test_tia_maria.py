@@ -18,7 +18,7 @@ SPEC.loader.exec_module(C)
 
 class RetainedEvidence(unittest.TestCase):
     def test_real_records(self) -> None:
-        self.assertEqual(C.validate(), 16)
+        self.assertEqual(C.validate(), 19)
 
     def test_each_bound_file_is_checked(self) -> None:
         import json
@@ -41,7 +41,7 @@ class RetainedEvidence(unittest.TestCase):
             shutil.copyfile(
                 C.ROOT / C.SHARED / "bindings.json", root / C.SHARED / "bindings.json"
             )
-            self.assertEqual(C.validate(root), 16)
+            self.assertEqual(C.validate(root), 19)
             for relative in bindings:
                 p = root / relative
                 original = p.read_bytes()
