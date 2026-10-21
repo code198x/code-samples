@@ -1,0 +1,63 @@
+{
+  "pixel_match": false,
+  "active_origin": [
+    32,
+    24
+  ],
+  "status": "passed",
+  "variant": "wrong-stride",
+  "server": {
+    "name": "emu198x-commodore-pet",
+    "version": "0.41.0"
+  },
+  "flags": [
+    129,
+    129,
+    129,
+    129,
+    128,
+    128,
+    128,
+    128,
+    128,
+    128,
+    128,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    239
+  ],
+  "spans": [
+    [
+      32768,
+      1024
+    ]
+  ],
+  "memory_sha256": "9069767529b67f0a85862c36a3941976a5a6e86bf6fac26710853130b01074d4",
+  "capture_sha256": "83619c33569659f4791a22185b3e6e9e9f30d47cfe4930efc4d78679587635ed",
+  "firmware_sha256": [
+    "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "5b426b5c50350e5d50c4308a81288bb34f310d7384bcc43c66a0e18716a4cdbe",
+    "5338b1dffebd695f6110c9995e16f7536bb63a909c2a0062b4789de46904ade9"
+  ],
+  "emulator_sha256": "2057d535c9363d08ab0c5ca554a4d09cd9338d9ef147dd842bdff2e27820d470",
+  "fixture_sha256": "5a4f68f4caae86533e47d8cd8de8edd51ea06103e28c11e45dbbb70fa428aa71",
+  "independent_memory_match": false
+}

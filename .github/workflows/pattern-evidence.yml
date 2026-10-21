@@ -55,6 +55,10 @@ jobs:
         run: |
           python scripts/check-sprite-lifecycle.py
           python -m unittest discover -s scripts -p test_sprite_lifecycle.py -v
+      - name: Check four fixed-character callers and corruption controls
+        run: |
+          python scripts/check-fixed-characters.py
+          python -m unittest discover -s scripts -p test_fixed_characters.py -v
       - name: Check guard failure modes
         run: python -m unittest discover -s scripts -p test_pattern_evidence.py -v
       - name: Verify clipping evidence bindings and failure modes

@@ -1,0 +1,69 @@
+{
+  "pixel_match": true,
+  "active_origin": [
+    32,
+    24
+  ],
+  "status": "passed",
+  "variant": "positive",
+  "server": {
+    "name": "emu198x-commodore-pet",
+    "version": "0.41.0"
+  },
+  "flags": [
+    129,
+    129,
+    129,
+    129,
+    128,
+    128,
+    128,
+    128,
+    128,
+    128,
+    128,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    239
+  ],
+  "spans": [
+    [
+      32768,
+      1024
+    ]
+  ],
+  "memory_sha256": "621fbf27c9b60d78feaec2a4896350a59309b666579b0627c4f15ac6555af409",
+  "capture_sha256": "9dddfeeecf98f60a2133bc5e2f06a5d77cd46bf7b548fc581f44c59fabb9eaab",
+  "firmware_sha256": [
+    "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "5b426b5c50350e5d50c4308a81288bb34f310d7384bcc43c66a0e18716a4cdbe",
+    "5338b1dffebd695f6110c9995e16f7536bb63a909c2a0062b4789de46904ade9"
+  ],
+  "emulator_sha256": "2057d535c9363d08ab0c5ca554a4d09cd9338d9ef147dd842bdff2e27820d470",
+  "fixture_sha256": "0ab97ae066534e8cebba5a3ea4462ca638bb48360ac88034ee966ea4db02ffa6",
+  "independent_memory_match": true,
+  "sources": {
+    "commodore-pet/patterns/assembly/rendering/fixed-characters/demo.asm": "0b48ed9c9593689c89dc00dbcf98b4b528be58067e5c37a36c087995b3e994c6",
+    "commodore-pet/patterns/assembly/rendering/fixed-characters/characters.inc": "03f65fbb2b0d1c4213c2466213528d24b7d190181de8815ed953697eb5f53cd0",
+    "scripts/verify-fixed-characters.py": "013181ce852bb87b11ae09469e8137387c02dc742b4e06e9285967b57a6132b4",
+    "cross-platform/patterns/rendering/fixed-characters/systems.json": "545365623a58a2d6a11f6f89afb027603af87feb2efbc6d9d6015666b96907bb"
+  }
+}
