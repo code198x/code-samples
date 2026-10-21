@@ -1,0 +1,139 @@
+[
+  {
+    "tool": "asm198x",
+    "tag": "asm198x-v0.0.71",
+    "url": "https://github.com/asm198x/asm198x/releases/download/asm198x-v0.0.71/asm198x-aarch64-apple-darwin.tar.xz",
+    "archive_sha256": "97435c1c1aaa349be4d6e1e354030306f7e909e00c14a6f21b2f6d634402978d",
+    "binary_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+  },
+  {
+    "tool": "emu198x-jupiter-ace",
+    "kind": "locked source build",
+    "repository": "https://github.com/emu198x/emu198x",
+    "commit": "7806827f35d4f49417f3cbfd537470f1a91f06b4",
+    "pull_request": 1912,
+    "binary_sha256": "d46d8ddfbe60e5badd0def192995d845caa62048e5848c759b62e28b3e4c39cb",
+    "cargo_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--release",
+      "-p",
+      "emu198x-jupiter-ace"
+    ],
+    "host": "aarch64-apple-darwin",
+    "rustc": "rustc 1.98.0 (88d9e12ae 2026-08-18)",
+    "baseline_release": {
+      "tool": "emu198x-jupiter-ace",
+      "tag": "v0.41.0",
+      "url": "https://github.com/emu198x/emu198x/releases/download/v0.41.0/emu198x-jupiter-ace-aarch64-apple-darwin.tar.gz",
+      "archive_sha256": "d8f26348b204b350b609d75d57e0bf0923481b3a746ad1d065742f7b1541bd6d",
+      "binary_sha256": "3bebd8536c1d3251b3d26708a1f2213a1275e139304a2942bdec2c75c974df3f",
+      "source_lock": {
+        "schema_version": 1,
+        "kind": "producer-source-lock",
+        "signed": false,
+        "source_commit": "8ea4a4b37f3686754244c29f12cf76f4e5559c7e",
+        "committed_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+        "before_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+        "after_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+        "package": "emu198x-jupiter-ace",
+        "version": "0.41.0",
+        "archive": "emu198x-jupiter-ace-aarch64-apple-darwin.tar.gz",
+        "target": "aarch64-apple-darwin",
+        "archive_sha256": "d8f26348b204b350b609d75d57e0bf0923481b3a746ad1d065742f7b1541bd6d",
+        "executable_sha256": "3bebd8536c1d3251b3d26708a1f2213a1275e139304a2942bdec2c75c974df3f",
+        "build": {
+          "job": "build-local-artifacts",
+          "run_id": "39451996009",
+          "run_attempt": "1"
+        },
+        "command": [
+          "dist",
+          "build",
+          "--tag=v0.41.0",
+          "--print=linkage",
+          "--output-format=json",
+          "--artifacts=local",
+          "--target=aarch64-apple-darwin"
+        ],
+        "compiled_dependency_graph": "unknown"
+      }
+    }
+  },
+  {
+    "tool": "emu198x-oric-atmos",
+    "tag": "v0.41.0",
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.41.0/emu198x-oric-atmos-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "184c864f64a12a8e40df47410ddef2d100819cbc05af9c7551aca12e5a4eb66d",
+    "binary_sha256": "93ee42e4b4910f85fd94dc130b788f1a0e4ed736b4e834a2fbdb81fd6af88b4a",
+    "source_lock": {
+      "schema_version": 1,
+      "kind": "producer-source-lock",
+      "signed": false,
+      "source_commit": "8ea4a4b37f3686754244c29f12cf76f4e5559c7e",
+      "committed_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+      "before_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+      "after_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+      "package": "emu198x-oric-atmos",
+      "version": "0.41.0",
+      "archive": "emu198x-oric-atmos-aarch64-apple-darwin.tar.gz",
+      "target": "aarch64-apple-darwin",
+      "archive_sha256": "184c864f64a12a8e40df47410ddef2d100819cbc05af9c7551aca12e5a4eb66d",
+      "executable_sha256": "93ee42e4b4910f85fd94dc130b788f1a0e4ed736b4e834a2fbdb81fd6af88b4a",
+      "build": {
+        "job": "build-local-artifacts",
+        "run_id": "39451996009",
+        "run_attempt": "1"
+      },
+      "command": [
+        "dist",
+        "build",
+        "--tag=v0.41.0",
+        "--print=linkage",
+        "--output-format=json",
+        "--artifacts=local",
+        "--target=aarch64-apple-darwin"
+      ],
+      "compiled_dependency_graph": "unknown"
+    }
+  },
+  {
+    "tool": "emu198x-atari-800xl",
+    "tag": "v0.41.0",
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.41.0/emu198x-atari-800xl-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "5d4d15306961a3f41c8fe7635b72f340972bb1d8fa3819209c860b601163d72a",
+    "binary_sha256": "32897a9c8770a50876d42b83c8eee2c788c2fc442581428baf0d0ac4b9de1a71",
+    "source_lock": {
+      "schema_version": 1,
+      "kind": "producer-source-lock",
+      "signed": false,
+      "source_commit": "8ea4a4b37f3686754244c29f12cf76f4e5559c7e",
+      "committed_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+      "before_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+      "after_lock_sha256": "9fd7e321e457330d7a56026aa545c369c6009052b96685e2acedb7fe3e9ea7f3",
+      "package": "emu198x-atari-800xl",
+      "version": "0.41.0",
+      "archive": "emu198x-atari-800xl-aarch64-apple-darwin.tar.gz",
+      "target": "aarch64-apple-darwin",
+      "archive_sha256": "5d4d15306961a3f41c8fe7635b72f340972bb1d8fa3819209c860b601163d72a",
+      "executable_sha256": "32897a9c8770a50876d42b83c8eee2c788c2fc442581428baf0d0ac4b9de1a71",
+      "build": {
+        "job": "build-local-artifacts",
+        "run_id": "39451996009",
+        "run_attempt": "1"
+      },
+      "command": [
+        "dist",
+        "build",
+        "--tag=v0.41.0",
+        "--print=linkage",
+        "--output-format=json",
+        "--artifacts=local",
+        "--target=aarch64-apple-darwin"
+      ],
+      "compiled_dependency_graph": "unknown"
+    }
+  }
+]

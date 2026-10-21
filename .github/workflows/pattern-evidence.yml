@@ -90,6 +90,10 @@ jobs:
         run: |
           python scripts/check-drawing-foundations.py
           python -m unittest discover -s scripts -p test_drawing_foundations.py -v
+      - name: Check Ace, Oric TEXT and Atari character RAM with corruption controls
+        run: |
+          python scripts/check-character-ram-ports.py
+          python -m unittest discover -s scripts -p test_character_ram_ports.py -v
       - name: Check four native character backends and corruption controls
         run: |
           python scripts/check-native-glyphs.py
