@@ -1,0 +1,26 @@
+{
+  "commodore-pet": {
+    "code_bytes": 86,
+    "context_bytes": 24,
+    "direct_stack_bytes": 2,
+    "writes_per_character": 1
+  },
+  "mattel-aquarius": {
+    "code_bytes": 103,
+    "context_bytes": 24,
+    "direct_stack_bytes": 2,
+    "writes_per_character": 2
+  },
+  "sinclair-zx80": {
+    "code_bytes": 164,
+    "context_bytes": 24,
+    "direct_stack_bytes": 4,
+    "writes_per_character": 1
+  },
+  "sinclair-zx81": {
+    "code_bytes": 164,
+    "context_bytes": 24,
+    "direct_stack_bytes": 4,
+    "writes_per_character": 1
+  }
+}

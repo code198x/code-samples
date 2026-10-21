@@ -42,3 +42,6 @@ __pycache__/
 
 # Retained bitmap memory readbacks are verification evidence, not ROM builds.
 !**/patterns/assembly/rendering/tile-region/verification/*.bin
+
+# Character-span destination readbacks (not executable/firmware images).
+!**/patterns/assembly/rendering/fixed-characters/verification/*.bin

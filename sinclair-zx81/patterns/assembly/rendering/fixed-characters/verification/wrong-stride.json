@@ -1,0 +1,58 @@
+{
+  "pixel_match": false,
+  "active_origin": null,
+  "status": "passed",
+  "variant": "wrong-stride",
+  "server": {
+    "name": "emu198x-sinclair-zx81",
+    "version": "0.41.0"
+  },
+  "flags": [
+    129,
+    128,
+    128,
+    129,
+    128,
+    128,
+    128,
+    128,
+    128,
+    128,
+    128,
+    128,
+    129,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    165,
+    239
+  ],
+  "spans": [
+    [
+      16553,
+      727
+    ]
+  ],
+  "memory_sha256": "20f04453bd38a77bca9a6bd6f09acd9abaa0c951b48e601ffce4b6caf0feec5b",
+  "capture_sha256": "dd8f0b75830a8d84d96d73181a2f371f1c37442f8320b016a456dd1b79686de1",
+  "firmware_sha256": [
+    "14ad84f4243efcd41587ff46ab932d11087043e8d455a1ed2a227b9657828dfa"
+  ],
+  "emulator_sha256": "10f64a1fbeff5c1707765e8288dab4417b5f0ca1c8648d6c8a489f78cec43222",
+  "fixture_sha256": "949fa6f144eb6cb585103b049e80a1ab9dba2c31cb99a19cd698afd3a2bc0f61",
+  "independent_memory_match": false
+}

@@ -1,0 +1,208 @@
+{
+  "status": "passed",
+  "machine_id": "mattel-aquarius",
+  "configuration": "Original reset driver with local stock character ROM; no stock OS qualification",
+  "records": [
+    {
+      "pixel_match": true,
+      "active_origin": [
+        16,
+        16
+      ],
+      "status": "passed",
+      "variant": "positive",
+      "server": {
+        "name": "emu198x-mattel-aquarius",
+        "version": "0.41.0"
+      },
+      "flags": [
+        129,
+        129,
+        129,
+        129,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        239
+      ],
+      "spans": [
+        [
+          12288,
+          1024
+        ],
+        [
+          13312,
+          1024
+        ]
+      ],
+      "memory_sha256": "1952673fb5e3a9b3a0bc3b8ed49a86c3ae31214142ce9752aad6750fa6c19b52",
+      "capture_sha256": "de904f8208b900d6d5dbac070cfdb142443f51f4302466661721584112dbde54",
+      "firmware_sha256": [
+        "0bf4b08b4514f2c437d6f00e13499b6dab0e771c937ea2675df3ec52c8d9f29e"
+      ],
+      "emulator_sha256": "1ac7eb676007e84ca8926a02c6cffbc6ad18acd758e4fdf8c2a72683c015e8a7",
+      "fixture_sha256": "c55072bba0a382e8368a303839e146d1d9e02d39d565d7ec911af5b961575e1f",
+      "independent_memory_match": true,
+      "sources": {
+        "mattel-aquarius/patterns/assembly/rendering/fixed-characters/demo.asm": "e60d65bf66d06a1794331fc98379309809d6d7925391d3e13a2dc68b872a5a24",
+        "mattel-aquarius/patterns/assembly/rendering/fixed-characters/characters.inc": "4646da5e867f6cd273a6a9aa1b35c622592019438ae8194e1a95476ebc55904c",
+        "scripts/verify-fixed-characters.py": "013181ce852bb87b11ae09469e8137387c02dc742b4e06e9285967b57a6132b4",
+        "cross-platform/patterns/rendering/fixed-characters/systems.json": "545365623a58a2d6a11f6f89afb027603af87feb2efbc6d9d6015666b96907bb"
+      }
+    },
+    {
+      "pixel_match": false,
+      "active_origin": [
+        16,
+        16
+      ],
+      "status": "passed",
+      "variant": "wrong-stride",
+      "server": {
+        "name": "emu198x-mattel-aquarius",
+        "version": "0.41.0"
+      },
+      "flags": [
+        129,
+        129,
+        129,
+        129,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        239
+      ],
+      "spans": [
+        [
+          12288,
+          1024
+        ],
+        [
+          13312,
+          1024
+        ]
+      ],
+      "memory_sha256": "f70cef96ef65034bd2b355f962370ce4b3646658620bab6228203051d1cb365a",
+      "capture_sha256": "97abc59e6f0015dfd6e242cf08e4ed6229ec541b075f23d52df4efadfcccfa1a",
+      "firmware_sha256": [
+        "0bf4b08b4514f2c437d6f00e13499b6dab0e771c937ea2675df3ec52c8d9f29e"
+      ],
+      "emulator_sha256": "1ac7eb676007e84ca8926a02c6cffbc6ad18acd758e4fdf8c2a72683c015e8a7",
+      "fixture_sha256": "60c43f89a4a6383b6d2fdacb294d4abf287b72e20f1fd13400d10232990bfcb7",
+      "independent_memory_match": false
+    },
+    {
+      "pixel_match": false,
+      "active_origin": [
+        16,
+        16
+      ],
+      "status": "passed",
+      "variant": "unsafe-count",
+      "server": {
+        "name": "emu198x-mattel-aquarius",
+        "version": "0.41.0"
+      },
+      "flags": [
+        129,
+        129,
+        129,
+        129,
+        128,
+        128,
+        128,
+        129,
+        128,
+        128,
+        128,
+        128,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        239
+      ],
+      "spans": [
+        [
+          12288,
+          1024
+        ],
+        [
+          13312,
+          1024
+        ]
+      ],
+      "memory_sha256": "0cc858ffd679c724fab64a9b5708861dc59896dbef0666223e62bb1c441f7c40",
+      "capture_sha256": "5176798ac2d67f93ba00748c893c5bf19f6355f69c3e0040443f7099b46ffbdc",
+      "firmware_sha256": [
+        "0bf4b08b4514f2c437d6f00e13499b6dab0e771c937ea2675df3ec52c8d9f29e"
+      ],
+      "emulator_sha256": "1ac7eb676007e84ca8926a02c6cffbc6ad18acd758e4fdf8c2a72683c015e8a7",
+      "fixture_sha256": "8889855799b016cf9be175c84c3de47c3c63f419ea7ddc73377bbb2ea4bbd87d",
+      "independent_memory_match": false
+    }
+  ]
+}

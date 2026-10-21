@@ -1,0 +1,65 @@
+{
+  "pixel_match": false,
+  "active_origin": [
+    16,
+    16
+  ],
+  "status": "passed",
+  "variant": "unsafe-count",
+  "server": {
+    "name": "emu198x-mattel-aquarius",
+    "version": "0.41.0"
+  },
+  "flags": [
+    129,
+    129,
+    129,
+    129,
+    128,
+    128,
+    128,
+    129,
+    128,
+    128,
+    128,
+    128,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    239
+  ],
+  "spans": [
+    [
+      12288,
+      1024
+    ],
+    [
+      13312,
+      1024
+    ]
+  ],
+  "memory_sha256": "0cc858ffd679c724fab64a9b5708861dc59896dbef0666223e62bb1c441f7c40",
+  "capture_sha256": "5176798ac2d67f93ba00748c893c5bf19f6355f69c3e0040443f7099b46ffbdc",
+  "firmware_sha256": [
+    "0bf4b08b4514f2c437d6f00e13499b6dab0e771c937ea2675df3ec52c8d9f29e"
+  ],
+  "emulator_sha256": "1ac7eb676007e84ca8926a02c6cffbc6ad18acd758e4fdf8c2a72683c015e8a7",
+  "fixture_sha256": "8889855799b016cf9be175c84c3de47c3c63f419ea7ddc73377bbb2ea4bbd87d",
+  "independent_memory_match": false
+}

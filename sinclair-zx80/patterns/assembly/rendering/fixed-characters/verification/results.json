@@ -1,0 +1,191 @@
+{
+  "status": "passed",
+  "machine_id": "sinclair-zx80",
+  "configuration": "Stock Sinclair ROM, PAL, 16 KiB RAM; BASIC USR caller",
+  "records": [
+    {
+      "pixel_match": true,
+      "active_origin": [
+        80,
+        48
+      ],
+      "status": "passed",
+      "variant": "positive",
+      "server": {
+        "name": "emu198x-sinclair-zx80",
+        "version": "0.41.0"
+      },
+      "flags": [
+        129,
+        129,
+        129,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        129,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        239
+      ],
+      "spans": [
+        [
+          16503,
+          34
+        ]
+      ],
+      "memory_sha256": "166f970022be21ea7ed830de562dd7f1a0b7b0d381d3847f31a67f68d45286a7",
+      "capture_sha256": "9a08ee9e202f0588cca2c7da104df32ff56c313eafa61a71fbe58368f5ee24fe",
+      "firmware_sha256": [
+        "9374711cb6a5fd53c1c98d1d20ecb444d01d621a322f3d066ef216d515ac5161"
+      ],
+      "emulator_sha256": "d8e7f2fb635bbf41a913d721efee27372580bf047bdea9f1d7b70417d66e7101",
+      "fixture_sha256": "5ff228f038741c7b79302b067bc0e0553f74a0a3c2f8128bfb9829bb997d0dcb",
+      "independent_memory_match": true,
+      "sources": {
+        "sinclair-zx80/patterns/assembly/rendering/fixed-characters/demo.asm": "2454bca257e2fce20b01cdb11f657fe9b1fe869223be653b791ecacb9e6f0bec",
+        "sinclair-zx80/patterns/assembly/rendering/fixed-characters/characters.inc": "984c546ccb2a65e1c13dc635a69bd9e5edaee3ea04789bbdc848ddadb997ee9f",
+        "scripts/verify-fixed-characters.py": "013181ce852bb87b11ae09469e8137387c02dc742b4e06e9285967b57a6132b4",
+        "cross-platform/patterns/rendering/fixed-characters/systems.json": "545365623a58a2d6a11f6f89afb027603af87feb2efbc6d9d6015666b96907bb",
+        "sinclair-zx80/patterns/assembly/rendering/fixed-characters/caller.bas": "85aaf7636c9a9bade56ef603d48fa01fb376c57037a7f30f83d6d826e1bc9459"
+      }
+    },
+    {
+      "pixel_match": false,
+      "active_origin": null,
+      "status": "passed",
+      "variant": "wrong-stride",
+      "server": {
+        "name": "emu198x-sinclair-zx80",
+        "version": "0.41.0"
+      },
+      "flags": [
+        129,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        129,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        239
+      ],
+      "spans": [
+        [
+          16503,
+          34
+        ]
+      ],
+      "memory_sha256": "377be659a538f352bb018b72336d47c079180757b6259ad55bdda1f45730c583",
+      "capture_sha256": "48e5a34d79581aa0ed77a8ab1effe3efb1e1a69d19da85b9e36bb2dd34fcc111",
+      "firmware_sha256": [
+        "9374711cb6a5fd53c1c98d1d20ecb444d01d621a322f3d066ef216d515ac5161"
+      ],
+      "emulator_sha256": "d8e7f2fb635bbf41a913d721efee27372580bf047bdea9f1d7b70417d66e7101",
+      "fixture_sha256": "89c5ade30730a0bae1c9a3543af0b3c6e0749bda24dab5876314271816b6f928",
+      "independent_memory_match": false
+    },
+    {
+      "pixel_match": false,
+      "active_origin": null,
+      "status": "passed",
+      "variant": "unsafe-count",
+      "server": {
+        "name": "emu198x-sinclair-zx80",
+        "version": "0.41.0"
+      },
+      "flags": [
+        129,
+        129,
+        129,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        129,
+        128,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        165,
+        239
+      ],
+      "spans": [
+        [
+          16503,
+          24
+        ]
+      ],
+      "memory_sha256": "2b2969a6ed7f477906d92a41a0d65cc0a26db78410a0fa9d79294566ef4f4d68",
+      "capture_sha256": "6efc2fb4426b0fe50aa4a90c88d353eba5aed5bf2d11e1a608b50761cd0f14a1",
+      "firmware_sha256": [
+        "9374711cb6a5fd53c1c98d1d20ecb444d01d621a322f3d066ef216d515ac5161"
+      ],
+      "emulator_sha256": "d8e7f2fb635bbf41a913d721efee27372580bf047bdea9f1d7b70417d66e7101",
+      "fixture_sha256": "8f08373a3e2b1b94d371e1fac2cf87c685a0b759f8a04a873ba264ff89416135",
+      "independent_memory_match": false
+    }
+  ]
+}
