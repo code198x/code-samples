@@ -1,0 +1,80 @@
+{
+  "machine_id": "tatung-einstein",
+  "sources": {
+    "cross-platform/patterns/rendering/character-quads/systems.json": "48409ed2122bbeb82e00a2ec5f863575ac617f6dca226bd0b8f1936748c5d45a",
+    "cross-platform/patterns/rendering/character-quads/toolchain.json": "ed8f7e761ae415761240d1003c93288f456a8580c9ea2308c6d56963d7e3cb32",
+    "cross-platform/patterns/rendering/character-quads/build.py": "37b81a6c2f65b48b82ec7421d7dbcb941a197b590188dd574f25d3cd90616342",
+    "cross-platform/patterns/rendering/character-quads/model.py": "60522bb3f3464d70c95dbdf7ce2eb159f49c64ef26d315faf52509b6d1794e14",
+    "cross-platform/patterns/rendering/character-quads/prepare.py": "a44a0f32c1a1e528842e54a9a8683217a4bceb6a6f1082f289fb9f217571f60f",
+    "cross-platform/patterns/rendering/character-quads/z80.inc": "215435dafef1d7d4aa82540b2d568d7473607fa9c57eb0b7014aec102918b74d",
+    "cross-platform/patterns/rendering/character-quads/mistakes/stride.inc": "cc36fa5d93e4da532b93d740960043586d64196c49ec94f8bf4fecf730c950a7",
+    "cross-platform/patterns/rendering/character-quads/f.bin": "3ada8ccca6659f6f139f8e72ddf5d48b9c06af9c181c1b0541d29c5028a6e388",
+    "cross-platform/patterns/rendering/character-quads/arrow.bin": "feb3c5924dd29f5c62a1829725b97c03955a810bf6da2bb2ec9d618f0ed669f9",
+    "tatung-einstein/patterns/assembly/rendering/character-quads/demo.asm": "693d0b0d98ace551f1267c32b2ba999239080160791c48c362167206028bac8a",
+    "tatung-einstein/patterns/assembly/rendering/character-quads/customise.asm": "c7255482dad56fa936050d47ff0844212180668fea174d10111ad07a20edf266",
+    "tatung-einstein/patterns/assembly/rendering/character-quads/caller.inc": "06bce5648d07e823c037888a53f80a16ed4749790765eaa387eabe8cd6f4eef2",
+    "tatung-einstein/patterns/assembly/rendering/character-quads/prepare.inc": "900c094196ada7522be69123a2a87307338a8a6bcb2fcc6b6590f076804116b1",
+    "tatung-einstein/patterns/assembly/rendering/character-quads/assets.inc": "fca7d3c7bbe8655c5eb1986575d99762aafe42ea6ab0abf33c2fae0b49d21f74",
+    "msx/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "bb7eea6ec18c814694a8380d81c99f93bfc7bd0986aba8a9639bb883235ab816",
+    "scripts/verify-character-quads.py": "b3005de7eebf7fc62878289e6f1724a7269bad0f53406e52010c5da19e96f14e",
+    "scripts/check-character-quads.py": "9ff7dc4079b9c6bc239fea04d77791371d63eacba705a04d3dea30578613615d",
+    "scripts/verify-tms-glyphs.py": "227ce80ac52093c03250d2fd3118925767b377ae00bd59a25ee5f07ed2b6dcad",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+    "cross-platform/patterns/rendering/tms-glyphs/build.py": "9b6ffdba63cf77e779e62f2b4bf4fed9e8ae35c735761bae233688296a3ad72c",
+    "cross-platform/patterns/rendering/tms-glyphs/model.py": "41cafaa5c99a34645d189ad3252e6629b6351e44cfbf45d1bc243df66f510733"
+  },
+  "variants": {
+    "positive": {
+      "observations": "positive.json.z",
+      "fixture_sha256": "ffafc39f5ec1e3ecb9c633dc42da51e054b542d062f317022dff7ae9cbd4bed6",
+      "emulator_sha256": "93954bdafe09389d36e6d1ef3c8f0cdb5d0c9f73ebf42fc0d1d5422383c73ce2",
+      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "quad_bytes": 92,
+      "glyph_bytes": 205
+    },
+    "customise": {
+      "observations": "customise.json.z",
+      "fixture_sha256": "6bef94e6f6e515bc47b49fda386a1809b34be346ffde1a12dffb2bb067810145",
+      "emulator_sha256": "93954bdafe09389d36e6d1ef3c8f0cdb5d0c9f73ebf42fc0d1d5422383c73ce2",
+      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "quad_bytes": 92,
+      "glyph_bytes": 205
+    },
+    "stride-fault": {
+      "observations": "stride-fault.json.z",
+      "fixture_sha256": "fee3fa1c9157a29f62db89334f07a3fd592f1f289450b41cd158b9cc75afdb47",
+      "emulator_sha256": "93954bdafe09389d36e6d1ef3c8f0cdb5d0c9f73ebf42fc0d1d5422383c73ce2",
+      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "quad_bytes": 92,
+      "glyph_bytes": 205
+    },
+    "stride-fixed": {
+      "observations": "stride-fixed.json.z",
+      "fixture_sha256": "ffafc39f5ec1e3ecb9c633dc42da51e054b542d062f317022dff7ae9cbd4bed6",
+      "emulator_sha256": "93954bdafe09389d36e6d1ef3c8f0cdb5d0c9f73ebf42fc0d1d5422383c73ce2",
+      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "quad_bytes": 92,
+      "glyph_bytes": 205
+    }
+  },
+  "artifacts": {
+    "positive-867.png": "685b84078dd581bb5d485ecee1c20ca7124df396778649588263f670a087688a",
+    "stride-fixed-startup.png": "c331095a9ab9c94a2cbc60bb5ff2bb5a1f01e4da6b27ad5ed64fd21dde5158c4",
+    "positive-734.png": "c7d38b424cb6220e6d34545212e4f2b74f1d5dfe96cb0cc9ff8ee955e33a5f5b",
+    "stride-fault-0.png": "eed8adbe6e9bf8607f9dc5ce1c487887f6a5e5ff48a77b412d72e5da0e42fdf8",
+    "stride-fixed-0.png": "c331095a9ab9c94a2cbc60bb5ff2bb5a1f01e4da6b27ad5ed64fd21dde5158c4",
+    "customise.json.z": "0aa56770937b69b3dcacdea2942792d72d51cb81b497dba54eb73352994a5578",
+    "positive-0.png": "fda0eb33fea83916f21fac5257b726951cdb7bcb497a94bac95f1bb02be6327d",
+    "stride-fault-6.png": "c6a6f45ff78af8e7225190a10eb64d87820c7b9901e15f62f6b8233e4c539be1",
+    "stride-fixed-6.png": "39c4a8380950249df31c213bd20db9ad5dad931659dbfe2b8f0ba7e43ae1ccf9",
+    "stride-fault.json.z": "7dc10b9ba81e832902cd3feff72b3a1635b10b750838cd5f5e7714909a74b33a",
+    "stride-fixed.json.z": "235dd7f7236ecf3f544476700900a96fddc08c251549919a890407bcd97b84a5",
+    "stride-fault-startup.png": "eed8adbe6e9bf8607f9dc5ce1c487887f6a5e5ff48a77b412d72e5da0e42fdf8",
+    "customise-6.png": "d617be91ed13d462fcd5fadb4ce95f046b5741122809cd899e7f96fe12a6ef4a",
+    "customise-0.png": "0a01d7aba47fb0867e4c8ca9daeec0ad91d9be45dc8a6aa84e67c2988302b77c",
+    "positive-startup.png": "c331095a9ab9c94a2cbc60bb5ff2bb5a1f01e4da6b27ad5ed64fd21dde5158c4",
+    "customise-startup.png": "0a01d7aba47fb0867e4c8ca9daeec0ad91d9be45dc8a6aa84e67c2988302b77c",
+    "positive.json.z": "250ffc1e432c03a1ee80235dfff41c3dff2414d271d0b3d0a7ac4d367ddb5696"
+  }
+}
