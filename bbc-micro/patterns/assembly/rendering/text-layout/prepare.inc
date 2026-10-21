@@ -1,29 +1,29 @@
 ; BEGIN LAYOUT INPUTS
     lda #<(PANEL_LEFT)
-    sta L+0
+    sta TL+0
     lda #>(PANEL_LEFT)
-    sta L+1
+    sta TL+1
     lda #<(PANEL_TOP)
-    sta L+2
+    sta TL+2
     lda #>(PANEL_TOP)
-    sta L+3
+    sta TL+3
     lda #<(PANEL_WIDTH)
-    sta L+4
+    sta TL+4
     lda #>(PANEL_WIDTH)
-    sta L+5
+    sta TL+5
     lda #<(PANEL_HEIGHT)
-    sta L+6
+    sta TL+6
     lda #>(PANEL_HEIGHT)
-    sta L+7
+    sta TL+7
     lda #<(label_data)
-    sta L+10
+    sta TL+10
     lda #>(label_data)
-    sta L+11
+    sta TL+11
     lda #PANEL_ALIGN
-    sta L+8
+    sta TL+8
     lda #LINE_PITCH
-    sta L+9
+    sta TL+9
     lda #MESSAGE_LENGTH
-    sta L+12
+    sta TL+12
     jsr layout_block
 ; END LAYOUT INPUTS

@@ -1,4 +1,4 @@
-L equ 17536
+TL equ 17536
 ; SPDX-License-Identifier: MIT
 ; Original reset caller. No manufacturer firmware is distributed.
 T equ $4400

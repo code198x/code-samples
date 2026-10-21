@@ -1,40 +1,40 @@
 ; SPDX-License-Identifier: MIT
 ; Bounded counted 8x8 text layout over the unchanged bitmap-text component.
-; Include bitmap-text once; reserve L=64, T=96 and BP=48 separate bytes.
-; L inputs 0..12 survive. T/BP are owned workspaces. See README.md.
-l_left equ L+0
-l_top equ L+2
-l_width equ L+4
-l_height equ L+6
-l_align equ L+8
-l_pitch equ L+9
-l_source equ L+10
-l_length equ L+12
-l_status equ L+13
-l_consumed equ L+14
-l_lines equ L+15
-l_last_count equ L+16
-l_measured equ L+18
-l_first_x equ L+20
-l_last_x equ L+22
-l_last_y equ L+24
-l_calls equ L+26
-l_writes equ L+28
-l_mode equ L+32
-l_pass equ L+33
-l_i equ L+34
-l_start equ L+35
-l_count equ L+36
-l_columns equ L+37
-l_temp equ L+38
-l_right equ L+40
-l_bottom equ L+42
-l_y equ L+44
-l_x equ L+46
-l_pointer equ L+48
-l_code equ L+50
-l_line_width equ L+52
-l_work equ L+54
+; Include bitmap-text once; reserve TL=64, T=96 and BP=48 separate bytes.
+; TL inputs 0..12 survive. T/BP are owned workspaces. See README.md.
+l_left equ TL+0
+l_top equ TL+2
+l_width equ TL+4
+l_height equ TL+6
+l_align equ TL+8
+l_pitch equ TL+9
+l_source equ TL+10
+l_length equ TL+12
+l_status equ TL+13
+l_consumed equ TL+14
+l_lines equ TL+15
+l_last_count equ TL+16
+l_measured equ TL+18
+l_first_x equ TL+20
+l_last_x equ TL+22
+l_last_y equ TL+24
+l_calls equ TL+26
+l_writes equ TL+28
+l_mode equ TL+32
+l_pass equ TL+33
+l_i equ TL+34
+l_start equ TL+35
+l_count equ TL+36
+l_columns equ TL+37
+l_temp equ TL+38
+l_right equ TL+40
+l_bottom equ TL+42
+l_y equ TL+44
+l_x equ TL+46
+l_pointer equ TL+48
+l_code equ TL+50
+l_line_width equ TL+52
+l_work equ TL+54
 layout_measure
     jsr layout_reset
     ldd #$0000

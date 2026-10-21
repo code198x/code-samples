@@ -1,4 +1,4 @@
-L equ 1152
+TL equ 1152
 ; SPDX-License-Identifier: MIT
 ; Original reset caller. No manufacturer firmware is distributed.
 T equ $0400

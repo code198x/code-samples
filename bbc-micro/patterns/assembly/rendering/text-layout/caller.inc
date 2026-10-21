@@ -1,4 +1,4 @@
-L = 1152
+TL = 1152
 ; SPDX-License-Identifier: MIT
 ; Original reset caller. No manufacturer firmware is distributed.
 T = $0400
@@ -8,7 +8,7 @@ TEXT_PEN_MAX=1
 ; SPDX-License-Identifier: MIT
 ; Original reset fixture; mailbox is verification transport, not a game loop.
 *=$c000
-BP=$0040
+BP=$40                   ; byte-sized zero-page constant for ACME
 COMMAND=$0300
 PIXEL_WIDTH=320
 PIXEL_HEIGHT=256
