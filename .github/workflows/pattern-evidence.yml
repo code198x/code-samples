@@ -169,6 +169,20 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  character-quads-records:
+    name: Large character records and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Replay six native grid-character records
+        run: python scripts/check-character-quads.py
+      - name: Check asset conversion and adversarial evidence controls
+        run: python -m unittest discover -s scripts -p test_character_quads.py -v
+
   glyph-resize-records:
     name: Glyph resizing records and failure controls
     runs-on: ubuntu-latest
