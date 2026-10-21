@@ -41,7 +41,7 @@
         ld de,$5801
         ld bc,767
         ldir
-        ld hl,$4000
+        ld hl,$c000         ; uncontended payload buffer: do not spend disk slots on ULA waits
         ld ($7004),hl
         ld iy,commands
         ld a,1
@@ -104,6 +104,10 @@ data_done:
         jr nz,next_command
         dec a
         ld ($7003),a
+        ld hl,$c000
+        ld de,$4000
+        ld bc,3072
+        ldir                ; visible pattern derives from completed disk transfers
         ld a,$a5
         ld ($7000),a
         cpl

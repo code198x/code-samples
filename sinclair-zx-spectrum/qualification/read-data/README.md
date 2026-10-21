@@ -1,7 +1,7 @@
 # Read Data diagnostic
 
 The program cold-loads through the +3 ROM disk loader, then reads 3,072 bytes
-from three seeded sectors into the screen bitmap. It performs single-sector
+from three seeded sectors into an uncontended buffer, then copies them to the screen bitmap. It performs single-sector
 and multi-sector reads through logical A0/A2, attempts a missing sector, and
 reads a valid sector afterwards. A completion signature is written only after
 all five commands return their expected number of bytes and seven result bytes.
@@ -39,7 +39,7 @@ Mount `seeded.dsk` in drive A of a cold +3 with English v4.0 firmware and choose
 Loader. Do not inject memory or restore a snapshot. Use legitimately obtained
 local firmware; this fixture contains no ROM. The BASIC loader runs CODE at
 32768. The program explicitly selects non-DMA MFM, seeks track9, and uses
-bounded polling. Runtime host and emulated-time limits belong to the runner.
+bounded polling. Reads use RAM at49152 to avoid ULA contention during the byte-service window. Runtime host and emulated-time limits belong to the runner.
 
 The expected screen starts with sectors `1,1,2,3,2,3`, each 512 bytes. Byte `i`
 of sector `s` is `((i*37) XOR (i>>1) XOR (s*33)) AND255`. The remaining 3,072
@@ -48,7 +48,7 @@ screen depend on bytes transferred by the controller. The original CODE does
 not contain the transferred data or the completed signature at its destination.
 
 At completion, addresses 28672–28673 contain 165,90, the final stage at28675 is5,
-and PC loops at33000. Trace records begin at28688; their count is at28674.
+and PC loops at33011. Trace records begin at28688; their count is at28674.
 Each command writes three five-byte records: stage/ST0/ST1/ST2/C,
 stage/H/R/N/following-MSR, then stage/count-low/count-high/destination-low/high.
 Setup Sense Interrupt records use the existing qualification layout.
