@@ -1,27 +1,29 @@
-# An untimed command loop: Default Aquarius with BASIC ROM
+# Aquarius: reusable untimed BASIC command loop
 
-Run the listing and the screen shows `TURN 0`. Type `GO` and press Return: it shows `TURN 1`. Wait as long as you like; the game state stays put. Submit the command again for `TURN 2`.
+Type GO and Return: TURN 0 becomes TURN 1. Submit it again for TURN 2. Waiting or submitting NO keeps the previous state. Q ends the program.
 
-## Use it
+Enter `reusable.bas` as one complete program and RUN it under the normal firmware. `caller.bas` and `routines.bas` are the same program split for reuse: include both sets of numbered lines, not a second copy of the complete listing. The older Aquarius `demo.bas` remains a separate baseline where present.
 
-Enter [demo.bas](demo.bas) into the named machine's BASIC, then type `RUN`. It needs the machine's normal firmware, not a replacement ROM. Enter uppercase source and commands as shown. The verifier uses the emulator's real keyboard path.
+## Use the rule in another program
 
-Keep the initial `N=0` once at startup. Put your command handling where the listing tests the input, and your world update where it increments N. Keep INPUT in the loop: it is the point at which the player hands control back to the game. Renumber the listing when combining it with another BASIC program; there is no assembly include or hidden support file.
+Copy lines 1000–1050 into free line numbers. Put the submitted command in A$, keep the current integer 0–255 in N and the integer step 0–255 in S, then GOSUB 1000. C is replaced on every call: 1 if accepted, 0 otherwise. The accepted command adds S, subtracting 256 once on overflow. N+S is at most 510 under that contract. Fractional, negative or larger values require another contract. Commands and S are preserved.
 
-## Contract and ownership
+The routine performs no input, drawing, fixed-address RAM writes or sound. Ordinary BASIC variables and GOSUB's stack belong to the interpreter. These globals and line numbers belong to your program: rename consistently, renumber every call target and retain RETURN. The caller initialises once, clears/redraws, submits input and applies the rule. Its INPUT blocks until Return; malformed input follows the dialect's own behaviour, not a parser supplied here.
 
-`N` holds rule state; `A$` holds the submitted command. `GO` advances one turn; `another string` leaves N unchanged. BASIC owns variable storage, keyboard scanning, screen output and its normal interrupt services. Other malformed input follows this BASIC's usual error handling; this small caller does not supply a full parser.
+Aquarius uses PRINT CHR$(11) to clear its text screen, not CLS. This is the unexpanded stock S2 BASIC/character-ROM configuration. No cartridge or AY expansion is required. The new bounded rule is independent from the older append-only GO probe.
 
-The caller appends TURN lines rather than clearing the screen. Historical counters remain visible; the newest TURN line is the current one. Press Return at the startup prompt before entering the listing.
+## Customise and diagnose
 
-The other BASIC counters use the dialect's normal numeric range. They are not unlimited integers. Screen redraw and input can take time, but neither is a turn deadline. To add timed turns later, choose a separate clock and timeout policy; do not assume INPUT will return periodically to check it.
+`customise.bas` sets S=3: two accepted commands give 0 → 3 → 6 without adding globals or another routine. It spends three progress units for one action; it does not run the whole game three times.
 
-## Reproduce the check
+`mistakes/reset-each-command.bas` is deliberately broken: its jump returns through line 10, erasing N at every iteration. Both accepted actions end back at zero. Restore the jump to line 20; initialisation remains outside the loop. The repaired caller is executed separately. Keep persistent world state across rejected input too.
 
-From the repository root:
+For a timed decision, replace the blocking input policy with one that checks an explicit clock and decides how a command competes with an expired deadline. Faster assembly is not a substitute for that policy. The machine can keep servicing its display while the game waits.
 
-```sh
-python3 scripts/verify-command-loops.py --native /path/to/native/binaries --only mattel-aquarius
-```
+## Verification
 
-[The retained record](verification/results.json) identifies the firmware and executable, source hashes and exact configuration. The check submits accepted and ignored commands, waits without changing state, repeats from a nonzero initialiser, and rejects a caller that fabricates its first command. Byte-counter callers also check 254 → 255 → 0. This qualifies a small command caller, not a complete platform track or physical-hardware accuracy.
+`scripts/verify-aquarius-mtx-loops.py --native /path/to/binaries-and-locks --assembler /path/to/asm198x --system mattel-aquarius --track basic` cold-starts six variants: normal use, step three, reset fault and repair, 254 → 255 → 0 and a nonzero start with step 255. Idle waits bracket actions; an ignored command must preserve state. `scripts/check-aquarius-mtx-loops.py` independently decodes retained video RAM/name-table dumps and checks source and image bindings. Native images accompany each observation. No host write supplies the game state. The record pins Emu198x 0.44.1, actual firmware, source and observation code; this is not original-hardware, a complete parser or whole-emulator qualification.
+
+## Primary references
+
+Mattel, *Aquarius Guide to Home Computing* (1982), clear-screen/CHR$ and BASIC control/input reference. Original S2 ROM, with Kenny Millar's annotated disassembly at https://aquarius.mattpilz.com/s2-disassembly.php, provides the firmware context; its comments about copyright status are not a licence grant.

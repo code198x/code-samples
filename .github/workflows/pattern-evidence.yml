@@ -476,3 +476,17 @@ jobs:
         run: python scripts/check-dragon-ace-loops.py
       - name: Prove changed state, source, capture and missing evidence fail
         run: python -m unittest discover -s scripts -p test_dragon_ace_loops.py -v
+
+  aquarius-mtx-command-loops:
+    name: Retained Aquarius and MTX BASIC and assembly loops
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Decode four independent machine and language routes
+        run: python scripts/check-aquarius-mtx-loops.py
+      - name: Reject changed observations and falsely repaired faults
+        run: python -m unittest discover -s scripts -p test_aquarius_mtx_loops.py -v
