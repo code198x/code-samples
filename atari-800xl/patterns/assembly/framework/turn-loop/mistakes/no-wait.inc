@@ -1,0 +1,2 @@
+wait_frame:
+    rts

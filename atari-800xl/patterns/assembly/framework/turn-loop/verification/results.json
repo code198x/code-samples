@@ -1,0 +1,483 @@
+{
+  "status": "passed",
+  "machine_id": "atari-800xl",
+  "language": "assembly",
+  "configuration": "800XL NTSC, stock OS and Atari BASIC, GRAPHICS 0",
+  "startup": "Fresh firmware and typed numbered program/RUN",
+  "variants": {
+    "working": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          69,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          1,
+          107,
+          0,
+          1,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          1,
+          137,
+          0,
+          1,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          145,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          1,
+          153,
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "customise": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          69,
+          0,
+          0,
+          2,
+          0
+        ],
+        "pressed": [
+          2,
+          1,
+          107,
+          0,
+          1,
+          2,
+          0
+        ],
+        "held": [
+          2,
+          1,
+          137,
+          0,
+          1,
+          2,
+          0
+        ],
+        "released": [
+          2,
+          0,
+          145,
+          0,
+          0,
+          2,
+          0
+        ],
+        "second": [
+          4,
+          1,
+          153,
+          0,
+          1,
+          2,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "wrap": {
+      "states": {
+        "initial": [
+          254,
+          0,
+          69,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          255,
+          1,
+          107,
+          0,
+          1,
+          1,
+          0
+        ],
+        "held": [
+          255,
+          1,
+          137,
+          0,
+          1,
+          1,
+          0
+        ],
+        "released": [
+          255,
+          0,
+          145,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          0,
+          1,
+          153,
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "nonzero": {
+      "states": {
+        "initial": [
+          37,
+          0,
+          69,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          38,
+          1,
+          107,
+          0,
+          1,
+          1,
+          0
+        ],
+        "held": [
+          38,
+          1,
+          137,
+          0,
+          1,
+          1,
+          0
+        ],
+        "released": [
+          38,
+          0,
+          145,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          39,
+          1,
+          153,
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "held-as-press": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          63,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          8,
+          1,
+          101,
+          0,
+          1,
+          1,
+          1
+        ],
+        "held": [
+          38,
+          1,
+          131,
+          0,
+          1,
+          1,
+          1
+        ],
+        "released": [
+          38,
+          0,
+          139,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          46,
+          1,
+          147,
+          0,
+          1,
+          1,
+          1
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "bad-wait": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          208,
+          49,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          1,
+          147,
+          79,
+          1,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          1,
+          19,
+          103,
+          1,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          87,
+          109,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          1,
+          154,
+          115,
+          1,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 6015
+    },
+    "fixed-edge": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          69,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          1,
+          107,
+          0,
+          1,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          1,
+          137,
+          0,
+          1,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          145,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          1,
+          153,
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "fixed-wait": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          69,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          1,
+          107,
+          0,
+          1,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          1,
+          137,
+          0,
+          1,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          145,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          1,
+          153,
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    }
+  },
+  "program_sha256": {
+    "working": "8ca50bdb8dc1e48a4a33f78ce7de405f522ddb4f97a67f05624f9e57bcac824b",
+    "customise": "c9db22e27c4ac35702d502c1b92bd89191ca81149e3f880a0ab081b6e55cf883",
+    "wrap": "9636a61b9dc10b87c53736773457475ce58d64ebcd14be49a3bc422805874d7c",
+    "nonzero": "98e0298e17f7906eb93a7ab1416460daeb38c699298b38417be02a100dccd30e",
+    "held-as-press": "5409a6658c6b03e545a2dc4488cfeae9129ab0029e477f5ba86402393a8fef6e",
+    "bad-wait": "3f5397b13788dafc1f788303efd286e0cfc8a8556af83d691bdd3738461aa4e7",
+    "fixed-edge": "8ca50bdb8dc1e48a4a33f78ce7de405f522ddb4f97a67f05624f9e57bcac824b",
+    "fixed-wait": "8ca50bdb8dc1e48a4a33f78ce7de405f522ddb4f97a67f05624f9e57bcac824b"
+  },
+  "artifacts": {
+    "working-waiting.png": "059c1fae55074f0b30ff76e9a5b3903286f0d64f554d0188dd29bb6597a25507",
+    "working-pressed.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "working-held.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "working-second.png": "56dbc75281d5930186186fca9df5bea682d4382c5e12e6eef48ff3d7f1903c5a",
+    "customise-waiting.png": "059c1fae55074f0b30ff76e9a5b3903286f0d64f554d0188dd29bb6597a25507",
+    "customise-pressed.png": "56dbc75281d5930186186fca9df5bea682d4382c5e12e6eef48ff3d7f1903c5a",
+    "customise-held.png": "56dbc75281d5930186186fca9df5bea682d4382c5e12e6eef48ff3d7f1903c5a",
+    "customise-second.png": "c989f48f25f96112b2c298797d19cfa5aa930277591a6e4e435771e32862adfe",
+    "wrap-waiting.png": "1b8ef40e1290dbb119a4c462e0258d5741b16e2bf27b8d8a5f93463b438127b1",
+    "wrap-pressed.png": "4fabf09f56b3999c0f3f26ebbfbcc5b20aeb227072f7c3b1af216efa9538ee82",
+    "wrap-held.png": "4fabf09f56b3999c0f3f26ebbfbcc5b20aeb227072f7c3b1af216efa9538ee82",
+    "wrap-second.png": "059c1fae55074f0b30ff76e9a5b3903286f0d64f554d0188dd29bb6597a25507",
+    "nonzero-waiting.png": "c247122a6dbea605f296f6f0bdbbff78b7cfee84b280876cfe9f1522256b152a",
+    "nonzero-pressed.png": "7d545c70c7d9a51d24b44cb228f9c700d5045a18385715aa11757b27b8942e71",
+    "nonzero-held.png": "7d545c70c7d9a51d24b44cb228f9c700d5045a18385715aa11757b27b8942e71",
+    "nonzero-second.png": "b0f651b723887cf7b12bab6215de57431ff123742eb3c3b6ed81529301de0dd7",
+    "held-as-press-waiting.png": "059c1fae55074f0b30ff76e9a5b3903286f0d64f554d0188dd29bb6597a25507",
+    "held-as-press-pressed.png": "b4f65953825e2f2a6ec7c94505afcf7dc6a3305a6a4c141983f2f8d266fa0eac",
+    "held-as-press-held.png": "c247122a6dbea605f296f6f0bdbbff78b7cfee84b280876cfe9f1522256b152a",
+    "held-as-press-second.png": "3b96b46cccac75541aeb67a3352342c1673f24fbf4a589fffe938d90326fc150",
+    "bad-wait-waiting.png": "059c1fae55074f0b30ff76e9a5b3903286f0d64f554d0188dd29bb6597a25507",
+    "bad-wait-pressed.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "bad-wait-held.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "bad-wait-second.png": "56dbc75281d5930186186fca9df5bea682d4382c5e12e6eef48ff3d7f1903c5a",
+    "fixed-edge-waiting.png": "059c1fae55074f0b30ff76e9a5b3903286f0d64f554d0188dd29bb6597a25507",
+    "fixed-edge-pressed.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "fixed-edge-held.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "fixed-edge-second.png": "56dbc75281d5930186186fca9df5bea682d4382c5e12e6eef48ff3d7f1903c5a",
+    "fixed-wait-waiting.png": "059c1fae55074f0b30ff76e9a5b3903286f0d64f554d0188dd29bb6597a25507",
+    "fixed-wait-pressed.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "fixed-wait-held.png": "2d882e1c12634d39a83a089e3322d82a9494224c04b3735a8f71a935d3b23f97",
+    "fixed-wait-second.png": "56dbc75281d5930186186fca9df5bea682d4382c5e12e6eef48ff3d7f1903c5a"
+  },
+  "sources": {
+    "atari-800xl/patterns/assembly/framework/turn-loop/Makefile": "c3470cecd314c4c797b004a24f716c8c8577d761fa220282e27de0ff46fb4e48",
+    "atari-800xl/patterns/assembly/framework/turn-loop/customise.inc": "29a6c64c6ccd473bec2ecfc31c42287e377a01256a600c99894f9adfa257efaf",
+    "atari-800xl/patterns/assembly/framework/turn-loop/demo.asm": "25e27a53cf81058d477cdc95a0168f068f7cf2428dd2ac1cd2b10025b5c9fec2",
+    "atari-800xl/patterns/assembly/framework/turn-loop/frame.inc": "b0e7eb53b13a120bdf174af052591a608fae723f1405a09d1f20224f32bfcbf3",
+    "atari-800xl/patterns/assembly/framework/turn-loop/loader.py": "47d72d7cbb90f3f6104d50b3d48bf9b3bae668f91fbd94ae79ad479ef964625f",
+    "atari-800xl/patterns/assembly/framework/turn-loop/mistakes/no-wait.inc": "671fc9495f9a11d023f5b1e54338959ecb7a1b7a476b07b4e7da01fc078f3ba0",
+    "atari-800xl/patterns/assembly/framework/turn-loop/nonzero.inc": "0dcda83ed0374f16d48f6bf07bc616b6b97aa27bae66925c2547483dcc744bf4",
+    "atari-800xl/patterns/assembly/framework/turn-loop/qualification-toolchain.json": "b823ac2e1606c4ba3f0838e4a7b64fd1f0ab7d59a6c25010cc203b49321fcdd3",
+    "atari-800xl/patterns/assembly/framework/turn-loop/settings.inc": "3210dd66a0751d171e24feb8804579807c4430c6e625388dc7d5966fc67b60f7",
+    "atari-800xl/patterns/assembly/framework/turn-loop/wrap.inc": "0da4c7b7b11db18cc16bdaa0a08f10357b8d63f0296debaef16dfa7a3d740032",
+    "cross-platform/patterns/framework/atari-turn-loops/edge-filter.inc": "f2a3b0201e5eff4fc008ab9b325457ddb7fe2bd6de48cff122694155aed0fabd",
+    "cross-platform/patterns/framework/atari-turn-loops/mistakes/held-as-press.inc": "5970b0dd119d23fc03ea1f85a089fb42b0b04de1f7d94edae8d7bc16ea5f57fd",
+    "cross-platform/patterns/framework/atari-turn-loops/turn.inc": "ad677edf4cd18a41aa72b69353a980edba464135c8d19b17d7d1129640a436fe"
+  },
+  "observer_sources": {
+    "scripts/verify-xl-coleco-loops.py": "db0535bb029c2d7f34dc3685e9bcd8a78b0bc245a4fc9443a8f5d6532e33b853",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "941eb3229a296e243f5bf9a8ead04fdef5cd9dd7d2ba8ddf9e06735c1f8ebd27",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "release_tags": {
+    "emu198x": "v0.44.1",
+    "asm198x": "asm198x-v0.0.71"
+  },
+  "firmware_sha256": {
+    "atarixl.rom": "a77050b2d81db2d11eaa3dbafd8ec2531b478abcc3bcc4b0d846b634e885edb1",
+    "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0"
+  },
+  "limits": "The named workload, released native tools and supplied firmware only; no PAL or physical-hardware timing qualification."
+}

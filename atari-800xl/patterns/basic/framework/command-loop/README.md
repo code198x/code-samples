@@ -1,27 +1,63 @@
-# An untimed command loop: Atari 800XL NTSC with OS and BASIC
+# Atari 800XL BASIC: wait for a command
 
-Run the listing and the screen shows `TURN 0`. Type `1` and press Return: it shows `TURN 1`. Wait as long as you like; the game state stays put. Submit the command again for `TURN 2`.
+Enter `caller.bas` then `routines.bas` as one numbered program in stock Atari
+BASIC and RUN. Type 1, Return to take a turn; 0 is rejected. Waiting consumes no
+game turn. GRAPHICS 0 clears the text screen before drawing TURN and FLAG.
+The earlier `demo.bas` is retained for the original probe record; use the new
+caller/routine pair when adopting this component.
 
-## Use it
+## Call contract
 
-Enter [demo.bas](demo.bas) into the named machine's BASIC, then type `RUN`. It needs the machine's normal firmware, not a replacement ROM. Enter uppercase source and commands as shown. The verifier uses the emulator's real keyboard path.
+Reserve lines 1000–1040, or renumber the GOSUB target and routine together.
+Initialise N and S once, then set numeric command A and GOSUB 1000.
 
-Keep the initial `N=0` once at startup. Put your command handling where the listing tests the input, and your world update where it increments N. Keep INPUT in the loop: it is the point at which the player hands control back to the game. Renumber the listing when combining it with another BASIC program; there is no assembly include or hidden support file.
+- N: integer-valued counter 0–255; accepted input adds S modulo 256.
+- S: integer-valued step 0–255; input, preserved.
+- A: submitted numeric command; input, preserved. Only 1 is accepted.
+- C: result, 1 accepted or 0 rejected; replaced on every call.
 
-## Contract and ownership
+The one-subtraction wrap assumes the stated bounds (maximum sum 510). It is not
+a general modulo operation for arbitrary floating-point values. Atari BASIC
+uses its normal numeric representation; these are globals, not byte variables.
+The routine owns N/C and its interpreter return frame; it allocates no fixed
+RAM, graphics buffer, clock or interrupt. Rename variables consistently if they
+clash, and consume C before another routine reuses it. A full adventure still
+needs command parsing, world state and game rules.
 
-`N` holds rule state; `A` holds the submitted command. `1` advances one turn; `0` leaves N unchanged. BASIC owns variable storage, keyboard scanning, screen output and its normal interrupt services. Other malformed input follows this BASIC's usual error handling; this small caller does not supply a full parser.
+## Customise; diagnose
 
-GRAPHICS 0 redraws the text display. Enter each line separately and allow it to be accepted before typing another; the verifier waits 60 native frames. The observer follows SAVMSC rather than assuming a fixed screen address.
+Use `customise.bas` plus the same routine: S=2 produces 0, 2, 4. Initialise N to
+254 for 254, 255, 0, or 37 for 37, 38, 39. These change initial values without
+adding another routine or global. Keep both the counter and step in range.
 
-The other BASIC counters use the dialect's normal numeric range. They are not unlimited integers. Screen redraw and input can take time, but neither is a turn deadline. To add timed turns later, choose a separate clock and timeout policy; do not assume INPUT will return periodically to check it.
+`mistakes/reset-each-turn.bas` is deliberately wrong: it erases N before every
+rule call. Two accepted commands produce 0, 1, 1; rejected input can erase
+progress too. Restore `caller.bas`; the verifier runs that repair afresh.
+Text entered at numeric INPUT follows Atari BASIC's interpreter error handling.
+This sample does not invent a universal parser or accept arbitrary malformed text.
 
-## Reproduce the check
+INPUT blocks the game code. It cannot promise to return for animation, sound
+updates or a deadline. The OS continues its own services. A timed turn needs a
+non-blocking reader or a separately owned service and explicit expiry policy.
+The assembly counterpart demonstrates sampled fire input with OS clock pacing;
+it is a different input contract, not a mandatory optimisation of this caller.
 
-From the repository root:
+## Execute again
 
 ```sh
-python3 scripts/verify-command-loops.py --native /path/to/native/binaries --only atari-800xl
+python3 scripts/verify-xl-coleco-loops.py --only atari-basic --tools TOOL_RELEASE_DIRECTORY --firmware ROM_ROOT
+python3 scripts/check-xl-coleco-loop-records.py
+python3 -m unittest discover -s scripts -p test_xl_coleco_loop_records.py -v
 ```
 
-[The retained record](verification/results.json) identifies the firmware and executable, source hashes and exact configuration. The check submits accepted and ignored commands, waits without changing state, repeats from a nonzero initialiser, and rejects a caller that fabricates its first command. Byte-counter callers also check 254 → 255 → 0. This qualifies a small command caller, not a complete platform track or physical-hardware accuracy.
+The native observer types each numbered line separately with 60 native fields
+for interpreter acceptance, submits actual keyboard commands and reads the
+rendered counter/flag through SAVMSC, not a fixed screen address. Six fresh
+cases cover default, custom step, nonzero, wrap, wrong and repaired callers.
+`verification/reusable/` retains the captures and source-bound execution record.
+Emu198x 0.44.1 and exact firmware/tool identities are recorded. No manufacturer
+firmware is included; this does not qualify a complete emulator or real hardware.
+
+Primary reference: Atari, *Atari BASIC Reference Manual*, GOSUB, RETURN, INPUT,
+GRAPHICS and the numeric representation. See the assembly counterpart's notes
+for the separate OS/joystick/clock contract.

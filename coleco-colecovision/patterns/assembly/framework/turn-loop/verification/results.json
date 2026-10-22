@@ -1,0 +1,483 @@
+{
+  "status": "passed",
+  "machine_id": "coleco-colecovision",
+  "language": "assembly",
+  "configuration": "ColecoVision NTSC, stock BIOS and title-skipping 32 KiB cartridge, polled VDP with IE0 disabled",
+  "startup": "Fresh stock BIOS cartridge startup; no host CPU/RAM injection",
+  "variants": {
+    "working": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          90,
+          1,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          64,
+          128,
+          1,
+          64,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          64,
+          158,
+          1,
+          64,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          166,
+          1,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          64,
+          174,
+          1,
+          64,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "customise": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          90,
+          1,
+          0,
+          2,
+          0
+        ],
+        "pressed": [
+          2,
+          64,
+          128,
+          1,
+          64,
+          2,
+          0
+        ],
+        "held": [
+          2,
+          64,
+          158,
+          1,
+          64,
+          2,
+          0
+        ],
+        "released": [
+          2,
+          0,
+          166,
+          1,
+          0,
+          2,
+          0
+        ],
+        "second": [
+          4,
+          64,
+          174,
+          1,
+          64,
+          2,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "wrap": {
+      "states": {
+        "initial": [
+          254,
+          0,
+          90,
+          1,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          255,
+          64,
+          128,
+          1,
+          64,
+          1,
+          0
+        ],
+        "held": [
+          255,
+          64,
+          158,
+          1,
+          64,
+          1,
+          0
+        ],
+        "released": [
+          255,
+          0,
+          166,
+          1,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          0,
+          64,
+          174,
+          1,
+          64,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "nonzero": {
+      "states": {
+        "initial": [
+          37,
+          0,
+          90,
+          1,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          38,
+          64,
+          128,
+          1,
+          64,
+          1,
+          0
+        ],
+        "held": [
+          38,
+          64,
+          158,
+          1,
+          64,
+          1,
+          0
+        ],
+        "released": [
+          38,
+          0,
+          166,
+          1,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          39,
+          64,
+          174,
+          1,
+          64,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "held-as-press": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          90,
+          1,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          8,
+          64,
+          128,
+          1,
+          64,
+          1,
+          1
+        ],
+        "held": [
+          38,
+          64,
+          158,
+          1,
+          64,
+          1,
+          1
+        ],
+        "released": [
+          38,
+          0,
+          166,
+          1,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          46,
+          64,
+          174,
+          1,
+          64,
+          1,
+          1
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "bad-wait": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          244,
+          41,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          64,
+          170,
+          74,
+          64,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          64,
+          127,
+          100,
+          64,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          98,
+          107,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          64,
+          68,
+          114,
+          64,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 6613
+    },
+    "fixed-edge": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          90,
+          1,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          64,
+          128,
+          1,
+          64,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          64,
+          158,
+          1,
+          64,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          166,
+          1,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          64,
+          174,
+          1,
+          64,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    },
+    "fixed-wait": {
+      "states": {
+        "initial": [
+          0,
+          0,
+          90,
+          1,
+          0,
+          1,
+          0
+        ],
+        "pressed": [
+          1,
+          64,
+          128,
+          1,
+          64,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          64,
+          158,
+          1,
+          64,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          166,
+          1,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          64,
+          174,
+          1,
+          64,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30
+    }
+  },
+  "program_sha256": {
+    "working": "b40f2adc81776424e5c217b0c3d0a72039e700a27c7fecb7c2c3ce45a9a1dc14",
+    "customise": "cdd6eaf25bf3a2bf7eb63957409be32e95e2b3e36d324a47670b0e6a96ba667f",
+    "wrap": "307fe79559cf39a4f7bdb5f01d1310b55a6f40417d92af9a0c890c58faa6bf7d",
+    "nonzero": "6bc63726fd4b219a14a44a63ef72a9c2f5656af5c0c1b5028e20e98cf049a446",
+    "held-as-press": "e86183c92398e1ee975d68ec5e8fde0f37c7e0a808a98da5ab04baad1f43e0d4",
+    "bad-wait": "a58d79028c9ea075f94db95a82cdd147d912498c43a9d0c697fa0ea9a3178d9d",
+    "fixed-edge": "b40f2adc81776424e5c217b0c3d0a72039e700a27c7fecb7c2c3ce45a9a1dc14",
+    "fixed-wait": "b40f2adc81776424e5c217b0c3d0a72039e700a27c7fecb7c2c3ce45a9a1dc14"
+  },
+  "artifacts": {
+    "working-waiting.png": "aec280492ee466b81c72a31f8bc2ba292e54ff3f13424e54d63d158904480127",
+    "working-pressed.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "working-held.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "working-second.png": "4e95aa5348bcadd7009babc59250805ab7e85ba16b973b5dbdf94eddccf1e339",
+    "customise-waiting.png": "aec280492ee466b81c72a31f8bc2ba292e54ff3f13424e54d63d158904480127",
+    "customise-pressed.png": "4e95aa5348bcadd7009babc59250805ab7e85ba16b973b5dbdf94eddccf1e339",
+    "customise-held.png": "4e95aa5348bcadd7009babc59250805ab7e85ba16b973b5dbdf94eddccf1e339",
+    "customise-second.png": "7260e59e2152faa2200a0a29de388c7cda74dbb9d2e0d1ceb667f61f7adb32ca",
+    "wrap-waiting.png": "63e11e0139f68205db164f235df26f83f9a2a8b1bccd4457ff60bd67388e1b5f",
+    "wrap-pressed.png": "7233b0acd618931233e7b31aa1c1e6ae7035874c6b0487b491ce585793b4d561",
+    "wrap-held.png": "7233b0acd618931233e7b31aa1c1e6ae7035874c6b0487b491ce585793b4d561",
+    "wrap-second.png": "aec280492ee466b81c72a31f8bc2ba292e54ff3f13424e54d63d158904480127",
+    "nonzero-waiting.png": "d37d0655b9c3295bd3a5d3e35ed8fd27a6ea491497895e9bb74885ccdb847a02",
+    "nonzero-pressed.png": "cc9a4d2cf76b50d50357e3926fe4530ed066abef832b67aef71147dde1abd1b2",
+    "nonzero-held.png": "cc9a4d2cf76b50d50357e3926fe4530ed066abef832b67aef71147dde1abd1b2",
+    "nonzero-second.png": "daae0d6950b080d3c4abc36bcaae9a2b3f77887ff7d76c05d2d8c671c840a049",
+    "held-as-press-waiting.png": "aec280492ee466b81c72a31f8bc2ba292e54ff3f13424e54d63d158904480127",
+    "held-as-press-pressed.png": "701b155c4102beb4b365188630792faf4c6e7fe0cd7a86f0c4a9f9c6eb0f52e0",
+    "held-as-press-held.png": "d37d0655b9c3295bd3a5d3e35ed8fd27a6ea491497895e9bb74885ccdb847a02",
+    "held-as-press-second.png": "244b4b169a0f8eec5d167f77bdd13c6b865c1b3bd51ec4ecbb490005793b33c2",
+    "bad-wait-waiting.png": "aec280492ee466b81c72a31f8bc2ba292e54ff3f13424e54d63d158904480127",
+    "bad-wait-pressed.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "bad-wait-held.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "bad-wait-second.png": "4e95aa5348bcadd7009babc59250805ab7e85ba16b973b5dbdf94eddccf1e339",
+    "fixed-edge-waiting.png": "aec280492ee466b81c72a31f8bc2ba292e54ff3f13424e54d63d158904480127",
+    "fixed-edge-pressed.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "fixed-edge-held.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "fixed-edge-second.png": "4e95aa5348bcadd7009babc59250805ab7e85ba16b973b5dbdf94eddccf1e339",
+    "fixed-wait-waiting.png": "aec280492ee466b81c72a31f8bc2ba292e54ff3f13424e54d63d158904480127",
+    "fixed-wait-pressed.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "fixed-wait-held.png": "a6c4c299e1adee1393ab5160a58968f9baf47ca5bbdd5c6d594cdcf51b18f4ec",
+    "fixed-wait-second.png": "4e95aa5348bcadd7009babc59250805ab7e85ba16b973b5dbdf94eddccf1e339"
+  },
+  "sources": {
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/Makefile": "d83161dd18c81df0a05753b9920640d6afc2e1021a48a38939fc2d2eb117b08d",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/customise.inc": "db23fed26fc5ed075bee9bcbfa19c6792167b1ef4426c77c209f9676decd2a2b",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/demo.asm": "e640b51d106a9d402834bef28e80fabc7a49c6b1e36acf8405f95f429996fb39",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/edge.inc": "fcbf5a5c4278a1d958eb3aab301c53fb29b0dd692ebd9178ec9a79b986ca4fef",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/frame.inc": "f8ddad9a4acd3d3ff268b3b671d9686e0d0587b6f11028b22fbf461fdaf6e490",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/mistakes/held-as-press.inc": "a925a91b49110f67a5328e3d9c33110da84af1f31138561760160c84d663535e",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/mistakes/no-wait.inc": "46e1cb52a7050379e0b2dbf09b72edb6416a0721e4e43ab9b90ff690a15ae5e3",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/nonzero.inc": "90f2ffa7529e052926e063e6131b8497e43f1bda5797c5a17cce2d60251e546e",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/picture.inc": "c5b0f797d801d28540821462f12c2eaa444571453b522ab83e9e3ac5217c067a",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/qualification-toolchain.json": "a925048abc95cbcfabc76adad95f3a4451558d65b403ef0939eb16e44472644f",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/settings.inc": "d1eddd08b478bfbe04dd32ea1a827b9ee02ccd7e73195fe4ef232e31fd50400d",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/turn.inc": "f27113b7f1215d552b1d02b2e59431ef3a2abaeb1ff417788707131c68186457",
+    "coleco-colecovision/patterns/assembly/framework/turn-loop/wrap.inc": "19b883992e5279c30161208074daef404a33fb97525c786752b2008216ff0a3d",
+    "cross-platform/patterns/rendering/bitmap-text/font-z80.inc": "881649d077c75b31eb1f6835b8fafc144512db1fa468f2bc4c778b15e09b08d5"
+  },
+  "observer_sources": {
+    "scripts/verify-xl-coleco-loops.py": "db0535bb029c2d7f34dc3685e9bcd8a78b0bc245a4fc9443a8f5d6532e33b853",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "b213b99c5c427c2df05f6c88d96b4d872f52da86b2961446002332a7f8ac1799",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "release_tags": {
+    "emu198x": "v0.44.1",
+    "asm198x": "asm198x-v0.0.71"
+  },
+  "firmware_sha256": {
+    "colecovision.rom": "990bf1956f10207d8781b619eb74f89b00d921c8d45c95c334c16c8cceca09ad"
+  },
+  "limits": "The named workload, released native tools and supplied firmware only; no PAL or physical-hardware timing qualification."
+}
