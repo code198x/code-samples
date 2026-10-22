@@ -151,6 +151,11 @@ def source() -> str:
 
 
 def validate(record: dict) -> None:
+    T.require(
+        len(CASES) == 22
+        and {case[0] for case in CASES} == {"get", "set", "property", "pixel8"},
+        "Missing boundary operations",
+    )
     T.require(record["cases"] == CASES, "Boundary cases changed")
     T.require(bytes(record["actual"]) == expected(), "6809 boundary result changed")
     T.require(record["sources"] == bindings(), "Stale 6809 boundary evidence")
