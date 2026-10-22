@@ -73,7 +73,7 @@ Use the identified firmware from your own installation; none is bundled.
 executable, full native captures and the following observations: idle and rejected
 commands preserve working state; accepted commands set C, rejected commands clear
 it; default steps give 0/1/2; step-two gives 0/2/4; a nonzero start gives 37/38/39;
-the reset fault gives 0/1/1. 
+the reset fault gives 0/1/1.
 The recorded checker verifies retained evidence; only the native verifier runs
 the emulator. No timed-input, physical-hardware, sound-service or whole-emulator
 claim follows from these checks.
