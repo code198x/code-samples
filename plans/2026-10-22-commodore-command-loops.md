@@ -8,3 +8,11 @@
 6. Publish source and website review PRs, update docs#117, language inventory and coverage matrix. Keep the new tranche in review. Preserve durable evidence, stop task processes and remove verified disposable worktrees/caches.
 
 Temporary resources: /private/tmp/commodore-loops-{samples,site,tools}; preview ports 4387/4388. Durable logs and records: task outputs/commodore-loops. No new dependencies or emulator changes are commissioned.
+
+CI exposed a pre-existing C64 corpus validator failure. The new routine files
+pass; four Oracle listings were rejected for DO inside quoted text, and unit
+15 deliberately supplies POKE 53281,300. Preserve that lesson, mask quoted
+literal data before semantic checks, require its exact negative fixture hash
+and diagnostic, print failures even when validate returns false, and reject a
+failed or empty tokenizer output. Verify literal/code pairs, changed/repaired
+negative fixtures and tokenizer failure controls. No listing or test is skipped.

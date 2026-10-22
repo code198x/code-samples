@@ -7,12 +7,16 @@ on:
       - 'commodore-64/**/*.bas'
       - 'scripts/validate-c64-basic.py'
       - 'scripts/validate-bas.sh'
+      - 'scripts/c64-basic-negative-cases.json'
+      - 'scripts/test_c64_basic_validator.py'
   pull_request:
     branches: [ main, master ]
     paths:
       - 'commodore-64/**/*.bas'
       - 'scripts/validate-c64-basic.py'
       - 'scripts/validate-bas.sh'
+      - 'scripts/c64-basic-negative-cases.json'
+      - 'scripts/test_c64_basic_validator.py'
 
 concurrency:
   group: validate-c64-basic-${{ github.event.pull_request.number || github.ref }}
@@ -37,6 +41,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y vice
 
+    - name: Test literal handling and required negative controls
+      run: python3 scripts/test_c64_basic_validator.py
+
     - name: Find and validate C64 BASIC files
       run: |
         echo "🔍 Finding C64 BASIC .bas files..."
@@ -58,7 +65,11 @@ jobs:
           echo "Validating: $BASFILE"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-          if ./scripts/validate-bas.sh "$BASFILE"; then
+          VALIDATION_ARGS=()
+          if [ "$BASFILE" = 'commodore-64/basic/meet-c64-basic/unit-15/steps/step-02.bas' ]; then
+            VALIDATION_ARGS+=(--negative-fixture)
+          fi
+          if ./scripts/validate-bas.sh "$BASFILE" "${VALIDATION_ARGS[@]}"; then
             PASSED=$((PASSED + 1))
           else
             FAILED=$((FAILED + 1))

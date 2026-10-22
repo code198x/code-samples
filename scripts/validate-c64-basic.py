@@ -13,6 +13,9 @@ This validator catches:
 - Boundary violations (screen coordinates, sprite positions)
 """
 
+import argparse
+import hashlib
+import json
 import re
 import sys
 from pathlib import Path
@@ -66,7 +69,8 @@ class C64BasicValidator:
 
         for line_num, line in enumerate(lines, 1):
             # Convert to lowercase for case-insensitive matching
-            line_lower = line.lower()
+            # Literal prose is data, not executable BASIC. Preserve positions.
+            line_lower = re.sub(r'"[^"\n]*(?:"|$)', lambda match: ' ' * len(match[0]), line.lower())
 
             # Run all validation checks
             self._check_restore_syntax(line_lower, line_num)
@@ -183,23 +187,38 @@ class C64BasicValidator:
             print(f"\n{len(self.warnings)} warning(s) found (non-blocking).")
             return True
 
+def negative_fixture_matches(filename: str, errors: list[ValidationError], root: Path | None = None) -> bool:
+    """Qualify one exact, deliberately invalid teaching fixture; fail on drift."""
+    project = root if root is not None else Path(__file__).resolve().parents[1]
+    try:
+        relative = str(Path(filename).resolve().relative_to(project.resolve()))
+        fixtures = json.loads((project / 'scripts/c64-basic-negative-cases.json').read_text())
+        expected = fixtures[relative]
+        return (
+            hashlib.sha256(Path(filename).read_bytes()).hexdigest() == expected['sha256']
+            and [(error.line_num, error.message) for error in errors]
+            == [(expected['line'], expected['message'])]
+        )
+    except (KeyError, ValueError, OSError):
+        return False
+
+
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: validate-c64-basic.py <file.bas>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('filename')
+    parser.add_argument('--negative-fixture', action='store_true', help='Require the exact registered source and expected semantic error')
+    args = parser.parse_args()
+    if not Path(args.filename).is_file():
+        parser.error('BASIC source file does not exist')
+    validator = C64BasicValidator(args.filename)
+    valid = validator.validate()
+    reported = validator.report()  # Report errors even when validate() is false.
+    if args.negative_fixture:
+        accepted = not valid and negative_fixture_matches(args.filename, validator.errors)
+        print('Expected negative diagnostic verified' if accepted else 'Negative fixture did not match its exact source and diagnostic')
+        sys.exit(0 if accepted else 1)
+    sys.exit(0 if valid and reported else 1)
 
-    filename = sys.argv[1]
-
-    if not Path(filename).exists():
-        print(f"❌ File not found: {filename}")
-        sys.exit(1)
-
-    validator = C64BasicValidator(filename)
-
-    if validator.validate() and validator.report():
-        sys.exit(0)
-    else:
-        sys.exit(1)
 
 if __name__ == '__main__':
     main()

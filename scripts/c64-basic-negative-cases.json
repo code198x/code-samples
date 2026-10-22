@@ -1,0 +1,8 @@
+{
+  "commodore-64/basic/meet-c64-basic/unit-15/steps/step-02.bas": {
+    "sha256": "6712d38e609e4673188fde01fae1c41ad398ee13a11e7dcc1b67743a40f9facf",
+    "line": 1,
+    "message": "POKE value 300 exceeds 255 (will cause ?ILLEGAL QUANTITY ERROR)",
+    "purpose": "Unit 15 deliberately demonstrates ILLEGAL QUANTITY; the corpus check must observe this diagnostic, not ignore the file."
+  }
+}
