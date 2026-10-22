@@ -25,3 +25,9 @@ python3 scripts/verify-command-loops.py --native /path/to/native/binaries --only
 ```
 
 [The retained record](verification/results.json) identifies the firmware and executable, source hashes and exact configuration. The check submits accepted and ignored commands, waits without changing state, repeats from a nonzero initialiser, and rejects a caller that fabricates its first command. Byte-counter callers also check 254 → 255 → 0. This qualifies a small command caller, not a complete platform track or physical-hardware accuracy.
+
+## Current-release qualification and variations
+
+The current retained baseline is executed on released Emu198x 0.44.1. Use `scripts/verify-dragon-ace-loops.py --native /path/to/binaries-and-producer-locks --assembler /path/to/asm198x --only refresh` to refresh both stock-language routes. `scripts/verify-dragon-ace-language-variants.py --native /path/to/binaries` executes the maintained customisation, reset fault, separate repair and nonzero initialiser; `scripts/check-dragon-ace-loops.py` independently checks retained observations.
+
+`customise` changes the accepted update from one to three. The deliberately broken `mistakes/reset-each-command` erases progress at the next iteration. Restore the original loop target/initialisation to repair it; normal state survives idle and ignored input. `verification/variants.json` and its native images keep those runs separate from the older baseline. These are untimed policies; a turn deadline needs its own clock and input policy.

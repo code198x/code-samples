@@ -4,7 +4,7 @@
   "machine_id": "jupiter-ace",
   "server": {
     "name": "emu198x-jupiter-ace",
-    "version": "0.38.3"
+    "version": "0.44.1"
   },
   "sound": "478 120 BEEP: ROM-generated blocking tone, actual PCM captured",
   "drawing": "BOX uses three text rows and preserves the running count on the stack",
@@ -22,13 +22,60 @@
     "observed_turn": 1
   },
   "firmware_sha256": {
-    "forth": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d"
+    "ace.rom": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d"
   },
-  "emulator_sha256": "d4c71890afb013fed3946570e1aa3f16abafa064416616405ddcf7b84c5a214a",
+  "emulator_sha256": "aba6bf3f2106dc7e65ef69d2deb0d7d05d98a0164c92dd011e930d93ea1508b4",
   "sources": {
     "jupiter-ace/patterns/forth/capabilities/input-drawing-sound/demo.fth": "4dfd2f2cb1f682f491e6cb1763d7dc05b845c8c94f320656f9f6842fe39880e0",
     "scripts/verify-ace-capabilities.py": "3c43c81a0689d0c0c7ddd61dc9eb22a74c5ac4768854c13ae0a65e24577568ac",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
-  "limits": "Untimed FORTH key/display path, one cell of state. No frame clock, deadline, original-hardware or whole-emulator claim."
+  "limits": "Untimed FORTH key/display path, one cell of state. No frame clock, deadline, original-hardware or whole-emulator claim.",
+  "emulator_source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+  "emulator_release": "v0.44.1",
+  "producer_source_lock": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-jupiter-ace",
+    "version": "0.44.1",
+    "archive": "emu198x-jupiter-ace-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "c959931a7b7fbf92980c49d49ed4d001d716d460433aa159be5a30045b53550e",
+    "executable_sha256": "aba6bf3f2106dc7e65ef69d2deb0d7d05d98a0164c92dd011e930d93ea1508b4",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "track": "forth",
+  "refresh_observer_sources": {
+    "scripts/verify-dragon-ace-loops.py": "66677bad2852d4e6de053783c83717a7d816a834a2e632cbc5cfddf5b1483a29",
+    "scripts/verify-ace-capabilities.py": "3c43c81a0689d0c0c7ddd61dc9eb22a74c5ac4768854c13ae0a65e24577568ac",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "captures": {
+    "jupiter-ace/patterns/forth/capabilities/input-drawing-sound/verification/current-release/two-turns.png": "682ebc2725c42e8e2e25aeefad2c60182bba6fbdb34eca47532fc0639f535c81",
+    "jupiter-ace/patterns/forth/capabilities/input-drawing-sound/verification/current-release/one-turn.png": "dabf84147b463454e804bc5d569c61c1ba8d82c5e9176d8d72a055cd0097e809"
+  },
+  "audio_capture": {
+    "path": "jupiter-ace/patterns/forth/capabilities/input-drawing-sound/verification/current-release/sound.wav",
+    "sha256": "6ddf31068f0a4eeb285d45b7ee3f6b41ebf4c7803a3ffe8310ac59a3262a277f",
+    "full_sha256": "424b711d84e45a448911791333dc1387fcd4c94b71d0d639677cb217847d5933"
+  }
 }

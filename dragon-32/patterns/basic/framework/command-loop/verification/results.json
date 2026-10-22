@@ -3,7 +3,7 @@
   "machine_id": "dragon",
   "server": {
     "name": "emu198x-dragon",
-    "version": "0.34.2"
+    "version": "0.44.1"
   },
   "configuration": "Dragon 32 PAL",
   "startup": "Fresh firmware reset; complete numbered BASIC program and RUN typed through keyboard",
@@ -31,12 +31,54 @@
   "firmware_sha256": {
     "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
   },
-  "emulator_sha256": "a5688310dd4d29bb1e430032e6d07fb4192c5ab5303258cf4920201242a1ca78",
-  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "emulator_sha256": "44c9ac54c512e34ed89b6d9287dc9c521f621abe722979d5074451c84a10b702",
+  "emulator_source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
   "sources": {
     "dragon-32/patterns/basic/framework/command-loop/demo.bas": "3fc152246614f1e26d3a3a1f77d9bf263689eed5043e2536acb251661289ade2",
     "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
-  "limits": "Untimed numeric turn state and line-input/display path only. Firmware clocks/IRQs continue; no deadline, joystick, frame pacing, original-hardware or complete emulator claim."
+  "limits": "Untimed numeric turn state and line-input/display path only. Firmware clocks/IRQs continue; no deadline, joystick, frame pacing, original-hardware or complete emulator claim.",
+  "emulator_release": "v0.44.1",
+  "producer_source_lock": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-dragon",
+    "version": "0.44.1",
+    "archive": "emu198x-dragon-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "f6fe61a63e25e2f45ceb28002e633730b073e26e3d96ddb92aaa42b13a4a3fb7",
+    "executable_sha256": "44c9ac54c512e34ed89b6d9287dc9c521f621abe722979d5074451c84a10b702",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "track": "basic",
+  "refresh_observer_sources": {
+    "scripts/verify-dragon-ace-loops.py": "66677bad2852d4e6de053783c83717a7d816a834a2e632cbc5cfddf5b1483a29",
+    "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "captures": {
+    "dragon-32/patterns/basic/framework/command-loop/verification/current-release/two-turns.png": "8553140f2f8816c6754ff0f939e737523ac71e412dd609792623131f4c4cc1fc",
+    "dragon-32/patterns/basic/framework/command-loop/verification/current-release/one-turn.png": "79dc800df43de7f38ec5fb8ccb5a49d587729452b9143fc1d9de76126345c356",
+    "dragon-32/patterns/basic/framework/command-loop/verification/current-release/waiting.png": "94b3c76c191490df4c52f814f2071beeca38d1229ebd25ec8be1f67777cf64aa"
+  }
 }

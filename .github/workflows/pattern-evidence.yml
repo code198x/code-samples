@@ -462,3 +462,17 @@ jobs:
             ${{ runner.temp }}/pattern-evidence/nes-release-inputs.json
           if-no-files-found: error
           retention-days: 14
+
+  dragon-ace-command-loops:
+    name: Retained Dragon and Ace language probes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Decode all four language routes and bind their evidence
+        run: python scripts/check-dragon-ace-loops.py
+      - name: Prove changed state, source, capture and missing evidence fail
+        run: python -m unittest discover -s scripts -p test_dragon_ace_loops.py -v
