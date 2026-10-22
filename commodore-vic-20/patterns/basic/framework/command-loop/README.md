@@ -1,27 +1,67 @@
-# An untimed command loop: PAL VIC-20, unexpanded 5 KiB
+# Wait for a command: unexpanded PAL VIC-20, basic
 
-Run the listing and the screen shows `TURN 0`. Type `GO` and press Return: it shows `TURN 1`. Wait as long as you like; the game state stays put. Submit the command again for `TURN 2`.
+A advances TURN 0 to TURN 1, then TURN 2. X leaves it alone; Q returns to BASIC.
+The rules have no deadline. Firmware clocks and keyboard/display services remain
+active. Delivered commands are not a physical-key edge contract.
 
-## Use it
+Enter caller.bas and routines.bas as one numbered BASIC program, then RUN.
+complete.bas is their complete combination. INPUT requires Return. Use uppercase
+A/X/Q. This is a tiny command decision, not a parser; punctuation, quoted strings
+and empty input follow the interpreter's INPUT rules.
 
-Enter [demo.bas](demo.bas) into the named machine's BASIC, then type `RUN`. It needs the machine's normal firmware, not a replacement ROM. Enter uppercase source and commands as shown. The verifier uses the emulator's real keyboard path.
+Copy lines 1000–1050 into free numbers and GOSUB 1000. Set N and S to integers
+0..255; A$ is the submitted command. N becomes (N+S) modulo 256 only for A;
+C is replaced with 1 for accepted, 0 otherwise. S/A$ are preserved. Initialise
+N/S once in the caller. One subtraction suffices because their sum is <=510.
+BASIC numbers use the interpreter's floating-point representation here.
 
-Keep the initial `N=0` once at startup. Put your command handling where the listing tests the input, and your world update where it increments N. Keep INPUT in the loop: it is the point at which the player hands control back to the game. Renumber the listing when combining it with another BASIC program; there is no assembly include or hidden support file.
+All four variables are global: rename consistently, including all callers.
+Only the first two name characters distinguish numeric names. The routine does
+no input/output and reserves no absolute RAM. It uses the BASIC return stack;
+call with GOSUB, never GOTO. The caller clears the entire text screen per command.
+Keep the routine separate if your UI must retain a status panel.
 
-## Contract and ownership
+customise.bas replaces the caller, not the routine: S=3 produces 0,3,6.
+mistakes/reset-each-command.bas is deliberately broken: it clears N before every
+rule call. A,X,A produces 1,0,1 instead of 1,1,2. Replace it with caller.bas to
+repair the fault. The native runs observe both versions independently.
 
-`N` holds rule state; `A$` holds the submitted command. `GO` advances one turn; `another string` leaves N unchanged. BASIC owns variable storage, keyboard scanning, screen output and its normal interrupt services. Other malformed input follows this BASIC's usual error handling; this small caller does not supply a full parser.
+The original demo.bas probe, where present, remains unchanged with its original
+record and reproduction path. The reusable caller and new evidence live beside
+it; old probe evidence has not been relabelled as proof of this implementation.
 
-KERNAL and BASIC own the keyboard and screen. Screen clearing uses CHR$(147); no arbitrary RAM address is reserved.
+## Waiting, costs and extensions
 
-The other BASIC counters use the dialect's normal numeric range. They are not unlimited integers. Screen redraw and input can take time, but neither is a turn deadline. To add timed turns later, choose a separate clock and timeout policy; do not assume INPUT will return periodically to check it.
+INPUT blocks in BASIC; assembly keeps polling GETIN, consuming CPU while it
+waits. Neither is a frame limiter. Redrawing the whole screen costs more than
+updating one counter; no frame-rate or cycle benchmark is claimed. Keep the
+rule routine and replace the caller when you need animation, deadlines or sound
+servicing. Specify what happens when a command and timeout coincide.
 
-## Reproduce the check
+The counter is a stand-in for a world update. Replace the A decision with your
+command rules and use the acceptance result to decide whether enemies move.
+A parser, physical press detection and timed turns are separate extensions.
 
-From the repository root:
+## Reproduce
 
-```sh
-python3 scripts/verify-command-loops.py --native /path/to/native/binaries --only commodore-vic-20
-```
+    python3 scripts/verify-commodore-command-loops.py --native /path/to/native/bin --assembler /path/to/asm198x --only commodore-vic-20/basic
 
-[The retained record](verification/results.json) identifies the firmware and executable, source hashes and exact configuration. The check submits accepted and ignored commands, waits without changing state, repeats from a nonzero initialiser, and rejects a caller that fabricates its first command. Byte-counter callers also check 254 → 255 → 0. This qualifies a small command caller, not a complete platform track or physical-hardware accuracy.
+verification/reusable/results.json binds sources, producer identity, firmware
+hashes and six separately started callers. Each waits 120 fields before and
+after an accepted command, rejects X, accepts two As, tests Q, and captures the
+actual framebuffer plus screen RAM. Step-three, reset fault, repair, 254→255→0
+and a nonzero start/step255 run independently. No counter state is injected.
+
+check-commodore-command-loops.py validates the retained observations against
+independent modulo arithmetic and decoded screen text; test_commodore_command_loops.py
+must reject falsified counts/screens, absent source bindings/stages and altered
+capture hashes. Retained evidence checks do not rerun firmware. No original
+hardware, complete emulator or untested display/model claim follows.
+
+The maintained reproduction script qualifies the aarch64 macOS releases above.
+Place the three native executable links and asm198x in one bin/ directory;
+keep each release's matching *-aarch64-apple-darwin-source-lock.json in its parent.
+Use --assembler /path/to/tools/bin/asm198x with --native /path/to/tools/bin.
+Firmware stays in the normal local ROM directory (or pass --firmware-root).
+No firmware is redistributed. Other hosts can adapt the transport, but need
+separate execution evidence rather than inheriting this record.
