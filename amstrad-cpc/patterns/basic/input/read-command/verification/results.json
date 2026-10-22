@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "system": "amstrad-cpc",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-amstrad-cpc",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "amstrad-cpc/patterns/basic/input/read-command/demo.bas": "79d5022ff8b15b3223bba6e4fa17c2df76992dfbae998ba6081ea57788bee119",
+    "amstrad-cpc/patterns/basic/input/read-command/caller.bas": "4861ba3c86e4f150c7184f734b79247b84dce72eda274c9be5b2d972d8ed3b5f",
+    "amstrad-cpc/patterns/basic/input/read-command/read-command.bas": "1fac3f92cbb17d942ae4aba7606beecceffd85bef99673ccd237adda9b105ffb",
+    "amstrad-cpc/patterns/basic/input/read-command/draw.bas": "5d1c9e77522e5136e314d79b9d61fa1f56de83f5e1cb086bd439cd9096e94f7a",
+    "amstrad-cpc/patterns/basic/input/read-command/sound.bas": "59208ef142576f161e994428033b51d9bca2928c17f61b4ddb22c2d3d7d240eb"
+  },
+  "observer_sha256": "f1b74a7f5beb583f574e0babef2c2e0f21ae26a9c0f42e20c96c70199b36e9c7",
+  "emulator_sha256": "95b8aa26a9a08c466e1d307fede6c273ed9bdef7796890a5e70fcad891c24948",
+  "observations": [
+    {
+      "address": 40000,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      9632
+    ],
+    "ac_power": [
+      1524957.4816121913
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

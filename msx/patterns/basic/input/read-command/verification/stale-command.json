@@ -1,0 +1,20 @@
+{
+  "observer_sha256": "e734211f9033994f3c654f7c29c71b782ab5ede017e2d63a96d6cf42e3323bcf",
+  "status": "passed",
+  "system": "msx",
+  "fault": "reused accepted command without reading input",
+  "idle_guard_rejected": true,
+  "observed_turn": 4,
+  "observations": [
+    {
+      "address": 40000,
+      "bytes": [
+        4
+      ],
+      "count": 4
+    }
+  ],
+  "source_sha256": "59dbb588f59e7cc5868447a7ad504ce289a6da7f9e0eb1c3b88471f9023ae949",
+  "image_sha256": "3ac40bc217efbdb4e4d97a03e4a370cb331b7de5535ee2dd08ffc263320b73ab",
+  "emulator_sha256": "1d7eb7ce0be60b9808d08bbe5761a524e84f8ad8e6d32765c7c70e877d32a3f3"
+}
