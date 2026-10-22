@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import argparse
 import copy
 import importlib.util
 import json
+import os
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 SPEC = importlib.util.spec_from_file_location(
     "map_check", Path(__file__).with_name("check-assembly-map-gaps.py")
@@ -17,10 +21,37 @@ SPEC.loader.exec_module(C)
 
 
 class MapRecords(unittest.TestCase):
-    def test_real_records(self):
+    def test_default_assembler_uses_path(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            binary = Path(directory) / "asm198x"
+            binary.write_text("#!/bin/sh\nexit 0\n")
+            binary.chmod(0o755)
+            resolved = []
+
+            def observe(_config: dict, args: argparse.Namespace) -> None:
+                resolved.append(args.assembler)
+
+            with (
+                patch.dict(os.environ, {"PATH": directory}),
+                patch(
+                    "sys.argv",
+                    [
+                        "verify-assembly-map-gaps",
+                        "--native",
+                        directory,
+                        "--only",
+                        "acorn-atom",
+                    ],
+                ),
+                patch.object(C.V, "verify", observe),
+            ):
+                C.V.main()
+            self.assertEqual(resolved, [str(binary.resolve())])
+
+    def test_real_records(self) -> None:
         C.main()
 
-    def test_falsifications(self):
+    def test_falsifications(self) -> None:
         for cfg in json.loads(C.V.CONFIG.read_text()):
             original = json.loads(
                 (C.V.folder(cfg) / "verification/results.json").read_text()
