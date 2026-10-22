@@ -1,0 +1,24 @@
+[
+  {
+    "system": "amstrad-cpc",
+    "binary": "amstrad-cpc",
+    "cpu": "z80",
+    "origin": 0,
+    "size": 32768,
+    "context": 32768,
+    "results": 32832,
+    "map": 33008,
+    "stack": 49136
+  },
+  {
+    "system": "mattel-aquarius",
+    "binary": "mattel-aquarius",
+    "cpu": "z80",
+    "origin": 0,
+    "size": 8192,
+    "context": 14336,
+    "results": 14400,
+    "map": 14576,
+    "stack": 16368
+  }
+]
