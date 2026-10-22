@@ -30,7 +30,7 @@ The first two variants were executed on this machine; the third explains the API
 
 ## Build and verify
 
-`make ASM198X=/path/to/asm198x` builds the original synthetic reset fixture. From the repository root run `python3 scripts/verify-assembly-map-gaps.py --only commodore-pet --assembler /path/to/asm198x --native /path/to/native-tools`. It builds all three variants without editing maintained source and fails unless the correct results match the independent oracle and both faulty callers complete with different results.
+`make ASM198X=/path/to/asm198x` builds the original synthetic reset fixture. From the repository root run `python3 scripts/verify-assembly-map-gaps.py --only commodore-pet --assembler /path/to/asm198x --native /path/to/native-tools`. It builds all four variants without editing maintained source and fails unless the correct results match the independent oracle and both faulty callers complete with different results.
 
 Executed with released Asm198x 0.0.71 and Emu198x 0.44.1. `verification/results.json` binds the caller, shared implementation, observer, fixture and tool hashes. No third-party firmware is distributed. This proves CPU/RAM routine behaviour in the stated configuration, not a stock interpreter loader, picture, interrupt coexistence, frame deadline or original hardware. The unrolled diagnostic is an explicit test caller; use the shared include in a real game.
 
