@@ -532,3 +532,17 @@ jobs:
         run: |
           python scripts/check-basic-rendering.py
           python -m unittest discover -s scripts -p test_basic_rendering.py -v
+
+  assembly-map-gaps:
+    name: Four assembly map ports and corruption controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check native records and reject falsified results
+        run: |
+          python scripts/check-assembly-map-gaps.py
+          python -m unittest discover -s scripts -p test_assembly_map_gaps.py -v
