@@ -14,6 +14,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  xl-coleco-loop-records:
+    name: XL and Coleco loop records and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check three independent language implementations and altered claims
+        run: |
+          python scripts/check-xl-coleco-loop-records.py
+          python -m unittest discover -s scripts -p test_xl_coleco_loop_records.py -v
+
   capability-inventory:
     name: Retained capability evidence (30 machines)
     runs-on: ubuntu-latest

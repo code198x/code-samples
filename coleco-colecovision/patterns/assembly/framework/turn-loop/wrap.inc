@@ -1,0 +1,3 @@
+T equ $6000
+INITIAL equ 254
+STEP equ 1

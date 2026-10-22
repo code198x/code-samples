@@ -1,0 +1,114 @@
+{
+  "status": "passed",
+  "machine_id": "atari-800xl",
+  "language": "basic",
+  "configuration": "800XL NTSC, stock OS and Atari BASIC, GRAPHICS 0",
+  "startup": "Fresh firmware and typed numbered program/RUN",
+  "variants": {
+    "working": {
+      "progression": [
+        0,
+        1,
+        2
+      ],
+      "rejected_flag": 0,
+      "accepted_flag": 1
+    },
+    "customise": {
+      "progression": [
+        0,
+        2,
+        4
+      ],
+      "rejected_flag": 0,
+      "accepted_flag": 1
+    },
+    "wrap": {
+      "progression": [
+        254,
+        255,
+        0
+      ],
+      "rejected_flag": 0,
+      "accepted_flag": 1
+    },
+    "nonzero": {
+      "progression": [
+        37,
+        38,
+        39
+      ],
+      "rejected_flag": 0,
+      "accepted_flag": 1
+    },
+    "reset-mistake": {
+      "progression": [
+        0,
+        1,
+        1
+      ],
+      "rejected_flag": 0,
+      "accepted_flag": 1
+    },
+    "fixed": {
+      "progression": [
+        0,
+        1,
+        2
+      ],
+      "rejected_flag": 0,
+      "accepted_flag": 1
+    }
+  },
+  "program_sha256": {
+    "working": "c6f0a04b5c233e5e99dd60c0e284f034eb68d04287b9a257c5d2a35934a1fb7c",
+    "customise": "58b74cff511a3219abc7be536e572714ea26b3ea61ce32f309769995bba36cca",
+    "wrap": "b8e940beb65f1269592a9ba2f577d1495299354a7900d4e51927a5943f0c0d34",
+    "nonzero": "0f816e1c206f37d9d56680e242eb6bd3ca2812ef1d8d080aef7d41ad72d1dbeb",
+    "reset-mistake": "a88bc71c9d686a5c84fae5a44544d6ebc4ed066764b24c6462badfae569301a2",
+    "fixed": "c6f0a04b5c233e5e99dd60c0e284f034eb68d04287b9a257c5d2a35934a1fb7c"
+  },
+  "artifacts": {
+    "working-waiting.png": "5c5cdd16636f7dda587573d9ee123c87c17f403667c8cc9c229761a162bbf520",
+    "working-action-1.png": "643d7c88f5b604d1cc96cafdea1862b5b31fac4d3ccc888d3435a8e8f456b020",
+    "working-action-2.png": "d3433f52eb77dccba7af2c877ba0f32ddb4a754fb50748052f3a7dfaf6171321",
+    "customise-waiting.png": "5c5cdd16636f7dda587573d9ee123c87c17f403667c8cc9c229761a162bbf520",
+    "customise-action-1.png": "d3433f52eb77dccba7af2c877ba0f32ddb4a754fb50748052f3a7dfaf6171321",
+    "customise-action-2.png": "d51a99c36d7dd340b969f639385557252d449ae72f28711060711f37f9ffea32",
+    "wrap-waiting.png": "adbd1531b3bac7e4fd3a6e6a4c74ba84c0c8a626cfcb8f0fea3705039c3e3e89",
+    "wrap-action-1.png": "dc03edcb7782331e9905606d199f2d5e69024fc43f4ea3653596ed9953743b1a",
+    "wrap-action-2.png": "13bbbcd230ef4d45a8924b8afe661029aa09ae54a88d7d1de18b186760d93042",
+    "nonzero-waiting.png": "6bcd7bb986f23e6d0e8617473d7acd7486b59f3f53864243dc0022f306d92999",
+    "nonzero-action-1.png": "f953995ee17948d31275976ee231e9179209e1286c950d84f6fe6edd32927dd5",
+    "nonzero-action-2.png": "38cd91e4bbf84151624fe2246a05a83585b349496d627ae24e4622cfa351376e",
+    "reset-mistake-waiting.png": "5c5cdd16636f7dda587573d9ee123c87c17f403667c8cc9c229761a162bbf520",
+    "reset-mistake-action-1.png": "643d7c88f5b604d1cc96cafdea1862b5b31fac4d3ccc888d3435a8e8f456b020",
+    "reset-mistake-action-2.png": "643d7c88f5b604d1cc96cafdea1862b5b31fac4d3ccc888d3435a8e8f456b020",
+    "fixed-waiting.png": "5c5cdd16636f7dda587573d9ee123c87c17f403667c8cc9c229761a162bbf520",
+    "fixed-action-1.png": "643d7c88f5b604d1cc96cafdea1862b5b31fac4d3ccc888d3435a8e8f456b020",
+    "fixed-action-2.png": "d3433f52eb77dccba7af2c877ba0f32ddb4a754fb50748052f3a7dfaf6171321"
+  },
+  "sources": {
+    "atari-800xl/patterns/basic/framework/command-loop/caller.bas": "6e357c9b0c1c0b92ed0c3a9c3fff337520555fdc361038571cb16b346e1e900b",
+    "atari-800xl/patterns/basic/framework/command-loop/customise.bas": "6e27be7a0814fc4ae6cfeee30197ed7f6b3c1ed6d625e53a7369526911d8867d",
+    "atari-800xl/patterns/basic/framework/command-loop/demo.bas": "1d6d618236024dcbe9c26c58ef3d26f37ff73067feb9415d2b06439a6bab2ab6",
+    "atari-800xl/patterns/basic/framework/command-loop/mistakes/reset-each-turn.bas": "a387edf228aafc31183b41fac84a142c880d436c65e98b6479477e366845468a",
+    "atari-800xl/patterns/basic/framework/command-loop/qualification-toolchain.json": "b823ac2e1606c4ba3f0838e4a7b64fd1f0ab7d59a6c25010cc203b49321fcdd3",
+    "atari-800xl/patterns/basic/framework/command-loop/routines.bas": "aeb7e8c122523d0717f4207cf2e9de8037f29a317ef3d84c5492c8eaf5b545e3"
+  },
+  "observer_sources": {
+    "scripts/verify-xl-coleco-loops.py": "db0535bb029c2d7f34dc3685e9bcd8a78b0bc245a4fc9443a8f5d6532e33b853",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "941eb3229a296e243f5bf9a8ead04fdef5cd9dd7d2ba8ddf9e06735c1f8ebd27",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "release_tags": {
+    "emu198x": "v0.44.1",
+    "asm198x": "asm198x-v0.0.71"
+  },
+  "firmware_sha256": {
+    "atarixl.rom": "a77050b2d81db2d11eaa3dbafd8ec2531b478abcc3bcc4b0d846b634e885edb1",
+    "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0"
+  },
+  "limits": "The named workload, released native tools and supplied firmware only; no PAL or physical-hardware timing qualification."
+}

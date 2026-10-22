@@ -1,0 +1,3 @@
+T = $06e0
+INITIAL = 254
+STEP = 1
