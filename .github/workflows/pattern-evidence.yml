@@ -490,3 +490,17 @@ jobs:
         run: python scripts/check-aquarius-mtx-loops.py
       - name: Reject changed observations and falsely repaired faults
         run: python -m unittest discover -s scripts -p test_aquarius_mtx_loops.py -v
+
+  msx-gameboy-command-loops:
+    name: Retained MSX BASIC and assembly and DMG loops
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Decode independent state, video writes and native-frame records
+        run: python scripts/check-msx-gameboy-loops.py
+      - name: Reject falsified records and disabled service/edge guards
+        run: python -m unittest discover -s scripts -p test_msx_gameboy_loops.py -v
