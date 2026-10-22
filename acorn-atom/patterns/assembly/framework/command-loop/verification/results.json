@@ -1,0 +1,133 @@
+{
+  "status": "passed",
+  "machine_id": "acorn-atom",
+  "language": "assembly",
+  "startup": "Cold firmware, entire numbered program and RUN typed through keyboard",
+  "configuration": "Atom full 32 KiB, integer BASIC loader, stock character firmware",
+  "cases": {
+    "default": {
+      "startup": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "a68d4ddd592aae01902ccc7b12f011a85907addc2677d312e9b0c18d3e9c93a7",
+      "progression": [
+        0,
+        1,
+        2
+      ],
+      "updates_per_30_fields": null
+    },
+    "step-two": {
+      "startup": [
+        0,
+        2,
+        0,
+        0
+      ],
+      "program_sha256": "513ac5525f4b89e39c9f993b31a008192f9dfeaca480d553541d7a5ba26271f3",
+      "progression": [
+        0,
+        2,
+        4
+      ],
+      "updates_per_30_fields": null
+    },
+    "nonzero": {
+      "startup": [
+        37,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "4622adb42f1ba8177831d029780ddb6318edcfced31536b76d1fccb88433f80a",
+      "progression": [
+        37,
+        38,
+        39
+      ],
+      "updates_per_30_fields": null
+    },
+    "wrap": {
+      "startup": [
+        254,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "2348c9ba6e470297634cb95a1afe6183e20bb1a9ca8a06b34ee88c1d4a1295a1",
+      "progression": [
+        254,
+        255,
+        0
+      ],
+      "updates_per_30_fields": null
+    },
+    "wrong": {
+      "startup": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "f91a44ea66dff86e8badd92f8e64aa947cfb579697c90781544a0dda801d8139",
+      "progression": [
+        0,
+        1,
+        1
+      ],
+      "updates_per_30_fields": null
+    },
+    "fixed": {
+      "startup": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "a68d4ddd592aae01902ccc7b12f011a85907addc2677d312e9b0c18d3e9c93a7",
+      "progression": [
+        0,
+        1,
+        2
+      ],
+      "updates_per_30_fields": null
+    }
+  },
+  "sources": {
+    "acorn-atom/patterns/assembly/framework/command-loop/Makefile": "c32a7eea0cf3b9c9056cb877be34a1a09ca815b7a5f485f9657506ca9f07d7ae",
+    "acorn-atom/patterns/assembly/framework/command-loop/demo.asm": "d85d99a3d8c9ccb55584261886e8f97c5fad03e2d0e515c744fb39655df39788",
+    "acorn-atom/patterns/assembly/framework/command-loop/dispatch.inc": "41dc79c0bcb244729f2b71e01cc34b21f28aee0bbad631224648c07035889e01",
+    "acorn-atom/patterns/assembly/framework/command-loop/loader.py": "ff3f70a5a2128ee5c51e9666542dfb66daec8965fa08d293ac048cc5ab01b80d",
+    "acorn-atom/patterns/assembly/framework/command-loop/mistakes/reset-each-command.inc": "8085e5db146e0a33c655441aea00bc8e70311fc782c4a0d6cd7f500031f7969e",
+    "acorn-atom/patterns/assembly/framework/command-loop/qualification-toolchain.json": "d24c4b9d5e9e98bdbf3d5cfb9721d7396112b4c65e5b9d29ae693234965d0066",
+    "acorn-atom/patterns/assembly/framework/command-loop/settings.inc": "deb8d02b2bdbf4385a9b56a045a31ec7608a1d99008dc88002b14111a49c554f",
+    "cross-platform/patterns/framework/command-turns/6502.inc": "0160929f8d6af858919c84ed181e7be4fab519101c82dd982f6fb1730398f424"
+  },
+  "observer_sources": {
+    "scripts/verify-loop-language-gaps.py": "558333951b7fe41323935d6bafbac704eab81e8fc76232a25d532aafef8d42b0",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "artifacts": {
+    "default-waiting.png": "6bbec3584e1d5a3ee9ff1b89aa183a4729fda194f3c8fd4b8e2392e931ce635e",
+    "default-action.png": "820d5ade275fb287c250a391ab5641ceb8f6511a5bca1bc515e62c0772063a0c",
+    "step-two-waiting.png": "6bbec3584e1d5a3ee9ff1b89aa183a4729fda194f3c8fd4b8e2392e931ce635e",
+    "step-two-action.png": "8b00b683b46c292b59eba978f6fa71177269921ff2ed11ad38123f387383f5b2",
+    "nonzero-waiting.png": "94d9adb44cec59d7fd603b03c4895fc1475f0fee0a687a6311c0fb70850fd86a",
+    "nonzero-action.png": "1cecb0b984a11bbdc9b2d6203260f02311eb739572ab4ad5e5b47d5fd6a5fb41",
+    "wrap-waiting.png": "251dc235bab6c83d1c68053046c0992e92564cb7912a74c095d8f946d90b9ecf",
+    "wrap-action.png": "6bbec3584e1d5a3ee9ff1b89aa183a4729fda194f3c8fd4b8e2392e931ce635e",
+    "wrong-waiting.png": "6bbec3584e1d5a3ee9ff1b89aa183a4729fda194f3c8fd4b8e2392e931ce635e",
+    "wrong-action.png": "48353198720c45db874155a344e2988473b8c31a544e3d954e95e0252dbad58c",
+    "fixed-waiting.png": "6bbec3584e1d5a3ee9ff1b89aa183a4729fda194f3c8fd4b8e2392e931ce635e",
+    "fixed-action.png": "820d5ade275fb287c250a391ab5641ceb8f6511a5bca1bc515e62c0772063a0c"
+  },
+  "executable_sha256": "db08f2aacd4a25348b63af7dac90f91d2e0a0a09181bd6097fa6d80b8f9d1a9a",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "firmware_sha256": {
+    "atom.rom": "c3810e3c70b035ba16ce40a6786723a548b89f2547eacc45c63a01c0337a1d47"
+  },
+  "limits": "Selected released native emulator and ROM configuration only; not original hardware, all ROM versions or a complete game budget."
+}

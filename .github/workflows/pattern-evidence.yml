@@ -37,6 +37,10 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.14'
+      - name: Check four language-specific loop records and falsified evidence
+        run: |
+          python scripts/check-loop-language-records.py
+          python -m unittest discover -s scripts -p test_loop_language_records.py -v
       - name: Compare the five selected records with their inputs
         run: python scripts/check-pattern-evidence.py --output "$RUNNER_TEMP/pattern-evidence/recorded-inputs.json"
       - name: Validate all eight routine-audit records and failure controls

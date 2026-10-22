@@ -1,0 +1,4 @@
+TURN equ $8ff0
+ACCEPT_KEY equ 71
+INITIAL equ 0
+STEP equ 1

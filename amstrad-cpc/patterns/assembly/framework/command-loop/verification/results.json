@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "machine_id": "amstrad-cpc",
+  "language": "assembly",
+  "startup": "Cold firmware, entire numbered program and RUN typed through keyboard",
+  "configuration": "CPC464 PAL, Locomotive BASIC loader, MODE 1",
+  "cases": {
+    "default": {
+      "startup": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "0f3e23b9a02824f55d42a0305b45853abfd6c01581c18ef14ce081e458a2ba57",
+      "progression": [
+        0,
+        1,
+        2
+      ],
+      "updates_per_30_fields": null
+    },
+    "step-two": {
+      "startup": [
+        0,
+        2,
+        0,
+        0
+      ],
+      "program_sha256": "61518286b3b876cf0dd95bef4db6f8d2fd8ada20d2bddb3e33652becd4b0d5af",
+      "progression": [
+        0,
+        2,
+        4
+      ],
+      "updates_per_30_fields": null
+    },
+    "nonzero": {
+      "startup": [
+        37,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "0eb319b7581af5348e5c16979bb3d9465abcc6d8f40c6f0e8b693a499e1852fa",
+      "progression": [
+        37,
+        38,
+        39
+      ],
+      "updates_per_30_fields": null
+    },
+    "wrap": {
+      "startup": [
+        254,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "640f1a086508afc057ea6bfca07d0a9035efcd3178da0b72b37d1b2fb2594587",
+      "progression": [
+        254,
+        255,
+        0
+      ],
+      "updates_per_30_fields": null
+    },
+    "wrong": {
+      "startup": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "1e23cdfb3286bf6caf2a7c5dca0f766288dfd670c8d67555d1c2e62e50b1fc98",
+      "progression": [
+        0,
+        1,
+        1
+      ],
+      "updates_per_30_fields": null
+    },
+    "fixed": {
+      "startup": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "program_sha256": "0f3e23b9a02824f55d42a0305b45853abfd6c01581c18ef14ce081e458a2ba57",
+      "progression": [
+        0,
+        1,
+        2
+      ],
+      "updates_per_30_fields": null
+    }
+  },
+  "sources": {
+    "amstrad-cpc/patterns/assembly/framework/command-loop/Makefile": "1bd8d5093ec6acf2bab0b24d75d6e0c447640d45dd5cc3e598aaaad1643bc7c6",
+    "amstrad-cpc/patterns/assembly/framework/command-loop/demo.asm": "b43469b1325fffcd9644858d7bf056745c4d4f4fb9f3ae3c20e78e0c3eb16bd0",
+    "amstrad-cpc/patterns/assembly/framework/command-loop/dispatch.inc": "ec926a528547b326803e36b223501a0e4322032c511154cfcfd37fec885ca693",
+    "amstrad-cpc/patterns/assembly/framework/command-loop/loader.py": "0869bd0803f6fac92daf855aefa9e930059194bffbcfd2f990a7faaa7ef682b7",
+    "amstrad-cpc/patterns/assembly/framework/command-loop/mistakes/reset-each-command.inc": "ec76e32acb6dc21010fdcfc0d82be78f3e1df55d151c52125840912f17d7067e",
+    "amstrad-cpc/patterns/assembly/framework/command-loop/qualification-toolchain.json": "58c69764ff8b6070856363198f9e32570eb03fd9cb118f13f836d09915e0468e",
+    "amstrad-cpc/patterns/assembly/framework/command-loop/settings.inc": "b3036e4a2af012b6e690d083455f84ad083e433dcd44e19c26474036fb3cdd9f",
+    "cross-platform/patterns/framework/command-turns/z80.inc": "9ab5c5e06e4754a5c40844ad54d532f2d9950bd38cb0d49cdd1df343dacb9885"
+  },
+  "observer_sources": {
+    "scripts/verify-loop-language-gaps.py": "558333951b7fe41323935d6bafbac704eab81e8fc76232a25d532aafef8d42b0",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "artifacts": {
+    "default-waiting.png": "d0733bc6b9a99dbbf5277f193a5741d683cafac91dc63c385da8e73b3d921507",
+    "default-action.png": "eb26118e8ea986836ae1ed426a4e284a7840cb0301caec533779dd9c5b931501",
+    "step-two-waiting.png": "d0733bc6b9a99dbbf5277f193a5741d683cafac91dc63c385da8e73b3d921507",
+    "step-two-action.png": "c97fa79661376798107b710ea5b6cdf5daaeec58fa68829fc104e7e7ce1c74db",
+    "nonzero-waiting.png": "11fca5ea4c4df65ac60d8c412537326aa47be7dcbc192bd4c84f2bc56ddf2a37",
+    "nonzero-action.png": "06daf629597547be9e2a6fca9d3a3d85beadbe923f28a8f8b1103cbcc0a3359f",
+    "wrap-waiting.png": "7aad0967a1a12a6545b7ed3b61c08113c0c377e7b30c07b1430f21811222192d",
+    "wrap-action.png": "d0733bc6b9a99dbbf5277f193a5741d683cafac91dc63c385da8e73b3d921507",
+    "wrong-waiting.png": "d0733bc6b9a99dbbf5277f193a5741d683cafac91dc63c385da8e73b3d921507",
+    "wrong-action.png": "8b8868899331300e5819d43fe96679dbeb14f0d690a4bb1cdd56545db4af6891",
+    "fixed-waiting.png": "d0733bc6b9a99dbbf5277f193a5741d683cafac91dc63c385da8e73b3d921507",
+    "fixed-action.png": "eb26118e8ea986836ae1ed426a4e284a7840cb0301caec533779dd9c5b931501"
+  },
+  "executable_sha256": "f66a8688202fe5fcf28fdf073c0bc2eaefd0dd28ac6c8db80c05523a4862b29f",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "firmware_sha256": {
+    "cpc6128.rom": "31c3668c67bea027dab698ece233c9434d9324f9ba7dac84db58f400b6689562",
+    "cpc664.rom": "1fcb20cf169f170774bf94954db9372c95edd038a5cb8e5199774552b93f8747",
+    "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e",
+    "cpcados.rom": "ea65e0fb44ee93ede4b6c507509b7e5ddf497fb7155023bea91ef229469fa04d"
+  },
+  "limits": "Selected released native emulator and ROM configuration only; not original hardware, all ROM versions or a complete game budget."
+}

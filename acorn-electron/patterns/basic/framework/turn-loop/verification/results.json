@@ -1,0 +1,149 @@
+{
+  "status": "passed",
+  "machine_id": "acorn-electron",
+  "language": "basic",
+  "startup": "Cold firmware, entire numbered program and RUN typed through keyboard",
+  "configuration": "Electron MOS and BASIC, MODE 6",
+  "cases": {
+    "default": {
+      "startup": [
+        0,
+        28,
+        0,
+        0
+      ],
+      "program_sha256": "8b058f00966f34b2aae117726728ed6cde164e6190d412bcbd4d10007cebd494",
+      "progression": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "updates_per_30_fields": 30
+    },
+    "step-two": {
+      "startup": [
+        0,
+        28,
+        0,
+        0
+      ],
+      "program_sha256": "75b443052f98554a14b551ae5c7c328d4c594f2744faba51e9895c38f6816721",
+      "progression": [
+        0,
+        2,
+        2,
+        4
+      ],
+      "updates_per_30_fields": 30
+    },
+    "nonzero": {
+      "startup": [
+        37,
+        28,
+        0,
+        0
+      ],
+      "program_sha256": "913eab67a10afaa335f2e8e5ccb3b06110d1b8b85529626fc6c3d63184cfa127",
+      "progression": [
+        37,
+        38,
+        38,
+        39
+      ],
+      "updates_per_30_fields": 30
+    },
+    "wrap": {
+      "startup": [
+        254,
+        28,
+        0,
+        0
+      ],
+      "program_sha256": "46b520d180fafb1d88fc5b5ab061e5ca060de1dcdadf47d0e8ad56813faa84fd",
+      "progression": [
+        254,
+        255,
+        255,
+        0
+      ],
+      "updates_per_30_fields": 30
+    },
+    "wrong": {
+      "startup": [
+        0,
+        29,
+        0,
+        0
+      ],
+      "program_sha256": "1c3bb3754581728aba0461c663c198d070b327c062ceebd0925467e6cc904fbb",
+      "progression": [
+        0,
+        3,
+        18,
+        22
+      ],
+      "updates_per_30_fields": 30
+    },
+    "fixed": {
+      "startup": [
+        0,
+        28,
+        0,
+        0
+      ],
+      "program_sha256": "8b058f00966f34b2aae117726728ed6cde164e6190d412bcbd4d10007cebd494",
+      "progression": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "updates_per_30_fields": 30
+    },
+    "no-wait": {
+      "updates_per_30_fields": 43,
+      "rate_guard_rejected": true
+    }
+  },
+  "sources": {
+    "acorn-electron/patterns/basic/framework/turn-loop/qualification-toolchain.json": "a8e8b338ab7a1434139c6f01792e12bb79511a68ef6e8f88a304b5f45b5e56a9",
+    "bbc-micro/patterns/basic/framework/turn-loop/caller.bas": "4a4c6f1e96d8ba3414eed4b7595de85c6f8f840d2f63617b6043b1ecd3e9ceb8",
+    "bbc-micro/patterns/basic/framework/turn-loop/mistakes/no-edge.bas": "7ef16b71da1e4f5bf29c2891a016afba8297021bb9ee96d45f3e2f7d4e042368",
+    "bbc-micro/patterns/basic/framework/turn-loop/mistakes/no-wait.bas": "4d19b7c0936326dc821c54a689d85e4ceda4fa15e87bd401f373c0244dfb56f4",
+    "bbc-micro/patterns/basic/framework/turn-loop/qualification-toolchain.json": "29022a9da26be19f654a0f41fae5c40ff9d7484f677cad98f08f592b82a2ee56",
+    "bbc-micro/patterns/basic/framework/turn-loop/routines.bas": "b15c981b20303406c10fa3e20a38ebc4021436d1d05564ba50ced142c9183d1c"
+  },
+  "observer_sources": {
+    "scripts/verify-loop-language-gaps.py": "558333951b7fe41323935d6bafbac704eab81e8fc76232a25d532aafef8d42b0",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "artifacts": {
+    "default-waiting.png": "2c989f805cc81af9748493c9c34a5a2eb4ec8d6e9ec0e125f511ca34aad62d10",
+    "default-held.png": "bdc22311cacb1ef3e10778f73cfa36ec449d97c3e744ae22d2827fd054178512",
+    "default-action.png": "f269ef2760c779c26a6075cdbec59104b4e78208de6514cd15b804587596b84e",
+    "step-two-waiting.png": "2c989f805cc81af9748493c9c34a5a2eb4ec8d6e9ec0e125f511ca34aad62d10",
+    "step-two-held.png": "f269ef2760c779c26a6075cdbec59104b4e78208de6514cd15b804587596b84e",
+    "step-two-action.png": "2d1405c6a15415427b419c3cd6e8be9d1017736ccebad7c0f100d1ee94cc8736",
+    "nonzero-waiting.png": "e032ddd66cc293c0bff3166f090f8139fe05e4a2157d2fbf8091e39a87d0cc38",
+    "nonzero-held.png": "38dfb99c8f5787972afd500f826c43843ea31f8af4b4bda4418f6bbb90c5684f",
+    "nonzero-action.png": "9ed315b78680f21684eb0959c6718a675f7e94054a37f00cd45cb217508b78a6",
+    "wrap-waiting.png": "37bc3e2030b1875892ecc378600b246ab967dae860ce5188af35771bdc4397dd",
+    "wrap-held.png": "01782bba947699a2fa2b04d011c86d097d241df52ce9d862d3c4658c30f326fb",
+    "wrap-action.png": "ff9d5ac817a2ba4473aa6d08bb0e21b2a2d94fc8beac533e72b292078d7ac87f",
+    "wrong-waiting.png": "ff9d5ac817a2ba4473aa6d08bb0e21b2a2d94fc8beac533e72b292078d7ac87f",
+    "wrong-held.png": "0ea078df92c254803ff3f415ee957644e9dacab1a2a41d05bc2eaafda987bafd",
+    "wrong-action.png": "def47f0d88036a01ac5e0a051715264e303365c6b0e9e7f5f731e90fa070a608",
+    "fixed-waiting.png": "2c989f805cc81af9748493c9c34a5a2eb4ec8d6e9ec0e125f511ca34aad62d10",
+    "fixed-held.png": "bdc22311cacb1ef3e10778f73cfa36ec449d97c3e744ae22d2827fd054178512",
+    "fixed-action.png": "f269ef2760c779c26a6075cdbec59104b4e78208de6514cd15b804587596b84e",
+    "no-wait-action.png": "2c989f805cc81af9748493c9c34a5a2eb4ec8d6e9ec0e125f511ca34aad62d10"
+  },
+  "executable_sha256": "7075f9ba58f1ead831c2921a0d5e81009853fda7cba2af77f006023a13ce89fa",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "firmware_sha256": {
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "os.rom": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4"
+  },
+  "limits": "Selected released native emulator and ROM configuration only; not original hardware, all ROM versions or a complete game budget."
+}
