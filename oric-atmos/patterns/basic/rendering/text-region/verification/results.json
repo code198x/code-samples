@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "system": "oric-atmos",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "oric-atmos/patterns/basic/rendering/text-region/query.bas": "a03aee0e9314c330b947f1fb475f4397340a008c037cdff235ff5c287afb4f73",
+    "oric-atmos/patterns/basic/rendering/text-region/region.bas": "7b4f41dc896af12c51794f76daa685b85ef4ddd13b69537d32eeb9996dc61a4b",
+    "oric-atmos/patterns/basic/rendering/text-region/caller.bas": "eaa1e7a35a4995bf16fcbfe48f8264df7af47f93d61c654619ad628103fe8bdc",
+    "oric-atmos/patterns/basic/rendering/text-region/demo.bas": "920596c50a1846b8671317ff4a1e0943b9eaf2ef90d61bde24181a270b630b34"
+  },
+  "emulator_sha256": "729231c2ccdb06c9ae540cf3c92b32f51de9d29d0a4db6f0586ec9f0e80ecf05",
+  "firmware": {
+    "oric.rom": "4ee38987c85ab007761cfd382f1c726c41a0a47dfddc6c3700d503dca150bfda"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-oric-atmos",
+    "version": "0.44.1",
+    "archive": "emu198x-oric-atmos-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "2740b17e5c147c00d62f23132963da4d52cb60ccd0e8d90b40c09ea64c43d744",
+    "executable_sha256": "729231c2ccdb06c9ae540cf3c92b32f51de9d29d0a4db6f0586ec9f0e80ecf05",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "787855b7ced5ff8cec20f63e2021f2ff3546f4963883d313c4a993a8e57f1ebd",
+    "reference.png": "03539a305f9d43301bcce2f6a2230b1328750b62c9e434662b84422735455f36",
+    "checked.png": "03539a305f9d43301bcce2f6a2230b1328750b62c9e434662b84422735455f36"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "oric-atmos/patterns/basic/rendering/text-region/verification/callers/checked.bas": "bdb01c420fd7c2253c215a06d47fb0992441769e86757a7a1591d1b758cf5f51",
+    "oric-atmos/patterns/basic/rendering/text-region/verification/callers/reference.bas": "b55447113d6049949982b848032d1b0e2f40e52e2b659566e22bd7344084c0eb",
+    "oric-atmos/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "39dfd42a37112a68c27bf830b293a257b7a1d2dbf83374c644c3cf0efe024493"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

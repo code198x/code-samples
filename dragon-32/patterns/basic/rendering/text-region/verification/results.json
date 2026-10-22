@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "system": "dragon-32",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "dragon-32/patterns/basic/rendering/text-region/query.bas": "a03aee0e9314c330b947f1fb475f4397340a008c037cdff235ff5c287afb4f73",
+    "dragon-32/patterns/basic/rendering/text-region/region.bas": "7b4f41dc896af12c51794f76daa685b85ef4ddd13b69537d32eeb9996dc61a4b",
+    "dragon-32/patterns/basic/rendering/text-region/caller.bas": "eaa1e7a35a4995bf16fcbfe48f8264df7af47f93d61c654619ad628103fe8bdc",
+    "dragon-32/patterns/basic/rendering/text-region/demo.bas": "920596c50a1846b8671317ff4a1e0943b9eaf2ef90d61bde24181a270b630b34"
+  },
+  "emulator_sha256": "44c9ac54c512e34ed89b6d9287dc9c521f621abe722979d5074451c84a10b702",
+  "firmware": {
+    "dragon64-compat.rom": "706d3865234494332afebd83ec78e8736b072b5e9fa503f977d5a343218f4347",
+    "dragon64.rom": "c3d0b8fd92020c939ec97388402d10b3890e6e26455963d50cc00b5f9cd68fa5",
+    "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-dragon",
+    "version": "0.44.1",
+    "archive": "emu198x-dragon-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "f6fe61a63e25e2f45ceb28002e633730b073e26e3d96ddb92aaa42b13a4a3fb7",
+    "executable_sha256": "44c9ac54c512e34ed89b6d9287dc9c521f621abe722979d5074451c84a10b702",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "2cdb2ce38edc388bf7763847ca65426144bc52aaae16f11ecb51e2d147bafc5f",
+    "reference.png": "52e26fac9f3e0108a0d90c66424f20f931c6d24622d1128992b723bde9fde374",
+    "checked.png": "52e26fac9f3e0108a0d90c66424f20f931c6d24622d1128992b723bde9fde374"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "dragon-32/patterns/basic/rendering/text-region/verification/callers/checked.bas": "bdb01c420fd7c2253c215a06d47fb0992441769e86757a7a1591d1b758cf5f51",
+    "dragon-32/patterns/basic/rendering/text-region/verification/callers/reference.bas": "b55447113d6049949982b848032d1b0e2f40e52e2b659566e22bd7344084c0eb",
+    "dragon-32/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "39dfd42a37112a68c27bf830b293a257b7a1d2dbf83374c644c3cf0efe024493"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

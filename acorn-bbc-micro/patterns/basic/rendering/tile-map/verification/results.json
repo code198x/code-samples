@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "system": "acorn-bbc-micro",
+  "kind": "tile-map",
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10
+  },
+  "sources": {
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/demo.bas": "c40911c35d6db40166d6e13af3e3b355ae6223b5a6db4871d6616e7d706ac4d3"
+  },
+  "emulator_sha256": "6b2d760a7d8dd3c8e481d1e667668be21f95d972562eb0022a78f8ef023ea4b3",
+  "firmware": {
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "os.rom": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "saa5050.rom": "9706945b02dd0e30823186ff0d73a49c0d98ed573499a057bab471add7ee28fb"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-acorn-bbc-micro",
+    "version": "0.44.1",
+    "archive": "emu198x-acorn-bbc-micro-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "9d6144f9f6823912ebfe0c5a32ba8d575b5ed6e01c07ff1ea7e16bc487a8feb6",
+    "executable_sha256": "6b2d760a7d8dd3c8e481d1e667668be21f95d972562eb0022a78f8ef023ea4b3",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "writes.png": "ede94986247c5d44e17701e89dffdf8cd755f27c5714f0f3ce0f96beaba72ca2",
+    "queries-reference.png": "36afe5f810da589be54422d28b1d6d706259c5501db8b436ce7fab3fbbf30c82",
+    "pixels.png": "52782fe90ab6a5efe97d73ca9a3c97cb81180bc6d4c10425da955046006589eb",
+    "wrong-stride.png": "fd534008208adb474c46abe31456bd7d97dcc217ab796ccb00a9ff0208ec17d6",
+    "queries.png": "36afe5f810da589be54422d28b1d6d706259c5501db8b436ce7fab3fbbf30c82",
+    "demo.png": "07e8165ad889d310943ba4134a77e244663c3d22c118048b801ab0b8c74ef7e8",
+    "writes-reference.png": "ede94986247c5d44e17701e89dffdf8cd755f27c5714f0f3ce0f96beaba72ca2",
+    "pixels-reference.png": "52782fe90ab6a5efe97d73ca9a3c97cb81180bc6d4c10425da955046006589eb"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/writes-reference.bas": "ce088fcb48b1ae09edd587529dc8a0b23a3dbe9c1546d428a72af16976dad7ea",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/pixels-reference.bas": "f9dc59aba22c30f7bdc426704a59c9f867ed77cf736b54bd4c777c9994609dd4",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/writes.bas": "aa75b0a743217eaa1efe8159a920e8f7c7096549f4225901cb10a298cf5d2459",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/demo.bas": "695de03d2a99729455d2df0e73d16d457cea81b962790de57dc84090577a99f9",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/queries.bas": "aa759b0bd8ece55b5bb0849530d6bdde9e21df6fd21cf2fc0b14f92d33a011ab",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/wrong-stride.bas": "4cbf0ec7427e76c0b1be67f44d1d180c1b2774a01883ce2ceefa6b7eae837276",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/pixels.bas": "993a0a43930b446a06acc17d970b7df2d3ca3059a8c282c8df0f444b055671a3",
+    "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/callers/queries-reference.bas": "ba936b0d0a5393265df21f2dc20bf8525c679a1ae6d07e4362d4084d7cc46eb7"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

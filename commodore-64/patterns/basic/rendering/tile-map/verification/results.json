@@ -1,0 +1,85 @@
+{
+  "status": "passed",
+  "system": "commodore-64",
+  "kind": "tile-map",
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10
+  },
+  "sources": {
+    "commodore-64/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68",
+    "commodore-64/patterns/basic/rendering/tile-map/demo.bas": "cb325e6269c933f395d8ee09619fb145d38b1043eb61b157b2b9b7539406345c"
+  },
+  "emulator_sha256": "ef00cee4b9539d1b3b13d141667919116443ca1270e0f66f4db6001617bbb45a",
+  "firmware": {
+    "1571.rom": "1fd73459b54a72a737609a879c283645acc37835de2c121633153db9fac81d45",
+    "basic_generic.rom": "54a1464b4b27c9dc61bbd62a818fdd12ec99af9089111005a5add0ad0e6bd5ec",
+    "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
+    "chargen_openroms.rom": "5e3451466841b93df7e01e4b635b07b8d8633351bae483b1961d96b3131186e7",
+    "kernal_generic.rom": "88e86ed3d0c710edab8f90ad146faa8de1ead11f43494b176c7b54724ca721c6",
+    "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420",
+    "kernal.rom": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721",
+    "1581.rom": "8f689277f36be357f5f105e6e606c35c42e73c581cdeec14b58f31850dfbcfcb",
+    "1541.rom": "326c289c38753323d7e8167897447cf61ef35189d82eb8d75210ece949adda7c"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-c64",
+    "version": "0.44.1",
+    "archive": "emu198x-c64-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "140f22b07a2f513e41a1031332bdf9580893306f342188e994448dfb99d4cf44",
+    "executable_sha256": "ef00cee4b9539d1b3b13d141667919116443ca1270e0f66f4db6001617bbb45a",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "writes.png": "0cabef3919351cfaba4aaeb3be0f30001e885bff6393ff3dd29e8c2d4ced16b3",
+    "queries-reference.png": "f508afba9c719c7455fedb7b9bd367ff814a493829e6f00cb7f0ec305cbe1214",
+    "pixels.png": "d0b24a0e46b6a8422e8215973d2a223a9c3d26f8cb1ed2ebddfc863574257250",
+    "wrong-stride.png": "7da57bb4ff3c07f13086ab764e846e60ff3b7a962b6dc97a57a68ced433d13b9",
+    "queries.png": "f508afba9c719c7455fedb7b9bd367ff814a493829e6f00cb7f0ec305cbe1214",
+    "demo.png": "fd131f668f2ccc6b1db46e72ee254eaf46324794062d57b93633ddda665650b9",
+    "writes-reference.png": "0cabef3919351cfaba4aaeb3be0f30001e885bff6393ff3dd29e8c2d4ced16b3",
+    "pixels-reference.png": "d0b24a0e46b6a8422e8215973d2a223a9c3d26f8cb1ed2ebddfc863574257250"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/writes-reference.bas": "ae8dd8994f48e3de41b9348192d368004b42d0c7c07a5ec96afa3378d0b133b8",
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/pixels-reference.bas": "8b40b0c98e4c4ba41cf1774f72ac3407ce35e98131b3845a231393b883296ff0",
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/writes.bas": "73812c31d3452b96422cf74b10ee2a82585fc2b4d7678be38363b06300037590",
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/demo.bas": "54992b8176e1e309dee12396b8314dbc42cbff6e6c61b0551da789e6b51f3083",
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/queries.bas": "b28ed28a7527a36ca291ef6d4e3ffc42eb0d4218af11e03d2d6297ad4798d781",
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/wrong-stride.bas": "ab9fde52da15cbeaffacb67bdd1e8148e04a959cd9befad2f84f29e7a18cb756",
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/pixels.bas": "caa14a20a4e308a9717fba5ebd94895da0bb3cd0050fc1f413b12ef7a3e90421",
+    "commodore-64/patterns/basic/rendering/tile-map/verification/callers/queries-reference.bas": "da64ff47fafa6dd5361ec7e501bfcc4a8a491446d1d4a539244629a2976aa67e"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

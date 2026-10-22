@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "system": "acorn-electron",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "acorn-electron/patterns/basic/rendering/text-region/query.bas": "a03aee0e9314c330b947f1fb475f4397340a008c037cdff235ff5c287afb4f73",
+    "acorn-electron/patterns/basic/rendering/text-region/region.bas": "7b4f41dc896af12c51794f76daa685b85ef4ddd13b69537d32eeb9996dc61a4b",
+    "acorn-electron/patterns/basic/rendering/text-region/caller.bas": "ab6b70a6da99be8eb20124dcbaff6dd6ff8c68b8a631b3da7bf3391753e383eb",
+    "acorn-electron/patterns/basic/rendering/text-region/demo.bas": "e21faf9dab0250188b1d80bf2d2764a7a29adfd65b007ecfcc68a5eafe4f28d7"
+  },
+  "emulator_sha256": "9bc204aa0ae4bd2590254496ef0e88a9a96d5be8c5908af8dc59720f289d5dfc",
+  "firmware": {
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "os.rom": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-acorn-electron",
+    "version": "0.44.1",
+    "archive": "emu198x-acorn-electron-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "b6437acdde0bd7017a2fc2f59239511bb9802cec36f274d3ee917624ead1729e",
+    "executable_sha256": "9bc204aa0ae4bd2590254496ef0e88a9a96d5be8c5908af8dc59720f289d5dfc",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "3cc51af46ace430acde104d22ac5c582800f508783dcc60512874a3701323a0d",
+    "reference.png": "7246fe21bdfac9813ebb58cbd5011f5b74c6be8160eb2b0220c50cd6dfe2eb00",
+    "checked.png": "7246fe21bdfac9813ebb58cbd5011f5b74c6be8160eb2b0220c50cd6dfe2eb00"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "acorn-electron/patterns/basic/rendering/text-region/verification/callers/checked.bas": "48080c4e712a05206af7e4e8df8ef821368c73bb54a6a6919a29c2a111cd8ec5",
+    "acorn-electron/patterns/basic/rendering/text-region/verification/callers/reference.bas": "fc9040674bc5381c42cec0b8f478f65f0f3e638aece1e80c957613d8634c9721",
+    "acorn-electron/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "0dda80cde654455e40e7727a348c30c418907d976614d9bd7e1c678d314da502"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "system": "mattel-aquarius",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "mattel-aquarius/patterns/basic/rendering/text-region/query.bas": "a03aee0e9314c330b947f1fb475f4397340a008c037cdff235ff5c287afb4f73",
+    "mattel-aquarius/patterns/basic/rendering/text-region/region.bas": "7b4f41dc896af12c51794f76daa685b85ef4ddd13b69537d32eeb9996dc61a4b",
+    "mattel-aquarius/patterns/basic/rendering/text-region/caller.bas": "bca0cf90f106c2398e532058d905f1754ed0f4aaa3eeded00b2034c21dbd5b5b",
+    "mattel-aquarius/patterns/basic/rendering/text-region/demo.bas": "bbf3bd2ba33e267fdf43c422fd0a1bc5f5469772a778671717fa73f177eb4c9d"
+  },
+  "emulator_sha256": "698691a221533b78713f4e8a36391b0f28ceeb259f108b85967ea4f4363aff29",
+  "firmware": {
+    "aquarius-char.rom": "0bf4b08b4514f2c437d6f00e13499b6dab0e771c937ea2675df3ec52c8d9f29e",
+    "aquarius.rom": "277b2655a0599861302e6ec86b027c65a29e284fe7aadc296c4570498ab0e249"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-mattel-aquarius",
+    "version": "0.44.1",
+    "archive": "emu198x-mattel-aquarius-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "4d8ed495cfaa1c5dde9d470d2261e30ac32c52ccf5ac02f521d0437fb1fd582d",
+    "executable_sha256": "698691a221533b78713f4e8a36391b0f28ceeb259f108b85967ea4f4363aff29",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "fc488f892254b0a342722a9d4a1170443a2d11512ca97f6dbe0ff1d4b0406e42",
+    "reference.png": "71a9d7afd2bfc43d453819e0c9c9bfde3d0b63ebf0ac492b874d630f420e3afb",
+    "checked.png": "71a9d7afd2bfc43d453819e0c9c9bfde3d0b63ebf0ac492b874d630f420e3afb"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "mattel-aquarius/patterns/basic/rendering/text-region/verification/callers/checked.bas": "031b081b4c0728634db8a086b78368a7968186bb99c26642c7b8fb78dd4deca8",
+    "mattel-aquarius/patterns/basic/rendering/text-region/verification/callers/reference.bas": "e899fe7e5e948ce66a030bb7ec1d1ff03849129f02358a82fb9179f14572cba8",
+    "mattel-aquarius/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "6125757af3d396149093e857a137db5a26cab07043320c62c8d0abde06f4db88"
+  },
+  "configuration": "16 KB RAM expansion; stock Aquarius BASIC; keyboard-loaded harness",
+  "basic_builder": null
+}

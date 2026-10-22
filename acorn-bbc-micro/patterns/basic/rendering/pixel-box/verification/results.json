@@ -1,0 +1,77 @@
+{
+  "system": "acorn-bbc-micro",
+  "kind": "pixel-box",
+  "status": "passed",
+  "bounds_cases": 10,
+  "wrong_units_rejected": true,
+  "omitted_draw_rejected": true,
+  "edge_and_one_cell_boxes": true,
+  "sources": {
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/routines.bas": "dbcd2ece095429298cf95083db70e02c6abf5e02d982a31c9c33ccb9a646c118",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/caller.bas": "dcde7dd4c3322c95170fcdecad183609e867e6261768e71330254e87e0e7be1b",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/demo.bas": "eeaf479bd8a13c41d86287d174269a695d8cc463f6276719fac967dcd0e40a5c"
+  },
+  "observer_sha256": "913f3b0c453525935b2a3940511dd36dd9e2c86043558a414d0b18e1db23da4e",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "firmware": {
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "os.rom": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "saa5050.rom": "9706945b02dd0e30823186ff0d73a49c0d98ed573499a057bab471add7ee28fb"
+  },
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-acorn-bbc-micro",
+    "version": "0.44.1",
+    "archive": "emu198x-acorn-bbc-micro-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "9d6144f9f6823912ebfe0c5a32ba8d575b5ed6e01c07ff1ea7e16bc487a8feb6",
+    "executable_sha256": "6b2d760a7d8dd3c8e481d1e667668be21f95d972562eb0022a78f8ef023ea4b3",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "independent_full_raster_match": true,
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "edges.png": "32e0c945bb9ed621533a6f5326e5e6dd4b20ca22baa445e4d0ac1db0b55b4e06",
+    "edges-reference.png": "32e0c945bb9ed621533a6f5326e5e6dd4b20ca22baa445e4d0ac1db0b55b4e06",
+    "bounds.png": "99c2cc6a4f6cf2911ce3f115009e9241511889b736802069a0b4b12cdc45e15f",
+    "reference.png": "c52c90885dd3242bb9df707cb71d65b7b73f4fa96e48c53c2564537cd0e76a87",
+    "demo.png": "c52c90885dd3242bb9df707cb71d65b7b73f4fa96e48c53c2564537cd0e76a87",
+    "wrong-units.png": "dc8b6fe56cc1cfd88da453f839961b7e5fe979214e41825d1098655aa21c099d",
+    "bounds-reference.png": "99c2cc6a4f6cf2911ce3f115009e9241511889b736802069a0b4b12cdc45e15f",
+    "omitted-draw.png": "512df0db282ed12ded57f3a003297bedcbe9a6fc860a37c238ff819b308c1d09"
+  },
+  "emulator_sha256": "6b2d760a7d8dd3c8e481d1e667668be21f95d972562eb0022a78f8ef023ea4b3",
+  "limits": "Stock-ROM APIs in released Emu198x. Whole decoded raster compared with independent direct line-drawing caller. No speed/original-hardware claim.",
+  "callers": {
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/wrong-units.bas": "b5412d31d735daba07f1b75661904bec6d84f94bb3fa4a7a75f6167cf872f091",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/omitted-draw.bas": "e31a195f6b067df0faea1222dca003ab1d3f19fde254ad91e5531ae18041b0b3",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/bounds-reference.bas": "3fa47b312698694aa7c75b8a22626f061faf4ebf583ecc25f070014ef8a8eca2",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/bounds.bas": "09bc2539fa8666ebafb5a18ce5d64fae7dcbc36de782087e288641dbf682cc1b",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/edges-reference.bas": "f76a696f68967ab774edfa975057dee547ba6b53cec3c07de37807d9d7be58cb",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/edges.bas": "5fbd04f35f2c5196b1775ec07f9ce269b85adc5482454ff962839dd1f2a45888",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/demo.bas": "d2795be8f3436fcc31b3dd771e0a48cfa683ccfad4a498e79739380ac2da3765",
+    "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/callers/reference.bas": "34a3727e512e85b63fb7b4d0853822414c48295d7c4e3fef261bda6af0b0e2d5"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "emulator_version": "0.44.1",
+  "routes": [
+    {
+      "system": "acorn-bbc-micro",
+      "kind": "tile-map",
+      "folder": "acorn-bbc-micro/patterns/basic/rendering/tile-map",
+      "record": "acorn-bbc-micro/patterns/basic/rendering/tile-map/verification/results.json",
+      "topic": "map"
+    },
+    {
+      "system": "acorn-electron",
+      "kind": "tile-map",
+      "folder": "acorn-electron/patterns/basic/rendering/tile-map",
+      "record": "acorn-electron/patterns/basic/rendering/tile-map/verification/results.json",
+      "topic": "map"
+    },
+    {
+      "system": "commodore-64",
+      "kind": "tile-map",
+      "folder": "commodore-64/patterns/basic/rendering/tile-map",
+      "record": "commodore-64/patterns/basic/rendering/tile-map/verification/results.json",
+      "topic": "map"
+    },
+    {
+      "system": "memotech-mtx",
+      "kind": "tile-map",
+      "folder": "memotech-mtx/patterns/basic/rendering/tile-map",
+      "record": "memotech-mtx/patterns/basic/rendering/tile-map/verification/results.json",
+      "topic": "map"
+    },
+    {
+      "system": "sinclair-zx-spectrum",
+      "kind": "tile-map",
+      "folder": "sinclair-zx-spectrum/patterns/basic/rendering/tile-map",
+      "record": "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/results.json",
+      "topic": "map"
+    },
+    {
+      "system": "acorn-atom",
+      "kind": "text-region",
+      "folder": "acorn-atom/patterns/basic/rendering/text-region",
+      "record": "acorn-atom/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "amstrad-cpc",
+      "kind": "text-region",
+      "folder": "amstrad-cpc/patterns/basic/rendering/text-region",
+      "record": "amstrad-cpc/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "atari-800xl",
+      "kind": "text-region",
+      "folder": "atari-800xl/patterns/basic/rendering/text-region",
+      "record": "atari-800xl/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "commodore-pet",
+      "kind": "text-region",
+      "folder": "commodore-pet/patterns/basic/rendering/text-region",
+      "record": "commodore-pet/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "commodore-vic-20",
+      "kind": "text-region",
+      "folder": "commodore-vic-20/patterns/basic/rendering/text-region",
+      "record": "commodore-vic-20/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "dragon-32",
+      "kind": "text-region",
+      "folder": "dragon-32/patterns/basic/rendering/text-region",
+      "record": "dragon-32/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "mattel-aquarius",
+      "kind": "text-region",
+      "folder": "mattel-aquarius/patterns/basic/rendering/text-region",
+      "record": "mattel-aquarius/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "msx",
+      "kind": "text-region",
+      "folder": "msx/patterns/basic/rendering/text-region",
+      "record": "msx/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "oric-atmos",
+      "kind": "text-region",
+      "folder": "oric-atmos/patterns/basic/rendering/text-region",
+      "record": "oric-atmos/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "spectravideo-svi-328",
+      "kind": "text-region",
+      "folder": "spectravideo-svi-328/patterns/basic/rendering/text-region",
+      "record": "spectravideo-svi-328/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "acorn-bbc-micro",
+      "kind": "text-region",
+      "folder": "acorn-bbc-micro/patterns/basic/rendering/text-region",
+      "record": "acorn-bbc-micro/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "acorn-electron",
+      "kind": "text-region",
+      "folder": "acorn-electron/patterns/basic/rendering/text-region",
+      "record": "acorn-electron/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "commodore-64",
+      "kind": "text-region",
+      "folder": "commodore-64/patterns/basic/rendering/text-region",
+      "record": "commodore-64/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "memotech-mtx",
+      "kind": "text-region",
+      "folder": "memotech-mtx/patterns/basic/rendering/text-region",
+      "record": "memotech-mtx/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "sinclair-zx-spectrum",
+      "kind": "text-region",
+      "folder": "sinclair-zx-spectrum/patterns/basic/rendering/text-region",
+      "record": "sinclair-zx-spectrum/patterns/basic/rendering/text-region/verification/results.json",
+      "topic": "region"
+    },
+    {
+      "system": "acorn-bbc-micro",
+      "kind": "pixel-box",
+      "folder": "acorn-bbc-micro/patterns/basic/rendering/pixel-box",
+      "record": "acorn-bbc-micro/patterns/basic/rendering/pixel-box/verification/results.json",
+      "topic": "pixels"
+    },
+    {
+      "system": "acorn-electron",
+      "kind": "pixel-box",
+      "folder": "acorn-electron/patterns/basic/rendering/pixel-box",
+      "record": "acorn-electron/patterns/basic/rendering/pixel-box/verification/results.json",
+      "topic": "pixels"
+    },
+    {
+      "system": "amstrad-cpc",
+      "kind": "pixel-box",
+      "folder": "amstrad-cpc/patterns/basic/rendering/pixel-box",
+      "record": "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/results.json",
+      "topic": "pixels"
+    },
+    {
+      "system": "sinclair-zx-spectrum",
+      "kind": "pixel-box",
+      "folder": "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box",
+      "record": "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/results.json",
+      "topic": "pixels"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "system": "memotech-mtx",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "memotech-mtx/patterns/basic/rendering/text-region/query.bas": "38a0debafbb357513022e9777f8d6a06562edf4bb8cf60235f7b59965d36050d",
+    "memotech-mtx/patterns/basic/rendering/text-region/region.bas": "309bd33ed68a29cbb2459fe4cb3f048750bf6cc246c872ca022355bc968356c1",
+    "memotech-mtx/patterns/basic/rendering/text-region/caller.bas": "705f628c09feac0c14ff7415e09eacf0a5e32205504738ff74f2c7a195cbb82b",
+    "memotech-mtx/patterns/basic/rendering/text-region/demo.bas": "5357cb38d81f6b2f40a4cb9841362a578c08688d75a33dc20fbb5719db8b08a4"
+  },
+  "emulator_sha256": "02d29eec7cf21920b0014fc8343369d3fb899d8c52843f08b1d411ddd9e7dddd",
+  "firmware": {
+    "mtx.rom": "e93edd8490f320c1828f879460a857f393ce15213fa8d8cc853beb700bc71b0f"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-memotech-mtx",
+    "version": "0.44.1",
+    "archive": "emu198x-memotech-mtx-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "b61eb648e2a6d02d9e9e39eee8ff5795e7bafc65fcc83c2f4abe307ed0804628",
+    "executable_sha256": "02d29eec7cf21920b0014fc8343369d3fb899d8c52843f08b1d411ddd9e7dddd",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "dea69829e57c88c39e0ac7b97748c6d5bdf05359ec2a3516a4fe47d7a8d947e8",
+    "reference.png": "c1efd0df90c3f8e6b4623567e29743ba17d96fbd30a4a5fcd04fa6a3e991373f",
+    "checked.png": "c1efd0df90c3f8e6b4623567e29743ba17d96fbd30a4a5fcd04fa6a3e991373f"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "memotech-mtx/patterns/basic/rendering/text-region/verification/callers/checked.bas": "d8af58d7e5d2a96389243c5082cd7f2fddf45bd876fd6f761c0d1ea0d53c649e",
+    "memotech-mtx/patterns/basic/rendering/text-region/verification/callers/reference.bas": "a95f210f89eb8b8a6982d20e96b310677ff78b2ed6b428de595410934de2c08b",
+    "memotech-mtx/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "b2c452b53a85c8ec950ebafd7f142a04e23528bd46e1df60fbe4236a5bc1478f"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "system": "commodore-vic-20",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "commodore-vic-20/patterns/basic/rendering/text-region/query.bas": "a03aee0e9314c330b947f1fb475f4397340a008c037cdff235ff5c287afb4f73",
+    "commodore-vic-20/patterns/basic/rendering/text-region/region.bas": "7b4f41dc896af12c51794f76daa685b85ef4ddd13b69537d32eeb9996dc61a4b",
+    "commodore-vic-20/patterns/basic/rendering/text-region/caller.bas": "ee622debffa0917fdbef5338b764713fdc05a65c3a29bb91dfe9863821efd2ea",
+    "commodore-vic-20/patterns/basic/rendering/text-region/demo.bas": "2dc3911230cce6eabf20cc037387cc23a2f92ae02edb2a090f0b4974746503b4"
+  },
+  "emulator_sha256": "2f23209d2c16bc2213991f156afd38f6eceed06f26ce4541a202df0bee39bb61",
+  "firmware": {
+    "kernal-ntsc.rom": "8fc94bd895f488ac0ae1a52abdc32988cd63c777770b89a9d415513098535cc2",
+    "basic.rom": "8be2d882e0eeb1c6923a43660236ea69d43ca8a3bd0613b1b6c910601584fbed",
+    "char.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502",
+    "chargen.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502",
+    "kernal.rom": "ff6d1416b91a71f5240a5bb8adc9fdc1b955374c48322ca47b3e436334f168fb"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-commodore-vic-20",
+    "version": "0.44.1",
+    "archive": "emu198x-commodore-vic-20-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "e34c236bbb77e8176f49421b3edad52c607ca0a3ed2278c3802e9479c6b175ee",
+    "executable_sha256": "2f23209d2c16bc2213991f156afd38f6eceed06f26ce4541a202df0bee39bb61",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "82eaf6061950a500d745091bf4bfcf074245130e1837f7aa328296055a3b68e8",
+    "reference.png": "3fa07e92c573e54633d07ef65e02088df26ffa3f4e8370e95df7652af5168e7d",
+    "checked.png": "3fa07e92c573e54633d07ef65e02088df26ffa3f4e8370e95df7652af5168e7d"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "commodore-vic-20/patterns/basic/rendering/text-region/verification/callers/checked.bas": "91642db5151dd786aaee5bd6638b74fc01191e42bf2374e1718b57999c9f58cf",
+    "commodore-vic-20/patterns/basic/rendering/text-region/verification/callers/reference.bas": "11fd20a7f354802463929903bf38f5aca9b6a6d5fc78a945caa5bb8cbb374f92",
+    "commodore-vic-20/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "02c5e3e0321cf0ca3ea15191262e1b0a879637731bc1277ce1acaa95ee279a59"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "system": "sinclair-zx-spectrum",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "sinclair-zx-spectrum/patterns/basic/rendering/text-region/query.bas": "cc83706a236b786dabc90f9cb6898d85af98dcae45385e1851d7dc13b12e1e30",
+    "sinclair-zx-spectrum/patterns/basic/rendering/text-region/region.bas": "8a2b81835c93a489e3b9c11821928d226ad4ca225bfb1acad9a5cffdd5328a90",
+    "sinclair-zx-spectrum/patterns/basic/rendering/text-region/caller.bas": "c5ff0e7ec46df39195b1741e362a833b9c616b5ad8e6207a15853dd46306d854",
+    "sinclair-zx-spectrum/patterns/basic/rendering/text-region/demo.bas": "40c1f575f42c81ad18f7a0ccd6e579926e59217ff71b7b9f4c996284306c6430"
+  },
+  "emulator_sha256": "575dbc84165bcf64ab7e0e3db013c094bf485331e9c44e921f3ff651a039bfa8",
+  "firmware": {
+    "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-spectrum",
+    "version": "0.44.1",
+    "archive": "emu198x-spectrum-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "f15367eb8b336d703d88e3e1c6a249c7524e0c9cc8e456cf9fae5f2d4fe23c54",
+    "executable_sha256": "575dbc84165bcf64ab7e0e3db013c094bf485331e9c44e921f3ff651a039bfa8",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "4b87c9bef1f2b571d91c3f64db80056b156ee8c4876343d4f857dc056c11f4db",
+    "reference.png": "62a6afe671fc03137323122f09782eb47bcde36f6b7d30d078097668468dac65",
+    "checked.png": "62a6afe671fc03137323122f09782eb47bcde36f6b7d30d078097668468dac65"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "sinclair-zx-spectrum/patterns/basic/rendering/text-region/verification/callers/checked.bas": "f064b77d1e575dfcdd564b0ee0abac80da1f4b93380eff7b8106aa1bb179733f",
+    "sinclair-zx-spectrum/patterns/basic/rendering/text-region/verification/callers/reference.bas": "83592448a1d1c245567060cc9c7c0eb1e4931ee5daa98dc27d1c741eca46c260",
+    "sinclair-zx-spectrum/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "c4b8d7d4432c650162ed2752a9d6327364f77bfe20826455fd7badfc1bf82c3e"
+  },
+  "configuration": "48K stock ROM, real tape load; harness CLEAR 59999 reserves the completion byte at 60000",
+  "basic_builder": "Build198x 0.2.13",
+  "builder_producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "971dce11d75903f8441e96b407ea428859363b73",
+    "committed_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "before_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "after_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "package": "build198x",
+    "version": "0.2.13",
+    "archive": "build198x-aarch64-apple-darwin.tar.xz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "12c9f61f121907b3403a7f4047093589ca7602a2bafe3b7a0322858cb6b2ed72",
+    "executable_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39753933977",
+      "run_attempt": "1"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=build198x-v0.2.13",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  }
+}

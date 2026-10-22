@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "system": "atari-800xl",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "atari-800xl/patterns/basic/rendering/text-region/query.bas": "a03aee0e9314c330b947f1fb475f4397340a008c037cdff235ff5c287afb4f73",
+    "atari-800xl/patterns/basic/rendering/text-region/region.bas": "7b4f41dc896af12c51794f76daa685b85ef4ddd13b69537d32eeb9996dc61a4b",
+    "atari-800xl/patterns/basic/rendering/text-region/caller.bas": "4d897bd7744fc074c77b2f953daee07d3e14f3fd2e264ba6fa95e07771e57008",
+    "atari-800xl/patterns/basic/rendering/text-region/demo.bas": "2d34c9644f821c874a92f69ccdf1dbc3d278410dbab9b5f64b7ad1c2b7356db9"
+  },
+  "emulator_sha256": "941eb3229a296e243f5bf9a8ead04fdef5cd9dd7d2ba8ddf9e06735c1f8ebd27",
+  "firmware": {
+    "atarixl-hias-1.30.rom": "64f13699592f2c068e468dfb22c245c63b1317fd0f871aca798c29688424955d",
+    "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0",
+    "atarixl.rom": "a77050b2d81db2d11eaa3dbafd8ec2531b478abcc3bcc4b0d846b634e885edb1"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-atari-800xl",
+    "version": "0.44.1",
+    "archive": "emu198x-atari-800xl-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "f06aa0a40bf63ed4e7ade3fe9be5493acb96a618ba14a7266a2285a65dcbe04d",
+    "executable_sha256": "941eb3229a296e243f5bf9a8ead04fdef5cd9dd7d2ba8ddf9e06735c1f8ebd27",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "274c9e33233612267116255657724b2c4074ecc7506784af039239a437b814b0",
+    "reference.png": "6a4c2c5f7830daac6ba0a33adcb1eaa752ae7ab2159140b5c55c6e8d3e88f140",
+    "checked.png": "6a4c2c5f7830daac6ba0a33adcb1eaa752ae7ab2159140b5c55c6e8d3e88f140"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "atari-800xl/patterns/basic/rendering/text-region/verification/callers/checked.bas": "166642751c9a7a4f942216a73f970bc7a13d56711de2cb57dcb5a1c3764e8d6e",
+    "atari-800xl/patterns/basic/rendering/text-region/verification/callers/reference.bas": "5e86618ff9bb6cffd019468b1b45a6e1bde345ffa37b25abf9f6fe77b20f64e8",
+    "atari-800xl/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "a15d51540b31c19ea30331e0d986354398ee9d646cc3437444f31642c9fec91a"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}
