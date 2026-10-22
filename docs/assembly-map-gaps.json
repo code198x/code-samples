@@ -1,0 +1,30 @@
+[
+  {
+    "system": "acorn-atom",
+    "origin": 49152,
+    "results": 1024,
+    "map": 1264,
+    "context": 112
+  },
+  {
+    "system": "commodore-pet",
+    "origin": 61440,
+    "results": 8192,
+    "map": 8688,
+    "context": 112
+  },
+  {
+    "system": "commodore-vic-20",
+    "origin": 57344,
+    "results": 4096,
+    "map": 4592,
+    "context": 112
+  },
+  {
+    "system": "oric-atmos",
+    "origin": 49152,
+    "results": 8192,
+    "map": 8688,
+    "context": 112
+  }
+]
