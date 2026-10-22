@@ -11621,7 +11621,7 @@
     239
   ],
   "sources": {
-    "scripts/verify-m6809-map-edges.py": "e4bfe133d03878ec62093dd7579c9458744454d231b2a6dd12e771de9b72be93",
+    "scripts/verify-m6809-map-edges.py": "ad271cc66c37dd533813c328972d515960bb9aac90dbcae88a247bb86ef1e12e",
     "cross-platform/patterns/rendering/tile-map/m6809.inc": "6705906304c9e19c6c90908ea3d549a9836413bee7d9664262e00ebc6d1af033",
     "scripts/verify-remaining-assembly-maps.py": "860ab8153d770d5cde5984f6d4fd45b3c93a7527dab9c404f908ca42b127731f",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
