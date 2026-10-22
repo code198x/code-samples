@@ -1,0 +1,149 @@
+{
+  "status": "passed",
+  "machine_id": "bbc-micro",
+  "language": "basic",
+  "startup": "Cold firmware, entire numbered program and RUN typed through keyboard",
+  "configuration": "BBC Model B, MOS and BASIC, MODE 6",
+  "cases": {
+    "default": {
+      "startup": [
+        0,
+        30,
+        0,
+        0
+      ],
+      "program_sha256": "8b058f00966f34b2aae117726728ed6cde164e6190d412bcbd4d10007cebd494",
+      "progression": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "updates_per_30_fields": 30
+    },
+    "step-two": {
+      "startup": [
+        0,
+        30,
+        0,
+        0
+      ],
+      "program_sha256": "75b443052f98554a14b551ae5c7c328d4c594f2744faba51e9895c38f6816721",
+      "progression": [
+        0,
+        2,
+        2,
+        4
+      ],
+      "updates_per_30_fields": 30
+    },
+    "nonzero": {
+      "startup": [
+        37,
+        30,
+        0,
+        0
+      ],
+      "program_sha256": "913eab67a10afaa335f2e8e5ccb3b06110d1b8b85529626fc6c3d63184cfa127",
+      "progression": [
+        37,
+        38,
+        38,
+        39
+      ],
+      "updates_per_30_fields": 30
+    },
+    "wrap": {
+      "startup": [
+        254,
+        30,
+        0,
+        0
+      ],
+      "program_sha256": "46b520d180fafb1d88fc5b5ab061e5ca060de1dcdadf47d0e8ad56813faa84fd",
+      "progression": [
+        254,
+        255,
+        255,
+        0
+      ],
+      "updates_per_30_fields": 30
+    },
+    "wrong": {
+      "startup": [
+        0,
+        31,
+        0,
+        0
+      ],
+      "program_sha256": "1c3bb3754581728aba0461c663c198d070b327c062ceebd0925467e6cc904fbb",
+      "progression": [
+        0,
+        4,
+        19,
+        23
+      ],
+      "updates_per_30_fields": 30
+    },
+    "fixed": {
+      "startup": [
+        0,
+        30,
+        0,
+        0
+      ],
+      "program_sha256": "8b058f00966f34b2aae117726728ed6cde164e6190d412bcbd4d10007cebd494",
+      "progression": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "updates_per_30_fields": 30
+    },
+    "no-wait": {
+      "updates_per_30_fields": 56,
+      "rate_guard_rejected": true
+    }
+  },
+  "sources": {
+    "bbc-micro/patterns/basic/framework/turn-loop/caller.bas": "4a4c6f1e96d8ba3414eed4b7595de85c6f8f840d2f63617b6043b1ecd3e9ceb8",
+    "bbc-micro/patterns/basic/framework/turn-loop/mistakes/no-edge.bas": "7ef16b71da1e4f5bf29c2891a016afba8297021bb9ee96d45f3e2f7d4e042368",
+    "bbc-micro/patterns/basic/framework/turn-loop/mistakes/no-wait.bas": "4d19b7c0936326dc821c54a689d85e4ceda4fa15e87bd401f373c0244dfb56f4",
+    "bbc-micro/patterns/basic/framework/turn-loop/qualification-toolchain.json": "29022a9da26be19f654a0f41fae5c40ff9d7484f677cad98f08f592b82a2ee56",
+    "bbc-micro/patterns/basic/framework/turn-loop/routines.bas": "b15c981b20303406c10fa3e20a38ebc4021436d1d05564ba50ced142c9183d1c"
+  },
+  "observer_sources": {
+    "scripts/verify-loop-language-gaps.py": "558333951b7fe41323935d6bafbac704eab81e8fc76232a25d532aafef8d42b0",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "artifacts": {
+    "default-waiting.png": "2378e2c2cdb25057f5e774bb73a9a0b0a43a777f51d0f72e24bef20ae6c8ab97",
+    "default-held.png": "8ba8665f4dee7a51ed3ae79eaac28572bc571bf11d32b9c228ed36862401f4d6",
+    "default-action.png": "af80a9aedba605ae8515d01641a6d11b0557380a6a1cd2f472c19a0981577277",
+    "step-two-waiting.png": "2378e2c2cdb25057f5e774bb73a9a0b0a43a777f51d0f72e24bef20ae6c8ab97",
+    "step-two-held.png": "66893e567773266a4847a1f216e1e21659b9003141c79bde6eda0506277b92a3",
+    "step-two-action.png": "4b9a80833971720a9efa3a6f2f2d55590cb40e23850dbfe7368e3efa3a8eaf27",
+    "nonzero-waiting.png": "17b3811e892e91473d40dd1c571bcc375b9279e8053248206b3a9125d592f539",
+    "nonzero-held.png": "9fe45f1c2fb2f432ab8aa0a83d879bef5a2018b955025f321d34300b12fdbfb1",
+    "nonzero-action.png": "efea666519ff58962e46ac09b3a847ddaf4013f341f980177783266b08805623",
+    "wrap-waiting.png": "b510ea9f3066b11c4e922b555b56472e789020eaf1a5a453b730faaf9a3288a0",
+    "wrap-held.png": "afcebe04e79ce16a972ee667bb5f59369bf9416581aa7ae02701013cd38be6af",
+    "wrap-action.png": "9de5a9bb7d7c920f23036cd9b290f4028abcf767e18ea4dd56f644f510d234cf",
+    "wrong-waiting.png": "9de5a9bb7d7c920f23036cd9b290f4028abcf767e18ea4dd56f644f510d234cf",
+    "wrong-held.png": "3319eea70831882dc342a3ee60f0875b13e77f9f63b038b3339336fa13602806",
+    "wrong-action.png": "e5ce0df42f89c6bfd6a8651a37ade32fdfd85d6090b753c7d9031f1d67546505",
+    "fixed-waiting.png": "2378e2c2cdb25057f5e774bb73a9a0b0a43a777f51d0f72e24bef20ae6c8ab97",
+    "fixed-held.png": "8ba8665f4dee7a51ed3ae79eaac28572bc571bf11d32b9c228ed36862401f4d6",
+    "fixed-action.png": "af80a9aedba605ae8515d01641a6d11b0557380a6a1cd2f472c19a0981577277",
+    "no-wait-action.png": "9de5a9bb7d7c920f23036cd9b290f4028abcf767e18ea4dd56f644f510d234cf"
+  },
+  "executable_sha256": "ced6a854c06262f656ebfd7087af6191c0e2daf7009e26c3ed22358f66c2732e",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "firmware_sha256": {
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "os.rom": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "saa5050.rom": "9706945b02dd0e30823186ff0d73a49c0d98ed573499a057bab471add7ee28fb"
+  },
+  "limits": "Selected released native emulator and ROM configuration only; not original hardware, all ROM versions or a complete game budget."
+}
