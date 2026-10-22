@@ -20,5 +20,27 @@
     "results": 14400,
     "map": 14576,
     "stack": 16368
+  },
+  {
+    "system": "msx",
+    "binary": "msx",
+    "cpu": "z80",
+    "origin": 0,
+    "size": 32768,
+    "context": 49152,
+    "results": 49216,
+    "map": 49392,
+    "stack": 65520
+  },
+  {
+    "system": "spectravideo-svi-328",
+    "binary": "spectravideo-svi-328",
+    "cpu": "z80",
+    "origin": 0,
+    "size": 32768,
+    "context": 49152,
+    "results": 49216,
+    "map": 49392,
+    "stack": 65520
   }
 ]
