@@ -33,3 +33,11 @@ The first two variants were executed on this machine; the third explains the API
 `make ASM198X=/path/to/asm198x` builds the original synthetic reset fixture. From the repository root run `python3 scripts/verify-assembly-map-gaps.py --only commodore-vic-20 --assembler /path/to/asm198x --native /path/to/native-tools`. It builds all three variants without editing maintained source and fails unless the correct results match the independent oracle and both faulty callers complete with different results.
 
 Executed with released Asm198x 0.0.71 and Emu198x 0.44.1. `verification/results.json` binds the caller, shared implementation, observer, fixture and tool hashes. No third-party firmware is distributed. This proves CPU/RAM routine behaviour in the stated configuration, not a stock interpreter loader, picture, interrupt coexistence, frame deadline or original hardware. The unrolled diagnostic is an explicit test caller; use the shared include in a real game.
+
+## Make it your own: close an exit
+
+`properties.inc` assigns flags 0,1,2,4 to tiles 0–3: blocking=1, hazard=2, exit=4 are caller choices. `customise-properties.inc` changes only tile 3 to 5 (exit plus blocking). Use that table instead of the normal one, or build `make VARIANT=closed-exit ASM198X=/path/to/asm198x`.
+
+The executed customisation returns property 5 instead of 4; all other 43 result bytes agree. Normal and customised fixtures differ in exactly one data byte. The four-byte property table, routine code and scratch allocation do not grow. This is a build-time table edit; a table changed during play needs writable RAM. Classification does not itself draw or enforce collision.
+
+The maintained deliberately broken includes live under the shared tile-map/mistakes/ directory and are used by the verifier. They are separate from the normal include. Compare their tile_rows and tile_set_id_ok blocks with the same labels in 6502.inc, then rerun the corrected caller.

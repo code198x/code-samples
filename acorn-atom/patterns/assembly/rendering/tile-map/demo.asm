@@ -646,6 +646,6 @@ done:
 initial_map:
     !byte 0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2
 properties:
-    !byte 0,1,2,4
+    !source "properties.inc"
     !fill $fffa-*,0
     !word done,start,done
