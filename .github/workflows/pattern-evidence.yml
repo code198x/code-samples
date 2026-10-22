@@ -504,3 +504,17 @@ jobs:
         run: python scripts/check-msx-gameboy-loops.py
       - name: Reject falsified records and disabled service/edge guards
         run: python -m unittest discover -s scripts -p test_msx_gameboy_loops.py -v
+
+  input-audio-column-expansion:
+    name: Retained input and audio routines across 26 language routes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Decode actual memory, video feedback and positive/muted PCM
+        run: python scripts/check-column-evidence.py
+      - name: Reject missing machines, wrong languages and falsified observations
+        run: python -m unittest discover -s scripts -p test_column_evidence.py -v
