@@ -200,10 +200,10 @@
     ]
   },
   "fixtures": {
-    "positive": "d48f35278f5d4dfe9c875dfeab77544a7a9ab90254e71c21fffbead5e05bbda9",
-    "closed-exit": "41a6b08671cca1c9dff1a1e4b0bc08656fbcd7bd34336e7591841ab7ef730ba4",
-    "wrong-stride": "bc1821e38b3f1e7d82e26918c15107cd7dfbc0a39bc7ce63d711db4773a3f9c9",
-    "write-without-valid": "f53582693f9f289bd097c7cc70e1ecaa58faea64fb8822e9d8e8bf60f2b88669"
+    "positive": "8920ef4dca11c4a6f56eb9d397d364f1675cd1159b18c93bf8574438c10dc342",
+    "closed-exit": "483396c5898f94e559930d3108aaf5050abfbfb2b98193b39f47ae5e5d0f29cf",
+    "wrong-stride": "9edbafb2b04b3ed1d36a8ff1875bf9dd844c0daf947c2500216883a4cd733e79",
+    "write-without-valid": "e705b77e22c2c8c310f16f2a080e074f4042a403ed84318725d80866eaf8c82b"
   },
   "customisation": {
     "changed_fixture_bytes": 1,
@@ -212,7 +212,7 @@
     "property_table_bytes": 4
   },
   "sources": {
-    "msx/patterns/assembly/rendering/tile-map/demo.asm": "1b68f9ad5ab0a06b038d9af03d11812ec7409c09a8661f4415ae4d2505f781f0",
+    "msx/patterns/assembly/rendering/tile-map/demo.asm": "149f9c89447ddab00ff5bffd1caae567b15817f1c1eb4693d64409f28bef97ca",
     "msx/patterns/assembly/rendering/tile-map/properties.inc": "59e0b0833d86577803ef1c78ccd49765f01a99ab13774c79942bde0eaa097f65",
     "msx/patterns/assembly/rendering/tile-map/customise-properties.inc": "6f50eb6b409b48202c4d87c43dcf490fc9dd125a07bf5e195caab6ddc2690886",
     "cross-platform/patterns/rendering/tile-map/z80.inc": "bac98f7023aba3e9647037e755aa44bd99783f62c7dae091f11fca3b78cae3d1",

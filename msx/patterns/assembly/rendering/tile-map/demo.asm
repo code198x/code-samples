@@ -5,6 +5,9 @@ RESULT equ $c040
 MAP equ $c0f0
 start:
     di
+    ; Configure mode 0: port A/C output, port B input, before driving slots.
+    ld a,$82
+    out ($ab),a
     ; This fixture selects slot 3 RAM in page 3, slot 0 BIOS below.
     ld a,$c0
     out ($a8),a
