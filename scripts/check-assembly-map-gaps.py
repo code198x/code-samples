@@ -36,19 +36,31 @@ def validate(c: dict, r: dict) -> None:
     V.T.require(r["sources"] == V.inputs(c), "Source or observer binding changed")
     observations = r["observations"]
     V.T.require(
-        set(observations) == {"positive", "wrong-stride", "write-without-valid"},
+        set(observations)
+        == {"positive", "closed-exit", "wrong-stride", "write-without-valid"},
         "Missing variant",
     )
     V.T.require(set(r["fixtures"]) == set(observations), "Missing fixture hash")
-    V.T.require(
-        len(set(r["fixtures"].values())) == 3, "Faulty fixtures were not distinct"
-    )
+    V.T.require(len(set(r["fixtures"].values())) == 4, "Fixtures were not distinct")
     for name, raw in observations.items():
         V.T.require(len(raw) == 44 and raw[-1] == 239, "Caller did not complete")
+        expected = bytearray(V.V.expected())
+        if name == "closed-exit":
+            expected[40] = 5
         V.T.require(
-            (bytes(raw) == V.V.expected()) == (name == "positive"),
+            (bytes(raw) == bytes(expected)) == (name in ("positive", "closed-exit")),
             "Oracle outcome changed",
         )
+    V.T.require(
+        r["customisation"]
+        == {
+            "changed_fixture_bytes": 1,
+            "normal_property": 4,
+            "closed_exit_property": 5,
+            "property_table_bytes": 4,
+        },
+        "Customisation result or footprint changed",
+    )
     for digest in [
         r["assembler_sha256"],
         r["emulator_sha256"],
@@ -70,7 +82,7 @@ def main() -> None:
     for c in configs:
         validate(c, json.loads((V.folder(c) / "verification/results.json").read_text()))
     print(
-        "PASS four assembly map ports; 12 completed native executions and source bindings"
+        "PASS four assembly map ports; 16 completed native executions and source bindings"
     )
 
 

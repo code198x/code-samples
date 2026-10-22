@@ -1,5 +1,6 @@
 ASM198X ?= asm198x
 PYTHON ?= python3
+VARIANT ?= positive
 .PHONY: all
 all:
-	$(PYTHON) ../../../../../scripts/verify-assembly-map-gaps.py --build-only --only commodore-pet --assembler $(ASM198X)
+	$(PYTHON) ../../../../../scripts/verify-assembly-map-gaps.py --build-only --variant $(VARIANT) --only commodore-pet --assembler $(ASM198X)

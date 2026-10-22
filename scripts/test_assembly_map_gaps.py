@@ -44,6 +44,16 @@ class MapRecords(unittest.TestCase):
                     {"wrong-stride": r["fixtures"]["positive"]}
                 ),
                 "limits": lambda r: r.update(limits=""),
+                "missing customisation": lambda r: r["observations"].pop("closed-exit"),
+                "customisation unchanged": lambda r: r["observations"].update(
+                    {"closed-exit": r["observations"]["positive"]}
+                ),
+                "customisation damaged a cell": lambda r: r["observations"][
+                    "closed-exit"
+                ].__setitem__(0, 99),
+                "customisation footprint": lambda r: r["customisation"].update(
+                    changed_fixture_bytes=2
+                ),
             }
             for name, mutate in mutations.items():
                 with self.subTest(system=cfg["system"], fault=name):

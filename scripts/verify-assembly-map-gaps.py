@@ -37,7 +37,11 @@ def inputs(c: dict) -> dict[str, str]:
         str(p.relative_to(ROOT)): T.sha(p)
         for p in (
             folder(c) / "demo.asm",
+            folder(c) / "properties.inc",
+            folder(c) / "customise-properties.inc",
             SHARED / "6502.inc",
+            SHARED / "mistakes/wrong-stride-6502.inc",
+            SHARED / "mistakes/write-without-valid-6502.inc",
             CONFIG,
             Path(__file__),
             ROOT / "scripts/verify-native-tilemaps.py",
@@ -54,12 +58,10 @@ def build(c: dict, assembler: str, variant: str = "positive") -> Path:
     out.mkdir(parents=True, exist_ok=True)
     kernel = (SHARED / "6502.inc").read_text()
     if variant == "wrong-stride":
-        assert kernel.count("adc TM+2") == 1
-        kernel = kernel.replace("adc TM+2", "adc #6")
+        kernel = (SHARED / "mistakes/wrong-stride-6502.inc").read_text()
     elif variant == "write-without-valid":
-        assert kernel.count("    beq tile_set_done\n") == 1
-        kernel = kernel.replace("    beq tile_set_done\n", "")
-    elif variant != "positive":
+        kernel = (SHARED / "mistakes/write-without-valid-6502.inc").read_text()
+    elif variant not in ("positive", "closed-exit"):
         raise ValueError(variant)
     (out / "kernel.inc").write_text(kernel)
     source = (
@@ -69,6 +71,12 @@ def build(c: dict, assembler: str, variant: str = "positive") -> Path:
             "../../../../../cross-platform/patterns/rendering/tile-map/6502.inc",
             str(out / "kernel.inc"),
         )
+    )
+    properties = p / (
+        "customise-properties.inc" if variant == "closed-exit" else "properties.inc"
+    )
+    source = source.replace(
+        '!source "properties.inc"', '!source "' + str(properties) + '"'
     )
     (out / "selected.asm").write_text(source)
     subprocess.run(
@@ -123,7 +131,7 @@ def verify(c: dict, args: argparse.Namespace) -> None:
     (out / "results.json").unlink(missing_ok=True)
     observations = {}
     fixtures = {}
-    for variant in ("positive", "wrong-stride", "write-without-valid"):
+    for variant in ("positive", "closed-exit", "wrong-stride", "write-without-valid"):
         image = build(c, args.assembler, variant)
         m = T.Machine(command(c, image, args.native))
         try:
@@ -133,9 +141,12 @@ def verify(c: dict, args: argparse.Namespace) -> None:
                 len(data) == 44 and data[-1] == 239,
                 f"{c['system']} {variant}: incomplete caller",
             )
-            equal = bytes(data) == V.expected()
+            expected = bytearray(V.expected())
+            if variant == "closed-exit":
+                expected[40] = 5
+            equal = bytes(data) == bytes(expected)
             T.require(
-                equal == (variant == "positive"),
+                equal == (variant in ("positive", "closed-exit")),
                 f"{c['system']} {variant}: wrong oracle outcome {data}",
             )
             observations[variant] = data
@@ -143,6 +154,10 @@ def verify(c: dict, args: argparse.Namespace) -> None:
             print("PASS", c["system"], variant, flush=True)
         finally:
             m.close()
+    positive = (folder(c) / "build/positive/fixture.bin").read_bytes()
+    customised = (folder(c) / "build/closed-exit/fixture.bin").read_bytes()
+    differences = sum(a != b for a, b in zip(positive, customised, strict=True))
+    T.require(differences == 1, "Customisation changed more than one data byte")
     record = {
         "status": "passed",
         "machine": c["system"],
@@ -150,6 +165,12 @@ def verify(c: dict, args: argparse.Namespace) -> None:
         "configuration": c,
         "observations": observations,
         "fixtures": fixtures,
+        "customisation": {
+            "changed_fixture_bytes": differences,
+            "normal_property": 4,
+            "closed_exit_property": 5,
+            "property_table_bytes": 4,
+        },
         "sources": inputs(c),
         "assembler_sha256": T.sha(Path(args.assembler)),
         "emulator_sha256": T.sha(args.native / ("emu198x-" + c["system"])),
@@ -164,6 +185,11 @@ def main() -> None:
     p.add_argument("--native", type=Path)
     p.add_argument("--only")
     p.add_argument("--build-only", action="store_true")
+    p.add_argument(
+        "--variant",
+        choices=("positive", "closed-exit", "wrong-stride", "write-without-valid"),
+        default="positive",
+    )
     args = p.parse_args()
     configs = json.loads(CONFIG.read_text())
     if args.only:
@@ -176,7 +202,7 @@ def main() -> None:
         args.assembler = str(Path(args.assembler).resolve())
     for c in configs:
         if args.build_only:
-            print(build(c, args.assembler))
+            print(build(c, args.assembler, args.variant))
         else:
             verify(c, args)
 
