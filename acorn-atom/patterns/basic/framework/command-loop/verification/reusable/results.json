@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "machine_id": "acorn-atom",
+  "server": {
+    "name": "emu198x-acorn-atom",
+    "version": "0.44.0"
+  },
+  "configuration": "Base Atom integer BASIC, 2.5 KiB RAM",
+  "startup": "Cold firmware boot; complete caller plus routines and RUN typed through keyboard",
+  "traces": {
+    "default": [
+      0,
+      1,
+      2
+    ],
+    "step-two": [
+      0,
+      2,
+      4
+    ],
+    "nonzero": [
+      37,
+      38,
+      39
+    ],
+    "reset-mistake": [
+      0,
+      1,
+      1
+    ]
+  },
+  "idle_frames_per_observation": 120,
+  "invalid_command_unchanged_in_working_callers": true,
+  "reset_fault_rejected_command_state": 0,
+  "reset_fault_rejected_by_progression_guard": true,
+  "sources": {
+    "acorn-atom/patterns/basic/framework/command-loop/caller.bas": "768737e95930ff5f275530d8ccd7bed1657a63650b0c54f3a66b61bfe651568d",
+    "acorn-atom/patterns/basic/framework/command-loop/customise.bas": "2a6491b1e84f4008b7dc975d6739d27fdd4829c5758337a10a8a8b2c5fe4067c",
+    "acorn-atom/patterns/basic/framework/command-loop/routines.bas": "655e88ad04607a816274ec4d313041ed4f93e82841334e65d2ee2c1e2109d3a5",
+    "acorn-atom/patterns/basic/framework/command-loop/mistakes/reset-each-turn.bas": "833a9ec0943c6b2766c09267fa4c7792853ac338fccf1b3f52baad7f4efefaf7",
+    "acorn-atom/patterns/basic/framework/command-loop/qualification-toolchain.json": "bdb8972b4e2af09a44d8d95a405a0e8009d0566206b0342962dc86a20a67a6d5"
+  },
+  "observer_sources": {
+    "scripts/verify-basic-turn-routines.py": "9740b38e14b006eda70f43772a5632719dd32809f4ff314ad6030af3a557c6c8",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "program_sha256": {
+    "caller.bas": "768737e95930ff5f275530d8ccd7bed1657a63650b0c54f3a66b61bfe651568d",
+    "customise.bas": "2a6491b1e84f4008b7dc975d6739d27fdd4829c5758337a10a8a8b2c5fe4067c"
+  },
+  "firmware_sha256": {
+    "atom.rom": "c3810e3c70b035ba16ce40a6786723a548b89f2547eacc45c63a01c0337a1d47"
+  },
+  "emulator_sha256": "db08f2aacd4a25348b63af7dac90f91d2e0a0a09181bd6097fa6d80b8f9d1a9a",
+  "images": {
+    "default-waiting.png": "4def48ed89392612f39fc931a689f69a2b072e21c2457357a223a60d5e0c6473",
+    "default-action-1.png": "ee92e3ec4b31de2738b202ee3ecd3d328fe317cb8e1ed9c0432ff79ee37a8f81",
+    "default-action-2.png": "bd5ddffac6e19db962e7320a2da7635a9c6bc8a743b99eaf3433f2eacf7cf7ef",
+    "step-two-waiting.png": "4def48ed89392612f39fc931a689f69a2b072e21c2457357a223a60d5e0c6473",
+    "step-two-action-1.png": "bd5ddffac6e19db962e7320a2da7635a9c6bc8a743b99eaf3433f2eacf7cf7ef",
+    "step-two-action-2.png": "fd11d5807031ea587cc0401082921d66c4eb66dbf060322ee14257f1201ca1f4",
+    "nonzero-waiting.png": "9cd84cd39de6d40a4171ec9b75545e56c2b4b4462458f2bb76e0b4415a88053a",
+    "nonzero-action-1.png": "d782185904a3555771b9ee9982f6e37f511fba05b0602d2079f6e31ff2543ebf",
+    "nonzero-action-2.png": "5aefb334a1ca4c1fbf864895d6ad72a3124627fc2ca71371a288d16b3167514e",
+    "reset-mistake-waiting.png": "4def48ed89392612f39fc931a689f69a2b072e21c2457357a223a60d5e0c6473",
+    "reset-mistake-action-1.png": "ee92e3ec4b31de2738b202ee3ecd3d328fe317cb8e1ed9c0432ff79ee37a8f81",
+    "reset-mistake-action-2.png": "ee92e3ec4b31de2738b202ee3ecd3d328fe317cb8e1ed9c0432ff79ee37a8f81"
+  },
+  "limits": "Untimed line-input turns; no deadline, frame rate, audio servicing or original-hardware claim. CPC byte is caller-owned observation storage at 40000/40001 above MEMORY 39999."
+}
