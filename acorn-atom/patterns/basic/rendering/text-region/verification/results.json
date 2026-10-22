@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "system": "acorn-atom",
+  "kind": "text-region",
+  "case_counts": 9,
+  "sources": {
+    "acorn-atom/patterns/basic/rendering/text-region/query.bas": "a9ca500b11edae58567442b6b6506d12bb4de520bf9be5b6ca7edf2f37e8f8cd",
+    "acorn-atom/patterns/basic/rendering/text-region/region.bas": "b5910564632f46d589024e98027d17c4b51b1dfc483cbbe24e93cc2badc481e5",
+    "acorn-atom/patterns/basic/rendering/text-region/caller.bas": "847b7ef9f7cbc812d6f49d41b6fa949f53ea72c22df086a68960c645e02d8336",
+    "acorn-atom/patterns/basic/rendering/text-region/demo.bas": "bdab11e0d572a83147c5328737b2814b1032c729ac23bf2163b9f67b8f88cf1f"
+  },
+  "emulator_sha256": "e003ee487cfe480b2ccfafb34c87cf46cb87a2e612f627e33eb253f3975e2163",
+  "firmware": {
+    "atom.rom": "c3810e3c70b035ba16ce40a6786723a548b89f2547eacc45c63a01c0337a1d47"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-acorn-atom",
+    "version": "0.44.1",
+    "archive": "emu198x-acorn-atom-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "9930998721d6dacf7a3ea540cc086caf09e4379d9fd4677f16082e659b7fd247",
+    "executable_sha256": "e003ee487cfe480b2ccfafb34c87cf46cb87a2e612f627e33eb253f3975e2163",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "1d76dbec77acd42a89bea6a58a687d233fe13bce1685dca6b38b8ff6c0809a0c",
+    "reference.png": "b6e0ae82bf84d1dffdf41da76f84b85c4c5906f06d9d44bb088415dcd522b313",
+    "checked.png": "b6e0ae82bf84d1dffdf41da76f84b85c4c5906f06d9d44bb088415dcd522b313"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "acorn-atom/patterns/basic/rendering/text-region/verification/callers/checked.bas": "ecb7b3e521276d5fcb5a5bcfcf0077a20fb504ea345de0eb2b15d4169b2e91d8",
+    "acorn-atom/patterns/basic/rendering/text-region/verification/callers/reference.bas": "311a1dee8366ab1c58d73e274e6b234a09b27845c6f5bd7a51d64cfcbea796fa",
+    "acorn-atom/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "53f000920cf52e2ecff8bc62756c2bd24da91a983517192204c0627d439cb656"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

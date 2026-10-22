@@ -1,0 +1,105 @@
+{
+  "system": "sinclair-zx-spectrum",
+  "kind": "pixel-box",
+  "status": "passed",
+  "bounds_cases": 10,
+  "wrong_units_rejected": true,
+  "omitted_draw_rejected": true,
+  "edge_and_one_cell_boxes": true,
+  "sources": {
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/routines.bas": "78ab07fc0d4065d39526b4c73393027af6d39ef019fc9aec61d2047ab4b81579",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/caller.bas": "56f53d7e31bf446b28cc32323f430c83e7c129a0010d5409a8786461b14fa698",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/demo.bas": "ac5ee03f19a2a69275e46d997db74853f59850c7580b2d9d15f032f126912c33"
+  },
+  "observer_sha256": "913f3b0c453525935b2a3940511dd36dd9e2c86043558a414d0b18e1db23da4e",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "firmware": {
+    "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
+  },
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-spectrum",
+    "version": "0.44.1",
+    "archive": "emu198x-spectrum-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "f15367eb8b336d703d88e3e1c6a249c7524e0c9cc8e456cf9fae5f2d4fe23c54",
+    "executable_sha256": "575dbc84165bcf64ab7e0e3db013c094bf485331e9c44e921f3ff651a039bfa8",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "independent_full_raster_match": true,
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "edges.png": "e3e65279aa2f038fb0ca180c2d9e1cf9215ecccc840f4e1745e0ff764acafcdc",
+    "edges-reference.png": "e3e65279aa2f038fb0ca180c2d9e1cf9215ecccc840f4e1745e0ff764acafcdc",
+    "bounds.png": "ce186991d2116a0a18a22d3eca6c2dc5cbd91e7ea88c9a0cf36b9592b838042f",
+    "reference.png": "baaf9c31e6dd5a3e54790fec2c6b7ac0be605d70bf488ad468c8b4b07c8bb51c",
+    "demo.png": "baaf9c31e6dd5a3e54790fec2c6b7ac0be605d70bf488ad468c8b4b07c8bb51c",
+    "wrong-units.png": "eca7dc3316f870766a7c6cd7e7464b4593ff84d1985abd29868154df7e87c8fd",
+    "bounds-reference.png": "ce186991d2116a0a18a22d3eca6c2dc5cbd91e7ea88c9a0cf36b9592b838042f",
+    "omitted-draw.png": "dcd986c58a6c5f5ad9853c622aebbff76c01abd75aefc46d5b91199db267a938"
+  },
+  "emulator_sha256": "575dbc84165bcf64ab7e0e3db013c094bf485331e9c44e921f3ff651a039bfa8",
+  "limits": "Stock-ROM APIs in released Emu198x. Whole decoded raster compared with independent direct line-drawing caller. No speed/original-hardware claim.",
+  "callers": {
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/wrong-units.bas": "4fd933d0ef55ab3106dda1207b0468a636e2192419aa811a55694fba1076fec4",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/omitted-draw.bas": "68aac87366910698e37ad953b7dd79a64cc323ac352749406afe34b958685e1a",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/bounds-reference.bas": "0f850c74ec92ff1550463027942af3ff7e1ea413fe6704432a06d9a4ebeb6560",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/bounds.bas": "58b785a2c3b138ede3105d145916bc39581333a9085863e12c4e4717a35eaabc",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/edges-reference.bas": "6dc1d356f4d2e6dbeb880ee9260c62c8fd2cb8bcccd4b0de3598621c9785af15",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/edges.bas": "432d629e9ee0648d87e3a2f8be74b4eb2ccc95417c6e3a1015d4582ac9deace3",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/demo.bas": "4921e442d8f9e019b9d1781e29b8a550b5f7bfde58d2f6b4f4207b914afcc146",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/reference.bas": "ad8ba421cda3743aa6ec8b34d35002caef3879881c302d086c346f096c4f0095"
+  },
+  "configuration": "48K stock ROM, real tape load; harness CLEAR 59999 reserves the completion byte at 60000",
+  "basic_builder": "Build198x 0.2.13",
+  "builder_producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "971dce11d75903f8441e96b407ea428859363b73",
+    "committed_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "before_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "after_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "package": "build198x",
+    "version": "0.2.13",
+    "archive": "build198x-aarch64-apple-darwin.tar.xz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "12c9f61f121907b3403a7f4047093589ca7602a2bafe3b7a0322858cb6b2ed72",
+    "executable_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39753933977",
+      "run_attempt": "1"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=build198x-v0.2.13",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  }
+}

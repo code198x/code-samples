@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "system": "commodore-64",
+  "kind": "text-region",
+  "case_counts": 11,
+  "sources": {
+    "commodore-64/patterns/basic/rendering/text-region/query.bas": "a03aee0e9314c330b947f1fb475f4397340a008c037cdff235ff5c287afb4f73",
+    "commodore-64/patterns/basic/rendering/text-region/region.bas": "7b4f41dc896af12c51794f76daa685b85ef4ddd13b69537d32eeb9996dc61a4b",
+    "commodore-64/patterns/basic/rendering/text-region/caller.bas": "ee622debffa0917fdbef5338b764713fdc05a65c3a29bb91dfe9863821efd2ea",
+    "commodore-64/patterns/basic/rendering/text-region/demo.bas": "2dc3911230cce6eabf20cc037387cc23a2f92ae02edb2a090f0b4974746503b4"
+  },
+  "emulator_sha256": "ef00cee4b9539d1b3b13d141667919116443ca1270e0f66f4db6001617bbb45a",
+  "firmware": {
+    "1571.rom": "1fd73459b54a72a737609a879c283645acc37835de2c121633153db9fac81d45",
+    "basic_generic.rom": "54a1464b4b27c9dc61bbd62a818fdd12ec99af9089111005a5add0ad0e6bd5ec",
+    "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
+    "chargen_openroms.rom": "5e3451466841b93df7e01e4b635b07b8d8633351bae483b1961d96b3131186e7",
+    "kernal_generic.rom": "88e86ed3d0c710edab8f90ad146faa8de1ead11f43494b176c7b54724ca721c6",
+    "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420",
+    "kernal.rom": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721",
+    "1581.rom": "8f689277f36be357f5f105e6e606c35c42e73c581cdeec14b58f31850dfbcfcb",
+    "1541.rom": "326c289c38753323d7e8167897447cf61ef35189d82eb8d75210ece949adda7c"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-c64",
+    "version": "0.44.1",
+    "archive": "emu198x-c64-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "140f22b07a2f513e41a1031332bdf9580893306f342188e994448dfb99d4cf44",
+    "executable_sha256": "ef00cee4b9539d1b3b13d141667919116443ca1270e0f66f4db6001617bbb45a",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "wrong-stride.png": "bfe5bf1a74bb95286229a9fdf950273e54b212ecaee571a792fbbe901357c61d",
+    "reference.png": "3ac044aac4db785aafd48d585206bf74e51a93aeb812a8db0d18af477a323d2b",
+    "checked.png": "3ac044aac4db785aafd48d585206bf74e51a93aeb812a8db0d18af477a323d2b"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "commodore-64/patterns/basic/rendering/text-region/verification/callers/checked.bas": "91642db5151dd786aaee5bd6638b74fc01191e42bf2374e1718b57999c9f58cf",
+    "commodore-64/patterns/basic/rendering/text-region/verification/callers/reference.bas": "11fd20a7f354802463929903bf38f5aca9b6a6d5fc78a945caa5bb8cbb374f92",
+    "commodore-64/patterns/basic/rendering/text-region/verification/callers/wrong-stride.bas": "02c5e3e0321cf0ca3ea15191262e1b0a879637731bc1277ce1acaa95ee279a59"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

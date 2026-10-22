@@ -1,0 +1,78 @@
+{
+  "system": "amstrad-cpc",
+  "kind": "pixel-box",
+  "status": "passed",
+  "bounds_cases": 10,
+  "wrong_units_rejected": true,
+  "omitted_draw_rejected": true,
+  "edge_and_one_cell_boxes": true,
+  "sources": {
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/routines.bas": "851e29980e6c147598e38083aec05a8e2a42aa57d34d6f6196709b49265b190e",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/caller.bas": "e3afa30f06636894b095730082d467b56d9ea43e84123f139d24fd9f888c579f",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/demo.bas": "da5592f1e205fbc6c787e82b926bb33474ea7925c88df10fcb4b06cebe681f22"
+  },
+  "observer_sha256": "913f3b0c453525935b2a3940511dd36dd9e2c86043558a414d0b18e1db23da4e",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "firmware": {
+    "cpc6128.rom": "31c3668c67bea027dab698ece233c9434d9324f9ba7dac84db58f400b6689562",
+    "cpc664.rom": "1fcb20cf169f170774bf94954db9372c95edd038a5cb8e5199774552b93f8747",
+    "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e",
+    "cpcados.rom": "ea65e0fb44ee93ede4b6c507509b7e5ddf497fb7155023bea91ef229469fa04d"
+  },
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-amstrad-cpc",
+    "version": "0.44.1",
+    "archive": "emu198x-amstrad-cpc-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "1a32dbf3cb8769bea2304c8bbde84c3d9f522e2c1f770266b6b2eb0542050887",
+    "executable_sha256": "95b8aa26a9a08c466e1d307fede6c273ed9bdef7796890a5e70fcad891c24948",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "independent_full_raster_match": true,
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "edges.png": "86f5e143b7702e0b061a38da22f7b9452ed6e9146025ecd089424c3d4e9f3e92",
+    "edges-reference.png": "86f5e143b7702e0b061a38da22f7b9452ed6e9146025ecd089424c3d4e9f3e92",
+    "bounds.png": "1b5387c836727dd6f4406b1b8de423b4a51f51b1f247ea958709f44175f9f848",
+    "reference.png": "ce9e48dd961bdec7b3dcb7a39ddf4a81762529c20445fb46d483f08e9036e067",
+    "demo.png": "ce9e48dd961bdec7b3dcb7a39ddf4a81762529c20445fb46d483f08e9036e067",
+    "wrong-units.png": "460dff0921ef4b8e2e92d7c3eaccd15ff394f7ba544c56ea898b85b8ddc0fa0b",
+    "bounds-reference.png": "1b5387c836727dd6f4406b1b8de423b4a51f51b1f247ea958709f44175f9f848",
+    "omitted-draw.png": "df06e4e23dfe5e368f8a412417e70e1d0a5d510dff3842fb03aef4217de67147"
+  },
+  "emulator_sha256": "95b8aa26a9a08c466e1d307fede6c273ed9bdef7796890a5e70fcad891c24948",
+  "limits": "Stock-ROM APIs in released Emu198x. Whole decoded raster compared with independent direct line-drawing caller. No speed/original-hardware claim.",
+  "callers": {
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/wrong-units.bas": "5440459037ff8e9d104286f8ecda452ac4bd280c21708776dea0277df044720f",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/omitted-draw.bas": "b688b97912b21bbc3991ba92b4d88e11707683cbf31ef606361253a6c49663dd",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/bounds-reference.bas": "16b39c13e59e866059f4345a5534f457d3390bad0489b826121aa820b9331396",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/bounds.bas": "bf5024edb181bc32a54fa632e23c050f621c7d2af26b59364b9618e7fdeaea41",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/edges-reference.bas": "4243f9ca48356388dd5237e23bdc32f0f089ba2a7c276a89e44a297e83933859",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/edges.bas": "abf9d22ccd2e70b613d7eaf538ae4f5c5c3f8ba0d233b01e35ed2515b8a54017",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/demo.bas": "e607c65fd02d1c1d23ce34d79140bd773bf7f430a84bed02c391af6dd1aa5347",
+    "amstrad-cpc/patterns/basic/rendering/pixel-box/verification/callers/reference.bas": "130c6e61e533c066e2e52ce773344dcdd7d2a5a70a1d29cc53818ba92f6afd6b"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

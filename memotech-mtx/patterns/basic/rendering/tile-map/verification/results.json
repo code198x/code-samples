@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "system": "memotech-mtx",
+  "kind": "tile-map",
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10
+  },
+  "sources": {
+    "memotech-mtx/patterns/basic/rendering/tile-map/routines.bas": "4610eae57b7804b505b477f3e02b80b3fde9353c8341aabd9b5f4d6354ab7408",
+    "memotech-mtx/patterns/basic/rendering/tile-map/demo.bas": "a792f3f553e613162a6afb6e2ede2a27dae1945f8284b231d49f43ead6b22fb1"
+  },
+  "emulator_sha256": "02d29eec7cf21920b0014fc8343369d3fb899d8c52843f08b1d411ddd9e7dddd",
+  "firmware": {
+    "mtx.rom": "e93edd8490f320c1828f879460a857f393ce15213fa8d8cc853beb700bc71b0f"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-memotech-mtx",
+    "version": "0.44.1",
+    "archive": "emu198x-memotech-mtx-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "b61eb648e2a6d02d9e9e39eee8ff5795e7bafc65fcc83c2f4abe307ed0804628",
+    "executable_sha256": "02d29eec7cf21920b0014fc8343369d3fb899d8c52843f08b1d411ddd9e7dddd",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "writes.png": "c282cda4f4a4672d0a379f94ac879da772925951008e78cb5af44af4ae6b5639",
+    "queries-reference.png": "b4be07dbec97d0544248fa661c6ce7a7008f4d421515af590f8a183569ec3876",
+    "pixels.png": "2f20d42de0a887d131da594083931aea594f7eb895c11c2e7d3d520248e42d8b",
+    "wrong-stride.png": "c9ff39c0b0946cbfa1417c07c8c59cb0b4ec81344874c28633cd521fbaadd4b6",
+    "queries.png": "b4be07dbec97d0544248fa661c6ce7a7008f4d421515af590f8a183569ec3876",
+    "demo.png": "2456c6826942d72d11b734588e42808aa124a29b5f501fb34158e2fba55bfc5c",
+    "writes-reference.png": "c282cda4f4a4672d0a379f94ac879da772925951008e78cb5af44af4ae6b5639",
+    "pixels-reference.png": "2f20d42de0a887d131da594083931aea594f7eb895c11c2e7d3d520248e42d8b"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/writes-reference.bas": "ceb73ed433b70a59898051142e935240fee7e969630812dbaa59b240288ca60f",
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/pixels-reference.bas": "5ae5a040cc67572a13ce2c27c4bf7fa118e4e86ac3313ac60425ba2c63564818",
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/writes.bas": "fcd566467495a2eb1a287bab260a843a6a43d3e0006108ebfa78744d43433423",
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/demo.bas": "231eddc8c7544d5df16cc44cf34195e9e5ba3f4d832fa6c588ce9a1d36cfbe5c",
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/queries.bas": "8683c5a7915a3dad71ec8b78ed42285bc70216ddf312b0dfe3e8ac72f7ad5756",
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/wrong-stride.bas": "d54550412b3d8da213edb24f7077a16ef25699ae7732bdcb55be87b05b03a2c2",
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/pixels.bas": "d9af44f206024ca20fcedc41f60a59cf8403d895fe0545becb9818a8284c7d63",
+    "memotech-mtx/patterns/basic/rendering/tile-map/verification/callers/queries-reference.bas": "72ce304b50a8facdc590f9e769370a6ec457fb1ed2a8e65c7edab48a884dd185"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}

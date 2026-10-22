@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "system": "acorn-electron",
+  "kind": "tile-map",
+  "case_counts": {
+    "queries": 48,
+    "writes": 57,
+    "pixels": 10
+  },
+  "sources": {
+    "acorn-electron/patterns/basic/rendering/tile-map/routines.bas": "f3741cc305d920e2befc46a87f014f8d0152ee41203ba4534dc1c6f367a11d68",
+    "acorn-electron/patterns/basic/rendering/tile-map/demo.bas": "c40911c35d6db40166d6e13af3e3b355ae6223b5a6db4871d6616e7d706ac4d3"
+  },
+  "emulator_sha256": "9bc204aa0ae4bd2590254496ef0e88a9a96d5be8c5908af8dc59720f289d5dfc",
+  "firmware": {
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "os.rom": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4"
+  },
+  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
+  "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "producer": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-acorn-electron",
+    "version": "0.44.1",
+    "archive": "emu198x-acorn-electron-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "b6437acdde0bd7017a2fc2f59239511bb9802cec36f274d3ee917624ead1729e",
+    "executable_sha256": "9bc204aa0ae4bd2590254496ef0e88a9a96d5be8c5908af8dc59720f289d5dfc",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "captures": {
+    "writes.png": "e56baa085ebdb7c852c780f34aae77f1c93a379b2d1c0d0bd5e5a07bdd222370",
+    "queries-reference.png": "0c0dd140002e6dcf1da8e73c987a0ad7e488294b35640659026e25b2b0caac9e",
+    "pixels.png": "848165a1326d2af0a6eaa080e2f8a6a0f09f767393d8479534a774a902959035",
+    "wrong-stride.png": "8d59a9e6b09dcf46c5da3ce9fdda6571df5dc8a2ad4bd92ff0ddc778244ff5f3",
+    "queries.png": "0c0dd140002e6dcf1da8e73c987a0ad7e488294b35640659026e25b2b0caac9e",
+    "demo.png": "502421746bccfc4456fe66ee68fbc14caccaaa03a1a9f8bfb32b5651c8909131",
+    "writes-reference.png": "e56baa085ebdb7c852c780f34aae77f1c93a379b2d1c0d0bd5e5a07bdd222370",
+    "pixels-reference.png": "848165a1326d2af0a6eaa080e2f8a6a0f09f767393d8479534a774a902959035"
+  },
+  "wrong_stride_rejected": true,
+  "independent_full_raster_match": true,
+  "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
+  "callers": {
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/writes-reference.bas": "ce088fcb48b1ae09edd587529dc8a0b23a3dbe9c1546d428a72af16976dad7ea",
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/pixels-reference.bas": "f9dc59aba22c30f7bdc426704a59c9f867ed77cf736b54bd4c777c9994609dd4",
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/writes.bas": "aa75b0a743217eaa1efe8159a920e8f7c7096549f4225901cb10a298cf5d2459",
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/demo.bas": "695de03d2a99729455d2df0e73d16d457cea81b962790de57dc84090577a99f9",
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/queries.bas": "aa759b0bd8ece55b5bb0849530d6bdde9e21df6fd21cf2fc0b14f92d33a011ab",
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/wrong-stride.bas": "4cbf0ec7427e76c0b1be67f44d1d180c1b2774a01883ce2ceefa6b7eae837276",
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/pixels.bas": "993a0a43930b446a06acc17d970b7df2d3ca3059a8c282c8df0f444b055671a3",
+    "acorn-electron/patterns/basic/rendering/tile-map/verification/callers/queries-reference.bas": "ba936b0d0a5393265df21f2dc20bf8525c679a1ae6d07e4362d4084d7cc46eb7"
+  },
+  "configuration": "Stock firmware, keyboard-loaded BASIC harness",
+  "basic_builder": null
+}
