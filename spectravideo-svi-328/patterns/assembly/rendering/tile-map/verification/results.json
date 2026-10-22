@@ -218,7 +218,7 @@
     "cross-platform/patterns/rendering/tile-map/z80.inc": "bac98f7023aba3e9647037e755aa44bd99783f62c7dae091f11fca3b78cae3d1",
     "cross-platform/patterns/rendering/tile-map/mistakes/wrong-stride-z80.inc": "f6df81205b0ac840812e57e6e5db2450d7ab3c840bee208e249c77a0957a192b",
     "cross-platform/patterns/rendering/tile-map/mistakes/write-without-valid-z80.inc": "c5cf6059902d3aefd736ce122adeea324e052c88582f5ede62757426e663374f",
-    "docs/remaining-assembly-maps.json": "c5fba8c94b575a383f08eecc1e754b7fb738c2dcba5a0ffa3ed07121c15c24bb",
+    "docs/remaining-assembly-maps.json": "7cf60ef212d371f313d89bb4ed37122d829e3dce9829d58f96191856335084bf",
     "scripts/verify-remaining-assembly-maps.py": "860ab8153d770d5cde5984f6d4fd45b3c93a7527dab9c404f908ca42b127731f",
     "scripts/verify-native-tilemaps.py": "4196694cee2dc89d8ea0c5c79bb934204b11d56b67595db81ae0ee082fa5afb1",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",

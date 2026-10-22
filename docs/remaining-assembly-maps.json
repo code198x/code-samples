@@ -42,5 +42,27 @@
     "results": 49216,
     "map": 49392,
     "stack": 65520
+  },
+  {
+    "system": "atari-800xl",
+    "binary": "atari-800xl",
+    "cpu": "6502",
+    "origin": 57344,
+    "size": 16384,
+    "context": 112,
+    "results": 8192,
+    "map": 8688,
+    "stack": 511
+  },
+  {
+    "system": "dragon-32",
+    "binary": "dragon",
+    "cpu": "m6809",
+    "origin": 32768,
+    "size": 16384,
+    "context": 8192,
+    "results": 8256,
+    "map": 8688,
+    "stack": 32752
   }
 ]
