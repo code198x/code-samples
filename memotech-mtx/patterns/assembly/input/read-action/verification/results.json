@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "machine_id": "memotech-mtx",
+  "configuration": "MTX500 PAL, stock OS/BASIC, typed DATA/POKE loader and USR($E000)",
+  "server": {
+    "name": "emu198x-memotech-mtx",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "memotech-mtx/patterns/assembly/input/read-action/demo.asm": "5f151046210d209df9e1b0962f144e1a5ab1af134e3530994018267290d9f2d7",
+    "memotech-mtx/patterns/assembly/input/read-action/sample.inc": "e5e15919e0d65a766464facdedfdbd10c0b9007028c03adee5573a25cad19f79",
+    "memotech-mtx/patterns/assembly/input/read-action/picture.inc": "033369bb0e9d8e2eaf6a161f205951eadef1c317a874933ff190c658d3d16d5e",
+    "memotech-mtx/patterns/assembly/input/read-action/sound.inc": "d3045b17ab0e2c791c7a632265af223c44db75cd8ee72fa51fc0064c6a79018e",
+    "memotech-mtx/patterns/assembly/input/read-action/Makefile": "163a694aa0d9d0ef091df542ddde97562a9282e7e02e8174ddf6a645031a0333"
+  },
+  "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
+  "emulator_sha256": "02d29eec7cf21920b0014fc8343369d3fb899d8c52843f08b1d411ddd9e7dddd",
+  "binary_sha256": "2b7e8b000ab0f6241afd67e784d45f58c3329d6fb8e120c0c57fb5aa019a2c13",
+  "firmware_sha256": "e93edd8490f320c1828f879460a857f393ce15213fa8d8cc853beb700bc71b0f",
+  "observations": [
+    {
+      "address": 57088,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 57088,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 57088,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 57088,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 57088,
+      "bytes": [
+        2
+      ],
+      "count": 2
+    },
+    {
+      "address": 57088,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 57088,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 30622,
+    "rate": 48000,
+    "channel_ranges": [
+      12817
+    ],
+    "ac_power": [
+      3731894.850854627
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

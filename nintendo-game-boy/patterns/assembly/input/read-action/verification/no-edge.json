@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "nintendo-game-boy",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "6593d71cccce04e83840a896d8231a0eec07eb4bfa6f6368fc13e5bbf918f8f3",
+  "binary_sha256": "60b99d6be7399a995d32f2a981cdde05642c18d711185d9083c943d149d35c3c",
+  "image_sha256": "0c765535da765e1e8095c184aabb0b78ac83ffb666d686696114123a2f78493f",
+  "emulator_sha256": "a049446762da8f2329ec855c7e5bd332fb2820d50beba1a12ca16349dbe4658f"
+}

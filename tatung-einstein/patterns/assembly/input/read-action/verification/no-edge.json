@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "tatung-einstein",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "87474c2e0c71911ae90f4b079e534b9e4332c6d5e64e0cd0da51769b20341b06",
+  "binary_sha256": "461850d013e94d4c25292707d0ab603481a9dddf679b1ac4a899b6e6b5654912",
+  "image_sha256": "19f476f5555569e69609051afd4a89f2c7a492c61e1f733c2a589d298f762d86",
+  "emulator_sha256": "5533b0722c77c5c1f4e20b1bd4e219baeffd20c00e8fbfb04e2d2fccc822ad8e"
+}

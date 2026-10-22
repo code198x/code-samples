@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "atari-5200",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "e5db5f3d1c1082e139bddf746b274e70a28be9434bbb1f487ddc4d19af401280",
+  "binary_sha256": "c3d8f05726c2805603064e76e3e27db83b8f1463bc9f4f075230553d68e9d79d",
+  "image_sha256": "e38c691a68d532390611e1a2d24e2e36b19b0380c75f5e13460fbbbdde03cb5b",
+  "emulator_sha256": "85922769215cf01d0ddf6752d51dfb4591e89f8e84f627efa43993e4b4921272"
+}

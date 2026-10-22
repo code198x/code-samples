@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "sega-sg-1000",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "8a363ca62d02cb9e5bc4733d886e1f8b3a117916fa3561a5e62f377ea6d18cc8",
+  "binary_sha256": "2ed04a863efe179d5df0c49f6cc3cf388bc923c9c0c03fa28afd2d3c4f9cf983",
+  "image_sha256": "ad4a6e2db41693340dd44e1606a102fae8b0177b0a53eb4a1fa0b52e330e3dc2",
+  "emulator_sha256": "2ed03d803a21550e322e4289c9ae511bf6d6263ae17711baca4fbfbbd15cf026"
+}

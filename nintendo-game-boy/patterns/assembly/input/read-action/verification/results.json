@@ -1,0 +1,96 @@
+{
+  "status": "passed",
+  "machine_id": "nintendo-game-boy",
+  "configuration": "DMG default reset, no boot ROM",
+  "server": {
+    "name": "emu198x-game-boy",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "nintendo-game-boy/patterns/assembly/input/read-action/demo.asm": "341cc3a090c902694c1b3cca974dafa17bd00293bbe4fb23c4b947f83b2ea9da",
+    "nintendo-game-boy/patterns/assembly/input/read-action/sample.inc": "de5f39ea174fe866990e5b93870d67a54a342a3428598979060cf707e085cd7f",
+    "nintendo-game-boy/patterns/assembly/input/read-action/picture.inc": "0538c8c230374f153334cd5a689d89e6e1cde914788e00db0c075060025f107f",
+    "nintendo-game-boy/patterns/assembly/input/read-action/sound.inc": "19e24a3cbc1d6d514ea2278e787513c20c16a8913e4c7e68f5cdef0b03d91855",
+    "nintendo-game-boy/patterns/assembly/input/read-action/Makefile": "78633cfd16b114eed107572ecc3dd3dec6a4df622442e782f54f802d2ee9ca7f"
+  },
+  "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
+  "emulator_sha256": "a049446762da8f2329ec855c7e5bd332fb2820d50beba1a12ca16349dbe4658f",
+  "binary_sha256": "677f36647c03885421cee20b65d5b8186985f3f2ce6352252a2c791dcdfe864e",
+  "firmware_sha256": null,
+  "observations": [
+    {
+      "address": 49152,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        2
+      ],
+      "count": 2
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "Background tile changes position and restores; fixed palette",
+  "sound": {
+    "frames": 25717,
+    "rate": 48000,
+    "channel_ranges": [
+      16384,
+      16384
+    ],
+    "ac_power": [
+      14681120.462009821,
+      14681120.462009821
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "machine_id": "atari-2600",
+  "configuration": "NTSC 4 KiB cartridge",
+  "server": {
+    "name": "emu198x-atari-2600",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "atari-2600/patterns/assembly/input/read-action/demo.asm": "65f957d6caac8279273b32490489b169ea07b51d23ff1431a94984e9d287ac14",
+    "atari-2600/patterns/assembly/input/read-action/sample.inc": "2a39a37f55cb312c210228e26a191a6361cf22f37c6e49dcaecb18ef78c1e284",
+    "atari-2600/patterns/assembly/input/read-action/picture.inc": "ac6cdb669cd68ebe7fcb1d1fe7da5853ab2d150ee55a56d9b5e212d4e6763007",
+    "atari-2600/patterns/assembly/input/read-action/sound.inc": "16954bdd23710645968e79fdb65414b5605bfe73c839a8ee4f422f455daee101",
+    "atari-2600/patterns/assembly/input/read-action/Makefile": "6d75b091acae78b3bb1527e70bdf5e913eda1c33bde759ba76f0333b426950fb"
+  },
+  "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
+  "emulator_sha256": "e59c80a755c6d6ce0a7d481608cb7be42dacb0741ed5380076c7f7fcd0d27a66",
+  "binary_sha256": "62f4e82bfa2f714fd007ef0a9208fdb757974c6af6824bc2d684392a4be1c855",
+  "firmware_sha256": null,
+  "observations": [
+    {
+      "address": 128,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 128,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 128,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 128,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 128,
+      "bytes": [
+        2
+      ],
+      "count": 2
+    },
+    {
+      "address": 128,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 128,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "TIA playfield bar changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 16768,
+    "rate": 31440,
+    "channel_ranges": [
+      21843
+    ],
+    "ac_power": [
+      46964990.09344316
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "redirect PF1 write to unused RIOT RAM, preserving instruction cost",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

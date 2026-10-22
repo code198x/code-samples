@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "atari-2600",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "379a1dd681dc22442359be6d4b2de5235d037ed7d8104e945ea23d40e880fa72",
+  "binary_sha256": "167a9a663311cae4f596a18c38735270d4e4dfacf58556e472bfe89fbbfd7093",
+  "image_sha256": "e19a27f76c66ba4a57eee08e81537134343641f78159499f87b10cccaf06f8da",
+  "emulator_sha256": "e59c80a755c6d6ce0a7d481608cb7be42dacb0741ed5380076c7f7fcd0d27a66"
+}

@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "memotech-mtx",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "41582ee4cd12ecb1992a41c047e00c3f5b220205d49b74104c3532a91200c4c0",
+  "binary_sha256": "edec23d3a1d5d1d52f9a0b268d3f9547bb525b0e1474dfbf0b60605d37b41d65",
+  "image_sha256": "19f476f5555569e69609051afd4a89f2c7a492c61e1f733c2a589d298f762d86",
+  "emulator_sha256": "02d29eec7cf21920b0014fc8343369d3fb899d8c52843f08b1d411ddd9e7dddd"
+}

@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "atari-7800",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "90e3ae8f31562197f6460c4b13b01213b85dfd477245cb7a3e7c963989e969a9",
+  "binary_sha256": "490996f50d0a7ef12d5ec65da92e05ac1700069cc0d873ba92b0b570aa52e23f",
+  "image_sha256": "8234112aa7beccad3d6c0ca211f2fce55105376c5bf4d95b8eaa8dd3aa8c215a",
+  "emulator_sha256": "fcadeae131c61cdd19768cc270431b1f1e6f92180c43638ba77b6adffdfe101b"
+}
