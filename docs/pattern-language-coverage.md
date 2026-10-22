@@ -10,8 +10,8 @@ or a BASIC compiler needing qualification is not a finished library entry.
 
 The previously published catalogue contains 217 pages: 20 BASIC, 169 assembly,
 27 conceptual/reference and one other cross-platform entry. Amiga AMOS and Blitz
-add two independently qualified dialect entries: samples #161 is merged and
-website #925 is awaiting its source-first browser CI rerun. This tranche adds
+add two independently qualified dialect entries: samples #161 and website #925
+are merged after the source-first browser CI rerun passed. This tranche adds
 five more review entries (three BASIC, two assembly), for 224 authored pages.
 Publication remains separate from source and review. These counts do not claim
 capability completeness or curriculum readiness.
@@ -29,7 +29,7 @@ capability completeness or curriculum readiness.
 | Atari 7800 | — | entry present |
 | Atari 800XL | entry present | entry present |
 | ColecoVision | — | entry present |
-| Amiga | AMOS and Blitz entries in review, independently qualified | entry present |
+| Amiga | AMOS and Blitz entries merged, independently qualified | entry present |
 | C64 | reusable command entry in review | entry present |
 | PET | reusable command entry in review | reusable command entry in review |
 | VIC-20 | reusable command entry in review | reusable command entry in review |
@@ -66,7 +66,7 @@ sources and records; this table does not silently upgrade code to execution.
   path. ColecoVision BASIC remains separately unqualified too. These are visible
   gaps, not claims of impossible languages or hardware.
 - Amiga now has separate AMOS Professional 2.00 fresh-key and Blitz BASIC 2.10
-  console-command entries in review. The latter uses Ted 1.1, not AmiBlitz/PED;
+  console-command entries now merged. The latter uses Ted 1.1, not AmiBlitz/PED;
   no AmigaBASIC or other dialect coverage follows. AMOS qualification mounts its
   fixture from boot: the known hot-swap bug #1877/#1881 remains visible.
 - C64 BASIC, PET BASIC/assembly and unexpanded PAL VIC-20 BASIC/assembly now
