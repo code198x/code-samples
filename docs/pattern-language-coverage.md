@@ -8,22 +8,23 @@ languages distinct too. A dash below means no dedicated entry in the topic
 inventory, not that the language is impossible on the machine. An emulator probe
 or a BASIC compiler needing qualification is not a finished library entry.
 
-The catalogue snapshot before the three Atari additions contains 207 pages:
-17 BASIC, 162 assembly, 27 conceptual/reference and one other cross-platform
-entry. The three new Atari pages add assembly coverage only. These are page
-counts, not capability completeness or curriculum readiness.
+The published catalogue after samples #158 / website #919 contains 210 pages:
+17 BASIC, 165 assembly, 27 conceptual/reference and one other cross-platform
+entry. The next four entries in review add two BASIC and two assembly pages,
+bringing authored coverage to 214. These are page counts, not capability
+completeness or curriculum readiness.
 
 ## Loop column, with languages visible
 
 | Machine | BASIC entry | Assembly entry |
 | --- | --- | --- |
-| Atom | entry present | — |
-| BBC Micro | — | entry present |
-| Electron | — | entry present |
-| Amstrad CPC | entry present | — |
-| Atari 2600 | — | new entry in review |
-| Atari 5200 | — | new entry in review |
-| Atari 7800 | — | new entry in review |
+| Atom | entry present | new entry in review |
+| BBC Micro | new entry in review | entry present |
+| Electron | new entry in review | entry present |
+| Amstrad CPC | entry present | new entry in review |
+| Atari 2600 | — | entry present |
+| Atari 5200 | — | entry present |
+| Atari 7800 | — | entry present |
 | Atari 800XL | — | — |
 | ColecoVision | — | — |
 | Amiga | — | entry present |
@@ -53,8 +54,14 @@ sources and records; this table does not silently upgrade code to execution.
 
 ## Next gaps and applicability
 
-- Continue the agreed Atari assembly tranche, then the remaining loop rows.
-- Atom/CPC assembly remains missing despite their new BASIC entries.
+- The first language gaps now have review implementations: Atom/CPC assembly
+  character-command loops and BBC/Electron BASIC sampled-input loops. Their
+  contracts distinguish delivered characters, physical new presses and pacing.
+- Continue down the Loops column. The Atari console BASIC rows require a
+  qualified compiler/runtime/load path before they can be marked covered.
+  The next missing stock-language row is Atari XL (BASIC and assembly), followed
+  by ColecoVision and the remaining language gaps. Do not hide those earlier
+  console BASIC gaps when choosing a practical implementation tranche.
 - BASIC loops on machines with existing assembly entries remain gaps too.
   Reuse lessons and probes, but supply usable entry contracts and qualification.
 - The console assembly callers do not rule out BASIC cross-compilers. A useful
