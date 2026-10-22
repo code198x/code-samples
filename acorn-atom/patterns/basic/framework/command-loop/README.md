@@ -25,3 +25,55 @@ python3 scripts/verify-command-loops.py --native /path/to/native/binaries --only
 ```
 
 [The retained record](verification/results.json) identifies the firmware and executable, source hashes and exact configuration. The check submits accepted and ignored commands, waits without changing state, repeats from a nonzero initialiser, and rejects a caller that fabricates its first command. Byte-counter callers also check 254 → 255 → 0. This qualifies a small command caller, not a complete platform track or physical-hardware accuracy.
+
+## Reusable update, customisation and a diagnosed mistake
+
+The original `demo.bas` above remains the small probe. For an independently
+callable rule update, enter `caller.bas` followed by `routines.bas`, then RUN.
+These are two parts of one numbered BASIC program, not two programs to RUN in
+succession. `customise.bas` replaces the caller; append the same routines.
+
+Call GOSUB 1000 with N=current state, S=positive step and A=1
+to accept an action. Other numeric values are rejected.
+C=1 means accepted, C=0 rejected. N changes only for an accepted command.
+The routine preserves the input and S, reads no keyboard and performs no drawing.
+Reserve all four global variables, and lines 1000–1040. It is not re-entrant.
+N and S use Atom integer arithmetic; keep their sum in range. No saturation or wrap policy is supplied.
+
+The caller initialises once, draws, reads input, calls the update and repeats.
+Atom uses semicolon statement separators and apostrophe newlines.
+Renumber GOSUB targets if another part of your program owns those lines. This
+shares BASIC globals, not private registers: the map-query routines also use C
+and other variables, so rename consistently or save results before another call.
+
+The step-two caller changes S from 1 to 2: successive accepted commands give
+0 → 2 → 4. Each still makes one call; S is the amount added, not a second input.
+The implementation, assets and scratch-variable count are unchanged. Redrawing
+the screen still costs the same work; no runtime speed measurement is claimed.
+
+**Deliberately broken:** `mistakes/reset-each-turn.bas` resets N before every
+call. Its first accepted command looks fine, but the second still gives 1.
+Even rejecting a later command resets N to zero. Use `caller.bas` instead: leave
+the initialisation at startup and call GOSUB 1000 without resetting N.
+The faulty caller is separate from the recommended implementation.
+
+Reproduce the independent execution from the repository root:
+
+```sh
+python3 scripts/verify-basic-turn-routines.py --native /path/to/extracted/release/directories --only acorn-atom
+python3 scripts/check-basic-turn-records.py
+python3 -m unittest discover -s scripts -p test_basic_turn_records.py -v
+```
+
+Native directories follow the release layout, for example
+`emu198x-acorn-atom-aarch64-apple-darwin/emu198x-acorn-atom`.
+Use the identified firmware from your own installation; none is bundled.
+`qualification-toolchain.json` pins the release archive and producer lock.
+`verification/reusable/results.json` binds all source/observer inputs, firmware,
+executable, full native captures and the following observations: idle and rejected
+commands preserve working state; accepted commands set C, rejected commands clear
+it; default steps give 0/1/2; step-two gives 0/2/4; a nonzero start gives 37/38/39;
+the reset fault gives 0/1/1. 
+The recorded checker verifies retained evidence; only the native verifier runs
+the emulator. No timed-input, physical-hardware, sound-service or whole-emulator
+claim follows from these checks.

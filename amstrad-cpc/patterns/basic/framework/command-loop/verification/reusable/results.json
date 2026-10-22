@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "machine_id": "amstrad-cpc",
+  "server": {
+    "name": "emu198x-amstrad-cpc",
+    "version": "0.44.0"
+  },
+  "configuration": "CPC464 PAL, Locomotive BASIC, MODE 1",
+  "startup": "Cold firmware boot; complete caller plus routines and RUN typed through keyboard",
+  "traces": {
+    "default": [
+      0,
+      1,
+      2
+    ],
+    "step-two": [
+      0,
+      2,
+      4
+    ],
+    "nonzero": [
+      37,
+      38,
+      39
+    ],
+    "reset-mistake": [
+      0,
+      1,
+      1
+    ],
+    "byte-wrap": [
+      254,
+      255,
+      0
+    ]
+  },
+  "idle_frames_per_observation": 120,
+  "invalid_command_unchanged_in_working_callers": true,
+  "reset_fault_rejected_command_state": 0,
+  "reset_fault_rejected_by_progression_guard": true,
+  "sources": {
+    "amstrad-cpc/patterns/basic/framework/command-loop/caller.bas": "5b91befb940dfa943a18fa803970105eb05b6aae5b54b3b067a70bc70f5658db",
+    "amstrad-cpc/patterns/basic/framework/command-loop/customise.bas": "2d1a7538a12cc47361580c04bafdab6619473a793f23748b180930716cb507ae",
+    "amstrad-cpc/patterns/basic/framework/command-loop/routines.bas": "989b20d1df166213f011bf9ef08b8fbc9407cdc6b771909901e120e14aff0cd0",
+    "amstrad-cpc/patterns/basic/framework/command-loop/mistakes/reset-each-turn.bas": "42e1d1b11e8e5c610d540645b6bfe3cab6d976a34051e7025b3be90daf100230",
+    "amstrad-cpc/patterns/basic/framework/command-loop/qualification-toolchain.json": "ff04e18f363c2029857b2dc1c61acf1068158f672cab75c2430cc695f4d4f877"
+  },
+  "observer_sources": {
+    "scripts/verify-basic-turn-routines.py": "9740b38e14b006eda70f43772a5632719dd32809f4ff314ad6030af3a557c6c8",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "program_sha256": {
+    "caller.bas": "5b91befb940dfa943a18fa803970105eb05b6aae5b54b3b067a70bc70f5658db",
+    "customise.bas": "2d1a7538a12cc47361580c04bafdab6619473a793f23748b180930716cb507ae"
+  },
+  "firmware_sha256": {
+    "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e"
+  },
+  "emulator_sha256": "f66a8688202fe5fcf28fdf073c0bc2eaefd0dd28ac6c8db80c05523a4862b29f",
+  "images": {
+    "default-waiting.png": "4b0a020edc4e06229b7d4ba1784b4c99e2bff2851a94dea9b36221eafb9d1231",
+    "default-action-1.png": "8d5f94e30cbe9a40e2c0cf4bf694b1e23a7b6f7c6386ab888c0947f04990b7bd",
+    "default-action-2.png": "5bba804689ee86a30d9184e8540c94c350fa1a3b82355b425244f46a44bab799",
+    "step-two-waiting.png": "4b0a020edc4e06229b7d4ba1784b4c99e2bff2851a94dea9b36221eafb9d1231",
+    "step-two-action-1.png": "5bba804689ee86a30d9184e8540c94c350fa1a3b82355b425244f46a44bab799",
+    "step-two-action-2.png": "d09946a7529d3b3cf48304d5b8fc2bd4720d4d64b179ca4e97de098e39c6c1c8",
+    "nonzero-waiting.png": "29bde113cebb0cf5c16f0dfc383f8dac11fb25ce8322e6d1a1abccbff0e8f59d",
+    "nonzero-action-1.png": "ad29b6a0724791aca2e0ddfa065aada050e2372a6be673ecf494d82ca0cdc25c",
+    "nonzero-action-2.png": "ad008b6a0ec141a35569e2527db0058bcaee668b41b89f7d3f58c30b90c201b6",
+    "reset-mistake-waiting.png": "4b0a020edc4e06229b7d4ba1784b4c99e2bff2851a94dea9b36221eafb9d1231",
+    "reset-mistake-action-1.png": "8d5f94e30cbe9a40e2c0cf4bf694b1e23a7b6f7c6386ab888c0947f04990b7bd",
+    "reset-mistake-action-2.png": "8d5f94e30cbe9a40e2c0cf4bf694b1e23a7b6f7c6386ab888c0947f04990b7bd",
+    "byte-wrap-waiting.png": "e947d18fc6c1b56bbdc15790070d74db7ded386eb0d7f4289c7a8c74d20a7c67",
+    "byte-wrap-action-1.png": "7532b98adc394b0c3431e263a49f916f5e8f72c52d7076ce0715e057e9f1e5e4",
+    "byte-wrap-action-2.png": "4b0a020edc4e06229b7d4ba1784b4c99e2bff2851a94dea9b36221eafb9d1231"
+  },
+  "limits": "Untimed line-input turns; no deadline, frame rate, audio servicing or original-hardware claim. CPC byte is caller-owned observation storage at 40000/40001 above MEMORY 39999."
+}

@@ -1,0 +1,35 @@
+{
+  "emulator_release": "0.44.0",
+  "target": "aarch64-apple-darwin",
+  "archive_sha256": "5debfd6484b1682b3c1ef7d89f22038cd7ab47173d36702080626655db412e76",
+  "producer_source_lock": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "1d70a0a216cbfd7cab489bb151d2c2b248daebf6",
+    "committed_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+    "before_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+    "after_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+    "package": "emu198x-acorn-atom",
+    "version": "0.44.0",
+    "archive": "emu198x-acorn-atom-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "5debfd6484b1682b3c1ef7d89f22038cd7ab47173d36702080626655db412e76",
+    "executable_sha256": "db08f2aacd4a25348b63af7dac90f91d2e0a0a09181bd6097fa6d80b8f9d1a9a",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39650277597",
+      "run_attempt": "1"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.0",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  }
+}
