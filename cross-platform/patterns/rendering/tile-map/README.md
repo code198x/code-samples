@@ -20,6 +20,12 @@ Define TM as the first byte of a caller-owned 20-byte context. For 6502 it must 
 | 15 | Conversion scratch |
 | 16–17, 18–19 | Unsigned 16-bit world X and Y |
 
+## 6809 context
+
+`m6809.inc` uses the same 20 offsets as the byte context above, but both pointer fields and world X/Y are **big endian**. Define TM as any reserved contiguous 20-byte RAM block; zero page/direct page is not required. A/B/D, X and CC are clobbered; Y, U and DP are preserved. S must point at a reserved writable stack. Get/set use 4 bytes of return addresses at maximum depth, pixel conversion 6 and property lookup 2, including the direct caller. Interrupt frames and the surrounding caller need extra space. The routines neither mask interrupts nor change the active stack.
+
+The Dragon caller is verified separately, including 22 boundary operations with complete map snapshots. Its original reset firmware is mapped at $8000–$BFFF; the build helper installs the big-endian reset vector in the final two socket bytes. This is a CPU/RAM fixture, not a BASIC loader or a display routine.
+
 ## 68000 context
 
 A0 points at an even-aligned 24-byte context. Multi-byte values use native big-endian storage. Offsets 0–3 hold the map pointer; 4/5 width/height; 6/7 column/row; 8 tile ID; 9 valid flag; 10 property output; 11 highest tile ID; 12–15 property pointer; 16–19 scratch address; 20–21 X and 22–23 Y. A0 is preserved, D0–D2/A1/CCR are clobbered.
@@ -44,3 +50,7 @@ Run `make ASM198X=/path/to/asm198x` in a machine's `patterns/assembly/rendering/
 The diagnostic copies a non-square 7×5 map into its declared RAM, reads every cell, rejects four outside reads, five invalid writes and an invalid property ID, checks the entire map and its following guard stayed unchanged, performs a valid write, reads the property table, converts a position and rejects an oversized converted coordinate. Result byte 43 is written only at completion. On every system the same observer must reject a deliberately wrong row stride and a write which ignores the validity flag, after each altered caller also reaches completion. Nineteen maps cross a 256-byte boundary; the Atari 2600 map stays within its 128-byte RAM window and uses its own stack budget.
 
 Run `scripts/verify-native-tilemaps.py --native /path/to/native-binaries --assembler /path/to/asm198x`. This establishes the routines on each named CPU/memory configuration. It does not establish stock firmware compatibility, a tape/disk loader, display output, IRQ coexistence, a frame deadline or original hardware. Retained checks in CI bind source and output identities; local execution remains a separate step.
+
+## Later machine ports
+
+`docs/assembly-map-gaps.json` and `docs/remaining-assembly-maps.json` extend the original twenty-machine inventory without changing its recorded inputs. Run `scripts/verify-remaining-assembly-maps.py --native /path/to/binaries` for CPC, Aquarius, MSX, SVI-328, Atari XL and Dragon, then `scripts/verify-m6809-map-edges.py --native /path/to/binaries` for the new CPU’s boundary checks. Both accept `--assembler`. Each new machine has four separately executed fixtures: working, closed-exit property customisation, wrong stride and unchecked invalid write. Their retained checkers run in CI. See the machine README for exact reservations and limitations.

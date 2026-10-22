@@ -51,6 +51,23 @@ class MapRecords(unittest.TestCase):
     def test_real_records(self) -> None:
         C.main()
 
+    def test_m6809_boundaries(self) -> None:
+        edges = C.V.load("map_boundaries", C.ROOT / "scripts/verify-m6809-map-edges.py")
+        record = json.loads((edges.FOLDER / "verification/boundaries.json").read_text())
+        edges.validate(record)
+        for index in range(len(edges.CASES)):
+            altered = copy.deepcopy(record)
+            altered["actual"][index * edges.STRIDE] ^= 1
+            with self.subTest(case=index), self.assertRaises(AssertionError):
+                edges.validate(altered)
+        for key in ("actual", "cases", "sources", "fixture_sha256"):
+            altered = copy.deepcopy(record)
+            altered[key] = (
+                [] if key in ("actual", "cases") else {} if key == "sources" else ""
+            )
+            with self.subTest(field=key), self.assertRaises(AssertionError):
+                edges.validate(altered)
+
     def test_falsifications(self) -> None:
         for cfg in json.loads(C.V.CONFIG.read_text()):
             original = json.loads(
