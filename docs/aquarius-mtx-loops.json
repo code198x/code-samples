@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "emulator": "0.44.1",
+  "assembler": "0.0.71",
+  "routes": {
+    "mattel-aquarius/basic": {
+      "record": "mattel-aquarius/patterns/basic/framework/command-loop/verification/reusable-results.json",
+      "record_sha256": "ed90fc12b8f3e4967cd0e7695012bd4fe8e7063a6b28412ade4b52763cbaf3c0",
+      "cases": 6,
+      "scope": "Untimed loop only; separate from broad input/drawing/sound probes"
+    },
+    "mattel-aquarius/assembly": {
+      "record": "mattel-aquarius/patterns/assembly/framework/command-loop/verification/reusable-results.json",
+      "record_sha256": "65be0214b478df4681c4ebf961c968c62396bcac4650f4d9a7694f7c45acd804",
+      "cases": 7,
+      "scope": "Untimed loop only; separate from broad input/drawing/sound probes"
+    },
+    "memotech-mtx/basic": {
+      "record": "memotech-mtx/patterns/basic/framework/command-loop/verification/reusable-results.json",
+      "record_sha256": "400325d82c2098e34d25215f36f63fdf11864d46cfae58b499647f33c0a18f26",
+      "cases": 6,
+      "scope": "Untimed loop only; separate from broad input/drawing/sound probes"
+    },
+    "memotech-mtx/assembly": {
+      "record": "memotech-mtx/patterns/assembly/framework/command-loop/verification/reusable-results.json",
+      "record_sha256": "ff9238a54a3bd0e4e0b2b7fccbca38874894af623c0e20eba85b9a0ada05c498",
+      "cases": 7,
+      "scope": "Untimed loop only; separate from broad input/drawing/sound probes"
+    }
+  },
+  "limits": "Separate machine and language records. BASIC submits lines; assembly samples physical press edges. MTX assembly takes over until reset. No new audio qualification or original-hardware claim."
+}
