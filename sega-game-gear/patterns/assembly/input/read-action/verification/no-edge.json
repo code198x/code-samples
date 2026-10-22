@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "sega-game-gear",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "8a363ca62d02cb9e5bc4733d886e1f8b3a117916fa3561a5e62f377ea6d18cc8",
+  "binary_sha256": "df7ceead679c336a2c8d0a3eeb0005b6dc83814d6c194e0281a7435c562063c9",
+  "image_sha256": "ce71530df3b3a7c76e626787fd2a33c1d7f93e13e2b6c68655c4675155ee211b",
+  "emulator_sha256": "21af9e1e7d9938b472e7761bbcd79bb2e5758ed9ded913a9246e16589a1337a5"
+}

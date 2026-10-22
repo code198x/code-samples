@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "machine_id": "atari-7800",
+  "configuration": "NTSC 48 KiB cartridge reset without BIOS authentication",
+  "server": {
+    "name": "emu198x-atari-7800",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "atari-7800/patterns/assembly/input/read-action/demo.asm": "ec1724c8219f3404cff7f66348dfca8221e701fa98cb9e4697c5f2ea30059d1a",
+    "atari-7800/patterns/assembly/input/read-action/sample.inc": "08e9b47ca2237998c857771f08083eef2048c595b12affbd7ea48f69081c70ce",
+    "atari-7800/patterns/assembly/input/read-action/picture.inc": "fe7160eb480baa785a3cc7537d59baf5ab4faa158eabacefa507d0b0bd612ce0",
+    "atari-7800/patterns/assembly/input/read-action/sound.inc": "9ae50c2992587db6eeb4ebd367baa7c8b1c4d7fbb0e9fd59101b7e540fb6765b",
+    "atari-7800/patterns/assembly/input/read-action/Makefile": "b31673069daf56fe471921662492118a7b74a615b2e666f267a617fb243adf25"
+  },
+  "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
+  "emulator_sha256": "fcadeae131c61cdd19768cc270431b1f1e6f92180c43638ba77b6adffdfe101b",
+  "binary_sha256": "42cdca94918a301e85527cddce8858d31b5469c5aa77935c6fc2430111977ed1",
+  "firmware_sha256": null,
+  "observations": [
+    {
+      "address": 6400,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 6400,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 6400,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 6400,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 6400,
+      "bytes": [
+        2
+      ],
+      "count": 2
+    },
+    {
+      "address": 6400,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 6400,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "MARIA direct object column changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 16758,
+    "rate": 31400,
+    "channel_ranges": [
+      21843
+    ],
+    "ac_power": [
+      46992233.13271131
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

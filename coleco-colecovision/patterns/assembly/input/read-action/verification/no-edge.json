@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "coleco-colecovision",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "20389961ffb8acf23050c6bfe66edeaf89c00c5748267044866b5258969c2b03",
+  "binary_sha256": "27d70fbc57f3159a12fc5a80782795feb41369644d61ef762c73fe8ae7378bdf",
+  "image_sha256": "ad4a6e2db41693340dd44e1606a102fae8b0177b0a53eb4a1fa0b52e330e3dc2",
+  "emulator_sha256": "b213b99c5c427c2df05f6c88d96b4d872f52da86b2961446002332a7f8ac1799"
+}

@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "machine_id": "coleco-colecovision",
+  "configuration": "NTSC ColecoVision, pinned BIOS, title-skipping cartridge",
+  "server": {
+    "name": "emu198x-colecovision",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "coleco-colecovision/patterns/assembly/input/read-action/demo.asm": "2118fab46f4a67d84fd7614c8c3d3ec24557a590fe3b3e1c82c534a063fae235",
+    "coleco-colecovision/patterns/assembly/input/read-action/sample.inc": "42ed2adb5245bda22d361ab51a00bf2e1682dc8bcf79febc7369d51e89f2c358",
+    "coleco-colecovision/patterns/assembly/input/read-action/picture.inc": "033369bb0e9d8e2eaf6a161f205951eadef1c317a874933ff190c658d3d16d5e",
+    "coleco-colecovision/patterns/assembly/input/read-action/sound.inc": "7094c06d07a45a7f0fa5e596a307a41896d2aa95ad289623648e5b6593c2fa91",
+    "coleco-colecovision/patterns/assembly/input/read-action/Makefile": "e273383f08ce4251f165a9e6c5386e25d0e7fdb39bd2627e692f8e670aca965b"
+  },
+  "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
+  "emulator_sha256": "b213b99c5c427c2df05f6c88d96b4d872f52da86b2961446002332a7f8ac1799",
+  "binary_sha256": "5ff39930260b18c0f9ba6735952affa8fa71bc45a5bcf20325174e0c829834a4",
+  "firmware_sha256": "990bf1956f10207d8781b619eb74f89b00d921c8d45c95c334c16c8cceca09ad",
+  "observations": [
+    {
+      "address": 24576,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 24576,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 24576,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 24576,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 24576,
+      "bytes": [
+        2
+      ],
+      "count": 2
+    },
+    {
+      "address": 24576,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 24576,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 25633,
+    "rate": 48000,
+    "channel_ranges": [
+      12752
+    ],
+    "ac_power": [
+      3697148.3962413617
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

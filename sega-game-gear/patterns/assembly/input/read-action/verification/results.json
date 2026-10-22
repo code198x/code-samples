@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "machine_id": "sega-game-gear",
+  "configuration": "NTSC stock cartridge configuration",
+  "server": {
+    "name": "emu198x-sega-game-gear",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "sega-game-gear/patterns/assembly/input/read-action/demo.asm": "242ea3a5a70f39fb2976663f2922ca680d422b15109d2c9f7efb3f56c646992b",
+    "sega-game-gear/patterns/assembly/input/read-action/sample.inc": "d56a59aee69d249de25d8a554581a62d42d8ce596155098c502bcb0588bb1539",
+    "sega-game-gear/patterns/assembly/input/read-action/picture.inc": "79dd0bb5452d17ebe27d38ca352c7ddf7054feb655f5afde384f6b23676f29c3",
+    "sega-game-gear/patterns/assembly/input/read-action/sound.inc": "4f3e73770d6e304e98040dbc715971324b7528ec1889259b9c6681bfee546fec",
+    "sega-game-gear/patterns/assembly/input/read-action/Makefile": "f8b68b228fc43b63a3bdbb767d675d922f01f48102aa1b2d99f3cb81cba7428a"
+  },
+  "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
+  "emulator_sha256": "21af9e1e7d9938b472e7761bbcd79bb2e5758ed9ded913a9246e16589a1337a5",
+  "binary_sha256": "6433fd3254eaffc11381ae87c1ed24f86f17dc723e2c7504bab5f1c6860e4b7e",
+  "firmware_sha256": null,
+  "observations": [
+    {
+      "address": 49152,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        2
+      ],
+      "count": 2
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 49152,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "VRAM glyph changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 25633,
+    "rate": 48000,
+    "channel_ranges": [
+      12751
+    ],
+    "ac_power": [
+      3717498.6101042926
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

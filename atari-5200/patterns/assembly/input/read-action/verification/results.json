@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "machine_id": "atari-5200",
+  "configuration": "NTSC 32 KiB cartridge, pinned BIOS",
+  "server": {
+    "name": "emu198x-atari-5200",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "atari-5200/patterns/assembly/input/read-action/demo.asm": "44f86544a8b1da626d12ff5efd71d372ad80ce1043c4c3f1c952d0be02181d79",
+    "atari-5200/patterns/assembly/input/read-action/sample.inc": "2e51ad87bc8cf9f8778166541670bcf3317111c324a328806b3e41a51105a507",
+    "atari-5200/patterns/assembly/input/read-action/picture.inc": "a19dd786b81b23d0afba47a3a5d5cdb979f2106c632cccfdf6086762dc4f3a67",
+    "atari-5200/patterns/assembly/input/read-action/sound.inc": "b1b18d83f386198d8489cff460f3cb0c4b2a10b1ecd8750ca196b9d1b2af4213",
+    "atari-5200/patterns/assembly/input/read-action/Makefile": "b31673069daf56fe471921662492118a7b74a615b2e666f267a617fb243adf25"
+  },
+  "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
+  "emulator_sha256": "85922769215cf01d0ddf6752d51dfb4591e89f8e84f627efa43993e4b4921272",
+  "binary_sha256": "77e08c0dab2300b90698f4555705e83d0d820edb06199b7baee5888ae08d8fcb",
+  "firmware_sha256": "06b250f18983d058c0f156ce7ee88ae48b6eaf11e6f10f21dccf6ac7ffb6a6af",
+  "observations": [
+    {
+      "address": 4096,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 4096,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 4096,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 4096,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 4096,
+      "bytes": [
+        2
+      ],
+      "count": 2
+    },
+    {
+      "address": 4096,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 4096,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "idle, press once, held without repeat, release and second press",
+  "drawing": "ANTIC mode8 bitmap block changes position and restores; fixed backdrop",
+  "sound": {
+    "frames": 25633,
+    "rate": 48000,
+    "channel_ranges": [
+      12933
+    ],
+    "ac_power": [
+      3708906.2941107424
+    ]
+  },
+  "negative_controls": {
+    "drawing": {
+      "intervention": "omit draw_picture",
+      "same_guard_rejected": true
+    },
+    "sound": {
+      "intervention": "omit trigger_sound",
+      "same_guard_rejected": true
+    }
+  },
+  "limits": "Configuration-specific native emulator evidence. No original-hardware or pitch-accuracy claim. Startup uses stock firmware/cartridge entry; MTX DATA/POKE/USR and Einstein MOS disk boot remain distinct from cassette/CPM loading."
+}

@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "system": "electron",
+  "startup": "Cold MOS/BASIC boot, DATA loader typed through keyboard, RUN",
+  "server": {
+    "name": "emu198x-acorn-electron",
+    "version": "0.44.1"
+  },
+  "emulator_sha256": "9bc204aa0ae4bd2590254496ef0e88a9a96d5be8c5908af8dc59720f289d5dfc",
+  "firmware_sha256": {
+    "os.rom": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4",
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
+  },
+  "binary_sha256": "07b96c9853fccd6670fa750e5e2db313bfb3eb7f4d1ccdb288ac54c55aa025ec",
+  "observer_sha256": "4f7ec136a13eced7e63098eb495752823489e6bd1d3e4b98a48dca8edcd550e0",
+  "sources": {
+    "acorn-electron/patterns/assembly/input/mos-controls/Makefile": "3e0a5ad1d456f8a41753c66d2363481b0c0711a62f6aeff0afc0d917ff034a14",
+    "acorn-electron/patterns/assembly/input/mos-controls/demo.asm": "2456b1eae2dcb32b5f6feac8118e4bde642b09bdae3f1f9000839692551a79df",
+    "acorn-electron/patterns/assembly/input/mos-controls/loader.py": "c9c6051d071853a233ea0c7e6c57ef7438c7dc7c59a89f33c22cc9747a4943ff",
+    "bbc-micro/patterns/assembly/framework/collect-and-respond/collision.inc": "67a1349d3e2990d2012b334d723baad77e495c81673a9570bc188bc780495971",
+    "bbc-micro/patterns/assembly/framework/collect-and-respond/draw.inc": "a2844fd67c460b540bc8c39936a3d57b67797fe865926ae6783a9d4d9b0148a2",
+    "bbc-micro/patterns/assembly/framework/collect-and-respond/input.inc": "09fc121a3044e55105ce8bbdcfb28e075bc027184dc42070fcf2f5a73ea6e05d",
+    "bbc-micro/patterns/assembly/framework/collect-and-respond/rules.inc": "5a839a1811080a85b7e6abe20202e9dff811dd1e5f15239c70a90a5b2661888f",
+    "bbc-micro/patterns/assembly/framework/collect-and-respond/sound.inc": "57f6ae511a6bae39bab4700d2f33afa173fdacc7489165b09c92974094fdd903",
+    "bbc-micro/patterns/assembly/framework/collect-and-respond/state.inc": "14b982944ac8e5c49f7dc3826969d0fa3359c5735ca401b3900dee40af936cb1",
+    "bbc-micro/patterns/assembly/framework/game-loop/frame.inc": "1be91c5fac2dce415184eac1e8a51dcdee5af85f874e8ac1e9aa5b3acbe3532b"
+  },
+  "initial": {
+    "player_x": 2,
+    "player_y": 5,
+    "score": 0,
+    "item_active": 1,
+    "pressed": 0,
+    "released": 0
+  },
+  "collected": {
+    "player_x": 10,
+    "player_y": 5,
+    "score": 1,
+    "item_active": 0,
+    "pressed": 0,
+    "released": 0
+  },
+  "bounds": {
+    "left": 0,
+    "up": 0,
+    "right": 15,
+    "down": 9
+  },
+  "held_restart_allows_movement": true,
+  "audio": {
+    "frames": 89137,
+    "rate": 48000,
+    "channel_ranges": [
+      19660
+    ],
+    "ac_power": [
+      4318852.252866968
+    ]
+  },
+  "sound_negative_rejected": true,
+  "sound_negative_intervention": "Diagnostic RAM patch: trigger_sound first opcode to RTS; restored after the muted check",
+  "negative_collection_rejected": true,
+  "limits": "Emulator configuration evidence; audio amplitude establishes changing output, not pitch accuracy or hardware conformance. Cell overlap tests one shared occupied cell; not a pixel-mask test. Snapshot startup on Spectrum is distinct from tape loading."
+}

@@ -1,0 +1,13 @@
+{
+  "observer_sha256": "918d514e5ac444950a418fdcd2c0d3ba14b955dfe58f7564e53648fcdf7301e9",
+  "status": "passed",
+  "system": "sord-m5",
+  "fault": "held state used in place of a new-press mask",
+  "first": 2,
+  "held": 32,
+  "held_guard_rejected": true,
+  "source_sha256": "7eb62f447047fe81cebda708896d2f7e65bf5e963b63f4cce22dc16a1370753f",
+  "binary_sha256": "287d341268431f77bb94d2722c3150047db4476b8f3bcb09c7990e9b1bf2d5fd",
+  "image_sha256": "ad4a6e2db41693340dd44e1606a102fae8b0177b0a53eb4a1fa0b52e330e3dc2",
+  "emulator_sha256": "563f45e4dee0412985fc5aceca22d3fc336c96f107e13e6eee799106da767abe"
+}
