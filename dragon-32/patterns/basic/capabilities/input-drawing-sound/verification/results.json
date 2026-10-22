@@ -4,13 +4,13 @@
   "configuration": "Stock BASIC and current command-loop firmware configuration",
   "server": {
     "name": "emu198x-dragon",
-    "version": "0.38.3"
+    "version": "0.44.1"
   },
   "sources": {
     "dragon-32/patterns/basic/capabilities/input-drawing-sound/demo.bas": "0f9e72d11f641bbb914348d667ad58b4a94f6ceb38a2f9a85788c5af08297b74"
   },
   "observer_sha256": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
-  "emulator_sha256": "4737a2c06ce3664092c27df1eea3fce5a617de72a0300d50fd6537e2ccf26e55",
+  "emulator_sha256": "44c9ac54c512e34ed89b6d9287dc9c521f621abe722979d5074451c84a10b702",
   "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
   "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
   "sound": {
@@ -34,5 +34,56 @@
     ]
   },
   "sound_negative_rejected": true,
-  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed.",
+  "emulator_source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+  "emulator_release": "v0.44.1",
+  "producer_source_lock": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-dragon",
+    "version": "0.44.1",
+    "archive": "emu198x-dragon-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "f6fe61a63e25e2f45ceb28002e633730b073e26e3d96ddb92aaa42b13a4a3fb7",
+    "executable_sha256": "44c9ac54c512e34ed89b6d9287dc9c521f621abe722979d5074451c84a10b702",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "track": "basic",
+  "refresh_observer_sources": {
+    "scripts/verify-dragon-ace-loops.py": "66677bad2852d4e6de053783c83717a7d816a834a2e632cbc5cfddf5b1483a29",
+    "scripts/verify-basic-capabilities.py": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "firmware_sha256": {
+    "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
+  },
+  "captures": {
+    "dragon-32/patterns/basic/capabilities/input-drawing-sound/verification/current-release/ready.png": "6bdd095aab6102cdd26b2d152d71e7c159840595922f63bd29c0bead15cfc796",
+    "dragon-32/patterns/basic/capabilities/input-drawing-sound/verification/current-release/drawing-negative.png": "94b3c76c191490df4c52f814f2071beeca38d1229ebd25ec8be1f67777cf64aa",
+    "dragon-32/patterns/basic/capabilities/input-drawing-sound/verification/current-release/accepted.png": "02a37ea72cffb15e45a735298efb00be50fc98464d24c0632c43b81372b70174"
+  },
+  "audio_capture": {
+    "path": "dragon-32/patterns/basic/capabilities/input-drawing-sound/verification/current-release/sound.wav",
+    "sha256": "465a356c377dd5c2ad44b8f9ed3711c747b404a9e039e2ec4fafd5cfbc98bfc5",
+    "full_sha256": "341fdeb296c58489983bb187e27b690ba0a8b8d2dc4096bb7e04e1e5e8a3a0bc"
+  }
 }

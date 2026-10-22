@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "scope": "Current-release tranche: four distinct language routes; supplements the 30-machine baseline without duplicating machine membership",
+  "routes": [
+    {
+      "system": "dragon-32",
+      "track": "basic",
+      "emulator_release": "v0.44.1",
+      "loop_record": "dragon-32/patterns/basic/framework/command-loop/verification/results.json",
+      "loop_record_sha256": "2ed3af8790635133f5f65086a99619435e7c95cbbeb4d3b31253dac6482a4320",
+      "input": "executed",
+      "drawing": "executed",
+      "sound": "executed",
+      "scope": "Named firmware configuration, native keyboard input and text-cell output; no whole-emulator claim",
+      "capability_record": "dragon-32/patterns/basic/capabilities/input-drawing-sound/verification/results.json",
+      "capability_record_sha256": "b954b6b6d12533d1fcc2662c031d5c7269b3659e904ae781868b733838653fe7",
+      "variants_record": "dragon-32/patterns/basic/framework/command-loop/verification/variants.json",
+      "variants_record_sha256": "3da56ae451591edf83c9a5e7f045944aef822195f40908d4362586ed579a0430"
+    },
+    {
+      "system": "dragon-32",
+      "track": "assembly",
+      "emulator_release": "v0.44.1",
+      "loop_record": "dragon-32/patterns/assembly/framework/command-loop/verification/results.json",
+      "loop_record_sha256": "91411a630861b6ba310addcc547cfe2991d4fcb85984cb17a7f92c218524c888",
+      "input": "executed",
+      "drawing": "executed",
+      "sound": "executed",
+      "scope": "Named firmware configuration, native keyboard input and text-cell output; no whole-emulator claim"
+    },
+    {
+      "system": "jupiter-ace",
+      "track": "forth",
+      "emulator_release": "v0.44.1",
+      "loop_record": "jupiter-ace/patterns/forth/framework/command-loop/verification/results.json",
+      "loop_record_sha256": "293b4af958dc4c6f7c32c5100f00aeaf0001b6f178b1c0697db5110d8bdc981c",
+      "input": "executed",
+      "drawing": "executed",
+      "sound": "executed",
+      "scope": "Named firmware configuration, native keyboard input and text-cell output; no whole-emulator claim",
+      "capability_record": "jupiter-ace/patterns/forth/capabilities/input-drawing-sound/verification/results.json",
+      "capability_record_sha256": "7a6420604093f03869128945f4a065aab840add4244df1affc871ca7c6c1b65b",
+      "variants_record": "jupiter-ace/patterns/forth/framework/command-loop/verification/variants.json",
+      "variants_record_sha256": "05532eca994f4226eac65e0e224b77cfa103de380c8ddb07c488631a35de9c60"
+    },
+    {
+      "system": "jupiter-ace",
+      "track": "assembly",
+      "emulator_release": "v0.44.1",
+      "loop_record": "jupiter-ace/patterns/assembly/framework/command-loop/verification/results.json",
+      "loop_record_sha256": "8e49695839efab8c9c6dbf0d60b0dd1f05ff38c201ee4b6710d83bd1d9e4226e",
+      "input": "executed",
+      "drawing": "executed",
+      "sound": "executed",
+      "scope": "Named firmware configuration, native keyboard input and text-cell output; no whole-emulator claim"
+    }
+  ]
+}

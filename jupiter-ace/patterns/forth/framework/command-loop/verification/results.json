@@ -3,7 +3,7 @@
   "machine_id": "jupiter-ace",
   "server": {
     "name": "emu198x-jupiter-ace",
-    "version": "0.34.2"
+    "version": "0.44.1"
   },
   "configuration": "Stock 3 KiB Jupiter Ace, pinned FORTH ROM",
   "startup": "Fresh ROM boot; definitions entered line by line with compile settling, then TURNS",
@@ -19,14 +19,55 @@
     "observed_turn": 1
   },
   "firmware_sha256": {
-    "forth": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d"
+    "ace.rom": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d"
   },
-  "emulator_sha256": "2e7ce7674fedf613ab105cdbc905deb850a17c87b5eae72f879fd1bada6d1256",
-  "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
+  "emulator_sha256": "aba6bf3f2106dc7e65ef69d2deb0d7d05d98a0164c92dd011e930d93ea1508b4",
+  "emulator_source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
   "sources": {
     "jupiter-ace/patterns/forth/framework/command-loop/demo.fth": "5fcea19dfe45051b6689d8b01dfd0a282c08075a022054186863671746b936ea",
     "scripts/verify-ace-command-loop.py": "bd09e9a83d668f61bc67ad93ebd50ceab9aff3c9878d5959d836739e92f2e729",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
-  "limits": "Untimed FORTH key/display path, one cell of state. No frame clock, deadline, original-hardware or whole-emulator claim."
+  "limits": "Untimed FORTH key/display path, one cell of state. No frame clock, deadline, original-hardware or whole-emulator claim.",
+  "emulator_release": "v0.44.1",
+  "producer_source_lock": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-jupiter-ace",
+    "version": "0.44.1",
+    "archive": "emu198x-jupiter-ace-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "c959931a7b7fbf92980c49d49ed4d001d716d460433aa159be5a30045b53550e",
+    "executable_sha256": "aba6bf3f2106dc7e65ef69d2deb0d7d05d98a0164c92dd011e930d93ea1508b4",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "track": "forth",
+  "refresh_observer_sources": {
+    "scripts/verify-dragon-ace-loops.py": "66677bad2852d4e6de053783c83717a7d816a834a2e632cbc5cfddf5b1483a29",
+    "scripts/verify-ace-command-loop.py": "bd09e9a83d668f61bc67ad93ebd50ceab9aff3c9878d5959d836739e92f2e729",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "captures": {
+    "jupiter-ace/patterns/forth/framework/command-loop/verification/current-release/two-turns.png": "305c9e16be2182f435de5bfc8af9580309147b3aee5b61aa52194248a3b1571c",
+    "jupiter-ace/patterns/forth/framework/command-loop/verification/current-release/one-turn.png": "184fa8366f28b563767b51de540b8eae34bf1329efcb7483e87ed4982d071fcd"
+  }
 }

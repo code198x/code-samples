@@ -1,0 +1,9 @@
+; SPDX-License-Identifier: MIT
+    org $3D00
+INITIAL equ 0
+STEP equ 1
+RESET_EACH equ 0
+DRAW equ 1
+SOUND equ 1
+    include "caller.inc"
+    include "routines.inc"
