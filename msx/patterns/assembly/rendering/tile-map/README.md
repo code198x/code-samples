@@ -2,7 +2,7 @@
 
 Read every cell in a 7×5 row-major map, reject out-of-range reads/writes, change a tile, look up its properties, and convert world positions into eight-unit cells. This is reusable CPU/RAM code, not a screen renderer.
 
-The diagnostic replaces the 32 KiB BIOS. Before using its stack, it writes $C0 to PPI port $A8: slot 0 remains selected for pages 0–2, while page 3 ($C000–$FFFF) selects slot 3 RAM in this emulator configuration. Context $C000, results $C040, map $C0F0 and stack top $FFF0 are all in that page. This is a fixture-specific selection, not a portable MSX RAM-discovery routine. Real MSX machines can place RAM in other slots or subslots; a BIOS-facing program should discover and preserve their layout rather than copy this startup byte.
+The diagnostic replaces the 32 KiB BIOS. Before using its stack, it configures the PPI with mode word $82 at port $AB (A/C outputs, B input), then writes $C0 to PPI port $A8: slot 0 remains selected for pages 0–2, while page 3 ($C000–$FFFF) selects slot 3 RAM in this emulator configuration. Context $C000, results $C040, map $C0F0 and stack top $FFF0 are all in that page. This is a fixture-specific selection, not a portable MSX RAM-discovery routine. Real MSX machines can place RAM in other slots or subslots; a BIOS-facing program should discover and preserve their layout rather than copy this startup byte.
 
 ## Include, initialise and call
 
