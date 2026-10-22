@@ -215,7 +215,7 @@
     "cross-platform/patterns/rendering/tile-map/mistakes/wrong-stride-6502.inc": "758af735689ce32517eb3cdbec93f57deaffb3c746265b522e1456d9646df8ad",
     "cross-platform/patterns/rendering/tile-map/mistakes/write-without-valid-6502.inc": "d756184b8049ea2193ce8f29468cc00cb8873e622de6853f7a3ada77e16b368b",
     "docs/assembly-map-gaps.json": "536bceac120798ad9d6e039ef36becc189f783f67a32d0a63f9534b11210d254",
-    "scripts/verify-assembly-map-gaps.py": "4d6341ff84339732170ad825abadcb438bac39c0b4dfe0944cc72bb48777ed8a",
+    "scripts/verify-assembly-map-gaps.py": "ca8861057baf1e7c4d2851ba810d311c32207199e52b95836189b4449c0ac8ce",
     "scripts/verify-native-tilemaps.py": "4196694cee2dc89d8ea0c5c79bb934204b11d56b67595db81ae0ee082fa5afb1",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "cross-platform/patterns/rendering/tile-map/build.py": "cfe53c6310a542c0ed69747f1994b76947ab5c365ede39c1cbbf519af89cb6c5",

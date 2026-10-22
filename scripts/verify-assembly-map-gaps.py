@@ -10,13 +10,15 @@ import importlib.util
 import json
 import subprocess
 from pathlib import Path
+from shutil import which
+from types import ModuleType
 
 ROOT = Path(__file__).resolve().parents[1]
 SHARED = ROOT / "cross-platform/patterns/rendering/tile-map"
 CONFIG = ROOT / "docs/assembly-map-gaps.json"
 
 
-def load(name: str, path: Path):
+def load(name: str, path: Path) -> ModuleType:
     spec = importlib.util.spec_from_file_location(name, path)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -199,7 +201,12 @@ def main() -> None:
         if args.native is None:
             p.error("--native is required")
         args.native = args.native.resolve()
-        args.assembler = str(Path(args.assembler).resolve())
+        resolved_assembler = which(args.assembler)
+        T.require(
+            resolved_assembler is not None,
+            "Assembler executable not found: " + args.assembler,
+        )
+        args.assembler = str(Path(resolved_assembler).resolve())
     for c in configs:
         if args.build_only:
             print(build(c, args.assembler, args.variant))
