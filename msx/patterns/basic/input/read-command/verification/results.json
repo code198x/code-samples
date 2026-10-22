@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "system": "msx",
+  "configuration": "Stock BASIC and current command-loop firmware configuration",
+  "server": {
+    "name": "emu198x-msx",
+    "version": "0.44.1"
+  },
+  "sources": {
+    "msx/patterns/basic/input/read-command/demo.bas": "f6b30bc5645503865d5bb36e99b5886d13352f64938812ea7dd72b8fdd84e174",
+    "msx/patterns/basic/input/read-command/caller.bas": "a52966580266ecbdb08ea43ac17a12f36232b469d1411f4e58e1e7a76fb0c150",
+    "msx/patterns/basic/input/read-command/read-command.bas": "1fac3f92cbb17d942ae4aba7606beecceffd85bef99673ccd237adda9b105ffb",
+    "msx/patterns/basic/input/read-command/draw.bas": "5d1c9e77522e5136e314d79b9d61fa1f56de83f5e1cb086bd439cd9096e94f7a",
+    "msx/patterns/basic/input/read-command/sound.bas": "64396dc40f98c722c060dca3fc9d1ec6b0662bb3dfdc88083b24a8bfe0bacd4a"
+  },
+  "observer_sha256": "f1b74a7f5beb583f574e0babef2c2e0f21ae26a9c0f42e20c96c70199b36e9c7",
+  "emulator_sha256": "1d7eb7ce0be60b9808d08bbe5761a524e84f8ad8e6d32765c7c70e877d32a3f3",
+  "observations": [
+    {
+      "address": 40000,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        0
+      ],
+      "count": 0
+    },
+    {
+      "address": 40000,
+      "bytes": [
+        1
+      ],
+      "count": 1
+    }
+  ],
+  "input": "Blocking command input: invalid leaves count unchanged; accepted advances once",
+  "drawing": "PRINT renders a three-row text-cell box; omitted call changes the picture",
+  "sound": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      10922
+    ],
+    "ac_power": [
+      7826857.7270735195
+    ]
+  },
+  "keyboard_baseline": {
+    "frames": 138240,
+    "rate": 48000,
+    "channel_ranges": [
+      0
+    ],
+    "ac_power": [
+      0.0
+    ]
+  },
+  "sound_negative_rejected": true,
+  "limits": "Configuration-specific native emulator observations; not non-blocking controls, a sprite renderer, pitch accuracy or original hardware. Audio omitted where a separate hardware caller is still needed."
+}

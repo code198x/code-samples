@@ -1,0 +1,20 @@
+{
+  "observer_sha256": "e734211f9033994f3c654f7c29c71b782ab5ede017e2d63a96d6cf42e3323bcf",
+  "status": "passed",
+  "system": "amstrad-cpc",
+  "fault": "reused accepted command without reading input",
+  "idle_guard_rejected": true,
+  "observed_turn": 12,
+  "observations": [
+    {
+      "address": 40000,
+      "bytes": [
+        12
+      ],
+      "count": 12
+    }
+  ],
+  "source_sha256": "f5d3c94449e9a7d39a9b857c4aeb0631734642a41f95a34e5dc0876dd1d59198",
+  "image_sha256": "b149074bece1392018ba691087cee9c3ae8cffc0e86d95055a7badd156da6b0d",
+  "emulator_sha256": "95b8aa26a9a08c466e1d307fede6c273ed9bdef7796890a5e70fcad891c24948"
+}
