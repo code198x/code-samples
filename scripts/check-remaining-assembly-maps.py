@@ -22,7 +22,7 @@ def load_verifier() -> ModuleType:
 
 
 V = load_verifier()
-SYSTEMS = {"mattel-aquarius", "amstrad-cpc"}
+SYSTEMS = {"mattel-aquarius", "msx", "spectravideo-svi-328", "amstrad-cpc"}
 
 
 def validate(c: dict, r: dict) -> None:
@@ -79,13 +79,13 @@ def validate(c: dict, r: dict) -> None:
 def main() -> None:
     configs = json.loads(V.CONFIG.read_text())
     V.T.require(
-        len(configs) == 2 and {c["system"] for c in configs} == SYSTEMS,
+        len(configs) == 4 and {c["system"] for c in configs} == SYSTEMS,
         "Incomplete or duplicate inventory",
     )
     for c in configs:
         validate(c, json.loads((V.folder(c) / "verification/results.json").read_text()))
     print(
-        "PASS 2 assembly map ports; 8 completed native executions and source bindings"
+        "PASS 4 assembly map ports; 16 completed native executions and source bindings"
     )
 
 
