@@ -1,0 +1,449 @@
+{
+  "status": "passed",
+  "machine_id": "atari-2600",
+  "variants": {
+    "working": {
+      "server": {
+        "name": "emu198x-atari-2600",
+        "version": "0.44.0"
+      },
+      "states": {
+        "initial": 0,
+        "pressed": [
+          1,
+          128,
+          190,
+          0,
+          128,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          128,
+          223,
+          0,
+          128,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          231,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          128,
+          239,
+          0,
+          128,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30,
+      "period_colour_clocks": [
+        59736,
+        59736
+      ],
+      "waiting_sha256": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+    },
+    "customise": {
+      "server": {
+        "name": "emu198x-atari-2600",
+        "version": "0.44.0"
+      },
+      "states": {
+        "initial": 0,
+        "pressed": [
+          2,
+          128,
+          190,
+          0,
+          128,
+          2,
+          0
+        ],
+        "held": [
+          2,
+          128,
+          223,
+          0,
+          128,
+          2,
+          0
+        ],
+        "released": [
+          2,
+          0,
+          231,
+          0,
+          0,
+          2,
+          0
+        ],
+        "second": [
+          4,
+          128,
+          239,
+          0,
+          128,
+          2,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30,
+      "period_colour_clocks": [
+        59736,
+        59736
+      ],
+      "waiting_sha256": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+    },
+    "wrap": {
+      "server": {
+        "name": "emu198x-atari-2600",
+        "version": "0.44.0"
+      },
+      "states": {
+        "initial": 254,
+        "pressed": [
+          255,
+          128,
+          190,
+          0,
+          128,
+          1,
+          0
+        ],
+        "held": [
+          255,
+          128,
+          223,
+          0,
+          128,
+          1,
+          0
+        ],
+        "released": [
+          255,
+          0,
+          231,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          0,
+          128,
+          239,
+          0,
+          128,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30,
+      "period_colour_clocks": [
+        59736,
+        59736
+      ],
+      "waiting_sha256": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+    },
+    "held-as-press": {
+      "server": {
+        "name": "emu198x-atari-2600",
+        "version": "0.44.0"
+      },
+      "states": {
+        "initial": 0,
+        "pressed": [
+          8,
+          128,
+          190,
+          0,
+          128,
+          1,
+          1
+        ],
+        "held": [
+          41,
+          128,
+          223,
+          0,
+          128,
+          1,
+          1
+        ],
+        "released": [
+          41,
+          0,
+          231,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          49,
+          128,
+          239,
+          0,
+          128,
+          1,
+          1
+        ]
+      },
+      "service_ticks_in_30_frames": 30,
+      "period_colour_clocks": [
+        59736,
+        59736
+      ],
+      "waiting_sha256": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+    },
+    "bad-service": {
+      "server": {
+        "name": "emu198x-atari-2600",
+        "version": "0.44.0"
+      },
+      "states": {
+        "initial": 0,
+        "pressed": [
+          1,
+          128,
+          190,
+          0,
+          128,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          128,
+          221,
+          0,
+          128,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          229,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          128,
+          237,
+          0,
+          128,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30,
+      "period_colour_clocks": [
+        59964,
+        59964
+      ],
+      "waiting_sha256": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+    },
+    "fixed-edge": {
+      "server": {
+        "name": "emu198x-atari-2600",
+        "version": "0.44.0"
+      },
+      "states": {
+        "initial": 0,
+        "pressed": [
+          1,
+          128,
+          190,
+          0,
+          128,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          128,
+          223,
+          0,
+          128,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          231,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          128,
+          239,
+          0,
+          128,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30,
+      "period_colour_clocks": [
+        59736,
+        59736
+      ],
+      "waiting_sha256": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+    },
+    "fixed-service": {
+      "server": {
+        "name": "emu198x-atari-2600",
+        "version": "0.44.0"
+      },
+      "states": {
+        "initial": 0,
+        "pressed": [
+          1,
+          128,
+          190,
+          0,
+          128,
+          1,
+          0
+        ],
+        "held": [
+          1,
+          128,
+          223,
+          0,
+          128,
+          1,
+          0
+        ],
+        "released": [
+          1,
+          0,
+          231,
+          0,
+          0,
+          1,
+          0
+        ],
+        "second": [
+          2,
+          128,
+          239,
+          0,
+          128,
+          1,
+          0
+        ]
+      },
+      "service_ticks_in_30_frames": 30,
+      "period_colour_clocks": [
+        59736,
+        59736
+      ],
+      "waiting_sha256": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+    }
+  },
+  "sources": {
+    "atari-2600/patterns/assembly/framework/turn-loop/demo.asm": "cd7885c039a0e5e15d6395e6fa59b055e40f5035f5efb43abe33dd2236cc0e07",
+    "atari-2600/patterns/assembly/framework/turn-loop/Makefile": "2affd4467e1d39f4985c18644820769dc5e8062fcb118ef8c942a183f98ab1af",
+    "atari-2600/patterns/assembly/framework/turn-loop/settings.inc": "102e3984cff8b906fbdecac6f4ffecf75887e3d10d4306aeef449dbdecb6a6a7",
+    "atari-2600/patterns/assembly/framework/turn-loop/customise.inc": "86bf7c493b82cda55dacbf31b88bb190aa6ec38cd49ec3908da5c55f2ad9fb21",
+    "atari-2600/patterns/assembly/framework/turn-loop/overscan-count.inc": "080442876811c7d8319cf0459c5d7c80186c73c98ea2d212254a6fac729261fe",
+    "atari-2600/patterns/assembly/framework/turn-loop/wrap.inc": "b4ea3661999e283e9464291eab12a7c218fdcfd749ca8bcfb3979212dd89f250",
+    "atari-2600/patterns/assembly/framework/turn-loop/mistakes/extra-line.inc": "89ad0d6357072fe1b16094b5193542cd983aed6e38930861c66665d9c91dfeb6",
+    "cross-platform/patterns/framework/atari-turn-loops/edge-filter.inc": "f2a3b0201e5eff4fc008ab9b325457ddb7fe2bd6de48cff122694155aed0fabd",
+    "cross-platform/patterns/framework/atari-turn-loops/turn.inc": "ad677edf4cd18a41aa72b69353a980edba464135c8d19b17d7d1129640a436fe",
+    "cross-platform/patterns/framework/atari-turn-loops/mistakes/held-as-press.inc": "5970b0dd119d23fc03ea1f85a089fb42b0b04de1f7d94edae8d7bc16ea5f57fd",
+    "cross-platform/patterns/framework/atari-turn-loops/toolchain.json": "25f1d7bcd8433772d7f343752c499dc924b66ca72c587afc18195cfdb1e05739",
+    "scripts/verify-atari-turn-loops.py": "9d2edae8a8e884de8cdfd2d451fcb5b943228ae6b9d61b95efb5e1254447d9ea",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "artifacts": {
+    "working-waiting.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "working-pressed.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "working-held.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "working-second.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "customise-waiting.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "customise-pressed.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "customise-held.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "customise-second.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "wrap-waiting.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "wrap-pressed.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "wrap-held.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "wrap-second.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "held-as-press-waiting.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "held-as-press-pressed.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "held-as-press-held.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "held-as-press-second.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "bad-service-waiting.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "bad-service-pressed.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "bad-service-held.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "bad-service-second.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "fixed-edge-waiting.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "fixed-edge-pressed.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "fixed-edge-held.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "fixed-edge-second.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "fixed-service-waiting.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa",
+    "fixed-service-pressed.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "fixed-service-held.png": "598d91524c1195db101c5e5c79060f07ca50fb26ff2f7b49fa3cef850b738074",
+    "fixed-service-second.png": "3b5bfdaa829b047d7ad019020ed89c9f1b2b6bd7d283df4f1d71b648b377d6aa"
+  },
+  "binaries": {
+    "working": {
+      "sha256": "e14f6fa9e20eba6cb9fc1fd03483091f386668a2d481dcafa23102d34ddf9bce",
+      "bytes": 4096,
+      "routine_bytes": 58
+    },
+    "customise": {
+      "sha256": "d7dad5009e2965ac9563b6617da7593814e64db375b4032877fd953fbfffa934",
+      "bytes": 4096,
+      "routine_bytes": 58
+    },
+    "wrap": {
+      "sha256": "9c0c3876e096f4e548a13cb118b5038bcb5d40e25a4fc399432a4d825304bf17",
+      "bytes": 4096,
+      "routine_bytes": 58
+    },
+    "held-as-press": {
+      "sha256": "7185da8df8852ba289ef3c49dd4c5aa91b16e338502fd73850d04ee5a8670eba",
+      "bytes": 4096,
+      "routine_bytes": 54
+    },
+    "bad-service": {
+      "sha256": "febf77dd2403e1b02b3a68c1f7fa66f01b62b44fdcd98875eb1a57e639f348ab",
+      "bytes": 4096,
+      "routine_bytes": 58
+    },
+    "fixed-edge": {
+      "sha256": "e14f6fa9e20eba6cb9fc1fd03483091f386668a2d481dcafa23102d34ddf9bce",
+      "bytes": 4096,
+      "routine_bytes": 58
+    },
+    "fixed-service": {
+      "sha256": "e14f6fa9e20eba6cb9fc1fd03483091f386668a2d481dcafa23102d34ddf9bce",
+      "bytes": 4096,
+      "routine_bytes": 58
+    }
+  },
+  "firmware_sha256": {},
+  "emulator_sha256": "95427549508a0f1c38e2195a98fa774760b5adead6ee09b95de65ad2f5f8ab64",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "limits": "Named NTSC caller only; 5200 uses pinned BIOS; 7800 reset bypasses BIOS authentication. No original-hardware, PAL, arbitrary workload or deadline qualification."
+}

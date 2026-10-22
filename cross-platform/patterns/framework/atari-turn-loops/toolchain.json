@@ -1,0 +1,153 @@
+[
+  {
+    "tool": "emu198x-atari-5200",
+    "archive": "emu198x-atari-5200-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "c6741abe0fee258171d3385ff5dae9123e9bca5951f94e92dceb5a944f3f251e",
+    "binary_sha256": "89538e46fcbd0a9ca65802a621f60d28dae4fd72908eb29d8d90c96109b5144f",
+    "source_lock": {
+      "schema_version": 1,
+      "kind": "producer-source-lock",
+      "signed": false,
+      "source_commit": "1d70a0a216cbfd7cab489bb151d2c2b248daebf6",
+      "committed_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "before_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "after_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "package": "emu198x-atari-5200",
+      "version": "0.44.0",
+      "archive": "emu198x-atari-5200-aarch64-apple-darwin.tar.gz",
+      "target": "aarch64-apple-darwin",
+      "archive_sha256": "c6741abe0fee258171d3385ff5dae9123e9bca5951f94e92dceb5a944f3f251e",
+      "executable_sha256": "89538e46fcbd0a9ca65802a621f60d28dae4fd72908eb29d8d90c96109b5144f",
+      "build": {
+        "job": "build-local-artifacts",
+        "run_id": "39650277597",
+        "run_attempt": "1"
+      },
+      "command": [
+        "dist",
+        "build",
+        "--tag=v0.44.0",
+        "--print=linkage",
+        "--output-format=json",
+        "--artifacts=local",
+        "--target=aarch64-apple-darwin"
+      ],
+      "compiled_dependency_graph": "unknown"
+    },
+    "tag": "v0.44.0",
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.44.0/emu198x-atari-5200-aarch64-apple-darwin.tar.gz"
+  },
+  {
+    "tool": "emu198x-atari-7800",
+    "archive": "emu198x-atari-7800-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "60a02741062bf660c33a3f3d423062b8658885eecdd58c33db5e86122d7527b0",
+    "binary_sha256": "06e16c7a096e22df0b273ce91b7d60fe919d565b680aade9502389879244c30a",
+    "source_lock": {
+      "schema_version": 1,
+      "kind": "producer-source-lock",
+      "signed": false,
+      "source_commit": "1d70a0a216cbfd7cab489bb151d2c2b248daebf6",
+      "committed_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "before_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "after_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "package": "emu198x-atari-7800",
+      "version": "0.44.0",
+      "archive": "emu198x-atari-7800-aarch64-apple-darwin.tar.gz",
+      "target": "aarch64-apple-darwin",
+      "archive_sha256": "60a02741062bf660c33a3f3d423062b8658885eecdd58c33db5e86122d7527b0",
+      "executable_sha256": "06e16c7a096e22df0b273ce91b7d60fe919d565b680aade9502389879244c30a",
+      "build": {
+        "job": "build-local-artifacts",
+        "run_id": "39650277597",
+        "run_attempt": "1"
+      },
+      "command": [
+        "dist",
+        "build",
+        "--tag=v0.44.0",
+        "--print=linkage",
+        "--output-format=json",
+        "--artifacts=local",
+        "--target=aarch64-apple-darwin"
+      ],
+      "compiled_dependency_graph": "unknown"
+    },
+    "tag": "v0.44.0",
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.44.0/emu198x-atari-7800-aarch64-apple-darwin.tar.gz"
+  },
+  {
+    "tool": "emu198x-atari-2600",
+    "archive": "emu198x-atari-2600-aarch64-apple-darwin.tar.gz",
+    "archive_sha256": "52692682d3eb2333d462b092cf8c1eb3fb57da05581e1a8cde2c9c96ea307980",
+    "binary_sha256": "95427549508a0f1c38e2195a98fa774760b5adead6ee09b95de65ad2f5f8ab64",
+    "source_lock": {
+      "schema_version": 1,
+      "kind": "producer-source-lock",
+      "signed": false,
+      "source_commit": "1d70a0a216cbfd7cab489bb151d2c2b248daebf6",
+      "committed_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "before_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "after_lock_sha256": "0eccf0da9a86f4e47732485d0885452cc7650acb05637cfcd80ef2896af7f664",
+      "package": "emu198x-atari-2600",
+      "version": "0.44.0",
+      "archive": "emu198x-atari-2600-aarch64-apple-darwin.tar.gz",
+      "target": "aarch64-apple-darwin",
+      "archive_sha256": "52692682d3eb2333d462b092cf8c1eb3fb57da05581e1a8cde2c9c96ea307980",
+      "executable_sha256": "95427549508a0f1c38e2195a98fa774760b5adead6ee09b95de65ad2f5f8ab64",
+      "build": {
+        "job": "build-local-artifacts",
+        "run_id": "39650277597",
+        "run_attempt": "1"
+      },
+      "command": [
+        "dist",
+        "build",
+        "--tag=v0.44.0",
+        "--print=linkage",
+        "--output-format=json",
+        "--artifacts=local",
+        "--target=aarch64-apple-darwin"
+      ],
+      "compiled_dependency_graph": "unknown"
+    },
+    "tag": "v0.44.0",
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.44.0/emu198x-atari-2600-aarch64-apple-darwin.tar.gz"
+  },
+  {
+    "tool": "asm198x",
+    "archive": "asm198x-aarch64-apple-darwin.tar.xz",
+    "archive_sha256": "97435c1c1aaa349be4d6e1e354030306f7e909e00c14a6f21b2f6d634402978d",
+    "binary_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+    "source_lock": {
+      "schema_version": 1,
+      "kind": "producer-source-lock",
+      "signed": false,
+      "source_commit": "60babae495e4e37963a5bbec23068ae21ff71eb3",
+      "committed_lock_sha256": "0ee4b612d610b2d581a5b32e1666f431bdfcf55b99cfaed65841aa48e369958a",
+      "before_lock_sha256": "0ee4b612d610b2d581a5b32e1666f431bdfcf55b99cfaed65841aa48e369958a",
+      "after_lock_sha256": "0ee4b612d610b2d581a5b32e1666f431bdfcf55b99cfaed65841aa48e369958a",
+      "target": "aarch64-apple-darwin",
+      "archive": "asm198x-aarch64-apple-darwin.tar.xz",
+      "archive_sha256": "97435c1c1aaa349be4d6e1e354030306f7e909e00c14a6f21b2f6d634402978d",
+      "executable_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "version": "0.0.71",
+      "build": {
+        "job": "build-local-artifacts",
+        "run_id": "38947879894",
+        "run_attempt": "1"
+      },
+      "command": [
+        "dist",
+        "build",
+        "--tag=asm198x-v0.0.71",
+        "--print=linkage",
+        "--output-format=json",
+        "--artifacts=local",
+        "--target=aarch64-apple-darwin"
+      ],
+      "compiled_dependency_graph": "unknown"
+    },
+    "tag": "asm198x-v0.0.71",
+    "url": "https://github.com/asm198x/asm198x/releases/download/asm198x-v0.0.71/asm198x-aarch64-apple-darwin.tar.xz"
+  }
+]
