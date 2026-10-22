@@ -1,0 +1,15 @@
+Rem AMOS Professional 2.00. Paste routines after End.
+Hide
+Palette $000,$FFF
+Paper 0 : Pen 1
+Cls 0
+PL_COUNT=0 : PL_STEP=1 : PL_LASTSCAN=-1
+Repeat
+   Locate 0,0
+   Print "A advances, X ignored, Q quits"
+   Print "Count: ";PL_COUNT;"     "
+   Gosub PL_READ_FRESH
+   Gosub PL_ADVANCE
+Until PL_KEY$="Q"
+Show
+End

@@ -1,0 +1,391 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/amos-cases-blank.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "ramiga",
+          "pressed": true
+        }
+      },
+      {
+        "Key": {
+          "name": "lshift",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "m",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "m",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "lshift",
+          "pressed": false
+        }
+      },
+      {
+        "Key": {
+          "name": "ramiga",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "type_string",
+    "text": "Cases:wrong.asc",
+    "hold_frames": 2
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "return",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "return",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "return",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "return",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "f2",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "f2",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "f1",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "f1",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/wrong-initial.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "a",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 90
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "a",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 8
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/wrong-0.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "x",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 8
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "x",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 8
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/wrong-1.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "a",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 90
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "a",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 8
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/wrong-2.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "q",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "q",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 60
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/wrong-quit.png"
+  }
+]

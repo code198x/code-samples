@@ -1,0 +1,98 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-boot.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 145,
+          "dy": 25
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 2
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 200
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-drawer.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-drawer.state"
+  }
+]

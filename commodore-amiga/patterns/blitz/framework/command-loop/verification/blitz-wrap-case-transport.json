@@ -1,0 +1,467 @@
+[
+  {
+    "action": "load_snapshot",
+    "arguments": {
+      "path": "${RUN}/blitz-settled.state"
+    },
+    "result": null
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "PL_count.l=254 : PL_step.l=1\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 29,
+      "reached": 605261948
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "Repeat\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 7,
+      "reached": 610644572
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "  NPrint \"Count: \",PL_count.l\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 30,
+      "reached": 629058812
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "  Print \"A advances, X ignored, Q quits: \"\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 43,
+      "reached": 654838748
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "  PL_key$=UCase$(Edit$(1))\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 27,
+      "reached": 671553212
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "  Gosub PL_advance\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 19,
+      "reached": 683734940
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "Until PL_key$=\"Q\"\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 18,
+      "reached": 695350076
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "End\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 4,
+      "reached": 699032924
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 1,
+      "reached": 701015996
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": ".PL_advance\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 12,
+      "reached": 709231580
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "PL_accepted.l=0\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 16,
+      "reached": 719713532
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "If PL_key$=\"A\"\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 15,
+      "reached": 729628892
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "  PL_count.l=PL_count.l+PL_step.l\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 34,
+      "reached": 750309500
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "  If PL_count.l>=256 Then PL_count.l=PL_count.l-256\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 52,
+      "reached": 781188764
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "  PL_accepted.l=1\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 18,
+      "reached": 792803900
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "EndIf\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 6,
+      "reached": 797619932
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "Return\n",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 7,
+      "reached": 803002556
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/blitz-wrap-source.png"
+    },
+    "result": null
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "ramiga",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 803569148,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "x",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 804135740,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "x",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 804702332,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "ramiga",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 805268924,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 819433724,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/blitz-wrap-initial.png"
+    },
+    "result": null
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "a\n",
+      "hold_frames": 3
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 2,
+      "reached": 822266684
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 836431484,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/blitz-wrap-0.png"
+    },
+    "result": null
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "x\n",
+      "hold_frames": 3
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 2,
+      "reached": 839264444
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 853429244,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/blitz-wrap-1.png"
+    },
+    "result": null
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "a\n",
+      "hold_frames": 3
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 2,
+      "reached": 856262204
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 870427004,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/blitz-wrap-2.png"
+    },
+    "result": null
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "q\n",
+      "hold_frames": 3
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 2,
+      "reached": 873259964
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 887424764,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/blitz-wrap-3.png"
+    },
+    "result": null
+  }
+]

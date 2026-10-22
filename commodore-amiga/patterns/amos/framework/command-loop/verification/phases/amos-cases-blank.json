@@ -1,0 +1,74 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/amos-cases-cold.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "space",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "space",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "backspace",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "backspace",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/amos-cases-blank.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/amos-cases-blank.state"
+  }
+]

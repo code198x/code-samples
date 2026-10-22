@@ -1,0 +1,181 @@
+{
+  "status": "framebuffer-checked",
+  "machine_id": "commodore-amiga",
+  "language": "blitz",
+  "configuration": "PAL A1200, 2 MiB chip, no fast RAM",
+  "release": "v0.44.1",
+  "emulator_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
+  "firmware_sha256": "6d43840d4099a74170ea0f0425b6257c3891ebcaa39c4d1840075a9ab22b5707",
+  "runtime": "Blitz BASIC 2.10 / Ted 1.1",
+  "runtime_media_sha256": {
+    "system": "43d12a5bf4401ffc505c77d7d6d329a39403ca00da978cc583ef9fe2bf8cd721",
+    "libs": "01f2d948ac14ac88575c04747fc7d4c282c0db84effa6dc2e02796f74e44955f"
+  },
+  "sources": {
+    "commodore-amiga/patterns/blitz/framework/command-loop/routines.bb2": "9548c1fb74dd177e88fdc268925eae63ecdf6b367e6c5e34f3e7a19ad8efea72",
+    "commodore-amiga/patterns/blitz/framework/command-loop/caller.bb2": "859cad754e6d90d86d280840e94eafbb70862227e5f229511e576ff0fee464a1",
+    "commodore-amiga/patterns/blitz/framework/command-loop/customise.bb2": "64b4e9843ff5c7a5f5391e526c5dc174109f4f9ebe657f017e9b3506c815826c",
+    "commodore-amiga/patterns/blitz/framework/command-loop/demo.bb2": "4f3c5179c98a279d977f44fd5fa47ecfff7ae17a3bf94d265008b2ba341dd7d8",
+    "commodore-amiga/patterns/blitz/framework/command-loop/mistakes/reset-each-command.bb2": "b440cb2170c10ef5da8e38cfe13642921415d2541abf184be581b99b5643cb19",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-edit.json": "4630dcbb2a1f54283bd3959603759dee62de442252086374df972a109a6bc90a",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-empty.json": "5e415a46307dd76a60989aa785a1d084c714b3fa1001ec450db626f3e341315d",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-custom-case.json": "94edbadb219a5d0a0b83b7879f68511ec41b98cab4fe55c6d3e00be28962e5e5",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-ide.json": "3eaa0d8b71e89c52d25a8d57f6cd8dddbaf30d77326f707146f52d67c5ce6245",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-wrap-case.json": "92e7a1b346f99360e946d915e59fa81ea7c3aa10675ec958845da9d5893a6c98",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-working-case.json": "2a9c327c724a95baed6209dd309e9dc3e8a6322f87888023a9a42d28d9501093",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-open.json": "6bdc6a0cde78c4db407b908a4690473f4a11e988e027752292cd8d9784b498f5",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-ide-later.json": "6a469d7faa46d409962c426ba9c641399bb63c406e5310152ce03d385cef3032",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-boot.json": "30e9a24c2665537b71ee90c7870dd23ee91d5b0bd4ae653eb94f80f7c8d04864",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-wrong-case.json": "a0380e63a2d200ec606f1725e711e40808e9f7c84965c5208919a43459bf4e2d",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-blank.json": "3d41e6e2b633a142682fbf06ac00a48fcc67613f69670beb21c9d5eb6c10f197",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-settled.json": "edf8e0e7d21796d19011c380f9874c4164d7f2b90b94eeaa2e8f84e5e61d276e",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-nonzero-case.json": "4d6c2c5da6d7daedbd47731991359041d6117540baa371d65b11eb4f0e8655bc",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-pointer.json": "eba176a5f91303c36525369e98aee35e71da2052fc76e0b46678476a027c51dc",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-fixed-case.json": "75f8a994543b3c3517ac8792e5fa8ba85d02c95fbad918a20c050f847abd6a2d",
+    "commodore-amiga/patterns/blitz/framework/command-loop/verification/phases/blitz-drawer.json": "3b2ce33ad9689194f238dd9ae173e7a9550ba08526706e2fdba003b7d6161991",
+    "scripts/replay-amiga-command-loops.py": "bbfe9e5a834234ebcffb96f1ce4b809e933d9fab05c2247bdf835ef9eb6948b4",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "variants": {
+    "working": {
+      "captures": [
+        "blitz-working-initial.png",
+        "blitz-working-0.png",
+        "blitz-working-1.png",
+        "blitz-working-2.png"
+      ],
+      "observed": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "transport": "blitz-working-case-transport.json"
+    },
+    "custom": {
+      "captures": [
+        "blitz-custom-initial.png",
+        "blitz-custom-0.png",
+        "blitz-custom-1.png",
+        "blitz-custom-2.png"
+      ],
+      "observed": [
+        0,
+        3,
+        3,
+        6
+      ],
+      "transport": "blitz-custom-case-transport.json"
+    },
+    "wrong": {
+      "captures": [
+        "blitz-wrong-initial.png",
+        "blitz-wrong-0.png",
+        "blitz-wrong-1.png",
+        "blitz-wrong-2.png"
+      ],
+      "observed": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "transport": "blitz-wrong-case-transport.json"
+    },
+    "fixed": {
+      "captures": [
+        "blitz-fixed-initial.png",
+        "blitz-fixed-0.png",
+        "blitz-fixed-1.png",
+        "blitz-fixed-2.png"
+      ],
+      "observed": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "transport": "blitz-fixed-case-transport.json"
+    },
+    "wrap": {
+      "captures": [
+        "blitz-wrap-initial.png",
+        "blitz-wrap-0.png",
+        "blitz-wrap-1.png",
+        "blitz-wrap-2.png"
+      ],
+      "observed": [
+        254,
+        255,
+        255,
+        0
+      ],
+      "transport": "blitz-wrap-case-transport.json"
+    },
+    "nonzero": {
+      "captures": [
+        "blitz-nonzero-initial.png",
+        "blitz-nonzero-0.png",
+        "blitz-nonzero-1.png",
+        "blitz-nonzero-2.png"
+      ],
+      "observed": [
+        100,
+        99,
+        99,
+        98
+      ],
+      "transport": "blitz-nonzero-case-transport.json"
+    }
+  },
+  "artifacts": {
+    "blitz-working-initial.png": "5542630d1bdd789faf10a881c4314af0a31aa78ff521bb8358743ddb3677ee14",
+    "blitz-working-0.png": "b729fd86323e4a0e93c4269f958a4fc9886c90cf1950da4aaf4d8c1e976c4dbe",
+    "blitz-working-1.png": "48456db4a680e79538d474fe220f65b4aa6f7175592eccf3dafa318318733d32",
+    "blitz-working-2.png": "a47779297530852a805d4cb2719abc94786f4e8d1bfd86adbe5a4f42b6eb2790",
+    "blitz-working-case-transport.json": "07bf79014da72c356b9e383cebc8715fbbc589398b339bdaaf7410a6e056f6a9",
+    "blitz-custom-initial.png": "5542630d1bdd789faf10a881c4314af0a31aa78ff521bb8358743ddb3677ee14",
+    "blitz-custom-0.png": "3c524b820adfb7654bfe9eeeeb915ae17cbff77c2f9ab7dc69c66726d88e5873",
+    "blitz-custom-1.png": "e2ea367802ea988e4971ed43bd35706343f50bd34509a59ba33e77cf16bb50f9",
+    "blitz-custom-2.png": "f8addc9c07444aa0107ed8ff73bf0f87227a7af149f9895313376a661fcc7563",
+    "blitz-custom-case-transport.json": "7ddbff1d633402f80b62374567983b27dd070c92425a7f2229062916efdc2adf",
+    "blitz-wrong-initial.png": "5542630d1bdd789faf10a881c4314af0a31aa78ff521bb8358743ddb3677ee14",
+    "blitz-wrong-0.png": "b729fd86323e4a0e93c4269f958a4fc9886c90cf1950da4aaf4d8c1e976c4dbe",
+    "blitz-wrong-1.png": "1224b3c4810b530dddcb004248e283e40063799f2dcd7734f3444f1ca6059c47",
+    "blitz-wrong-2.png": "096731593a60037ca0f68005f6a9388856716ff3f2d769711ec2b3a66ac7cc6c",
+    "blitz-wrong-case-transport.json": "287921ed64154c0b3b97952b19a61de470d3a5a7754797c60c632e61ecdc53e4",
+    "blitz-fixed-initial.png": "5542630d1bdd789faf10a881c4314af0a31aa78ff521bb8358743ddb3677ee14",
+    "blitz-fixed-0.png": "b729fd86323e4a0e93c4269f958a4fc9886c90cf1950da4aaf4d8c1e976c4dbe",
+    "blitz-fixed-1.png": "48456db4a680e79538d474fe220f65b4aa6f7175592eccf3dafa318318733d32",
+    "blitz-fixed-2.png": "a47779297530852a805d4cb2719abc94786f4e8d1bfd86adbe5a4f42b6eb2790",
+    "blitz-fixed-case-transport.json": "50c9ad82ba45fdb3546bb3572f4962d81cffa029ac5bb6fe823b1b3c4a09c76f",
+    "blitz-wrap-initial.png": "feae73fa62932cab880f546b46a06608926c5849c64cd0a40e4d8f8145b739d1",
+    "blitz-wrap-0.png": "6a8ba222396066d62dc07b8dbce6c3b6b23a785e54186d73b36fdd92907eb91f",
+    "blitz-wrap-1.png": "ce99825b8f1a3ab91ace6ed88c324450fe13a64316153aa472c6590f5ff5e7ca",
+    "blitz-wrap-2.png": "ea22aac331b17554975a377fb5db48cafa54596e7f8f188da01b438df93914f7",
+    "blitz-wrap-case-transport.json": "fb23692a4b54370bc7069af4edb7bf170d8381c6497c03809d15e17797583d62",
+    "blitz-nonzero-initial.png": "adfe261d4eace4119156d3c37656d0b056c4893a6c92b7da7078c964c6983f80",
+    "blitz-nonzero-0.png": "5268744894c7c00348a5b6fed64f29e62c7bd4178c51afdd834f89ae3062ea7e",
+    "blitz-nonzero-1.png": "cbdf584577e3f5d9ef7736e0ea0322c85ad809d3b328e10823e135546425206e",
+    "blitz-nonzero-2.png": "47e1ecf4687c3addd18e38e45806aacd5bce011e9f8d788f3c29b66cedcfe1ac",
+    "blitz-nonzero-case-transport.json": "11775096c56f8776090ed34039aafa39014d53ce92e3e704e492f24ce1ef30ce",
+    "published-working.png": "54e180e1d7401dd7ed79285327db8925030390716db3f75fda0e3f2b876f86a9",
+    "published-step-three.png": "06cdc72bc667e33bf6afbd0a41377ddb93a099d90cceb12e3bfb293f838bf554",
+    "published-reset-mistake.png": "6b3f0af4f00e4372ee56ec9740e28c1db1af0121909a7a7291c2eb63180ea663",
+    "toolchain.json": "9a0c5fd81c4f73c0166f0eeba5604499a0623fb8f6c1a41d4f24358a6341fbd1"
+  },
+  "published": {
+    "working": {
+      "capture": "blitz-working-2.png",
+      "file": "published-working.png"
+    },
+    "step-three": {
+      "capture": "blitz-custom-2.png",
+      "file": "published-step-three.png"
+    },
+    "reset-mistake": {
+      "capture": "blitz-wrong-2.png",
+      "file": "published-reset-mistake.png"
+    }
+  }
+}

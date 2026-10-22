@@ -1,0 +1,63 @@
+{
+  "emu198x": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+    "committed_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "before_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "after_lock_sha256": "3a6174d6a05d0bf9dab21457a2996f520352efd0da4b74080a185da17b02269a",
+    "package": "emu198x-amiga",
+    "version": "0.44.1",
+    "archive": "emu198x-amiga-aarch64-apple-darwin.tar.gz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "7b68b884a5508a522c696ff0e37555cfa6ea084dd073d998f0837c65811c29dc",
+    "executable_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39749624981",
+      "run_attempt": "3"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=v0.44.1",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "build198x-adf": {
+    "schema_version": 1,
+    "kind": "producer-source-lock",
+    "signed": false,
+    "source_commit": "971dce11d75903f8441e96b407ea428859363b73",
+    "committed_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "before_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "after_lock_sha256": "ade14cc482820a9839fe9e47914fc59cd78808afcf22dbeac2d6342b4f343ab2",
+    "package": "build198x-adf",
+    "version": "0.2.13",
+    "archive": "build198x-adf-aarch64-apple-darwin.tar.xz",
+    "target": "aarch64-apple-darwin",
+    "archive_sha256": "78b09ca71355d025ff771d1ed17920c83938da06064119b23143419d5d5b181b",
+    "executable_sha256": "8cee299092889d79d5c0a9b3ade2e3fd272739f3f4b57761b2f51a1046e9a3a8",
+    "build": {
+      "job": "build-local-artifacts",
+      "run_id": "39753937974",
+      "run_attempt": "1"
+    },
+    "command": [
+      "dist",
+      "build",
+      "--tag=build198x-adf-v0.2.13",
+      "--print=linkage",
+      "--output-format=json",
+      "--artifacts=local",
+      "--target=aarch64-apple-darwin"
+    ],
+    "compiled_dependency_graph": "unknown"
+  },
+  "source_fixture_sha256": "7ee707641dc632a001863918ef36ffc1e1b383cd4a215463a138e4e269048f61"
+}

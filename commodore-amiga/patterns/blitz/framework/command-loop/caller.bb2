@@ -1,0 +1,9 @@
+; Blitz BASIC 2.1 Amiga mode; append routines after End.
+PL_count.l=0 : PL_step.l=1
+Repeat
+  NPrint "Count: ",PL_count.l
+  Print "A advances, X ignored, Q quits: "
+  PL_key$=UCase$(Edit$(1))
+  Gosub PL_advance
+Until PL_key$="Q"
+End

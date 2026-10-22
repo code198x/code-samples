@@ -1,0 +1,172 @@
+{
+  "status": "framebuffer-checked",
+  "machine_id": "commodore-amiga",
+  "language": "amos",
+  "configuration": "PAL A1200, 2 MiB chip, no fast RAM",
+  "release": "v0.44.1",
+  "emulator_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
+  "firmware_sha256": "6d43840d4099a74170ea0f0425b6257c3891ebcaa39c4d1840075a9ab22b5707",
+  "runtime": "AMOS Professional 2.00",
+  "runtime_media_sha256": {
+    "system": "507828d923c0af5e485a03048e396c29c9c5dec7769e8b40b1c933d980ffba3b"
+  },
+  "sources": {
+    "commodore-amiga/patterns/amos/framework/command-loop/customise.amos": "4fbdaaa4b2db89d8a89c7e99c04790f87252603b7d856948fa87d6fdac02d63c",
+    "commodore-amiga/patterns/amos/framework/command-loop/routines.amos": "dcaa7a212d60d25f92d7d30f05d6a5dc91093477063e835bc328c52bcc21dbf8",
+    "commodore-amiga/patterns/amos/framework/command-loop/caller.amos": "8e5e60f86da6e559a21ffe775a04f4e15058473c3450601c70afb49869c063dd",
+    "commodore-amiga/patterns/amos/framework/command-loop/demo.amos": "b2f0489aa8dc4fcd683278ead3688b8be5e27e275a600b93c18a7eb620d70d3e",
+    "commodore-amiga/patterns/amos/framework/command-loop/mistakes/reset-each-command.amos": "74a6aa5e5c852f243d26a4192d32972e4ccbf3658aeb8cef8d3a6f99dc247b50",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/custom-case.json": "d2e603ec9151a0421e1024a6e1e32a253a76c182e8cb607bf7fbdbe5c892f87d",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/wrap-case.json": "28a5fbdcc3cd89be7af0ec67877706821ef726ce24fb5fc7bdb79052907d7355",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/nonzero-case.json": "2da6c2f330e62f0ed7d661a4d302fee85a97d5cc07dc74173cbfa763663420ac",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/amos-cases-cold.json": "0023900548f7d0c104684ad7137d30130263c22730b2306e5ccf456fa983b0ef",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/wrong-case.json": "478151ed981950e0d4a800391829f95a4bb8900afa5052bcf61c2fbc893e816f",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/amos-cases-blank.json": "96e1195064f7663d87173f898aa184bd3caebf2505d0b560a9bedbeea0be4944",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/working-case.json": "148db7ac9936a14652182f9040936d11acf16136b3b8ebe0a9c09a0a183677e6",
+    "commodore-amiga/patterns/amos/framework/command-loop/verification/phases/fixed-case.json": "3c453488e59d94d04f7d7e06f2160c5b402431635afb6341be6bfc7afe9c3d49",
+    "scripts/replay-amiga-command-loops.py": "bbfe9e5a834234ebcffb96f1ce4b809e933d9fab05c2247bdf835ef9eb6948b4",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "variants": {
+    "working": {
+      "captures": [
+        "working-initial.png",
+        "working-0.png",
+        "working-1.png",
+        "working-2.png"
+      ],
+      "observed": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "transport": "working-case-transport.json"
+    },
+    "custom": {
+      "captures": [
+        "custom-initial.png",
+        "custom-0.png",
+        "custom-1.png",
+        "custom-2.png"
+      ],
+      "observed": [
+        0,
+        3,
+        3,
+        6
+      ],
+      "transport": "custom-case-transport.json"
+    },
+    "wrong": {
+      "captures": [
+        "wrong-initial.png",
+        "wrong-0.png",
+        "wrong-1.png",
+        "wrong-2.png"
+      ],
+      "observed": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "transport": "wrong-case-transport.json"
+    },
+    "fixed": {
+      "captures": [
+        "fixed-initial.png",
+        "fixed-0.png",
+        "fixed-1.png",
+        "fixed-2.png"
+      ],
+      "observed": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "transport": "fixed-case-transport.json"
+    },
+    "wrap": {
+      "captures": [
+        "wrap-initial.png",
+        "wrap-0.png",
+        "wrap-1.png",
+        "wrap-2.png"
+      ],
+      "observed": [
+        254,
+        255,
+        255,
+        0
+      ],
+      "transport": "wrap-case-transport.json"
+    },
+    "nonzero": {
+      "captures": [
+        "nonzero-initial.png",
+        "nonzero-0.png",
+        "nonzero-1.png",
+        "nonzero-2.png"
+      ],
+      "observed": [
+        100,
+        99,
+        99,
+        98
+      ],
+      "transport": "nonzero-case-transport.json"
+    }
+  },
+  "artifacts": {
+    "working-initial.png": "5fd1b172d2248ba00283b4cd2c1c2b48cc856ea5dd255b322048ebc3df75bbe4",
+    "working-0.png": "a1a7aba8cee7646d10c83365befdb840377af32cfb51c3196e0b5139389e838e",
+    "working-1.png": "e84b5ef98850b723ed8de8ab0b094d6fc3c5831a3543749561d99c72ecc4ae72",
+    "working-2.png": "c221aacbe5d01a7ee17774d21d6664c376f1bcce683b2fbdb6d68e6c53d41218",
+    "working-case-transport.json": "0fb3cda45f269e258c24939b7aea39d46c1ce6243eb9470614db7a9574153fbc",
+    "custom-initial.png": "5fd1b172d2248ba00283b4cd2c1c2b48cc856ea5dd255b322048ebc3df75bbe4",
+    "custom-0.png": "c72e2a6d634be172ee779f84df2d1cd63b4b9c0135d5fe4cd368be42fa41851a",
+    "custom-1.png": "f3742e0af716aca3ce406055117fe73260248591d58d0d6d9f96dacc84e27564",
+    "custom-2.png": "95580878eeeac6fda5fee8841e21a402ab1a3f717438ce7df0cafa28f0041aad",
+    "custom-case-transport.json": "9a8a3e1e989ec1d3c5b267f8d7265833ef4ec625f3f3dbff805cf10895add9dc",
+    "wrong-initial.png": "5fd1b172d2248ba00283b4cd2c1c2b48cc856ea5dd255b322048ebc3df75bbe4",
+    "wrong-0.png": "a1a7aba8cee7646d10c83365befdb840377af32cfb51c3196e0b5139389e838e",
+    "wrong-1.png": "1f06e18a0f7dd0802dbfcdcf416a8194764131dd42b7b79b442204b847277dba",
+    "wrong-2.png": "742dcb7219df316ba17ffb308b92e79de2cbaae75bf3cca55045fb6a44cbc786",
+    "wrong-case-transport.json": "55b32714ff30b8ee98ffd2e1ffe70f14858088f24f93ce426ecd339273daabb0",
+    "fixed-initial.png": "5fd1b172d2248ba00283b4cd2c1c2b48cc856ea5dd255b322048ebc3df75bbe4",
+    "fixed-0.png": "a1a7aba8cee7646d10c83365befdb840377af32cfb51c3196e0b5139389e838e",
+    "fixed-1.png": "e84b5ef98850b723ed8de8ab0b094d6fc3c5831a3543749561d99c72ecc4ae72",
+    "fixed-2.png": "c221aacbe5d01a7ee17774d21d6664c376f1bcce683b2fbdb6d68e6c53d41218",
+    "fixed-case-transport.json": "b344bfad53c9f96ba680d5bd0d30609fdea3ade9e879eee89fb40003495c2dd0",
+    "wrap-initial.png": "39a0285d16004f0c5b00da5f0f1a60e70f48bc3e0bd03f95741420cc9640f7d2",
+    "wrap-0.png": "6974fcc2377b552a0a30ab14899c1ce8f225f03df1839aaeb3f14a39073878b7",
+    "wrap-1.png": "4092f16f855874c94c34bbaa307045f960c15cb2a042731fc405fa2597425926",
+    "wrap-2.png": "87321baf8226a2452ed14660219b2d9a5cc4d57e60f154812ad7103c0fc30d43",
+    "wrap-case-transport.json": "267205ca8f0fa4472b9c096583dc8a0966fb2c22e151242d769b6e5888ee96b3",
+    "nonzero-initial.png": "3ec25535a16edb4bb55c1b20ced152b31d7c6911992468fe5db8467cca4aabf0",
+    "nonzero-0.png": "d58c22bbe9bfa1280a7b284bf7de4c0218de11475a08ccbd137e91a1b38893f5",
+    "nonzero-1.png": "d1233dcbd0b5c0487bf7692d9190d319f0c9e88c6533e07168f9c9ff150ca2de",
+    "nonzero-2.png": "c83dfede1e09406fad79214d0c7a1f340cffb121f50a7a7c8f2c6ad8977fb389",
+    "nonzero-case-transport.json": "855f1c506adf524a4dd1f800a02ba475cda56888a287194a65314b432285d1d8",
+    "published-working.png": "02fab348378b53aa9f232c532f4ece50e7c9eaa8447c4b4e2b484aa3346ffd3a",
+    "published-step-three.png": "5482cc2e941e4a3cb84a40a3fe8d5c232fcf47b0300c7a68320a631318a01eb3",
+    "published-reset-mistake.png": "8b2f8c905f29e06ea4b0f03235e1093d49404d29d6809b07f67658f43372973d",
+    "toolchain.json": "9a0c5fd81c4f73c0166f0eeba5604499a0623fb8f6c1a41d4f24358a6341fbd1"
+  },
+  "published": {
+    "working": {
+      "capture": "working-2.png",
+      "file": "published-working.png"
+    },
+    "step-three": {
+      "capture": "custom-2.png",
+      "file": "published-step-three.png"
+    },
+    "reset-mistake": {
+      "capture": "wrong-2.png",
+      "file": "published-reset-mistake.png"
+    }
+  }
+}
