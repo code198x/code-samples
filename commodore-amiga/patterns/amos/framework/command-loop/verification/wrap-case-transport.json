@@ -1,0 +1,732 @@
+[
+  {
+    "action": "load_snapshot",
+    "arguments": {
+      "path": "${RUN}/amos-cases-blank.state"
+    },
+    "result": null
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "ramiga",
+            "pressed": true
+          }
+        },
+        {
+          "Key": {
+            "name": "lshift",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 356386412,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "m",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 356953004,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "m",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 357519596,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "lshift",
+            "pressed": false
+          }
+        },
+        {
+          "Key": {
+            "name": "ramiga",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 358086188,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 372250988,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "type_string",
+    "arguments": {
+      "text": "Cases:wrap.asc",
+      "hold_frames": 2
+    },
+    "result": {
+      "kind": "type_string",
+      "chars_typed": 14,
+      "reached": 381599756
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "return",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 382166348,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "return",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 382732940,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 396897740,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "return",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 397464332,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "return",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 398030924,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 412195724,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "f2",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 412762316,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "f2",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 413328908,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 427493708,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "f1",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 428060300,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "f1",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 428626892,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 100
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 100,
+      "reached": 442791692,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/wrap-initial.png"
+    },
+    "result": null
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "a",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 443358284,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 90
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 90,
+      "reached": 456106604,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "a",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 456673196,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 8
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 8,
+      "reached": 457806380,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/wrap-0.png"
+    },
+    "result": null
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "x",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 458372972,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 8
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 8,
+      "reached": 459506156,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "x",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 460072748,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 8
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 8,
+      "reached": 461205932,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/wrap-1.png"
+    },
+    "result": null
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "a",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 461772524,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 90
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 90,
+      "reached": 474520844,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "a",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 475087436,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 8
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 8,
+      "reached": 476220620,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/wrap-2.png"
+    },
+    "result": null
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "q",
+            "pressed": true
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 476787212,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "input",
+    "arguments": {
+      "events": [
+        {
+          "Key": {
+            "name": "q",
+            "pressed": false
+          }
+        }
+      ]
+    },
+    "result": null
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 4
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 4,
+      "reached": 477353804,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "run_frames",
+    "arguments": {
+      "frames": 60
+    },
+    "result": {
+      "kind": "run_frames",
+      "frames": 60,
+      "reached": 485852684,
+      "stop_reason": "ReachedTarget"
+    }
+  },
+  {
+    "action": "save_screenshot",
+    "arguments": {
+      "path": "${RUN}/wrap-quit.png"
+    },
+    "result": null
+  }
+]

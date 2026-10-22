@@ -8,10 +8,10 @@ languages distinct too. A dash below means no dedicated entry in the topic
 inventory, not that the language is impossible on the machine. An emulator probe
 or a BASIC compiler needing qualification is not a finished library entry.
 
-The catalogue checkpoint through website #922 contains 214 pages: 19 BASIC,
-167 assembly, 27 conceptual/reference and one other cross-platform entry.
-The next Atari XL/ColecoVision slice adds one BASIC and two assembly entries
-in review, bringing authored coverage to 217. Publication is tracked separately
+The published catalogue through website #923 contains 217 pages: 20 BASIC,
+169 assembly, 27 conceptual/reference and one other cross-platform entry.
+The Amiga slice adds one AMOS and one Blitz BASIC entry in review, bringing
+authored coverage to 219. The two dialects remain separate implementations. Publication is tracked separately
 from source and review status. These are page counts, not capability completeness
 or curriculum readiness.
 
@@ -26,9 +26,9 @@ or curriculum readiness.
 | Atari 2600 | — | entry present |
 | Atari 5200 | — | entry present |
 | Atari 7800 | — | entry present |
-| Atari 800XL | new entry in review | new entry in review |
-| ColecoVision | — | new entry in review |
-| Amiga | — | entry present |
+| Atari 800XL | entry present | entry present |
+| ColecoVision | — | entry present |
+| Amiga | AMOS and Blitz entries in review, independently qualified | entry present |
 | C64 | — | entry present |
 | PET | — | — |
 | VIC-20 | — | — |
@@ -58,17 +58,18 @@ sources and records; this table does not silently upgrade code to execution.
 - Atom/CPC assembly and BBC/Electron BASIC now have the source-first publication
   slice in #159/#922. Their delivered-character, physical-press and pacing
   contracts remain distinct.
-- Atari XL now has separate BASIC command and assembly sampled-input review
+- Atari XL now has separate published BASIC command and assembly sampled-input
   implementations. ColecoVision assembly has a reusable BIOS-started, polled-VDP
   caller. Shared ancestry is not substituted for native execution.
 - Earlier Atari console BASIC rows still need a qualified compiler/runtime/load
   path. ColecoVision BASIC remains separately unqualified too. These are visible
   gaps, not claims of impossible languages or hardware.
-- The next stock-language row is Amiga BASIC-family coverage: existing AMOS and
-  Blitz material offers a route to investigate, but each native runtime, loader,
-  ownership contract and dialect must be named and independently qualified.
-  Then continue C64 BASIC, PET and VIC-20 in row order. Preserve AMOS/Blitz
-  identities rather than presenting them as identical BASIC runtimes.
+- Amiga now has separate AMOS Professional 2.00 fresh-key and Blitz BASIC 2.10
+  console-command entries in review. The latter uses Ted 1.1, not AmiBlitz/PED;
+  no AmigaBASIC or other dialect coverage follows. AMOS qualification mounts its
+  fixture from boot: the known hot-swap bug #1877/#1881 remains visible.
+- Continue with C64 BASIC, PET and VIC-20 in row order. Existing assembly
+  coverage does not complete BASIC, and an AMOS entry does not complete Blitz.
 - BASIC loops on machines with existing assembly entries remain gaps too.
   Reuse lessons and probes, but supply usable entry contracts and qualification.
 - The console assembly callers do not rule out BASIC cross-compilers. A useful

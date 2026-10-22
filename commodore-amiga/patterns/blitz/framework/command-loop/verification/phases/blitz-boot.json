@@ -1,0 +1,34 @@
+[
+  {
+    "action": "load_media",
+    "slot": "floppy-0",
+    "kind": "disk",
+    "path": "${BLITZ}"
+  },
+  {
+    "action": "load_media",
+    "slot": "floppy-1",
+    "kind": "disk",
+    "path": "${BLITZ_LIBS}"
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-boot.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-boot.state"
+  }
+]

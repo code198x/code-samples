@@ -1,0 +1,215 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-settled.state"
+  },
+  {
+    "action": "type_string",
+    "text": "PL_count.l=100 : PL_step.l=255\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "Repeat\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "  NPrint \"Count: \",PL_count.l\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "  Print \"A advances, X ignored, Q quits: \"\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "  PL_key$=UCase$(Edit$(1))\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "  Gosub PL_advance\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "Until PL_key$=\"Q\"\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "End\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": ".PL_advance\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "PL_accepted.l=0\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "If PL_key$=\"A\"\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "  PL_count.l=PL_count.l+PL_step.l\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "  If PL_count.l>=256 Then PL_count.l=PL_count.l-256\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "  PL_accepted.l=1\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "EndIf\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "type_string",
+    "text": "Return\n",
+    "hold_frames": 2
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-nonzero-source.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "ramiga",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "x",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "x",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "ramiga",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 4
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-nonzero-initial.png"
+  },
+  {
+    "action": "type_string",
+    "text": "a\n",
+    "hold_frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-nonzero-0.png"
+  },
+  {
+    "action": "type_string",
+    "text": "x\n",
+    "hold_frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-nonzero-1.png"
+  },
+  {
+    "action": "type_string",
+    "text": "a\n",
+    "hold_frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-nonzero-2.png"
+  },
+  {
+    "action": "type_string",
+    "text": "q\n",
+    "hold_frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 100
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-nonzero-3.png"
+  }
+]

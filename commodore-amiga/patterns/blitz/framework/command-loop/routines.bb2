@@ -1,0 +1,10 @@
+; Integer globals: PL_count.l and PL_step.l in 0..255.
+; PL_key$ is a delivered command; PL_accepted.l reports acceptance.
+.PL_advance
+PL_accepted.l=0
+If PL_key$="A"
+  PL_count.l=PL_count.l+PL_step.l
+  If PL_count.l>=256 Then PL_count.l=PL_count.l-256
+  PL_accepted.l=1
+EndIf
+Return

@@ -14,6 +14,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  amiga-command-loop-records:
+    name: AMOS and Blitz native counter evidence and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Read native counters and reject altered claims and captures
+        run: |
+          python scripts/check-amiga-command-loops.py
+          python -m unittest discover -s scripts -p test_amiga_command_loops.py -v
+
   xl-coleco-loop-records:
     name: XL and Coleco loop records and failure controls
     runs-on: ubuntu-latest

@@ -1,0 +1,45 @@
+Rem AMOS Professional 2.00. Paste routines after End.
+Hide
+Palette $000,$FFF
+Paper 0 : Pen 1
+Cls 0
+PL_COUNT=0 : PL_STEP=3 : PL_LASTSCAN=-1
+Repeat
+   Locate 0,0
+   Print "A advances, X ignored, Q quits"
+   Print "Count: ";PL_COUNT;"     "
+   Gosub PL_READ_FRESH
+   Gosub PL_ADVANCE
+Until PL_KEY$="Q"
+Show
+End
+
+Rem Globals: PL_COUNT and PL_STEP are integers from 0 to 255.
+Rem PL_KEY$ is supplied by the caller; PL_ACCEPTED is the result.
+Rem Only A advances; Q and other characters leave state unchanged.
+PL_ADVANCE:
+PL_ACCEPTED=0
+If PL_KEY$="A"
+   PL_COUNT=PL_COUNT+PL_STEP
+   If PL_COUNT>=256
+      PL_COUNT=PL_COUNT-256
+   End If
+   PL_ACCEPTED=1
+End If
+Return
+
+Rem Initialise PL_LASTSCAN=-1 once; retain it across calls.
+Rem Returns PL_KEY$ and updates PL_LASTSCAN; blocks until a fresh key.
+PL_READ_FRESH:
+If PL_LASTSCAN>=0
+   Repeat
+      Wait Vbl
+   Until Key State(PL_LASTSCAN)=0
+End If
+Clear Key
+Repeat
+   PL_KEY$=Upper$(Inkey$)
+   Wait Vbl
+Until PL_KEY$<>""
+PL_LASTSCAN=Scancode
+Return
