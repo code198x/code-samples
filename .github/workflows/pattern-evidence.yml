@@ -715,3 +715,17 @@ jobs:
         run: |
           python scripts/check-commodore-deadlines.py
           python -m unittest discover -s scripts -p test_commodore_deadlines.py -v
+
+  pet-assembly-deadline-records:
+    name: PET native deadline and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check PET clock, pixels, arithmetic and falsified evidence
+        run: |
+          python scripts/check-pet-deadlines.py
+          python -m unittest discover -s scripts -p test_pet_deadlines.py -v
