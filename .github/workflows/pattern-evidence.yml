@@ -574,3 +574,17 @@ jobs:
         run: |
           python scripts/check-ace-map.py
           python -m unittest discover -s scripts -p test_ace_map.py -v
+
+  zx-basic-maps:
+    name: ZX80 and ZX81 BASIC maps and corruption controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Decode retained ROM output and reject falsifications
+        run: |
+          python scripts/check-zx-basic-map.py
+          python -m unittest discover -s scripts -p test_zx_basic_map.py -v
