@@ -48,7 +48,7 @@ State work is bounded subtraction/comparison and possible remaining update. DCLO
 
 ## Qualification
 
-Emu198x 0.44.1; unexpanded stock FORTH ROM, 8192 bytes, identity pinned with the executable in the records. Four fresh keyboard-entered callers cover working, 100-tick customisation, baseline-reset fault and repaired service. They check idle, a 120-field held action, no-input expiry, restart, disable, normal exit and observed stack separation. Native clock/state and raw 32×24 screen bytes back the counters and inspected captures.
+Emu198x 0.44.1; unexpanded stock FORTH ROM, 8192 bytes, identity pinned with the executable in the records. Four fresh keyboard-entered callers cover working, 100-tick customisation, baseline-reset fault and repaired service. They check idle, a 120-field held action, no-input expiry, restart, disable, normal exit and observed stack separation. Native clock/state and raw 32×24 screen bytes back the counters. Captures settle for two additional fields; every active pixel is compared with native screen and character RAM before an image is accepted. The retained checker independently repeats that pixel comparison.
 
 `boundaries.fth` is a second caller using the same helper without a keyboard policy. Sixteen cases cover zero/maximum duration, no elapsed time, 16-bit wrap, exact/overshot expiry and the signed boundary. It prints a case identifier and a lower-stack tag and returns to an empty stack. The signed-comparison control executes the same cases and is rejected by an independent oracle. Synthetic samples establish arithmetic, not an observed 21-minute rollover or original-hardware accuracy.
 

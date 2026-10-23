@@ -48,6 +48,39 @@ def read(machine: T.Machine, addr: int, length: int = 2) -> int:
     return int.from_bytes(bytes(raw), "little")
 
 
+def capture_check(machine: T.Machine, image: Path) -> dict:
+    spec = importlib.util.spec_from_file_location(
+        "png", ROOT / "scripts/check-amiga-command-loops.py"
+    )
+    assert spec and spec.loader
+    pixels_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pixels_module)
+    video, _ = screen(machine)
+    font = []
+    for offset in range(0, 1024, 128):
+        part = machine.call("memory_read", addr=0x2C00 + offset, len=128)["bytes"]
+        T.require(len(part) == 128, "Truncated character RAM")
+        font += part
+    width, height, channels, pixels = pixels_module.png(image)
+    T.require(
+        (width, height, channels) == (320, 288, 4), "Unexpected Ace capture geometry"
+    )
+    glyphs = {
+        str(code & 127): font[(code & 127) * 8 : (code & 127) * 8 + 8] for code in video
+    }
+    for y in range(192):
+        for x in range(256):
+            code = video[(y // 8) * 32 + x // 8]
+            bits = glyphs[str(code & 127)][y % 8]
+            expected = bool(bits & (128 >> (x % 8))) ^ bool(code & 128)
+            pos = ((y + 48) * width + x + 32) * channels
+            actual = min(pixels[pos : pos + 3]) > 180 and pixels[pos + 3] == 255
+            T.require(
+                actual == expected, "Capture disagrees with native screen/font RAM"
+            )
+    return {"video_hex": bytes(video).hex(), "glyphs": glyphs, "pixel_match": True}
+
+
 def qualify(args: argparse.Namespace, variant: str) -> dict:
     command = [str(args.emulator), "--mcp", "--rom", str(args.firmware)]
     machine = T.Machine(command)
@@ -174,8 +207,10 @@ def qualify(args: argparse.Namespace, variant: str) -> dict:
                 expired["turn"] == 3 and expired["state"]["DA"] == 1,
                 "No-input expiry did not commit one turn",
             )
+        frames(2)
         image = out / f"{variant}-expiry.png"
         machine.call("save_screenshot", path=str(image))
+        capture = capture_check(machine, image)
         key("2")
         disabled = observe("disabled")
         frames(250)
@@ -200,6 +235,7 @@ def qualify(args: argparse.Namespace, variant: str) -> dict:
             "ram_top": top,
             "samples": samples,
             "data_top_after_exit": after_exit,
+            "capture": capture,
             "image": image.name,
             "image_sha256": T.sha(image),
         }
