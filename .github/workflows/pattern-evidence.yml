@@ -701,3 +701,17 @@ jobs:
         run: |
           python scripts/check-electron-cpc-basic-deadlines.py
           python -m unittest discover -s scripts -p test_electron_cpc_basic_deadlines.py -v
+
+  commodore-assembly-deadline-records:
+    name: C64 and VIC-20 native deadlines and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check native clocks, pixels, arithmetic and corrupted evidence
+        run: |
+          python scripts/check-commodore-deadlines.py
+          python -m unittest discover -s scripts -p test_commodore_deadlines.py -v

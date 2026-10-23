@@ -1,0 +1,16 @@
+{
+  "system": "commodore-vic-20",
+  "region": "PAL",
+  "ram_bytes": 5120,
+  "display": "22-column text",
+  "assembler_release": "0.0.72",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_release": "0.44.2",
+  "emulator_sha256": "0be9ab7a67eb41fea10325a3d26b3bc0fdf7f9331fe221156e71e62bedb6b6ca",
+  "firmware_sha256": {
+    "basic.rom": "8be2d882e0eeb1c6923a43660236ea69d43ca8a3bd0613b1b6c910601584fbed",
+    "chargen.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502",
+    "kernal.rom": "ff6d1416b91a71f5240a5bb8adc9fdc1b955374c48322ca47b3e436334f168fb"
+  },
+  "limits": "Independent native emulator observations, not original hardware. Stock firmware IRQ service; imported PRG; no debugger state injection. Clock boundary fixture uses owned synthetic samples. GETIN delivers buffered characters, not physical press edges."
+}
