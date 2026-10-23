@@ -1,0 +1,19 @@
+{
+  "system": "commodore-pet",
+  "model": "commodore-pet-40col",
+  "region": "emulator default",
+  "ram_bytes": 32768,
+  "display": "40-column text",
+  "assembler_release": "0.0.72",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_release": "0.44.2",
+  "emulator_sha256": "3743c55c7055223d4d5f920a9051dc6a260e4fbb258a8aeabda941b3df49931c",
+  "firmware_sha256": {
+    "basic.rom": "5b426b5c50350e5d50c4308a81288bb34f310d7384bcc43c66a0e18716a4cdbe",
+    "char.rom": "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "editor.rom": "5338b1dffebd695f6110c9995e16f7536bb63a909c2a0062b4789de46904ade9",
+    "chargen.rom": "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "kernal.rom": "056d5e84a6e4f2b5b40a4109f49515c2496a4bf99139a9f59abe486ded5cd03d"
+  },
+  "limits": "Named upgrade-ROM 40-column PET; default emulator timing, no selectable PAL/NTSC switch. Independent native emulator evidence, not original hardware or other PET ROMs."
+}
