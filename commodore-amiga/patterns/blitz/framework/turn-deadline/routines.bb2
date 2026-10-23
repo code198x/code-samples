@@ -1,0 +1,26 @@
+; Signed long integer deadline state; supply samples in 0..65535.
+.PL_dl_init
+PL_dl_previous.l=PL_dl_now.l
+PL_dl_left.l=0 : PL_dl_active.l=0 : PL_dl_expired.l=0 : PL_dl_elapsed.l=0
+Return
+.PL_dl_start
+PL_dl_left.l=PL_dl_duration.l : PL_dl_active.l=0 : PL_dl_expired.l=0
+If PL_dl_duration.l>0
+   PL_dl_active.l=1
+EndIf
+Return
+.PL_dl_poll
+PL_dl_expired.l=0
+PL_dl_elapsed.l=PL_dl_now.l-PL_dl_previous.l
+If PL_dl_elapsed.l<0
+   PL_dl_elapsed.l=PL_dl_elapsed.l+65536
+EndIf
+PL_dl_previous.l=PL_dl_now.l
+If PL_dl_active.l=0
+   Return
+EndIf
+PL_dl_left.l=PL_dl_left.l-PL_dl_elapsed.l
+If PL_dl_left.l<=0
+   PL_dl_left.l=0 : PL_dl_active.l=0 : PL_dl_expired.l=1
+EndIf
+Return

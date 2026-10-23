@@ -1,0 +1,42 @@
+; Second caller: synthetic samples, no installed clock handler.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Deadline arithmetic",1,0
+InitBank 0,272,1 : PL_box.l=Bank(0)
+For PL_i.l=0 To 15
+  Read PL_before.l,PL_dl_now.l,PL_dl_duration.l
+  PL_saved.l=PL_dl_now.l : PL_dl_now.l=PL_before.l
+  Gosub PL_dl_init : Gosub PL_dl_start
+  PL_dl_now.l=PL_saved.l : Gosub PL_dl_poll
+  Poke.l PL_box.l+PL_i.l*16,PL_dl_expired.l
+  Poke.l PL_box.l+PL_i.l*16+4,PL_dl_left.l
+  Poke.l PL_box.l+PL_i.l*16+8,PL_dl_elapsed.l
+  Poke.l PL_box.l+PL_i.l*16+12,PL_dl_active.l
+Next
+Poke.l PL_box.l+264,$1A2B3C4D
+Poke.l PL_box.l+268,239
+WLocate 8,20 : Print "Count: 16"
+WLocate 8,60 : Print "Bank: ",PL_box.l
+WLocate 8,80 : Print "Size: ",BankSize(0)
+WLocate 8,100 : Print "0123456789"
+Repeat
+  VWait
+Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0 : FreeBank 0
+End
+Data.l 0,0,0
+Data.l 100,100,1
+Data.l 100,109,10
+Data.l 100,110,10
+Data.l 100,125,10
+Data.l 65530,5,100
+Data.l 0,65535,65535
+Data.l 65535,0,65535
+Data.l 100,101,0
+Data.l 0,65535,1
+Data.l 12345,12345,65535
+Data.l 65535,65535,1
+Data.l 0,32768,32769
+Data.l 0,32768,32768
+Data.l 60000,10000,30000
+Data.l 65535,32767,40000

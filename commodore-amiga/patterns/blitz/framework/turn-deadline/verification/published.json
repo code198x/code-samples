@@ -1,0 +1,14 @@
+{
+  "working": {
+    "source": "working-06-expiry.png",
+    "source_sha256": "80901100ae9453873775b7612ec391e5c303f5922aeae68c6615443a55d4563f",
+    "published": "published-working.png",
+    "published_sha256": "85450770bf4b414518abd96a7308a2392d66303275fc48719a8c84b57482ed49"
+  },
+  "wrong": {
+    "source": "wrong-05-wrong-no-expiry.png",
+    "source_sha256": "45eff9c715fee976152b4b01f007b1c32d09dfaeae97add7e538c8026e986bfb",
+    "published": "published-wrong.png",
+    "published_sha256": "0061f106c16324786fbc160ff024bfa5f0b46f132ef655595057c628aeab0d88"
+  }
+}

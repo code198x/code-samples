@@ -1,0 +1,5 @@
+; WindowInput must already select an owned, open window.
+; Delivered characters may include operating-system key repeats.
+.PL_poll_key
+PL_key$=UCase$(Inkey$)
+Return

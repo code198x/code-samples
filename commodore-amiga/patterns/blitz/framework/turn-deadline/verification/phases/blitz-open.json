@@ -1,0 +1,114 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-pointer.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 70,
+          "dy": 13
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 65,
+          "dy": 0
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 150
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-open.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-open.state"
+  }
+]

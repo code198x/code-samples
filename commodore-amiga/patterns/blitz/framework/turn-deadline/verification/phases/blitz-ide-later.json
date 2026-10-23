@@ -1,0 +1,18 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-ide.state"
+  },
+  {
+    "action": "run_frames",
+    "frames": 600
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-ide-later.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-ide-later.state"
+  }
+]

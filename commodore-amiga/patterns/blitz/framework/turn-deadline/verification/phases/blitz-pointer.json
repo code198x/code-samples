@@ -1,0 +1,46 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-drawer.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 80,
+          "dy": 0
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 65,
+          "dy": 0
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-pointer.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-pointer.state"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "emulator_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
+  "firmware_sha256": "6d43840d4099a74170ea0f0425b6257c3891ebcaa39c4d1840075a9ab22b5707",
+  "runtime_media_sha256": {
+    "system": "43d12a5bf4401ffc505c77d7d6d329a39403ca00da978cc583ef9fe2bf8cd721",
+    "libs": "01f2d948ac14ac88575c04747fc7d4c282c0db84effa6dc2e02796f74e44955f"
+  },
+  "emulator_version": "0.44.1",
+  "runtime": "Blitz BASIC 2.10 / Ted 1.1",
+  "configuration": "PAL A1200, 2 MiB chip, no fast RAM, three drives",
+  "builder_version": "0.2.13",
+  "builder_sha256": "8cee299092889d79d5c0a9b3ade2e3fd272739f3f4b57761b2f51a1046e9a3a8"
+}

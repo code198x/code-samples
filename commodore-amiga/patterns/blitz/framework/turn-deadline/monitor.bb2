@@ -1,0 +1,11 @@
+.PL_monitor
+Poke.l PL_box.l+36,0
+Poke.l PL_box.l,PL_count.l
+Poke.l PL_box.l+4,PL_ex.l
+Poke.l PL_box.l+8,PL_dl_active.l
+Poke.l PL_box.l+12,PL_dl_left.l
+Poke.l PL_box.l+16,PL_dl_now.l
+Poke.l PL_box.l+20,PL_dl_duration.l
+Poke.l PL_box.l+24,PL_dl_elapsed.l
+Poke.l PL_box.l+36,239
+Return

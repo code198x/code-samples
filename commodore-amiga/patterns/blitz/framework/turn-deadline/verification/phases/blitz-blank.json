@@ -1,0 +1,48 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-ide-later.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "return",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "Key": {
+          "name": "return",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 30
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-blank.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-blank.state"
+  }
+]
