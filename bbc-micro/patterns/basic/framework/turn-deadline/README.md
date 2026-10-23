@@ -1,4 +1,4 @@
-# Optional turn deadlines in BBC Micro BASIC II
+# Optional turn deadlines in BBC Micro BASIC
 
 Press Space to spend one turn. Leave timing disabled and the world waits. T enables a deadline; another T disables it. Q ends the demo. Expiry advances one turn even with no input, then starts a fresh deadline. The display shows the turn, automatic expiry count and active flag; it is not a live countdown.
 
@@ -55,11 +55,11 @@ The observer is intentionally readable and expensive, especially in C64 BASIC. I
 
 `verification/native.json` retains independent cold-firmware runs of working, shorter, wrong and repaired public callers, typed through the keyboard. No debugger writes initialise guest state. `verification/boundaries.json` comes from a second BASIC caller (`boundaries.bas` plus the same helper and byte writer): twelve synthetic-clock cases execute in the interpreter and are checked against an independent arithmetic oracle. Synthetic clock tests establish arithmetic, not native clock accuracy or a 24-hour wall-clock run.
 
-Repeat using `scripts/verify-basic-deadlines.py` and `scripts/verify-basic-deadline-boundaries.py`, supplying `--tools` and `--firmware`. Native tools are the verified Emu198x 0.44.1 Apple Silicon binaries; firmware/tool hashes are in the records. BBC Model B, 32 KiB, MOS/BASIC II, MODE 6 is the named configuration. No original-hardware, other-ROM or other-region execution claim is made.
+Repeat using `scripts/verify-basic-deadlines.py` and `scripts/verify-basic-deadline-boundaries.py`, supplying `--tools` and `--firmware`. Native tools are the verified Emu198x 0.44.1 Apple Silicon binaries; firmware/tool hashes are in the records. BBC Model B, 32 KiB, MOS and BASIC ROM version byte 1, MODE 6 is the named configuration. No original-hardware, other-ROM or other-region execution claim is made.
 
 ## References and extensions
 
-BBC Micro Advanced User Guide, §9.3 OSWORD 1 (printed p.248), five-byte centisecond system clock; §8 OSBYTE 129 timed key read. The BASIC ROM User Guide (1984), BASIC II memory map and TIME/INKEY$ language behaviour.
+BBC Micro Advanced User Guide, §9.3 OSWORD 1 (printed p.248), five-byte centisecond system clock; §8 OSBYTE 129 timed key read. The BASIC ROM User Guide (1984), BASIC memory map and TIME/INKEY$ language behaviour.
 
 Longer clocks, preserved pause state, queued commands, multiple deadline contexts, fixed-step catch-up and tighter assembly service are possible extensions, not hidden features. Prefer each only when its resource cost and policy fit the game. No routine can recover time its chosen clock did not count.
 
