@@ -39,6 +39,12 @@ class Evidence(unittest.TestCase):
             lambda r, b: r["cases"]["custom"]["samples"][0]["state"].update(DU=200),
             lambda r, b: r["cases"]["wrong"]["samples"][-3]["state"].update(DR=0),
             lambda r, b: r["cases"]["working"].update(image_sha256=""),
+            lambda r, b: r["cases"]["working"]["capture"].update(pixel_match=False),
+            lambda r, b: r["cases"]["working"]["capture"].update(video_hex="00"),
+            lambda r, b: r["cases"]["working"].update(
+                image=r["cases"]["wrong"]["image"],
+                image_sha256=r["cases"]["wrong"]["image_sha256"],
+            ),
             lambda r, b: b["cases"].pop("signed-fault"),
             lambda r, b: b["cases"]["working"]["cases"].pop(),
             lambda r, b: b["cases"]["working"]["cases"][0].update(actual=[1, 1, 1]),

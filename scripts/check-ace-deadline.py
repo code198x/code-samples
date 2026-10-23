@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import re
 from pathlib import Path
@@ -53,6 +54,7 @@ def check(
             ROOT / "scripts/verify-ace-deadline.py",
             ROOT / "scripts/verify-ace-deadline-boundaries.py",
             ROOT / "scripts/verify-game-loops.py",
+            ROOT / "scripts/check-amiga-command-loops.py",
         ]
     )
     require(
@@ -191,6 +193,30 @@ def check(
             and (stopped["clock"] - disabled["clock"]) % 65536 >= 250,
             "Disabled state advanced or interval missing",
         )
+        capture = case["capture"]
+        require(capture["pixel_match"] is True, "Native capture was not checked")
+        spec = importlib.util.spec_from_file_location(
+            "png", ROOT / "scripts/check-amiga-command-loops.py"
+        )
+        assert spec and spec.loader
+        decoder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(decoder)
+        width, height, channels, pixels = decoder.png(
+            FOLDER / "verification" / case["image"]
+        )
+        video = bytes.fromhex(capture["video_hex"])
+        require(
+            (width, height, channels) == (320, 288, 4) and len(video) == 768,
+            "Invalid native capture extent",
+        )
+        for y in range(192):
+            for x in range(256):
+                code = video[(y // 8) * 32 + x // 8]
+                bits = capture["glyphs"][str(code & 127)][y % 8]
+                expected = bool(bits & (128 >> (x % 8))) ^ bool(code & 128)
+                pos = ((y + 48) * width + x + 32) * channels
+                actual = min(pixels[pos : pos + 3]) > 180 and pixels[pos + 3] == 255
+                require(expected == actual, "Native image disagrees with character RAM")
         require(
             sha(FOLDER / "verification" / case["image"]) == case["image_sha256"],
             "Changed native capture",
