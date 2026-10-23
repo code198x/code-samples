@@ -1,0 +1,16 @@
+{
+  "system": "acorn-electron",
+  "language": "basic",
+  "model": "Electron",
+  "ram_bytes": 32768,
+  "region": "PAL",
+  "display": "MODE 6",
+  "emulator_release": "0.44.1",
+  "emulator_sha256": "9bc204aa0ae4bd2590254496ef0e88a9a96d5be8c5908af8dc59720f289d5dfc",
+  "archive_sha256": "b6437acdde0bd7017a2fc2f59239511bb9802cec36f274d3ee917624ead1729e",
+  "firmware_sha256": {
+    "os.rom": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4",
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
+  },
+  "limits": "Typed stock firmware, native clocks and input; no debugger state injection, original-hardware, minimum-RAM or whole-game performance claim."
+}
