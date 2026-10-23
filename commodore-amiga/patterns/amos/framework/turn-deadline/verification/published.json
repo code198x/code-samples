@@ -1,0 +1,30 @@
+{
+  "working": {
+    "source": "working-43-waiting.png",
+    "source_sha256": "0de12599c540c04c78d2246a786947688d87c3cbe8a4befce8ee8dd2f3e0ddad",
+    "published": "published-working.png",
+    "published_sha256": "33b3b2187c73f2b73324bc7ea06560dbe69b09ddc4b4b6524cd01a4399f99de6",
+    "source_geometry": [
+      1536,
+      576
+    ],
+    "display_geometry": [
+      768,
+      576
+    ]
+  },
+  "wrong": {
+    "source": "wrong-05-wrong-no-expiry.png",
+    "source_sha256": "3cc97549676fbba60cc3800f2d9fd20b4db7a949f6533c276c87d7f84c5ec143",
+    "published": "published-wrong.png",
+    "published_sha256": "64bb10c170229e9fa883bdc1b5a022f4203c0c3acc25d3af1a95f949d1004659",
+    "source_geometry": [
+      1536,
+      576
+    ],
+    "display_geometry": [
+      768,
+      576
+    ]
+  }
+}

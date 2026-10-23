@@ -1,0 +1,4 @@
+PL_DL_SERVICE:
+PL_DL_NOW=Timer and $FFFF
+Gosub PL_DL_POLL
+Return

@@ -1,0 +1,38 @@
+Rem Second caller: synthetic samples, no keyboard policy or global Timer reset.
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Reserve As Work 1,160
+PL_MAILBOX=Start(1)
+Locate 0,3 : Print "Bank: ";PL_MAILBOX
+Locate 0,4 : Print "Size: ";Length(1)
+For PL_CASE=0 To 15
+   Read PL_PREVIOUS,PL_NEXT,PL_DL_DURATION
+   PL_DL_NOW=PL_PREVIOUS : Gosub PL_DL_INIT : Gosub PL_DL_START
+   PL_DL_NOW=PL_NEXT : Gosub PL_DL_POLL
+   PL_AT=PL_MAILBOX+PL_CASE*8
+   Doke PL_AT,PL_DL_EXPIRED : Doke PL_AT+2,PL_DL_LEFT
+   Doke PL_AT+4,PL_DL_ELAPSED : Doke PL_AT+6,PL_DL_ACTIVE
+Next PL_CASE
+Doke PL_MAILBOX+156,$A55A : Poke PL_MAILBOX+159,239
+Locate 0,0 : Print "Deadline boundaries complete"
+Print "Count: 16"
+Repeat
+   Wait Vbl
+Until Inkey$="q"
+Erase 1 : Show
+End
+Data 0,0,0
+Data 100,100,1
+Data 100,109,10
+Data 100,110,10
+Data 100,125,10
+Data 65530,5,100
+Data 0,65535,65535
+Data 65535,0,65535
+Data 100,101,0
+Data 0,65535,1
+Data 12345,12345,65535
+Data 65535,65535,1
+Data 0,32768,32769
+Data 0,32768,32768
+Data 60000,10000,30000
+Data 65535,32767,40000

@@ -1,0 +1,20 @@
+{
+  "commodore-amiga/patterns/amos/framework/turn-deadline/boundaries.amos": "54897c273224746f31a7b59d6ec82f1ce521c94e10ca4aa914da022bff6a0d67",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/caller.amos": "0cba0545cd93819a770bb3ea9b1ee0e4078d2d59e638c4e52d3b1c3978be6412",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/clock.amos": "fa85affd9912e160301dda190e2381ae1799962b2d5183c923eb757f2058985e",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/customise.amos": "f92ecc2781e4ffc5ac94acf8779fb9dcdf77732994099da03896493e9f1c4519",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/input.amos": "544dae94e70797049432502642cfa0838a811122191b89bd6993f215ae7e779c",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/monitor.amos": "bce5b156f82ef43401566f06c24ecdad8ab459de7b700b606cf6ec75b818cf5d",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/routines.amos": "12494740c4311ccaa486dc023e44c1f5f524598ed6a283de53c63493a1c7b72d",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/mistakes/reset-baseline.amos": "0213a3d29016e8e2caa8681e3218e0a9eb40a652d3b69a3145a06c192842c51f",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/Makefile": "b5c4908cef665316d5087510c109acc5192a9de0e920bd4c1f490632c5e438e8",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/build.py": "583a19c2db796068e6340ff12e499ec51da1c4ddd3fc27dfcc81fc0f330c2eae",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/verification/configuration.json": "2d6b8c8a08068a33ed8943ac6b6692bac83381cf2790f02e96e070ecbc955e6a",
+  "scripts/verify-amos-deadline.py": "69199c4b5e8d3dde09c5a134d9b1ee85c906ad87fb78ff8f04fae08462fa4a17",
+  "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+  "scripts/check-amiga-command-loops.py": "75f35ab4d1077f3d3e89f347f4a13496370c55ffc9b772cd280c610d6b4b4326",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/../command-loop/routines.amos": "dcaa7a212d60d25f92d7d30f05d6a5dc91093477063e835bc328c52bcc21dbf8",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/verification/phases/amos-cases-blank.json": "96e1195064f7663d87173f898aa184bd3caebf2505d0b560a9bedbeea0be4944",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/verification/phases/amos-cases-cold.json": "0023900548f7d0c104684ad7137d30130263c22730b2306e5ccf456fa983b0ef",
+  "commodore-amiga/patterns/amos/framework/turn-deadline/verification/phases/working-case.json": "d55ea30bdc671df0acf2cd73770a984a2f76224468e2901fd1799af18f9aaa42"
+}
