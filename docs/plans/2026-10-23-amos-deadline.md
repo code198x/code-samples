@@ -1,0 +1,7 @@
+# AMOS deadline slice (#178)
+
+Keep the untimed command reader intact. Add separate integer deadline, low-word Timer service and nonblocking release-gated input modules; reuse PL_ADVANCE from the command-loop file. Demonstrate a full caller, shorter duration, baseline-reset mistake and separate repair. The optional work-bank observer belongs to the caller, not the helper.
+
+Generate ASCII fixtures from maintained modules with build.py/Makefile. Qualify each through AMOS Professional 2.00 on the existing released PAL A1200 route, with separate imports from a cold-mounted fixture and verified empty-editor checkpoint. Drive actual keyboard events; compare native counter pixels with guarded bank observations. Execute a second synthetic-clock caller and an exact-boundary fault through the interpreter. Retain tool/firmware/media/source identities, case tags, native output and corruption controls; never distribute licensed media or running snapshots.
+
+Add a CodeFromFile website entry, inspected native figures and natural comparison links. Explain numeric/clock bounds, state/stack/resource ownership, timing/input policy, customisation, repair, measured/derived costs and unmeasured runtime overhead. Verify exact code/images, discovery, phone overflow and normal site gates. Push separate source/website PRs; website closes only docs#178. Preserve remote refs before removing owned worktrees, tools, media copies, snapshots and background processes.
