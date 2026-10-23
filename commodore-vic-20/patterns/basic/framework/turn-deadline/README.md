@@ -12,7 +12,7 @@ Copy the helper's lines 3000–3250 into free numbers, renumbering every caller 
 
 ## Callable contract
 
-All variables are global floating-point BASIC values; only the first two name characters distinguish them. Rename the complete interface consistently if a project already uses these names. DURATION and DU would collide. Initialise once, not on every poll.
+All variables are global floating-point BASIC values; only the first two name characters distinguish them. Rename the complete interface consistently if a project already uses these names. DUAL and DU would collide. Initialise once, not on every poll.
 
 | Entry | Inputs | Result |
 | --- | --- | --- |
