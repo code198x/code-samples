@@ -672,3 +672,17 @@ jobs:
         run: |
           python scripts/check-basic-deadlines.py
           python -m unittest discover -s scripts -p test_basic_deadlines.py -v
+
+  mos-deadline-records:
+    name: BBC and Electron MOS deadlines and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Decode native pixels and reject corrupted observations
+        run: |
+          python scripts/check-mos-deadlines.py
+          python -m unittest discover -s scripts -p test_mos_deadlines.py -v

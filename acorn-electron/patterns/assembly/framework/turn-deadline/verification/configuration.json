@@ -1,0 +1,16 @@
+{
+  "system": "acorn-electron",
+  "region": "PAL",
+  "ram_bytes": 32768,
+  "display": "MODE 6",
+  "startup": "Cold stock OS/BASIC, complete generated loader typed and RUN; full installed bytes compared",
+  "emulator_release": "0.44.1",
+  "emulator_sha256": "9bc204aa0ae4bd2590254496ef0e88a9a96d5be8c5908af8dc59720f289d5dfc",
+  "assembler_release": "0.0.65",
+  "assembler_sha256": "f546f460f43d25ccbf84edffec100b7b2fe1d69b38477dddb88ce1c008ca3570",
+  "firmware_sha256": {
+    "os.rom": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4",
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
+  },
+  "limits": "Named emulator/firmware only; no original-hardware, other-ROM, minimum-RAM or complete game-budget claim."
+}
