@@ -560,3 +560,17 @@ jobs:
         run: |
           python scripts/check-remaining-assembly-maps.py
           python -m unittest discover -s scripts -p test_remaining_assembly_maps.py -v
+
+  ace-forth-map:
+    name: Ace FORTH byte maps and stack conservation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Decode retained ROM execution and reject falsifications
+        run: |
+          python scripts/check-ace-map.py
+          python -m unittest discover -s scripts -p test_ace_map.py -v
