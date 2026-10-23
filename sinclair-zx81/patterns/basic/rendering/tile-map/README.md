@@ -1,6 +1,6 @@
 # Checked map queries — ZX81 BASIC
 
-Run with the original ZX81 BASIC ROM and **16 KiB RAM**. This is an expanded-machine example, not a stock 1 KiB claim. No assembly or dependency is required.
+Run the unchanged public caller with the original ROM and **4 KiB RAM** or more. This configuration has now been executed; the earlier exhaustive diagnostics remain qualified at 16 KiB. A separate [stock 1 KiB option](compact/) is available below. No assembly or dependency is required.
 
 ## Include and call
 
@@ -60,3 +60,23 @@ Primary references: [ZX80 original manual, chapters 4/6/14 and appendix II](http
 The automated entry uses conservative per-key gaps and a longer post-line pause for the expanded ZX81 display. It checks each stored ZX81 line number and waits for complete indexed output with a 6000-frame cap. These are transport bounds, not measurements of minimum keyboard latency or game performance.
 
 The retained executable identity is the verified aarch64-apple-darwin release. A different host requires its own verified tool identity and fresh qualification; changing a recorded pass flag is not a requalification.
+
+
+## Measured RAM, rather than the old test setting
+
+The original readable listings are retained unchanged. Entering them through the ROM gives these tokenised storage costs (including line headers):
+
+| Component | Bytes |
+| --- | ---: |
+| Reusable routines | 659 |
+| Explicit room initialiser | 1086 |
+| Public caller | 285 |
+| Total program | 2030 |
+
+The complete public caller runs on **4 KiB**. Entry of the unchanged listing into **2 KiB** is rejected with BASIC error 4 (out of memory). This is a comparison of exercised configurations, not an exact byte-by-byte minimum or a promise that a larger game will fit.
+
+At the stopped caller, variables occupy 291 bytes and the full display file 793 bytes; the 125-byte system area is separate. The smallest SP-to-calculator-stack-end gap observed at frame checkpoints was **796 bytes** on 4 KiB (843 bytes at STOP).
+
+These gaps are sampled separation between allocated data and the machine stack, not an instruction-level peak, a free-memory API or a safe game-content budget. Editing, INPUT, nested calls and additional output use workspace too. Read the retained `verification/memory/readable-*.json` pointer and CPU records alongside the separate original exhaustive test records.
+
+The ZX81 stores a marker and five-byte value alongside each numeric literal. The tokenised counts include those hidden bytes, line headers and terminators; source-file size is not program RAM. This is another reason a generated room or character string can save more than its visible listing suggests.

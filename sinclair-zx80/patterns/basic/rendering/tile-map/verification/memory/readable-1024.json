@@ -1,0 +1,146 @@
+{
+  "machine": "sinclair-zx80",
+  "ram_bytes": 1024,
+  "identity": {
+    "emulator_sha256": "7239551de49dfc8ecdfb857c5df475cf5e3ab864c5e70a89e3e4d112b1823069",
+    "firmware_sha256": "9374711cb6a5fd53c1c98d1d20ecb444d01d621a322f3d066ef216d515ac5161"
+  },
+  "sources": {
+    "routines.bas": "07a9a33f369f5727bb739643dde0fe9d7506582de9164fde65a167f9a54f47d5",
+    "room.bas": "85f365f6f0e474473ba7703454e88ba661f0858308f86101a3fba69e2c2935fa",
+    "demo.bas": "1a5be6e5e2058c01d9b1595805cfb4769611ade0ec0d7dcea5a5113506e2c4a4"
+  },
+  "snapshots": [
+    {
+      "label": "boot",
+      "system_hex": "ff04000029400000284029402b40424045400200000000000000000000008f00000000382117ffff",
+      "pointers": {
+        "vars": 16424,
+        "e_line": 16425,
+        "d_file": 16427,
+        "df_ea": 16450,
+        "df_end": 16453
+      },
+      "cpu": {
+        "af": "$000A",
+        "bc": "$00FF",
+        "de": "$FFFF",
+        "halt": false,
+        "hl": "$4022",
+        "i": "$0E",
+        "iff1": false,
+        "iff2": false,
+        "im": 1,
+        "ix": "$0000",
+        "iy": "$4000",
+        "pc": "$0198",
+        "r": "$D8",
+        "sp": "$43FC"
+      },
+      "frontier": 16453,
+      "sp": 17404,
+      "observed_gap": 951,
+      "ram_bytes": 1024
+    },
+    {
+      "label": "entered-routines.bas",
+      "system_hex": "ff04000074416405734174417641024305430292040000000000800700004360000000382117ffff",
+      "pointers": {
+        "vars": 16755,
+        "e_line": 16756,
+        "d_file": 16758,
+        "df_ea": 17154,
+        "df_end": 17157
+      },
+      "cpu": {
+        "af": "$000A",
+        "bc": "$00FF",
+        "de": "$FFFF",
+        "halt": false,
+        "hl": "$4022",
+        "i": "$0E",
+        "iff1": false,
+        "iff2": false,
+        "im": 1,
+        "ix": "$0000",
+        "iy": "$4000",
+        "pc": "$0198",
+        "r": "$D8",
+        "sp": "$43FC"
+      },
+      "frontier": 17157,
+      "sp": 17404,
+      "observed_gap": 247,
+      "ram_bytes": 1024
+    },
+    {
+      "label": "entered-room.bas",
+      "system_hex": "030400004f439c094e434f435143e043e34302560900000000008007000040e59e4100382117ffff",
+      "pointers": {
+        "vars": 17230,
+        "e_line": 17231,
+        "d_file": 17233,
+        "df_ea": 17376,
+        "df_end": 17379
+      },
+      "cpu": {
+        "af": "$000A",
+        "bc": "$00FF",
+        "de": "$FFFF",
+        "halt": false,
+        "hl": "$4022",
+        "i": "$0E",
+        "iff1": false,
+        "iff2": false,
+        "im": 1,
+        "ix": "$0000",
+        "iy": "$4000",
+        "pc": "$0198",
+        "r": "$D8",
+        "sp": "$43FC"
+      },
+      "frontier": 17379,
+      "sp": 17404,
+      "observed_gap": 25,
+      "ram_bytes": 1024
+    },
+    {
+      "label": "entry-rejected",
+      "system_hex": "03040000b1438200b043b143b343c543dd4317780000000000008e07000011019e4100382117ffff",
+      "pointers": {
+        "vars": 17328,
+        "e_line": 17329,
+        "d_file": 17331,
+        "df_ea": 17349,
+        "df_end": 17373
+      },
+      "cpu": {
+        "af": "$000A",
+        "bc": "$00FF",
+        "de": "$FFFF",
+        "halt": false,
+        "hl": "$4022",
+        "i": "$0E",
+        "iff1": false,
+        "iff2": false,
+        "im": 1,
+        "ix": "$0000",
+        "iy": "$4000",
+        "pc": "$0198",
+        "r": "$D8",
+        "sp": "$43FC"
+      },
+      "frontier": 17373,
+      "sp": 17404,
+      "observed_gap": 31,
+      "ram_bytes": 1024
+    }
+  ],
+  "status": "entry-rejected",
+  "rejected_line": "130 PRINT \"CHANGED \";T",
+  "screen": {
+    "address": 17331,
+    "hex": "76001d1e1c002c3400383a27001d1d1c1c7676b076767676767676767676767676767676767676767676",
+    "text": "\n 120 GO SUB 1100\n\n?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+  }
+}
