@@ -1,0 +1,13 @@
+{
+  "machine": "sinclair-zx81",
+  "files": {
+    "compact.json": "d0b71d88466d3f25ce2c47f651ad615ebda5515b5de2e43cdc2b1f8c559299e2",
+    "compact-caller.png": "9399c094cdef5c89eb2e196ca909bd5020b1d9f7749da526782d9cbe31f1f030",
+    "compact-bad-write.png": "bc7f89227b7a3fedcc7e6713f22fafaa738d0a43f4507134aabae867686eca4b",
+    "emulator-source-lock.json": "7ffb3bf0f874ba6a30caa5e0fd078c5e8cfb361782a7e18b505e9ce8e3b6f356",
+    "readable-4096.json": "53b2d93f7ae72c60a03c2f50bfcc4c12ff9fcd876739eef5437cb58447c7ba7b",
+    "readable-4096.png": "8b0a231714852a538a66279fc51140a8a786daec181878c84fda62b41f8e8a5c",
+    "readable-2048.json": "a02bc83535e739ecbf13439e581842c36dc55930706d7c0f239c03779d8a6bbf",
+    "readable-2048.png": "f29134c891e8d2b58d3b14923e123a5277ef83853bc795ecc20f44f836955680"
+  }
+}
