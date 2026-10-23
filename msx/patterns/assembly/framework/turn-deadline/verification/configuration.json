@@ -1,0 +1,10 @@
+{
+  "emulator_sha256": "55bb6772d98246a32c4de6ba78a8c3722fdf410a42db23fcdf83582c249d4905",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "firmware_sha256": {
+    "msx.rom": "3b33130d959337be63182c4eae217797774b52322f8eb9e35ab20747412ed417"
+  },
+  "system": "msx",
+  "ram_bytes": 65536,
+  "region": "NTSC default"
+}

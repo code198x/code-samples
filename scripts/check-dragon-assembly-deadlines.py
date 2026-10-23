@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load(system):
-    name = "dragon" if system == "dragon-32" else "ace"
+    name = {"dragon-32": "dragon", "jupiter-ace": "ace", "msx": "msx"}[system]
     spec = importlib.util.spec_from_file_location(
         "native", ROOT / f"scripts/verify-{name}-assembly-deadlines.py"
     )
@@ -41,12 +41,15 @@ def check(system="dragon-32", record=None):
         "Changed producer/firmware identity",
     )
     ace = system == "jupiter-ace"
-    offset = 4 if ace else 16
-    endian = "little" if ace else "big"
+    z80 = system in ("jupiter-ace", "msx")
+    offset = 4 if z80 else 16
+    endian = "little" if z80 else "big"
     for variant, c in r["cases"].items():
         T.require(c["server"]["version"] == "0.44.2", "Wrong actual emulator version")
         T.require(
-            0 < len(c["loaded_bytes"]) < (600 if ace else 512)
+            0
+            < len(c["loaded_bytes"])
+            < (700 if system == "msx" else 600 if ace else 512)
             and hashlib.sha256(bytes(c["loaded_bytes"])).hexdigest()
             == c["loaded_sha256"],
             "Loaded payload mismatch",
@@ -77,7 +80,7 @@ def check(system="dragon-32", record=None):
         for s in states:
             raw = s["raw"]
             T.require(
-                len(raw) == (14 if ace else 28)
+                len(raw) == (14 if z80 else 28)
                 and [
                     raw[0],
                     raw[1],
@@ -146,7 +149,7 @@ def check(system="dragon-32", record=None):
         )
         text = "".join(
             chr(v & 127)
-            if ace
+            if z80
             else chr((v & 63) + 64)
             if (v & 63) < 32
             else chr(v & 63)
@@ -167,7 +170,7 @@ def check(system="dragon-32", record=None):
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
-        "--system", default="dragon-32", choices=("dragon-32", "jupiter-ace")
+        "--system", default="dragon-32", choices=("dragon-32", "jupiter-ace", "msx")
     )
     a = p.parse_args()
     check(a.system)
