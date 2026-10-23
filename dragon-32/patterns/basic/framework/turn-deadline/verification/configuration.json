@@ -1,0 +1,10 @@
+{
+  "system": "dragon-32",
+  "ram_bytes": 32768,
+  "region": "PAL default",
+  "mailbox": 28672,
+  "emulator_sha256": "5390120f0bbe2cb3e448e23ab69c14a6ec5844736a84a6053572f02a2d7c753e",
+  "firmware_sha256": {
+    "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
+  }
+}
