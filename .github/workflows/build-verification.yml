@@ -29,7 +29,7 @@ jobs:
           FAILED=0
           PASSED=0
 
-          for ASM in $(find commodore-64 -name "*.asm" -type f ! -path "*/snippets/*"); do
+          while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
 
@@ -52,7 +52,7 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done
+          done < <(find commodore-64 -name "*.asm" -type f ! -path "*/snippets/*")
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
@@ -63,7 +63,7 @@ jobs:
             for FLAG in "" $FLAGS; do
               OUT=$(mktemp -d)
               echo "Generating: $PREP $FLAG"
-              if ! python3 "$PREP" $FLAG "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
+              if ! python3 "$PREP" ${FLAG:+"$FLAG"} "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
                 echo "  FAILED (prepare.py errored or wrote no .asm)"
                 FAILED=$((FAILED + 1))
                 rm -rf "$OUT"
@@ -120,7 +120,7 @@ jobs:
           FAILED=0
           PASSED=0
 
-          for ASM in $(find sinclair-zx-spectrum -name "*.asm" -type f ! -path "*/snippets/*"); do
+          while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
 
@@ -143,7 +143,7 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done
+          done < <(find sinclair-zx-spectrum -name "*.asm" -type f ! -path "*/snippets/*")
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
@@ -154,7 +154,7 @@ jobs:
             for FLAG in "" $FLAGS; do
               OUT=$(mktemp -d)
               echo "Generating: $PREP $FLAG"
-              if ! python3 "$PREP" $FLAG "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
+              if ! python3 "$PREP" ${FLAG:+"$FLAG"} "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
                 echo "  FAILED (prepare.py errored or wrote no .asm)"
                 FAILED=$((FAILED + 1))
                 rm -rf "$OUT"
@@ -202,7 +202,7 @@ jobs:
           FAILED=0
           PASSED=0
 
-          for ASM in $(find commodore-amiga -name "*.asm" -type f ! -path "*/snippets/*"); do
+          while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
 
@@ -225,7 +225,7 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done
+          done < <(find commodore-amiga -name "*.asm" -type f ! -path "*/snippets/*")
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
@@ -236,7 +236,7 @@ jobs:
             for FLAG in "" $FLAGS; do
               OUT=$(mktemp -d)
               echo "Generating: $PREP $FLAG"
-              if ! python3 "$PREP" $FLAG "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
+              if ! python3 "$PREP" ${FLAG:+"$FLAG"} "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
                 echo "  FAILED (prepare.py errored or wrote no .asm)"
                 FAILED=$((FAILED + 1))
                 rm -rf "$OUT"
@@ -284,7 +284,7 @@ jobs:
           FAILED=0
           PASSED=0
 
-          for ASM in $(find nintendo-entertainment-system -name "*.asm" -type f ! -path "*/snippets/*"); do
+          while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
 
@@ -319,7 +319,7 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done
+          done < <(find nintendo-entertainment-system -name "*.asm" -type f ! -path "*/snippets/*")
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
@@ -334,7 +334,7 @@ jobs:
             for FLAG in "" $FLAGS; do
               OUT=$(mktemp -d)
               echo "Generating: $PREP $FLAG"
-              if ! python3 "$PREP" $FLAG "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
+              if ! python3 "$PREP" ${FLAG:+"$FLAG"} "$OUT" 2>&1 || ! ls "$OUT"/*.asm > /dev/null 2>&1; then
                 echo "  FAILED (prepare.py errored or wrote no .asm)"
                 FAILED=$((FAILED + 1))
                 rm -rf "$OUT"
