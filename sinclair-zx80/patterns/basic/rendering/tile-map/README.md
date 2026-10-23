@@ -1,6 +1,6 @@
 # Checked map queries — ZX80 BASIC
 
-Run with the original ZX80 BASIC ROM and **16 KiB RAM**. This is an expanded-machine example, not a stock 1 KiB claim. No assembly or dependency is required.
+Run the unchanged public caller with the original ROM and **2 KiB RAM** or more. This configuration has now been executed; the earlier exhaustive diagnostics remain qualified at 16 KiB. A separate [stock 1 KiB option](compact/) is available below. No assembly or dependency is required.
 
 ## Include and call
 
@@ -60,3 +60,21 @@ Primary references: [ZX80 original manual, chapters 4/6/14 and appendix II](http
 The automated entry uses conservative per-key gaps and a longer post-line pause for the expanded ZX81 display. It checks each stored ZX81 line number and waits for complete indexed output with a 6000-frame cap. These are transport bounds, not measurements of minimum keyboard latency or game performance.
 
 The retained executable identity is the verified aarch64-apple-darwin release. A different host requires its own verified tool identity and fresh qualification; changing a recorded pass flag is not a requalification.
+
+
+## Measured RAM, rather than the old test setting
+
+The original readable listings are retained unchanged. Entering them through the ROM gives these tokenised storage costs (including line headers):
+
+| Component | Bytes |
+| --- | ---: |
+| Reusable routines | 331 |
+| Explicit room initialiser | 475 |
+| Public caller | 175 |
+| Total program | 981 |
+
+The complete public caller runs on **2 KiB**. Entry of the unchanged listing into **1 KiB** is rejected with BASIC error 4 (out of memory). This is a comparison of exercised configurations, not an exact byte-by-byte minimum or a promise that a larger game will fit.
+
+At the stopped caller, variables occupy 124 bytes and the display file 67 bytes; the 40-byte system area is separate. The stopped caller has an SP-to-display-end gap of **832 bytes** on 2 KiB. Its recorded sample is already at STOP, so it does not measure a range during execution.
+
+These gaps are sampled separation between allocated data and the machine stack, not an instruction-level peak, a free-memory API or a safe game-content budget. Editing, INPUT, nested calls and additional output use workspace too. Read the retained `verification/memory/readable-*.json` pointer and CPU records alongside the separate original exhaustive test records.
