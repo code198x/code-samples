@@ -1,0 +1,823 @@
+{
+  "status": "passed",
+  "machine_id": "amstrad-cpc",
+  "language": "assembly",
+  "startup": "Cold stock firmware; complete generated BASIC loader entered through keyboard, RUN, installed bytes compared",
+  "configuration": "CPC464 PAL, firmware interrupts enabled, 300 Hz KL TIME PLEASE",
+  "cases": {
+    "working": {
+      "duration": 600,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 36832,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37012,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37108,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 180,
+      "enabled": {
+        "remaining": 509,
+        "active": 1,
+        "expired": 0,
+        "clock": 37324,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 461,
+        "active": 1,
+        "expired": 0,
+        "clock": 37372,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 401,
+        "active": 1,
+        "expired": 0,
+        "clock": 38032,
+        "turns": 2,
+        "expiries": 1,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": false,
+      "actions": {
+        "restart": {
+          "remaining": 510,
+          "active": 1,
+          "expired": 0,
+          "clock": 38128,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled": {
+          "remaining": 504,
+          "active": 0,
+          "expired": 0,
+          "clock": 38224,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled_after": {
+          "remaining": 504,
+          "active": 0,
+          "expired": 0,
+          "clock": 39004,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        }
+      },
+      "captures": {
+        "working-untimed.png": "df845aeb3c2a95f62d3fe6c97bcaa3e73031c09b1ad5c5efd98494c3c93077c6",
+        "working-untimed-action.png": "a8fb996cbce9c86f6714de6f2b11cf01a57956b08c7f68a36b20eaa2ed135c56",
+        "working-expiry.png": "7a7cfebff03e078c7d05a7d8b920bd5f3bb99ee71c2d9611679303ae1c964c7a",
+        "working-action.png": "df72823c70ccbab29c9d5c45714a56f0711e0d032d356b4ab6788e355395622a"
+      },
+      "binary_sha256": "23010882b0353537bdc2361191d9ed593e87e8ee6a3d1338d0d443f98a875388",
+      "binary_bytes": 326,
+      "loader_sha256": "b10016a6d47eb78991aa0575f21a73a52a25bdbb76416995d175f01fe4790dc4",
+      "server": {
+        "name": "emu198x-amstrad-cpc",
+        "version": "0.44.1"
+      }
+    },
+    "custom-duration": {
+      "duration": 300,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 36832,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37012,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37108,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 180,
+      "enabled": {
+        "remaining": 209,
+        "active": 1,
+        "expired": 0,
+        "clock": 37324,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 161,
+        "active": 1,
+        "expired": 0,
+        "clock": 37372,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 101,
+        "active": 1,
+        "expired": 0,
+        "clock": 37732,
+        "turns": 2,
+        "expiries": 1,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": false,
+      "actions": {
+        "restart": {
+          "remaining": 209,
+          "active": 1,
+          "expired": 0,
+          "clock": 37828,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled": {
+          "remaining": 203,
+          "active": 0,
+          "expired": 0,
+          "clock": 37924,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled_after": {
+          "remaining": 203,
+          "active": 0,
+          "expired": 0,
+          "clock": 38704,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        }
+      },
+      "captures": {
+        "custom-duration-untimed.png": "df845aeb3c2a95f62d3fe6c97bcaa3e73031c09b1ad5c5efd98494c3c93077c6",
+        "custom-duration-untimed-action.png": "a8fb996cbce9c86f6714de6f2b11cf01a57956b08c7f68a36b20eaa2ed135c56",
+        "custom-duration-expiry.png": "7a7cfebff03e078c7d05a7d8b920bd5f3bb99ee71c2d9611679303ae1c964c7a",
+        "custom-duration-action.png": "df72823c70ccbab29c9d5c45714a56f0711e0d032d356b4ab6788e355395622a"
+      },
+      "binary_sha256": "47adcf19a8cd52ac3216fc7dd31427f935d3651f77d23668624fa3f407ebbd49",
+      "binary_bytes": 326,
+      "loader_sha256": "af46d95567f28ea41c9af3ca60a00f24c6a688ffcdf31fa7ce51d935645f4274",
+      "server": {
+        "name": "emu198x-amstrad-cpc",
+        "version": "0.44.1"
+      }
+    },
+    "wrong-input-gate": {
+      "duration": 600,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37396,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37576,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37672,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 180,
+      "enabled": {
+        "remaining": 510,
+        "active": 1,
+        "expired": 0,
+        "clock": 37888,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 462,
+        "active": 1,
+        "expired": 0,
+        "clock": 37936,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 38596,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": true,
+      "actions": {},
+      "captures": {
+        "wrong-input-gate-untimed.png": "df845aeb3c2a95f62d3fe6c97bcaa3e73031c09b1ad5c5efd98494c3c93077c6",
+        "wrong-input-gate-untimed-action.png": "a8fb996cbce9c86f6714de6f2b11cf01a57956b08c7f68a36b20eaa2ed135c56",
+        "wrong-input-gate-expiry.png": "a8fb996cbce9c86f6714de6f2b11cf01a57956b08c7f68a36b20eaa2ed135c56"
+      },
+      "binary_sha256": "7406e1dc169898079926cff856039a4e5e86356c79e5350f1f8c080eaa53d13d",
+      "binary_bytes": 332,
+      "loader_sha256": "e91cfa8cb74e9ed05a3acc9480403d6d7c89d88cb25a46cc94fcc02c52bd6ba5",
+      "server": {
+        "name": "emu198x-amstrad-cpc",
+        "version": "0.44.1"
+      }
+    },
+    "repaired": {
+      "duration": 600,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 36832,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37012,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37108,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 180,
+      "enabled": {
+        "remaining": 509,
+        "active": 1,
+        "expired": 0,
+        "clock": 37324,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 461,
+        "active": 1,
+        "expired": 0,
+        "clock": 37372,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 401,
+        "active": 1,
+        "expired": 0,
+        "clock": 38032,
+        "turns": 2,
+        "expiries": 1,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": false,
+      "actions": {
+        "restart": {
+          "remaining": 510,
+          "active": 1,
+          "expired": 0,
+          "clock": 38128,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled": {
+          "remaining": 504,
+          "active": 0,
+          "expired": 0,
+          "clock": 38224,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled_after": {
+          "remaining": 504,
+          "active": 0,
+          "expired": 0,
+          "clock": 39004,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        }
+      },
+      "captures": {
+        "repaired-untimed.png": "df845aeb3c2a95f62d3fe6c97bcaa3e73031c09b1ad5c5efd98494c3c93077c6",
+        "repaired-untimed-action.png": "a8fb996cbce9c86f6714de6f2b11cf01a57956b08c7f68a36b20eaa2ed135c56",
+        "repaired-expiry.png": "7a7cfebff03e078c7d05a7d8b920bd5f3bb99ee71c2d9611679303ae1c964c7a",
+        "repaired-action.png": "df72823c70ccbab29c9d5c45714a56f0711e0d032d356b4ab6788e355395622a"
+      },
+      "binary_sha256": "23010882b0353537bdc2361191d9ed593e87e8ee6a3d1338d0d443f98a875388",
+      "binary_bytes": 326,
+      "loader_sha256": "b10016a6d47eb78991aa0575f21a73a52a25bdbb76416995d175f01fe4790dc4",
+      "server": {
+        "name": "emu198x-amstrad-cpc",
+        "version": "0.44.1"
+      }
+    }
+  },
+  "arithmetic": {
+    "startup": "Original synthetic reset ROM; CPU/RAM arithmetic only, no firmware or video claim",
+    "cases": [
+      [
+        100,
+        65530,
+        5
+      ],
+      [
+        100,
+        10,
+        10
+      ],
+      [
+        100,
+        10,
+        109
+      ],
+      [
+        100,
+        10,
+        110
+      ],
+      [
+        100,
+        10,
+        111
+      ],
+      [
+        65535,
+        0,
+        65534
+      ],
+      [
+        65535,
+        0,
+        65535
+      ],
+      [
+        0,
+        7,
+        8
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        2
+      ],
+      [
+        256,
+        65500,
+        200
+      ],
+      [
+        300,
+        65500,
+        200
+      ]
+    ],
+    "observations": {
+      "working": {
+        "bytes": [
+          89,
+          0,
+          1,
+          0,
+          11,
+          0,
+          5,
+          0,
+          165,
+          90,
+          100,
+          0,
+          1,
+          0,
+          0,
+          0,
+          10,
+          0,
+          165,
+          90,
+          1,
+          0,
+          1,
+          0,
+          99,
+          0,
+          109,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          100,
+          0,
+          110,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          101,
+          0,
+          111,
+          0,
+          165,
+          90,
+          1,
+          0,
+          1,
+          0,
+          254,
+          255,
+          254,
+          255,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          255,
+          255,
+          255,
+          255,
+          165,
+          90,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          8,
+          0,
+          165,
+          90,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          2,
+          0,
+          165,
+          90,
+          20,
+          0,
+          1,
+          0,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          64,
+          0,
+          1,
+          0,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          239
+        ],
+        "fixture_sha256": "edd57d09c322932fddb9fe55a0b4c08adb084d177099adce5a0044481e6bed05",
+        "oracle_matches": true
+      },
+      "wrong-zero-boundary": {
+        "bytes": [
+          0,
+          0,
+          0,
+          1,
+          11,
+          0,
+          5,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          10,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          99,
+          0,
+          109,
+          0,
+          165,
+          90,
+          0,
+          0,
+          1,
+          0,
+          100,
+          0,
+          110,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          101,
+          0,
+          111,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          254,
+          255,
+          254,
+          255,
+          165,
+          90,
+          0,
+          0,
+          1,
+          0,
+          255,
+          255,
+          255,
+          255,
+          165,
+          90,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          8,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          2,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          239
+        ],
+        "fixture_sha256": "3c6f1535d66e8f19f1e61e5a88f2d23f3fa43ccfac17805bc7773ae30e3994cc",
+        "oracle_matches": false
+      }
+    }
+  },
+  "sources": {
+    "amstrad-cpc/patterns/assembly/framework/turn-deadline/demo.asm": "31cbdbbe7e272785d50c5e9d66c924d78f55d2df1d2ec279196a0293aaf65035",
+    "amstrad-cpc/patterns/assembly/framework/turn-deadline/settings.inc": "055035686aee2ad53ca9849907a70efae4fd567ed06fc25682959bf229909e65",
+    "amstrad-cpc/patterns/assembly/framework/turn-deadline/dispatch.inc": "56845dd6ade9ff4e96383739a2e652db7630be14bc144278533e881c29396601",
+    "amstrad-cpc/patterns/assembly/framework/turn-deadline/loader.py": "f53bfbd87991abab00f92efbbb1587b08064efb3f6e8b71b056d7cc3d4ee77fe",
+    "amstrad-cpc/patterns/assembly/framework/turn-deadline/Makefile": "a44f1ebbde089bf5d37f1ca3fbf34061937f8a8dd08662ea57b5de407a1ae521",
+    "amstrad-cpc/patterns/assembly/framework/turn-deadline/mistakes/input-gated-expiry.inc": "22af3719d8913b4aef42da69939bb4a45047977c90e9e4096ff9b3aff33f0adf",
+    "cross-platform/patterns/framework/elapsed-deadline/z80.inc": "b3e1c807e562d29ebb1b68f9086ce46604fe9f72ab6038c8838bad16f5b28227"
+  },
+  "observers": {
+    "scripts/verify-firmware-deadlines.py": "434965283e2f00e40dceb0002f73568810a5620425af0829b76dd4bbc8110a6c",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "95b8aa26a9a08c466e1d307fede6c273ed9bdef7796890a5e70fcad891c24948",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "firmware_sha256": {
+    "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e"
+  },
+  "limits": "Named emulator configurations; reset arithmetic fixtures are separate from stock firmware callers. Atom counts observed sync edges and loses missed flybacks; CPC uses low 16 firmware ticks and must be serviced within 65536 ticks. No original hardware or full game budget."
+}
