@@ -19,6 +19,9 @@ jobs:
     container:
       image: ghcr.io/code198x/commodore-64:latest
       options: --entrypoint /bin/bash
+    defaults:
+      run:
+        shell: sh
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -29,6 +32,8 @@ jobs:
           FAILED=0
           PASSED=0
 
+          ASM_LIST=$(mktemp)
+          find commodore-64 -name "*.asm" -type f ! -path "*/snippets/*" > "$ASM_LIST"
           while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
@@ -52,7 +57,8 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done < <(find commodore-64 -name "*.asm" -type f ! -path "*/snippets/*")
+          done < "$ASM_LIST"
+          rm -f "$ASM_LIST"
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
@@ -106,6 +112,9 @@ jobs:
     container:
       image: ghcr.io/code198x/sinclair-zx-spectrum:latest
       options: --entrypoint /bin/bash
+    defaults:
+      run:
+        shell: sh
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -120,6 +129,8 @@ jobs:
           FAILED=0
           PASSED=0
 
+          ASM_LIST=$(mktemp)
+          find sinclair-zx-spectrum -name "*.asm" -type f ! -path "*/snippets/*" > "$ASM_LIST"
           while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
@@ -143,7 +154,8 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done < <(find sinclair-zx-spectrum -name "*.asm" -type f ! -path "*/snippets/*")
+          done < "$ASM_LIST"
+          rm -f "$ASM_LIST"
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
@@ -192,6 +204,9 @@ jobs:
     container:
       image: ghcr.io/code198x/commodore-amiga:latest
       options: --entrypoint /bin/bash
+    defaults:
+      run:
+        shell: sh
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -202,6 +217,8 @@ jobs:
           FAILED=0
           PASSED=0
 
+          ASM_LIST=$(mktemp)
+          find commodore-amiga -name "*.asm" -type f ! -path "*/snippets/*" > "$ASM_LIST"
           while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
@@ -225,7 +242,8 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done < <(find commodore-amiga -name "*.asm" -type f ! -path "*/snippets/*")
+          done < "$ASM_LIST"
+          rm -f "$ASM_LIST"
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
@@ -274,6 +292,9 @@ jobs:
     container:
       image: ghcr.io/code198x/nintendo-nes:latest
       options: --entrypoint /bin/bash
+    defaults:
+      run:
+        shell: sh
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -284,6 +305,8 @@ jobs:
           FAILED=0
           PASSED=0
 
+          ASM_LIST=$(mktemp)
+          find nintendo-entertainment-system -name "*.asm" -type f ! -path "*/snippets/*" > "$ASM_LIST"
           while IFS= read -r ASM; do
             DIR=$(dirname "$ASM")
             BASENAME=$(basename "$ASM" .asm)
@@ -319,7 +342,8 @@ jobs:
               FAILED=$((FAILED + 1))
             fi
             cd - > /dev/null
-          done < <(find nintendo-entertainment-system -name "*.asm" -type f ! -path "*/snippets/*")
+          done < "$ASM_LIST"
+          rm -f "$ASM_LIST"
 
           # Assemble what each prepare.py generates from its fragments: once
           # with no options, then once per flag its --help lists (e.g. --spaced).
