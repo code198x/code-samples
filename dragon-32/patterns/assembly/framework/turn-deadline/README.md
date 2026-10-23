@@ -6,7 +6,7 @@ The screen shows three hexadecimal bytes: turn, expiry count and enabled flag. P
 
 `make -C dragon-32/patterns/assembly/framework/turn-deadline ASM=/path/to/asm198x` builds the binary. To create the keyboard loader and reproduce the runs, use `python3 scripts/verify-dragon-assembly-deadlines.py --tools /path/to/released/tools --firmware /path/to/roms --assembler /path/to/asm198x`. This needs your own stock Dragon 32 firmware; no ROM is supplied.
 
-For manual entry, enter the generated `build/working/load.bas` one line at a time after a fresh firmware boot. Its CLEAR reserves RAM above $6FFF; READ/POKE loads the actual assembled bytes at $7000, then CLS:EXEC &H7000 launches them. This proves the keyboard/POKE/EXEC route, not cassette loading. Loader variables I/A and numbered lines are temporary and must not collide with an existing program.
+For manual entry, make generates `build/load.bas` from the actual emitted bytes; enter it one line at a time after a fresh firmware boot. The verifier also keeps a loader for each variant under build/working and its sibling folders. Its CLEAR reserves RAM above $6FFF; READ/POKE loads the actual assembled bytes at $7000, then CLS:EXEC &H7000 launches them. This proves the keyboard/POKE/EXEC route, not cassette loading. Loader variables I/A and numbered lines are temporary and must not collide with an existing program.
 
 The normal payload occupies $7000–$70F5 (246 bytes). Caller state occupies $7200–$7202: turn, expiries and delivered key. The deadline context owns $7210–$721B (12 bytes). The separate native fixture also borrows $7203 for its loop count and $7300–$7350 for results. Reserve these locations against BASIC, other machine code and graphics buffers. The helper itself accepts X=context, so other projects may allocate that context elsewhere. The caller's fixed labels and loader/reservation must be changed together when relocating it.
 
@@ -34,7 +34,7 @@ The caller asks INCH at $8006 for a delivered character; A=0 means none. It does
 
 The helper knows no turns or keys. dispatch.inc makes expiry win over a simultaneously delivered command, including Q/T. Otherwise 1 advances once and restarts only an active timer; an untimed action stays untimed. T discards remaining time when disabling and starts a full duration when enabling. These are choices, not hardware rules. Replace the bounded turn increment with your own world update.
 
-The status drawing writes only $0400–$0401, $0403–$0404 and $0406–$0407 in normal text mode. It uses A/X/Y/U/flags through its caller. Digits are deliberately inverse text cells. The caller clears text once before entry; it neither restores the screen nor supports PMODE graphics. There is no sound driver or frame wait here.
+The status drawing writes only $0400–$0401, $0403–$0404 and $0406–$0407 in normal text mode. It uses A/Y/U/flags; X is preserved. Digits are deliberately inverse text cells. The caller clears text once before entry; it neither restores the screen nor supports PMODE graphics. There is no sound driver or frame wait here.
 
 ## Customise and diagnose
 

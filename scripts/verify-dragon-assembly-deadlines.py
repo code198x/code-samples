@@ -37,6 +37,7 @@ def source_paths():
             "mistakes/reset-baseline.asm",
             "mistakes/reset-baseline.inc",
             "Makefile",
+            "loader.py",
         )
     ] + [
         Path(__file__),
@@ -169,16 +170,10 @@ def build(assembler, variant):
     )
     data = (out / "demo.bin").read_bytes()
     T.require(0 < len(data) < 512, "Payload overlaps caller state")
-    lines = [
-        "CLEAR 200,&H6FFF",
-        f"10 FOR I=0 TO {len(data) - 1}:READ A:POKE &H7000+I,A:NEXT",
-        "20 END",
-    ]
-    lines += [
-        f"{100 + i} DATA " + ",".join(map(str, data[i : i + 16]))
-        for i in range(0, len(data), 16)
-    ]
-    lines += ["RUN", "CLS:EXEC &H7000"]
+    spec = importlib.util.spec_from_file_location("loader", F / "loader.py")
+    loader = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loader)
+    lines = loader.listing(data)
     (out / "load.bas").write_text("\n".join(lines) + "\n")
     return out, data, lines
 

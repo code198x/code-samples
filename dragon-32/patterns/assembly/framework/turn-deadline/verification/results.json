@@ -9734,8 +9734,9 @@
     "dragon-32/patterns/assembly/framework/turn-deadline/dispatch.inc": "1a1e7855c57f815d620088f9588616a9dafdb0b2b5060d01d6b66cf75f328190",
     "dragon-32/patterns/assembly/framework/turn-deadline/mistakes/reset-baseline.asm": "ea023aa7281212534311817aae9e101a67c17c08d9e0007fb1a132c30af1fcc1",
     "dragon-32/patterns/assembly/framework/turn-deadline/mistakes/reset-baseline.inc": "c75da785b9d35aee0b678bf7253190d40025af3c5c40e769dc87401d6c5d1f9d",
-    "dragon-32/patterns/assembly/framework/turn-deadline/Makefile": "3970954d87dadf12ce46139bae349e2884a46769e462f16a63c92abf15cb9459",
-    "scripts/verify-dragon-assembly-deadlines.py": "abca7d4f4fcc1dd1e2566af73aae195c08fc35b01b1a85b66e9a3f08b7d5ef57",
+    "dragon-32/patterns/assembly/framework/turn-deadline/Makefile": "7d08593609a5fd101a2f9be084415a7525510e1e4d45181bee507aa62300c45a",
+    "dragon-32/patterns/assembly/framework/turn-deadline/loader.py": "936780775a79388c46f9741d4cad364c8ee7eb3bf9689213adc4b4d02f969221",
+    "scripts/verify-dragon-assembly-deadlines.py": "aa03015dcff28fb20006cb31f78b89e972b4d3b8089e803f6904e295c215c5f9",
     "scripts/verify-dragon-basic-deadlines.py": "6c03ba4091410f9a50d7e93113558d91426fb87b0b2444d71a745d64d5887afb",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
