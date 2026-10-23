@@ -155,7 +155,8 @@ def check(system="dragon-32", record=None):
         import re
 
         T.require(
-            re.search(r"RETURNED\s*5", text), "No interpreter arithmetic after return"
+            re.search(r"RETURNED\s*5", text, re.IGNORECASE),
+            "No interpreter arithmetic after return",
         )
     T.require(
         r["cases"]["working"]["loaded_bytes"] == r["cases"]["repaired"]["loaded_bytes"],

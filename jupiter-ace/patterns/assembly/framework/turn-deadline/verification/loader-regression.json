@@ -1,0 +1,54 @@
+{
+  "injection": {
+    "kind": "type_string",
+    "chars_typed": 53,
+    "reached": 57173376
+  },
+  "early": [
+    245,
+    197,
+    213,
+    229,
+    175,
+    50,
+    0,
+    0
+  ],
+  "early_pointers": [
+    6,
+    61,
+    88,
+    60,
+    24,
+    61
+  ],
+  "completed": [
+    245,
+    197,
+    213,
+    229,
+    175,
+    50,
+    81,
+    62
+  ],
+  "completed_pointers": [
+    8,
+    61,
+    88,
+    60,
+    20,
+    61
+  ],
+  "waited_frames": 3,
+  "server": {
+    "name": "emu198x-jupiter-ace",
+    "version": "0.44.2"
+  },
+  "executable_sha256": "19499b81e2f1de3cd74a9514813f7c6ed272e3ef8021aa49ee35dc65a3b9f9c3",
+  "firmware_sha256": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d",
+  "sources": {
+    "scripts/verify-ace-loader.py": "b09ad862d94110f6340ab8a943d8036d3b6e428e5512e60cd89c2aad441304d2",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  }
+}
