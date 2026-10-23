@@ -1,0 +1,10 @@
+{
+  "emulator_sha256": "19499b81e2f1de3cd74a9514813f7c6ed272e3ef8021aa49ee35dc65a3b9f9c3",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "firmware_sha256": {
+    "ace.rom": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d"
+  },
+  "system": "jupiter-ace",
+  "ram_top": 16384,
+  "region": "stock 50 Hz"
+}
