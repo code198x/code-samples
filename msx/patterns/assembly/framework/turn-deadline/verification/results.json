@@ -1256,7 +1256,7 @@
         },
         {
           "stage": "disabled",
-          "frames": 750,
+          "frames": 752,
           "raw": [
             3,
             1,
@@ -1270,18 +1270,18 @@
             0,
             0,
             0,
-            238,
+            240,
             36
           ],
           "turn": 3,
           "expiries": 1,
           "active": 0,
           "remaining": 0,
-          "clock": 9454
+          "clock": 9456
         },
         {
           "stage": "disabled-idle",
-          "frames": 1000,
+          "frames": 1002,
           "raw": [
             3,
             1,
@@ -1295,14 +1295,14 @@
             0,
             0,
             0,
-            232,
+            234,
             37
           ],
           "turn": 3,
           "expiries": 1,
           "active": 0,
           "remaining": 0,
-          "clock": 9704
+          "clock": 9706
         }
       ],
       "return_screen": [
@@ -2637,7 +2637,7 @@
         "version": "0.44.2"
       },
       "image": "working.png",
-      "image_sha256": "96ca358d053c875cd7ad43aa5339135e99625051033a8dbea067df7870b0a751"
+      "image_sha256": "03b0f27e533d719a18d2791f5ae48a49839f99df6e19571717c578d9d574562f"
     },
     "custom": {
       "samples": [
@@ -3293,7 +3293,7 @@
         },
         {
           "stage": "disabled",
-          "frames": 630,
+          "frames": 632,
           "raw": [
             3,
             1,
@@ -3307,18 +3307,18 @@
             0,
             0,
             0,
-            118,
+            120,
             36
           ],
           "turn": 3,
           "expiries": 1,
           "active": 0,
           "remaining": 0,
-          "clock": 9334
+          "clock": 9336
         },
         {
           "stage": "disabled-idle",
-          "frames": 880,
+          "frames": 882,
           "raw": [
             3,
             1,
@@ -3332,14 +3332,14 @@
             0,
             0,
             0,
-            112,
+            114,
             37
           ],
           "turn": 3,
           "expiries": 1,
           "active": 0,
           "remaining": 0,
-          "clock": 9584
+          "clock": 9586
         }
       ],
       "return_screen": [
@@ -4674,7 +4674,7 @@
         "version": "0.44.2"
       },
       "image": "custom.png",
-      "image_sha256": "96ca358d053c875cd7ad43aa5339135e99625051033a8dbea067df7870b0a751"
+      "image_sha256": "03b0f27e533d719a18d2791f5ae48a49839f99df6e19571717c578d9d574562f"
     },
     "wrong": {
       "samples": [
@@ -4830,7 +4830,7 @@
         },
         {
           "stage": "disabled",
-          "frames": 810,
+          "frames": 812,
           "raw": [
             1,
             0,
@@ -4844,18 +4844,18 @@
             0,
             0,
             0,
-            98,
+            100,
             37
           ],
           "turn": 1,
           "expiries": 0,
           "active": 0,
           "remaining": 0,
-          "clock": 9570
+          "clock": 9572
         },
         {
           "stage": "disabled-idle",
-          "frames": 1060,
+          "frames": 1062,
           "raw": [
             1,
             0,
@@ -4869,14 +4869,14 @@
             0,
             0,
             0,
-            92,
+            94,
             38
           ],
           "turn": 1,
           "expiries": 0,
           "active": 0,
           "remaining": 0,
-          "clock": 9820
+          "clock": 9822
         }
       ],
       "return_screen": [
@@ -7470,7 +7470,7 @@
         },
         {
           "stage": "disabled",
-          "frames": 750,
+          "frames": 752,
           "raw": [
             3,
             1,
@@ -7484,18 +7484,18 @@
             0,
             0,
             0,
-            238,
+            240,
             36
           ],
           "turn": 3,
           "expiries": 1,
           "active": 0,
           "remaining": 0,
-          "clock": 9454
+          "clock": 9456
         },
         {
           "stage": "disabled-idle",
-          "frames": 1000,
+          "frames": 1002,
           "raw": [
             3,
             1,
@@ -7509,14 +7509,14 @@
             0,
             0,
             0,
-            232,
+            234,
             37
           ],
           "turn": 3,
           "expiries": 1,
           "active": 0,
           "remaining": 0,
-          "clock": 9704
+          "clock": 9706
         }
       ],
       "return_screen": [
@@ -8851,7 +8851,7 @@
         "version": "0.44.2"
       },
       "image": "repaired.png",
-      "image_sha256": "96ca358d053c875cd7ad43aa5339135e99625051033a8dbea067df7870b0a751"
+      "image_sha256": "03b0f27e533d719a18d2791f5ae48a49839f99df6e19571717c578d9d574562f"
     },
     "boundaries": {
       "bytes": [
@@ -10142,7 +10142,7 @@
     "msx/patterns/assembly/framework/turn-deadline/Makefile": "69e5dd34eb048c9865a020af4d4edc0d1d396d53249a01d6628738b02894c7a7",
     "msx/patterns/assembly/framework/turn-deadline/loader.py": "e11a0c3b640213d631e95015468fdf7343321e357483d4724fb39087aa82a1a8",
     "cross-platform/patterns/framework/elapsed-deadline/z80.inc": "b3e1c807e562d29ebb1b68f9086ce46604fe9f72ab6038c8838bad16f5b28227",
-    "scripts/verify-msx-assembly-deadlines.py": "d72a5701c03904d204b1b7de73ef986790245cb6485b1e5bc71cd9c8702ac07c",
+    "scripts/verify-msx-assembly-deadlines.py": "074b4c90733108a5a4eb5a18045b0c02b72e4f32b43ef32516e83729f759679c",
     "scripts/verify-dragon-basic-deadlines.py": "6c03ba4091410f9a50d7e93113558d91426fb87b0b2444d71a745d64d5887afb",
     "scripts/verify-basic-deadlines.py": "fc684b89a2098d8c76e4604c7e32e44b7386eff41d0d52c12d3007d0e4f4b4dd",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"

@@ -340,6 +340,7 @@ def run(args, variant):
                     expired["turn"] == 3 and expired["expiries"] == 1,
                     "Automatic turn failed",
                 )
+            advance(2)
             m.call("save_screenshot", path=str(F / "verification" / (variant + ".png")))
             key("t")
             disabled = observe("disabled")
