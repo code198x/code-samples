@@ -1,0 +1,15 @@
+{
+  "system": "amstrad-cpc",
+  "language": "basic",
+  "model": "CPC464",
+  "ram_bytes": 65536,
+  "region": "PAL",
+  "display": "MODE 1",
+  "emulator_release": "0.44.1",
+  "emulator_sha256": "95b8aa26a9a08c466e1d307fede6c273ed9bdef7796890a5e70fcad891c24948",
+  "archive_sha256": "1a32dbf3cb8769bea2304c8bbde84c3d9f522e2c1f770266b6b2eb0542050887",
+  "firmware_sha256": {
+    "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e"
+  },
+  "limits": "Typed stock firmware, native clocks and input; no debugger state injection, original-hardware, minimum-RAM or whole-game performance claim."
+}
