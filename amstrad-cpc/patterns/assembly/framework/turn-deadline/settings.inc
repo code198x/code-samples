@@ -1,0 +1,3 @@
+DEADLINE equ $8fe0
+STATE equ $8fc0
+DURATION equ 600

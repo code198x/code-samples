@@ -1,0 +1,951 @@
+{
+  "status": "passed",
+  "machine_id": "acorn-atom",
+  "language": "assembly",
+  "startup": "Cold stock firmware; complete generated BASIC loader entered through keyboard, RUN, installed bytes compared",
+  "configuration": "Atom full 32 KiB, PAL field sync",
+  "cases": {
+    "working": {
+      "duration": 100,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 23,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 53,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 67,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 30,
+      "enabled": {
+        "remaining": 84,
+        "active": 1,
+        "expired": 0,
+        "clock": 103,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 76,
+        "active": 1,
+        "expired": 0,
+        "clock": 111,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 67,
+        "active": 1,
+        "expired": 0,
+        "clock": 220,
+        "turns": 2,
+        "expiries": 1,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": false,
+      "actions": {
+        "restart": {
+          "remaining": 85,
+          "active": 1,
+          "expired": 0,
+          "clock": 235,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled": {
+          "remaining": 85,
+          "active": 0,
+          "expired": 0,
+          "clock": 266,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled_after": {
+          "remaining": 85,
+          "active": 0,
+          "expired": 0,
+          "clock": 396,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        }
+      },
+      "captures": {
+        "working-untimed.png": "2dc6b4a1c30016ddd3896044ea54db2d5544346a4cd60aeba6c9c3b66d165322",
+        "working-untimed-action.png": "765d5b7d9f60253e349881ab40c1a6d339a7f04116c868efa5ddcdb3c0b6c3c6",
+        "working-expiry.png": "f07c8db7af8f1528af103b9ad8c478911c04277097b696acee7ea69236526863",
+        "working-action.png": "22161a0fc666e480e0b2b024ad8f578d8a351ffe23c28d7b029f80093e5eebab"
+      },
+      "binary_sha256": "c56241fbd56e9c065d2026e45f23af8d022e8582de4bd1b6f2600c5bc214b8e1",
+      "binary_bytes": 479,
+      "loader_sha256": "d0a26b86bc1bd7120259b689b2635d8778331622bdeec50bde8a2a142befb088",
+      "server": {
+        "name": "emu198x-acorn-atom",
+        "version": "0.44.1"
+      }
+    },
+    "custom-duration": {
+      "duration": 50,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 23,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 53,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 68,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 30,
+      "enabled": {
+        "remaining": 34,
+        "active": 1,
+        "expired": 0,
+        "clock": 104,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 26,
+        "active": 1,
+        "expired": 0,
+        "clock": 112,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 17,
+        "active": 1,
+        "expired": 0,
+        "clock": 171,
+        "turns": 2,
+        "expiries": 1,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": false,
+      "actions": {
+        "restart": {
+          "remaining": 36,
+          "active": 1,
+          "expired": 0,
+          "clock": 185,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled": {
+          "remaining": 35,
+          "active": 0,
+          "expired": 0,
+          "clock": 216,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled_after": {
+          "remaining": 35,
+          "active": 0,
+          "expired": 0,
+          "clock": 346,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        }
+      },
+      "captures": {
+        "custom-duration-untimed.png": "2dc6b4a1c30016ddd3896044ea54db2d5544346a4cd60aeba6c9c3b66d165322",
+        "custom-duration-untimed-action.png": "765d5b7d9f60253e349881ab40c1a6d339a7f04116c868efa5ddcdb3c0b6c3c6",
+        "custom-duration-expiry.png": "f07c8db7af8f1528af103b9ad8c478911c04277097b696acee7ea69236526863",
+        "custom-duration-action.png": "22161a0fc666e480e0b2b024ad8f578d8a351ffe23c28d7b029f80093e5eebab"
+      },
+      "binary_sha256": "4c0c16383c32e31cad8dbb6e7b4166924fe528b683dbf884ff1b44599e3b4b11",
+      "binary_bytes": 479,
+      "loader_sha256": "00c8d2c1b0ac96d3f5a71736bd73488f313bc71fd7362aab32780b00b1eade24",
+      "server": {
+        "name": "emu198x-acorn-atom",
+        "version": "0.44.1"
+      }
+    },
+    "wrong-input-gate": {
+      "duration": 100,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 23,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 53,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 68,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 30,
+      "enabled": {
+        "remaining": 84,
+        "active": 1,
+        "expired": 0,
+        "clock": 104,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 76,
+        "active": 1,
+        "expired": 0,
+        "clock": 112,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 222,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": true,
+      "actions": {},
+      "captures": {
+        "wrong-input-gate-untimed.png": "2dc6b4a1c30016ddd3896044ea54db2d5544346a4cd60aeba6c9c3b66d165322",
+        "wrong-input-gate-untimed-action.png": "765d5b7d9f60253e349881ab40c1a6d339a7f04116c868efa5ddcdb3c0b6c3c6",
+        "wrong-input-gate-expiry.png": "765d5b7d9f60253e349881ab40c1a6d339a7f04116c868efa5ddcdb3c0b6c3c6"
+      },
+      "binary_sha256": "a055c6c2dc224530a06babd5d215607730be32e219de98913d0f5664c04e6bf0",
+      "binary_bytes": 486,
+      "loader_sha256": "0d79838fbd32dc11e804d9bdcd2315ed1312495fff7b7710fe6f7910806e53b0",
+      "server": {
+        "name": "emu198x-acorn-atom",
+        "version": "0.44.1"
+      }
+    },
+    "repaired": {
+      "duration": 100,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 23,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 53,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 67,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 30,
+      "enabled": {
+        "remaining": 84,
+        "active": 1,
+        "expired": 0,
+        "clock": 103,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 76,
+        "active": 1,
+        "expired": 0,
+        "clock": 111,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 67,
+        "active": 1,
+        "expired": 0,
+        "clock": 220,
+        "turns": 2,
+        "expiries": 1,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": false,
+      "actions": {
+        "restart": {
+          "remaining": 85,
+          "active": 1,
+          "expired": 0,
+          "clock": 235,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled": {
+          "remaining": 85,
+          "active": 0,
+          "expired": 0,
+          "clock": 266,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled_after": {
+          "remaining": 85,
+          "active": 0,
+          "expired": 0,
+          "clock": 396,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        }
+      },
+      "captures": {
+        "repaired-untimed.png": "2dc6b4a1c30016ddd3896044ea54db2d5544346a4cd60aeba6c9c3b66d165322",
+        "repaired-untimed-action.png": "765d5b7d9f60253e349881ab40c1a6d339a7f04116c868efa5ddcdb3c0b6c3c6",
+        "repaired-expiry.png": "f07c8db7af8f1528af103b9ad8c478911c04277097b696acee7ea69236526863",
+        "repaired-action.png": "22161a0fc666e480e0b2b024ad8f578d8a351ffe23c28d7b029f80093e5eebab"
+      },
+      "binary_sha256": "c56241fbd56e9c065d2026e45f23af8d022e8582de4bd1b6f2600c5bc214b8e1",
+      "binary_bytes": 479,
+      "loader_sha256": "d0a26b86bc1bd7120259b689b2635d8778331622bdeec50bde8a2a142befb088",
+      "server": {
+        "name": "emu198x-acorn-atom",
+        "version": "0.44.1"
+      }
+    },
+    "clock-wrap": {
+      "duration": 100,
+      "idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 7,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "after_idle": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 37,
+        "turns": 0,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "untimed_action": {
+        "remaining": 0,
+        "active": 0,
+        "expired": 0,
+        "clock": 52,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "ticks_in_30_frames": 30,
+      "enabled": {
+        "remaining": 84,
+        "active": 1,
+        "expired": 0,
+        "clock": 88,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "running": {
+        "remaining": 76,
+        "active": 1,
+        "expired": 0,
+        "clock": 96,
+        "turns": 1,
+        "expiries": 0,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "expiry": {
+        "remaining": 67,
+        "active": 1,
+        "expired": 0,
+        "clock": 205,
+        "turns": 2,
+        "expiries": 1,
+        "guards": [
+          165,
+          90
+        ]
+      },
+      "fault_rejected": false,
+      "actions": {
+        "restart": {
+          "remaining": 85,
+          "active": 1,
+          "expired": 0,
+          "clock": 220,
+          "turns": 3,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled": {
+          "remaining": 85,
+          "active": 0,
+          "expired": 0,
+          "clock": 251,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        },
+        "disabled_after": {
+          "remaining": 85,
+          "active": 0,
+          "expired": 0,
+          "clock": 381,
+          "turns": 4,
+          "expiries": 1,
+          "guards": [
+            165,
+            90
+          ]
+        }
+      },
+      "captures": {
+        "clock-wrap-untimed.png": "2dc6b4a1c30016ddd3896044ea54db2d5544346a4cd60aeba6c9c3b66d165322",
+        "clock-wrap-untimed-action.png": "765d5b7d9f60253e349881ab40c1a6d339a7f04116c868efa5ddcdb3c0b6c3c6",
+        "clock-wrap-expiry.png": "f07c8db7af8f1528af103b9ad8c478911c04277097b696acee7ea69236526863",
+        "clock-wrap-action.png": "22161a0fc666e480e0b2b024ad8f578d8a351ffe23c28d7b029f80093e5eebab"
+      },
+      "binary_sha256": "4c22b119669aa56157241943a41336a66304eb8d372c312e536b65e4d21e1039",
+      "binary_bytes": 479,
+      "loader_sha256": "7dfbadb3001617a189456ede84d7a61f52cd286cdadecdf382578333d1cf8b4c",
+      "server": {
+        "name": "emu198x-acorn-atom",
+        "version": "0.44.1"
+      }
+    }
+  },
+  "arithmetic": {
+    "startup": "Original synthetic reset ROM; CPU/RAM arithmetic only, no firmware or video claim",
+    "cases": [
+      [
+        100,
+        65530,
+        5
+      ],
+      [
+        100,
+        10,
+        10
+      ],
+      [
+        100,
+        10,
+        109
+      ],
+      [
+        100,
+        10,
+        110
+      ],
+      [
+        100,
+        10,
+        111
+      ],
+      [
+        65535,
+        0,
+        65534
+      ],
+      [
+        65535,
+        0,
+        65535
+      ],
+      [
+        0,
+        7,
+        8
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        2
+      ],
+      [
+        256,
+        65500,
+        200
+      ],
+      [
+        300,
+        65500,
+        200
+      ]
+    ],
+    "observations": {
+      "working": {
+        "bytes": [
+          89,
+          0,
+          1,
+          0,
+          11,
+          0,
+          5,
+          0,
+          165,
+          90,
+          100,
+          0,
+          1,
+          0,
+          0,
+          0,
+          10,
+          0,
+          165,
+          90,
+          1,
+          0,
+          1,
+          0,
+          99,
+          0,
+          109,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          100,
+          0,
+          110,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          101,
+          0,
+          111,
+          0,
+          165,
+          90,
+          1,
+          0,
+          1,
+          0,
+          254,
+          255,
+          254,
+          255,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          255,
+          255,
+          255,
+          255,
+          165,
+          90,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          8,
+          0,
+          165,
+          90,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          2,
+          0,
+          165,
+          90,
+          20,
+          0,
+          1,
+          0,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          64,
+          0,
+          1,
+          0,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          239
+        ],
+        "fixture_sha256": "bf8010c3208aedec5c747ee59c8824e1e61dbccce1ae813b2b537a6c2dd3dd59",
+        "oracle_matches": true
+      },
+      "wrong-zero-boundary": {
+        "bytes": [
+          0,
+          0,
+          0,
+          1,
+          11,
+          0,
+          5,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          10,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          99,
+          0,
+          109,
+          0,
+          165,
+          90,
+          0,
+          0,
+          1,
+          0,
+          100,
+          0,
+          110,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          101,
+          0,
+          111,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          254,
+          255,
+          254,
+          255,
+          165,
+          90,
+          0,
+          0,
+          1,
+          0,
+          255,
+          255,
+          255,
+          255,
+          165,
+          90,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          8,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          2,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          0,
+          0,
+          0,
+          1,
+          236,
+          0,
+          200,
+          0,
+          165,
+          90,
+          239
+        ],
+        "fixture_sha256": "8abaf03179c032713aa3ca2fed47679dc70696aeb0c529de869b7bc03b4475a7",
+        "oracle_matches": false
+      }
+    }
+  },
+  "sources": {
+    "acorn-atom/patterns/assembly/framework/turn-deadline/demo.asm": "749518660ba0e125db8867b996437d2da41e822fd731c044fd767bc4138b38f0",
+    "acorn-atom/patterns/assembly/framework/turn-deadline/settings.inc": "df5e6730c9edfbb91ea3bb5504679ea05c6650540ee6221d7517b26f157860e4",
+    "acorn-atom/patterns/assembly/framework/turn-deadline/dispatch.inc": "2f17869acb01e69382694795c0d9da9be466ae347efb366e3e4aa4e73d4d9821",
+    "acorn-atom/patterns/assembly/framework/turn-deadline/loader.py": "f9c1fed76d559625f11b3328a4d144ae0926a5143ba519ba9fbc1b21b46a1cc6",
+    "acorn-atom/patterns/assembly/framework/turn-deadline/Makefile": "71c1567e25fe2ed2b74c6884d77519630e92effdbc21c1c74d0e66f7ea212a40",
+    "acorn-atom/patterns/assembly/framework/turn-deadline/mistakes/input-gated-expiry.inc": "cb4165ee35ce4f17ce84b9001033a05970bac5f61fcaa05e82a92c5d39de77ba",
+    "cross-platform/patterns/framework/elapsed-deadline/6502.inc": "d2fc25554bfc95904af8186240b64c660e891a159e98c9e29efa8a858bce06f6"
+  },
+  "observers": {
+    "scripts/verify-firmware-deadlines.py": "434965283e2f00e40dceb0002f73568810a5620425af0829b76dd4bbc8110a6c",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "e003ee487cfe480b2ccfafb34c87cf46cb87a2e612f627e33eb253f3975e2163",
+  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "firmware_sha256": {
+    "atom.rom": "c3810e3c70b035ba16ce40a6786723a548b89f2547eacc45c63a01c0337a1d47"
+  },
+  "limits": "Named emulator configurations; reset arithmetic fixtures are separate from stock firmware callers. Atom counts observed sync edges and loses missed flybacks; CPC uses low 16 firmware ticks and must be serviced within 65536 ticks. No original hardware or full game budget."
+}
