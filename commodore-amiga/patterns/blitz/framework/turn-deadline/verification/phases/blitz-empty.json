@@ -1,0 +1,66 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-edit.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 110
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "left",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 60
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-empty.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-empty.state"
+  }
+]

@@ -1,0 +1,12 @@
+; Own the Blitz type-5 handler set for this adapter's lifetime.
+.PL_clock_init
+PL_ticks.l=0
+SetInt 5
+  PL_ticks.l=PL_ticks.l+1
+  If PL_ticks.l=65536 Then PL_ticks.l=0
+End SetInt
+Return
+.PL_dl_service
+PL_dl_now.l=PL_ticks.l
+Gosub PL_dl_poll
+Return

@@ -1,0 +1,25 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-empty.state"
+  },
+  {
+    "action": "query_exec_tasks"
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/blitz-settled.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/blitz-settled.state"
+  }
+]

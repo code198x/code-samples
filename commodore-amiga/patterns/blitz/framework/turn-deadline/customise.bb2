@@ -1,0 +1,50 @@
+; Original Blitz BASIC 2.10, Amiga mode, PAL.
+PL_count.l=0 : PL_step.l=1 : PL_ex.l=0
+PL_dl_duration.l=100
+Gosub PL_clock_init
+PL_dl_now.l=PL_ticks.l : Gosub PL_dl_init
+InitBank 0,40,1 : PL_box.l=Bank(0)
+Poke.l PL_box.l+32,$1A2B3C4D
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Optional turn deadline",1,0
+WLocate 8,60 : Print "Bank: ",PL_box.l
+WLocate 8,80 : Print "Size: ",BankSize(0)
+WLocate 8,100 : Print "0123456789"
+Gosub PL_show
+Repeat
+  VWait
+  Gosub PL_dl_service
+  Gosub PL_poll_key
+  PL_dirty.l=0
+  If PL_dl_expired.l
+    PL_ex.l=(PL_ex.l+1)&255
+    PL_key$="A" : Gosub PL_advance : Gosub PL_dl_start
+    PL_dirty.l=1
+  Else
+    If PL_key$="T"
+      If PL_dl_active.l
+        PL_dl_active.l=0 : PL_dl_left.l=0
+      Else
+        Gosub PL_dl_start
+      EndIf
+      PL_dirty.l=1
+    Else
+      Gosub PL_advance
+      If PL_accepted.l
+        If PL_dl_active.l Then Gosub PL_dl_start
+        PL_dirty.l=1
+      EndIf
+    EndIf
+  EndIf
+  If PL_dirty.l Then Gosub PL_show
+  Gosub PL_monitor
+Until PL_key$="Q"
+ClrInt 5
+DefaultInput : DefaultOutput
+Free Window 0
+FreeBank 0
+End
+.PL_show
+WLocate 8,20 : Print "Count: ",PL_count.l,"      "
+WLocate 8,40 : Print "Timer: ",PL_dl_active.l,"      "
+Return

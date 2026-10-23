@@ -1,0 +1,622 @@
+[
+  {
+    "action": "load_snapshot",
+    "path": "${RUN}/blitz-settled.state"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": -237,
+          "dy": -145
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "right",
+          "pressed": true
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/insert-menu.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": -61,
+          "dy": -49
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": -61,
+          "dy": -49
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": -61,
+          "dy": -49
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": -61,
+          "dy": -49
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/edit-menu.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": -10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/edit-menu-top.png"
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerMotion": {
+          "device": "mouse-1",
+          "dx": 0,
+          "dy": 10
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "run_frames",
+    "frames": 3
+  },
+  {
+    "action": "input",
+    "events": [
+      {
+        "PointerButton": {
+          "device": "mouse-1",
+          "button": "right",
+          "pressed": false
+        }
+      }
+    ]
+  },
+  {
+    "action": "run_frames",
+    "frames": 30
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/insert-requester.png"
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/insert-requester.state"
+  }
+]

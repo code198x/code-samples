@@ -644,3 +644,17 @@ jobs:
         run: |
           python scripts/check-amos-deadline.py
           python -m unittest discover -s scripts -p test_amos_deadline.py -v
+
+  blitz-deadline-records:
+    name: Blitz native deadlines and exact-expiry control
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check native pixels, clock data and corrupted evidence
+        run: |
+          python scripts/check-blitz-deadline.py
+          python -m unittest discover -s scripts -p test_blitz_deadline.py -v
