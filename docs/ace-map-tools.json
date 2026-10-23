@@ -1,0 +1,8 @@
+{
+  "emulator_version": "0.44.1",
+  "emulator_sha256": "aba6bf3f2106dc7e65ef69d2deb0d7d05d98a0164c92dd011e930d93ea1508b4",
+  "emulator_source_commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+  "firmware_sha256": "6c898799cd9782f24e98dfb4302d01984daabb9cffe353a2d491212bea0b6d2d",
+  "firmware_bytes": 8192,
+  "ram_top": 16384
+}

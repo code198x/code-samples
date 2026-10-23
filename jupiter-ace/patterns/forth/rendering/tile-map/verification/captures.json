@@ -1,0 +1,8 @@
+{
+  "captures": {
+    "positive-read-0-1.png": "f1fb28b8299f3c997084e550aa2b13e6262181222fa0067b21ea090a68c8f0fa",
+    "wrong-stride-read-0-1.png": "208c19bbf7303c264642f72647766e2c6168de54febf641476c2d08846e38211"
+  },
+  "source_record": "results.json",
+  "kind": "Unedited native Emu198x captures; case 7 queries column 0 row 1"
+}
