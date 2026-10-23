@@ -1,0 +1,42 @@
+[
+  {
+    "action": "load_media",
+    "slot": "floppy-0",
+    "kind": "disk",
+    "path": "${AMOS}"
+  },
+  {
+    "action": "load_media",
+    "slot": "floppy-1",
+    "kind": "disk",
+    "path": "${RUN}/cases.adf"
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "run_frames",
+    "frames": 500
+  },
+  {
+    "action": "save_snapshot",
+    "path": "${RUN}/amos-cases-cold.state"
+  },
+  {
+    "action": "save_screenshot",
+    "path": "${RUN}/amos-cases-cold.png"
+  }
+]

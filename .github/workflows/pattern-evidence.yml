@@ -616,3 +616,17 @@ jobs:
         run: |
           python scripts/check-zx-map-memory.py
           python -m unittest discover -s scripts -p test_zx_map_memory.py -v
+
+  amos-deadline-records:
+    name: AMOS native deadlines and exact-boundary control
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Validate native pixels, clock/bank data and falsifications
+        run: |
+          python scripts/check-amos-deadline.py
+          python -m unittest discover -s scripts -p test_amos_deadline.py -v

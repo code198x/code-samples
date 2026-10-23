@@ -1,0 +1,11 @@
+{
+  "emulator_version": "0.44.1",
+  "emulator_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
+  "firmware_sha256": "6d43840d4099a74170ea0f0425b6257c3891ebcaa39c4d1840075a9ab22b5707",
+  "runtime": "AMOS Professional 2.00",
+  "runtime_media_sha256": "507828d923c0af5e485a03048e396c29c9c5dec7769e8b40b1c933d980ffba3b",
+  "builder_version": "0.2.13",
+  "builder_sha256": "8cee299092889d79d5c0a9b3ade2e3fd272739f3f4b57761b2f51a1046e9a3a8",
+  "configuration": "PAL A1200, 2 MiB chip, no fast RAM",
+  "phase_provenance": "Cold boot, blank editor and ASCII import reuse the command-loop route; load phase retains only the actually used prefix through its first capture."
+}

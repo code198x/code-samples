@@ -1,0 +1,15 @@
+Rem Nonblocking version of the existing release-gated reader.
+PL_POLL_KEY:
+PL_KEY$=""
+If PL_LASTSCAN>=0
+   If Key State(PL_LASTSCAN)<>0
+      Return
+   End If
+   PL_LASTSCAN=-1
+   Clear Key
+End If
+PL_KEY$=Upper$(Inkey$)
+If PL_KEY$<>""
+   PL_LASTSCAN=Scancode
+End If
+Return

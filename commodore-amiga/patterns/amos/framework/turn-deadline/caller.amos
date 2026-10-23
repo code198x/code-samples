@@ -1,0 +1,50 @@
+Rem AMOS Professional 2.00, PAL. Append modules after End.
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+PL_COUNT=0 : PL_STEP=1 : PL_LASTSCAN=-1 : PL_EX=0
+PL_DL_DURATION=200 : PL_DL_NOW=Timer and $FFFF
+Gosub PL_DL_INIT
+Reserve As Work 1,32
+PL_MAILBOX=Start(1)
+Doke PL_MAILBOX+28,$A55A
+Locate 0,3 : Print "Bank: ";PL_MAILBOX
+Locate 0,5 : Print "0123456789"
+Gosub PL_SHOW
+Repeat
+   Wait Vbl
+   Gosub PL_DL_SERVICE
+   Gosub PL_POLL_KEY
+   PL_DIRTY=0
+   If PL_DL_EXPIRED
+      PL_EX=(PL_EX+1) and 255
+      PL_KEY$="A" : Gosub PL_ADVANCE : Gosub PL_DL_START
+      PL_DIRTY=1
+   Else
+      If PL_KEY$="T"
+         If PL_DL_ACTIVE
+            PL_DL_ACTIVE=0 : PL_DL_LEFT=0
+         Else
+            Gosub PL_DL_START
+         End If
+         PL_DIRTY=1
+      Else
+         Gosub PL_ADVANCE
+         If PL_ACCEPTED
+            If PL_DL_ACTIVE
+               Gosub PL_DL_START
+            End If
+            PL_DIRTY=1
+         End If
+      End If
+   End If
+   If PL_DIRTY
+      Gosub PL_SHOW
+   End If
+   Gosub PL_MONITOR
+Until PL_KEY$="Q"
+Erase 1 : Show
+End
+PL_SHOW:
+Locate 0,0 : Print "A advances, T timer, Q quits"
+Print "Count: ";PL_COUNT;"      "
+Print "Timer: ";PL_DL_ACTIVE;"       "
+Return
