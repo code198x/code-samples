@@ -729,3 +729,17 @@ jobs:
         run: |
           python scripts/check-pet-deadlines.py
           python -m unittest discover -s scripts -p test_pet_deadlines.py -v
+
+  pet-vic-basic-deadline-records:
+    name: PET and VIC-20 BASIC deadlines and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check native BASIC memory, clocks, pixels and corrupted records
+        run: |
+          python scripts/check-pet-vic-basic-deadlines.py
+          python -m unittest discover -s scripts -p test_pet_vic_basic_deadlines.py -v

@@ -1,0 +1,18 @@
+{
+  "system": "commodore-vic-20",
+  "model": "unexpanded VIC-20",
+  "ram_bytes": 5120,
+  "region": "PAL",
+  "mailbox": 828,
+  "mailbox_ownership": "20-byte normal observer, 99-byte fixture, borrowed from inactive tape-2 buffer on PET / inactive tape buffer on VIC-20; no tape I/O during these programs.",
+  "emulator_release": "0.44.2",
+  "emulator_sha256": "0be9ab7a67eb41fea10325a3d26b3bc0fdf7f9331fe221156e71e62bedb6b6ca",
+  "firmware_sha256": {
+    "kernal-ntsc.rom": "8fc94bd895f488ac0ae1a52abdc32988cd63c777770b89a9d415513098535cc2",
+    "basic.rom": "8be2d882e0eeb1c6923a43660236ea69d43ca8a3bd0613b1b6c910601584fbed",
+    "char.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502",
+    "chargen.rom": "bda280726cfe069ca70ef5e2f2d95a29f69d3950c859a12e6979464963fcf502",
+    "kernal.rom": "ff6d1416b91a71f5240a5bb8adc9fdc1b955374c48322ca47b3e436334f168fb"
+  },
+  "limits": "Typed stock BASIC; shared floating-point helper, delivered characters, named firmware and memory configuration. Native fixtures use synthetic supplied clock values. No debugger writes, original-hardware or peak-RAM claim."
+}

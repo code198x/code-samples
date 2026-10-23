@@ -1,0 +1,18 @@
+{
+  "system": "commodore-pet",
+  "model": "40-column upgrade-ROM PET",
+  "ram_bytes": 32768,
+  "region": "PAL default",
+  "mailbox": 826,
+  "mailbox_ownership": "20-byte normal observer, 99-byte fixture, borrowed from inactive tape-2 buffer on PET / inactive tape buffer on VIC-20; no tape I/O during these programs.",
+  "emulator_release": "0.44.2",
+  "emulator_sha256": "3743c55c7055223d4d5f920a9051dc6a260e4fbb258a8aeabda941b3df49931c",
+  "firmware_sha256": {
+    "basic.rom": "5b426b5c50350e5d50c4308a81288bb34f310d7384bcc43c66a0e18716a4cdbe",
+    "char.rom": "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "editor.rom": "5338b1dffebd695f6110c9995e16f7536bb63a909c2a0062b4789de46904ade9",
+    "chargen.rom": "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "kernal.rom": "056d5e84a6e4f2b5b40a4109f49515c2496a4bf99139a9f59abe486ded5cd03d"
+  },
+  "limits": "Typed stock BASIC; shared floating-point helper, delivered characters, named firmware and memory configuration. Native fixtures use synthetic supplied clock values. No debugger writes, original-hardware or peak-RAM claim."
+}
