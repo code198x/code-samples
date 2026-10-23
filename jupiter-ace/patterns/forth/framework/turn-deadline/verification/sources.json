@@ -1,0 +1,15 @@
+{
+  "jupiter-ace/patterns/forth/framework/turn-deadline/boundaries.fth": "2f95fd264d6fb93781730509fd01b604b8672e6b58b2bcf567f0a28b92e6742e",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/caller.fth": "7dd15ef4b857582ee037b153607a840523e0022f1a63f997654972f6e6dd4b25",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/clock.fth": "155551dd053fe51f878ce45746d8e844e5c925212a18e1d789a77c65d4837817",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/customise.fth": "ebb0b4d709994b8aa413800bb679ddd7fb303bb291ef14ee006e33f9547eded5",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/input.fth": "d418b9f9efc6dcc8ce08b3b6647c0df96c7a15f49c8b0526137125218a0b45ce",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/routines.fth": "ef93bedc6f9a1d07dd112739596e2fcc19482a738c34ef4378f55c5d72f468eb",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/service.fth": "7ff81a22f241e285364f198baeb9a266a92e40b6ff1b3b0154d9d5c6a50c9496",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/settings.fth": "3bdc5621dbf91ef58cec1be92b513763bb2c9a49389bd22efbcb71f8050964b2",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/mistakes/reset-baseline.fth": "ad9bcc7560b2e096dde99f80148b6391b87b727cb3f67368d7482168e0df5b74",
+  "jupiter-ace/patterns/forth/framework/turn-deadline/Makefile": "a50450189a126a1a8e79743e6b8964f6524e13a7c47736cc90848d3cf413dbe2",
+  "scripts/verify-ace-deadline.py": "d5cc857033ac79fc4891642e7f2ae2a043666a6b11f5f70506a0720e353fadd1",
+  "scripts/verify-ace-deadline-boundaries.py": "a18eb1d285c62f8f82eaabe391120f2c923441d0a56767d5c6826624db5cfdf1",
+  "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+}

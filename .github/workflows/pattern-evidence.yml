@@ -616,3 +616,17 @@ jobs:
         run: |
           python scripts/check-zx-map-memory.py
           python -m unittest discover -s scripts -p test_zx_map_memory.py -v
+
+  ace-forth-deadline:
+    name: Ace FORTH deadlines and unsigned arithmetic
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check native callers and reject corrupted evidence
+        run: |
+          python scripts/check-ace-deadline.py
+          python -m unittest discover -s scripts -p test_ace_deadline.py -v
