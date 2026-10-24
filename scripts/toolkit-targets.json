@@ -110,5 +110,21 @@
   [
     "priority-event-queue",
     "commodore-amiga"
+  ],
+  [
+    "high-score-insertion",
+    "commodore-64"
+  ],
+  [
+    "high-score-insertion",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "high-score-insertion",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "high-score-insertion",
+    "commodore-amiga"
   ]
 ]
