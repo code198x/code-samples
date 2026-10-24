@@ -864,3 +864,16 @@ jobs:
       - run: |
           python scripts/check-spectrum-input-edges.py
           python -m unittest discover -s scripts -p test_spectrum_input_edges.py -v
+
+  nes-release-input-records:
+    name: NES serial-input edges and exhaustive release evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-nes-input-edges.py
+          python -m unittest discover -s scripts -p test_nes_input_edges.py -v
