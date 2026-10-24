@@ -1,0 +1,134 @@
+{
+  "fractional-position": {
+    "title": "Fractional Position Updates",
+    "category": "physics",
+    "fields": [
+      "POS_LO",
+      "POS_HI",
+      "VEL_LO",
+      "VEL_HI"
+    ]
+  },
+  "bounded-acceleration": {
+    "title": "Bounded Signed Acceleration",
+    "category": "physics",
+    "fields": [
+      "VEL_LO",
+      "VEL_HI",
+      "ACC_LO",
+      "ACC_HI",
+      "LIMIT_LO",
+      "LIMIT_HI",
+      "CLIPPED",
+      "VALID"
+    ]
+  },
+  "jump-windows": {
+    "title": "Jump Buffering and Coyote Time",
+    "category": "physics",
+    "fields": [
+      "JUMPED",
+      "COYOTE",
+      "BUFFER",
+      "GROUNDED",
+      "PRESSED"
+    ]
+  },
+  "one-way-platform": {
+    "title": "Land on a One-way Platform",
+    "category": "physics",
+    "fields": [
+      "LANDED",
+      "SNAP",
+      "ACTOR_X",
+      "ACTOR_W",
+      "PREV_BOTTOM",
+      "NEW_BOTTOM",
+      "PLATFORM_X",
+      "PLATFORM_W",
+      "PLATFORM_Y",
+      "DROP"
+    ]
+  },
+  "camera-deadzone": {
+    "title": "Camera Dead Zones",
+    "category": "physics",
+    "fields": [
+      "CAMERA",
+      "PLAYER",
+      "LEFT_EDGE",
+      "RIGHT_EDGE",
+      "SCROLL_LIMIT",
+      "SHIFTED",
+      "VALID"
+    ]
+  },
+  "menu-navigation": {
+    "title": "Wrap and Skip Menu Options",
+    "category": "input",
+    "fields": [
+      "SELECTED",
+      "OPTION_COUNT",
+      "ENABLED",
+      "DELTA",
+      "MOVED",
+      "VALID"
+    ]
+  },
+  "text-entry-buffer": {
+    "title": "A Counted Text-entry Buffer",
+    "category": "input",
+    "fields": [
+      "LENGTH",
+      "STATUS",
+      "KEY",
+      "MODE",
+      "BUF0",
+      "BUF1",
+      "BUF2",
+      "BUF3",
+      "BUF4",
+      "BUF5",
+      "BUF6",
+      "BUF7"
+    ]
+  },
+  "tile-properties": {
+    "title": "Look Up Tile Properties",
+    "category": "rendering",
+    "fields": [
+      "ATTRS",
+      "MATCH",
+      "VALID",
+      "TILE_ID",
+      "MASK"
+    ]
+  },
+  "bounded-rle": {
+    "title": "Decode Bounded RLE Data",
+    "category": "framework",
+    "fields": [
+      "WRITTEN",
+      "ERROR",
+      "INPUT_START",
+      "INPUT_END",
+      "OUTPUT_LIMIT",
+      "BUF0",
+      "BUF1",
+      "BUF2",
+      "BUF3",
+      "BUF4",
+      "BUF5",
+      "BUF6",
+      "BUF7"
+    ]
+  },
+  "streaming-crc8": {
+    "title": "A Streaming CRC-8",
+    "category": "framework",
+    "fields": [
+      "CRC",
+      "DATA"
+    ]
+  }
+}
