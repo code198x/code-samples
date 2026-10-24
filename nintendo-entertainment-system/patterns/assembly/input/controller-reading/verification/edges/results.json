@@ -1,0 +1,4797 @@
+{
+  "system": "nintendo-nes",
+  "language": "assembly",
+  "cases": {
+    "working": {
+      "samples": [
+        {
+          "stage": "idle",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 0,
+            "last_release": 0,
+            "press_events": 0,
+            "release_events": 0,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 1,
+            "release_events": 0,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83818,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "hold",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 1,
+            "release_events": 0,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83813,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 128,
+            "press_events": 1,
+            "release_events": 1,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83815,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "second-press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 128,
+            "press_events": 2,
+            "release_events": 1,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83810,
+            "steps": 7986
+          }
+        },
+        {
+          "stage": "simultaneous",
+          "input": 130,
+          "state": {
+            "controls": 130,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 128,
+            "press_events": 3,
+            "release_events": 1,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83827,
+            "steps": 7988
+          }
+        },
+        {
+          "stage": "release-a",
+          "input": 2,
+          "state": {
+            "controls": 2,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 128,
+            "press_events": 3,
+            "release_events": 2,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "release-all",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 2,
+            "press_events": 3,
+            "release_events": 3,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83824,
+            "steps": 7988
+          }
+        },
+        {
+          "stage": "all-buttons",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 2,
+            "press_events": 4,
+            "release_events": 3,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83819,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "all-hold",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 2,
+            "press_events": 4,
+            "release_events": 3,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83815,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "all-release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 255,
+            "press_events": 4,
+            "release_events": 4,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83816,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "capture",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 255,
+            "press_events": 4,
+            "release_events": 4,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        }
+      ],
+      "capture": {
+        "stage": "capture",
+        "input": 0,
+        "state": {
+          "controls": 0,
+          "new_presses": 0,
+          "released_controls": 0,
+          "last_new": 255,
+          "last_release": 255,
+          "press_events": 4,
+          "release_events": 4,
+          "actions": 3
+        },
+        "stop": {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32970,
+          "ticks": 83822,
+          "steps": 7987
+        }
+      },
+      "image": "working.png",
+      "image_sha256": "bac09e182dcde6706f03ee4808bf41b93731ff7092844bd2d561647383ffc595",
+      "code_bytes": 32,
+      "state_bytes": 2,
+      "native_prg_sha256": "56c9e5cd251e3b682b0bfc58cc0d25fb39ea5f62224da1a0fa7938cb6f51660c",
+      "cart_sha256": "b59acf066a7bd19e2e6b6671d053fa380c13fd7e138ac8d7d8e306ab689b1c54",
+      "source_sha256": "f03b9bbc613f9ed1dd3132b1c811b0c725d16ee27a7e94690acdebff8d5d8f1d",
+      "code_end": 33082,
+      "server": {
+        "name": "emu198x-nes",
+        "version": "0.44.2"
+      }
+    },
+    "custom": {
+      "samples": [
+        {
+          "stage": "idle",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 0,
+            "last_release": 0,
+            "press_events": 0,
+            "release_events": 0,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 1,
+            "release_events": 0,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83824,
+            "steps": 7988
+          }
+        },
+        {
+          "stage": "hold",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 1,
+            "release_events": 0,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83819,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 128,
+            "press_events": 1,
+            "release_events": 1,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83821,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "second-press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 128,
+            "press_events": 2,
+            "release_events": 1,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "simultaneous",
+          "input": 130,
+          "state": {
+            "controls": 130,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 128,
+            "press_events": 3,
+            "release_events": 1,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83818,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "release-a",
+          "input": 2,
+          "state": {
+            "controls": 2,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 128,
+            "press_events": 3,
+            "release_events": 2,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83819,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "release-all",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 2,
+            "press_events": 3,
+            "release_events": 3,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83821,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "all-buttons",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 2,
+            "press_events": 4,
+            "release_events": 3,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83816,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "all-hold",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 2,
+            "press_events": 4,
+            "release_events": 3,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83812,
+            "steps": 7986
+          }
+        },
+        {
+          "stage": "all-release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 255,
+            "press_events": 4,
+            "release_events": 4,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83813,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "capture",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 255,
+            "press_events": 4,
+            "release_events": 4,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83819,
+            "steps": 7987
+          }
+        }
+      ],
+      "capture": {
+        "stage": "capture",
+        "input": 0,
+        "state": {
+          "controls": 0,
+          "new_presses": 0,
+          "released_controls": 0,
+          "last_new": 255,
+          "last_release": 255,
+          "press_events": 4,
+          "release_events": 4,
+          "actions": 2
+        },
+        "stop": {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32970,
+          "ticks": 83819,
+          "steps": 7987
+        }
+      },
+      "image": "custom.png",
+      "image_sha256": "9312a50fc59610075b77fd9f14955eac3f95f496432b26470b353d29170cc2f7",
+      "code_bytes": 32,
+      "state_bytes": 2,
+      "native_prg_sha256": "6878565051550a371a157309aea4869f739bf5beabb45fc16ddcdb6526ea9fb9",
+      "cart_sha256": "48c3fe43c080b37f9e69ea0b8864fb11c170dcb638d4e609713cd3e81cd9c131",
+      "source_sha256": "f582ad988c508abd29e37087675363fb020ce30f3233af46711a29bf0f64971c",
+      "code_end": 33082,
+      "server": {
+        "name": "emu198x-nes",
+        "version": "0.44.2"
+      }
+    },
+    "wrong": {
+      "samples": [
+        {
+          "stage": "idle",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 0,
+            "last_release": 0,
+            "press_events": 0,
+            "release_events": 0,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83831,
+            "steps": 7989
+          }
+        },
+        {
+          "stage": "press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 128,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 2,
+            "release_events": 0,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83878,
+            "steps": 7992
+          }
+        },
+        {
+          "stage": "hold",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 128,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 4,
+            "release_events": 0,
+            "actions": 4
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83882,
+            "steps": 7992
+          }
+        },
+        {
+          "stage": "release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 4,
+            "release_events": 0,
+            "actions": 4
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 173182,
+            "steps": 16498
+          }
+        },
+        {
+          "stage": "second-press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 128,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 7,
+            "release_events": 0,
+            "actions": 7
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 173224,
+            "steps": 16501
+          }
+        },
+        {
+          "stage": "simultaneous",
+          "input": 130,
+          "state": {
+            "controls": 130,
+            "new_presses": 130,
+            "released_controls": 0,
+            "last_new": 130,
+            "last_release": 0,
+            "press_events": 10,
+            "release_events": 0,
+            "actions": 10
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 173224,
+            "steps": 16501
+          }
+        },
+        {
+          "stage": "release-a",
+          "input": 2,
+          "state": {
+            "controls": 2,
+            "new_presses": 2,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 0,
+            "press_events": 13,
+            "release_events": 0,
+            "actions": 10
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83866,
+            "steps": 7991
+          }
+        },
+        {
+          "stage": "release-all",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 0,
+            "press_events": 13,
+            "release_events": 0,
+            "actions": 10
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83831,
+            "steps": 7989
+          }
+        },
+        {
+          "stage": "all-buttons",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 255,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 0,
+            "press_events": 15,
+            "release_events": 0,
+            "actions": 12
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83878,
+            "steps": 7992
+          }
+        },
+        {
+          "stage": "all-hold",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 255,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 0,
+            "press_events": 17,
+            "release_events": 0,
+            "actions": 14
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83882,
+            "steps": 7992
+          }
+        },
+        {
+          "stage": "all-release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 0,
+            "press_events": 17,
+            "release_events": 0,
+            "actions": 14
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 173182,
+            "steps": 16498
+          }
+        },
+        {
+          "stage": "capture",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 0,
+            "press_events": 17,
+            "release_events": 0,
+            "actions": 14
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83831,
+            "steps": 7989
+          }
+        }
+      ],
+      "capture": {
+        "stage": "capture",
+        "input": 0,
+        "state": {
+          "controls": 0,
+          "new_presses": 0,
+          "released_controls": 0,
+          "last_new": 255,
+          "last_release": 0,
+          "press_events": 17,
+          "release_events": 0,
+          "actions": 14
+        },
+        "stop": {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32970,
+          "ticks": 83831,
+          "steps": 7989
+        }
+      },
+      "image": "wrong.png",
+      "image_sha256": "1e72a9563a1ffba3717b2e9532967209570e95fbaea934cdf5de51affab3f10e",
+      "code_bytes": 32,
+      "state_bytes": 2,
+      "native_prg_sha256": "e958065c52c2e195d774a46d9282ade3b5018f4321e4373112d326f84404e931",
+      "cart_sha256": "45130ee00883a18028f7f8bc670525d94f8dc6767e2d2d1b2184a5a296c81df6",
+      "source_sha256": "300b245ac518287dbef300b5a48edb212ba8ca28c93481813eb4bf21f2dcbc85",
+      "code_end": 33087,
+      "server": {
+        "name": "emu198x-nes",
+        "version": "0.44.2"
+      }
+    },
+    "repaired": {
+      "samples": [
+        {
+          "stage": "idle",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 0,
+            "last_release": 0,
+            "press_events": 0,
+            "release_events": 0,
+            "actions": 0
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 1,
+            "release_events": 0,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83818,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "hold",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 0,
+            "press_events": 1,
+            "release_events": 0,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83813,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 128,
+            "press_events": 1,
+            "release_events": 1,
+            "actions": 1
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83815,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "second-press",
+          "input": 128,
+          "state": {
+            "controls": 128,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 128,
+            "last_release": 128,
+            "press_events": 2,
+            "release_events": 1,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83810,
+            "steps": 7986
+          }
+        },
+        {
+          "stage": "simultaneous",
+          "input": 130,
+          "state": {
+            "controls": 130,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 128,
+            "press_events": 3,
+            "release_events": 1,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83827,
+            "steps": 7988
+          }
+        },
+        {
+          "stage": "release-a",
+          "input": 2,
+          "state": {
+            "controls": 2,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 128,
+            "press_events": 3,
+            "release_events": 2,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "release-all",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 2,
+            "last_release": 2,
+            "press_events": 3,
+            "release_events": 3,
+            "actions": 2
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83824,
+            "steps": 7988
+          }
+        },
+        {
+          "stage": "all-buttons",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 2,
+            "press_events": 4,
+            "release_events": 3,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83819,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "all-hold",
+          "input": 255,
+          "state": {
+            "controls": 255,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 2,
+            "press_events": 4,
+            "release_events": 3,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83815,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "all-release",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 255,
+            "press_events": 4,
+            "release_events": 4,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83816,
+            "steps": 7987
+          }
+        },
+        {
+          "stage": "capture",
+          "input": 0,
+          "state": {
+            "controls": 0,
+            "new_presses": 0,
+            "released_controls": 0,
+            "last_new": 255,
+            "last_release": 255,
+            "press_events": 4,
+            "release_events": 4,
+            "actions": 3
+          },
+          "stop": {
+            "kind": "run_until_pc",
+            "reached": true,
+            "pc": 32970,
+            "ticks": 83822,
+            "steps": 7987
+          }
+        }
+      ],
+      "capture": {
+        "stage": "capture",
+        "input": 0,
+        "state": {
+          "controls": 0,
+          "new_presses": 0,
+          "released_controls": 0,
+          "last_new": 255,
+          "last_release": 255,
+          "press_events": 4,
+          "release_events": 4,
+          "actions": 3
+        },
+        "stop": {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32970,
+          "ticks": 83822,
+          "steps": 7987
+        }
+      },
+      "image": "repaired.png",
+      "image_sha256": "bac09e182dcde6706f03ee4808bf41b93731ff7092844bd2d561647383ffc595",
+      "code_bytes": 32,
+      "state_bytes": 2,
+      "native_prg_sha256": "56c9e5cd251e3b682b0bfc58cc0d25fb39ea5f62224da1a0fa7938cb6f51660c",
+      "cart_sha256": "b59acf066a7bd19e2e6b6671d053fa380c13fd7e138ac8d7d8e306ab689b1c54",
+      "source_sha256": "f03b9bbc613f9ed1dd3132b1c811b0c725d16ee27a7e94690acdebff8d5d8f1d",
+      "code_end": 33082,
+      "server": {
+        "name": "emu198x-nes",
+        "version": "0.44.2"
+      }
+    },
+    "boundaries": {
+      "rows_zlib_hex": "789ce55d71d4cdf51997616a2f5393c9686a980c5393a9612fc96434494d8649980c93c9642fc930d95b9361329a9a4c8da6a6a686a9c9643235991a26c3d4301926a3f57bcebdcf39f7fd9c73efe7dcf773eefb3dbf7b9fef79ce739ef39ce73c7f3de7399ff3b99fdfad54a9b0edbc027f952b572a68ff48e5f30adaab44667b50a8b16a95aa556c0f0a3556ab56a58aed41a1c68f56ab5ac5f6a05063f5a4f93d2cb4fcfcea89e7f7b0d0f20b2ea85edddcef61a1e51fbbe0fceae67e0f0b2d2f8accf6c1ef61a1e5358a6a14d93ef83d2cb4bc66cda222db07bf8785967fbc668d22db07bf878596d702ab0496eff50b6b957d888ff3bd7ed145b56aa53ae2e37caf7fe2a20b6ba53ae2e37cafd78eccf6c223e2e37caf5f5cfbe2dab6171e111fe77bbd4e9ddab56d2f3c223ecef7fa27eb5c5cdbf6c223e2e37cafd74d9adf47c4c7f95ebfa46ee2f97d447c9ceff57af5ead635f7fb88f838dfeb9faa77495d73bf8f888ff3bd5e3f32db0fbf8f888ff3bddea07e83fab61f7e1f111fe77bfdd24bebd7b7fdf0fb88f838dfeb9fbeb4417ddb0fbf8f888ff3bdde9018e265b4b8f75fd630f343bc8c2feefd975fdeb0612647bc8c1ef7fecf5c7e59c34c8e78193deefd8d22b33d4917197f1ef7fec68d1a37b23d4917197f1ef7fe264d1a35b23d4917197f1ef7fecf3669dcc8f6245d64fc79dcfb9b26cdef25e68c3f8f7bff154d13cfef25e68c3f8f7b7fb3664d9b9afbbdc49cf1e771efff5cb32b9a9afbbdc49cf1e771ef6f1e99ed8bdf4bcc197f1ef7fe16cd5b34b77df17b8939e3cfe3dedfb265f3e6b62f7e2f3167fc79dcfb3fdfb24573db17bf979833fe3ceefdadc0103f33fe3ceefd57b62afb103f33fe3ceefd575dd5aa55aa237e66fc79dcfbbf70d595ad521df133e3cfe3dedf3a32db1b8f889f197f1ef7feab5b5fdddaf6c623e267c69fc7bdbf4d9bd6ad6d6f3c227e66fc79dcfbbfd8e6ead6b6371e113f33fe3ceefd6d93e6f713f133e3cfe3de7f4ddbc4f3fb89f899f1e771efbff6dab66dcdfd7e227e66fc79dcfbbf74ed356dcdfd7e227e66fc79dcfbdb4566fbe3f713f133e3cfe3dedfbe5dfb76b63f7e3f113f33fe3ceefd1d3ab46b67fbe3f713f133e3cfe3deffe50eeddbd9fef8fd44fcccf8f3b8f7178b86783a5b0b3dbf63b1f618bfce5ee8f99d3a15172b5e99f0ebcc43cfbfae53c762c5114f67eba1e7778eccf6a8bc91f1eb2c869e7f7de7eb3bdb1e9537aafafbd0f3bb74e9dcd9f6a8bc51d5df879eff952ed777b63d2a6f54f5f7a1e7774d9adfd36c73c6afb33cf4fc1bba269edfd36c73557f1f7a7eb76e5dbb9afb3dcd3667fc3acb43cfff6ab71bba9afb3dcd3657f5f7a1e7778fccf6c9ef69b6b9aabf0f3dbf47f71edd6d9ffc9e669babfafbd0f36fbcb17b77db27bfa7d9e6aafe3ef4fcafddd8a3bbed93dfd36c73557f1f7a7e4fb062305667fc3aab879e7f53cfb20ff135ababfafbd0f37bf5ead933d5fdaebab33ae3d7593df4fc9b7bddd433d5115fb3baaabf0f3dbf7764b6571e115fb3baaabf0f3dff96deb7f4b6bdf288f89ad555fd7de8f9b7dedabbb7ed9547c4d7acaeeaef43cffffaadb7f4b6bdf288f89ad555fd7de8f97d92e6f715f135ababfafbd0f36feb93787e5f115fb3baaabf0f3dbf6fdf3e7dccfdbe22be6675557f1f7afe37faded6c7dcef2be26b5657f5f7a1e7f78bccf6cbef2be26b5657f5f7a1e7f7efd7bf9fed97df57c4d7acaeeaef43cf1f30a05f3fdb2fbfaf88af595dd5df879effcd01fdfbd97ef97d457ccdeaaafe3ef4fc81c4106fa3e1efedd1106fa3859e7ffbc0cc0ff1363e557f1f7afea041030766f24e9d32f3eff87b7bf4ca9533f3efa1e7df31e8f681991cf136baaabf0f3d7f7064b667e922e3df55fd7de8f943060f196c7b962e32fe5dd5df879e3f74e8e0c1b667e922e3df55fd7de8f9df1a3a64b0ed59bac8f877557f1f7afeb0a4f9bdc59cf1efaafe3ef4fc3b87259edf5bcc19ffaeeaef43cf1f3e7cd83073bfb79833fe5dd5df879effede1770e33f77b8b39e3df55fd7de8f92322b37df37b8b39e3df55fd7de8f923478c1c61fbe6f71673c6bfabfafbd0f3478d1a31c2f6cdef2de68c7f57f5f7a1e77f67d4c811b66f7e6f3167fcbbaabf0f3d7f3418e26fc6bfabfafbd0f3ef1a5df621fe66fcbbaabf0f3d7fcc98d1a3531df137e3df55fd7de8f9df1d73d7e85447fccdf877557f1f7afed8c86cef3c22fe66fcbbaabf0f3dffeeb1778fb5bdf388f89bf1efaafe3ef4fc71e3c68eb5bdf388f89bf1efaafe3ef4fcef8dbb7baced9d47c4df8c7f57f5f7a1e78f4f9adf5fc4df8c7f57f5f7a1e7df333ef1fcfe22fe66fcbbaabf0f3d7fc284f1e3cdfdfe22fe66fcbbaabf0f3dfffb13ee196feef717f137e3df55fd7de8f92591d9fef9fd45fccdf877557f1f7afec4928925b67f7e7f117f33fe5dd5df879e3f69524989ed9fdf5fc4df8c7f57f5f7a1e7df3b696289ed9fdf5fc4df8c7f57f5f7a1e74f0e6c88c72bdaee9b1cf6317e3ed76fca94c993433ae2f18af61f4cb96f724867fc7cae7d6a64b687a122e3e7731da74d9d36d5f6305454f5fb6a9c3e7dea54dbc35051d5efabf187d3a74db53d0c1555fdbe1a6724cdef7145e78c9fcf757eff8cc4f37b5cd1b9aadf57f3993367cc30f77b5cd139e3e7739dff68e6fd33ccfd1e5774aeeaf7d5bc3432db47bfc7159dabfa7d357fa0f48152db47bfc7159dabfa7d357ff0c1d252db47bfc7159dabfa7d35fff1830f94da3efa3daee85cd5efabf92cb0c960b9ae337e3ed7f58766957d88cf735d57f5fb6a7df6ec59b3521df179aeeb8c9fcf75fd27b31f9a95ea88cf735d57f5fb6a7d4e64b6971e119fe7baaeeaf7d5fadc3973e7d85e7a447c9eebbaaadf57ebf3e6cd99637be911f179aeebaa7e5fadff74dedc39b6971e119fe7baaeeaf7d5fafca4f97d467c9eebbaaadf57eb0fcf4f3cbfcf88cf735d57f5fb6a7dc182f9f3cdfd3e233ecf755dd5efabf59f2d7878beb9df67c4e7b9aeabfa7db5be3032db4fbfcf88cf735d57f5fb6a7dd1c2450b6d3ffd3e233ecf755dd5efabf5471e59b8d0f6d3ef33e2f35cd755fdbe5afff9238b16da7efa7d467c9eebbaaadf57eb8b89215e4753fbf1f7fa6888d7d1d4fe4717677e88d7f1a9fdaa7e5fed7fecb1c58b3339e3efd57efcbd3e3ae3efd5fe5f3cf6e8e24ccef87bb55fd5efabfd4b22b33d4d17197faff6abfa7db5fff1258f2fb13d4d17197faff6abfa7db57fe9d2254b6c4fd345c6dfabfdaa7e5fedffe5d2c797d89ea68b8cbf57fb55fdbedabf2c697eaf3167fcbddaafeaf7d5fe2796259edf6bcc197faff6abfa7db5ffc927972d33f77b8d39e3efd57e55bfaff6ffeac9279699fbbdc69cf1f76abfaadf57fb974766fbeaf71a73c6dfabfdaa7e5fed5fb17cc572db57bfd79833fe5eed57f5fb6aff534f2d5f6efbeaf71a73c6dfabfdaa7e5fedfff5532b96dbbefabdc69cf1f76abfaadf57fb5782217e67fcbddaafeaf7d5fea757967d88df197faff6abfa7db5ff996756ae4c75c4ef8cbf57fb55fdbedaff9b679e5e99ea88df197faff6abfa7db57f5564b6b71e11bf33fe5eed57f5fb6affb3ab9e5d657beb11f13be3efd57e55bfaff63ff7dcaa55b6b71e11bf33fe5eed57f5fb6aff6f9f7b7695edad47c4ef8cbf57fb55fdbedabf3a697ebf11bf33fe5eed57f5fb6afff3ab13cfef37e277c6dfabfdaa7e5fed7fe185d5abcdfd7e237e67fcbddaafeaf7d5fedfbdf0fc6a73bfdf88df197faff6abfa7db57f4d64b6bf7ebf11bf33fe5eed57f5fb6affda356bd7d8fefafd46fccef87bb55fd5efabfdebd6ad5963fbebf71bf13be3efd57e55bfaff6ff7eddda35b6bf7ebf11bf33fe5eed57f5fb6aff7ad110cf676bc5a2219ecfd65e5caf3dc6efb3d7917cdf9f3dc6efb3f7d24bebd72bcef87de69dc8f7fd99337e9ff91f5e7a71bde28cdf677e1df9be3f73c6ef33df1099ed7179a3aaff67dff76751d5ffbfbce1e50db6c7e58daafe9f7ddf9f4555ffbf71e3860db6c7e58daafebf0bf9be3f8baafeff8f1b5fde607b5cdea8eaffd9f7fd5954f5ff9b92e6f73cdb9cf1fb2c67dff76739e3f759fecaa6c4f37b9e6daeeaffd9f7fd59aeeaff376fdeb4c9dcef79b6b9aaffef46beefcf7255ffffa7cdaf6c32f77b9e6daeeaffd9f7fd59aeeaffb74466fbecf73cdb5cd5ffb3effbb35cd5ffbfbae5d52db6cf7ecfb3cd55fd3ffbbe3fcb55fdffd6ad5bb6d83efb3dcf3657f5ffecfbfe2c57f5ff7fdefaea16db67bfe7d9e6aafe9f7ddf9fe5aafe7f1b18e27b5667fc3eabb3effbb33ae3f759fdb56d651fe27b5657f5ffecfbfeacaeeaff5f7f7ddbb654477ccfeaaafebf17f9be3fababfaffbfbcfedab654477ccfeaaafeff66f27d7f5657f5ffdb23b3bdf688f89ed555fd3ffbbe3fababfaff37b6bfb1ddf6da23e27b5657f5ffecfbfeacaeeaff77ecd8beddf6da23e27b5657f5ffecfbfeacaeeaffffbae38dedb6d71e11dfb3baaaff67dff7677555ffbf33697edf11dfb3baaaff67dff7677555ffffe6cec4f3fb8ef89ed555fd3ffbbe3fababfaffb7dedab9d3dcef3be27b5657f5ffecfbfeacaeeafffff6d69b3bcdfdbe23be677555ffcfbeefcfeaaafe7f5764b6df7edf11dfb3baaaff67dff7677555ffbf7bd7ee5db6df7edf11dfb3baaaff67dff7677555ffbf67cfae5db6df7edf11dfb3baaaff67dff7677555fffff73dbb77d97efb7d477ccfeaaafe9f7ddf9fd555fdff5e6288f7d1f0f7fe6888f7d1f0fffed010efa3e1effdd110efa3bdbd37f343bc8f4fd5ffe3fffde143bc8f4fd5ffefdbb7776f2647bc8faeeaff07c1fffda123de4757f5ffffd8f7f6de4c9e89fb3757f5ff77c0fffda167e2fecd55fdfffec86ccfd345c6ffabfa7ffcbf3f8c8cff57f5ff07f61fd86f7b9e2e32fe5fd5ffe3fffd6164fcbfaaff3f7870ff7edbf37491f1ffaafe1fffef0f23e3ff55fdff3f0f1ed86f7b9e2e32fe5fd5ffe3fffd6164fcbfaaff3f9434bff79833fe5fd5ffe3fffd61cef87f55ffffcea1c4f37b8f39e3ff55fd3ffedf1fe68cff57f5ffefbe7be890b9df7bcc19ffafeafff1fffe3067fcbfaaffffd7bbef1c32f77b8f39e3ff55fd3ffedf1fe68cff57f5ff8723b37df77b8f39e3ff55fd3ffedf1fe68cff57f5ff470e1f396cfbeef71e73c6ffabfa7ffcbf3fcc19ffafeaff8f1e3d7cd8f6ddef3de68cff57f5fff87f7f9833fe5fd5fffffbe891c3b6ef7eef3167fcbfaaffc7fffbc39cf1ffaafeff1818e27fc6ffabfaffd16088ff19ffafeaffdf3b56f621fe67fcbfaafff7fffdf587f89ff1ffaafefff8f163c7521df13fe3ff55fdbfffefaf3be27fc6ffabfaffff1c7fef58aa23fe67fcbfaafff7fffd7547fccff87f55ff7f2232db7b8f88ff19ffafeafffd7f7f3d22fe67fcbfaaff3f79e2e409db7b8f88ff19ffafeafffd7f7f3d22fe67fcbfaaff3f75eac409db7b8f88ff19ffafeafffd7f7f3d22fe67fcbfaaffffefa993276cef3d22fe67fcbfaafff7fffdf588f89ff1ffaafeff74d2fcfe23fe67fcbfaaff1f9f34bfff88ff19ffafeaffdf3f9d787eff11ff33fe5fd5ffdb7f7fdbf3fb8ff89ff1ffaafeffcc99d3a7cdfdfe23fe67fcbfaaffb7fffe36f7fb8ff89ff1ffaafeff7f67de3f6deef71ff13fe3ff55fdbffdf7b7b9df7fc4ff8cff57f5ff6723b3fdf7fb8ff89ff1ffaafebf2432db7fbfff88ff19ffafeaffcf9d3d77d6f6dfef3fe27fc6ffabfaff8925134b6cfffdfe23fe67fcbfaaffffe083b3676dfffdfe23fe67fcbfaaff9f34a9a4c4f6dfef3fe27fc6ffabfaffff7f70eeacedbfdf7fc4ff8cff57f5fff74e9a5862fbeff71ff13fe3ff55fdff875536c3b2",
+      "row_count": 256,
+      "stops": [
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29328,
+          "steps": 2575
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        }
+      ],
+      "row_done_pc": 32811,
+      "end_guard": 165,
+      "oracle_matches": true,
+      "mismatches": 0,
+      "native_prg_sha256": "33635b4fde0757b36228e28100a7d3dd09d741be01d39bce0246176346da4b70",
+      "cart_sha256": "73360cde6ad59059228439f7dc07faf79a59f9e8928852a0df66188f11abf85d",
+      "source_sha256": "cf42fd5b97ad4fe935a524f201075d7d55264a84ef096e59fc2fe5e6df424944",
+      "code_end": 32898,
+      "server": {
+        "name": "emu198x-nes",
+        "version": "0.44.2"
+      }
+    },
+    "wrong-boundary": {
+      "rows_zlib_hex": "789ce59d71d4d7f315c747a3d17846a3d168341a8d46a3d168341a8d46a3d168341a8d46a3d1483da3d17846a3d168341a8d46a3d17846a3d168341a8d46a3d168341a4dbf7dee39dffb8717f53e5fb7dff339dfe7b9f7dc73cffbdc73cfe7af7bee799ff7effebeb5d56fff6fd55b6ffe77e51bafff67c56baffe7bf92b2fff6bd94b2ffe73e90bcfff63c973cffe7df1334fff6dd1534ffe75e1138fff65c1638ffe79fe230fff69de430ffe71ee03f7ff61ce7df7febef99ebb7f37fbae3b7f3beb8edb7f33f3b65b7f3de3969b7f35fda61b7f39ed86eb7f31f5ba6b7f3ee59aab7f36f9aa2b7f3ae98acb7f32f1b24b7fdc74c9c53f9a70d1853f1c7fc1f93f681c37f6bc31e79ef3fdd1679ff5bd51679ef1dd91a79ff69d11a79ef2ede1279ff4ad61279ef0cda1c71ff78d21c71ef3f5c1471ff5b541471ef1d581871ff69501871ef2e5fe071ff4a57e071ef0c5befbeff7853efbeef3f9de7beff5b95e7beef1d99ebbeff6991ebbeef2e9ee3beff4a96e3beef0c9aedb6ff7892edb6ef3f1ce5b6ff5b14e5b6ef1d18e9b6ff691864d37f970878d37fa50fb0d37f860bbf5d7fb40adf6f6dbab56bdf9e6ca95afbfbe62c5abaf2e5ffef2cbcb96bdf8e2d2a5cf3fbf64c9b3cf2e5efcf4d38b163df9e4c2858f3fbe60c1a38fce9ffff0c3f3e63df8e0dcb9f7df3f67cebdf73637df7df7ecd977de396bd6edb7cf9c79ebad3366dc7cf3f4e937de386ddaf5d74f9d7aedb553a65c7df5e4c9575e3969d2e5974f9c78e9a54d4d175f3c61c285178e1f7ffef98d8d63c78e1973ce39a3479f75d6a851679c3172e469a78d1871ca29c3879f74d2b061279c3074e871c70d1972cc3183071f75d4a041471c3170e061870d1870c821fdfb1f7450bf7e071cd0b7ef7efbf5e9b3cf3ebd7befb557af5e7becd1b3e76ebbf5e8b1cb2eddbbefb453b76e3becd0b5eb76db75e9b2cd369d3b6fb555a74e5b6cd1b1e3669b35346cb249870e1b6dd4befd061bb46bb7de7ab5d5b5d5abde5af5d6ca3756beb1e2b515af2d7f65f92bcb5e5af6d2d21796beb0e4b925cf2d7e66f1338b9e5af4d4c227163eb1e0b1058fcd7f64fe23f31e9af7d0dc07e63e30e7be39f735dfd37ccfecbb66df35eb8e5977ccbc6de66d336e9971cbf49ba6df34ed8669374cbd6eea7553ae9972cde4ab265f35e98a49574cbc6ce2654d97345d32e1a209178dbf60fc058de31ac78d3977ccb9a3cf1e7df6a833479d39f2f491a78f3875c4a9c34f1e7ef2b013879d38f4f8a1c70f3976c8b1838f1e7cf4a023071d39f0f081870f3874c0a1fd0fee7f70bf03fb1dd877ffbefbf7d9b7cfbebdf7eebd77af3d7bedd973f79ebbf7d8b5c7aedd77eebe73b71dbbedd875fbaedb77d9b6cbb69db7eebc75a72d3b6dd971f38e9b376cdab069878d3b6cdc7ec3f61bb65bbfddfab564ab92ad4cb622d9f264cb922d4db624d9e2648b922d4cb620d9fc64f392cd4d36275973b2d9c966259b996c46b2e9c9a6259b9a6c4ab2c9c926259b98ac29d98464e39335261b936c74b251c946261b916c78b261c986261b926c70b241c906261b90ac7fb27ec9fa26eb93ac77b25ec97a26eb91ac7bb26ec9ba26eb92ac73b24ec93a266b48d62159fb64ed92d5d2fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc5bd8fc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bdbfc9bd70a5b59d8f2c29616b6b8b08585cd2f6c6e61cd85cd2a6c4661d30a9b52d8a4c29a0a1b5fd898c2461536a2b061850d296c5061030aeb57589fc27a15d6a3b06e857529ac53610d85b52fac56ec7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7fcfbeff3dfbfef7ecfbdfb3ef7f0fdfff1ebeff3d7cff7bf8fef7f0fdefe1fbdfc3f7bf87ef7f0fdfff1ebeff3d7cff7bf8fef7f0fdefe1fbdfc3f7bf87ef7f0fdfff1ebeff3d7cff7bf8fef7f0fdefe1fbdfc3f7bf87ef7f0fdfff1ebeff3d7cff7bf8fef7f0fdefe1fbdfc3f7bf87ef7f77dfffeebeffdd7dffbbfbfe77f7fdefeefbdfddf7bfbbef7f77dfffeebeffdd7dffbbfbfe77f7fdefeefbdfddf7bf7b0db61cb618361fd60c9b019b026b828d818d800d810d80f581f580758135c06ae0ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffc4e4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ffcce4ff0cf27f06f93f83fc9f41fecf20ff6790ff33c8ff19e4ff0cf27f06f93f83fc9f41fecf20ff6790ff33c8ff19e4ff74f27f3af93f9dfc9f4efe4f27ffa793ffd3c9ffe9e4ff34f27f1af93f8dfc9f46fe4f23ffa791ffd3c8ff69e4fbd4ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff555de9ffaaaef47f5557fabfaa2bfd5fd595feafea4aff5775a5ffabbad2ff1556fabfc24aff5758e9ff0a2bfd5f61a5ff2bacf47f8595feafb0d2ff1556fabfc24aff5758e9ff0a93df97c5e4f76531f97d594c7e5f162bfd5f61a5ff2bacf47f8595feafb0d2ff1556fabfc24aff5758e9ff0a2bfd5f61a5ff2bacf47f8595feaf30f97d594c7e5f1693df97c5e4f765b1d2ff5556fabfca4aff5759e9ff2a2bfd5f65a5ffabacf47f9595feafb2d2ff5556fabfca4aff5759e9ff2a93df97cde4f76533f97dd94c7e5f362bfd5f85d2ff5528fd5f85d2ff5528fd5f85d2ff5528fd5f85d2ff5528fd5fb9d2ff952bfd5fb9d2ff9593df9735f2fbb2467e5fd6c8efcb9ad2f7d5fd7fb43f7aff1fed8fdeff47fba3f7ffd17ea5efabfbff68bfd2f7d5fd7fb4dff7f8fbbdff8ff6fb1e7fbff7ffd1fee8fd7fb43f7aff1fed8fdeff47fba3f7ffd17ea5efabfbff68bfd2f7d5fd7fb49f7cbeecfd7fb49f7cbeecfd7fb43f7aff1fed8fdeff47fba3f7ffd1fee8fd7fb45fe9fbeafe3fdaaff47d75ff1fed279f2f7bff1fed279f2f7bff1fed8fdeff47fba3f7ffd1fee8fd7fb43f7aff1fed57fabebaff8ff62b7d5fddff47fbc9e7cbdeff47fbc9e7cbdeff47fba3f7ffd1fee8fd7fb43f7aff1fed8fdeff47fb95beafeeffa3fd4adf57f7ffd17ef2776275ff1fed277f2756f7ffd1fee8fd7fb43f7aff1fed8fdeff47fba3f7ffd17ea5efabfbff68bfd2f7d5fd7fb49ffc9d58ddff47fbc9df89d5fd7fb43f7aff1fed8fdeff47fba3f7ffd1fee8fd7fb45fe9fbeafe3fdaaff47d75ff1fed277f67267f678ef693bf3393bf3347fba3f7ffd1fee8fd7fb43f7aff1fed8fdeff47fb95beafeeffa3fd4adf57f7ffd1fe772bfaefb4f738f97f8745fbdf25e8c3dee3e4ff1d16ed8fdeff47ebd1fbff683d7aff1fad47efffa375a5dfd7bbaef4fb7ad7c9d7cbdeff47ebe4eb65efffa3f5e8fd7fb41ebdff8fd6a3f7ffd17af4fe3f5a57fa7dbdeb4abfaf779d7cbdecfd7fb44ebe5ef6fe3f5a8fdeff47ebd1fbff683d7aff1fad47efffa375a5dfd7bbaef4fb7ad7c9d7a9dfd7bb4ebe4efdbedef5e8fd7fb41ebdff8fd6a3f7ffd17af4fe3f5a57fa7dbdeb4abfaf779d7c9dfa7dbdebe4ebd4efeb5d8fdeff4771f4fe3f8aa3f7ff511cbdff8f62a5dfd71b2bfdbede98fcbca531f9794be3b2f7feeb1a97bdf75fd7b8ecbdffbac665effdd73556fa7dbdb1d2efeb8dc9cf5b1a939fb73456fa7dbdb3d2efeb9d957e5fefacf4fb7a67f2f396cee4e72d9dc9cf5b3afb3ece95957e5fef50fa7dbd43e9f7f50ea5dfd73bc8cf5bdac9cf5bdac9cf5bdac8cf5bda943eafeef7d5fffbf37b7ffedd5ffbf677e3b8b1e7657f5fe8f3ea7e5ffdbf3fbff7e7dffdb56f7f37368e1d9bfd7df0f1b2f7fbcde2fffdf9bd3fffeeaf7dfbbb715ce3b8ecefd7d6aecff3f7fabcdfb7fff058dbfffbf37b7ffedd5ffbf67763b2ecef0b7d5eddefabfff7e7f7fefcbbbf367f16d9df17fabcbadf57ffefcfeffdf9777f6dfe2cb2bf0f3e5ef67edfffc7674dffefcfeffdf9777f6dfeccb3bf5fd89af479fe5e9ff7fbfe3f3e6bfa7f7f7eefcfbffb3bbeb0ecef0b7d5eddefabfff7e7f7fe7cff7acefebed0e7d5fdbefa7f7f7eefcff7afe7ecef838f97bddff7fdeb99ffefcfeffdf9fef59cfdfddadaf579fe5e9ff7fbbe7f3df3fffdf9bd3fdfbf9eb3bf2ff47975bfaffedf9fdffbf3fdeb91fd7da1cfabfb7df5fffefcde9fef5f8fecef838f97bddf6fc6fff9f1fffdf9bd3fdfbfeed9df87519fe7eff579bfdf0ce3fffbf37b7f4db0ecef0b7d5eddefabfff727ff26cefebed0e7d5fdbefa7f7ff26fe2ecef837f13abfb7df26f62f26fe2ecef837f13937f13937f13937f13677f5fe8f3ea7e5ffdbf3ff93771f6f7853eafeef7d5fffb937f13677f5fe8f3ea7e9ffc9b98fc9b38fbfbe0dfc4e4dfc4e4dfc4e4dfc4d9df17fabcbadf57ffef4ffecd9cfd7da1cfabfb7df5fffee4dfccd9df17fabcbadf27ff6626ff66cefe3ef83733f93733f93733f93773f6f7853eafeef7d5fffb937f33b2bf2ff47975bfaffedf9ffc9b91fd7da1cfabfb7df26f3af9373dfbfbc2c8bf69e4df34f26f5af6f785feaeea4a7f57f5ecef0bfd5dd595feaeead9df17fabbaa2bfd5dd5b3bf0fbe4dfd5dd5c9b7a9bfab7af6f785feaeea4a7f57f5ecef0bfd5dd595feaeead9df17fabbaa2bfd5dd5b3bf0fbe4dfd5dd5c9b7a9bfab7af6f785feaeea4a7f57f5ecef0bfd5dd595feaeead9df17fabbaa2bfd5dd5b3bf0fbe4dfd5dd5c9b7a9bfab7af6f785feaeea4a7f57f5ecef0bfd5dd595feaeead9df17fabbaa2bfd5dd5b3bf0fa3feaeeae4dbd4df553dfbfb427f5758e9ef0a677f5fe8ef0a2bfd5de1ecef0bfd5d61f2ebb238fbfbe0d76531f975599cfd7da1bf2bacf47785b3bf2ff4778595feae70f6f785feae30f975599cfd7df0ebb298fcba2ccefebed0df5556fabbcad9df17fabbca4a7f5739fbfb427f5799fcba6ccefe7e6dedfabbcabe4fdf6fcefebed0df5528fd5d45f6f785feae42e9ef2ab2bf2ff477e5e4d7653dfbfb416b0e5af6f785beaeeeef2bdf2ff475757f5ff97ef0e9b2f7f795efafc5eeef2bdf2ff475757f5ff97ea1afabfbfbcaf7834f97bdbfaf7c7f616bd2d7f97b7bdedf57be5fe8ebeafebef2fd425f57f7f795ef079f2e7b7f5ff9fe5aecfebef2fd425f57f7f795ef17fabababfaf7c3ff874d9fbfbcaf7c3a8aff3f7f6bcbfaf7cbfd0d7d5fd7de5fb85beaeeeef2bdf0ffe4caceeef2bdf0ffe4c4cfe4c5cf97ea1afabfbfbcaf70b7d5ddddf57be1ffc9958dddf57be1ffc9998fc99b8f2fd425f57f7f795ef17fabababfaf7cffeab5ebebe4cfcc95efafad5d5f277f66ae7cbfd0d7d5fd7de5fb85beaeeeef2bdf2ff475757f5ff97e61e4cfb4caf70bfdbcd5d7857edeeaebe0cb65efef2b5fafc5eeef2b5f17fa79abaf0bfdbcd5d7c197cbdedf57be5ed89af4f3565f17fa79abaf0bfdbcd5d7c197cbdedf57be5e8bdddf57be2ef4f3565f17fa79abaf832f97bdbfaf7c1d46fdbcd5d7c18fdb1c063f6e7318fcb8cde15aecfebef218fcb8cd61f0e33687c18fdb1c2e6c4dfa79abc7e0c76d2e831fb7b90c7edce6722d767f5ff90c7edce602fcb8cdc5ea36ee6ddcfe0f90fa4b32",
+      "row_count": 256,
+      "stops": [
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29328,
+          "steps": 2575
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        },
+        {
+          "kind": "run_until_pc",
+          "reached": true,
+          "pc": 32811,
+          "ticks": 29196,
+          "steps": 2562
+        }
+      ],
+      "row_done_pc": 32811,
+      "end_guard": 165,
+      "oracle_matches": false,
+      "mismatches": 65280,
+      "native_prg_sha256": "3bf76d19272d681213f770e2162f5f368c80694caf09085e571ffff8543d7498",
+      "cart_sha256": "54adebaa672ad60a82ac234425c7a9c6eca4ab02b422ebf4865206767c37e6d4",
+      "source_sha256": "cd425201893faa64845ab59c4a6f59a7c4f011a2429aac52a432bb3be6cce38c",
+      "code_end": 32898,
+      "server": {
+        "name": "emu198x-nes",
+        "version": "0.44.2"
+      }
+    }
+  },
+  "sources": {
+    "nintendo-entertainment-system/patterns/assembly/input/controller-reading/edges-demo.asm": "f03b9bbc613f9ed1dd3132b1c811b0c725d16ee27a7e94690acdebff8d5d8f1d",
+    "nintendo-entertainment-system/patterns/assembly/input/controller-reading/edges-custom.asm": "f582ad988c508abd29e37087675363fb020ce30f3233af46711a29bf0f64971c",
+    "nintendo-entertainment-system/patterns/assembly/input/controller-reading/edges-wrong.asm": "300b245ac518287dbef300b5a48edb212ba8ca28c93481813eb4bf21f2dcbc85",
+    "nintendo-entertainment-system/patterns/assembly/input/controller-reading/edges-caller.inc": "0933f4a18943ed1634d6524e55c599b2e31083385ebc145e819fe358faeed6e4",
+    "nintendo-entertainment-system/patterns/assembly/input/controller-reading/edges-font.inc": "fba50c5ec8e59e3e6821dc40aeb8ec2a02435d567e4277f86938f44b2d1a075e",
+    "nintendo-entertainment-system/patterns/assembly/input/controller-reading/edges.inc": "fe7cabaaa632bea62cfc0cdad53a625aed8e317ae321133a7c94e2855f5bbedb",
+    "nintendo-entertainment-system/patterns/assembly/input/controller-reading/Makefile": "f1c6cff805464e31a224a8a6abc14ce3d6de93ba282d7f35d60f2f7bb2e6f086",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/input.inc": "5f0c09cff25558981904113065f9f898a42bcad85914e6cde5309ac5da11c1b2",
+    "nintendo-entertainment-system/patterns/assembly/framework/input-to-sound/presses.inc": "e6480b3f798c09b6431f9fc2e77c159125892264a07de5d591a30c91504ce74d",
+    "scripts/verify-nes-input-edges.py": "353710502aa89ad7dfc005d27816084f640942d0b068c1ca915c7128153db069",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
+  },
+  "emulator_sha256": "60a56d759580a8231f9f9087c7dd646a3d3d2439053cf1861d9126393c00af73",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279"
+}
