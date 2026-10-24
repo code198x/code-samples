@@ -1,0 +1,16 @@
+{
+  "emulator_sha256": "ded30155d74817ffd16c7fdd6f691a5893a560d5f59999ab02614648bac0a458",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "firmware_sha256": {
+    "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
+  },
+  "model": "48K PAL, stock recorded ROM",
+  "payload_sha256": {
+    "working": "fa8ca6e872aacf2de69c9a5532952da40fe6d09a96a64a02d973a22fbf4f507d",
+    "custom": "79bab4310cb844539de4e869a46d294cd8e020664e538fe441df6a0c8348aee8",
+    "wrong": "e52bc8d12702d043b3e26f367dc702c8ab4afeaf0c7a29130c5223312cd16fef",
+    "repaired": "fa8ca6e872aacf2de69c9a5532952da40fe6d09a96a64a02d973a22fbf4f507d",
+    "boundaries": "27ab5fdfe3437883beda8f0378e38517221091e15366c4bd6908fd67fb4fbcee",
+    "wrong-boundary": "14799f55f6ed39a9cf3b6bd7d38a5cd30d48bec9d6553c1ba32cd7ec776849ba"
+  }
+}
