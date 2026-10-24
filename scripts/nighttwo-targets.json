@@ -126,5 +126,21 @@
   [
     "music-command-stream",
     "commodore-amiga"
+  ],
+  [
+    "save-record-validation",
+    "commodore-64"
+  ],
+  [
+    "save-record-validation",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "save-record-validation",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "save-record-validation",
+    "commodore-amiga"
   ]
 ]
