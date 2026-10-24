@@ -206,5 +206,21 @@
   [
     "bounded-rle-encoder",
     "commodore-amiga"
+  ],
+  [
+    "generation-handles",
+    "commodore-64"
+  ],
+  [
+    "generation-handles",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "generation-handles",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "generation-handles",
+    "commodore-amiga"
   ]
 ]
