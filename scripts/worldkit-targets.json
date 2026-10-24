@@ -94,5 +94,21 @@
   [
     "grid-line-sight",
     "commodore-amiga"
+  ],
+  [
+    "bounded-grid-path",
+    "commodore-64"
+  ],
+  [
+    "bounded-grid-path",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-grid-path",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-grid-path",
+    "commodore-amiga"
   ]
 ]
