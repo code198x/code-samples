@@ -126,5 +126,21 @@
   [
     "moving-solid-push",
     "commodore-amiga"
+  ],
+  [
+    "viewport-world-transform",
+    "commodore-64"
+  ],
+  [
+    "viewport-world-transform",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "viewport-world-transform",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "viewport-world-transform",
+    "commodore-amiga"
   ]
 ]

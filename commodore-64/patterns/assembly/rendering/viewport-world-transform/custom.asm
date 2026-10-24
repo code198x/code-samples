@@ -1,0 +1,43 @@
+SCREEN_X=$80
+SCREEN_Y=$81
+VISIBLE=$82
+VALID=$83
+WORLD_X_LO=$84
+WORLD_X_HI=$85
+WORLD_Y_LO=$86
+WORLD_Y_HI=$87
+CAMERA_X_LO=$88
+CAMERA_X_HI=$89
+CAMERA_Y_LO=$8a
+CAMERA_Y_HI=$8b
+WIDTH=$8c
+HEIGHT=$8d
+T0=$8e
+T1=$8f
+T2=$90
+T3=$91
+STATE=$80
+input_ptr=$70
+cases_left=$72
+ptr=$74
+saved_y=$76
+OUTPUT=$c000
+preview=OUTPUT+1400
+ready=OUTPUT+1408
+CUSTOM=1
+BROKEN=0
+COYOTE_STEPS=2
+BUFFER_STEPS=2
+TEXT_CAP=4
+PROPERTY_COUNT=16
+STREAM_BYTES=13
+CRC_POLY=49
+!source "caller.inc"
+!source "exercise.inc"
+component_start:
+!source "component.inc"
+!source "data.inc"
+!source "cases.inc"
+hex_font:
+    !byte 0,0,0,0,0,0,0,0,0,56,40,40,40,56,0,0,0,16,48,16,16,56,0,0,0,56,8,56,32,56,0,0,0,56,8,56,8,56,0,0,0,40,40,56,8,8,0,0,0,56,32,56,8,56,0,0,0,56,32,56,40,56,0,0,0,56,8,8,8,8,0,0,0,56,40,56,40,56,0,0,0,56,40,56,8,56,0,0,0,16,40,56,40,40,0,0,0,48,40,48,40,48,0,0,0,56,32,32,32,56,0,0,0,48,40,40,40,48,0,0,0,56,32,48,32,56,0,0,0,56,32,48,32,32,0,0
+code_end:
