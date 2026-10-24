@@ -20,7 +20,7 @@ The custom client uses 0.5 per update instead of 0.25. Four calls reach 102. The
 
 The wrong client clears POS_LO before every call. The quarter-step is always restarted from a whole unit, so four calls leave position 100.25 instead of 101. Retain the fractional byte between calls; discarding it only for drawing is harmless, discarding it from state is not.
 
-An 8.8 unsigned position covers 0–255.996 units. C64 and Amiga displays can extend beyond 255 horizontal pixels, so do not mistake this for a complete screen-coordinate format. Wider worlds need a wider integer part. [The Amiga Flock lessons](/systems/commodore-amiga/assembly/flock/unit-14/) already use 16.16 positions; that is a useful wider alternative rather than a reason to squeeze those games into this byte-oriented interface. Clamp or wrap at the game’s actual bounds as a separate policy.
+An 8.8 unsigned position covers 0–255.996 units. C64 and Amiga displays can extend beyond 255 horizontal pixels, so do not mistake this for a complete screen-coordinate format. Wider worlds need a wider integer part. [The Amiga Flock lessons](https://code198x.com/systems/commodore-amiga/assembly/flock/unit-14/) already use 16.16 positions; that is a useful wider alternative rather than a reason to squeeze those games into this byte-oriented interface. Clamp or wrap at the game’s actual bounds as a separate policy.
 
 ## Cost and evidence
 
