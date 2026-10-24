@@ -30,5 +30,21 @@
   [
     "saturating-word-add",
     "commodore-amiga"
+  ],
+  [
+    "hexadecimal-format",
+    "commodore-64"
+  ],
+  [
+    "hexadecimal-format",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "hexadecimal-format",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "hexadecimal-format",
+    "commodore-amiga"
   ]
 ]
