@@ -142,5 +142,21 @@
   [
     "priority-arbiter",
     "commodore-amiga"
+  ],
+  [
+    "decimal-format",
+    "commodore-64"
+  ],
+  [
+    "decimal-format",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "decimal-format",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "decimal-format",
+    "commodore-amiga"
   ]
 ]
