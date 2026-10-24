@@ -1094,3 +1094,18 @@ jobs:
           python scripts/check-gamekit.py
           python -m unittest discover -s scripts -p test_gamekit.py -v
           python -m unittest discover -s scripts -p test_gamekit_contracts.py -v
+
+  worldkit-records:
+    name: Reusable maths, world and state component evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Validate explicit native records and reject altered evidence
+        run: |
+          python scripts/check-worldkit.py
+          python -m unittest discover -s scripts -p test_worldkit.py -v
+          python -m unittest discover -s scripts -p test_worldkit_contracts.py -v

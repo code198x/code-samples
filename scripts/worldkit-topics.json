@@ -1,0 +1,394 @@
+{
+  "byte-product": {
+    "title": "Multiply Two Bytes into a Word",
+    "category": "framework",
+    "fields": [
+      "PRODUCT_LO",
+      "PRODUCT_HI",
+      "LEFT",
+      "RIGHT"
+    ]
+  },
+  "word-division": {
+    "title": "Divide a Word by a Byte",
+    "category": "framework",
+    "fields": [
+      "QUOTIENT_LO",
+      "QUOTIENT_HI",
+      "REMAINDER",
+      "VALID",
+      "NUMERATOR_LO",
+      "NUMERATOR_HI",
+      "DIVISOR"
+    ]
+  },
+  "integer-square-root": {
+    "title": "Find an Integer Square Root",
+    "category": "framework",
+    "fields": [
+      "ROOT",
+      "REMAINDER_LO",
+      "REMAINDER_HI",
+      "NUMBER_LO",
+      "NUMBER_HI"
+    ]
+  },
+  "point-circle": {
+    "title": "Test a Point Against a Circle",
+    "category": "physics",
+    "fields": [
+      "HIT",
+      "DX",
+      "DY",
+      "POINT_X",
+      "POINT_Y",
+      "CENTRE_X",
+      "CENTRE_Y",
+      "RADIUS"
+    ]
+  },
+  "byte-interpolation": {
+    "title": "Interpolate Between Byte Endpoints",
+    "category": "physics",
+    "fields": [
+      "VALUE",
+      "START",
+      "END",
+      "FRACTION"
+    ]
+  },
+  "grid-line-sight": {
+    "title": "Trace a Thin Grid Line of Sight",
+    "category": "ai",
+    "fields": [
+      "VISIBLE",
+      "VALID",
+      "FROM",
+      "TO",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15"
+    ]
+  },
+  "bounded-grid-path": {
+    "title": "Find the First Step Along a Shortest Grid Path",
+    "category": "ai",
+    "fields": [
+      "MOVE",
+      "DISTANCE",
+      "FOUND",
+      "VALID",
+      "FROM",
+      "TO",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15"
+    ]
+  },
+  "trigger-transitions": {
+    "title": "Report Trigger Enter, Stay and Exit Events",
+    "category": "framework",
+    "fields": [
+      "ENTERED",
+      "STAYED",
+      "EXITED",
+      "PREVIOUS",
+      "CURRENT"
+    ]
+  },
+  "timed-status": {
+    "title": "Service a Timed Status Effect",
+    "category": "framework",
+    "fields": [
+      "PULSE",
+      "REMAINING",
+      "PHASE",
+      "DURATION",
+      "PERIOD",
+      "APPLY",
+      "VALID"
+    ]
+  },
+  "checkpoint-state": {
+    "title": "Capture and Restore a Checked Checkpoint",
+    "category": "framework",
+    "fields": [
+      "RESULT",
+      "SAVED",
+      "LIVE_X",
+      "LIVE_Y",
+      "LIVE_RESOURCE",
+      "MODE",
+      "SAVED_X",
+      "SAVED_Y",
+      "SAVED_RESOURCE",
+      "CHECKSUM"
+    ]
+  },
+  "spawn-timeline": {
+    "title": "Service a Small Spawn Timeline",
+    "category": "framework",
+    "fields": [
+      "EVENT",
+      "FIRED",
+      "INDEX",
+      "WAIT",
+      "COUNT",
+      "DONE",
+      "VALID",
+      "E0",
+      "E1",
+      "E2",
+      "E3",
+      "L0",
+      "L1",
+      "L2",
+      "L3"
+    ]
+  },
+  "packed-nibble-map": {
+    "title": "Read and Update Packed Four-bit Cells",
+    "category": "rendering",
+    "fields": [
+      "VALUE",
+      "VALID",
+      "CELL",
+      "WRITE",
+      "NEW_VALUE",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6",
+      "B7"
+    ]
+  },
+  "bounded-rle-encoder": {
+    "title": "Encode a Small Run-length Block",
+    "category": "framework",
+    "fields": [
+      "WRITTEN",
+      "ERROR",
+      "VALID",
+      "INPUT_COUNT",
+      "CAPACITY",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6",
+      "B7",
+      "R0",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7",
+      "R8",
+      "R9",
+      "R10",
+      "R11",
+      "R12",
+      "R13",
+      "R14",
+      "R15"
+    ]
+  },
+  "generation-handles": {
+    "title": "Reject Stale Object Handles",
+    "category": "framework",
+    "fields": [
+      "RESULT",
+      "OUT_SLOT",
+      "OUT_GENERATION",
+      "VALID",
+      "MODE",
+      "SLOT",
+      "GENERATION",
+      "ACTIVE",
+      "G0",
+      "G1",
+      "G2",
+      "G3"
+    ]
+  },
+  "stable-compaction": {
+    "title": "Compact a Live Object Prefix",
+    "category": "framework",
+    "fields": [
+      "COUNT",
+      "REMOVED",
+      "VALID",
+      "F0",
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7",
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "I5",
+      "I6",
+      "I7"
+    ]
+  },
+  "motion-history": {
+    "title": "Keep a Small Position History",
+    "category": "framework",
+    "fields": [
+      "OUT_X",
+      "OUT_Y",
+      "VALID",
+      "HEAD",
+      "COUNT",
+      "INPUT_X",
+      "INPUT_Y",
+      "LAG",
+      "PUSH",
+      "HX0",
+      "HX1",
+      "HX2",
+      "HX3",
+      "HX4",
+      "HX5",
+      "HX6",
+      "HX7",
+      "HY0",
+      "HY1",
+      "HY2",
+      "HY3",
+      "HY4",
+      "HY5",
+      "HY6",
+      "HY7"
+    ]
+  },
+  "bounded-bit-reader": {
+    "title": "Read Bits from a Bounded Data Block",
+    "category": "framework",
+    "fields": [
+      "VALUE",
+      "VALID",
+      "CURSOR",
+      "COUNT",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  "pixel-mask-collision": {
+    "title": "Test Two Small Opaque Pixel Masks",
+    "category": "physics",
+    "fields": [
+      "HIT",
+      "ROW",
+      "SHIFT_X",
+      "SHIFT_Y",
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "Q0",
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q6",
+      "Q7"
+    ]
+  },
+  "logical-envelope": {
+    "title": "Service a Logical Attack\u2013Decay\u2013Sustain\u2013Release Envelope",
+    "category": "audio",
+    "fields": [
+      "LEVEL",
+      "PHASE",
+      "PREVIOUS",
+      "VALID",
+      "GATE",
+      "ATTACK",
+      "DECAY",
+      "SUSTAIN",
+      "RELEASE"
+    ]
+  },
+  "bounded-undo": {
+    "title": "Keep a Bounded Cell-edit Undo Log",
+    "category": "framework",
+    "fields": [
+      "RESULT",
+      "VALID",
+      "COUNT",
+      "MODE",
+      "CELL",
+      "VALUE",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15",
+      "J0",
+      "J1",
+      "J2",
+      "J3",
+      "K0",
+      "K1",
+      "K2",
+      "K3"
+    ]
+  }
+}
