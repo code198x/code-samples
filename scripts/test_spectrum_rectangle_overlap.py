@@ -18,6 +18,11 @@ class Evidence(unittest.TestCase):
         for lang in C.V.FS:
             C.check(lang)
 
+    def test_table_include(self):
+        F = C.V.FS["assembly"]
+        with self.assertRaisesRegex(AssertionError, "table"):
+            C.tables((F / "cases.inc").read_text(), "case_table:\n    defb 0\n")
+
     def test_falsifications(self):
         for lang, F in C.V.FS.items():
             original = json.loads((F / "verification/results.json").read_text())
