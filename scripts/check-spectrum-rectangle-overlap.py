@@ -51,7 +51,21 @@ def pixels(c, lang):
                 )
 
 
+def tables(count_text, table_text):
+    cases = V.C.cases()
+    T.require(
+        count_text == "CASE_COUNT equ " + str(len(cases)) + "\n",
+        "Changed case count include",
+    )
+    expected = "case_table:\n" + "".join(
+        "    defb " + ",".join(map(str, c["a"] + c["b"])) + "\n" for c in cases
+    )
+    T.require(table_text == expected, "Changed case table include")
+
+
 def check(lang, record=None):
+    F = V.FS["assembly"]
+    tables((F / "cases.inc").read_text(), (F / "case-table.inc").read_text())
     global _image_root
     _image_root = V.FS[lang] / "verification"
     r = (
