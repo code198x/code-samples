@@ -62,5 +62,21 @@
   [
     "one-way-platform",
     "commodore-amiga"
+  ],
+  [
+    "camera-deadzone",
+    "commodore-64"
+  ],
+  [
+    "camera-deadzone",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "camera-deadzone",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "camera-deadzone",
+    "commodore-amiga"
   ]
 ]
