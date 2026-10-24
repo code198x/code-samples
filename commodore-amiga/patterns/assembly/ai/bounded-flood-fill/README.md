@@ -1,0 +1,55 @@
+# Fill a Connected Grid Region on Amiga
+
+A paint fill can also discover a connected room or reveal matching puzzle cells.
+
+## Use it in a project
+
+The caller supplies a 4×4 row-major byte grid and SEED 0–15. Replace its four-connected region with REPLACEMENT and return CHANGED. Equal source/replacement is a valid no-op. The implementation repeatedly scans for source-colour cells touching the growing replacement region, but tracks membership separately in scratch so pre-existing replacement-colour cells cannot leak into it.
+
+Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **SEED, REPLACEMENT, CHANGED, VALID, C0, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15**. They occupy 20 contiguous bytes. Also reserve the private workspace: **T0, T1, T2, T3, T4, T5, T6, T7, EXPR_SAVE, V0, V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14, V15** (25 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
+
+Call `bounded_flood_fill_init` once at the intended reset boundary. It clears inputs as well as outputs and workspace. Set your starting state and configuration afterwards, then call `bounded_flood_fill_step` whenever the described event occurs. The helper reads no device, waits for no frame and installs no interrupt handler.
+
+| Ownership | Fields |
+|---|---|
+| Retain between calls | C0–C15 |
+| Supply before service | SEED and REPLACEMENT |
+| Read after service | CHANGED and VALID |
+
+A separate membership map distinguishes cells reached from the seed from cells that happened to have the replacement colour already. Repeated scans grow that membership until a scan adds nothing; only then are colours changed.
+
+## Machine contract
+
+D0–D3/A0–A1/CCR may change; D4–D7/A2–A6 are preserved. A direct BSR/JSR needs four return-address stack bytes. The helper makes no nested calls and adds no other stack use. Its named scratch is private workspace, not a pointer, a ROM variable or shared zero-page space that the game may borrow concurrently. Scope or rename routine and field labels and allocate a separate block for each independent instance. Give each block one mutation owner.
+
+The A500 OCS diagnostic cold-boots an OFS disk, owns the Copper and bitplane and disables interrupt/DMA sources. The helper does not take over hardware or allocate Chip RAM.
+
+## Adapt the caller
+
+`demo.asm` supplies the bindings and include order. `exercise.inc` first runs table cases, then a separate client retaining state between calls. A game can call the public step entry directly and remove the diagnostic packet and display. Do not copy the diagnostic's hardware takeover into an existing game loop.
+
+Build with `make ASM198X=/path/to/asm198x` and `BUILD198X=/path/to/build198x`. The Makefile produces normal, custom, deliberately wrong and repaired programs. Tools must already be installed; the sample downloads nothing.
+
+## Customise it
+
+Seed the disconnected bottom-right cell instead of the upper-left region. The maintained custom caller changes its inputs or client sequence rather than hiding a different implementation behind the same label. Compare every state of the two clients, not only their final display.
+
+## Mistake and repair
+
+The wrong caller always supplies SEED=15. It changes the disconnected bottom-right region instead of the selected upper-left region. Convert the selected cell to a checked row-major index, then pass that index unchanged.
+
+The BROKEN branch lives in the sequential client, not the reusable helper. `wrong.asm` selects it; `repaired.asm` restores the normal call sequence. The repaired executable matches the normal program (for Spectrum, compare loaded CODE rather than the tape filename).
+
+## Cost and alternatives
+
+The measured helper extent is 1026 code bytes; public state is 20 bytes and private scratch is 25 bytes. There are no immutable helper tables. Caller data, the test cases, return-address stack, alignment and display buffers cost additional space. These are assembled sizes, not cycle measurements.
+
+Repeated full scans deliberately favour a small fixed workspace over a queue. At most fifteen growth scans can add cells, followed by a terminating scan. Larger or frame-budgeted maps need a different implementation.
+
+The fixed 16-cell scan trades a queue for sixteen scratch membership bytes. It may scan repeatedly; larger maps should use an explicit bounded queue or span fill and budget work across frames. Diagonal contact is not connectivity. It is not a complete navigation solver.
+
+## Execution evidence
+
+Four variants run on A500 OCS PAL, Kickstart1.3 OFS cold boot, using Asm198x 0.0.72, Emu198x 0.44.2 and Build198x 0.2.9. Each executes 50 boundary/varied/error table cases, dirty initialisation and the separate retained-state client. An independent mathematical/container model checks every public byte after every call. This is bounded example coverage, not exhaustive correctness for every possible state.
+
+The records retain loaded immutable code, completion, register sentinels, full packets, source/tool/firmware hashes and captures. The public gate validates these retained observations and rejects altered evidence; it does not run restricted firmware. No firmware is distributed. The eight displayed bytes are the first eight public fields, zero-padded when shorter; the packet includes every field.
