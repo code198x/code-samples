@@ -14,5 +14,21 @@
   [
     "ladder-controller",
     "commodore-amiga"
+  ],
+  [
+    "inventory-transfer",
+    "commodore-64"
+  ],
+  [
+    "inventory-transfer",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "inventory-transfer",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "inventory-transfer",
+    "commodore-amiga"
   ]
 ]
