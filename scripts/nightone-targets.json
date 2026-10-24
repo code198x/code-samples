@@ -46,5 +46,21 @@
   [
     "push-block-transaction",
     "commodore-amiga"
+  ],
+  [
+    "spatial-bucket",
+    "commodore-64"
+  ],
+  [
+    "spatial-bucket",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "spatial-bucket",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "spatial-bucket",
+    "commodore-amiga"
   ]
 ]
