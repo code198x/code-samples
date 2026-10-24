@@ -1,0 +1,15 @@
+{
+  "emulator_sha256": "7b82d697d1a1d8f87276d2217b8aaf4e659ffeecbf62f71305afe6cbb61d09d3",
+  "firmware_sha256": {
+    "atarixl.rom": "a77050b2d81db2d11eaa3dbafd8ec2531b478abcc3bcc4b0d846b634e885edb1",
+    "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0"
+  },
+  "model": "800XL NTSC, OS Rev 2 and recorded Atari BASIC",
+  "ram_bytes": 65536,
+  "ramtop_page": 124,
+  "reserved_gap": 1024,
+  "code_origin": 32768,
+  "context": 33536,
+  "context_bytes": 20,
+  "mailbox": 32768
+}

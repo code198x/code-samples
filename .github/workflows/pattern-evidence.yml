@@ -825,3 +825,16 @@ jobs:
       - run: |
           python scripts/check-atari-xl-assembly-deadlines.py
           python -m unittest discover -s scripts -p test_atari_xl_assembly_deadlines.py -v
+
+  atari-xl-basic-deadline-records:
+    name: Atari BASIC deadlines, allocation and native failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-atari-xl-basic-deadlines.py
+          python -m unittest discover -s scripts -p test_atari_xl_basic_deadlines.py -v
