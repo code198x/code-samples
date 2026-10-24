@@ -286,5 +286,21 @@
   [
     "bounded-delta-decoder",
     "commodore-amiga"
+  ],
+  [
+    "input-debounce",
+    "commodore-64"
+  ],
+  [
+    "input-debounce",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "input-debounce",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "input-debounce",
+    "commodore-amiga"
   ]
 ]
