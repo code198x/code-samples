@@ -942,3 +942,16 @@ jobs:
       - run: |
           python scripts/check-blitz-map-queries.py
           python -m unittest discover -s scripts -p test_blitz_map_queries.py -v
+
+  nes-deadline-records:
+    name: NES NMI deadlines, slow work and native policy evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-nes-deadlines.py
+          python -m unittest discover -s scripts -p test_nes_deadlines.py -v
