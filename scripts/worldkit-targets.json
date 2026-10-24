@@ -158,5 +158,21 @@
   [
     "checkpoint-state",
     "commodore-amiga"
+  ],
+  [
+    "spawn-timeline",
+    "commodore-64"
+  ],
+  [
+    "spawn-timeline",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "spawn-timeline",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "spawn-timeline",
+    "commodore-amiga"
   ]
 ]
