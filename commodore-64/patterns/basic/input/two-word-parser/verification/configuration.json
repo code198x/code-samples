@@ -1,0 +1,9 @@
+{
+  "build198x_sha256": "248bed66d985f433c20f2cfb439a02cb0382a26bc8b44762270d785e80879e93",
+  "emulator_sha256": "fe8f355b7ee01cb20b30b9741c97f5e4cde8357a4a1c380d5bc9ef1c0d89deb6",
+  "roms": {
+    "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
+    "kernal.rom": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721",
+    "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
+  }
+}

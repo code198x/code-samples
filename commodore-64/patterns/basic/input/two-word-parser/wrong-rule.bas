@@ -1,0 +1,1 @@
+5330 IF LEFT$(O$,LEN(E$(I)))=E$(I) THEN NI=Z(I)
