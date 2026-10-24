@@ -254,5 +254,21 @@
   [
     "bitmap-transpose",
     "commodore-amiga"
+  ],
+  [
+    "packed-colour-step",
+    "commodore-64"
+  ],
+  [
+    "packed-colour-step",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "packed-colour-step",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "packed-colour-step",
+    "commodore-amiga"
   ]
 ]
