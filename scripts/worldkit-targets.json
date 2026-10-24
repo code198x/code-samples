@@ -110,5 +110,21 @@
   [
     "bounded-grid-path",
     "commodore-amiga"
+  ],
+  [
+    "trigger-transitions",
+    "commodore-64"
+  ],
+  [
+    "trigger-transitions",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "trigger-transitions",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "trigger-transitions",
+    "commodore-amiga"
   ]
 ]
