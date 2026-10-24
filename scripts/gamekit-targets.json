@@ -158,5 +158,21 @@
   [
     "waypoint-route",
     "commodore-amiga"
+  ],
+  [
+    "inventory-stacks",
+    "commodore-64"
+  ],
+  [
+    "inventory-stacks",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "inventory-stacks",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "inventory-stacks",
+    "commodore-amiga"
   ]
 ]
