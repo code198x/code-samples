@@ -14,5 +14,21 @@
   [
     "byte-product",
     "commodore-amiga"
+  ],
+  [
+    "word-division",
+    "commodore-64"
+  ],
+  [
+    "word-division",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "word-division",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "word-division",
+    "commodore-amiga"
   ]
 ]
