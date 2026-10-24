@@ -190,5 +190,21 @@
   [
     "packed-nibble-map",
     "commodore-amiga"
+  ],
+  [
+    "bounded-rle-encoder",
+    "commodore-64"
+  ],
+  [
+    "bounded-rle-encoder",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-rle-encoder",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-rle-encoder",
+    "commodore-amiga"
   ]
 ]
