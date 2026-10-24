@@ -46,5 +46,21 @@
   [
     "quest-flags",
     "commodore-amiga"
+  ],
+  [
+    "event-queue",
+    "commodore-64"
+  ],
+  [
+    "event-queue",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "event-queue",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "event-queue",
+    "commodore-amiga"
   ]
 ]
