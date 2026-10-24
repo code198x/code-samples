@@ -29,6 +29,10 @@ def pixels(c, system):
     text = " ".join(f"{v:02X}" for v in c["preview"]) + " "
     if system == "sinclair-zx-spectrum":
         bits = zlib.decompress(bytes.fromhex(c["bitmap_zlib"]))
+        T.require(
+            all(str(ord(char)) in c["glyphs"] for char in set(text)),
+            "Claimed text contains an uncaptured glyph",
+        )
         wanted = bytearray(6144)
         for y in range(8):
             for x, char in enumerate(text):
