@@ -126,5 +126,21 @@
   [
     "tile-properties",
     "commodore-amiga"
+  ],
+  [
+    "bounded-rle",
+    "commodore-64"
+  ],
+  [
+    "bounded-rle",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-rle",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-rle",
+    "commodore-amiga"
   ]
 ]
