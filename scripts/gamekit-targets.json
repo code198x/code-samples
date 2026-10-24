@@ -206,5 +206,21 @@
   [
     "dialogue-gates",
     "commodore-amiga"
+  ],
+  [
+    "decimal-parser",
+    "commodore-64"
+  ],
+  [
+    "decimal-parser",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "decimal-parser",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "decimal-parser",
+    "commodore-amiga"
   ]
 ]
