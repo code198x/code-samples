@@ -1035,3 +1035,17 @@ jobs:
         run: |
           python scripts/check-pools-and-states.py
           python -m unittest discover -s scripts -p test_pools_and_states.py -v
+
+  game-rules-records:
+    name: Native damage and cooldown evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check all explicit native targets and reject altered observations
+        run: |
+          python scripts/check-game-rules.py
+          python -m unittest discover -s scripts -p test_game_rules.py -v
