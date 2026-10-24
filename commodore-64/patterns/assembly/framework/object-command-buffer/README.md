@@ -1,0 +1,55 @@
+# Defer Object Changes Until After Traversal on C64
+
+Spawning or deleting objects during a traversal can accidentally update a new object twice or skip a neighbour.
+
+## Use it in a project
+
+Four object slots use ACTIVE bits0..3 and generations G0..G3. MODE=1 queues a spawn in SLOT; MODE=2 queues a removal of SLOT with GENERATION; MODE=3 flushes. MODE=0 clears pending commands without changing objects. COUNT is0..4. Queueing never changes the object table. A full queue returns FULL=1 and preserves its commands. Flush handles commands in insertion order: spawn only a free slot and increment its generation modulo256; remove only a live matching-generation slot. APPLIED/REJECTED count results and COUNT becomes zero. Invalid global state or queued command structure sets VALID=0 and leaves objects and queue intact. Slot payload initialisation is caller-owned.
+
+Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **APPLIED, REJECTED, FULL, VALID, MODE, SLOT, GENERATION, ACTIVE, COUNT, G0, G1, G2, G3, O0, O1, O2, O3, S0, S1, S2, S3, H0, H1, H2, H3**. They occupy 25 contiguous bytes. Also reserve the private workspace: **T0, T1, T2, T3, T4, T5, T6, EXPR_SAVE** (8 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
+
+Call `object_command_buffer_init` once at the intended reset boundary. It clears inputs as well as outputs and workspace. Set your starting state and configuration afterwards, then call `object_command_buffer_step` whenever the described event occurs. The helper reads no device, waits for no frame and installs no interrupt handler.
+
+| Ownership | Fields |
+|---|---|
+| Retain between calls | ACTIVE, G0..G3, COUNT and queued O/S/H arrays |
+| Supply before service | MODE, SLOT and GENERATION |
+| Read after service | APPLIED, REJECTED, FULL, VALID and updated table/queue |
+
+A validation pass checks every queued operation before mutation. The application pass then honours insertion order and current generations, so a stale removal cannot delete a newly reused slot. Queueing and flushing are distinct mutation boundaries.
+
+## Machine contract
+
+A/X/status may change; Y and decimal mode are preserved. Use CLD for binary arithmetic. A direct JSR needs two return-address stack bytes. The helper makes no nested calls and adds no other stack use. Its named scratch is private workspace, not a pointer, a ROM variable or shared zero-page space that the game may borrow concurrently. The samples use fixed symbol bindings. Scope or rename every label and binding, including the component_end measurement marker, and allocate a separate block for each independent instance. Different helpers can also use common field names, so combining them needs separate namespaces or explicitly renamed bindings. Give each block one mutation owner.
+
+The diagnostic PRG owns screen, font and colour RAM and disables interrupts; it does not return to BASIC. The reusable helper does none of those things.
+
+## Adapt the caller
+
+`demo.asm` supplies the bindings and include order. `exercise.inc` first runs table cases, then a separate client retaining state between calls. A game can call the public step entry directly and remove the diagnostic packet and display. Do not copy the diagnostic's hardware takeover into an existing game loop.
+
+Build with `make ASM198X=/path/to/asm198x`. The Makefile produces normal, custom, deliberately wrong and repaired programs. Tools must already be installed; the sample downloads nothing.
+
+## Customise it
+
+Queue a spawn then a matching removal of the same slot; insertion order leaves it free after one flush. The maintained custom caller changes its inputs or client sequence rather than hiding a different implementation behind the same label. Compare every state of the two clients, not only their final display.
+
+## Mistake and repair
+
+The wrong client clears the pending count before each service. Flush sees an empty queue and the requested spawn never happens. Retain the command buffer until the traversal ends and a deliberate flush consumes it.
+
+The BROKEN branch lives in the sequential client, not the reusable helper. `wrong.asm` selects it; `repaired.asm` restores the normal call sequence. The repaired executable matches the normal program (for Spectrum, compare loaded CODE rather than the tape filename).
+
+## Cost and alternatives
+
+The measured helper extent is 578 code bytes; public state is 25 bytes and private scratch is 8 bytes. There are no immutable helper tables. Caller data, the test cases, return-address stack, alignment and display buffers cost additional space. These are assembled sizes, not cycle measurements.
+
+At most four validation steps and four applications, each with at most three bit shifts. Compared with immediate mutation this needs queue storage and a flush phase, but traversal sees a stable object set. The existing event FIFO is smaller when only byte event IDs are needed.
+
+This component owns occupancy and generations only, not a payload constructor or resource allocator. After a successful flush initialise newly live payloads before any object consumer runs; retain the queued commands externally if you need per-command payload data or outcomes. A generation byte wraps after256 reuses, so ancient handles require a stronger lifetime policy. Single update owner only; interrupt producers need separate synchronisation.
+
+## Execution evidence
+
+Four variants run on PAL stock-ROM PRG, using Asm198x 0.0.72, Emu198x 0.44.2. Each executes 40 boundary/varied/error table cases, dirty initialisation and the separate retained-state client. An independent mathematical/container model checks every public byte after every call. This is bounded example coverage, not exhaustive correctness for every possible state.
+
+The records retain loaded immutable code, completion, register sentinels, full packets, source/tool/firmware hashes and captures. The public gate validates these retained observations and rejects altered evidence; it does not run restricted firmware. No firmware is distributed. The eight displayed bytes are the first eight public fields, zero-padded when shorter; the packet includes every field.
