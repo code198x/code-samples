@@ -6,7 +6,7 @@ A prompt should not flicker between two nearby objects whenever their distances 
 
 ACTIVE uses its low four bits. D0..D3 are caller-computed distances on one consistent byte scale. Choose the nearest active candidate at distance <= RANGE; lowest slot wins a fresh tie. CURRENT is 0–3 or 255 for none. Retain a current eligible candidate when its distance is no more than MARGIN worse than the nearest. SELECTED is 255 when none qualifies. Invalid CURRENT or high ACTIVE bits clears VALID and returns SELECTED=255. Feed SELECTED back as CURRENT next time.
 
-Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **SELECTED, VALID, CURRENT, ACTIVE, RANGE, MARGIN, D0, D1, D2, D3**. They occupy 10 contiguous bytes. Also reserve the private workspace: **T0, T1, T2, T3, T4, T5** (6 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
+Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **SELECTED, VALID, CURRENT, ACTIVE, RANGE, MARGIN, DIST0, DIST1, DIST2, DIST3**. They occupy 10 contiguous bytes. Also reserve the private workspace: **T0, T1, T2, T3, T4, T5** (6 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
 
 Call `interaction_focus_init` once at the intended reset boundary. It clears inputs as well as outputs and workspace. Set your starting state and configuration afterwards, then call `interaction_focus_step` whenever the described event occurs. The helper reads no device, waits for no frame and installs no interrupt handler.
 
@@ -22,7 +22,7 @@ First find the strict nearest candidate. Compare the old candidate’s excess di
 
 D0–D3/A0–A1/CCR may change; D4–D7/A2–A6 are preserved. A direct BSR/JSR needs four return-address stack bytes. The helper makes no nested calls and adds no other stack use. Its named scratch is private workspace, not a pointer, a ROM variable or shared zero-page space that the game may borrow concurrently. The samples use fixed symbol bindings. Scope or rename every label and binding, including the component_end measurement marker, and allocate a separate block for each independent instance. Different helpers can also use common field names, so combining them needs separate namespaces or explicitly renamed bindings. Give each block one mutation owner.
 
-The A500 OCS diagnostic cold-boots an OFS disk, owns the Copper and bitplane and disables interrupt/DMA sources. The helper does not take over hardware or allocate Chip RAM.
+The A500 OCS diagnostic cold-boots an OFS disk, owns the Copper and bitplane and disables interrupt/DMA sources. The helper does not take over hardware or allocate Chip RAM. The four distance bytes are named DIST0..DIST3 here because D0..D3 identify CPU registers on 68000. Their order matches the abstract D0..D3 interface.
 
 ## Adapt the caller
 
