@@ -1,0 +1,9 @@
+{
+  "model": "A500 OCS PAL, Kickstart1.3 OFS cold boot",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "b29139242e3f6fe659c2a8a9d0fee1b1b50dd20b7177eb657bd422c55ddbb7f7",
+  "firmware_sha256": {
+    "firmware": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+  },
+  "build198x_sha256": "248bed66d985f433c20f2cfb439a02cb0382a26bc8b44762270d785e80879e93"
+}
