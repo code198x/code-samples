@@ -142,5 +142,21 @@
   [
     "timed-status",
     "commodore-amiga"
+  ],
+  [
+    "checkpoint-state",
+    "commodore-64"
+  ],
+  [
+    "checkpoint-state",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "checkpoint-state",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "checkpoint-state",
+    "commodore-amiga"
   ]
 ]
