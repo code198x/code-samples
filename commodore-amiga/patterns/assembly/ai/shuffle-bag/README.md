@@ -1,0 +1,55 @@
+# Draw Without Repeating from a Bag on Amiga
+
+Random pieces can arrive in long droughts. A bag guarantees each of eight choices appears once before a refill.
+
+## Use it in a project
+
+RESET nonzero fills B0–B7 with 0–7 and sets REMAINING=8; it does not draw. A draw requires REMAINING 1–8 and ROLL below it. Return the indexed choice, swap the last live item into its place and shorten the live prefix. CHOICE=255 and VALID=0 reject an empty bag or invalid index. Only the live prefix is meaningful; callers must preserve it.
+
+Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **REMAINING, ROLL, RESET, CHOICE, VALID, B0, B1, B2, B3, B4, B5, B6, B7**. They occupy 13 contiguous bytes. Also reserve the private workspace: **EXPR_SAVE** (1 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
+
+Call `shuffle_bag_init` once at the intended reset boundary. It clears inputs as well as outputs and workspace. Set your starting state and configuration afterwards, then call `shuffle_bag_step` whenever the described event occurs. The helper reads no device, waits for no frame and installs no interrupt handler.
+
+| Ownership | Fields |
+|---|---|
+| Retain between calls | REMAINING and B0–B7 |
+| Supply before service | ROLL and RESET |
+| Read after service | CHOICE and VALID |
+
+Only the live prefix matters. Removing one item moves the final live item into its hole, so there is no need to shift all the later entries. This is a bag, not an order-preserving queue.
+
+## Machine contract
+
+D0–D3/A0–A1/CCR may change; D4–D7/A2–A6 are preserved. A direct BSR/JSR needs four return-address stack bytes. The helper makes no nested calls and adds no other stack use. Its named scratch is private workspace, not a pointer, a ROM variable or shared zero-page space that the game may borrow concurrently. Scope or rename routine and field labels and allocate a separate block for each independent instance. Give each block one mutation owner.
+
+The A500 OCS diagnostic cold-boots an OFS disk, owns the Copper and bitplane and disables interrupt/DMA sources. The helper does not take over hardware or allocate Chip RAM.
+
+## Adapt the caller
+
+`demo.asm` supplies the bindings and include order. `exercise.inc` first runs table cases, then a separate client retaining state between calls. A game can call the public step entry directly and remove the diagnostic packet and display. Do not copy the diagnostic's hardware takeover into an existing game loop.
+
+Build with `make ASM198X=/path/to/asm198x` and `BUILD198X=/path/to/build198x`. The Makefile produces normal, custom, deliberately wrong and repaired programs. Tools must already be installed; the sample downloads nothing.
+
+## Customise it
+
+Draw the last remaining live index each time instead of the first. The maintained custom caller changes its inputs or client sequence rather than hiding a different implementation behind the same label. Compare every state of the two clients, not only their final display.
+
+## Mistake and repair
+
+The wrong caller requests RESET on every call. It continually refills but never draws. Refill once, draw from the live prefix, then decide explicitly what an empty bag should do.
+
+The BROKEN branch lives in the sequential client, not the reusable helper. `wrong.asm` selects it; `repaired.asm` restores the normal call sequence. The repaired executable matches the normal program (for Spectrum, compare loaded CODE rather than the tape filename).
+
+## Cost and alternatives
+
+The measured helper extent is 442 code bytes; public state is 13 bytes and private scratch is 1 bytes. There are no immutable helper tables. Caller data, the test cases, return-address stack, alignment and display buffers cost additional space. These are assembled sizes, not cycle measurements.
+
+A valid draw takes constant work. Refilling writes eight entries. An order-preserving removal would take more moves but suits a queue rather than a bag.
+
+The helper does not secretly refill or pick a random index. Uniform draws require an unbiased roll in the current range. It protects indices, not arbitrary corruption of bag contents; only reset and this routine should mutate the live prefix.
+
+## Execution evidence
+
+Four variants run on A500 OCS PAL, Kickstart1.3 OFS cold boot, using Asm198x 0.0.72, Emu198x 0.44.2 and Build198x 0.2.9. Each executes 64 boundary/varied/error table cases, dirty initialisation and the separate retained-state client. An independent mathematical/container model checks every public byte after every call. This is bounded example coverage, not exhaustive correctness for every possible state.
+
+The records retain loaded immutable code, completion, register sentinels, full packets, source/tool/firmware hashes and captures. The public gate validates these retained observations and rejects altered evidence; it does not run restricted firmware. No firmware is distributed. The eight displayed bytes are the first eight public fields, zero-padded when shorter; the packet includes every field.
