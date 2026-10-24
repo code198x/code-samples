@@ -126,5 +126,21 @@
   [
     "manhattan-distance",
     "commodore-amiga"
+  ],
+  [
+    "priority-arbiter",
+    "commodore-64"
+  ],
+  [
+    "priority-arbiter",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "priority-arbiter",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "priority-arbiter",
+    "commodore-amiga"
   ]
 ]
