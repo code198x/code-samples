@@ -51,9 +51,9 @@ def source_paths() -> list[Path]:
                 "clock.inc",
                 "input.inc",
                 "dispatch.inc",
-                "mistakes/reset-baseline.asm",
+                "wrong-baseline.asm",
                 "mistakes/reset-baseline.inc",
-                "mistakes/no-entry.asm",
+                "no-entry.asm",
                 "Makefile",
             )
         ]
@@ -116,8 +116,8 @@ def build(assembler: Path, variant: str) -> tuple[Path, list[int], list[int]]:
             F
             / {
                 "custom": "customise.asm",
-                "wrong": "mistakes/reset-baseline.asm",
-                "no-entry": "mistakes/no-entry.asm",
+                "wrong": "wrong-baseline.asm",
+                "no-entry": "no-entry.asm",
             }.get(variant, "demo.asm")
         ).read_text()
     )

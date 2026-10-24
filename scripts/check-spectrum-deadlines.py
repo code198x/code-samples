@@ -83,7 +83,7 @@ def check_assembly(record=None):
                 A.F
                 / {
                     "custom": "customise.asm",
-                    "wrong": "mistakes/reset-baseline.asm",
+                    "wrong": "wrong-baseline.asm",
                 }.get(variant, "demo.asm")
             ).read_text()
         )
