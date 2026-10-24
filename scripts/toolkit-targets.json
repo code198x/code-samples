@@ -62,5 +62,21 @@
   [
     "hexadecimal-parser",
     "commodore-amiga"
+  ],
+  [
+    "bounded-bit-writer",
+    "commodore-64"
+  ],
+  [
+    "bounded-bit-writer",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-bit-writer",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-bit-writer",
+    "commodore-amiga"
   ]
 ]
