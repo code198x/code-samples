@@ -110,5 +110,21 @@
   [
     "typewriter-text",
     "commodore-amiga"
+  ],
+  [
+    "music-command-stream",
+    "commodore-64"
+  ],
+  [
+    "music-command-stream",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "music-command-stream",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "music-command-stream",
+    "commodore-amiga"
   ]
 ]
