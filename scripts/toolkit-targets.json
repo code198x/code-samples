@@ -78,5 +78,21 @@
   [
     "bounded-bit-writer",
     "commodore-amiga"
+  ],
+  [
+    "bitset-slot-allocation",
+    "commodore-64"
+  ],
+  [
+    "bitset-slot-allocation",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bitset-slot-allocation",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bitset-slot-allocation",
+    "commodore-amiga"
   ]
 ]
