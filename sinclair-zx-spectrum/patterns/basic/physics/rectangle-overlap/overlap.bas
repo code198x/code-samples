@@ -1,0 +1,10 @@
+3000 REM RR=-1 INVALID RANGE, 0 EMPTY/APART, 1 OVERLAP
+3010 LET rr=-1
+3020 IF al<0 OR ay<0 OR ar<0 OR ab<0 OR bl<0 OR by<0 OR br<0 OR bb<0 THEN RETURN
+3030 IF al>65535 OR ay>65535 OR ar>65535 OR ab>65535 OR bl>65535 OR by>65535 OR br>65535 OR bb>65535 THEN RETURN
+3040 IF al<>INT al OR ay<>INT ay OR ar<>INT ar OR ab<>INT ab OR bl<>INT bl OR by<>INT by OR br<>INT br OR bb<>INT bb THEN RETURN
+3050 LET rr=0
+3060 IF al>=ar OR ay>=ab OR bl>=br OR by>=bb THEN RETURN
+3070 IF al>=br OR bl>=ar OR ay>=bb OR by>=ab THEN RETURN
+3080 LET rr=1
+3090 RETURN
