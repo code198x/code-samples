@@ -238,5 +238,21 @@
   [
     "stable-depth-order",
     "commodore-amiga"
+  ],
+  [
+    "dirty-cells",
+    "commodore-64"
+  ],
+  [
+    "dirty-cells",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "dirty-cells",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "dirty-cells",
+    "commodore-amiga"
   ]
 ]
