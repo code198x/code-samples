@@ -1,0 +1,11 @@
+# Reusable object slots on Amiga
+
+Call pool_acquire: D1.L = 0 / D0.L = slot means success; D1.L = 1 / D0.L = capacity means full. Both results are full-width values. pool_release takes an unsigned D0.L index, preserves it and returns D1.L = 0 on release or 1 for invalid/already free. It rejects the index before forming an indexed address. D0/D1/A0/CCR change, except release preserves D0; D2–D7 and A1–A6 survive. Do not interpret carry as its status API. Init has no D0 result. A direct call uses a four-byte return address; ageing additionally saves D3 and calls release, adding four saved bytes and another four-byte return address on expiry.
+
+The standalone A500 OCS/PAL caller cold-boots an OFS ADF with Kickstart 1.3. It takes over interrupts, DMA, Copper and a private single bitplane; it never returns to the OS. The helper itself touches no custom-chip registers or IRQ state. Code and private flag/payload storage are in a relocated Hunk; keep that writable storage in RAM and provide a suitably aligned instruction address. The 880 KiB ADF and its executable include loader, font, display and verification overhead; neither is the cost of including the helper.
+
+Include pool.inc once after reserving pool_flags[N], N=1..255; pool_init clears only flags. Only capacities4 and8 are qualified here. Payload is caller-owned; release does not clear it. Initialise payload after acquisition before any reader. No spawning during the optional age pass. Live lifetime1..255. Discard stale references when freeing; no generational handles or hardware sprite allocation.
+
+Measured helper 84 code bytes +N flags; optional age 42 code bytes +N lifetime bytes. Init/age scan N; acquire scans to the first free or allN; release is bounded. These are operation/storage counts, not hardware timing.
+
+Demo preview00 01 02 FF 01 01 AA 00; custom capacity4 changes AA to0A. Wrong omits release and changes reacquired01 toFF; repaired executable equals demo. Build with make ASM198X=/path/to/asm198x BUILD198X=/path/to/build198x. Native configuration/evidence is in verification; scripts/verify-pools-and-states.py --topic object-pool --system commodore-amiga supplies the native producer, and scripts/check-pools-and-states.py plus test_pools_and_states.py validate/corrupt evidence. No firmware-bearing snapshots are retained publicly.
