@@ -1,0 +1,7 @@
+{
+  "model": "A1200 PAL, 2 MiB chip, no fast RAM, original AMOS Professional 2.00",
+  "emulator_sha256": "b29139242e3f6fe659c2a8a9d0fee1b1b50dd20b7177eb657bd422c55ddbb7f7",
+  "kickstart_sha256": "6d43840d4099a74170ea0f0425b6257c3891ebcaa39c4d1840075a9ab22b5707",
+  "runtime_sha256": "507828d923c0af5e485a03048e396c29c9c5dec7769e8b40b1c933d980ffba3b",
+  "builder_sha256": "8cee299092889d79d5c0a9b3ade2e3fd272739f3f4b57761b2f51a1046e9a3a8"
+}
