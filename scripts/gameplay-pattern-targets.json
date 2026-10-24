@@ -94,5 +94,21 @@
   [
     "approach-target",
     "commodore-amiga"
+  ],
+  [
+    "endpoint-patrol",
+    "commodore-64"
+  ],
+  [
+    "endpoint-patrol",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "endpoint-patrol",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "endpoint-patrol",
+    "commodore-amiga"
   ]
 ]
