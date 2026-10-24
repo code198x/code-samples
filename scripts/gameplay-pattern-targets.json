@@ -30,5 +30,21 @@
   [
     "score-counter",
     "commodore-amiga"
+  ],
+  [
+    "quest-flags",
+    "commodore-64"
+  ],
+  [
+    "quest-flags",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "quest-flags",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "quest-flags",
+    "commodore-amiga"
   ]
 ]
