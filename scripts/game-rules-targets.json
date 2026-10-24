@@ -14,5 +14,21 @@
   [
     "damage-rules",
     "commodore-amiga"
+  ],
+  [
+    "action-cooldown",
+    "commodore-64"
+  ],
+  [
+    "action-cooldown",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "action-cooldown",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "action-cooldown",
+    "commodore-amiga"
   ]
 ]

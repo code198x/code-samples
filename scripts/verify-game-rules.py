@@ -228,13 +228,17 @@ def run(args, system, name):
             # Reuse the maintained ROM-loading budget: loading is guest execution,
             # not host injection. One debugger span need not finish a tape load.
             startup = []
-            for _ in range(20):
+            # The 6 KiB cooldown table finishes in span22; the smaller
+            # damage fixture retains its original bound. Both must enter CODE.
+            startup_limit = 30 if TOPIC == "action-cooldown" else 20
+            for _ in range(startup_limit):
                 stop = m.call("run_until_pc", addr=sym["start"], max_steps=1000000)
                 startup.append(stop)
                 if stop["reached"]:
                     break
             T.require(
-                stop["reached"], "ROM loader did not enter CODE within 20M instructions"
+                stop["reached"],
+                f"ROM loader did not enter CODE within {startup_limit}M instructions",
             )
             loaded = read(0x8000, len(payload))
             T.require(loaded == list(payload), "ROM-loaded tape differs")

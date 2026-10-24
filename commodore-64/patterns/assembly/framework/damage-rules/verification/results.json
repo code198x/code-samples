@@ -15778,7 +15778,7 @@
     "commodore-64/patterns/assembly/framework/damage-rules/Makefile": "a18a48d36a17c327650ad6a5faef7b410b3185c2dbfbf0f63e43419a70f098dc",
     "cross-platform/patterns/framework/damage-rules/6502.inc": "b5336cd6e96df7a1b9b369d70956e363dd69e11b83f21206fe4a284422c1195c",
     "cross-platform/patterns/framework/damage-rules/oracle.py": "0883aae377e88b4b124e6550f4fc40fd6fa01371a2747b57bb437acb63a5052c",
-    "scripts/verify-game-rules.py": "526748232ab78e52601d2931896b7a82de9240d23c79ae55d992cb12c94c40f4",
+    "scripts/verify-game-rules.py": "1af9d15077b38ccb8cf37827c2a7f988f616a6bd37fe0b4c2f46295db27394c7",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-amiga-rectangle-overlap.py": "043f40922cba465b60f39ba7ea46b7197bd14d6816a31b4b018870991c518a3f",
     "scripts/verify-c64-rectangle-overlap.py": "73c962c6b9edeb97abe61f36778b56dd29ed0857e6187d623c197613bddd4723",
