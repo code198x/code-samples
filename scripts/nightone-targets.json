@@ -14,5 +14,21 @@
   [
     "collision-layer-filter",
     "commodore-amiga"
+  ],
+  [
+    "grid-turn-buffer",
+    "commodore-64"
+  ],
+  [
+    "grid-turn-buffer",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "grid-turn-buffer",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "grid-turn-buffer",
+    "commodore-amiga"
   ]
 ]
