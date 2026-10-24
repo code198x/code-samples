@@ -238,5 +238,21 @@
   [
     "stable-compaction",
     "commodore-amiga"
+  ],
+  [
+    "motion-history",
+    "commodore-64"
+  ],
+  [
+    "motion-history",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "motion-history",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "motion-history",
+    "commodore-amiga"
   ]
 ]
