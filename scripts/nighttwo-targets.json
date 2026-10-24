@@ -30,5 +30,21 @@
   [
     "inventory-transfer",
     "commodore-amiga"
+  ],
+  [
+    "aimed-projectile",
+    "commodore-64"
+  ],
+  [
+    "aimed-projectile",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "aimed-projectile",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "aimed-projectile",
+    "commodore-amiga"
   ]
 ]
