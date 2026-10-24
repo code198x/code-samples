@@ -46,5 +46,21 @@
   [
     "jump-windows",
     "commodore-amiga"
+  ],
+  [
+    "one-way-platform",
+    "commodore-64"
+  ],
+  [
+    "one-way-platform",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "one-way-platform",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "one-way-platform",
+    "commodore-amiga"
   ]
 ]
