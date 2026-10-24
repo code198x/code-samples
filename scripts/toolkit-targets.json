@@ -158,5 +158,21 @@
   [
     "bounded-text-wrap",
     "commodore-amiga"
+  ],
+  [
+    "rectangle-clipping",
+    "commodore-64"
+  ],
+  [
+    "rectangle-clipping",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "rectangle-clipping",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "rectangle-clipping",
+    "commodore-amiga"
   ]
 ]
