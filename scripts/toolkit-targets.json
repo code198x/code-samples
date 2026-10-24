@@ -270,5 +270,21 @@
   [
     "packed-colour-step",
     "commodore-amiga"
+  ],
+  [
+    "bounded-delta-decoder",
+    "commodore-64"
+  ],
+  [
+    "bounded-delta-decoder",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-delta-decoder",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-delta-decoder",
+    "commodore-amiga"
   ]
 ]
