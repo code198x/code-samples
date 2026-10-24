@@ -174,5 +174,21 @@
   [
     "inventory-stacks",
     "commodore-amiga"
+  ],
+  [
+    "recipe-transaction",
+    "commodore-64"
+  ],
+  [
+    "recipe-transaction",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "recipe-transaction",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "recipe-transaction",
+    "commodore-amiga"
   ]
 ]
