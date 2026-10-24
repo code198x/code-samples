@@ -62,5 +62,21 @@
   [
     "point-circle",
     "commodore-amiga"
+  ],
+  [
+    "byte-interpolation",
+    "commodore-64"
+  ],
+  [
+    "byte-interpolation",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "byte-interpolation",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "byte-interpolation",
+    "commodore-amiga"
   ]
 ]
