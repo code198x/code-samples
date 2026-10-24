@@ -94,5 +94,21 @@
   [
     "moving-platform-carry",
     "commodore-amiga"
+  ],
+  [
+    "camera-shake",
+    "commodore-64"
+  ],
+  [
+    "camera-shake",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "camera-shake",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "camera-shake",
+    "commodore-amiga"
   ]
 ]
