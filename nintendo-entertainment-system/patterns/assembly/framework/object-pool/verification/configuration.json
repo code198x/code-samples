@@ -1,0 +1,6 @@
+{
+  "model": "NTSC NROM background, NMI/DMC disabled",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "60a56d759580a8231f9f9087c7dd646a3d3d2439053cf1861d9126393c00af73",
+  "firmware_sha256": {}
+}
