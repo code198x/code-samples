@@ -916,3 +916,16 @@ jobs:
       - run: |
           python scripts/check-amiga-rectangle-overlap.py
           python -m unittest discover -s scripts -p test_amiga_rectangle_overlap.py -v
+
+  amos-map-query-records:
+    name: AMOS original-runtime checked map queries
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-amos-map-queries.py
+          python -m unittest discover -s scripts -p test_amos_map_queries.py -v

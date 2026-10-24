@@ -1,0 +1,15 @@
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Rem Reusable small caller: a 7 by 5 map in a flat AMOS integer array.
+Dim PL_TM_MAP(34),PL_TM_PROPS(3)
+PL_TM_W=7 : PL_TM_H=5 : PL_TM_CAP=35 : PL_TM_MAX=3 : PL_TM_PC=4
+For PL_TM_I=0 To 34 : PL_TM_MAP(PL_TM_I)=PL_TM_I mod 4 : Next PL_TM_I
+PL_TM_PROPS(0)=0 : PL_TM_PROPS(1)=1 : PL_TM_PROPS(2)=2 : PL_TM_PROPS(3)=3
+PL_TM_X=3 : PL_TM_Y=2 : Gosub PL_TM_GET
+Print "Tile: ";PL_TM_TILE;" Valid: ";PL_TM_VALID
+Gosub PL_TM_PROPERTY : Print "Flags: ";PL_TM_PROP
+PL_TM_TILE=2 : Gosub PL_TM_SET
+PL_TM_WX=24 : PL_TM_WY=16 : Gosub PL_TM_PIXEL8
+Print "Changed tile: ";PL_TM_TILE
+Repeat : Wait Vbl : Until Inkey$="q"
+Show
+End
