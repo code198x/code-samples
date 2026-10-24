@@ -164,6 +164,10 @@ def check(system, record=None):
                 "Cartridge caller must not claim unrelated firmware",
             )
         elif system == "sinclair-zx-spectrum":
+            T.require(
+                0 < len(c["startup"]) <= 20 and c["startup"][-1]["reached"],
+                "ROM startup incomplete",
+            )
             T.require(loaded == V.blocks(binary)[3][1:-1], "ROM-loaded CODE differs")
         else:
             exe = zlib.decompress(bytes.fromhex(c["exe_zlib"]))
@@ -185,11 +189,20 @@ def check(system, record=None):
         )
         T.require(T.sha(v / c["image"]) == c["image_sha256"], "Changed capture")
         pixels(c, system)
-    T.require(
-        r["cases"]["demo"]["program_sha256"]
-        == r["cases"]["repaired"]["program_sha256"],
-        "Repair differs",
-    )
+    if system == "sinclair-zx-spectrum":
+        repaired_equal = (
+            r["cases"]["demo"]["loaded_bytes"] == r["cases"]["repaired"]["loaded_bytes"]
+        )
+    elif system == "commodore-amiga":
+        repaired_equal = (
+            r["cases"]["demo"]["exe_zlib"] == r["cases"]["repaired"]["exe_zlib"]
+        )
+    else:
+        repaired_equal = (
+            r["cases"]["demo"]["program_sha256"]
+            == r["cases"]["repaired"]["program_sha256"]
+        )
+    T.require(repaired_equal, "Executable repair differs")
 
 
 def systems():
