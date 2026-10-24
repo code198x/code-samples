@@ -90,3 +90,30 @@ mismatches), and four broken-edge runs rejected on held Fire. Tools:
 Asm198x 0.0.58, ACME 0.97, VICE 3.10 and Emu198x revision
 `df2799e220a10de6a3bc0f14f04c6506363cb7d3`; executable hashes are recorded.
 The routines occupy 100 assembled bytes plus six state bytes.
+
+
+## Reuse release events as well
+
+`edges.inc` extends the existing six-byte reader without changing its interfaces. Include joystick.inc once, then edges.inc. Call joy_edges_init once in the same exclusive CIA1 configuration; call joy_poll_edges once per update instead of joy_poll. Read joy1/joy2 for held controls, joy1_new/joy2_new for new presses, and joy1_released/joy2_released for releases. All use the existing five pressed-bit meanings. A/X/flags change; Y survives. The wrapper owns two release bytes and one scratch byte; it uses the existing JSR stack and is not re-entrant on one state set.
+
+The wrapper saves each previous held mask before the maintained reader updates it, then finds `previous AND NOT current`. A zero-history start counts a button already held as a first press. For a scene that should ignore already-held buttons, initialise, sample once, and discard that first result before accepting actions. Polling more than once per game update consumes the edge; use one shared sample for all consumers. Pulses entirely between samples, mechanical bounce, repeat timing and illegal-direction policy remain separate jobs.
+
+Run `make edges ASM198X=/path/to/asm198x`, load build/edges-demo.prg and RUN. The first row contains seven hexadecimal bytes: port1 held/new/released, port2 held/new/released, then the action count. Fire in port2 adds one action; holding it does not add more. Reset to leave. The caller owns the display, CIA ports/timer controls/interrupt masks, CPU banking and an NMI return vector; it deliberately does not coexist with the KERNAL keyboard service. Keyboard keys must remain released.
+
+The example's diagnostic latches and event counters preserve short edge pulses after their display update. They belong to the caller, not the helper: a stable screenshot cannot show every one-update transition. Native transition records check those latches alongside the current masks and counters. The first row's final action count is the visible comparison.
+
+### Make it your own
+
+edges-custom.asm changes ACTION_MASK from `$10` (Fire) to `$04` (Left) in the caller. The reader and release wrapper stay unchanged. Fire no longer spends an action; a new Left press does. Payload and helper sizes stay the same. This is action mapping, not another electrical input mode; choosing a wider mask would count one event when any selected bit is newly pressed, rather than one event per selected button.
+
+### A revealing mistake
+
+edges-wrong.asm deliberately adds edges-wrong.inc: it clears the held history before every poll. Held Fire is then reported as newly pressed every update, action counts rise during the hold and release events disappear. Restore the normal POLL_ROUTINE jump to joy_poll_edges. The repaired caller is independently run and has the same payload as the working caller. The broken build adds eleven bytes. Keep the labelled fault outside the normal build target.
+
+### Costs and current qualification
+
+The wrapper adds 62 instruction bytes and three state bytes to the maintained reader's 100 instruction bytes and six state bytes. Its pure joy_release_bits entry takes A=previous and X=current five-bit masks and returns the released bits in A; X/Y survive, flags and private scratch change. A second guest-owned caller exercises all 1,024 previous/current pairs, including simultaneous and opposite directions. It does not establish physical joystick capability for impossible switch combinations.
+
+The complete diagnostic PRG payload is 490 bytes, including its BASIC header, caller, tables, code and state. Diagnostic latches add eight bytes beyond the normal input state; the caller also has an action counter and ready marker. The two reads per poll still come from the original reader. Extra wrapper/call work is real; byte counts are not a whole-frame or VIC-contention budget.
+
+Six cases on Emu198x 0.44.2, Asm198x 0.0.72 and the recorded stock PAL C64 ROMs cover working/custom/wrong/repaired callers and the independent release matrix. A wrong OR operation completes the matrix guards but fails an independent bit-set oracle. Real port inputs, native screen values, ROM-glyph/PNG agreement and source/tool/firmware identities are retained under verification/edges. Run scripts/verify-c64-input-edges.py, then check-c64-input-edges.py and its corruption tests. The new wrapper is qualified on this PAL configuration; the earlier reader's separate PAL/NTSC evidence remains separate. No original-hardware or complete keyboard-electrical claim follows.
