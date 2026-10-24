@@ -190,5 +190,21 @@
   [
     "recipe-transaction",
     "commodore-amiga"
+  ],
+  [
+    "dialogue-gates",
+    "commodore-64"
+  ],
+  [
+    "dialogue-gates",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "dialogue-gates",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "dialogue-gates",
+    "commodore-amiga"
   ]
 ]
