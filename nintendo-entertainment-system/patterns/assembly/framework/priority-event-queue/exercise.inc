@@ -1,0 +1,185 @@
+exercise_rules:
+    lda #<(OUTPUT)
+    sta ptr
+    lda #>(OUTPUT)
+    sta ptr+1
+    lda #165
+    jsr emit
+    lda #6
+    jsr emit
+    lda #CUSTOM
+    jsr emit
+    ldx #0
+    lda #255
+dirty_state:
+    sta STATE,x
+    inx
+    cpx #16
+    bne dirty_state
+    ldy #$93
+    jsr priority_event_queue_init
+    cpy #$93
+    bne failed_register
+    jsr emit_state
+    lda #<(case_table)
+    sta input_ptr
+    lda #>(case_table)
+    sta input_ptr+1
+    lda #62
+    sta cases_left
+case_loop:
+    ldx #0
+case_read:
+    ldy #0
+    lda (input_ptr),y
+    sta STATE,x
+    inc input_ptr
+    bne case_read_next
+    inc input_ptr+1
+case_read_next:
+    inx
+    cpx #16
+    bne case_read
+    jsr checked_step
+    jsr emit_state
+    dec cases_left
+    bne case_loop
+    jsr priority_event_queue_init
+    jsr preview_rules
+    ldx #0
+preview_copy:
+    lda #0
+    sta preview,x
+    inx
+    cpx #8
+    bne preview_copy
+    ldx #0
+preview_state:
+    lda STATE,x
+    sta preview,x
+    inx
+    cpx #8
+    bne preview_state
+    lda #239
+    jsr emit
+    rts
+checked_step:
+    ldy #$93
+    jsr priority_event_queue_step
+    cpy #$93
+    bne failed_register
+    rts
+failed_register:
+    jmp failed_register
+emit_state:
+    ldx #0
+emit_state_loop:
+    lda STATE,x
+    jsr emit
+    inx
+    cpx #16
+    bne emit_state_loop
+    rts
+emit:
+    sty saved_y
+    ldy #0
+    sta (ptr),y
+    inc ptr
+    bne emit_done
+    inc ptr+1
+emit_done:
+    ldy saved_y
+    rts
+; Sequential client: retain private state between service calls.
+preview_rules:
+.if CUSTOM
+; NEW_EVENT = 7
+    lda #7
+    sta NEW_EVENT
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.if BROKEN
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.endif
+    jsr checked_step
+    jsr emit_state
+; NEW_EVENT = 9
+    lda #9
+    sta NEW_EVENT
+; NEW_PRIORITY = 255
+    lda #255
+    sta NEW_PRIORITY
+.if BROKEN
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.endif
+    jsr checked_step
+    jsr emit_state
+; MODE = 1
+    lda #1
+    sta MODE
+.if BROKEN
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.endif
+    jsr checked_step
+    jsr emit_state
+    rts
+.else
+; NEW_EVENT = 11
+    lda #11
+    sta NEW_EVENT
+; NEW_PRIORITY = 2
+    lda #2
+    sta NEW_PRIORITY
+.if BROKEN
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.endif
+    jsr checked_step
+    jsr emit_state
+; NEW_EVENT = 22
+    lda #22
+    sta NEW_EVENT
+; NEW_PRIORITY = 8
+    lda #8
+    sta NEW_PRIORITY
+.if BROKEN
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.endif
+    jsr checked_step
+    jsr emit_state
+; NEW_EVENT = 33
+    lda #33
+    sta NEW_EVENT
+; NEW_PRIORITY = 8
+    lda #8
+    sta NEW_PRIORITY
+.if BROKEN
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.endif
+    jsr checked_step
+    jsr emit_state
+; MODE = 1
+    lda #1
+    sta MODE
+.if BROKEN
+; NEW_PRIORITY = 0
+    lda #0
+    sta NEW_PRIORITY
+.endif
+    jsr checked_step
+    jsr emit_state
+.endif
+    rts
+; End of toolkit client.
