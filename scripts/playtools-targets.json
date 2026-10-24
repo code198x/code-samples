@@ -14,5 +14,21 @@
   [
     "fractional-position",
     "commodore-amiga"
+  ],
+  [
+    "bounded-acceleration",
+    "commodore-64"
+  ],
+  [
+    "bounded-acceleration",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-acceleration",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-acceleration",
+    "commodore-amiga"
   ]
 ]
