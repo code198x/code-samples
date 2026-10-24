@@ -11,3 +11,10 @@ For each batch: exact emulator/tool/firmware/source identities; generated loader
 Paired website layers: src/content/patterns/{sinclair-zx-spectrum,atari-800xl}/{basic,assembly}/framework/turn-deadline.mdx; own native images; CodeFromFile maintained listings; concise useful Maths/Craft links; tests for exact listings/captures, desktop/phone, internal links, discovery and overflow. Append natural comparisons to cross-platform/framework/game-loop-choices.mdx.
 
 Commit/push each verified source layer before building the next, and pin original qualification commits on archive refs. Commit/push each paired website layer with child-closing refs. Use native GitHub stacks, three layers per repo; keep all checks visible and source-first publication dependency explicit. Run whole build/content and focused development/built browser checks on final combination. Retain evidence and remove task worktrees/tools/processes after positive remote or bundle retention checks.
+
+## Implementation findings
+
+- Spectrum requires END start for the generated USR tape entry. Keep fault drivers beside their includes so the legacy per-file build can compile them from their own directory. Seven assembly and six BASIC native cases cover these controls.
+- Atari's complete 424-byte assembly caller exceeds page six. RAMTOP=124 plus GRAPHICS 0 leaves an explicit 1 KiB margin below $8000 code; state is separately owned at $8300. Wait for a fresh READY after the final loader POKE/NEXT before sending USR. Six native cases qualify this path.
+- Atari BASIC reuses the unchanged decimal countdown and separately qualifies its own keyboard-entered program and native tables. The line-32768 immediate record is not numbered program text: it is three bytes empty and six after RUN. Keep that bounded record separate from program size.
+- Website identity remains atari-800 while samples name the qualified atari-800xl model. No new platform identifier is needed.
