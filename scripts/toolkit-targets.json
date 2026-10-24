@@ -94,5 +94,21 @@
   [
     "bitset-slot-allocation",
     "commodore-amiga"
+  ],
+  [
+    "priority-event-queue",
+    "commodore-64"
+  ],
+  [
+    "priority-event-queue",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "priority-event-queue",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "priority-event-queue",
+    "commodore-amiga"
   ]
 ]
