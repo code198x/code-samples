@@ -1,0 +1,13 @@
+{
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "fe8f355b7ee01cb20b30b9741c97f5e4cde8357a4a1c380d5bc9ef1c0d89deb6",
+  "roms": {
+    "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
+    "kernal.rom": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721",
+    "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
+  },
+  "rom_halves": [
+    "3cf89732b10b1d51a267f74df35f10a154108b444a3a0ec9e51ef7ddefb668a1",
+    "badb3b49e5377494e39665f7873b1aae08c6f1b9b3ae1252e62399a10eb6ef8f"
+  ]
+}
