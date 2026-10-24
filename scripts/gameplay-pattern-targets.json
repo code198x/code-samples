@@ -14,5 +14,21 @@
   [
     "resource-wallet",
     "commodore-amiga"
+  ],
+  [
+    "score-counter",
+    "commodore-64"
+  ],
+  [
+    "score-counter",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "score-counter",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "score-counter",
+    "commodore-amiga"
   ]
 ]
