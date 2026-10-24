@@ -1,0 +1,321 @@
+{
+  "signed-byte-order": {
+    "title": "Compare Signed Byte Values",
+    "category": "framework",
+    "fields": [
+      "ORDER",
+      "LEFT",
+      "RIGHT"
+    ]
+  },
+  "saturating-word-add": {
+    "title": "Add Words with Saturation",
+    "category": "framework",
+    "fields": [
+      "SUM_LO",
+      "SUM_HI",
+      "CLAMPED",
+      "LEFT_LO",
+      "LEFT_HI",
+      "RIGHT_LO",
+      "RIGHT_HI"
+    ]
+  },
+  "hexadecimal-format": {
+    "title": "Format a Byte as Hexadecimal",
+    "category": "framework",
+    "fields": [
+      "HIGH_CHAR",
+      "LOW_CHAR",
+      "VALUE",
+      "LOWERCASE"
+    ]
+  },
+  "hexadecimal-parser": {
+    "title": "Parse Two Hexadecimal Digits",
+    "category": "framework",
+    "fields": [
+      "VALUE",
+      "VALID",
+      "FIRST",
+      "SECOND"
+    ]
+  },
+  "bounded-bit-writer": {
+    "title": "Write Packed Bits with Bounds",
+    "category": "framework",
+    "fields": [
+      "VALID",
+      "CURSOR",
+      "COUNT",
+      "VALUE",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  "bitset-slot-allocation": {
+    "title": "Allocate Slots with a Bitset",
+    "category": "framework",
+    "fields": [
+      "SLOT",
+      "RESULT",
+      "VALID",
+      "USED",
+      "MODE",
+      "REQUEST"
+    ]
+  },
+  "priority-event-queue": {
+    "title": "Keep a Stable Priority Event Queue",
+    "category": "framework",
+    "fields": [
+      "EVENT",
+      "PRIORITY",
+      "RESULT",
+      "VALID",
+      "COUNT",
+      "MODE",
+      "NEW_EVENT",
+      "NEW_PRIORITY",
+      "E0",
+      "E1",
+      "E2",
+      "E3",
+      "P0",
+      "P1",
+      "P2",
+      "P3"
+    ]
+  },
+  "high-score-insertion": {
+    "title": "Insert into a High-score Table",
+    "category": "framework",
+    "fields": [
+      "RANK",
+      "INSERTED",
+      "VALID",
+      "SCORE",
+      "TAG",
+      "COUNT",
+      "S0",
+      "S1",
+      "S2",
+      "S3",
+      "I0",
+      "I1",
+      "I2",
+      "I3"
+    ]
+  },
+  "dictionary-lookup": {
+    "title": "Look Up a Bounded Byte Dictionary",
+    "category": "framework",
+    "fields": [
+      "VALUE",
+      "FOUND",
+      "VALID",
+      "KEY",
+      "COUNT",
+      "K0",
+      "K1",
+      "K2",
+      "K3",
+      "K4",
+      "K5",
+      "K6",
+      "K7",
+      "Q0",
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q6",
+      "Q7"
+    ]
+  },
+  "bounded-text-wrap": {
+    "title": "Choose a Bounded Text Line",
+    "category": "framework",
+    "fields": [
+      "LENGTH",
+      "NEXT",
+      "VALID",
+      "START",
+      "WIDTH",
+      "COUNT",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15"
+    ]
+  },
+  "rectangle-clipping": {
+    "title": "Clip a Rectangle to a Viewport",
+    "category": "physics",
+    "fields": [
+      "OUT_LEFT",
+      "OUT_TOP",
+      "OUT_RIGHT",
+      "OUT_BOTTOM",
+      "VISIBLE",
+      "VALID",
+      "LEFT",
+      "TOP",
+      "RIGHT",
+      "BOTTOM",
+      "VIEW_LEFT",
+      "VIEW_TOP",
+      "VIEW_RIGHT",
+      "VIEW_BOTTOM"
+    ]
+  },
+  "swept-axis-collision": {
+    "title": "Sweep an Interval Along One Axis",
+    "category": "physics",
+    "fields": [
+      "POSITION",
+      "HIT",
+      "VALID",
+      "OLD_POSITION",
+      "TARGET",
+      "SIZE",
+      "WALL_START",
+      "WALL_END"
+    ]
+  },
+  "nearest-target": {
+    "title": "Select the Nearest Active Target",
+    "category": "ai",
+    "fields": [
+      "SLOT",
+      "DISTANCE_LO",
+      "DISTANCE_HI",
+      "FOUND",
+      "ACTIVE",
+      "ORIGIN_X",
+      "ORIGIN_Y",
+      "PX0",
+      "PX1",
+      "PX2",
+      "PX3",
+      "PY0",
+      "PY1",
+      "PY2",
+      "PY3"
+    ]
+  },
+  "eight-way-direction": {
+    "title": "Choose an Eight-way Direction",
+    "category": "physics",
+    "fields": [
+      "DIRECTION",
+      "DX",
+      "DY",
+      "FROM_X",
+      "FROM_Y",
+      "TO_X",
+      "TO_Y"
+    ]
+  },
+  "bitmap-mirror": {
+    "title": "Mirror an Eight-bit Bitmap Row",
+    "category": "rendering",
+    "fields": [
+      "MIRRORED",
+      "ROW"
+    ]
+  },
+  "bitmap-transpose": {
+    "title": "Transpose an Eight-by-eight Bitmap",
+    "category": "rendering",
+    "fields": [
+      "R0",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7"
+    ]
+  },
+  "packed-colour-step": {
+    "title": "Step Towards a Packed Colour",
+    "category": "rendering",
+    "fields": [
+      "COLOUR",
+      "TARGET"
+    ]
+  },
+  "bounded-delta-decoder": {
+    "title": "Decode Bounded Byte Deltas",
+    "category": "framework",
+    "fields": [
+      "WRITTEN",
+      "VALID",
+      "COUNT",
+      "BASE",
+      "Q0",
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q6",
+      "Q7",
+      "R0",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ]
+  },
+  "input-debounce": {
+    "title": "Debounce a Sampled Input Byte",
+    "category": "input",
+    "fields": [
+      "STABLE",
+      "CHANGED",
+      "CANDIDATE",
+      "RUN",
+      "RAW",
+      "THRESHOLD"
+    ]
+  },
+  "round-robin-service": {
+    "title": "Select Ready Work with Round-robin Fairness",
+    "category": "framework",
+    "fields": [
+      "SLOT",
+      "FOUND",
+      "NEXT",
+      "READY"
+    ]
+  }
+}
