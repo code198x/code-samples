@@ -68,6 +68,10 @@ class Evidence(unittest.TestCase):
             ):
                 C.check(r)
 
+    def test_table_include(self):
+        with self.assertRaisesRegex(AssertionError, "table"):
+            C.tables((C.V.F / "cases.inc").read_text(), "case_table:\n    !byte 0\n")
+
     def test_pixels(self):
         r = json.loads((C.V.V / "results.json").read_text())
         c = copy.deepcopy(r["cases"]["demo"])
