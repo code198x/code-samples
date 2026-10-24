@@ -14,5 +14,13 @@
   [
     "game-flow",
     "nintendo-entertainment-system"
+  ],
+  [
+    "game-flow",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "game-flow",
+    "commodore-amiga"
   ]
 ]
