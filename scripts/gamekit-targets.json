@@ -14,5 +14,21 @@
   [
     "animation-timeline",
     "commodore-amiga"
+  ],
+  [
+    "rational-tick-divider",
+    "commodore-64"
+  ],
+  [
+    "rational-tick-divider",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "rational-tick-divider",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "rational-tick-divider",
+    "commodore-amiga"
   ]
 ]
