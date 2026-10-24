@@ -190,5 +190,21 @@
   [
     "swept-axis-collision",
     "commodore-amiga"
+  ],
+  [
+    "nearest-target",
+    "commodore-64"
+  ],
+  [
+    "nearest-target",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "nearest-target",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "nearest-target",
+    "commodore-amiga"
   ]
 ]
