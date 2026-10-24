@@ -254,5 +254,21 @@
   [
     "dirty-cells",
     "commodore-amiga"
+  ],
+  [
+    "bounded-flood-fill",
+    "commodore-64"
+  ],
+  [
+    "bounded-flood-fill",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-flood-fill",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-flood-fill",
+    "commodore-amiga"
   ]
 ]
