@@ -46,5 +46,21 @@
   [
     "hexadecimal-format",
     "commodore-amiga"
+  ],
+  [
+    "hexadecimal-parser",
+    "commodore-64"
+  ],
+  [
+    "hexadecimal-parser",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "hexadecimal-parser",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "hexadecimal-parser",
+    "commodore-amiga"
   ]
 ]
