@@ -286,5 +286,21 @@
   [
     "pixel-mask-collision",
     "commodore-amiga"
+  ],
+  [
+    "logical-envelope",
+    "commodore-64"
+  ],
+  [
+    "logical-envelope",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "logical-envelope",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "logical-envelope",
+    "commodore-amiga"
   ]
 ]
