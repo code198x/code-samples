@@ -1064,3 +1064,18 @@ jobs:
           python scripts/check-gameplay-patterns.py
           python -m unittest discover -s scripts -p test_gameplay_patterns.py -v
           python -m unittest discover -s scripts -p test_gameplay_contracts.py -v
+
+  playtools-records:
+    name: Movement, interaction and data routine evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check explicit native targets and reject altered evidence
+        run: |
+          python scripts/check-playtools.py
+          python -m unittest discover -s scripts -p test_playtools.py -v
+          python -m unittest discover -s scripts -p test_playtools_contracts.py -v
