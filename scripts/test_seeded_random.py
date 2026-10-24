@@ -41,7 +41,7 @@ class Evidence(unittest.TestCase):
                 "cost",
                 "image",
                 "repair",
-            ):
+            ) + (("startup",) if system == "sinclair-zx-spectrum" else ()):
                 r = copy.deepcopy(original)
                 c = r["cases"]["demo"]
                 if fault == "source":
@@ -74,6 +74,8 @@ class Evidence(unittest.TestCase):
                     c["state_bytes"] = 0
                 elif fault == "image":
                     c["image_sha256"] = "0" * 64
+                elif fault == "startup":
+                    c["startup"][-1]["reached"] = False
                 else:
                     r["cases"]["repaired"]["program_sha256"] = "0" * 64
                 with (
