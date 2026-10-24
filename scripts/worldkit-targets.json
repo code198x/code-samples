@@ -46,5 +46,21 @@
   [
     "integer-square-root",
     "commodore-amiga"
+  ],
+  [
+    "point-circle",
+    "commodore-64"
+  ],
+  [
+    "point-circle",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "point-circle",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "point-circle",
+    "commodore-amiga"
   ]
 ]
