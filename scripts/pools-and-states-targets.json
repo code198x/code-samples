@@ -1,4 +1,18 @@
 [
-  ["object-pool", "sinclair-zx-spectrum"],
-  ["object-pool", "commodore-amiga"]
+  [
+    "object-pool",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "object-pool",
+    "commodore-amiga"
+  ],
+  [
+    "game-flow",
+    "commodore-64"
+  ],
+  [
+    "game-flow",
+    "nintendo-entertainment-system"
+  ]
 ]
