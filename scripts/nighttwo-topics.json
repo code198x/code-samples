@@ -1,0 +1,186 @@
+{
+  "ladder-controller": {
+    "title": "Enter and Leave a Ladder",
+    "category": "physics",
+    "fields": [
+      "MODE",
+      "POSITION",
+      "GRAVITY",
+      "JUMPED",
+      "VALID",
+      "ON_LADDER",
+      "UP",
+      "DOWN",
+      "JUMP",
+      "MINIMUM",
+      "MAXIMUM"
+    ]
+  },
+  "inventory-transfer": {
+    "title": "Transfer Inventory Stacks Atomically",
+    "category": "framework",
+    "fields": [
+      "MOVED",
+      "VALID",
+      "SOURCE_KIND",
+      "SOURCE_COUNT",
+      "DEST_KIND",
+      "DEST_COUNT",
+      "CAPACITY",
+      "AMOUNT"
+    ]
+  },
+  "aimed-projectile": {
+    "title": "Aim a Projectile with Bounded Integer Speed",
+    "category": "physics",
+    "fields": [
+      "VELOCITY_X",
+      "VELOCITY_Y",
+      "VALID",
+      "ORIGIN_X",
+      "ORIGIN_Y",
+      "TARGET_X",
+      "TARGET_Y",
+      "SPEED"
+    ]
+  },
+  "attack-hit-window": {
+    "title": "Limit Hits to an Attack Window",
+    "category": "framework",
+    "fields": [
+      "HIT",
+      "VALID",
+      "SEEN",
+      "FRAME",
+      "START_FRAME",
+      "END_FRAME",
+      "TARGET",
+      "CONTACT",
+      "NEW_ATTACK"
+    ]
+  },
+  "interaction-focus": {
+    "title": "Keep a Stable Interaction Focus",
+    "category": "framework",
+    "fields": [
+      "SELECTED",
+      "VALID",
+      "CURRENT",
+      "ACTIVE",
+      "RANGE",
+      "MARGIN",
+      "D0",
+      "D1",
+      "D2",
+      "D3"
+    ]
+  },
+  "menu-page-window": {
+    "title": "Keep a Menu Selection Visible",
+    "category": "input",
+    "fields": [
+      "TOP",
+      "ROW",
+      "VISIBLE",
+      "VALID",
+      "SELECTED",
+      "ITEM_COUNT",
+      "PAGE_ROWS"
+    ]
+  },
+  "typewriter-text": {
+    "title": "Reveal Counted Text Over Time",
+    "category": "rendering",
+    "fields": [
+      "REVEALED",
+      "TICKS",
+      "DONE",
+      "ADDED",
+      "VALID",
+      "LENGTH",
+      "INTERVAL",
+      "SKIP"
+    ]
+  },
+  "music-command-stream": {
+    "title": "Sequence Counted Notes and Rests",
+    "category": "audio",
+    "fields": [
+      "NOTE",
+      "EVENT",
+      "FINISHED",
+      "VALID",
+      "INDEX",
+      "REMAINING",
+      "COUNT",
+      "N0",
+      "N1",
+      "N2",
+      "N3",
+      "N4",
+      "N5",
+      "N6",
+      "N7",
+      "U0",
+      "U1",
+      "U2",
+      "U3",
+      "U4",
+      "U5",
+      "U6",
+      "U7"
+    ]
+  },
+  "save-record-validation": {
+    "title": "Validate a Save Before Replacing Live State",
+    "category": "framework",
+    "fields": [
+      "ACCEPTED",
+      "VALID",
+      "MODE",
+      "L0",
+      "L1",
+      "L2",
+      "L3",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7"
+    ]
+  },
+  "object-command-buffer": {
+    "title": "Defer Object Changes Until After Traversal",
+    "category": "framework",
+    "fields": [
+      "APPLIED",
+      "REJECTED",
+      "FULL",
+      "VALID",
+      "MODE",
+      "SLOT",
+      "GENERATION",
+      "ACTIVE",
+      "COUNT",
+      "G0",
+      "G1",
+      "G2",
+      "G3",
+      "O0",
+      "O1",
+      "O2",
+      "O3",
+      "S0",
+      "S1",
+      "S2",
+      "S3",
+      "H0",
+      "H1",
+      "H2",
+      "H3"
+    ]
+  }
+}
