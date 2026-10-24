@@ -1,0 +1,17 @@
+; Blitz BASIC 2.10 Amiga-mode long arrays; append routines after End.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Checked map queries",1,0
+Dim PL_TM_MAP.l(34),PL_TM_PROPS.l(3)
+PL_TM_W.l=7 : PL_TM_H.l=5 : PL_TM_CAP.l=35 : PL_TM_MAX.l=3 : PL_TM_PC.l=4
+For PL_TM_I.l=0 To 34 : PL_TM_MAP.l(PL_TM_I.l)=PL_TM_I.l MOD 4 : Next
+PL_TM_PROPS.l(0)=0 : PL_TM_PROPS.l(1)=1 : PL_TM_PROPS.l(2)=2 : PL_TM_PROPS.l(3)=3
+PL_TM_X.l=3 : PL_TM_Y.l=2 : Gosub PL_TM_GET
+WLocate 8,20 : Print "Tile: ",PL_TM_TILE.l
+Gosub PL_TM_PROPERTY : WLocate 8,40 : Print "Flags: ",PL_TM_PROP.l
+PL_TM_TILE.l=2 : Gosub PL_TM_SET
+PL_TM_WX.l=24 : PL_TM_WY.l=16 : Gosub PL_TM_PIXEL8
+WLocate 8,60 : Print "Changed tile: ",PL_TM_TILE.l
+Repeat : VWait : Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0
+End
