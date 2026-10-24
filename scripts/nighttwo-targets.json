@@ -142,5 +142,21 @@
   [
     "save-record-validation",
     "commodore-amiga"
+  ],
+  [
+    "object-command-buffer",
+    "commodore-64"
+  ],
+  [
+    "object-command-buffer",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "object-command-buffer",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "object-command-buffer",
+    "commodore-amiga"
   ]
 ]
