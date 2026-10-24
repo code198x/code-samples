@@ -302,5 +302,21 @@
   [
     "logical-envelope",
     "commodore-amiga"
+  ],
+  [
+    "bounded-undo",
+    "commodore-64"
+  ],
+  [
+    "bounded-undo",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-undo",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-undo",
+    "commodore-amiga"
   ]
 ]
