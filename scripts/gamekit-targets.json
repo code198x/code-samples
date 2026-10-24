@@ -30,5 +30,21 @@
   [
     "rational-tick-divider",
     "commodore-amiga"
+  ],
+  [
+    "pause-clock",
+    "commodore-64"
+  ],
+  [
+    "pause-clock",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "pause-clock",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "pause-clock",
+    "commodore-amiga"
   ]
 ]
