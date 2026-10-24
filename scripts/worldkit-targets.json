@@ -30,5 +30,21 @@
   [
     "word-division",
     "commodore-amiga"
+  ],
+  [
+    "integer-square-root",
+    "commodore-64"
+  ],
+  [
+    "integer-square-root",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "integer-square-root",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "integer-square-root",
+    "commodore-amiga"
   ]
 ]
