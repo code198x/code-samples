@@ -238,5 +238,21 @@
   [
     "bitmap-mirror",
     "commodore-amiga"
+  ],
+  [
+    "bitmap-transpose",
+    "commodore-64"
+  ],
+  [
+    "bitmap-transpose",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bitmap-transpose",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bitmap-transpose",
+    "commodore-amiga"
   ]
 ]
