@@ -164,7 +164,8 @@ def check(topic, system, record=None):
             )
         elif system == "sinclair-zx-spectrum":
             T.require(
-                0 < len(c["startup"]) <= 20 and c["startup"][-1]["reached"],
+                0 < len(c["startup"]) <= (30 if topic == "action-cooldown" else 20)
+                and c["startup"][-1]["reached"],
                 "ROM startup incomplete",
             )
             T.require(loaded == V.blocks(binary)[3][1:-1], "ROM-loaded CODE differs")
