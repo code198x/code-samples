@@ -126,5 +126,21 @@
   [
     "trigger-transitions",
     "commodore-amiga"
+  ],
+  [
+    "timed-status",
+    "commodore-64"
+  ],
+  [
+    "timed-status",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "timed-status",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "timed-status",
+    "commodore-amiga"
   ]
 ]
