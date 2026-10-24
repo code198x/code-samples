@@ -1184,3 +1184,14 @@ jobs:
           python-version: '3.14'
       - name: Check interpreter observations, queue invariants and altered evidence
         run: python -m unittest discover -s scripts -p test_basic_fifo.py -v
+  basic-damage-rules-records:
+    name: Native BASIC damage-rules evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check interpreter observations, independent invariants and altered evidence
+        run: python -m unittest discover -s scripts -p test_basic_damage_rules.py -v
