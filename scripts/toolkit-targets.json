@@ -126,5 +126,21 @@
   [
     "high-score-insertion",
     "commodore-amiga"
+  ],
+  [
+    "dictionary-lookup",
+    "commodore-64"
+  ],
+  [
+    "dictionary-lookup",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "dictionary-lookup",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "dictionary-lookup",
+    "commodore-amiga"
   ]
 ]
