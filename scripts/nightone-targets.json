@@ -1,0 +1,18 @@
+[
+  [
+    "collision-layer-filter",
+    "commodore-64"
+  ],
+  [
+    "collision-layer-filter",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "collision-layer-filter",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "collision-layer-filter",
+    "commodore-amiga"
+  ]
+]

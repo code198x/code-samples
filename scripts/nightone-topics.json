@@ -1,0 +1,205 @@
+{
+  "collision-layer-filter": {
+    "title": "Filter Collision Pairs by Layer",
+    "category": "physics",
+    "fields": [
+      "PAIR_KIND",
+      "GROUP_A",
+      "MASK_A",
+      "GROUP_B",
+      "MASK_B",
+      "SOLID_A",
+      "SOLID_B"
+    ]
+  },
+  "grid-turn-buffer": {
+    "title": "Buffer Turns Through a Grid",
+    "category": "framework",
+    "fields": [
+      "CELL",
+      "DIRECTION",
+      "PENDING",
+      "MOVED",
+      "VALID",
+      "REQUEST",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15"
+    ]
+  },
+  "push-block-transaction": {
+    "title": "Push a Block Atomically",
+    "category": "framework",
+    "fields": [
+      "CELL",
+      "RESULT",
+      "VALID",
+      "REQUEST",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15"
+    ]
+  },
+  "spatial-bucket": {
+    "title": "Build Bounded Spatial Buckets",
+    "category": "physics",
+    "fields": [
+      "BUCKET",
+      "COUNT",
+      "INSERTED",
+      "FULL",
+      "VALID",
+      "MODE",
+      "INPUT_X",
+      "INPUT_Y",
+      "ITEM",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "S0",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6",
+      "S7",
+      "S8",
+      "S9",
+      "S10",
+      "S11",
+      "S12",
+      "S13",
+      "S14",
+      "S15"
+    ]
+  },
+  "contact-pair-cache": {
+    "title": "Remember Contact Pairs for a Step",
+    "category": "physics",
+    "fields": [
+      "FIRST",
+      "VALID",
+      "MODE",
+      "OBJECT_A",
+      "OBJECT_B",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6",
+      "B7"
+    ]
+  },
+  "moving-platform-carry": {
+    "title": "Carry a Supported Passenger",
+    "category": "physics",
+    "fields": [
+      "POSITION",
+      "CLAMPED",
+      "VALID",
+      "PASSENGER",
+      "PLATFORM_OLD",
+      "PLATFORM_NEW",
+      "SUPPORTED",
+      "MINIMUM",
+      "MAXIMUM"
+    ]
+  },
+  "camera-shake": {
+    "title": "Keep Camera Shake out of World State",
+    "category": "rendering",
+    "fields": [
+      "OFFSET_X",
+      "OFFSET_Y",
+      "REMAINING",
+      "AMPLITUDE",
+      "VALID",
+      "TRIGGER",
+      "STRENGTH",
+      "DURATION",
+      "NOISE_X",
+      "NOISE_Y"
+    ]
+  },
+  "moving-solid-push": {
+    "title": "Push an Actor with a Moving Solid",
+    "category": "physics",
+    "fields": [
+      "POSITION",
+      "PUSHED",
+      "BLOCKED",
+      "VALID",
+      "ACTOR_POSITION",
+      "ACTOR_SIZE",
+      "SOLID_OLD",
+      "SOLID_NEW",
+      "SOLID_SIZE",
+      "MINIMUM",
+      "MAXIMUM"
+    ]
+  },
+  "viewport-world-transform": {
+    "title": "Project World Points into a Viewport",
+    "category": "rendering",
+    "fields": [
+      "SCREEN_X",
+      "SCREEN_Y",
+      "VISIBLE",
+      "VALID",
+      "WORLD_X_LO",
+      "WORLD_X_HI",
+      "WORLD_Y_LO",
+      "WORLD_Y_HI",
+      "CAMERA_X_LO",
+      "CAMERA_X_HI",
+      "CAMERA_Y_LO",
+      "CAMERA_Y_HI",
+      "WIDTH",
+      "HEIGHT"
+    ]
+  },
+  "surface-response": {
+    "title": "Reflect a Surface-normal Speed with Restitution",
+    "category": "physics",
+    "fields": [
+      "NORMAL_OUT",
+      "DIRECTION_OUT",
+      "TANGENT_OUT",
+      "VALID",
+      "NORMAL_IN",
+      "DIRECTION_IN",
+      "TANGENT_IN",
+      "RESTITUTION"
+    ]
+  }
+}
