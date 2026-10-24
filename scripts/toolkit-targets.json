@@ -142,5 +142,21 @@
   [
     "dictionary-lookup",
     "commodore-amiga"
+  ],
+  [
+    "bounded-text-wrap",
+    "commodore-64"
+  ],
+  [
+    "bounded-text-wrap",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-text-wrap",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-text-wrap",
+    "commodore-amiga"
   ]
 ]
