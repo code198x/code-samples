@@ -94,5 +94,21 @@
   [
     "menu-navigation",
     "commodore-amiga"
+  ],
+  [
+    "text-entry-buffer",
+    "commodore-64"
+  ],
+  [
+    "text-entry-buffer",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "text-entry-buffer",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "text-entry-buffer",
+    "commodore-amiga"
   ]
 ]
