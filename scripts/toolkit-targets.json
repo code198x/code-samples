@@ -302,5 +302,21 @@
   [
     "input-debounce",
     "commodore-amiga"
+  ],
+  [
+    "round-robin-service",
+    "commodore-64"
+  ],
+  [
+    "round-robin-service",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "round-robin-service",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "round-robin-service",
+    "commodore-amiga"
   ]
 ]
