@@ -46,5 +46,21 @@
   [
     "aimed-projectile",
     "commodore-amiga"
+  ],
+  [
+    "attack-hit-window",
+    "commodore-64"
+  ],
+  [
+    "attack-hit-window",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "attack-hit-window",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "attack-hit-window",
+    "commodore-amiga"
   ]
 ]
