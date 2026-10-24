@@ -62,5 +62,21 @@
   [
     "input-sequence",
     "commodore-amiga"
+  ],
+  [
+    "input-chord",
+    "commodore-64"
+  ],
+  [
+    "input-chord",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "input-chord",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "input-chord",
+    "commodore-amiga"
   ]
 ]
