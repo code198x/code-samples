@@ -996,14 +996,14 @@
         "text": "TURN 3 E 1 T 1",
         "font_base": 15360,
         "glyphs": {
-          "82": [
+          "84": [
             0,
-            124,
-            66,
-            66,
-            124,
-            68,
-            66,
+            254,
+            16,
+            16,
+            16,
+            16,
+            16,
             0
           ],
           "32": [
@@ -1016,34 +1016,14 @@
             0,
             0
           ],
-          "51": [
+          "82": [
             0,
-            60,
-            66,
-            12,
-            2,
-            66,
-            60,
-            0
-          ],
-          "84": [
-            0,
-            254,
-            16,
-            16,
-            16,
-            16,
-            16,
-            0
-          ],
-          "69": [
-            0,
-            126,
-            64,
             124,
-            64,
-            64,
-            126,
+            66,
+            66,
+            124,
+            68,
+            66,
             0
           ],
           "49": [
@@ -1062,6 +1042,26 @@
             66,
             66,
             66,
+            66,
+            60,
+            0
+          ],
+          "69": [
+            0,
+            126,
+            64,
+            124,
+            64,
+            64,
+            126,
+            0
+          ],
+          "51": [
+            0,
+            60,
+            66,
+            12,
+            2,
             66,
             60,
             0
@@ -4796,14 +4796,14 @@
         "text": "TURN 3 E 1 T 1",
         "font_base": 15360,
         "glyphs": {
-          "82": [
+          "84": [
             0,
-            124,
-            66,
-            66,
-            124,
-            68,
-            66,
+            254,
+            16,
+            16,
+            16,
+            16,
+            16,
             0
           ],
           "32": [
@@ -4816,34 +4816,14 @@
             0,
             0
           ],
-          "51": [
+          "82": [
             0,
-            60,
-            66,
-            12,
-            2,
-            66,
-            60,
-            0
-          ],
-          "84": [
-            0,
-            254,
-            16,
-            16,
-            16,
-            16,
-            16,
-            0
-          ],
-          "69": [
-            0,
-            126,
-            64,
             124,
-            64,
-            64,
-            126,
+            66,
+            66,
+            124,
+            68,
+            66,
             0
           ],
           "49": [
@@ -4862,6 +4842,26 @@
             66,
             66,
             66,
+            66,
+            60,
+            0
+          ],
+          "69": [
+            0,
+            126,
+            64,
+            124,
+            64,
+            64,
+            126,
+            0
+          ],
+          "51": [
+            0,
+            60,
+            66,
+            12,
+            2,
             66,
             60,
             0
@@ -8290,14 +8290,24 @@
         "text": "TURN 1 E 0 T 1",
         "font_base": 15360,
         "glyphs": {
-          "82": [
+          "84": [
             0,
-            124,
-            66,
-            66,
-            124,
-            68,
-            66,
+            254,
+            16,
+            16,
+            16,
+            16,
+            16,
+            0
+          ],
+          "48": [
+            0,
+            60,
+            70,
+            74,
+            82,
+            98,
+            60,
             0
           ],
           "32": [
@@ -8310,24 +8320,14 @@
             0,
             0
           ],
-          "84": [
+          "82": [
             0,
-            254,
-            16,
-            16,
-            16,
-            16,
-            16,
-            0
-          ],
-          "69": [
-            0,
-            126,
-            64,
             124,
-            64,
-            64,
-            126,
+            66,
+            66,
+            124,
+            68,
+            66,
             0
           ],
           "49": [
@@ -8350,6 +8350,16 @@
             60,
             0
           ],
+          "69": [
+            0,
+            126,
+            64,
+            124,
+            64,
+            64,
+            126,
+            0
+          ],
           "78": [
             0,
             66,
@@ -8358,16 +8368,6 @@
             74,
             70,
             66,
-            0
-          ],
-          "48": [
-            0,
-            60,
-            70,
-            74,
-            82,
-            98,
-            60,
             0
           ]
         },
@@ -12505,14 +12505,14 @@
         "text": "TURN 3 E 1 T 1",
         "font_base": 15360,
         "glyphs": {
-          "82": [
+          "84": [
             0,
-            124,
-            66,
-            66,
-            124,
-            68,
-            66,
+            254,
+            16,
+            16,
+            16,
+            16,
+            16,
             0
           ],
           "32": [
@@ -12525,34 +12525,14 @@
             0,
             0
           ],
-          "51": [
+          "82": [
             0,
-            60,
-            66,
-            12,
-            2,
-            66,
-            60,
-            0
-          ],
-          "84": [
-            0,
-            254,
-            16,
-            16,
-            16,
-            16,
-            16,
-            0
-          ],
-          "69": [
-            0,
-            126,
-            64,
             124,
-            64,
-            64,
-            126,
+            66,
+            66,
+            124,
+            68,
+            66,
             0
           ],
           "49": [
@@ -12571,6 +12551,26 @@
             66,
             66,
             66,
+            66,
+            60,
+            0
+          ],
+          "69": [
+            0,
+            126,
+            64,
+            124,
+            64,
+            64,
+            126,
+            0
+          ],
+          "51": [
+            0,
+            60,
+            66,
+            12,
+            2,
             66,
             60,
             0
@@ -21914,13 +21914,13 @@
     "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/clock.inc": "10d438c3e42db7bbdfe7294cd28b8307c4b01f109317cf2584d56c59fd4196fe",
     "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/input.inc": "57f2af4bb21768c3ee3f0f33e57c61739e7ddc35889ca687175b5aab499393f7",
     "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/dispatch.inc": "a77dcd5e3643da57789730cb417775237ea899b09495bfb35b74dce287a4cae6",
-    "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/mistakes/reset-baseline.asm": "236ce0d3b458a9146bd846c7f94bfae982df61660d029b70209e983c0f569813",
+    "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/wrong-baseline.asm": "236ce0d3b458a9146bd846c7f94bfae982df61660d029b70209e983c0f569813",
     "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/mistakes/reset-baseline.inc": "fc1641796dfde6180778649c4fb83b490c5fc0d63cc40b91d78b2a141debc0ca",
-    "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/mistakes/no-entry.asm": "72fa0258a1178cc3757e05dbcd4e8e5f826ca4fb2b4be7cfdda3e396264f75a0",
+    "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/no-entry.asm": "72fa0258a1178cc3757e05dbcd4e8e5f826ca4fb2b4be7cfdda3e396264f75a0",
     "sinclair-zx-spectrum/patterns/assembly/framework/turn-deadline/Makefile": "ee3842675079a396047aff1750e07e24710fdd27324b7de4755fd4cfc4cc6009",
     "cross-platform/patterns/framework/elapsed-deadline/z80.inc": "b3e1c807e562d29ebb1b68f9086ce46604fe9f72ab6038c8838bad16f5b28227",
     "msx/patterns/assembly/framework/turn-deadline/dispatch.inc": "a77dcd5e3643da57789730cb417775237ea899b09495bfb35b74dce287a4cae6",
-    "scripts/verify-spectrum-assembly-deadlines.py": "48b5b209f84a0d6d6a20237cb38f616c38f4ec4fd9b074e2e92bf80a8e46f570",
+    "scripts/verify-spectrum-assembly-deadlines.py": "192297ef6445f672259601140065d9f1603db13f5299bdb39588bb9af9734acd",
     "scripts/verify-msx-assembly-deadlines.py": "074b4c90733108a5a4eb5a18045b0c02b72e4f32b43ef32516e83729f759679c",
     "scripts/verify-dragon-basic-deadlines.py": "6c03ba4091410f9a50d7e93113558d91426fb87b0b2444d71a745d64d5887afb",
     "scripts/verify-basic-deadlines.py": "fc684b89a2098d8c76e4604c7e32e44b7386eff41d0d52c12d3007d0e4f4b4dd",

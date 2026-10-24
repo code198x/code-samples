@@ -38,9 +38,9 @@ This caller draws continuously for readable feedback. Clock sampling does not wa
 
 customise.asm changes DURATION=200 to 100, about four seconds to two, without changing image/context size. Keep units and clock range explicit. Maths for Games develops the same units, unsigned ranges and modular subtraction.
 
-mistakes/reset-baseline.asm selects a deliberately broken clock adapter: it overwrites previous before polling. The real clock moves but elapsed is always zero, remaining stays at 200 and the screen remains 01 00 01. Restore clock.inc and rebuild; an independent repaired run reaches 03 01 01. The broken adapter adds three bytes. Never include both adapters in a working image.
+wrong-baseline.asm selects a deliberately broken clock adapter: it overwrites previous before polling. The real clock moves but elapsed is always zero, remaining stays at 200 and the screen remains 01 00 01. Restore clock.inc and rebuild; an independent repaired run reaches 03 01 01. The broken adapter adds three bytes. Never include both adapters in a working image.
 
-mistakes/no-entry.asm omits END start. The tape still loads the exact 393-byte image, then BASIC reports 0 OK, 30:1; READY stays zero because USR never ran. Add END start and rebuild the loader. A successful load is not evidence that a routine executed.
+no-entry.asm omits END start. The tape still loads the exact 393-byte image, then BASIC reports 0 OK, 30:1; READY stays zero because USR never ran. Add END start and rebuild the loader. A successful load is not evidence that a routine executed.
 
 ## Costs and verification
 
