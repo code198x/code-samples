@@ -142,5 +142,21 @@
   [
     "shuffle-bag",
     "commodore-amiga"
+  ],
+  [
+    "waypoint-route",
+    "commodore-64"
+  ],
+  [
+    "waypoint-route",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "waypoint-route",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "waypoint-route",
+    "commodore-amiga"
   ]
 ]
