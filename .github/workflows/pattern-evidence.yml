@@ -1049,3 +1049,18 @@ jobs:
         run: |
           python scripts/check-game-rules.py
           python -m unittest discover -s scripts -p test_game_rules.py -v
+
+  gameplay-pattern-records:
+    name: Reusable gameplay packets, code and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check every explicit native target and altered-record rejection
+        run: |
+          python scripts/check-gameplay-patterns.py
+          python -m unittest discover -s scripts -p test_gameplay_patterns.py -v
+          python -m unittest discover -s scripts -p test_gameplay_contracts.py -v

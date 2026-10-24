@@ -1,0 +1,108 @@
+{
+  "resource-wallet": [
+    "Resource Counters",
+    [
+      "BALANCE",
+      "AMOUNT",
+      "MODE",
+      "OK"
+    ]
+  ],
+  "score-counter": [
+    "A Saturating 16-bit Score",
+    [
+      "SCORE_LO",
+      "SCORE_HI",
+      "ADD_LO",
+      "ADD_HI",
+      "CLIPPED"
+    ]
+  ],
+  "quest-flags": [
+    "Quest and Inventory Flags",
+    [
+      "FLAGS",
+      "MASK",
+      "MODE",
+      "ALL_SET"
+    ]
+  ],
+  "event-queue": [
+    "A Bounded Event Queue",
+    [
+      "HEAD",
+      "TAIL",
+      "COUNT",
+      "VALUE",
+      "MODE",
+      "OK",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  ],
+  "input-repeat": [
+    "Menu Key Repeat",
+    [
+      "HELD",
+      "WAS_HELD",
+      "TIMER",
+      "PULSE"
+    ]
+  ],
+  "approach-target": [
+    "Approach a Target Without Overshoot",
+    [
+      "POSITION",
+      "TARGET",
+      "STEP",
+      "ARRIVED"
+    ]
+  ],
+  "endpoint-patrol": [
+    "Patrol Between Two Endpoints",
+    [
+      "POSITION",
+      "LOWER",
+      "UPPER",
+      "DIRECTION"
+    ]
+  ],
+  "manhattan-distance": [
+    "Manhattan Distance",
+    [
+      "AX",
+      "AY",
+      "BX",
+      "BY",
+      "DIST_LO",
+      "DIST_HI"
+    ]
+  ],
+  "priority-arbiter": [
+    "Choose the Highest-priority Request",
+    [
+      "PRESENT",
+      "ID",
+      "PRIORITY",
+      "REQUEST_ID",
+      "REQUEST_PRIORITY",
+      "ACCEPTED"
+    ]
+  ],
+  "decimal-format": [
+    "Format a 16-bit Decimal Number",
+    [
+      "VALUE_LO",
+      "VALUE_HI",
+      "DIGIT0",
+      "DIGIT1",
+      "DIGIT2",
+      "DIGIT3",
+      "DIGIT4",
+      "WORK_LO",
+      "WORK_HI"
+    ]
+  ]
+}

@@ -1,0 +1,5 @@
+# Shared gameplay case models
+
+Independent integer/list models for ten small native components, with 96 valid boundary/varied calls per named configuration and a separate sequential client. These are developer verification inputs, not a runtime dependency or portable engine API. The current runnable targets are listed explicitly in scripts/gameplay-pattern-targets.json; missing targets fail the retained-evidence gate rather than silently disappearing. Planned topic contracts do not claim that a machine implementation exists before its target is added.
+
+Values in cases are bytes; preconditions are respected for bounded scores, patrol intervals and queue indices/count. Init is checked from dirty bytes. Wrong-client behavior is confined to the separate trace; correct component boundary calls still run in that variant. The host model uses integer min/abs/list operations independently of native carry/borrow paths. Diagnostic tables and packet storage are excluded from reusable component costs. Public CI validates retained native evidence and rejects altered observations; it does not rerun restricted-firmware execution.
