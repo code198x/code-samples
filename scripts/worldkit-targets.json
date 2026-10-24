@@ -270,5 +270,21 @@
   [
     "bounded-bit-reader",
     "commodore-amiga"
+  ],
+  [
+    "pixel-mask-collision",
+    "commodore-64"
+  ],
+  [
+    "pixel-mask-collision",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "pixel-mask-collision",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "pixel-mask-collision",
+    "commodore-amiga"
   ]
 ]
