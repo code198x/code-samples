@@ -1,0 +1,55 @@
+# Step Towards a Packed Colour on NES
+
+A fade can approach its target one channel step at a time instead of treating a packed colour as a single number.
+
+## Use it in a project
+
+COLOUR and TARGET use logical RGB332: red bits 7–5, green 4–2, blue 1–0. Move each channel by at most one towards its target and write COLOUR. A call at the target is idempotent. No hardware palette register is written.
+
+Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **COLOUR, TARGET**. They occupy 2 contiguous bytes. Also reserve the private workspace: **T0, T1, T2, T3, T4, T5** (6 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
+
+Call `packed_colour_step_init` once at the intended reset boundary. It clears inputs as well as outputs and workspace. Set your starting state and configuration afterwards, then call `packed_colour_step_step` whenever the described event occurs. The helper reads no device, waits for no frame and installs no interrupt handler.
+
+| Ownership | Fields |
+|---|---|
+| Retain between calls | COLOUR |
+| Supply before service | TARGET |
+| Read after service | updated COLOUR |
+
+Unpack each channel, approach its target independently, then repack. The completion time is the greatest initial channel difference.
+
+## Machine contract
+
+A/X/status may change; Y is preserved. The 2A03 has no decimal arithmetic mode. A direct JSR needs two return-address stack bytes. The helper makes no nested calls and adds no other stack use. Its named scratch is private workspace, not a pointer, a ROM variable or shared zero-page space that the game may borrow concurrently. The samples use fixed symbol bindings. Scope or rename every label and binding, including the component_end measurement marker, and allocate a separate block for each independent instance. Different helpers can also use common field names, so combining them needs separate namespaces or explicitly renamed bindings. Give each block one mutation owner.
+
+The NROM caller owns PPU setup and background display, with NMI and DMC disabled. Table and packet sizes are bounded to fit the cartridge caller and internal RAM; the helper owns no PPU registers.
+
+## Adapt the caller
+
+`demo.asm` supplies the bindings and include order. `exercise.inc` first runs table cases, then a separate client retaining state between calls. A game can call the public step entry directly and remove the diagnostic packet and display. Do not copy the diagnostic's hardware takeover into an existing game loop.
+
+Build with `make ASM198X=/path/to/asm198x`. The Makefile produces normal, custom, deliberately wrong and repaired programs. Tools must already be installed; the sample downloads nothing.
+
+## Customise it
+
+Fade all channels down instead of up. The maintained custom caller changes its inputs or client sequence rather than hiding a different implementation behind the same label. Compare every state of the two clients, not only their final display.
+
+## Mistake and repair
+
+The wrong caller resets the current colour before every step, so the fade never progresses beyond its first increment. Retain COLOUR between ticks.
+
+The BROKEN branch lives in the sequential client, not the reusable helper. `wrong.asm` selects it; `repaired.asm` restores the normal call sequence. The repaired executable matches the normal program (for Spectrum, compare loaded CODE rather than the tape filename).
+
+## Cost and alternatives
+
+The measured helper extent is 239 code bytes; public state is 2 bytes and private scratch is 6 bytes. There are no immutable helper tables. Caller data, the test cases, return-address stack, alignment and display buffers cost additional space. These are assembled sizes, not cycle measurements.
+
+Constant arithmetic. Precomputed hardware palette sequences can give better-looking fades and reduce runtime at the cost of data.
+
+RGB332 is a logical teaching format, not the native palette encoding of these machines. C64, Spectrum and NES need a chosen palette-index mapping; Amiga RGB444 conversion needs channel scaling. Hardware colours are not perceptually uniform.
+
+## Execution evidence
+
+Four variants run on NTSC NROM, background only, DMC/NMI disabled, using Asm198x 0.0.72, Emu198x 0.44.2. Each executes 64 boundary/varied/error table cases, dirty initialisation and the separate retained-state client. An independent mathematical/container model checks every public byte after every call. This is bounded example coverage, not exhaustive correctness for every possible state.
+
+The records retain loaded immutable code, completion, register sentinels, full packets, source/tool/firmware hashes and captures. The public gate validates these retained observations and rejects altered evidence; it does not run restricted firmware. No firmware is distributed. The eight displayed bytes are the first eight public fields, zero-padded when shorter; the packet includes every field.
