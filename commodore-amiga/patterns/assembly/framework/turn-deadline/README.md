@@ -1,0 +1,58 @@
+# Optional timed turns on Amiga
+
+A turn can wait for the player indefinitely. Or it can end when a deadline runs out. Keep those choices separate: the clock runs continuously, while a turn only advances after a fresh Fire press or an enabled deadline expires.
+
+This standalone A500 caller uses Up to switch the deadline on or off, Fire to finish a turn, Right to add slow foreground work, and Left to hold the displayed sample still. Its seven hexadecimal words show turns, timed expiries, active state, ticks left, sampled clock, foreground updates and configured duration. The normal duration is 150 PAL VBlank ticks; `custom.asm` changes it to 50.
+
+## Reuse the countdown
+
+Include `cross-platform/patterns/framework/elapsed-deadline/m68000.inc`. Reserve an even-aligned **14-byte context**, pass its address in A0 and supply the current 16-bit clock in D0.W. Call `deadline_init` once after setting the duration, `deadline_poll` regularly, and `deadline_renew` after starting another timed turn. D0/D1 and condition codes change; A0 and other registers survive. The helper itself owns no interrupts or display.
+
+| Word offset | Meaning |
+| --- | --- |
+| 0 | Duration, 0–65535 ticks; zero disables |
+| 2 | Ticks remaining |
+| 4 | Active, 0 or 1 |
+| 6 | Expired on this poll, 0 or 1 |
+| 8 | Elapsed ticks since previous poll |
+| 10, 12 | Previous and current clock samples |
+
+Subtraction wraps modulo 65536. Poll before a whole 65536-tick revolution can pass: the same word value cannot distinguish no time from an entire revolution. Elapsed time equal to or greater than the remaining duration expires once and saturates at zero. A late poll does not invent a queue of missed turns. A zero duration still updates the sampling baseline.
+
+## Own the clock and interrupts
+
+`clock.inc` is a separate **A500 68000** adapter. This is custom-chip takeover code, not an Exec interrupt server. Install only after claiming the level-3 vector at $6C, disabling competing COPER/VERTB/BLIT interrupt sources, enabling the interrupt master and keeping CPU IPL below 3. `clock_install` checks those enable/mask conditions and refuses a repeated install; it cannot detect a second program writing the vector later.
+
+Call `clock_install`: D0 is 1 on success, 0 on refusal. It saves the vector, clears its counter and pending VERTB request, then enables its own VBlank source. The handler increments an atomic word counter, acknowledges its request and returns with RTE without changing general registers. `read_clock` returns the word in D0. `wait_clock_frame` waits for a **new** counter value and changes D1/flags; it requires the clock and interrupts to remain enabled.
+
+Do not combine that wait with another routine which polls and acknowledges the same INTREQ bit. Two consumers can steal each other's event. `clock_stop` disables and acknowledges this source, restores the saved vector and returns 1; repeated stop returns 0. It leaves the interrupt master and the surrounding OS/custom-chip restoration to its owner. This caller deliberately stays in its own loop.
+
+The original 68000 permits the SR read used by the precondition check; later processors differ. Do not drop this exact clock adapter into an accelerated machine. An Exec server is another implementation of the clock interface, not a reason to copy this takeover routine into an OS application. See the [Commodore hardware reference](https://www.ikod.se/wp-content/uploads/2020/08/Amiga_Hardware_Reference_Manual_1989.pdf) interrupt-control chapter and the [Motorola MC68000 manual](https://www.nxp.com/docs/en/reference-manual/MC68000UM.pdf) for the hardware contracts.
+
+## Include and call from a project
+
+`demo.asm` lists the includes. `caller.inc` shows where the unchanged joystick edge detector, clock read, countdown poll and turn policy are called. `policy.inc` contains only policy: handle expiry first, then a fresh Up toggle, then a fresh Fire action. Expiry suppresses a simultaneous action for that update; toggling also takes precedence over Fire. Releasing a button enables its next press; holding it creates no repeated turn.
+
+Keep the countdown context, edge state and clock state private to this caller. Clear/initialise them at startup. The context is not re-entrant. Do not let an interrupt call the same policy or rewrite the countdown while the foreground is updating it. Only the clock word is shared with the interrupt here.
+
+The single-bitplane renderer and `display_row` latch are optional diagnostics. A game can call the same routines without drawing any text. Left freezes only the last displayed row: clock reads and deadline polls continue. The renderer is small and readable; these runs do not establish tear-free live rendering or a worst-case frame budget.
+
+## Common error: renew the baseline before every poll
+
+`wrong.asm` stores the current clock into the previous-sample field before polling. That makes elapsed time zero, so the clock display rises but the enabled countdown never expires. This adds four code bytes to the caller. Removing those stores fixes the fault; `repaired.asm` produces the same executable as the working version.
+
+Watch both values when debugging. A stopped clock, a disabled countdown and a baseline overwritten on every update can all look like a frozen timer, but they need different fixes. The native fixtures exercise all three distinctions.
+
+## Costs and verification
+
+The assembled countdown is **108 code bytes plus 14 state bytes**. The clock is **196 code bytes plus 8 state bytes**, including installation, refusal paths and restoration. These exclude the policy, joystick reader, caller and display. The complete working executable is 11,444 bytes, including its 10,240-byte bitplane and 136-byte original hexadecimal font. Reserve stack space for your call chain and interrupt entry; these figures are storage counts, not cycle budgets.
+
+Seven cold-boot ADF runs cover the working, shorter-duration, faulty and repaired callers, 12 independent arithmetic vectors, 16 simultaneous-policy combinations, a wrong arithmetic caller, and clock installation/refusal/stop/restoration. The foreground workload yielded 186 clock ticks over 62 updates, versus 34 ticks over 34 ordinary updates. Another native interval produced 100 IRQ ticks in 100 frames. Readback checks relocated executable bytes, state and the actual bitplane; complete native pixels must agree with the displayed words and own font. Corruption tests must fail when code, events, arithmetic, lifecycle, costs or captures change.
+
+Qualification used Asm198x 0.0.72 and Build198x 0.2.9. Normal frame-clock operation was also checked on released Emu198x 0.44.2. Exact debugger observation used an **unreleased build based on that release with a framebuffer-refresh performance fix**; `verification/configuration.json` identifies that build and pins its executable hash. This is emulator execution evidence, not a physical-hardware timing measurement.
+
+## Make it your own
+
+Change DURATION in `custom.asm`, preserving the same units as your clock. Choose whether expiry should suppress simultaneous input by changing the small dispatcher, then add a test for that choice. Replace the exclusive IRQ adapter with a suitable OS-owned clock when your program runs under Exec. Poll promptly even during slow work; splitting expensive jobs across updates improves responsiveness, while the elapsed countdown keeps its meaning.
+
+Modular subtraction and saturation are useful Maths for Games connections. PAL and NTSC ticks have different durations: choose region-specific tick counts or a finer clock when wall-clock seconds matter. An untimed adventure needs no ticking turn policy at all; a timed puzzle can use precisely the same command handling with this optional deadline.
