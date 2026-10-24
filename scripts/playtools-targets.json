@@ -142,5 +142,21 @@
   [
     "bounded-rle",
     "commodore-amiga"
+  ],
+  [
+    "streaming-crc8",
+    "commodore-64"
+  ],
+  [
+    "streaming-crc8",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "streaming-crc8",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "streaming-crc8",
+    "commodore-amiga"
   ]
 ]
