@@ -1,0 +1,57 @@
+; Checked row-major map context. Arrays and capacities belong to the caller.
+.PL_TM_CHECK
+PL_TM_VALID.l=0 : PL_TM_PROP.l=0
+If PL_TM_W.l<1 or PL_TM_W.l>255 or PL_TM_H.l<1 or PL_TM_H.l>255
+Return
+EndIf
+If PL_TM_CAP.l<PL_TM_W.l*PL_TM_H.l
+Return
+EndIf
+If PL_TM_MAX.l<0 or PL_TM_MAX.l>255
+Return
+EndIf
+If PL_TM_X.l<0 or PL_TM_X.l>=PL_TM_W.l or PL_TM_Y.l<0 or PL_TM_Y.l>=PL_TM_H.l
+Return
+EndIf
+PL_TM_INDEX.l=PL_TM_Y.l*PL_TM_W.l+PL_TM_X.l
+PL_TM_VALID.l=1
+Return
+.PL_TM_GET
+PL_TM_TILE.l=0 : Gosub PL_TM_CHECK
+If PL_TM_VALID.l=0
+Return
+EndIf
+PL_TM_TILE.l=PL_TM_MAP.l(PL_TM_INDEX.l)
+If PL_TM_TILE.l<0 or PL_TM_TILE.l>PL_TM_MAX.l
+   PL_TM_TILE.l=0 : PL_TM_VALID.l=0
+EndIf
+Return
+.PL_TM_SET
+Gosub PL_TM_CHECK
+If PL_TM_VALID.l=0
+Return
+EndIf
+If PL_TM_TILE.l<0 or PL_TM_TILE.l>PL_TM_MAX.l
+PL_TM_VALID.l=0
+Return
+EndIf
+PL_TM_MAP.l(PL_TM_INDEX.l)=PL_TM_TILE.l
+Return
+.PL_TM_PROPERTY
+PL_TM_VALID.l=0 : PL_TM_PROP.l=0
+If PL_TM_MAX.l<0 or PL_TM_MAX.l>255 or PL_TM_PC.l<PL_TM_MAX.l+1
+Return
+EndIf
+If PL_TM_TILE.l<0 or PL_TM_TILE.l>PL_TM_MAX.l
+Return
+EndIf
+PL_TM_PROP.l=PL_TM_PROPS.l(PL_TM_TILE.l) : PL_TM_VALID.l=1
+Return
+.PL_TM_PIXEL8
+PL_TM_X.l=0 : PL_TM_Y.l=0 : PL_TM_TILE.l=0 : PL_TM_PROP.l=0 : PL_TM_VALID.l=0
+If PL_TM_WX.l<0 or PL_TM_WY.l<0 or PL_TM_WX.l>65535 or PL_TM_WY.l>65535
+Return
+EndIf
+PL_TM_X.l=PL_TM_WX.l/8 : PL_TM_Y.l=PL_TM_WY.l/8
+Gosub PL_TM_GET
+Return
