@@ -30,5 +30,21 @@
   [
     "grid-turn-buffer",
     "commodore-amiga"
+  ],
+  [
+    "push-block-transaction",
+    "commodore-64"
+  ],
+  [
+    "push-block-transaction",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "push-block-transaction",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "push-block-transaction",
+    "commodore-amiga"
   ]
 ]
