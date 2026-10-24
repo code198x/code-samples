@@ -799,3 +799,16 @@ jobs:
       - run: |
           python scripts/check-msx-basic-deadlines.py
           python -m unittest discover -s scripts -p test_msx_basic_deadlines.py -v
+
+  spectrum-deadline-records:
+    name: Spectrum BASIC and Z80 deadlines, pixels and loader controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-spectrum-deadlines.py
+          python -m unittest discover -s scripts -p test_spectrum_deadlines.py -v

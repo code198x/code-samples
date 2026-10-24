@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load(system):
-    name = {"dragon-32": "dragon", "jupiter-ace": "ace", "msx": "msx"}[system]
+    name = {"dragon-32": "dragon", "jupiter-ace": "ace", "msx": "msx", "sinclair-zx-spectrum": "spectrum"}[system]
     spec = importlib.util.spec_from_file_location(
         "native", ROOT / f"scripts/verify-{name}-assembly-deadlines.py"
     )
@@ -41,7 +41,9 @@ def check(system="dragon-32", record=None):
         "Changed producer/firmware identity",
     )
     ace = system == "jupiter-ace"
-    z80 = system in ("jupiter-ace", "msx")
+    spectrum = system == "sinclair-zx-spectrum"
+    fifty = ace or spectrum
+    z80 = system in ("jupiter-ace", "msx", "sinclair-zx-spectrum")
     offset = 4 if z80 else 16
     endian = "little" if z80 else "big"
     for variant, c in r["cases"].items():
@@ -49,12 +51,15 @@ def check(system="dragon-32", record=None):
         T.require(
             0
             < len(c["loaded_bytes"])
-            < (700 if system == "msx" else 600 if ace else 512)
+            < (700 if system == "msx" or spectrum else 600 if ace else 512)
             and hashlib.sha256(bytes(c["loaded_bytes"])).hexdigest()
             == c["loaded_sha256"],
             "Loaded payload mismatch",
         )
         T.require(T.sha(f / c["image"]) == c["image_sha256"], "Changed native image")
+        if variant == "no-entry":
+            T.require(spectrum and c["ready"] == [0, 0] and any("0 OK, 30:1" in line for line in c["screen"]), "Missing loader-entry control")
+            continue
         if "boundar" in variant:
             data = c["bytes"]
             good = variant == "boundaries"
@@ -95,7 +100,7 @@ def check(system="dragon-32", record=None):
                 int.from_bytes(bytes(raw[offset : offset + 2]), endian)
                 == (
                     (100 if variant == "custom" else 200)
-                    if ace
+                    if fifty
                     else (120 if variant == "custom" else 240)
                 ),
                 "Wrong configured duration",
@@ -120,7 +125,7 @@ def check(system="dragon-32", record=None):
             T.require(
                 e["turn"] == 1
                 and e["expiries"] == 0
-                and e["remaining"] == (200 if ace else 240),
+                and e["remaining"] == (200 if fifty else 240),
                 "No baseline-reset symptom",
             )
         else:
@@ -170,7 +175,7 @@ def check(system="dragon-32", record=None):
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
-        "--system", default="dragon-32", choices=("dragon-32", "jupiter-ace", "msx")
+        "--system", default="dragon-32", choices=("dragon-32", "jupiter-ace", "msx", "sinclair-zx-spectrum")
     )
     a = p.parse_args()
     check(a.system)

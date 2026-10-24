@@ -1,0 +1,10 @@
+{
+  "emulator_sha256": "ded30155d74817ffd16c7fdd6f691a5893a560d5f59999ab02614648bac0a458",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "firmware_sha256": {
+    "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
+  },
+  "model": "48K PAL",
+  "ram_bytes": 49152,
+  "clock": "ROM IM1 FRAMES low word, nominal 50 ticks/second"
+}
