@@ -1,0 +1,55 @@
+# Keep a Menu Selection Visible on Amiga
+
+A list can hold more choices than the screen has rows while its cursor still stays in view.
+
+## Use it in a project
+
+ITEM_COUNT and PAGE_ROWS must be nonzero and SELECTED below ITEM_COUNT. TOP is a retained requested first row; clamp it to max(0, ITEM_COUNT-PAGE_ROWS). Shift it just enough to contain SELECTED. Return ROW=SELECTED-TOP and VISIBLE=min(PAGE_ROWS, ITEM_COUNT-TOP). Invalid input clears ROW/VISIBLE/VALID and preserves TOP. Selection changes, disabled choices and input repeat remain caller-owned.
+
+Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **TOP, ROW, VISIBLE, VALID, SELECTED, ITEM_COUNT, PAGE_ROWS**. They occupy 7 contiguous bytes. Also reserve the private workspace: **T0, T1** (2 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
+
+Call `menu_page_window_init` once at the intended reset boundary. It clears inputs as well as outputs and workspace. Set your starting state and configuration afterwards, then call `menu_page_window_step` whenever the described event occurs. The helper reads no device, waits for no frame and installs no interrupt handler.
+
+| Ownership | Fields |
+|---|---|
+| Retain between calls | TOP |
+| Supply before service | SELECTED, ITEM_COUNT and PAGE_ROWS |
+| Read after service | TOP, ROW, VISIBLE and VALID |
+
+Clamp the old window against the list, then move only when selection crosses either edge. Compute relative differences instead of adding page size to TOP, avoiding byte wrap near the end of a long list.
+
+## Machine contract
+
+D0–D3/A0–A1/CCR may change; D4–D7/A2–A6 are preserved. A direct BSR/JSR needs four return-address stack bytes. The helper makes no nested calls and adds no other stack use. Its named scratch is private workspace, not a pointer, a ROM variable or shared zero-page space that the game may borrow concurrently. The samples use fixed symbol bindings. Scope or rename every label and binding, including the component_end measurement marker, and allocate a separate block for each independent instance. Different helpers can also use common field names, so combining them needs separate namespaces or explicitly renamed bindings. Give each block one mutation owner.
+
+The A500 OCS diagnostic cold-boots an OFS disk, owns the Copper and bitplane and disables interrupt/DMA sources. The helper does not take over hardware or allocate Chip RAM.
+
+## Adapt the caller
+
+`demo.asm` supplies the bindings and include order. `exercise.inc` first runs table cases, then a separate client retaining state between calls. A game can call the public step entry directly and remove the diagnostic packet and display. Do not copy the diagnostic's hardware takeover into an existing game loop.
+
+Build with `make ASM198X=/path/to/asm198x` and `BUILD198X=/path/to/build198x`. The Makefile produces normal, custom, deliberately wrong and repaired programs. Tools must already be installed; the sample downloads nothing.
+
+## Customise it
+
+Show the last item of a 255-entry list in an eight-row page. The maintained custom caller changes its inputs or client sequence rather than hiding a different implementation behind the same label. Compare every state of the two clients, not only their final display.
+
+## Mistake and repair
+
+The wrong client resets the retained top row before each call. Moving back to row three jumps the list to the beginning instead of preserving the nearby window. Retain TOP between selection changes.
+
+The BROKEN branch lives in the sequential client, not the reusable helper. `wrong.asm` selects it; `repaired.asm` restores the normal call sequence. The repaired executable matches the normal program (for Spectrum, compare loaded CODE rather than the tape filename).
+
+## Cost and alternatives
+
+The measured helper extent is 392 code bytes; public state is 7 bytes and private scratch is 2 bytes. There are no immutable helper tables. Caller data, the test cases, return-address stack, alignment and display buffers cost additional space. These are assembled sizes, not cycle measurements.
+
+Constant work regardless of list length. Redraw only changed rows when your display path permits it; the helper does not promise that scrolling a bitmap costs the same as changing a hardware character map.
+
+The helper returns logical indices, not character or pixel positions. Count255 means valid indices0..254. An empty list needs a separate empty-state view. For variable-height rows, use a pixel-offset viewport rather than this fixed-row policy.
+
+## Execution evidence
+
+Four variants run on A500 OCS PAL, Kickstart1.3 OFS cold boot, using Asm198x 0.0.72, Emu198x 0.44.2 and Build198x 0.2.9. Each executes 64 boundary/varied/error table cases, dirty initialisation and the separate retained-state client. An independent mathematical/container model checks every public byte after every call. This is bounded example coverage, not exhaustive correctness for every possible state.
+
+The records retain loaded immutable code, completion, register sentinels, full packets, source/tool/firmware hashes and captures. The public gate validates these retained observations and rejects altered evidence; it does not run restricted firmware. No firmware is distributed. The eight displayed bytes are the first eight public fields, zero-padded when shorter; the packet includes every field.
