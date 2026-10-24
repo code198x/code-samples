@@ -36,4 +36,4 @@ Six native cases on released Emu198x 0.44.2/Asm198x 0.0.72 cover working/custom/
 
 Real host controller events, native event counters, all 32 KiB of immutable PRG ROM, original-font screenshot pixels, source/tool/cartridge hashes and rejected corruptions are retained under verification/edges. Run scripts/verify-nes-input-edges.py, check-nes-input-edges.py and the unittest controls. Qualification names this NTSC NROM/DMC-off configuration, not every mapper/region, original hardware or the entire emulator.
 
-Primary hardware reference: Nintendo Family Computer development documentation, controller I/O at $4016/$4017 and PPU reset/vblank register requirements. The unchanged reader's DMC exclusion remains binding. Set difference, sampling and event mapping connect to Maths for Games; action timing remains a separate game-loop decision.
+The hardware interface and limits remain those of the maintained serial reader and this named caller. Its DMC exclusion remains binding; these emulation observations do not establish a new hardware exception. Set difference, sampling and event mapping connect to Maths for Games; action timing remains a separate game-loop decision.
