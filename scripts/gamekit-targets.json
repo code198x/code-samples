@@ -78,5 +78,21 @@
   [
     "input-chord",
     "commodore-amiga"
+  ],
+  [
+    "four-way-input",
+    "commodore-64"
+  ],
+  [
+    "four-way-input",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "four-way-input",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "four-way-input",
+    "commodore-amiga"
   ]
 ]
