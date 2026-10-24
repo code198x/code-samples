@@ -126,5 +126,21 @@
   [
     "weighted-choice",
     "commodore-amiga"
+  ],
+  [
+    "shuffle-bag",
+    "commodore-64"
+  ],
+  [
+    "shuffle-bag",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "shuffle-bag",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "shuffle-bag",
+    "commodore-amiga"
   ]
 ]
