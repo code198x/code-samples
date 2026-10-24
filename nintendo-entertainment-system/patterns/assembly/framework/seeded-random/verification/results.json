@@ -134483,7 +134483,7 @@
     "cross-platform/patterns/framework/seeded-random/oracle.py": "812333b4fe84b5ffdeecc42c7ce0aa88cece65098f4fefdddc9a462470ed24c8",
     "cross-platform/patterns/framework/seeded-random/6502.inc": "6aba76a77b143f8b41e7f00a247d2114f69bc78ac9c32229d2639fb35c49fdc0",
     "cross-platform/patterns/framework/seeded-random/exercise6502.inc": "209fd3a6e04daa449cdf6d76cc906fa212f165507f71be89849e50c6afc083c4",
-    "scripts/verify-seeded-random.py": "65e5c4e46c5a9704c76b59ee4087ef844a6082fdb82f58581d9bb407fef8621b",
+    "scripts/verify-seeded-random.py": "f9301b25c7d58a7d61227ec3f9e9b084eeca722129cf8fed28fb02634dd1ad57",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-amiga-rectangle-overlap.py": "043f40922cba465b60f39ba7ea46b7197bd14d6816a31b4b018870991c518a3f",
     "scripts/verify-c64-rectangle-overlap.py": "73c962c6b9edeb97abe61f36778b56dd29ed0857e6187d623c197613bddd4723",

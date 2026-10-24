@@ -209,8 +209,17 @@ def run(args, system, name):
             payload = tape[3][1:-1]
             m.call("load_media", slot="tape-1", kind="tape", path=str(program))
             m.call("autoload_tape", slot="tape-1", max_boot_frames=150)
-            stop = m.call("run_until_pc", addr=sym["start"], max_steps=1000000)
-            T.require(stop["reached"], "ROM loader did not enter CODE")
+            # Reuse the maintained ROM-loading budget: loading is guest execution,
+            # not host injection. One debugger span need not finish a tape load.
+            startup = []
+            for _ in range(20):
+                stop = m.call("run_until_pc", addr=sym["start"], max_steps=1000000)
+                startup.append(stop)
+                if stop["reached"]:
+                    break
+            T.require(
+                stop["reached"], "ROM loader did not enter CODE within 20M instructions"
+            )
             loaded = read(0x8000, len(payload))
             T.require(loaded == list(payload), "ROM-loaded tape differs")
             advance(30)
@@ -280,6 +289,7 @@ def run(args, system, name):
             result["program_zlib"] = zlib.compress(binary).hex()
         elif spec:
             result["program_zlib"] = zlib.compress(binary).hex()
+            result["startup"] = startup
             result["bitmap_zlib"] = zlib.compress(bytes(read(0x4000, 6144))).hex()
             result["attributes"] = read(0x5800, 768)
             chars = int.from_bytes(bytes(read(23606, 2)), "little")
