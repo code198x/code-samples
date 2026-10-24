@@ -1,0 +1,306 @@
+{
+  "animation-timeline": {
+    "title": "Advance a Timed Animation",
+    "category": "rendering",
+    "fields": [
+      "FRAME",
+      "TICKS",
+      "FRAME_COUNT",
+      "DURATION",
+      "LOOP",
+      "FINISHED",
+      "VALID"
+    ]
+  },
+  "rational-tick-divider": {
+    "title": "Divide Ticks Without Losing the Remainder",
+    "category": "framework",
+    "fields": [
+      "PHASE",
+      "NUMERATOR",
+      "DENOMINATOR",
+      "FIRED",
+      "VALID"
+    ]
+  },
+  "pause-clock": {
+    "title": "Count Active Play Time",
+    "category": "framework",
+    "fields": [
+      "TIME_LO",
+      "TIME_HI",
+      "PAUSED",
+      "RESET"
+    ]
+  },
+  "input-sequence": {
+    "title": "Recognise a Short Input Sequence",
+    "category": "input",
+    "fields": [
+      "PROGRESS",
+      "SYMBOL",
+      "MATCHED",
+      "VALID"
+    ]
+  },
+  "input-chord": {
+    "title": "Detect a Button Chord Once",
+    "category": "input",
+    "fields": [
+      "PREVIOUS",
+      "HELD",
+      "REQUIRED",
+      "FORBIDDEN",
+      "ACTIVE",
+      "PRESSED",
+      "VALID"
+    ]
+  },
+  "four-way-input": {
+    "title": "Resolve Input to Four Directions",
+    "category": "input",
+    "fields": [
+      "HELD",
+      "LAST_AXIS",
+      "DIRECTION",
+      "VALID"
+    ]
+  },
+  "analogue-deadzone": {
+    "title": "Turn an Analogue Axis into Intent",
+    "category": "input",
+    "fields": [
+      "SAMPLE",
+      "CENTRE",
+      "RADIUS",
+      "DIRECTION",
+      "MAGNITUDE",
+      "VALID"
+    ]
+  },
+  "weighted-choice": {
+    "title": "Choose from Weighted Outcomes",
+    "category": "ai",
+    "fields": [
+      "WEIGHT0",
+      "WEIGHT1",
+      "WEIGHT2",
+      "ROLL",
+      "CHOICE",
+      "TOTAL",
+      "VALID"
+    ]
+  },
+  "shuffle-bag": {
+    "title": "Draw Without Repeating from a Bag",
+    "category": "ai",
+    "fields": [
+      "REMAINING",
+      "ROLL",
+      "RESET",
+      "CHOICE",
+      "VALID",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6",
+      "B7"
+    ]
+  },
+  "waypoint-route": {
+    "title": "Walk an Ordered Waypoint Route",
+    "category": "ai",
+    "fields": [
+      "POSITION",
+      "TARGET_INDEX",
+      "COUNT",
+      "SPEED",
+      "LOOP",
+      "ARRIVED",
+      "FINISHED",
+      "VALID",
+      "P0",
+      "P1",
+      "P2",
+      "P3"
+    ]
+  },
+  "inventory-stacks": {
+    "title": "Add and Remove Inventory Stacks",
+    "category": "framework",
+    "fields": [
+      "SLOT",
+      "AMOUNT",
+      "REMOVE",
+      "CAP",
+      "SUCCESS",
+      "VALID",
+      "C0",
+      "C1",
+      "C2",
+      "C3"
+    ]
+  },
+  "recipe-transaction": {
+    "title": "Commit a Crafting Recipe Atomically",
+    "category": "framework",
+    "fields": [
+      "HAVE0",
+      "HAVE1",
+      "RESULT",
+      "NEED0",
+      "NEED1",
+      "PRODUCE",
+      "CAP",
+      "CRAFTED",
+      "VALID"
+    ]
+  },
+  "dialogue-gates": {
+    "title": "Gate a Dialogue Choice with Flags",
+    "category": "framework",
+    "fields": [
+      "FLAGS",
+      "REQUIRED",
+      "FORBIDDEN",
+      "SET_MASK",
+      "CLEAR_MASK",
+      "ACCEPT",
+      "AVAILABLE",
+      "TAKEN",
+      "VALID"
+    ]
+  },
+  "decimal-parser": {
+    "title": "Parse a Bounded Decimal Number",
+    "category": "framework",
+    "fields": [
+      "VALUE",
+      "CHARACTER",
+      "STATUS"
+    ]
+  },
+  "stable-depth-order": {
+    "title": "Sort a Small Draw Order Stably",
+    "category": "rendering",
+    "fields": [
+      "COUNT",
+      "VALID",
+      "Z0",
+      "Z1",
+      "Z2",
+      "Z3",
+      "Z4",
+      "Z5",
+      "Z6",
+      "Z7",
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "I5",
+      "I6",
+      "I7"
+    ]
+  },
+  "dirty-cells": {
+    "title": "Remember Which Cells Need Redrawing",
+    "category": "rendering",
+    "fields": [
+      "MASK_LO",
+      "MASK_HI",
+      "CELL",
+      "MODE",
+      "FOUND",
+      "VALID"
+    ]
+  },
+  "bounded-flood-fill": {
+    "title": "Fill a Connected Grid Region",
+    "category": "ai",
+    "fields": [
+      "SEED",
+      "REPLACEMENT",
+      "CHANGED",
+      "VALID",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15"
+    ]
+  },
+  "cardinal-sight": {
+    "title": "Test Sight Along a Grid Row or Column",
+    "category": "ai",
+    "fields": [
+      "FROM",
+      "TO",
+      "VISIBLE",
+      "VALID",
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15"
+    ]
+  },
+  "reflected-axis": {
+    "title": "Reflect Movement at Axis Bounds",
+    "category": "physics",
+    "fields": [
+      "POSITION",
+      "MINIMUM",
+      "MAXIMUM",
+      "DISTANCE",
+      "DIRECTION",
+      "BOUNCES",
+      "VALID"
+    ]
+  },
+  "slope-height": {
+    "title": "Query a Small Slope Height Profile",
+    "category": "physics",
+    "fields": [
+      "LOCAL_X",
+      "BASE_Y",
+      "MIRROR",
+      "SURFACE",
+      "VALID",
+      "H0",
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H5",
+      "H6",
+      "H7"
+    ]
+  }
+}
