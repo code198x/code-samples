@@ -30,5 +30,21 @@
   [
     "bounded-acceleration",
     "commodore-amiga"
+  ],
+  [
+    "jump-windows",
+    "commodore-64"
+  ],
+  [
+    "jump-windows",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "jump-windows",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "jump-windows",
+    "commodore-amiga"
   ]
 ]
