@@ -53,3 +53,7 @@ This handles fixed-width ASCII spaces. Proportional fonts, explicit newlines, Un
 Four variants run on NTSC NROM, background only, DMC/NMI disabled, using Asm198x 0.0.72, Emu198x 0.44.2. Each executes 45 boundary/varied/error table cases, dirty initialisation and the separate retained-state client. An independent mathematical/container model checks every public byte after every call. This is bounded example coverage, not exhaustive correctness for every possible state.
 
 The records retain loaded immutable code, completion, register sentinels, full packets, source/tool/firmware hashes and captures. The public gate validates these retained observations and rejects altered evidence; it does not run restricted firmware. No firmware is distributed. The eight displayed bytes are the first eight public fields, zero-padded when shorter; the packet includes every field.
+
+## Existing alternatives
+
+The existing [text layout and word-aware panel](https://code198x.com/patterns/sinclair-zx-spectrum/assembly/rendering/text-layout/) includes layout and drawing on its documented machines. Reuse that complete panel when it fits your renderer. This short-span selector is useful when a game already owns its drawing code and only needs the next source span: its sixteen-byte buffer, character-count width and returned indices keep that boundary explicit.
