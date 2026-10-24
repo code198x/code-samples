@@ -1,1 +1,7 @@
-{"systems":["commodore-64","nintendo-entertainment-system"]}
+{
+  "systems": [
+    "commodore-64",
+    "nintendo-entertainment-system",
+    "sinclair-zx-spectrum"
+  ]
+}
