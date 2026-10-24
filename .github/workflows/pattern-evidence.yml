@@ -994,3 +994,16 @@ jobs:
       - run: |
           python scripts/check-c64-adventure-parser.py
           python -m unittest discover -s scripts -p test_c64_adventure_parser.py -v
+
+  seeded-random-records:
+    name: Seeded native random sequences and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-seeded-random.py
+          python -m unittest discover -s scripts -p test_seeded_random.py -v
