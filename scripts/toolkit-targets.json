@@ -174,5 +174,21 @@
   [
     "rectangle-clipping",
     "commodore-amiga"
+  ],
+  [
+    "swept-axis-collision",
+    "commodore-64"
+  ],
+  [
+    "swept-axis-collision",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "swept-axis-collision",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "swept-axis-collision",
+    "commodore-amiga"
   ]
 ]
