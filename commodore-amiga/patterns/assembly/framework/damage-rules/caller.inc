@@ -3,6 +3,14 @@ start:
     move.w #$7fff,$09a(a5)
     move.w #$7fff,$09c(a5)
     move.w #$7fff,$096(a5)
+    ; HRM Sprite Hardware, Manual Mode pp119-120: DMA-off can leave
+    ; latched manual sprite output armed. Writing SPRxCTL disarms it.
+    lea $142(a5),a0
+    moveq #7,d0
+disarm_sprites:
+    move.w #0,(a0)
+    adda.w #8,a0
+    dbra d0,disarm_sprites
     bsr exercise_rules
     lea plane,a0
     move.l a0,d0
