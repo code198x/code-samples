@@ -78,5 +78,21 @@
   [
     "interaction-focus",
     "commodore-amiga"
+  ],
+  [
+    "menu-page-window",
+    "commodore-64"
+  ],
+  [
+    "menu-page-window",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "menu-page-window",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "menu-page-window",
+    "commodore-amiga"
   ]
 ]
