@@ -41,7 +41,20 @@ def pixels(c, cfg):
                 )
 
 
+def tables(count_text, table_text):
+    cases = V.C.cases()
+    T.require(
+        count_text == "CASE_COUNT = " + str(len(cases)) + "\n",
+        "Changed case count include",
+    )
+    expected = "case_table:\n" + "".join(
+        "    !byte " + ",".join(map(str, c["a"] + c["b"])) + "\n" for c in cases
+    )
+    T.require(table_text == expected, "Changed case table include")
+
+
 def check(record=None):
+    tables((V.F / "cases.inc").read_text(), (V.F / "case-table.inc").read_text())
     r = record if record is not None else json.loads((V.V / "results.json").read_text())
     cfg = json.loads((V.V / "configuration.json").read_text())
     T.require(
