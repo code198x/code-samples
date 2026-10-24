@@ -94,5 +94,21 @@
   [
     "menu-page-window",
     "commodore-amiga"
+  ],
+  [
+    "typewriter-text",
+    "commodore-64"
+  ],
+  [
+    "typewriter-text",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "typewriter-text",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "typewriter-text",
+    "commodore-amiga"
   ]
 ]
