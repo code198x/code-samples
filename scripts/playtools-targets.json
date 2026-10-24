@@ -110,5 +110,21 @@
   [
     "text-entry-buffer",
     "commodore-amiga"
+  ],
+  [
+    "tile-properties",
+    "commodore-64"
+  ],
+  [
+    "tile-properties",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "tile-properties",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "tile-properties",
+    "commodore-amiga"
   ]
 ]
