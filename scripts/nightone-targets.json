@@ -78,5 +78,21 @@
   [
     "contact-pair-cache",
     "commodore-amiga"
+  ],
+  [
+    "moving-platform-carry",
+    "commodore-64"
+  ],
+  [
+    "moving-platform-carry",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "moving-platform-carry",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "moving-platform-carry",
+    "commodore-amiga"
   ]
 ]
