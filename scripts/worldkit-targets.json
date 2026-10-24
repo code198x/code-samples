@@ -222,5 +222,21 @@
   [
     "generation-handles",
     "commodore-amiga"
+  ],
+  [
+    "stable-compaction",
+    "commodore-64"
+  ],
+  [
+    "stable-compaction",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "stable-compaction",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "stable-compaction",
+    "commodore-amiga"
   ]
 ]
