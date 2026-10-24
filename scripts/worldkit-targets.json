@@ -254,5 +254,21 @@
   [
     "motion-history",
     "commodore-amiga"
+  ],
+  [
+    "bounded-bit-reader",
+    "commodore-64"
+  ],
+  [
+    "bounded-bit-reader",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "bounded-bit-reader",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "bounded-bit-reader",
+    "commodore-amiga"
   ]
 ]
