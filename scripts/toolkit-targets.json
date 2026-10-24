@@ -206,5 +206,21 @@
   [
     "nearest-target",
     "commodore-amiga"
+  ],
+  [
+    "eight-way-direction",
+    "commodore-64"
+  ],
+  [
+    "eight-way-direction",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "eight-way-direction",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "eight-way-direction",
+    "commodore-amiga"
   ]
 ]
