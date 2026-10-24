@@ -110,5 +110,21 @@
   [
     "analogue-deadzone",
     "commodore-amiga"
+  ],
+  [
+    "weighted-choice",
+    "commodore-64"
+  ],
+  [
+    "weighted-choice",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "weighted-choice",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "weighted-choice",
+    "commodore-amiga"
   ]
 ]
