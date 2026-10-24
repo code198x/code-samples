@@ -142,5 +142,21 @@
   [
     "viewport-world-transform",
     "commodore-amiga"
+  ],
+  [
+    "surface-response",
+    "commodore-64"
+  ],
+  [
+    "surface-response",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "surface-response",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "surface-response",
+    "commodore-amiga"
   ]
 ]
