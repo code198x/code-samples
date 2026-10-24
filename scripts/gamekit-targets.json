@@ -94,5 +94,21 @@
   [
     "four-way-input",
     "commodore-amiga"
+  ],
+  [
+    "analogue-deadzone",
+    "commodore-64"
+  ],
+  [
+    "analogue-deadzone",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "analogue-deadzone",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "analogue-deadzone",
+    "commodore-amiga"
   ]
 ]
