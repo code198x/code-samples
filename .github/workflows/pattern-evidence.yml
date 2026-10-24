@@ -1079,3 +1079,18 @@ jobs:
           python scripts/check-playtools.py
           python -m unittest discover -s scripts -p test_playtools.py -v
           python -m unittest discover -s scripts -p test_playtools_contracts.py -v
+
+  gamekit-records:
+    name: Reusable game component execution evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Validate retained native records and reject altered observations
+        run: |
+          python scripts/check-gamekit.py
+          python -m unittest discover -s scripts -p test_gamekit.py -v
+          python -m unittest discover -s scripts -p test_gamekit_contracts.py -v
