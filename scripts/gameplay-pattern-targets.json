@@ -110,5 +110,21 @@
   [
     "endpoint-patrol",
     "commodore-amiga"
+  ],
+  [
+    "manhattan-distance",
+    "commodore-64"
+  ],
+  [
+    "manhattan-distance",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "manhattan-distance",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "manhattan-distance",
+    "commodore-amiga"
   ]
 ]
