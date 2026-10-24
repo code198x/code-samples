@@ -110,5 +110,21 @@
   [
     "camera-shake",
     "commodore-amiga"
+  ],
+  [
+    "moving-solid-push",
+    "commodore-64"
+  ],
+  [
+    "moving-solid-push",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "moving-solid-push",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "moving-solid-push",
+    "commodore-amiga"
   ]
 ]
