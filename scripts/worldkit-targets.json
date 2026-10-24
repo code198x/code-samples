@@ -78,5 +78,21 @@
   [
     "byte-interpolation",
     "commodore-amiga"
+  ],
+  [
+    "grid-line-sight",
+    "commodore-64"
+  ],
+  [
+    "grid-line-sight",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "grid-line-sight",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "grid-line-sight",
+    "commodore-amiga"
   ]
 ]
