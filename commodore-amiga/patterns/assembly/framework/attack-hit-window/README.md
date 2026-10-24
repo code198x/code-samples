@@ -1,0 +1,55 @@
+# Limit Hits to an Attack Window on Amiga
+
+A sword can overlap the same enemy for several frames without dealing damage on every frame.
+
+## Use it in a project
+
+START_FRAME..END_FRAME is a half-open active interval, with START_FRAME strictly below END_FRAME. FRAME is the caller’s current attack frame. TARGET is 0–7. A nonzero NEW_ATTACK clears the retained SEEN bitset before testing contact. In the active interval, nonzero CONTACT emits HIT=1 once per target and records its bit. Outside the interval HIT=0. Invalid interval or target clears HIT/VALID and preserves SEEN.
+
+Include `component.inc` once (MOS callers include the shared 6502 implementation through it). Reserve the public fields in this exact order: **HIT, VALID, SEEN, FRAME, START_FRAME, END_FRAME, TARGET, CONTACT, NEW_ATTACK**. They occupy 9 contiguous bytes. Also reserve the private workspace: **T0, T1** (2 bytes). Array names in the explanation refer to the numbered consecutive bindings, such as C0, C1 and so on.
+
+Call `attack_hit_window_init` once at the intended reset boundary. It clears inputs as well as outputs and workspace. Set your starting state and configuration afterwards, then call `attack_hit_window_step` whenever the described event occurs. The helper reads no device, waits for no frame and installs no interrupt handler.
+
+| Ownership | Fields |
+|---|---|
+| Retain between calls | SEEN |
+| Supply before service | frame interval, TARGET, CONTACT and NEW_ATTACK |
+| Read after service | HIT, SEEN and VALID |
+
+The active interval decides when damage is permitted; the bitset decides whether this attack already affected that target. They answer different questions and are checked independently.
+
+## Machine contract
+
+D0–D3/A0–A1/CCR may change; D4–D7/A2–A6 are preserved. A direct BSR/JSR needs four return-address stack bytes. The helper makes no nested calls and adds no other stack use. Its named scratch is private workspace, not a pointer, a ROM variable or shared zero-page space that the game may borrow concurrently. The samples use fixed symbol bindings. Scope or rename every label and binding, including the component_end measurement marker, and allocate a separate block for each independent instance. Different helpers can also use common field names, so combining them needs separate namespaces or explicitly renamed bindings. Give each block one mutation owner.
+
+The A500 OCS diagnostic cold-boots an OFS disk, owns the Copper and bitplane and disables interrupt/DMA sources. The helper does not take over hardware or allocate Chip RAM.
+
+## Adapt the caller
+
+`demo.asm` supplies the bindings and include order. `exercise.inc` first runs table cases, then a separate client retaining state between calls. A game can call the public step entry directly and remove the diagnostic packet and display. Do not copy the diagnostic's hardware takeover into an existing game loop.
+
+Build with `make ASM198X=/path/to/asm198x` and `BUILD198X=/path/to/build198x`. The Makefile produces normal, custom, deliberately wrong and repaired programs. Tools must already be installed; the sample downloads nothing.
+
+## Customise it
+
+Strike target seven, then a different target, and stop exactly at the exclusive end frame. The maintained custom caller changes its inputs or client sequence rather than hiding a different implementation behind the same label. Compare every state of the two clients, not only their final display.
+
+## Mistake and repair
+
+The wrong client clears the hit history every service. The same target is hit repeatedly while the attack remains active. Reset SEEN once per new attack, not once per collision candidate.
+
+The BROKEN branch lives in the sequential client, not the reusable helper. `wrong.asm` selects it; `repaired.asm` restores the normal call sequence. The repaired executable matches the normal program (for Spectrum, compare loaded CODE rather than the tape filename).
+
+## Cost and alternatives
+
+The measured helper extent is 352 code bytes; public state is 9 bytes and private scratch is 2 bytes. There are no immutable helper tables. Caller data, the test cases, return-address stack, alignment and display buffers cost additional space. These are assembled sizes, not cycle measurements.
+
+At most seven shifts and one bitset update. Larger target sets need more bits or handles; per-attack storage grows with the identity space.
+
+Eight stable target IDs are available per attack. Slot reuse during one attack requires generation-aware identity or clearing the relevant bit under an explicit policy. The caller owns animation, overlap, faction rules and actual damage. Do not set NEW_ATTACK on every candidate in one frame.
+
+## Execution evidence
+
+Four variants run on A500 OCS PAL, Kickstart1.3 OFS cold boot, using Asm198x 0.0.72, Emu198x 0.44.2 and Build198x 0.2.9. Each executes 64 boundary/varied/error table cases, dirty initialisation and the separate retained-state client. An independent mathematical/container model checks every public byte after every call. This is bounded example coverage, not exhaustive correctness for every possible state.
+
+The records retain loaded immutable code, completion, register sentinels, full packets, source/tool/firmware hashes and captures. The public gate validates these retained observations and rejects altered evidence; it does not run restricted firmware. No firmware is distributed. The eight displayed bytes are the first eight public fields, zero-padded when shorter; the packet includes every field.
