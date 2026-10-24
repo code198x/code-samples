@@ -1151,3 +1151,14 @@ jobs:
           python scripts/check-nighttwo.py
           python -m unittest discover -s scripts -p test_nighttwo.py -v
           python -m unittest discover -s scripts -p test_nighttwo_contracts.py -v
+  basic-pools-records:
+    name: Native BASIC object-pool evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check all interpreter observations and reject altered evidence
+        run: python -m unittest discover -s scripts -p test_basic_pools.py -v
