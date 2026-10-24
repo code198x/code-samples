@@ -955,3 +955,42 @@ jobs:
       - run: |
           python scripts/check-nes-deadlines.py
           python -m unittest discover -s scripts -p test_nes_deadlines.py -v
+
+  amiga-deadlines-records:
+    name: Amiga IRQ deadlines and lifecycle failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-amiga-deadlines.py
+          python -m unittest discover -s scripts -p test_amiga_deadlines.py -v
+
+  c64-rom-font-records:
+    name: C64 stock ROM font preservation and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-c64-rom-font.py
+          python -m unittest discover -s scripts -p test_c64_rom_font.py -v
+
+  c64-adventure-parser-records:
+    name: C64 BASIC reusable parser and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-c64-adventure-parser.py
+          python -m unittest discover -s scripts -p test_c64_adventure_parser.py -v
