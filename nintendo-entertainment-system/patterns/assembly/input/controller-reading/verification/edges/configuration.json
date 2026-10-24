@@ -1,0 +1,21 @@
+{
+  "emulator_sha256": "60a56d759580a8231f9f9087c7dd646a3d3d2439053cf1861d9126393c00af73",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "model": "NTSC NES, NROM-256, DMC disabled",
+  "cart_sha256": {
+    "working": "b59acf066a7bd19e2e6b6671d053fa380c13fd7e138ac8d7d8e306ab689b1c54",
+    "custom": "48c3fe43c080b37f9e69ea0b8864fb11c170dcb638d4e609713cd3e81cd9c131",
+    "wrong": "45130ee00883a18028f7f8bc670525d94f8dc6767e2d2d1b2184a5a296c81df6",
+    "repaired": "b59acf066a7bd19e2e6b6671d053fa380c13fd7e138ac8d7d8e306ab689b1c54",
+    "boundaries": "73360cde6ad59059228439f7dc07faf79a59f9e8928852a0df66188f11abf85d",
+    "wrong-boundary": "54adebaa672ad60a82ac234425c7a9c6eca4ab02b422ebf4865206767c37e6d4"
+  },
+  "native_prg_sha256": {
+    "working": "56c9e5cd251e3b682b0bfc58cc0d25fb39ea5f62224da1a0fa7938cb6f51660c",
+    "custom": "6878565051550a371a157309aea4869f739bf5beabb45fc16ddcdb6526ea9fb9",
+    "wrong": "e958065c52c2e195d774a46d9282ade3b5018f4321e4373112d326f84404e931",
+    "repaired": "56c9e5cd251e3b682b0bfc58cc0d25fb39ea5f62224da1a0fa7938cb6f51660c",
+    "boundaries": "33635b4fde0757b36228e28100a7d3dd09d741be01d39bce0246176346da4b70",
+    "wrong-boundary": "3bf76d19272d681213f770e2162f5f368c80694caf09085e571ffff8543d7498"
+  }
+}
