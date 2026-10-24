@@ -78,5 +78,21 @@
   [
     "camera-deadzone",
     "commodore-amiga"
+  ],
+  [
+    "menu-navigation",
+    "commodore-64"
+  ],
+  [
+    "menu-navigation",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "menu-navigation",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "menu-navigation",
+    "commodore-amiga"
   ]
 ]
