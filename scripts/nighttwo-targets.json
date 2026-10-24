@@ -62,5 +62,21 @@
   [
     "attack-hit-window",
     "commodore-amiga"
+  ],
+  [
+    "interaction-focus",
+    "commodore-64"
+  ],
+  [
+    "interaction-focus",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "interaction-focus",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "interaction-focus",
+    "commodore-amiga"
   ]
 ]
