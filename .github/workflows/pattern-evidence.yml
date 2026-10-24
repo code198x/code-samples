@@ -1007,3 +1007,17 @@ jobs:
       - run: |
           python scripts/check-seeded-random.py
           python -m unittest discover -s scripts -p test_seeded_random.py -v
+
+  object-pool-records:
+    name: Native pool ownership and failure controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Require both machines and reject corrupted ownership records
+        run: |
+          python scripts/check-object-pool.py
+          python -m unittest discover -s scripts -p test_object_pool.py -v
