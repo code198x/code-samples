@@ -1,0 +1,8 @@
+{
+  "model": "A500 68000 OCS PAL, Kickstart1.3 cold OFS ADF, exclusive level3 VBlank clock",
+  "producer_note": "Unreleased v0.44.2 source 2f35ad00f88de688d64ce0e90c6e78e436b261a4 plus deferred debugger framebuffer refresh; executable SHA256 pinned here. Normal IRQ clock independently checked on released v0.44.2.",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "build198x_sha256": "248bed66d985f433c20f2cfb439a02cb0382a26bc8b44762270d785e80879e93",
+  "emulator_sha256": "47f66fcd25949a6e76ad41695e0f5635713b4c8260e74ba695dbf1f6adcc0508",
+  "kickstart_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
+}
