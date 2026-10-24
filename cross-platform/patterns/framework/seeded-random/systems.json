@@ -2,6 +2,7 @@
   "systems": [
     "commodore-64",
     "nintendo-entertainment-system",
-    "sinclair-zx-spectrum"
+    "sinclair-zx-spectrum",
+    "commodore-amiga"
   ]
 }
