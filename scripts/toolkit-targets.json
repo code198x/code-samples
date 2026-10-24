@@ -1,0 +1,18 @@
+[
+  [
+    "signed-byte-order",
+    "commodore-64"
+  ],
+  [
+    "signed-byte-order",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "signed-byte-order",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "signed-byte-order",
+    "commodore-amiga"
+  ]
+]
