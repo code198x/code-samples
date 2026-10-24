@@ -174,5 +174,21 @@
   [
     "spawn-timeline",
     "commodore-amiga"
+  ],
+  [
+    "packed-nibble-map",
+    "commodore-64"
+  ],
+  [
+    "packed-nibble-map",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "packed-nibble-map",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "packed-nibble-map",
+    "commodore-amiga"
   ]
 ]
