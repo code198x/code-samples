@@ -14,5 +14,21 @@
   [
     "signed-byte-order",
     "commodore-amiga"
+  ],
+  [
+    "saturating-word-add",
+    "commodore-64"
+  ],
+  [
+    "saturating-word-add",
+    "sinclair-zx-spectrum"
+  ],
+  [
+    "saturating-word-add",
+    "nintendo-entertainment-system"
+  ],
+  [
+    "saturating-word-add",
+    "commodore-amiga"
   ]
 ]
