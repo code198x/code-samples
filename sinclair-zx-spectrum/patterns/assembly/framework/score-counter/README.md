@@ -10,7 +10,7 @@ SCORE_LO and SCORE_HI hold an unsigned little-endian score; ADD_LO and ADD_HI ho
 
 The two SCORE bytes persist; the two ADD bytes are inputs; CLIPPED is a replaced overflow/cap pulse. Byte order is explicit on every CPU, including the big-endian 68000.
 
-AF/BC/DE/HL may change; IX/IY survive. A direct CALL uses two return-address stack bytes.
+AF/BC/DE/HL may change; IX/IY survive. A direct CALL uses two return-address stack bytes. This score helper also saves HL with PUSH/POP during the cap comparison: allow two more temporary stack bytes, four bytes in total for the helper call excluding its caller and interrupts.
 
 Initialise at the start of a new session. Set both award bytes before each call; an award of 300 is low byte 44, high byte 1. Keep the score in binary for arithmetic and format a separate display copy. Call once for each scoring event, not once per overlapping frame unless that is the scoring rule.
 
