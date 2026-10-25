@@ -31,7 +31,7 @@ The normal caller inserts IDs 10 through 13 at 0,0. The custom caller inserts 20
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are diagnostics. In a game, iterate exactly N entries starting at S(4*B+1). Guard N=0 before entering a FOR loop: some BASIC interpreters still execute a descending-empty range once. IDs zero and 255 are valid; an unused-looking value is never an end marker. Duplicate IDs are permitted by this component.
+Line 2000, AA/BB, JJ/KK (Z/Q on Spectrum) and the mailbox are diagnostics. In a game, iterate exactly N entries starting at S(4*B+1). Guard N=0 before entering a FOR loop: some BASIC interpreters still execute a descending-empty range once. IDs zero and 255 are valid; an unused-looking value is never an end marker. Duplicate IDs are permitted by this component.
 
 ## Choose a safe capacity policy
 
