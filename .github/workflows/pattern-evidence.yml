@@ -1525,3 +1525,14 @@ jobs:
           python-version: '3.14'
       - name: Check interpreter observations, independent invariants and altered evidence
         run: python -m unittest discover -s scripts -p test_basic_bounded_delta_decoder.py -v
+  basic-dictionary-lookup-records:
+    name: Native BASIC dictionary-lookup evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check interpreter observations, independent invariants and altered evidence
+        run: python -m unittest discover -s scripts -p test_basic_dictionary_lookup.py -v
