@@ -1,0 +1,21 @@
+"""Independent outcomes for BASIC checkpoint-state."""
+
+from __future__ import annotations
+
+import importlib.util
+from pathlib import Path
+
+s = importlib.util.spec_from_file_location(
+    "basic_timeline_models",
+    Path(__file__).parents[2] / "framework/basic-timeline-models/cases.py",
+)
+M = importlib.util.module_from_spec(s)
+s.loader.exec_module(M)
+TOPIC = "checkpoint-state"
+CATEGORY = M.CATEGORIES[TOPIC]
+LABEL = M.LABELS[TOPIC]
+FIELDS = M.FIELDS[TOPIC]
+
+
+def packet(variant: str) -> list[int]:
+    return M.packet(TOPIC, variant)
