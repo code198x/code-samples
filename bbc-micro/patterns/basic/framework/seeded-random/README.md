@@ -30,7 +30,7 @@ Seeding with zero produces the first eight values 180,90,45,162,81,156,78,39. Th
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are diagnostics. To replay later draws, save R after a draw, validate it is nonzero, restore it using M=0/S=saved and resume M=1 draws. The external-seed zero policy is not validation of a damaged save record.
+Line 2000, AA/BB/JJ/KK (Z/Q on Spectrum) and the mailbox are diagnostics. To replay later draws, save R after a draw, validate it is nonzero, restore it using M=0/S=saved and resume M=1 draws. The external-seed zero policy is not validation of a damaged save record.
 
 ## Customise and understand the limits
 
@@ -42,7 +42,7 @@ This repeats random draws, not a whole game: state, inputs, update timing and ca
 
 ## Mistake and repair
 
-The wrong caller clears R and bypasses the seed operation. Every attempted draw reports invalid state and remains zero. Both saved checks fail; the loader still completes normally. Use the seed entry for initialisation, then investigate any unexpected zero writer. Repaired source and loaded program match normal exactly.
+The wrong caller clears R and bypasses the seed operation. Its first eight attempted draws report invalid state and remain zero. The later restoration check calls the seed entry again. Both saved checks fail; the loader still completes normally. Use the seed entry for initialisation, then investigate any unexpected zero writer. Repaired source and loaded program match normal exactly.
 
 See `verification/wrong.png`.
 
@@ -58,7 +58,7 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 ## Machine and measured size
 
-BBC BASIC arrays include element zero; this one-based array interface leaves it unused. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
+This helper uses scalar numeric fields and allocates no arrays. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
 
 The numbered helper occupies **411 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
 

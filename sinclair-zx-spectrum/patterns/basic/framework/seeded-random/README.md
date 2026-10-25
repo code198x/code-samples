@@ -30,7 +30,7 @@ Seeding with zero produces the first eight values 180,90,45,162,81,156,78,39. Th
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are diagnostics. To replay later draws, save R after a draw, validate it is nonzero, restore it using M=0/S=saved and resume M=1 draws. The external-seed zero policy is not validation of a damaged save record.
+Line 2000, AA/BB/JJ/KK (Z/Q on Spectrum) and the mailbox are diagnostics. To replay later draws, save R after a draw, validate it is nonzero, restore it using M=0/S=saved and resume M=1 draws. The external-seed zero policy is not validation of a damaged save record.
 
 ## Customise and understand the limits
 
@@ -42,7 +42,7 @@ This repeats random draws, not a whole game: state, inputs, update timing and ca
 
 ## Mistake and repair
 
-The wrong caller clears R and bypasses the seed operation. Every attempted draw reports invalid state and remains zero. Both saved checks fail; the loader still completes normally. Use the seed entry for initialisation, then investigate any unexpected zero writer. Repaired source and loaded program match normal exactly.
+The wrong caller clears R and bypasses the seed operation. Its first eight attempted draws report invalid state and remain zero. The later restoration check calls the seed entry again. Both saved checks fail; the loader still completes normally. Use the seed entry for initialisation, then investigate any unexpected zero writer. Repaired source and loaded program match normal exactly.
 
 See `verification/wrong.png`.
 
@@ -58,9 +58,9 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 ## Machine and measured size
 
-Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
+Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. This helper uses scalar numeric fields and allocates no arrays. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
 
-The numbered helper occupies **533 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **533 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, Z/Q and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
