@@ -6,11 +6,11 @@ Two nearby doors should not make the interaction prompt flicker whenever the pla
 
 Include routines.bas, reserving lines **3000–3330**. Public fields are S/O/C/A/R/M/D/E/F/G; private scratch names are I/K/P/U/V/T/B. Call **3000** at a chosen reset boundary. It clears public fields. Put a STOP, END or jump before the helper; call **3100** to choose focus.
 
-C is the current target index, zero through three, or255 for none. A is a four-bit active mask. D/E/F/G are the four target distances, R the maximum allowed distance and M the retention margin. All these values must be integral bytes, and A cannot exceed15. Supply every distance, even for inactive targets.
+C is the current target index, zero through three, or 255 for none. A is a four-bit active mask. D/E/F/G are the four target distances, R the maximum allowed distance and M the retention margin. All these values must be integral bytes, and A cannot exceed 15. Supply every distance, even for inactive targets.
 
 See `routines.bas`.
 
-S is the selected index;255 means none. O=1 means a valid query, including an empty eligible set. Invalid input returns S=255/O=0 and preserves all inputs. The routine does not change C: after a valid query the caller decides when to commit C=S. That includes clearing C when S=255.
+S is the selected index; 255 means none. O=1 means a valid query, including an empty eligible set. Invalid input returns S=255/O=0 and preserves all inputs. The routine does not change C: after a valid query the caller decides when to commit C=S. That includes clearing C when S=255.
 
 ## Prefer the nearest, retain the current
 
@@ -30,13 +30,13 @@ Use separate state for separate players. Target identities must remain stable be
 
 ## Mistake and repair
 
-The wrong caller sets C to255 before every query. The helper keeps choosing the nearest or lowest tied index because it never receives the old focus. Both saved first-selection/current-input checks fail. Retain the committed current index between queries and replace it only through the intended game policy. Repaired source and loaded programs match normal exactly.
+The wrong caller sets C to 255 before every query. The helper keeps choosing the nearest or lowest tied index because it never receives the old focus. Both saved first-selection/current-input checks fail. Retain the committed current index between queries and replace it only through the intended game policy. Repaired source and loaded programs match normal exactly.
 
 See `verification/wrong.png`.
 
 ## Cost and Maths for Games
 
-The helper validates eight inputs and examines exactly four candidates. It uses no arrays, display access or timer. The best distance starts at256, outside the valid byte range. Best distance plus margin can reach510 and deliberately stays wide in BASIC; narrowing that sum to a byte would change the rule near its limit.
+The helper validates eight inputs and examines exactly four candidates. It uses no arrays, display access or timer. The best distance starts at 256, outside the valid byte range. Best distance plus margin can reach 510 and deliberately stays wide in BASIC; narrowing that sum to a byte would change the rule near its limit.
 
 Nearest-target selection without memory is cheaper in state and may be exactly right for a single shot. Retention adds deliberate hysteresis. A dwell timer or separate enter/leave radii offer different stability and response costs; they are alternatives, not automatic upgrades.
 
