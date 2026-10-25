@@ -10639,7 +10639,7 @@
     "commodore-amiga/patterns/assembly/framework/decimal-format/wrong.asm": "c42e89c5f58942dcec906e23a7f1c04d699135d3cc6cdb769c3215ebf92abea0",
     "commodore-amiga/patterns/assembly/framework/decimal-format/repaired.asm": "681812be2d0586cfe386914b16b1468100448aa5cf9dc3a3fb24a3b86d721cf5",
     "commodore-amiga/patterns/assembly/framework/decimal-format/caller.inc": "db40b848e7291e4afe8bd5a1e713ad1ad3fd12a37ebcafd6efe6681f545161d8",
-    "commodore-amiga/patterns/assembly/framework/decimal-format/component.inc": "257f3253bd7d59ad02d901403f28be42d179b599f5633d4cef54cdde18a45bc6",
+    "commodore-amiga/patterns/assembly/framework/decimal-format/component.inc": "6cfa1f3d8a9865c276b20200bbf617dae03208074b1d52746b3afd9b775f5e46",
     "commodore-amiga/patterns/assembly/framework/decimal-format/exercise.inc": "f95750f6392a1d02ce9329aae78bb473997a8cf4cbfc98e0f5cb8734b531deda",
     "commodore-amiga/patterns/assembly/framework/decimal-format/cases.inc": "cdf4b7428303d25b56119b59e0c8526fa769f2bec3547aea54bf660b5831b4fe",
     "commodore-amiga/patterns/assembly/framework/decimal-format/Makefile": "3302e1b4ae36e6d374f248fef31ef617d82f82d77e38cc5e1006c82f6d6d1824",
@@ -10653,6 +10653,6 @@
     "cross-platform/patterns/physics/rectangle-overlap/cases.py": "4a0c5aa3fdba5e103b5aedfa65c6a0666e35205affe2c27eafcf6a4d3aae1029",
     "nintendo-entertainment-system/patterns/assembly/input/controller-reading/edges-font.inc": "fba50c5ec8e59e3e6821dc40aeb8ec2a02435d567e4277f86938f44b2d1a075e",
     "commodore-amiga/patterns/assembly/framework/decimal-format/../turn-deadline/font.inc": "2fb24a16b4a8af02e492ccc83f46cf967eefb907be5f8312ec4b444e2678bbba",
-    "commodore-amiga/patterns/assembly/framework/decimal-format/display.inc": "9f3d5ee4781e940c3641e966d83f3451012d1e91c7609e083b2b758756363772"
+    "commodore-amiga/patterns/assembly/framework/decimal-format/display.inc": "600364de996dce73058cfa64c0501e956836c91cd04e0db497e304bf1532ed74"
   }
 }

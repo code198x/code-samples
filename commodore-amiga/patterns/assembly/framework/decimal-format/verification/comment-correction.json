@@ -1,0 +1,38 @@
+{
+  "scope": "Correct register names in comments only; instructions and retained native executables are unchanged.",
+  "verification": "Reassembled all four callers using the recorded Asm198x0.0.72 binary and compared every executable byte with its retained native execution. Existing native packets and captures are reused, not represented as new emulator runs.",
+  "sources": [
+    {
+      "path": "commodore-amiga/patterns/assembly/framework/decimal-format/component.inc",
+      "previous_sha256": "257f3253bd7d59ad02d901403f28be42d179b599f5633d4cef54cdde18a45bc6",
+      "sha256": "6cfa1f3d8a9865c276b20200bbf617dae03208074b1d52746b3afd9b775f5e46"
+    },
+    {
+      "path": "commodore-amiga/patterns/assembly/framework/decimal-format/display.inc",
+      "previous_sha256": "9f3d5ee4781e940c3641e966d83f3451012d1e91c7609e083b2b758756363772",
+      "sha256": "600364de996dce73058cfa64c0501e956836c91cd04e0db497e304bf1532ed74"
+    }
+  ],
+  "cases": [
+    {
+      "case": "demo",
+      "executable_sha256": "4866f77a65d8b2b8afff8d03b2be411c1c677750974d21309cf48fe2ab671375",
+      "matches_retained_native_executable": true
+    },
+    {
+      "case": "custom",
+      "executable_sha256": "599c108e9089360e07c5d965b3f8f1e4b2983f9e0855ba23207fd919aebf4f37",
+      "matches_retained_native_executable": true
+    },
+    {
+      "case": "wrong",
+      "executable_sha256": "64d7a096ee23d34100873212ad90df65528bd90da4a1ec96d1ba98a46b18fdfe",
+      "matches_retained_native_executable": true
+    },
+    {
+      "case": "repaired",
+      "executable_sha256": "4866f77a65d8b2b8afff8d03b2be411c1c677750974d21309cf48fe2ab671375",
+      "matches_retained_native_executable": true
+    }
+  ]
+}
