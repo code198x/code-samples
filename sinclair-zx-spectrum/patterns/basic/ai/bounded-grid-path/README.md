@@ -26,7 +26,7 @@ The search continues after finding the target, building the whole reachable dist
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-The caller first queries a detour around a wall, then adds a second wall and asks again. The earlier table covers narrow rectangles, row edges, blocked endpoints, same-cell queries and invalid inputs. Its line **2000** writer, mailbox, AA/BB and JJ/KK are diagnostic machinery. The helper does not require them.
+The caller first queries a detour around a wall, then adds a second wall and asks again. The earlier table covers narrow rectangles, row edges, blocked endpoints, same-cell queries and invalid inputs. Its line **2000** writer, mailbox, AA/BB and Z/Q are diagnostic machinery. The helper does not require them.
 
 ## Customise it
 
@@ -50,7 +50,7 @@ The search visits at most W*H cells and tests at most four neighbours each. Vali
 
 Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
 
-The numbered helper occupies **1009 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **1009 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, Z/Q and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
