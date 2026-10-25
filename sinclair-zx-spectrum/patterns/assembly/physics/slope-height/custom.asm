@@ -18,7 +18,7 @@ code_end:
 STATE:
 LOCAL_X: defb 0
 BASE_Y: defb 0
-MIRROR: defb 0
+MIRROR_X: defb 0
 SURFACE: defb 0
 VALID: defb 0
 H0: defb 0
