@@ -1701,3 +1701,14 @@ jobs:
           python-version: '3.14'
       - name: Check interpreter observations, independent invariants and altered evidence
         run: python -m unittest discover -s scripts -p test_basic_score_counter.py -v
+  basic-seeded-random-records:
+    name: Native BASIC seeded-random evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check interpreter observations, independent invariants and altered evidence
+        run: python -m unittest discover -s scripts -p test_basic_seeded_random.py -v
