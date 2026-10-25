@@ -11,7 +11,7 @@ motion_history_init:
     ld (INPUT_X),a
     ld (INPUT_Y),a
     ld (LAG),a
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     ld (HX0),a
     ld (HX1),a
     ld (HX2),a
@@ -64,8 +64,8 @@ motion_history_L4:
     jp motion_history_L6
 motion_history_L5:
 motion_history_L6:
-; if PUSH != 0:
-    ld a,(PUSH)
+; if APPEND_SAMPLE != 0:
+    ld a,(APPEND_SAMPLE)
     cp 0
     jp nz,motion_history_L7
     jp motion_history_L8

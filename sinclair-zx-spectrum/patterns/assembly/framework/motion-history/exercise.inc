@@ -91,9 +91,9 @@ preview_rules:
 ; INPUT_Y = 1
     ld a,1
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -107,9 +107,9 @@ preview_rules:
 ; INPUT_Y = 2
     ld a,2
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -123,9 +123,9 @@ preview_rules:
 ; INPUT_Y = 3
     ld a,3
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -139,9 +139,9 @@ preview_rules:
 ; INPUT_Y = 4
     ld a,4
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -155,9 +155,9 @@ preview_rules:
 ; INPUT_Y = 5
     ld a,5
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -171,9 +171,9 @@ preview_rules:
 ; INPUT_Y = 6
     ld a,6
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -187,9 +187,9 @@ preview_rules:
 ; INPUT_Y = 7
     ld a,7
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -203,9 +203,9 @@ preview_rules:
 ; INPUT_Y = 8
     ld a,8
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -219,9 +219,9 @@ preview_rules:
 ; INPUT_Y = 9
     ld a,9
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -229,9 +229,9 @@ preview_rules:
     endif
     call checked_step
     call emit_state
-; PUSH = 0
+; APPEND_SAMPLE = 0
     ld a,0
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
 ; LAG = 7
     ld a,7
     ld (LAG),a
@@ -250,9 +250,9 @@ preview_rules:
 ; INPUT_Y = 20
     ld a,20
     ld (INPUT_Y),a
-; PUSH = 1
+; APPEND_SAMPLE = 1
     ld a,1
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
     if BROKEN
 ; HEAD = 0
     ld a,0
@@ -286,9 +286,9 @@ preview_rules:
     endif
     call checked_step
     call emit_state
-; PUSH = 0
+; APPEND_SAMPLE = 0
     ld a,0
-    ld (PUSH),a
+    ld (APPEND_SAMPLE),a
 ; LAG = 2
     ld a,2
     ld (LAG),a
