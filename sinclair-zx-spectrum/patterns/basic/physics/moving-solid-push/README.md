@@ -1,0 +1,68 @@
+# Propose a Push from a Moving Solid in Spectrum BASIC
+
+A sliding wall can cross an actor even when it finishes beyond the actor's old position. Keep both wall positions, establish which side the actor started on, then ask where the actor would need to end up.
+
+## Include and initialise
+
+Reserve public P/U/C/O/X/W/A/B/S/L/H, private T and lines **3000–3260**. There are no arrays. Combine routines.bas with the caller through build.py; prevent fall-through with END, STOP or a jump. Use GOSUB on C64/BBC and GO SUB on Spectrum. Call **3000** to clear public fields, then supply actual world state.
+
+X/W are actor position/size, A/B the solid's old/new positions and S its size. L/H bound the actor's leading position. All seven inputs are integral bytes; sizes are nonzero, X lies within L/H and every interval endpoint is at most 255. Coordinates do not wrap. Half-open intervals treat exact touching as non-overlap. The actor and solid must not overlap initially.
+
+## Ask for a proposal
+
+Call **3100**. P initially equals X. O=1 means the query is valid. If the moving solid crosses the actor from the left, P becomes B+S; from the right, P becomes B-W. U=1 reports a proposed push. If that proposed position would leave L/H or its actor endpoint exceed 255, the helper preserves P=X, returns U=0 and C=1 for blocked.
+
+See `routines.bas`.
+
+| U / C / O | Meaning |
+|---|---|
+| 0 / 0 / 1 | Valid, no push needed |
+| 1 / 0 / 1 | Safe one-dimensional proposal |
+| 0 / 1 / 1 | Push would leave the allowed interval |
+| 0 / 0 / 0 | Invalid query or initially overlapping intervals |
+
+Invalid input preserves every input and P=X. No branch commits X or moves the solid. A blocked proposal is valid feedback, distinct from corrupt data.
+
+## Follow a crossing
+
+Normally the actor occupies 10 through 12 and a size-two solid moves from zero to twelve. It crosses the actor and proposes P=14. The custom actor is at five, size two, while the solid moves from ten to zero: the required proposal is minus two, outside the lower bound. C=1 reports that it cannot fit.
+
+See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
+
+Later queries cover an unaffected actor, a push from the other side and invalid initial overlap. Line 2000, AA/BB/JJ and the mailbox are diagnostics. A game commits an accepted P only after its other collision rules have agreed.
+
+## Choose the blocked policy
+
+A game might stop the solid, reject its complete move, damage the actor or begin a crush animation. C=1 chooses none of those. Nor does this query test the other axis, detect walls beyond the allowed interval, resolve several solids or handle a rotating shape.
+
+The starting non-overlap requirement prevents guessing a depenetration direction. A separate overlap-recovery routine needs its own policy. For wider worlds, change coordinate bounds and intermediate capacity together; for wrapping worlds, supply an explicit displacement convention.
+
+## Mistake and repair
+
+The wrong caller replaces old A with new B before the query. There is then no movement to sweep. The normal push disappears; the custom blocked crossing also disappears. Both saved checks fail. Keep the old position until the query has consumed it. Repaired source and loaded program match normal exactly.
+
+See `verification/wrong.png`.
+
+## Cost and Maths for Games
+
+This bounded query validates seven inputs and several widened endpoints, then performs at most one proposal check. It neither enumerates world objects nor allocates storage. BASIC retains signed intermediate arithmetic; an assembly implementation needs deliberate width and borrow handling.
+
+[Maths for Games](/craft/maths-for-games/) connects interval intersections, inequalities and swept displacement. [The Craft](/craft/) connects movement order and blocked feedback to the rules the player experiences.
+
+## Global names and line numbers
+
+BASIC numeric names, arrays and numbered lines are global. To combine helpers, rename public and private fields and renumber the helper together with every GO SUB/GO TO reference. Keep each state block under one owner. The maintained build.py rejects duplicate line numbers; it does not automatically namespace or renumber routines.
+
+## Machine and measured size
+
+Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
+
+The numbered helper occupies **664 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+
+## Execution evidence
+
+Working, custom, deliberately wrong and exact repaired callers executed through Spectrum's stock BASIC interpreter under Emu198x 0.44.2. Build198x 0.2.9 tokenises C64 PRG and Spectrum TAP programs. C64 enters stock RUN, Spectrum uses ROM tape loading, and BBC enters every numbered source line through MOS/BASIC. Actual loaded program bytes, complete state packets, positive completion/count/guards and visible result pixels are checked. After the positive completion marker, the observer advances two complete display frames before capturing, so a partially scanned final character cannot masquerade as a finished picture. Firmware is not distributed.
+
+An independent mathematical/order model checks the trace and rejects altered source, configuration, loaded program, state, completion and image evidence. Host exhaustive checks complement the native boundary/sequential examples; those host ranges are not claimed as natively exhaustive. The supplied diagnostic callers deliberately end with STOP; the interpreter report is expected. The wrong caller prints 0,0 and the normal/custom/repaired callers print 1,1.
+
+Public CI checks retained evidence; it does not execute restricted firmware. Refresh with `python3 scripts/verify-basic-traversal.py moving-solid-push sinclair-zx-spectrum --tools /path/to/extracted/releases` and inspect with `python3 scripts/check-basic-traversal.py moving-solid-push`.
