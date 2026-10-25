@@ -1,0 +1,17 @@
+{
+  "emulator_sha256": "7b82d697d1a1d8f87276d2217b8aaf4e659ffeecbf62f71305afe6cbb61d09d3",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "firmware_sha256": {
+    "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0",
+    "atarixl-hias-1.30.rom": "64f13699592f2c068e468dfb22c245c63b1317fd0f871aca798c29688424955d",
+    "atarixl.rom": "a77050b2d81db2d11eaa3dbafd8ec2531b478abcc3bcc4b0d846b634e885edb1"
+  },
+  "programs": {
+    "demo": "55559b059d6f667ac61711e8e09d5a6eb1fbb820b4464e59558be1a2290aace6",
+    "custom": "e639e937bd57431254a5d49b6be620d09cea49e8ee093f5793b45370a5843180",
+    "wrong": "369a96778941d5d584d855e6b6bc5f18b75872eadbaf6047874ddc37caccf2c7",
+    "repaired": "55559b059d6f667ac61711e8e09d5a6eb1fbb820b4464e59558be1a2290aace6",
+    "boundary-one": "17b12db6ea54d391d7bfcb034e03c28ad74890e57fda884fa1347b3ea0d938ee",
+    "boundary-max": "7bfacd859640fd1b0b79fad42a729f4aee1d47971e4ae500e82fa44aeeae340b"
+  }
+}

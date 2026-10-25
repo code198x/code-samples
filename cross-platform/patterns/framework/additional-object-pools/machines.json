@@ -1,0 +1,44 @@
+{
+  "bbc-micro": {
+    "cpu": "6502",
+    "origin": 12288,
+    "limit": 15872,
+    "vars": 15872,
+    "flags": 16384,
+    "life": 16896,
+    "output": 18432,
+    "zp": 112,
+    "packet_limit": 22528
+  },
+  "atari-800xl": {
+    "cpu": "6502",
+    "origin": 32768,
+    "limit": 34304,
+    "vars": 34304,
+    "flags": 34560,
+    "life": 35072,
+    "output": 36864,
+    "zp": 203,
+    "packet_limit": 40960
+  },
+  "amstrad-cpc": {
+    "cpu": "z80",
+    "origin": 32768,
+    "limit": 36352,
+    "vars": 36352,
+    "flags": 36864,
+    "life": 37376,
+    "output": 38912,
+    "packet_limit": 43008
+  },
+  "dragon-32": {
+    "cpu": "6809",
+    "origin": 24576,
+    "limit": 26112,
+    "vars": 26112,
+    "flags": 26624,
+    "life": 27136,
+    "output": 27648,
+    "packet_limit": 31744
+  }
+}

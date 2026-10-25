@@ -1,0 +1,17 @@
+{
+  "emulator_sha256": "3bd2c441655497a6223fd38d5a5f0ef9aa4279cb5620bfefba8f416c06defe39",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "firmware_sha256": {
+    "os.rom": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
+    "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",
+    "saa5050.rom": "9706945b02dd0e30823186ff0d73a49c0d98ed573499a057bab471add7ee28fb"
+  },
+  "programs": {
+    "demo": "6aa672324b86fbdeac1f6ead5cce188bf7c2b57cdbaf2e8d5157bb4f094398cf",
+    "custom": "b7a232c0957e833b37ffedb8025099fc3520bdd8e1a4340b4c8141896f506b5b",
+    "wrong": "02e6f0c5dd04917662b0bb58ce63c216a651492fa90f942cba7fd106f6301613",
+    "repaired": "6aa672324b86fbdeac1f6ead5cce188bf7c2b57cdbaf2e8d5157bb4f094398cf",
+    "boundary-one": "81608e27ab379c6131153a312d99af476a76ac621c20bac4de0f0f0b8b66fe73",
+    "boundary-max": "318fc25f6448c046f1c389a9f658ab9a0fb3835165cef08434a0cfd7826cdccb"
+  }
+}
