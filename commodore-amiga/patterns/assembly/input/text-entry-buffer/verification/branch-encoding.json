@@ -1,0 +1,41 @@
+{
+  "reason": "An explicit word-sized clear branch assembles in both vasm and Asm198x. The formerly short-qualified branch exceeds the signed-byte displacement range in vasm.",
+  "source_sha256_before": "e5306a75476d8b708a92cbb414c6e9e677313595dc85b918dce70db2245d0052",
+  "source_sha256": "bb1ad5d5307f263e01e93667f1eee5b28afd57c599612798081a45f277ad83ce",
+  "assembler": "Asm198x0.0.72; vasm2.0b local, CI2.0d",
+  "evidence": "All four Asm198x executables are byte-identical to the retained native execution inputs. Native observations are retained, not newly executed.",
+  "variants": [
+    {
+      "variant": "demo",
+      "vasm_exit": 0,
+      "asm_exit": 0,
+      "same_native_executable": true,
+      "bytes": 13340,
+      "sha256": "499e6b8ef6e4dce6f8c5f48d473ee1f9ea841bc92b0fd5d39a0e773970c0abd5"
+    },
+    {
+      "variant": "custom",
+      "vasm_exit": 0,
+      "asm_exit": 0,
+      "same_native_executable": true,
+      "bytes": 13368,
+      "sha256": "2d92b1ba2662fbd14be6a2f3e77dba5fc1f48abbd033ca2209525335c89c4c72"
+    },
+    {
+      "variant": "wrong",
+      "vasm_exit": 0,
+      "asm_exit": 0,
+      "same_native_executable": true,
+      "bytes": 13604,
+      "sha256": "4f11187bdedbbe360ba02a881d1a5aa5a45d7cf4b6ba540516b103c6adcf4d11"
+    },
+    {
+      "variant": "repaired",
+      "vasm_exit": 0,
+      "asm_exit": 0,
+      "same_native_executable": true,
+      "bytes": 13340,
+      "sha256": "499e6b8ef6e4dce6f8c5f48d473ee1f9ea841bc92b0fd5d39a0e773970c0abd5"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ text_entry_buffer_init:
 text_entry_buffer_step:
     clr.b STATUS
     cmp.b #2,MODE
-    beq.s text_clear
+    beq.w text_clear
     cmp.b #TEXT_CAP,LENGTH
     bhi.s text_bad
     tst.b MODE
