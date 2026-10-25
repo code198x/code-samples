@@ -43,7 +43,7 @@ A byte-aligned record is simpler and faster to edit. Native bit masks or a reser
 
 ## Mistake and repair
 
-The wrong caller resets C before every field, repeatedly overwriting the start. Its returned O flags remain valid, but C and the completed record are wrong. The repair keeps C/B between writes and checks each returned O. Repaired source and loaded program match the normal caller exactly.
+The wrong caller resets C before every field, repeatedly overwriting the start. Its returned O flags remain valid, but C and the completed record are wrong. The repair keeps C/B between writes. The retained trace checks each returned O. Repaired source and loaded program match the normal caller exactly.
 
 See `verification/wrong.png`.
 
