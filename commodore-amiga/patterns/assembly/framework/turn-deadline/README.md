@@ -6,7 +6,7 @@ This standalone A500 caller uses Up to switch the deadline on or off, Fire to fi
 
 ## Reuse the countdown
 
-Include `cross-platform/patterns/framework/elapsed-deadline/m68000.inc`. Reserve an even-aligned **14-byte context**, pass its address in A0 and supply the current 16-bit clock in D0.W. Call `deadline_init` once after setting the duration, `deadline_poll` regularly, and `deadline_renew` after starting another timed turn. D0/D1 and condition codes change; A0 and other registers survive. The helper itself owns no interrupts or display.
+Include `cross-platform/patterns/framework/elapsed-deadline/m68000.inc`. Reserve an even-aligned **14-byte context**, pass its address in A0 and supply the current 16-bit clock in D0.W. Call `deadline_init` once after setting the duration, `deadline_poll` regularly, and `deadline_start` after starting another timed turn. D0/D1 and condition codes change; A0 and other registers survive. The helper itself owns no interrupts or display.
 
 | Word offset | Meaning |
 | --- | --- |
