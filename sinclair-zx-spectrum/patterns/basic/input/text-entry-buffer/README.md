@@ -6,7 +6,7 @@ Entering a player's name needs more than appending characters. A full buffer mus
 
 DIM B(8). Reserve public L/S/K/M/C, the eight array elements, private I and lines **3000–3300**. Private I must not be a caller's outer FOR variable. Combine routines.bas and the caller through build.py, keeping END, STOP or a jump before the helper. C64/BBC use GOSUB; Spectrum uses GO SUB.
 
-Call **3000** at a reset boundary. It clears the public fields and all eight slots. Set accepted capacity C afterwards, from one to eight. The normal caller uses eight; the custom caller four. Both still allocate eight numeric elements. L starts at zero and counts live characters, not allocated space.
+Call **3000** at a reset boundary. It clears the public fields and all eight slots. Set accepted capacity C afterwards, from one to eight. The normal caller uses eight; the custom caller four. Both still reserve B(1)..B(8) for the buffer. DIM B(8) also allocates unused element zero on C64 and BBC BASIC; Spectrum allocates elements one through eight. L starts at zero and counts live characters, not allocated space.
 
 ## Choose one edit
 
@@ -29,7 +29,7 @@ The caller appends A and checks L=1 and B(1)=65. It then appends B, erases, clea
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are diagnostics. Draw exactly B(1)..B(L). A full buffer has no promised terminator beyond the live span; do not search past it for a zero. Appending preserves inactive slots, so the count remains the authority even if other slots contain old data.
+Line 2000, AA/BB, JJ/KK (Z/Q on Spectrum) and the mailbox are diagnostics. Draw exactly B(1)..B(L). A full buffer has no promised terminator beyond the live span; do not search past it for a zero. Appending preserves inactive slots, so the count remains the authority even if other slots contain old data.
 
 ## Choose the representation
 
@@ -57,7 +57,7 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
 
-The numbered helper occupies **607 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **607 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, Z/Q and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
