@@ -28,7 +28,7 @@ The normal caller uses N=3,D=5 for twelve calls, producing seven events with one
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/NN/JJ/KK and the mailbox are observations. A game supplies the source tick and performs the desired work on F. This helper does not wait for a display frame, read a hardware timer or promise that an interpreted update fits the available time.
+Line 2000, AA/BB/NN/JJ/KK (Z/Q on Spectrum) and the mailbox are observations. A game supplies the source tick and performs the desired work on F. This helper does not wait for a display frame, read a hardware timer or promise that an interpreted update fits the available time.
 
 ## Choose the rate policy
 
@@ -54,9 +54,9 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 ## Machine and measured size
 
-BBC BASIC arrays include element zero; this one-based array interface leaves it unused. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
+This helper uses scalar numeric fields and allocates no arrays. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
 
-The numbered helper occupies **214 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **214 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB/NN, JJ/KK and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
