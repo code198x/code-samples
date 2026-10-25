@@ -1,0 +1,67 @@
+# Filter Collision Pairs by Policy in Spectrum BASIC
+
+A projectile can ignore its owner while still testing opponents in the same patch of screen. Group rules answer whether a pair is worth considering; geometry answers whether those two objects actually touch.
+
+## Include and initialise
+
+Reserve public K/A/B/C/D/S/T/O, private E/F/G/H/I/U/V/J/L and lines **3000–3280**. There are no arrays. Private I must not be the caller's outer FOR variable. Combine routines.bas and a caller through build.py, keeping END, STOP or a jump before the helper. C64/BBC use GOSUB; Spectrum uses GO SUB. Call **3000** to clear the public fields, then supply the two objects' policies.
+
+A/B are the first object's group-membership and accepted-group masks. C/D are the second object's membership and accepted-group masks. S/T are their solidity flags, zero false and nonzero true. Every input is an integral byte; each bit can represent a chosen category.
+
+## Classify the pair
+
+Call **3100**. Both directions must accept: some bit of A must be present in D, and some bit of C in B. If either rejects, K=0. An accepted pair returns K=1 when at least one object is non-solid, otherwise K=2. O=1 reports a valid policy query; invalid input clears K/O and preserves all inputs.
+
+See `routines.bas`.
+
+| K | Meaning before the spatial test |
+|---|---|
+| 0 | Ignored by policy |
+| 1 | Accepted sensor pair |
+| 2 | Accepted pair with both solid flags nonzero |
+
+K=1 or two is not evidence of contact. A spatial test still has to establish overlap, followed by the game's sensor event or collision response. Zero masks or membership sets are valid and can reject every pair deliberately.
+
+## Check both directions
+
+The first caller query has B=0, so the first object accepts nobody even though the second accepts it. The correct result is ignored. Later queries enable the mask, reject from the reverse direction and finally accept a solid pair. The custom caller uses a high membership bit and a sensor flag.
+
+See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
+
+Line 2000, AA/BB/JJ and the mailbox are diagnostics. A game supplies stable bit meanings and consumes K/O before choosing its spatial and response paths. The masks describe policy, not a screen cell, sprite ID or hardware collision register.
+
+## Customise collision rules
+
+Use membership sets when an object belongs to several categories. Use acceptance masks to choose which of those categories matter to each object. Mutual acceptance keeps one object's broad mask from silently overriding the other's exclusions.
+
+The portable BASIC implementation walks eight bit positions because bitwise facilities differ. A native mask operation can be cheaper after checking width and signedness. Filtering can save expensive geometry work when it rejects enough pairs; it also adds work of its own. Measure the actual candidate population rather than assuming that another filter always helps.
+
+## Mistake and repair
+
+The wrong caller widens the intended B=0 mask to 255 before asking the helper. A rejected pair becomes accepted. Both saved kind and preserved-policy checks fail: the helper cannot recover the caller's original intention. Keep authoritative masks intact and pass the intended policy. Repaired source and loaded program match normal exactly.
+
+See `verification/wrong.png`.
+
+## Cost and Maths for Games
+
+The component makes a bounded eight-bit comparison of the two intersections. It reads no geometry, allocates nothing and performs no response or device write. Broad-phase buckets, box tests and pixel-level tests remain separate choices with their own costs.
+
+[Maths for Games](/craft/maths-for-games/) connects membership sets and mutual intersections. [The Craft](/craft/) connects collision categories, sensor events and the rules the player experiences.
+
+## Global names and line numbers
+
+BASIC numeric names, arrays and numbered lines are global. To combine helpers, rename public and private fields and renumber the helper together with every GO SUB/GO TO reference. Keep each state block under one owner. The maintained build.py rejects duplicate line numbers; it does not automatically namespace or renumber routines.
+
+## Machine and measured size
+
+Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
+
+The numbered helper occupies **759 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+
+## Execution evidence
+
+Working, custom, deliberately wrong and exact repaired callers executed through Spectrum's stock BASIC interpreter under Emu198x 0.44.2. Build198x 0.2.9 tokenises C64 PRG and Spectrum TAP programs. C64 enters stock RUN, Spectrum uses ROM tape loading, and BBC enters every numbered source line through MOS/BASIC. Actual loaded program bytes, complete state packets, positive completion/count/guards and visible result pixels are checked. After the positive completion marker, the observer advances two complete display frames before capturing, so a partially scanned final character cannot masquerade as a finished picture. Firmware is not distributed.
+
+An independent mathematical/order model checks the trace and rejects altered source, configuration, loaded program, state, completion and image evidence. Host exhaustive checks complement the native boundary/sequential examples; those host ranges are not claimed as natively exhaustive. The supplied diagnostic callers deliberately end with STOP; the interpreter report is expected. The wrong caller prints 0,0 and the normal/custom/repaired callers print 1,1.
+
+Public CI checks retained evidence; it does not execute restricted firmware. Refresh with `python3 scripts/verify-basic-world-policy.py collision-layer-filter sinclair-zx-spectrum --tools /path/to/extracted/releases` and inspect with `python3 scripts/check-basic-world-policy.py collision-layer-filter`.
