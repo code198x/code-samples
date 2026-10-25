@@ -24,7 +24,7 @@ The normal caller remembers 0,3, presents its reverse, queries it again, then re
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-A later clear begins a new traversal: a previously seen pair is new again. The saved early checks distinguish correct retention even though clearing can eventually bring different traces back to the same state. AA/BB/JJ/KK, line 2000 and the mailbox belong to that diagnostic.
+A later clear begins a new traversal: a previously seen pair is new again. The saved early checks distinguish correct retention even though clearing can eventually bring different traces back to the same state. AA/BB/NN and JJ/KK (Z/Q on Spectrum), line 2000 and the mailbox belong to that diagnostic.
 
 ## Decide what first means
 
@@ -52,7 +52,7 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
 
-The numbered helper occupies **456 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **456 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB/NN, JJ/KK and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
