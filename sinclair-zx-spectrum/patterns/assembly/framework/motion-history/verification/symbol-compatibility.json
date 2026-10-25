@@ -1,0 +1,60 @@
+{
+  "reason": "Spectrum PUSH field conflicts with CPU instruction; bind APPEND_SAMPLE without changing state layout or executable bytes.",
+  "original_head": "849781291485a2c835e68cea21c70a7fd3ccc226",
+  "fresh_native_execution": false,
+  "stale_source_control": "Changed source",
+  "variants": {
+    "demo": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "f20ff537a932feaf6491040e261794cbfebab32d1699395700b49edbac108bc0"
+    },
+    "custom": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "b9e2ca28ed9cc4cc26b423b068509cd8b8d922809cb0581e17b24eb522e6c813"
+    },
+    "wrong": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "0b93fe926283609420c5fd3cd15118a5a9223e4a35f3082fe44bcd40f9573334"
+    },
+    "repaired": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "4763a09d752c5058f6f3c4ec7c919452813de6e654cf7605823e4e0a4d0beac9"
+    }
+  },
+  "source_digest_changes": {
+    "sinclair-zx-spectrum/patterns/assembly/framework/motion-history/component.inc": {
+      "before": "2e18e70b721046e84bf573c70b335221c1dedf7cea249919c7adf2b07a26da31",
+      "after": "33483387a54272a7180c126af724b10bf065aa22c5977d4e69ee43f31b2d0733"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/framework/motion-history/exercise.inc": {
+      "before": "2713741a2634141a904c9746b5d22d61d611e72308e09cd2deb2f1c5477ce59f",
+      "after": "525a17f7471fc8ce9d8b43148ba27e90bf81fd41b9d2817c69f122c7138f8b6d"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/framework/motion-history/demo.asm": {
+      "before": "0f3f9705bed0b6521aafb7ca4852dd0441ac20cc40a3bdeb37fe4c3df4df82a0",
+      "after": "2d5bbc0a6934c507a5709ed8a83198964eb5ccb71ecc08d0be45acc320db1038"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/framework/motion-history/custom.asm": {
+      "before": "315a11afd72494eafd6df259c12ee50247f4d36b6ac488b9c0660ce3b5f8623e",
+      "after": "a9ca4a3c6e3d4b4b93f4952549446448f94e71e46e4f21f64013746223d64395"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/framework/motion-history/wrong.asm": {
+      "before": "449b854bd9bf1c4bb950c2970b219a76c4759428aab14dda0859cddf46153fd0",
+      "after": "9878b254657452c1432632b21a4586580260109de2a640c492d6bfbeb5ab876b"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/framework/motion-history/repaired.asm": {
+      "before": "0f3f9705bed0b6521aafb7ca4852dd0441ac20cc40a3bdeb37fe4c3df4df82a0",
+      "after": "2d5bbc0a6934c507a5709ed8a83198964eb5ccb71ecc08d0be45acc320db1038"
+    }
+  },
+  "pasmo_sha256": "e9628f5c32f3c74a963c649781e6cb87e9eaeb4bbfe7b52d3de27f4986bbf136",
+  "asm198x_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279"
+}

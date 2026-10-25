@@ -24,7 +24,7 @@ COUNT: defb 0
 INPUT_X: defb 0
 INPUT_Y: defb 0
 LAG: defb 0
-PUSH: defb 0
+APPEND_SAMPLE: defb 0
 HX0: defb 0
 HX1: defb 0
 HX2: defb 0
