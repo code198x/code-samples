@@ -22,6 +22,8 @@ See `routines.bas`.
 
 The caller starts one unit below capacity, tries to add two, and checks that the request is refused without changing stock. It then fills the final space, removes a full stack, tries an unavailable removal and exercises another category. The earlier table in the complete diagnostic covers varied counts, invalid slots, damaged state and invalid modes.
 
+Calls to line **2000** in this excerpt write diagnostic observations; that writer and the mailbox setup are in the complete source. In your own game, omit those observation calls and the final mailbox write. Keep the public helper calls, and supply your game state as described above.
+
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
 ## Ownership and customisation
