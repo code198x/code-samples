@@ -42,7 +42,7 @@ A surface query alone does not decide whether an actor should land. Its old/prop
 
 ## Mistake and repair
 
-The wrong caller replaces X with zero before every query. The profile appears flat because the game keeps sampling one column; both saved checks fail. Retain the actual local coordinate and mirror through M. Repaired source and loaded program match the normal caller exactly.
+The wrong caller replaces X with zero before the first retained-state query. It samples the wrong column, changing the returned surface and losing the requested local position; both saved checks fail. Retain the actual local coordinate and mirror through M. Repaired source and loaded program match the normal caller exactly.
 
 See `verification/wrong.png`.
 
