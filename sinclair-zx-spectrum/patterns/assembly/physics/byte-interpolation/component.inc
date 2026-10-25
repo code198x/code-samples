@@ -5,7 +5,7 @@ byte_interpolation_init:
     ld a,0
     ld (VALUE),a
     ld (START),a
-    ld (END),a
+    ld (ENDPOINT),a
     ld (FRACTION),a
     ld (T0),a
     ld (T1),a
@@ -23,8 +23,8 @@ byte_interpolation_step:
 ; T10 = 0
     ld a,0
     ld (T10),a
-; if END >= START:
-    ld a,(END)
+; if ENDPOINT >= START:
+    ld a,(ENDPOINT)
     ld b,a
     ld a,(START)
     ld c,a
@@ -33,8 +33,8 @@ byte_interpolation_step:
     jp nc,byte_interpolation_L1
     jp byte_interpolation_L2
 byte_interpolation_L1:
-; T11 = END - START
-    ld a,(END)
+; T11 = ENDPOINT - START
+    ld a,(ENDPOINT)
     ld b,a
     ld a,(START)
     ld c,a
@@ -43,10 +43,10 @@ byte_interpolation_L1:
     ld (T11),a
     jp byte_interpolation_L3
 byte_interpolation_L2:
-; T11 = START - END
+; T11 = START - ENDPOINT
     ld a,(START)
     ld b,a
-    ld a,(END)
+    ld a,(ENDPOINT)
     ld c,a
     ld a,b
     sub c

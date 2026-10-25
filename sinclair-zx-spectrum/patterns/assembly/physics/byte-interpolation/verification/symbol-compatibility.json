@@ -1,0 +1,60 @@
+{
+  "reason": "Spectrum END field is reserved by Pasmo; use ENDPOINT with identical bytes and state layout.",
+  "original_head": "8429a9a15ca1e69317f667d679dc0c419bd12f33",
+  "fresh_native_execution": false,
+  "stale_source_control": "Changed source",
+  "variants": {
+    "demo": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "a433c47e15539e0615be548339acc182a058d6476058e0a5c55807ca8bd158f7"
+    },
+    "custom": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "e7ba7d9d4872645843e59c31f7f31e19f37c3198b6e93aec1564c4b2d2032888"
+    },
+    "wrong": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "d18be5092ecc8609190918ddf9ca27371456c7f94e5fa5b8802e8f2b84daf79f"
+    },
+    "repaired": {
+      "pasmo_exit": 0,
+      "pasmo_loaded_code_identical": true,
+      "asm_complete_tape_identical": true,
+      "program_sha256": "85ad0492be77c57ee87fa840cf7b62a98508646d62122cb75fb7c43b0c533f41"
+    }
+  },
+  "source_digest_changes": {
+    "sinclair-zx-spectrum/patterns/assembly/physics/byte-interpolation/demo.asm": {
+      "before": "3519b6d5bb70a6d334718f474e2e5c42ea854e30854ed573a3fda0a03b3484b7",
+      "after": "ed21f98d0e1cd4db415e6f1212b84870e9df9706eb5c1ed1cd291b0701e37ab3"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/physics/byte-interpolation/custom.asm": {
+      "before": "14ef6dc62e4f9deed5c220b26534c7abdfad611ce8fc175b34c36268d1f5e1ba",
+      "after": "3611c68a4d99ffc70ad85f0fad72f130b23f4c178f346515f521be1f1e56bc5a"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/physics/byte-interpolation/wrong.asm": {
+      "before": "342f4e0ecf625784b24d4a7fb2a786fc993c220c456623432e62ce9089e35774",
+      "after": "3cb5f48d4989a30eac6b7b5d5a36e14f70baedb58be9762eee429a31f12bd9df"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/physics/byte-interpolation/repaired.asm": {
+      "before": "3519b6d5bb70a6d334718f474e2e5c42ea854e30854ed573a3fda0a03b3484b7",
+      "after": "ed21f98d0e1cd4db415e6f1212b84870e9df9706eb5c1ed1cd291b0701e37ab3"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/physics/byte-interpolation/component.inc": {
+      "before": "1073e2447570d88bed1af129bb6187030cad30a8b95e01621398e780202f6dba",
+      "after": "d5325af9f5562a0509d13950a9991b895881b3b0998209b9f8dcdf0e5296dbaf"
+    },
+    "sinclair-zx-spectrum/patterns/assembly/physics/byte-interpolation/exercise.inc": {
+      "before": "a598f9494e55b35c60a97f3527e1c31a22a901a3566c81b3d6b4f5053f6afb60",
+      "after": "554d5227b7cf29bfb4ed69baccad0cf3f84e2693f183c57030c6ee2540250909"
+    }
+  },
+  "pasmo_sha256": "e9628f5c32f3c74a963c649781e6cb87e9eaeb4bbfe7b52d3de27f4986bbf136",
+  "asm198x_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279"
+}

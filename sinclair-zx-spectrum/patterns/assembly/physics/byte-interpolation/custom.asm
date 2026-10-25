@@ -18,7 +18,7 @@ code_end:
 STATE:
 VALUE: defb 0
 START: defb 0
-END: defb 0
+ENDPOINT: defb 0
 FRACTION: defb 0
 T0: defb 0
 T1: defb 0
