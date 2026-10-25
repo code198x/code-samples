@@ -1,0 +1,68 @@
+# Read Bits from a Small Data Block in C64 BASIC
+
+A door needs one open/closed flag. A facing direction might need two bits. Giving each a whole byte is convenient, but a packed record can hold several small fields together. This reader pulls those fields back out in the order they were written.
+
+## Include and initialise
+
+Reserve B(4), public V/O/C/N and private I/J/K/P/T. Reserve numbered lines **3000–3220**, combine routines.bas with your caller using build.py, and put END, STOP or a jump before the helper. C64/BBC use GOSUB; Spectrum uses GO SUB. Never use the helper's private scratch as an enclosing FOR variable.
+
+Call **3000** once when beginning a new block. It clears all four bytes, C/N and V/O. Supply the bytes afterwards. B(1) is the first byte; its leftmost, most significant bit comes first. C counts consumed bits from zero to 32. It is a bit offset, not a byte index.
+
+## Read one field
+
+Set N to the number of bits, from zero to eight, then call **3100**. If the whole field fits, O=1, V contains its unsigned value, and C advances by N. A request for zero bits succeeds, returns zero and leaves C unchanged, including at C=32.
+
+| Field | Use |
+|---|---|
+| B(1)..B(4) | Caller-owned bytes; preserved by every read |
+| C | Retained consumed-bit count, 0..32 |
+| N | Requested width, 0..8 |
+| V / O | Fresh returned value / valid flag |
+
+The helper validates C, N and every source byte as integers in range, then checks C+N before extracting anything. Invalid input or an incomplete field returns V=0,O=0 and preserves C and B. Zero is also a valid field value: always check O. Calls do no input, display, timing or allocation.
+
+## The reusable routine
+
+See `routines.bas`.
+
+INT(C/8)+1 locates the source array element. The remainder selects its bit. Multiplying V by two before adding each bit keeps the written order, including fields crossing a byte boundary. The routine uses arithmetic rather than assuming a shared bitwise operator across three BASIC dialects.
+
+## Read a retained record
+
+The normal caller reads widths 4,4,8,8,8 from bytes 171,205,239,1. The values are 10,11,205,239,1 and the final cursor is 32. Full trace checks compare every returned value and byte, beyond the caller's two visible summary checks.
+
+See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
+
+Line 2000, the mailbox and AA/BB/SS/JJ/KK (Z/Q on Spectrum) belong to the diagnostic. A game supplies N, calls 3100, checks O and uses V. It retains C until deliberately starting another record.
+
+## Customise the fields
+
+The custom caller reads four complete bytes instead. Width is a property of each field: your format can mix flags, directions and small counters. Both sides must agree on widths and most-significant-bit-first order. A field can hold only values representable by its chosen width.
+
+This fixed four-byte example is useful for small records. Longer files need wider storage/offsets and a refill policy. Byte-aligned data can use direct array access with far less interpreter work. A hot native reader may use a shift register or bit reservoir; that needs explicit refill and end-of-input rules.
+
+## Mistake and repair
+
+The wrong caller resets C before each field. Every request succeeds, but it keeps reading the beginning of the block. Both summary checks fail: the cursor never reaches 32 and the value sum is wrong. The repair retains the cursor between calls. Its source and loaded program match the normal caller exactly.
+
+See `verification/wrong.png`.
+
+## Cost and Maths for Games
+
+A successful call visits at most eight bits, with division, powers and integer arithmetic per bit. Validation scans the four source numbers. No cycle budget is inferred from this BASIC implementation. The public values are BASIC numbers and array cells, not eight packed machine-code bytes.
+
+[Maths for Games](/craft/maths-for-games/) explains binary place values, division/remainders and choosing a bit width. [The Craft](/craft/) helps judge whether saving a few record bytes is worth a slower, less convenient interface. The matching writer follows the same bit order, but owns the destination and has a different failure contract.
+
+## Machine and measured size
+
+C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
+
+The numbered helper occupies **377 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+
+## Execution evidence
+
+Working, custom, deliberately wrong and exact repaired callers executed through C64's stock BASIC interpreter under Emu198x 0.44.2. Build198x 0.2.9 tokenises C64 PRG and Spectrum TAP programs. C64 enters stock RUN, Spectrum uses ROM tape loading, and BBC enters every numbered source line through MOS/BASIC. Actual loaded program bytes, complete state packets, positive completion/count/guards and visible result pixels are checked. After the positive completion marker, the observer advances two complete display frames before capturing, so a partially scanned final character cannot masquerade as a finished picture. Firmware is not distributed.
+
+An independent mathematical/order model checks the trace and rejects altered source, configuration, loaded program, state, completion and image evidence. Host exhaustive checks complement the native boundary/sequential examples; those host ranges are not claimed as natively exhaustive. The supplied diagnostic callers deliberately end with STOP; the interpreter report is expected. The wrong caller prints 0,0 and the normal/custom/repaired callers print 1,1.
+
+Public CI checks retained evidence; it does not execute restricted firmware. Refresh with `python3 scripts/verify-basic-packing.py bounded-bit-reader commodore-64 --tools /path/to/extracted/releases` and inspect with `python3 scripts/check-basic-packing.py bounded-bit-reader`.
