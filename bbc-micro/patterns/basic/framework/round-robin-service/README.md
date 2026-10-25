@@ -33,7 +33,7 @@ With M=21, bits 0, 2 and 4 are ready. Six decisions return 0, 2, 4, 0, 2, 4. The
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-The diagnostic's line 2000, AA/BB/SS/NN/JJ/KK (Z/Q on Spectrum) and mailbox record those decisions. Your game calls 3100, checks O/F and runs one bounded piece of the selected job. The helper does not run the job itself or read elapsed time.
+The diagnostic's line 2000, AA/BB/SS/NN/JJ (Z on Spectrum) and mailbox record those decisions. Your game calls 3100, checks O/F and runs one bounded piece of the selected job. The helper does not run the job itself or read elapsed time.
 
 ## Customise the ready mask
 
@@ -55,9 +55,9 @@ Each decision checks at most eight candidates with division, powers and remainde
 
 ## Machine and measured size
 
-BBC BASIC arrays include element zero; this one-based array interface leaves it unused. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
+This helper uses scalar numeric fields and allocates no arrays. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
 
-The numbered helper occupies **330 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **330 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
