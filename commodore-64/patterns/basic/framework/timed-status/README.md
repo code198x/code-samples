@@ -39,7 +39,7 @@ The working caller applies once and services eight times. It checks that the dur
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line **2000**, the mailbox, NN/AA/BB and JJ/KK (Z/Q on Spectrum) are diagnostic machinery. A game calls 3100, consumes the fresh F result once and uses R for its own status display. The helper neither changes health nor plays sound.
+Line **2000**, the mailbox, NN/AA/BB and JJ (Z on Spectrum) are diagnostic machinery. A game calls 3100, consumes the fresh F result once and uses R for its own status display. The helper neither changes health nor plays sound.
 
 ## Customise the effect
 
@@ -65,9 +65,9 @@ Each service performs a bounded sequence of scalar checks/arithmetic with no arr
 
 ## Machine and measured size
 
-C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
+C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. This helper uses scalar numeric fields and allocates no arrays. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
 
-The numbered helper occupies **368 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **368 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
