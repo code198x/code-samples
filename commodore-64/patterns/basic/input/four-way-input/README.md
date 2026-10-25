@@ -28,7 +28,7 @@ The caller supplies left/up, then up alone, then left/up again. Normal initial A
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ and the mailbox are observations. A game maps its input reader to H and uses D to propose movement. This routine does not move an actor, consult a tile map or buffer an intended turn until a junction. The chosen direction can still be blocked by game geometry.
+Line 2000, AA/BB/JJ (Z on Spectrum) and mailbox writes are observations. A game maps its input reader to H and uses D to propose movement. This routine does not move an actor, consult a tile map or buffer an intended turn until a junction. The chosen direction can still be blocked by game geometry.
 
 ## Choose the policy for your game
 
@@ -54,9 +54,9 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 ## Machine and measured size
 
-C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
+C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. This helper uses scalar numeric fields and allocates no arrays. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
 
-The numbered helper occupies **363 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **363 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
