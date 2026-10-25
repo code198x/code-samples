@@ -28,7 +28,7 @@ The normal caller writes three to cell nine, then reads cell nine and its neighb
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are diagnostics. A game passes its logical cell index, not an already halved byte offset. Convert world or map coordinates to that logical index before this layer. Reading data does not draw a tile or decide its properties.
+Line 2000, AA/BB, JJ/KK (Z/Q on Spectrum) and the mailbox are diagnostics. A game passes its logical cell index, not an already halved byte offset. Convert world or map coordinates to that logical index before this layer. Reading data does not draw a tile or decide its properties.
 
 ## Weigh the saving
 
