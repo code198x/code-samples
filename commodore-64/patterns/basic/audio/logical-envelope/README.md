@@ -32,7 +32,7 @@ Normal A=4,D=3,S=6,R=2 produces held levels 4,8,12,15,12,9,6,6, then released le
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ and the mailbox are observations. A game retains L/P/W, supplies gate state and services at its chosen cadence. An output backend maps L to an owned voice or gain. This proof checks the control routine in the interpreter; it does not claim audible output, a verified device mapping or a musical timing budget.
+Line 2000, AA/BB/JJ (Z on Spectrum) and the mailbox are observations. A game retains L/P/W, supplies gate state and services at its chosen cadence. An output backend maps L to an owned voice or gain. This proof checks the control routine in the interpreter; it does not claim audible output, a verified device mapping or a musical timing budget.
 
 ## Choose the output and timing policy
 
@@ -58,9 +58,9 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 ## Machine and measured size
 
-C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
+C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. This helper uses scalar numeric fields and allocates no arrays. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
 
-The numbered helper occupies **669 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **669 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
