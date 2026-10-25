@@ -160,6 +160,8 @@ def execute(system, variant):
             read(base + 1000, 2) == [239, 90],
             f"{system}/{variant}: BASIC caller did not finish",
         )
+        # Completion records execution; two full frames also complete the display scan.
+        run(2)
         expected = M.packet(variant)
         count = read(base + 998, 2)
         T.require(count[0] + 256 * count[1] == len(expected), "Wrong emitted count")
