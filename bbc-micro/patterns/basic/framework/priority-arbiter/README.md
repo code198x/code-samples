@@ -22,6 +22,8 @@ See `routines.bas`.
 
 The retained client below submits five requests. ID20 has the highest priority, and an equal-priority ID40 arrives later. ID20 remains selected. The complete diagnostic also tests priority boundaries, equal values and a damaged present flag.
 
+Calls to line **2000** in this excerpt write diagnostic observations; that writer and the mailbox setup are in the complete source. In your own game, omit those observation calls and the final mailbox write. Keep the public helper calls, and supply your game state as described above.
+
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
 ## Ownership and customisation
