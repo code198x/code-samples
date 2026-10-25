@@ -5,7 +5,7 @@
   "source_sha256": "4bc4cbb36902ffcb8fafb73bf0154818313828f21ea01d5bf294811ae8b32122",
   "emulator_sha256": "fe8f355b7ee01cb20b30b9741c97f5e4cde8357a4a1c380d5bc9ef1c0d89deb6",
   "builder_sha256": "248bed66d985f433c20f2cfb439a02cb0382a26bc8b44762270d785e80879e93",
-  "frames_after_start": 1200,
+  "frames_after_start": 1202,
   "packet": [
     0,
     0,
@@ -356,7 +356,7 @@
     239,
     90
   ],
-  "image_sha256": "f6fe06a1369ff1a4e0b75b4cda8545dab2a45408a8303f22fd28cb43beae9a3c",
+  "image_sha256": "e1cb441fbe9ec330b868d13d33e6e31ce51a7425149a0161f6c428e054be1912",
   "memory": {
     "program_start": 2049,
     "program_bytes": [
@@ -2909,7 +2909,7 @@
     "commodore-64/patterns/basic/framework/dialogue-gates/build.py": "383b11424b159d793392c905da48465e6a88838cac3d8a009ac9bc472511b36e",
     "commodore-64/patterns/basic/framework/dialogue-gates/Makefile": "20d11f173cf8c189696083c9dc746333a74d13231776deee80950da4e578dd46",
     "cross-platform/patterns/framework/dialogue-gates/basic_oracle.py": "307d29d6cb9b04456b1a90f1ea47e08493fcf9431c58edbe0de16c1fd7129ce9",
-    "scripts/verify-basic-world.py": "9d78c24222fefbb3ae8526e2a94a679edf4cae17731b304d1b4824b25abdd2eb",
+    "scripts/verify-basic-world.py": "5d327ff237ab07449c410a81656c462e43b6fbd7e28f4e4d500509f19276f6f4",
     "cross-platform/patterns/framework/basic-world-models/cases.py": "efc98a0a8e1b032a649a47845884cc0675da31272b5f2d2348c92195edf2be3d",
     "scripts/verify-basic-deadlines.py": "fc684b89a2098d8c76e4604c7e32e44b7386eff41d0d52c12d3007d0e4f4b4dd",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"

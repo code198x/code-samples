@@ -5,7 +5,7 @@
   "source_sha256": "7ec42d0e5a79666c5e644b5f5c3cd158c67f9927d46ef1ff548922dbc2957c38",
   "emulator_sha256": "ded30155d74817ffd16c7fdd6f691a5893a560d5f59999ab02614648bac0a458",
   "builder_sha256": "248bed66d985f433c20f2cfb439a02cb0382a26bc8b44762270d785e80879e93",
-  "frames_after_start": 3000,
+  "frames_after_start": 3002,
   "packet": [
     0,
     0,
@@ -5104,7 +5104,7 @@
     "sinclair-zx-spectrum/patterns/basic/framework/dialogue-gates/build.py": "383b11424b159d793392c905da48465e6a88838cac3d8a009ac9bc472511b36e",
     "sinclair-zx-spectrum/patterns/basic/framework/dialogue-gates/Makefile": "b617cdde76651888c0e2254883c6b92df55e6817719c13d4fa993ab690245208",
     "cross-platform/patterns/framework/dialogue-gates/basic_oracle.py": "307d29d6cb9b04456b1a90f1ea47e08493fcf9431c58edbe0de16c1fd7129ce9",
-    "scripts/verify-basic-world.py": "9d78c24222fefbb3ae8526e2a94a679edf4cae17731b304d1b4824b25abdd2eb",
+    "scripts/verify-basic-world.py": "5d327ff237ab07449c410a81656c462e43b6fbd7e28f4e4d500509f19276f6f4",
     "cross-platform/patterns/framework/basic-world-models/cases.py": "efc98a0a8e1b032a649a47845884cc0675da31272b5f2d2348c92195edf2be3d",
     "scripts/verify-basic-deadlines.py": "fc684b89a2098d8c76e4604c7e32e44b7386eff41d0d52c12d3007d0e4f4b4dd",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
