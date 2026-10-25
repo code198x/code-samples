@@ -115,9 +115,9 @@ preview_rules:
 ; H7 = 0
     ld a,0
     ld (H7),a
-; MIRROR = 1
+; MIRROR_X = 1
     ld a,1
-    ld (MIRROR),a
+    ld (MIRROR_X),a
     if BROKEN
 ; LOCAL_X = 0
     ld a,0

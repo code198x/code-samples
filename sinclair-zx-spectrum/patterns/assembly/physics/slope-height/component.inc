@@ -5,7 +5,7 @@ slope_height_init:
     ld a,0
     ld (LOCAL_X),a
     ld (BASE_Y),a
-    ld (MIRROR),a
+    ld (MIRROR_X),a
     ld (SURFACE),a
     ld (VALID),a
     ld (H0),a
@@ -41,8 +41,8 @@ slope_height_L3:
 ; T0 = LOCAL_X
     ld a,(LOCAL_X)
     ld (T0),a
-; if MIRROR != 0:
-    ld a,(MIRROR)
+; if MIRROR_X != 0:
+    ld a,(MIRROR_X)
     cp 0
     jp nz,slope_height_L4
     jp slope_height_L5
