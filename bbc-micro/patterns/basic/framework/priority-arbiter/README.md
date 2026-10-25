@@ -46,7 +46,7 @@ Each request takes constant scalar work and a comparison; a batch of N requests 
 
 ## Machine and measured size
 
-BBC BASIC arrays include element zero; the inventory interface leaves it unused. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
+This helper uses scalar variables and needs no array allocation. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
 
 The numbered helper occupies **318 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller's W/Z/G, Y/D and RAM mailbox are observation machinery, not required game state.
 

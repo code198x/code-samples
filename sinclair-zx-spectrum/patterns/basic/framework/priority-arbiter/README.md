@@ -46,7 +46,7 @@ Each request takes constant scalar work and a comparison; a batch of N requests 
 
 ## Machine and measured size
 
-Spectrum numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
+This helper uses scalar variables and needs no array allocation. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
 
 The numbered helper occupies **393 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller's W/Z/G, Y/D and RAM mailbox are observation machinery, not required game state.
 
