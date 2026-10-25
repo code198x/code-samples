@@ -1,4 +1,4 @@
-# Carry a Passenger by a Platform’s Displacement in BBC Micro BASIC
+# Carry a Passenger with a Platform in BBC Micro BASIC
 
 A passenger needs the platform's movement, not its absolute position. If a platform moves five pixels right, add five to the passenger. If it moves left, preserve that negative displacement before applying it.
 
