@@ -44,7 +44,7 @@ L never exceeds the allocated eight cells. A larger decoder needs corresponding 
 
 ## Mistake and repair
 
-The wrong caller replaces W with L after decoding. It advertises eight output cells although only six were produced; two old values become part of the alleged asset. The length and consumed-data checks both fail. The repair preserves the decoder's returned W, checks E and consumes exactly that prefix. Repaired source and loaded program match the normal caller.
+The wrong caller replaces W with L after decoding. It advertises eight output cells although only six were produced; two old values become part of the alleged asset. The length and consumed-data checks both fail. The repair preserves the decoder's returned W and consumes exactly that prefix. The retained trace checks E as well as the output. Repaired source and loaded program match the normal caller.
 
 See `verification/wrong.png`.
 
