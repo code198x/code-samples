@@ -12,11 +12,11 @@ Call **3000** at a deliberate new-session boundary. It clears A/M/S/T/O/V/E and 
 
 Set M and call **3100**:
 
-| M | Operation | Supply | Successful result |
-|---|---|---|---|
-| 0 | Allocate lowest free slot | retained A/G | O=1,R=slot,V=new generation |
-| 1 | Release a matching live handle | S=slot,T=generation | O=1,R=S,V=T; clears its live bit |
-| 2 | Query a matching live handle | S=slot,T=generation | O=1,R=S,V=T; leaves live state unchanged |
+| M | Call | Result |
+|---|---|---|
+| 0 | Allocate lowest free slot | O=1; R=slot; V=new generation |
+| 1 | Release handle S/T | O=1; R=S; V=T; clears its live bit |
+| 2 | Query handle S/T | O=1; R=S; V=T; retains live state |
 
 Allocation ignores S/T, increments the chosen generation modulo 256 and marks the slot live. A full pool returns O=0,R=255,V=0,E=0. Query/release also return that ordinary failure for an inactive slot or a stale generation. Release keeps the stored generation; the next allocation advances it before returning a handle.
 
