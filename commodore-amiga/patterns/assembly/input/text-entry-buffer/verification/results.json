@@ -10891,7 +10891,7 @@
     "commodore-amiga/patterns/assembly/input/text-entry-buffer/wrong.asm": "7ab14d8f8db0e6430031bce05c84554597ab81069a29c134963f218f7d33b5ad",
     "commodore-amiga/patterns/assembly/input/text-entry-buffer/repaired.asm": "c2e8de32bdea1d4dd0a263e39d8bd0f7b01d10e2087cfe7da6a0b683ed12bdbf",
     "commodore-amiga/patterns/assembly/input/text-entry-buffer/caller.inc": "db40b848e7291e4afe8bd5a1e713ad1ad3fd12a37ebcafd6efe6681f545161d8",
-    "commodore-amiga/patterns/assembly/input/text-entry-buffer/component.inc": "e5306a75476d8b708a92cbb414c6e9e677313595dc85b918dce70db2245d0052",
+    "commodore-amiga/patterns/assembly/input/text-entry-buffer/component.inc": "bb1ad5d5307f263e01e93667f1eee5b28afd57c599612798081a45f277ad83ce",
     "commodore-amiga/patterns/assembly/input/text-entry-buffer/exercise.inc": "5c33953527dd8e37b534b4191cf5a5e1376e4de9af5a396a5785a1f744e2a479",
     "commodore-amiga/patterns/assembly/input/text-entry-buffer/cases.inc": "dc463216e1261047cda0852cdc6e11dc7f8bdfd669071e3f8d9a0a9f961fa689",
     "commodore-amiga/patterns/assembly/input/text-entry-buffer/Makefile": "3302e1b4ae36e6d374f248fef31ef617d82f82d77e38cc5e1006c82f6d6d1824",
