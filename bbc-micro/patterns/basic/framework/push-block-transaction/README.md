@@ -29,7 +29,7 @@ Normal play starts at cell five with a crate at six. A right request pushes the 
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are observations. A game uses R/O to choose animation, sound or feedback after the logical result. The player is not painted into the map: keeping it separate avoids destroying the underlying floor during movement.
+Line 2000, AA/BB, JJ/KK (Z/Q on Spectrum) and the mailbox are observations. A game uses R/O to choose animation, sound or feedback after the logical result. The player is not painted into the map: keeping it separate avoids destroying the underlying floor during movement.
 
 ## Keep one owner through the commit
 
