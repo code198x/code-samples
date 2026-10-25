@@ -1503,3 +1503,14 @@ jobs:
           python-version: '3.14'
       - name: Check interpreter observations, independent invariants and altered evidence
         run: python -m unittest discover -s scripts -p test_basic_priority_event_queue.py -v
+  basic-round-robin-service-records:
+    name: Native BASIC round-robin-service evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check interpreter observations, independent invariants and altered evidence
+        run: python -m unittest discover -s scripts -p test_basic_round_robin_service.py -v
