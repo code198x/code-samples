@@ -3,6 +3,8 @@
 import copy
 import importlib.util
 import json
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -11,6 +13,36 @@ s = importlib.util.spec_from_file_location(
 )
 C = importlib.util.module_from_spec(s)
 s.loader.exec_module(C)
+
+
+class BuildFailure(unittest.TestCase):
+    def check_failure(self, override):
+        makefile = (
+            C.V.ROOT / "commodore-64/patterns/assembly/rendering/custom-glyphs/Makefile"
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run(
+                [
+                    "make",
+                    "--no-print-directory",
+                    "-f",
+                    str(makefile),
+                    "rom-font",
+                    override,
+                ],
+                cwd=directory,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn("(ignored)", result.stderr)
+
+    def test_legacy_assembler_failure_propagates(self):
+        self.check_failure("ASM=/usr/bin/false")
+
+    def test_empty_assembler_failure_propagates(self):
+        self.check_failure("ASM198X=")
 
 
 class Evidence(unittest.TestCase):
