@@ -1,4 +1,4 @@
-# Follow a Route Without Overshooting in BBC Micro BASIC
+# Follow an Ordered Waypoint Route in BBC Micro BASIC
 
 A guard reaches one end of a corridor, turns and heads towards the next patrol point. Moving by a fixed amount is easy; reaching each target cleanly needs a little more care. This helper clamps each step to the current target and remembers which point comes next.
 
