@@ -1,0 +1,67 @@
+# Run a Timed Wave of Events in Spectrum BASIC
+
+A wave can begin with one enemy, pause, then introduce the next. A small event timeline keeps that schedule out of a tangle of main-loop conditions. This helper returns event IDs; your game decides what each event creates or changes.
+
+## Include and initialise
+
+Reserve A(4) event IDs, L(4) quiet delays, C/I/W/D/R/F/O/E and private K. Reserve lines **3000–3230**, combine numbered files using build.py and keep END, STOP or a jump before the helper. C64/BBC use GOSUB and Spectrum GO SUB. Private K must not be caller loop scratch.
+
+Set C to an integral event count from one to four. A(1)..A(C) hold byte-valued event IDs and L(1)..L(C) their delays. Call **3000** to reset I/W/D/F/O/E and set R=255, retaining C/A/L. I is the zero-based next event index, W its accumulated quiet calls and D the finished flag.
+
+## Service the schedule
+
+Call **3100 once per chosen timeline tick**. If W is below the current delay, it increases W without emitting. Otherwise the routine returns that event in R with F=1, resets W and advances I. At the final event it latches D=1 and retains the last valid index. Finished calls emit nothing. O=1,E=0 reports a valid call.
+
+The delay counts **quiet calls before emission**. Delay two gives two quiet updates and emits on the third. Delay zero emits immediately, but there is still at most one event per call; four zero-delay events need four calls. This is a deliberate bounded-work rule, not an attempt to emit a whole overdue burst.
+
+R=255,F=0 means no event. Event ID255 is also legal when F=1, so check F rather than treating R alone as a sentinel. Inputs/state must be integral byte values, with I below C and D exactly zero or one. E=1 rejects invalid state/configuration, preserving I/W/D and clearing R/F/O. Every active ID/delay is validated before progression.
+
+## The reusable routine
+
+See `routines.bas`.
+
+The cursor selects both an ID and its delay. W belongs to that selected event. Resetting the cursor or wait independently changes the schedule even when each value remains inside its legal range.
+
+## Observe a complete wave
+
+The caller schedules IDs10,20,30,40 with quiet delays 1,0,2,1. They fire on service calls 2,3,6,8. It continues to twelve calls to check that finishing does not repeat an event. The custom caller uses zero delays, producing those IDs on calls 1,2,3,4. The complete table also covers final state, maximum delay, event255, event zero and invalid state.
+
+See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
+
+Line **2000**, the mailbox, NN/SS/AA/BB and JJ/KK (Z/Q on Spectrum) are diagnostic machinery. A game services once, checks the fresh F result and dispatches that returned R once. Reading an old F=1 again is not a new event.
+
+## Customise the wave
+
+Change IDs and delays in the caller. The custom zero-delay schedule keeps the same four-element arrays. More events need corresponding allocation, bounds and qualification. Restart deliberately through 3000; changing C without resetting an out-of-range I is rejected.
+
+A tick means a call, not a second or necessarily a video frame. A turn-based game can service on turns; a timed game needs a suitable loop or clock policy. Withholding calls pauses the timeline. Changing a pending delay is also a policy choice: W is retained rather than silently rescaled.
+
+The routine does not allocate an enemy or own a sprite. If the object pool is full after an event is emitted, decide whether to queue, skip or retain that event for retry. Calling 3100 again does not retry the same allocation: its cursor has already advanced. Separate timelines need separate globals, arrays, private scratch and numbered references.
+
+## Mistake and repair
+
+The wrong caller resets I to zero before every update. The first event repeats and later events never arrive. Its event count and ID-sum checks both print zero: neither matches the intended four-event wave. Legal cursor values do not guarantee a coherent retained schedule.
+
+The repair retains the cursor until a real restart. Repaired source and loaded tokenised program match the working caller exactly.
+
+See `verification/wrong.png`.
+
+## Cost and Maths for Games
+
+A service validates up to four entries, then ages one wait or emits one event. Zero delays cannot create an unbounded inner loop. Numeric arrays and scalar state use interpreter storage rather than sixteen packed bytes. A larger data stream can reduce fixed-array limits but needs an end marker, bounds and loading rules.
+
+[Maths for Games](/craft/maths-for-games/) connects discrete time, cumulative delays and off-by-one choices. [The Craft](/craft/) helps decide when a wave should breathe, accelerate or surprise the player. The helper supplies a clear schedule, not those pacing decisions.
+
+## Machine and measured size
+
+Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
+
+The numbered helper occupies **545 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+
+## Execution evidence
+
+Working, custom, deliberately wrong and exact repaired callers executed through Spectrum's stock BASIC interpreter under Emu198x 0.44.2. Build198x 0.2.9 tokenises C64 PRG and Spectrum TAP programs. C64 enters stock RUN, Spectrum uses ROM tape loading, and BBC enters every numbered source line through MOS/BASIC. Actual loaded program bytes, complete state packets, positive completion/count/guards and visible result pixels are checked. After the positive completion marker, the observer advances two complete display frames before capturing, so a partially scanned final character cannot masquerade as a finished picture. Firmware is not distributed.
+
+An independent mathematical/order model checks the trace and rejects altered source, configuration, loaded program, state, completion and image evidence. Host exhaustive checks complement the native boundary/sequential examples; those host ranges are not claimed as natively exhaustive. The supplied diagnostic callers deliberately end with STOP; the interpreter report is expected. The wrong caller prints 0,0 and the normal/custom/repaired callers print 1,1.
+
+Public CI checks retained evidence; it does not execute restricted firmware. Refresh with `python3 scripts/verify-basic-timelines.py spawn-timeline sinclair-zx-spectrum --tools /path/to/extracted/releases` and inspect with `python3 scripts/check-basic-timelines.py spawn-timeline`.
