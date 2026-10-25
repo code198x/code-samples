@@ -13624,7 +13624,7 @@
     "commodore-64/patterns/assembly/rendering/custom-glyphs/rom-caller.inc": "d1359cdc129f208c4f5a7173cf853e37313f064668f690065c2ed856c6c9f8bf",
     "commodore-64/patterns/assembly/rendering/custom-glyphs/rom-init.inc": "66c02bc4099b5044f6340859e5fa24a971b559e0e529e3d4eba56e17664b5798",
     "commodore-64/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "5f492504afc8856afac1f6816f6469ee7f40ce07c0140251b329674fadafa6a5",
-    "commodore-64/patterns/assembly/rendering/custom-glyphs/Makefile": "4dddbef6278efa4d082e7778810dd8c3282564358826e0716f3ad72f7f5897de",
+    "commodore-64/patterns/assembly/rendering/custom-glyphs/Makefile": "0a6df39f1b1e2f54e66161a606bd670d0fc341ff92305bde44ae672759454246",
     "commodore-64/patterns/assembly/rendering/custom-glyphs/../../input/joystick-reading/joystick.inc": "1783dc758f76ba4b165f86aa5e637a5fdaf7ae675c46c80144f20c797f9388a5",
     "scripts/verify-c64-rom-font.py": "f2a74341528131a29f51c48fc0addab6286d0a1fe900a3349ec407aa71de59d9",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
