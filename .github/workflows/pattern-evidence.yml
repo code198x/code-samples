@@ -1250,3 +1250,14 @@ jobs:
           python-version: '3.14'
       - name: Check interpreter observations, independent invariants and altered evidence
         run: python -m unittest discover -s scripts -p test_basic_bounded_grid_path.py -v
+  basic-grid-line-sight-records:
+    name: Native BASIC grid-line-sight evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check interpreter observations, independent invariants and altered evidence
+        run: python -m unittest discover -s scripts -p test_basic_grid_line_sight.py -v
