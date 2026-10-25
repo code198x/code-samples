@@ -1,0 +1,15 @@
+{
+  "emulator_sha256": "5390120f0bbe2cb3e448e23ab69c14a6ec5844736a84a6053572f02a2d7c753e",
+  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "firmware_sha256": {
+    "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
+  },
+  "programs": {
+    "demo": "49c8ca7083de5fb9f4c77fad0344f9a22f62e262d02a84913085b1174cd317c3",
+    "custom": "3e2f01d0a9df3ed6ce58f2432bf8ecd89b7fa780e545fb2eb3a4f6bee0eb12cc",
+    "wrong": "0d56802648402ae83f734e7eb7a85d643d268853b0cabbceffd36339ee881380",
+    "repaired": "49c8ca7083de5fb9f4c77fad0344f9a22f62e262d02a84913085b1174cd317c3",
+    "boundary-one": "a84c0f5b4bc1e25bcb3bb98898f6f2dadf54fb3caf1cf81d93e74349e8f8eb70",
+    "boundary-max": "173555fd60520e059e6f7c497c879319c193b9737a166d21febb81690a93d9dd"
+  }
+}
