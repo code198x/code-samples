@@ -33,7 +33,7 @@ The caller marks four cells across both halves, marks one again, peeks, takes on
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-The line **2000** writer, mailbox, AA/BB and JJ/KK (Z/Q on Spectrum) are verification machinery. A game owns the loop that obtains an ID and redraws its chosen region.
+The line **2000** writer, mailbox, AA/BB and JJ are verification machinery. A game owns the loop that obtains an ID and redraws its chosen region.
 
 ## Customise and use the set
 
@@ -59,9 +59,9 @@ Mark/clear use one bit calculation; peek/take scan up to sixteen IDs. Scalar BAS
 
 ## Machine and measured size
 
-BBC BASIC arrays include element zero; this one-based array interface leaves it unused. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
+This helper uses scalar numeric fields and allocates no arrays. Its diagnostic uses MODE 7 and HIMEM=&6000 to separate program storage, mailbox and screen. The helper itself changes neither mode nor HIMEM.
 
-The numbered helper occupies **580 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **580 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
