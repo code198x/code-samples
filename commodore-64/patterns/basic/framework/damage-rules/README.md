@@ -46,7 +46,7 @@ The update takes a fixed number of scalar checks and branches; it has no object 
 
 ## Machine and measured size
 
-C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Single-letter names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
+C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Single-letter names make the ownership visible; check for collisions before including another component. This helper uses scalar variables and needs no array allocation. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
 
 The numbered helper occupies **348 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller's W/Z/G, Y/D and RAM mailbox are observation machinery, not required game state.
 
