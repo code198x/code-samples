@@ -30,6 +30,8 @@ The default pool has eight slots; custom.asm uses four. Both reuse slot one afte
 
 Optionally include age.inc and reserve a separate lifetime byte for each slot. Before the first age call, every occupied slot must have a lifetime from one through 255. One pool_age call is one chosen simulation step. It decrements occupied lifetimes and releases those reaching zero, keeping every other object at the same index.
 
+See the maintained optional `age.inc`.
+
 The example assigns alternating lifetimes one and two. After one step the odd slots remain; after the next, none remain. The maximum-capacity native caller also checks all 255 lifetimes changing from 255 to 254, then from one to zero with every slot released.
 
 The caller owns the clock. An untimed game can omit this policy, and a timed-turn game can invoke it at its chosen boundary. Queue new spawns until after the pass: otherwise whether a new object ages immediately would depend on which slot it received. Passing zero as a live lifetime violates this policy’s contract and can wrap the decrement.
