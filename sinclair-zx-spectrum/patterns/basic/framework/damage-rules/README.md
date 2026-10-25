@@ -22,6 +22,8 @@ If P=4, a surviving hit on update zero is followed by three blocked updates; ano
 
 The caller below supplies damage on twelve consecutive updates. It counts accepted hits and checks that health reaches zero. Its table before this excerpt covers health/amount boundaries, timer boundaries and invalid zero periods. The complete diagnostic source and observations remain in the source link.
 
+Calls to line **2000** in this excerpt write diagnostic observations; that writer and the mailbox setup are in the complete source. In your own game, omit those observation calls and the final mailbox write. Keep the public helper calls, and supply your game state as described above.
+
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
 ## Ownership and customisation
