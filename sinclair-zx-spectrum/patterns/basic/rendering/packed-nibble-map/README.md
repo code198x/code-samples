@@ -28,7 +28,7 @@ The normal caller writes three to cell nine, then reads cell nine and its neighb
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are diagnostics. A game passes its logical cell index, not an already halved byte offset. Convert world or map coordinates to that logical index before this layer. Reading data does not draw a tile or decide its properties.
+Line 2000, AA/BB, JJ/KK (Z/Q on Spectrum) and the mailbox are diagnostics. A game passes its logical cell index, not an already halved byte offset. Convert world or map coordinates to that logical index before this layer. Reading data does not draw a tile or decide its properties.
 
 ## Weigh the saving
 
@@ -56,7 +56,7 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
 
-The numbered helper occupies **569 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **569 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, Z/Q and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
