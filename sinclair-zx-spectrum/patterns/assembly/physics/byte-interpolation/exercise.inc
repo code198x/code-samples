@@ -88,9 +88,9 @@ preview_rules:
 ; START = 210
     ld a,210
     ld (START),a
-; END = 10
+; ENDPOINT = 10
     ld a,10
-    ld (END),a
+    ld (ENDPOINT),a
 ; FRACTION = 255
     ld a,255
     ld (FRACTION),a
@@ -106,9 +106,9 @@ preview_rules:
 ; START = 10
     ld a,10
     ld (START),a
-; END = 210
+; ENDPOINT = 210
     ld a,210
-    ld (END),a
+    ld (ENDPOINT),a
 ; FRACTION = 128
     ld a,128
     ld (FRACTION),a
