@@ -10,7 +10,7 @@ Call **3000** at a deliberate reset boundary. It clears all source/output array 
 
 ## Decode a selected span
 
-S is an inclusive **zero-based source byte offset**, T the exclusive end, with 0<=S<=T<=13. L is the available output capacity from zero to eight. Set them and call **3100**. Pairs are positive count followed by byte value. S=0 refers to I(1), and decoded bytes begin at B(1).
+S is an inclusive **zero-based source byte offset**, T the exclusive end, with `0 <= S <= T <= 13`. L is the available output capacity from zero to eight. Set them and call **3100**. Pairs are positive count followed by byte value. S=0 refers to I(1), and decoded bytes begin at B(1).
 
 | Field | Use |
 |---|---|
