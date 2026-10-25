@@ -38,7 +38,7 @@ The custom map also blocks five, keeping the turn pending for another step: nine
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/JJ/KK and the mailbox are diagnostics. A game calls at a logical cell-step boundary and animates between positions separately. This helper does not interpolate pixels, scan input or choose a movement clock. A zero R means no new request, not cancellation. Set P=0 deliberately at an intended cancellation boundary if that is the game's rule.
+Line 2000, AA/BB, JJ/KK (Z/Q on Spectrum) and the mailbox are diagnostics. A game calls at a logical cell-step boundary and animates between positions separately. This helper does not interpolate pixels, scan input or choose a movement clock. A zero R means no new request, not cancellation. Set P=0 deliberately at an intended cancellation boundary if that is the game's rule.
 
 ## Keep geometry and policy clear
 
