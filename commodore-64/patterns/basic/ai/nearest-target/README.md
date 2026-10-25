@@ -1,0 +1,71 @@
+# Pick the Nearest Active Target in C64 BASIC
+
+A homing enemy needs a rule for choosing its target. Choosing a different equal-distance target every update can look indecisive. This query uses a small, stable rule: shortest Manhattan distance, then lowest slot number.
+
+## Include and initialise
+
+DIM A(4) and B(4) for candidate X/Y coordinates. Reserve public S/L/H/F/O/M/X/Y and private I/P/T/U. Reserve numbered lines **3000–3250**, combine routines.bas and a caller with build.py and keep END, STOP or a jump before the helper. C64/BBC use GOSUB; Spectrum uses GO SUB. Private I must not be an outer caller's FOR variable.
+
+Call **3000** at a reset boundary. It clears all public fields and both arrays. Supply origin X/Y, candidate arrays and active mask M afterwards. The low four mask bits select slots 0..3; high bits are ignored.
+
+## Query active candidates
+
+Call **3100**. A valid query sets O=1. If a target is active, F=1, S is its zero-based slot and the distance is `L+256*H`, from zero to 510. No active target returns S=255,F=0,L=H=0. Check F before indexing a candidate array.
+
+| Field | Use |
+|---|---|
+| M / X / Y | Active mask and origin; preserved |
+| A(1)..A(4), B(1)..B(4) | Candidate positions; preserved |
+| S / L / H / F / O | Slot, distance bytes, found and valid flags |
+
+Origin, mask and active candidate coordinates must be integral bytes. Invalid input returns O=0 and the same empty-result outputs. Inactive candidate coordinates are ignored. This BASIC guard adds explicit numeric validation to the assembly example's byte-input representation.
+
+## The reusable routine
+
+See `routines.bas`.
+
+Distance is the absolute horizontal difference plus the absolute vertical difference. The helper keeps that sum wide enough for 510 before splitting it into two returned bytes. It replaces the best candidate only for a strictly smaller distance, keeping the earlier slot on a tie.
+
+## Supply the real active mask
+
+The normal caller has two targets one Manhattan unit from the origin; slot 1 wins the tie. The custom caller works near the far corner of the byte range with two targets ten units away. Later calls check no active targets and ignored high mask bits.
+
+See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
+
+The diagnostic's line 2000, AA/BB/JJ/KK (Z/Q on Spectrum) and mailbox can be removed. A game supplies M/X/Y/A/B, calls 3100 and uses the result after checking O/F. Array index is S+1, because returned slots are zero-based and these arrays are one-based.
+
+## Customise the metric
+
+Manhattan distance suits grid-like movement. It is not straight-line distance: a target at `(3,0)` is nearer by Manhattan distance than `(2,2)`, while the latter is nearer in Euclidean distance. Choose the rule the game needs rather than treating one metric as universally correct.
+
+Squared Euclidean distance avoids a square root but needs multiplication and wider intermediate sums. More targets may justify a spatial index or a different search policy. Wider BASIC coordinates are possible, but require wider input/output bounds and renewed verification; the byte example's distance limit must not be silently reused.
+
+## Mistake and repair
+
+The wrong caller marks only slot zero active, excluding nearer candidates. It returns a valid result for the wrong candidate set, and both saved checks fail. Pass the actual occupancy mask and check F before using S. The repair matches the normal source and loaded program exactly.
+
+See `verification/wrong.png`.
+
+## Cost and Maths for Games
+
+The helper validates at most four active pairs and computes at most four distances. BASIC arithmetic can represent the 0..510 sum directly; L/H retain the shared assembly-facing result contract. Do not discard H: opposite corners have Manhattan distance 510, not 254. No cycle or whole-game budget is inferred.
+
+[Maths for Games](/craft/maths-for-games/) connects absolute differences, distance metrics, ties and numeric width. [The Craft](/craft/) connects a stable target rule to readable enemy behaviour and when switching targets should happen.
+
+## Global names and line numbers
+
+BASIC numeric names, arrays and numbered lines are global. To combine helpers, rename public and private fields and renumber the helper together with every GO SUB/GO TO reference. Keep each state block under one owner. The maintained build.py rejects duplicate line numbers; it does not automatically namespace or renumber routines.
+
+## Machine and measured size
+
+C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Short names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
+
+The numbered helper occupies **620 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+
+## Execution evidence
+
+Working, custom, deliberately wrong and exact repaired callers executed through C64's stock BASIC interpreter under Emu198x 0.44.2. Build198x 0.2.9 tokenises C64 PRG and Spectrum TAP programs. C64 enters stock RUN, Spectrum uses ROM tape loading, and BBC enters every numbered source line through MOS/BASIC. Actual loaded program bytes, complete state packets, positive completion/count/guards and visible result pixels are checked. After the positive completion marker, the observer advances two complete display frames before capturing, so a partially scanned final character cannot masquerade as a finished picture. Firmware is not distributed.
+
+An independent mathematical/order model checks the trace and rejects altered source, configuration, loaded program, state, completion and image evidence. Host exhaustive checks complement the native boundary/sequential examples; those host ranges are not claimed as natively exhaustive. The supplied diagnostic callers deliberately end with STOP; the interpreter report is expected. The wrong caller prints 0,0 and the normal/custom/repaired callers print 1,1.
+
+Public CI checks retained evidence; it does not execute restricted firmware. Refresh with `python3 scripts/verify-basic-geometry.py nearest-target commodore-64 --tools /path/to/extracted/releases` and inspect with `python3 scripts/check-basic-geometry.py nearest-target`.
