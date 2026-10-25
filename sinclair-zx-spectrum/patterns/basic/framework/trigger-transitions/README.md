@@ -30,7 +30,7 @@ The normal client supplies masks 1,1,3,2,0,1. Trigger zero enters, stays, shares
 
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
-Line 2000, AA/BB/NN/SS/JJ and the mailbox are diagnostics. Those sums are test checks, not a way to count trigger events in a game: adding mask values weights higher bits more heavily. A game tests the relevant bits of E/S/X and chooses the associated action. Supply a complete C once per chosen simulation step, after collision/region queries have established overlap.
+Line 2000, AA/BB/NN/SS/JJ (Z on Spectrum) and the mailbox are diagnostics. Those sums are test checks, not a way to count trigger events in a game: adding mask values weights higher bits more heavily. A game tests the relevant bits of E/S/X and chooses the associated action. Supply a complete C once per chosen simulation step, after collision/region queries have established overlap.
 
 ## Choose reset and identity rules
 
@@ -56,9 +56,9 @@ BASIC numeric names, arrays and numbered lines are global. To combine helpers, r
 
 ## Machine and measured size
 
-Spectrum FOR variables must be single letters: this diagnostic uses Z/Q instead of the other callers’ JJ/KK. Numeric arrays start at one. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
+Spectrum FOR variables must be single letters: this diagnostic uses Z instead of the other callers’ JJ. The helper uses scalar numeric fields and allocates no arrays. AND/OR in these listings join comparisons; neither is being used as a bitwise operator. The diagnostic reserves its mailbox above CLEAR 59999.
 
-The numbered helper occupies **466 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB, JJ/KK and RAM mailbox are observation machinery, not required game state.
+The numbered helper occupies **466 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller’s AA/BB/NN/SS, Z and RAM mailbox are observation machinery, not required game state.
 
 ## Execution evidence
 
