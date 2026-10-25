@@ -1,0 +1,57 @@
+# Craft Without Losing Ingredients in C64 BASIC
+
+You have the ingredients, but your pack is full. Pressing “make” should not eat the ingredients and give you nothing. This helper checks the whole recipe first, then changes all three counts together.
+
+## Include and initialise
+
+Combine the numbered helper and caller, reserving **3000–3220**. Set output capacity C from 1 to 255 and call **3000** once at a new-session boundary. It clears ingredient counts H/I, result count R, requested costs A/B, produced quantity P and results O/E, retaining C. Set starting stocks and a recipe after initialising. Put END, STOP or a jump before the helper. Spectrum spells calls GO SUB; C64/BBC use GOSUB. The supplied build.py combines numbered source and rejects duplicates.
+
+## Supply a recipe
+
+H and I are counts of two distinct ingredient categories; R counts a separate result category. Supply required quantities A and B, and the quantity P to produce. Call **3100**. O=1 means all three changes happened: H decreases by A, I by B, and R increases by P. O=0 with E=0 means insufficient ingredients or output space, and **all stocks stay unchanged**.
+
+H/I and costs A/B must be integral 0–255; output R is 0..C and P is 1–255. At least one ingredient cost must be positive. A zero cost for one ingredient is allowed. E=1 rejects damaged stock/capacity; E=2 rejects an invalid recipe. Invalid calls clear O and leave all stocks unchanged. The helper does not combine two references to the same stock: H and I represent distinct resources.
+
+## The routine
+
+See `routines.bas`.
+
+## Check before spending
+
+The retained client starts with enough ingredients but only one free output space, then asks to produce two. It checks that both ingredient stocks remain unchanged. After explicitly clearing output storage it crafts repeatedly until ingredients run out. The complete diagnostic's earlier table covers varied stock, exact boundaries, invalid capacity, over-capacity result and zero-cost ingredient variants.
+
+See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
+
+## Ownership and customisation
+
+The helper owns H/I/R/A/B/P/C/O/E and uses no scratch loop variables. It owns no recipe names, UI, item discovery, animation or elapsed production time. A successful call is an immediate transaction. A timed crafting system needs a separate reservation/commit/cancel policy; do not subtract now and hope a later completion succeeds.
+
+The custom caller lowers result capacity from 31 to 7 while keeping the same recipe. Choose different costs and output quantities in the caller. Increasing the number of ingredients requires checking every resource before subtracting any, with corresponding model and failure examples. Selling or exchanging items can use the same transaction idea, but money, weight and item slots introduce their own bounds.
+
+This scalar version owns one recipe context. Separate simultaneous transactions need distinct state or an array-based wrapper. Changing the meaning of H/I/R between calls is possible only when the caller deliberately loads and stores the matching game resources.
+
+## Mistake and repair
+
+The wrong caller spends H and I before asking the routine whether the output will fit. The routine correctly refuses the craft, but those earlier deductions have already happened. Its saved ingredient checks become 0,0. Retrying can then fail for a second reason: ingredients that used to be available are gone.
+
+The repair leaves spending to the successful transaction path. Its source and actual loaded tokenised program match the working caller exactly.
+
+See `verification/wrong.png`.
+
+## Costs and alternatives
+
+This has constant scalar storage and a bounded sequence of validation/comparison/subtraction operations. It checks available room as C-R, avoiding a machine-code byte-overflow assumption; BASIC numeric arithmetic is wider, but the interface still enforces byte-valued counts. There is no rollback buffer because nothing mutates until all conditions pass. Larger transactions may benefit from a checked plan followed by a separate commit. [The Craft](/craft/) connects crafting rules to player expectations; [Maths for Games](/craft/maths-for-games/) supplies inequalities, bounds and conservation reasoning.
+
+## Machine and measured size
+
+C64 BASIC V2 recognises only the first two significant characters of numeric variable names. Single-letter names make the ownership visible; check for collisions before including another component. Array element zero exists but is unused here. The diagnostic uses a mailbox at $C000, outside the normal BASIC heap.
+
+The numbered helper occupies **412 tokenised program bytes** on this interpreter, including line headers. This excludes the caller, test tables, numeric scalar/array storage, interpreter stacks and ROM. Tokenised size is not machine-code size or a hardware-cycle count. No real-time or whole-game performance budget is inferred from the diagnostic. The caller's W/Z/G, Y/D and RAM mailbox are observation machinery, not required game state.
+
+## Execution evidence
+
+Working, custom, deliberately wrong and exact repaired callers executed through C64's stock BASIC interpreter under Emu198x 0.44.2. Build198x 0.2.9 tokenises C64 PRG and Spectrum TAP programs. C64 enters stock RUN, Spectrum uses ROM tape loading, and BBC enters every numbered source line through MOS/BASIC. Actual loaded program bytes, complete state packets, positive completion/count/guards and visible result pixels are checked. Firmware is not distributed.
+
+An independent mathematical/order model checks the trace and rejects altered source, configuration, loaded program, state, completion and image evidence. Host exhaustive checks complement the native boundary/sequential examples; those host ranges are not claimed as natively exhaustive. The wrong caller prints 0,0 and the normal/custom/repaired callers print 1,1.
+
+Public CI checks retained evidence; it does not execute restricted firmware. Refresh with `python3 scripts/verify-basic-rules.py recipe-transaction commodore-64 --tools /path/to/extracted/releases` and inspect with `python3 scripts/check-basic-rules.py recipe-transaction`.
