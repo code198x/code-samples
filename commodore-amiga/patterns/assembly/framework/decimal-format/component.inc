@@ -1,7 +1,7 @@
 ; SPDX-License-Identifier: MIT
 ; Format a 16-bit Decimal Number. Bind these contiguous private bytes: VALUE_LO, VALUE_HI, DIGIT0, DIGIT1, DIGIT2, DIGIT3, DIGIT4, WORK_LO, WORK_HI.
 ; init clears the whole block; step uses current inputs. No I/O, waits or IRQ owner.
-; DIGIT0-DIGIT3/A0-A1/CCR may change; DIGIT4-D7/A2-A6 survive.
+; D0-D3/A0-A1/CCR may change; D4-D7/A2-A6 survive.
 decimal_format_init:
     clr.b VALUE_LO
     clr.b VALUE_HI

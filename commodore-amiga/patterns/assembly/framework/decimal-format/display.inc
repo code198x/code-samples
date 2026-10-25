@@ -1,5 +1,5 @@
 ; A1 points at the first bitplane byte; A0=eight glyph bytes.
-; Advances A1 one character column; DIGIT1/A0/CCR change. Row stride40.
+; Advances A1 one character column; D1/A0/CCR change. Row stride40.
 put_glyph:
     moveq #7,d1
 glyph_row:
