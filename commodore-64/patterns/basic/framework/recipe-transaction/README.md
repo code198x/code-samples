@@ -20,6 +20,8 @@ See `routines.bas`.
 
 The retained client starts with enough ingredients but only one free output space, then asks to produce two. It checks that both ingredient stocks remain unchanged. After explicitly clearing output storage it crafts repeatedly until ingredients run out. The complete diagnostic's earlier table covers varied stock, exact boundaries, invalid capacity, over-capacity result and zero-cost ingredient variants.
 
+Calls to line **2000** in this excerpt write diagnostic observations; that writer and the mailbox setup are in the complete source. In your own game, omit those observation calls and the final mailbox write. Keep the public helper calls, and supply your game state as described above.
+
 See the retained-state section in `demo.bas`; the file also contains its boundary table and observation writer.
 
 ## Ownership and customisation
