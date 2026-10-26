@@ -36,7 +36,7 @@ Try a leftward push whose required destination would be negative, and handle BLO
 
 ## Mistake and repair
 
-The wrong caller replaces the old solid position before the sweep. It begins from overlapping geometry and the request is rejected instead of producing the required push. Keep previous/current positions distinct.
+The wrong caller replaces the old solid position with the new one before the sweep. In this example, the actor occupies [10,12) and the solid occupies [12,14): they only touch. With old and new positions both 12, the helper sees no movement and returns POSITION=10, PUSHED=0, BLOCKED=0 and VALID=1. Keep previous/current positions distinct so the sweep can produce the required push.
 
 The BROKEN branch lives in the sequential client, not the reusable helper. `wrong.asm` selects it; `repaired.asm` restores the normal call sequence. The repaired executable matches the normal program (for Spectrum, compare loaded CODE rather than the tape filename).
 
