@@ -36,10 +36,10 @@ jobs:
       with:
         python-version: '3.14'
 
+    # Bounded, retried and moved to another mirror on each retry: a slow or
+    # unreachable Ubuntu mirror otherwise stalls the job for twenty minutes.
     - name: Install VICE (includes petcat)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y vice
+      run: bash scripts/ci/apt-install.sh vice
 
     - name: Test literal handling and required negative controls
       run: python3 scripts/test_c64_basic_validator.py
