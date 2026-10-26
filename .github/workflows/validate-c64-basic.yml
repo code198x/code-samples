@@ -9,6 +9,8 @@ on:
       - 'scripts/validate-bas.sh'
       - 'scripts/c64-basic-negative-cases.json'
       - 'scripts/test_c64_basic_validator.py'
+      - 'scripts/ci/apt-install.sh'
+      - '.github/workflows/validate-c64-basic.yml'
   pull_request:
     branches: [ main, master ]
     paths:
@@ -17,6 +19,8 @@ on:
       - 'scripts/validate-bas.sh'
       - 'scripts/c64-basic-negative-cases.json'
       - 'scripts/test_c64_basic_validator.py'
+      - 'scripts/ci/apt-install.sh'
+      - '.github/workflows/validate-c64-basic.yml'
 
 concurrency:
   group: validate-c64-basic-${{ github.event.pull_request.number || github.ref }}
