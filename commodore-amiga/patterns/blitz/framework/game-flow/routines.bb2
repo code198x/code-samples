@@ -1,0 +1,49 @@
+; Six signed long fields, one owner; no arrays, input, screen or clock.
+; Event domain0..15 is validated before integer MOD bit tests.
+.PL_GF_INIT
+PL_GF_STATE.l=0 : PL_GF_EVENTS.l=0 : PL_GF_CHANGED.l=0
+PL_GF_FRESH.l=0 : PL_GF_ERROR.l=0 : PL_GF_NEXT.l=0
+Return
+.PL_GF_STEP
+PL_GF_CHANGED.l=0 : PL_GF_FRESH.l=0 : PL_GF_ERROR.l=0
+If PL_GF_STATE.l<0 or PL_GF_STATE.l>3
+   PL_GF_ERROR.l=1
+   Return
+EndIf
+If PL_GF_EVENTS.l<0 or PL_GF_EVENTS.l>15
+   PL_GF_ERROR.l=2
+   Return
+EndIf
+PL_GF_NEXT.l=PL_GF_STATE.l
+If PL_GF_STATE.l=0
+   If PL_GF_EVENTS.l MOD 2<>0
+      PL_GF_NEXT.l=1 : PL_GF_FRESH.l=1
+   EndIf
+EndIf
+If PL_GF_STATE.l=1
+   If PL_GF_EVENTS.l MOD 8>=4
+      PL_GF_NEXT.l=2
+   Else
+      If PL_GF_EVENTS.l MOD 4>=2
+         PL_GF_NEXT.l=3
+      EndIf
+   EndIf
+EndIf
+If PL_GF_STATE.l=2
+   If PL_GF_EVENTS.l>=8
+      PL_GF_NEXT.l=1 : PL_GF_FRESH.l=1
+   Else
+      If PL_GF_EVENTS.l MOD 2<>0
+         PL_GF_NEXT.l=0
+      EndIf
+   EndIf
+EndIf
+If PL_GF_STATE.l=3
+   If PL_GF_EVENTS.l MOD 4>=2
+      PL_GF_NEXT.l=1
+   EndIf
+EndIf
+If PL_GF_NEXT.l<>PL_GF_STATE.l
+   PL_GF_STATE.l=PL_GF_NEXT.l : PL_GF_CHANGED.l=1
+EndIf
+Return
