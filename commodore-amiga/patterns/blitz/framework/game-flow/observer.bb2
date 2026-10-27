@@ -1,0 +1,38 @@
+; Independent full-state caller; owns the window and results bank.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Game flow integer checks",1,0
+InitBank 0,__BANK_SIZE__,1 : PL_box.l=Bank(0)
+WLocate 8,60 : Print "Bank: ",PL_box.l
+WLocate 8,80 : Print "Size: ",BankSize(0)
+For PL_case.l=0 To __LAST_CASE__
+   Read PL_GF_STATE.l,PL_GF_EVENTS.l,PL_minimum.l,PL_initialise.l
+   If PL_minimum.l=1
+      PL_GF_STATE.l=PL_GF_STATE.l-1
+   EndIf
+   If PL_minimum.l=2
+      PL_GF_EVENTS.l=PL_GF_EVENTS.l-1
+   EndIf
+   PL_GF_CHANGED.l=77 : PL_GF_FRESH.l=77 : PL_GF_ERROR.l=77 : PL_GF_NEXT.l=91
+   PL_SCORE.l=65537 : PL_LIFE.l=5 : PL_PREVIOUS.l=3
+   PL_at.l=PL_box.l+PL_case.l*48
+   Poke.l PL_at.l,PL_GF_STATE.l : Poke.l PL_at.l+4,PL_GF_EVENTS.l
+   If PL_initialise.l=1
+      Gosub PL_GF_INIT
+   Else
+      Gosub PL_GF_STEP
+   EndIf
+   Poke.l PL_at.l+8,PL_GF_STATE.l : Poke.l PL_at.l+12,PL_GF_EVENTS.l
+   Poke.l PL_at.l+16,PL_GF_CHANGED.l : Poke.l PL_at.l+20,PL_GF_FRESH.l
+   Poke.l PL_at.l+24,PL_GF_ERROR.l : Poke.l PL_at.l+28,PL_GF_NEXT.l
+   Poke.l PL_at.l+32,PL_SCORE.l : Poke.l PL_at.l+36,PL_LIFE.l
+   Poke.l PL_at.l+40,PL_PREVIOUS.l : Poke.l PL_at.l+44,$1A2B3C4D
+Next
+Poke.l PL_box.l+__PAYLOAD_BYTES__,$1A2B3C4D
+Poke.l PL_box.l+__DONE_OFFSET__,239
+WLocate 8,20 : Print "Count: ",__CASE_COUNT__
+WLocate 8,40 : Print "Changed: ",PL_GF_CHANGED.l
+WLocate 8,100 : Print "0123456789"
+Repeat : VWait : Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0 : FreeBank 0
+End

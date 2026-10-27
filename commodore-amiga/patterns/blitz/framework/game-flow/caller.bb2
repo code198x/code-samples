@@ -1,0 +1,43 @@
+; Small logical-event owner; fresh edges and payload remain outside the helper.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Session game flow",1,0
+Gosub PL_GF_INIT
+PL_SCORE.l=0 : PL_LIFE.l=PL_HEALTH.l : PL_PREVIOUS.l=0 : PL_RESETS.l=0
+PL_RESUMED.l=0 : PL_FINISHED.l=0
+For PL_FRAME.l=0 To 14
+   Read PL_HELD.l
+   PL_GF_EVENTS.l=0 : PL_FACTOR.l=1
+   For PL_BIT.l=0 To 3
+      If PL_HELD.l MOD (PL_FACTOR.l*2)>=PL_FACTOR.l
+         If PL_PREVIOUS.l MOD (PL_FACTOR.l*2)<PL_FACTOR.l
+            PL_GF_EVENTS.l=PL_GF_EVENTS.l+PL_FACTOR.l
+         EndIf
+      EndIf
+      PL_FACTOR.l=PL_FACTOR.l*2
+   Next
+   PL_PREVIOUS.l=PL_HELD.l
+   If PL_GF_STATE.l=1
+      PL_SCORE.l=(PL_SCORE.l+1) MOD 256
+   EndIf
+   Gosub PL_GF_STEP
+   If PL_GF_FRESH.l<>0
+      PL_SCORE.l=0 : PL_LIFE.l=PL_HEALTH.l : PL_RESETS.l=PL_RESETS.l+1
+   EndIf
+   If PL_FRAME.l=8
+      PL_RESUMED.l=PL_SCORE.l
+   EndIf
+   If PL_FRAME.l=10
+      PL_FINISHED.l=PL_SCORE.l
+   EndIf
+Next
+WLocate 8,20 : Print "Resumed: ",PL_RESUMED.l
+WLocate 8,40 : Print "Resets: ",PL_RESETS.l
+WLocate 8,60 : Print "State: ",PL_GF_STATE.l
+WLocate 8,80 : Print "Score: ",PL_SCORE.l
+WLocate 8,100 : Print "Health: ",PL_LIFE.l
+WLocate 8,120 : Print "Finished: ",PL_FINISHED.l
+Repeat : VWait : Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0
+End
+Data.l 0,3,3,0,0,3,3,0,3,0,4,0,8,8,0
