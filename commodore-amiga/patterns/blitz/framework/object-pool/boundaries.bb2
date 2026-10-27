@@ -1,0 +1,56 @@
+; All invalid contexts/indices are checked before any array subscript.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Pool domain checks",1,0
+Dim PL_OP_LIVE.l(8),PL_PAYLOAD.l(8)
+InitBank 0,__BANK_SIZE__,1 : PL_BOX.l=Bank(0)
+WLocate 8,60 : Print "Bank: ",PL_BOX.l
+WLocate 8,80 : Print "Size: ",BankSize(0)
+For PL_CASE.l=0 To __LAST_CASE__
+   Read PL_TEST_OP.l,PL_TEST_CAP.l,PL_TEST_SIZE.l,PL_TEST_SLOT.l,PL_MINIMUM.l
+   If PL_MINIMUM.l=1
+      PL_TEST_CAP.l=PL_TEST_CAP.l-1
+   EndIf
+   If PL_MINIMUM.l=2
+      PL_TEST_SIZE.l=PL_TEST_SIZE.l-1
+   EndIf
+   If PL_MINIMUM.l=3
+      PL_TEST_SLOT.l=PL_TEST_SLOT.l-1
+   EndIf
+   For PL_OB_I.l=0 To 8
+      PL_OP_LIVE.l(PL_OB_I.l)=77 : PL_PAYLOAD.l(PL_OB_I.l)=65537
+   Next
+   PL_OP_LIVE.l(8)=99
+   PL_OP_CAP.l=PL_TEST_CAP.l : PL_OP_SIZE.l=PL_TEST_SIZE.l
+   PL_OP_SLOT.l=PL_TEST_SLOT.l : PL_OP_OK.l=77 : PL_OP_ERROR.l=77 : PL_OP_I.l=91
+   If PL_TEST_OP.l=1 or PL_TEST_OP.l=4 or PL_TEST_OP.l=5
+      Gosub PL_OP_INIT
+   EndIf
+   If PL_TEST_OP.l=2 or PL_TEST_OP.l=4
+      Gosub PL_OP_ACQUIRE
+   EndIf
+   If PL_TEST_OP.l=3 or PL_TEST_OP.l=5
+      PL_OP_SLOT.l=PL_TEST_SLOT.l
+      Gosub PL_OP_RELEASE
+   EndIf
+   PL_AT.l=PL_BOX.l+PL_CASE.l*116
+   Poke.l PL_AT.l,PL_TEST_OP.l : Poke.l PL_AT.l+4,PL_TEST_CAP.l
+   Poke.l PL_AT.l+8,PL_TEST_SIZE.l : Poke.l PL_AT.l+12,PL_TEST_SLOT.l
+   Poke.l PL_AT.l+16,PL_OP_CAP.l : Poke.l PL_AT.l+20,PL_OP_SIZE.l
+   Poke.l PL_AT.l+24,PL_OP_SLOT.l : Poke.l PL_AT.l+28,PL_OP_OK.l
+   Poke.l PL_AT.l+32,PL_OP_ERROR.l : Poke.l PL_AT.l+36,PL_OP_I.l
+   For PL_OB_I.l=0 To 8
+      Poke.l PL_AT.l+40+PL_OB_I.l*4,PL_OP_LIVE.l(PL_OB_I.l)
+      Poke.l PL_AT.l+76+PL_OB_I.l*4,PL_PAYLOAD.l(PL_OB_I.l)
+   Next
+   Poke.l PL_AT.l+112,$1A2B3C4D
+Next
+Poke.l PL_BOX.l+__PAYLOAD_BYTES__,$1A2B3C4D
+Poke.l PL_BOX.l+__DONE_OFFSET__,239
+WLocate 8,20 : Print "Count: ",__CASE_COUNT__
+WLocate 8,40 : Print "Exit: ",PL_OP_OK.l
+WLocate 8,100 : Print "0123456789"
+Repeat : VWait : Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0 : FreeBank 0
+End
+__DATA__

@@ -1,0 +1,32 @@
+{
+  "working": {
+    "raw": "caller-working.png",
+    "published": "published-working.png",
+    "raw_sha256": "68442187bee1fdd9064ee17396e8d213d266fa4dc16bba1e00e1c13ab57f2402",
+    "published_sha256": "ff735ec622a86e3e85e548fdf098189054c39458f00238a9adc17c62d70a694f",
+    "raw_size": [
+      1536,
+      576
+    ],
+    "published_size": [
+      768,
+      576
+    ],
+    "operation": "Remove only identical adjacent framebuffer columns; every source pair checked"
+  },
+  "wrong": {
+    "raw": "caller-wrong.png",
+    "published": "published-wrong.png",
+    "raw_sha256": "d8bfaab250fd81d8adb73f2e34c2e6c89abe8a8f9fa1287ed16517901043daec",
+    "published_sha256": "72fc38931a6768b51114a19c9971273fe00e7e9c35414f9a3f9b8a147bb53de0",
+    "raw_size": [
+      1536,
+      576
+    ],
+    "published_size": [
+      768,
+      576
+    ],
+    "operation": "Remove only identical adjacent framebuffer columns; every source pair checked"
+  }
+}

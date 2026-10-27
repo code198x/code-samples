@@ -930,6 +930,20 @@ jobs:
           python scripts/check-amos-map-queries.py
           python -m unittest discover -s scripts -p test_amos_map_queries.py -v
 
+  blitz-object-pool-records:
+    name: Blitz compiled object pools and complete owner evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-blitz-object-pool.py
+          python -m unittest discover -s scripts -p test_blitz_object_pool.py -v
+          python -m unittest discover -s scripts -p test_blitz_depth_images.py -v
+
   blitz-game-flow-records:
     name: Blitz compiled game flow and complete state evidence
     runs-on: ubuntu-latest

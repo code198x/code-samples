@@ -1,0 +1,67 @@
+; Owner releases during traversal, spawns only after that complete pass.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Pool owner lifetimes",1,0
+Dim PL_OP_LIVE.l(8),PL_LIFE.l(8),PL_PAYLOAD.l(8)
+PL_OP_CAP.l=4
+For PL_OB_I.l=0 To 8
+   PL_OP_LIVE.l(PL_OB_I.l)=77 : PL_LIFE.l(PL_OB_I.l)=77
+   PL_PAYLOAD.l(PL_OB_I.l)=65537
+Next
+PL_OP_LIVE.l(8)=99 : PL_LIFE.l(8)=99
+Gosub PL_OP_INIT
+For PL_OB_I.l=0 To 3
+   Gosub PL_OP_ACQUIRE
+   Read PL_SEED.l
+   PL_LIFE.l(PL_OP_SLOT.l)=PL_SEED.l
+Next
+InitBank 0,464,1 : PL_BOX.l=Bank(0)
+WLocate 8,60 : Print "Bank: ",PL_BOX.l
+WLocate 8,80 : Print "Size: ",BankSize(0)
+For PL_FRAME.l=0 To 2
+   PL_EXPIRED.l=0
+   For PL_OB_I.l=0 To PL_OP_SIZE.l-1
+      If PL_OP_LIVE.l(PL_OB_I.l)<>0
+         PL_LIFE.l(PL_OB_I.l)=PL_LIFE.l(PL_OB_I.l)-1
+         If PL_LIFE.l(PL_OB_I.l)=0
+            PL_OP_SLOT.l=PL_OB_I.l
+            Gosub PL_OP_RELEASE
+            PL_EXPIRED.l=PL_EXPIRED.l+1
+         EndIf
+      EndIf
+   Next
+   PL_REUSED.l=PL_OP_SIZE.l
+   If PL_FRAME.l=0
+      Gosub PL_OP_ACQUIRE
+      PL_REUSED.l=PL_OP_SLOT.l
+      If PL_OP_OK.l<>0
+         PL_LIFE.l(PL_OP_SLOT.l)=2
+      EndIf
+   EndIf
+   PL_COUNT.l=0
+   For PL_OB_I.l=0 To PL_OP_SIZE.l-1
+      If PL_OP_LIVE.l(PL_OB_I.l)<>0
+         PL_COUNT.l=PL_COUNT.l+1
+      EndIf
+   Next
+   PL_AT.l=PL_BOX.l+PL_FRAME.l*152
+   Poke.l PL_AT.l,PL_FRAME.l : Poke.l PL_AT.l+4,PL_COUNT.l
+   Poke.l PL_AT.l+8,PL_EXPIRED.l : Poke.l PL_AT.l+12,PL_REUSED.l
+   Poke.l PL_AT.l+16,PL_OP_CAP.l : Poke.l PL_AT.l+20,PL_OP_SIZE.l
+   Poke.l PL_AT.l+24,PL_OP_SLOT.l : Poke.l PL_AT.l+28,PL_OP_OK.l
+   Poke.l PL_AT.l+32,PL_OP_ERROR.l : Poke.l PL_AT.l+36,PL_OP_I.l
+   For PL_OB_I.l=0 To 8
+      Poke.l PL_AT.l+40+PL_OB_I.l*4,PL_OP_LIVE.l(PL_OB_I.l)
+      Poke.l PL_AT.l+76+PL_OB_I.l*4,PL_LIFE.l(PL_OB_I.l)
+      Poke.l PL_AT.l+112+PL_OB_I.l*4,PL_PAYLOAD.l(PL_OB_I.l)
+   Next
+   Poke.l PL_AT.l+148,$1A2B3C4D
+Next
+Poke.l PL_BOX.l+456,$1A2B3C4D : Poke.l PL_BOX.l+460,239
+WLocate 8,20 : Print "Count: ",3
+WLocate 8,40 : Print "Exit: ",0
+WLocate 8,100 : Print "0123456789"
+Repeat : VWait : Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0 : FreeBank 0
+End
+Data.l 1,2,1,3

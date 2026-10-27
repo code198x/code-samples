@@ -1,0 +1,2 @@
+Gosub PL_OP_RELEASE
+Gosub PL_OP_ACQUIRE

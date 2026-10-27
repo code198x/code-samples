@@ -50,3 +50,7 @@ An independent literal four-by-sixteen table covers all 64 valid state/event pai
 `scripts/check-blitz-game-flow.py` checks retained proof without booting the runtime. It requires all six unique chunks in order, all 366 rows, all five owners, exact source/program/fixture/runtime/capture identities, full independent packets and actual native pixels. `scripts/test_blitz_game_flow.py` challenges coverage, upper bits, pulses, Init, payload, completion guards, source identities and pixels; recomputing a false packet's hash cannot make it pass. Re-run native verification with matching lawful local media and a fresh private fixture whenever qualified runtime inputs change.
 
 For Maths for Games, the state table maps a finite old-state/event pair to one next state. Priorities make simultaneous events deterministic. For Craft, keep this transition decision separate from simulation, input history and session resets. State entry and a fresh session serve different purposes.
+
+## Published native captures
+
+The working and wrong captures also have 768×576 publication exports, `verification/published-working.png` and `published-wrong.png`. Every omitted framebuffer column has an identical retained partner across the complete decoded image. Original 1536×576 captures remain retained; no unique pixels are removed or invented. `published-images.json` binds original and published identities, and the image checks challenge altered geometry, unique pixels and hashes.

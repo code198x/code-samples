@@ -1,0 +1,2 @@
+; Release omitted: the pool remains full.
+Gosub PL_OP_ACQUIRE

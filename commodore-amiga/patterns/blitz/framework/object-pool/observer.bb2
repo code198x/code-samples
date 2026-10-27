@@ -1,0 +1,77 @@
+; Compact original-compiler diagnostic; no large generated DATA table.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Pool integer checks",1,0
+Dim PL_OP_LIVE.l(8),PL_PAYLOAD.l(8)
+InitBank 0,__BANK_SIZE__,1 : PL_BOX.l=Bank(0)
+WLocate 8,60 : Print "Bank: ",PL_BOX.l
+WLocate 8,80 : Print "Size: ",BankSize(0)
+PL_CASE.l=0
+For PL_CAPCASE.l=0 To 2
+   PL_OP_CAP.l=1
+   If PL_CAPCASE.l=1
+      PL_OP_CAP.l=4
+   EndIf
+   If PL_CAPCASE.l=2
+      PL_OP_CAP.l=8
+   EndIf
+   For PL_MASK.l=0 To 255
+      PL_BAD.l=-1 : PL_SELECT.l=PL_MASK.l MOD 6
+      If PL_SELECT.l=1
+         PL_BAD.l=PL_OP_CAP.l
+      EndIf
+      If PL_SELECT.l=2
+         PL_BAD.l=8
+      EndIf
+      If PL_SELECT.l=3
+         PL_BAD.l=255
+      EndIf
+      If PL_SELECT.l=4
+         PL_BAD.l=65535
+      EndIf
+      If PL_SELECT.l=5
+         PL_BAD.l=2147483647
+      EndIf
+      For PL_OB_I.l=0 To 8
+         PL_OP_LIVE.l(PL_OB_I.l)=77 : PL_PAYLOAD.l(PL_OB_I.l)=60
+      Next
+      PL_OP_LIVE.l(8)=99
+      PL_AT.l=PL_BOX.l+PL_CASE.l*496
+      Poke.l PL_AT.l,PL_OP_CAP.l : Poke.l PL_AT.l+4,PL_MASK.l
+      Poke.l PL_AT.l+8,PL_BAD.l
+      Gosub PL_OP_INIT
+      PL_OUT.l=PL_AT.l+12 : Gosub PL_OB_SNAPSHOT
+      PL_BITS.l=PL_MASK.l
+      For PL_OB_I.l=0 To PL_OP_SIZE.l-1
+         PL_OP_LIVE.l(PL_OB_I.l)=PL_BITS.l MOD 2
+         PL_BITS.l=PL_BITS.l/2
+      Next
+      Gosub PL_OP_ACQUIRE
+      PL_OUT.l=PL_AT.l+108 : Gosub PL_OB_SNAPSHOT
+      __RELEASE_CALL__
+      PL_OUT.l=PL_AT.l+204 : Gosub PL_OB_SNAPSHOT
+      Gosub PL_OP_RELEASE
+      PL_OUT.l=PL_AT.l+300 : Gosub PL_OB_SNAPSHOT
+      PL_OP_SLOT.l=PL_BAD.l : Gosub PL_OP_RELEASE
+      PL_OUT.l=PL_AT.l+396 : Gosub PL_OB_SNAPSHOT
+      Poke.l PL_AT.l+492,$1A2B3C4D
+      PL_CASE.l=PL_CASE.l+1
+   Next
+Next
+Poke.l PL_BOX.l+__PAYLOAD_BYTES__,$1A2B3C4D
+Poke.l PL_BOX.l+__DONE_OFFSET__,239
+WLocate 8,20 : Print "Count: ",PL_CASE.l
+WLocate 8,40 : Print "Exit: ",PL_OP_OK.l
+WLocate 8,100 : Print "0123456789"
+Repeat : VWait : Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0 : FreeBank 0
+End
+.PL_OB_SNAPSHOT
+Poke.l PL_OUT.l,PL_OP_CAP.l : Poke.l PL_OUT.l+4,PL_OP_SIZE.l
+Poke.l PL_OUT.l+8,PL_OP_SLOT.l : Poke.l PL_OUT.l+12,PL_OP_OK.l
+Poke.l PL_OUT.l+16,PL_OP_ERROR.l : Poke.l PL_OUT.l+20,PL_OP_I.l
+For PL_OB_J.l=0 To 8
+   Poke.l PL_OUT.l+24+PL_OB_J.l*4,PL_OP_LIVE.l(PL_OB_J.l)
+   Poke.l PL_OUT.l+60+PL_OB_J.l*4,PL_PAYLOAD.l(PL_OB_J.l)
+Next
+Return
