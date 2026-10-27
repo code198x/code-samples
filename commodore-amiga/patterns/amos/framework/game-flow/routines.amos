@@ -1,0 +1,32 @@
+Rem Private scalar context; inputs/events belong to the single caller.
+PL_GF_INIT:
+PL_GF_STATE=0 : PL_GF_EVENTS=0 : PL_GF_CHANGED=0
+PL_GF_FRESH=0 : PL_GF_ERROR=0 : PL_GF_NEXT=0
+Return
+PL_GF_STEP:
+PL_GF_CHANGED=0 : PL_GF_FRESH=0 : PL_GF_ERROR=0
+If PL_GF_STATE<0 or PL_GF_STATE>3 : PL_GF_ERROR=1 : Return : End If
+If PL_GF_EVENTS<0 or PL_GF_EVENTS>15 : PL_GF_ERROR=2 : Return : End If
+PL_GF_NEXT=PL_GF_STATE
+If PL_GF_STATE=0
+   If (PL_GF_EVENTS and 1)<>0 : PL_GF_NEXT=1 : PL_GF_FRESH=1 : End If
+End If
+If PL_GF_STATE=1
+   If (PL_GF_EVENTS and 4)<>0
+      PL_GF_NEXT=2
+   Else
+      If (PL_GF_EVENTS and 2)<>0 : PL_GF_NEXT=3 : End If
+   End If
+End If
+If PL_GF_STATE=2
+   If (PL_GF_EVENTS and 8)<>0
+      PL_GF_NEXT=1 : PL_GF_FRESH=1
+   Else
+      If (PL_GF_EVENTS and 1)<>0 : PL_GF_NEXT=0 : End If
+   End If
+End If
+If PL_GF_STATE=3
+   If (PL_GF_EVENTS and 2)<>0 : PL_GF_NEXT=1 : End If
+End If
+If PL_GF_NEXT<>PL_GF_STATE : PL_GF_STATE=PL_GF_NEXT : PL_GF_CHANGED=1 : End If
+Return

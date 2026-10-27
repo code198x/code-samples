@@ -1,0 +1,27 @@
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Gosub PL_GF_INIT
+PL_SCORE=0 : PL_LIFE=PL_HEALTH : PL_PREVIOUS=0 : PL_RESETS=0
+PL_RESUMED=0 : PL_FINISHED=0
+For PL_FRAME=0 To 14
+   Read PL_HELD
+   PL_GF_EVENTS=PL_HELD and (255-PL_PREVIOUS)
+   PL_PREVIOUS=PL_HELD
+   If PL_GF_STATE=1 : PL_SCORE=(PL_SCORE+1) mod 256 : End If
+   Gosub PL_GF_STEP
+   If PL_GF_FRESH<>0
+      PL_SCORE=0 : PL_LIFE=PL_HEALTH : PL_RESETS=PL_RESETS+1
+   End If
+   If PL_FRAME=8 : PL_RESUMED=PL_SCORE : End If
+   If PL_FRAME=10 : PL_FINISHED=PL_SCORE : End If
+Next PL_FRAME
+Print "Game flow complete"
+Print "Resumed: ";PL_RESUMED
+Print "Resets: ";PL_RESETS
+Print "State: ";PL_GF_STATE
+Print "Score: ";PL_SCORE
+Print "Health: ";PL_LIFE
+Print "Finished: ";PL_FINISHED
+Repeat : Wait Vbl : Until Inkey$="q"
+Show
+End
+Data 0,3,3,0,0,3,3,0,3,0,4,0,8,8,0
