@@ -1,0 +1,25 @@
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Reserve As Work 1,__BANK_SIZE__
+PL_MAILBOX=Start(1)
+Locate 0,3 : Print "Bank: ";PL_MAILBOX
+Locate 0,4 : Print "Size: ";Length(1)
+For PL_CASE=0 To __LAST_CASE__
+   Read PL_GF_STATE,PL_GF_EVENTS
+   PL_GF_CHANGED=77 : PL_GF_FRESH=77 : PL_GF_ERROR=77 : PL_GF_NEXT=91
+   PL_SCORE=65537 : PL_LIFE=5 : PL_PREVIOUS=3
+   PL_AT=PL_MAILBOX+PL_CASE*48
+   Loke PL_AT,PL_GF_STATE : Loke PL_AT+4,PL_GF_EVENTS
+   Gosub PL_GF_STEP
+   Loke PL_AT+8,PL_GF_STATE : Loke PL_AT+12,PL_GF_EVENTS
+   Loke PL_AT+16,PL_GF_CHANGED : Loke PL_AT+20,PL_GF_FRESH
+   Loke PL_AT+24,PL_GF_ERROR : Loke PL_AT+28,PL_GF_NEXT
+   Loke PL_AT+32,PL_SCORE : Loke PL_AT+36,PL_LIFE : Loke PL_AT+40,PL_PREVIOUS
+   Loke PL_AT+44,$1A2B3C4D
+Next PL_CASE
+Loke PL_MAILBOX+__PAYLOAD_BYTES__,$1A2B3C4D
+Locate 0,0 : Print "Flow checks complete"
+Locate 0,1 : Print "Count: ";__CASE_COUNT__
+Locate 0,2 : Print "Exit: ";PL_GF_CHANGED
+Repeat : Wait Vbl : Until Inkey$="q"
+Erase 1 : Show
+End

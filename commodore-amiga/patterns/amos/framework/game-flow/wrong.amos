@@ -1,0 +1,1 @@
+If PL_GF_FRESH<>0 or (PL_GF_CHANGED<>0 and PL_GF_STATE=1)
