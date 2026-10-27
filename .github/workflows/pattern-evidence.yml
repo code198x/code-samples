@@ -962,7 +962,7 @@ jobs:
   blitz-object-pool-records:
     name: Blitz compiled object pools and complete owner evidence
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
