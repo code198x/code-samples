@@ -1,0 +1,41 @@
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Dim PL_OP_LIVE(8),PL_PAYLOAD(8)
+Reserve As Work 1,__BANK_SIZE__
+PL_MAILBOX=Start(1)
+Locate 0,3 : Print "Bank: ";PL_MAILBOX
+Locate 0,4 : Print "Size: ";Length(1)
+For PL_CASE=0 To __LAST_CASE__
+   Read PL_OP_CAP,PL_MASK,PL_BAD
+   For PL_I=0 To 8 : PL_OP_LIVE(PL_I)=77 : PL_PAYLOAD(PL_I)=60 : Next PL_I
+   PL_OP_LIVE(8)=99
+   PL_AT=PL_MAILBOX+PL_CASE*__RECORD_BYTES__
+   Gosub PL_OP_INIT
+   Doke PL_AT,PL_OP_CAP : Doke PL_AT+2,PL_MASK : Doke PL_AT+22,PL_OP_OK
+   For PL_I=0 To 8 : Loke PL_AT+28+PL_I*4,PL_OP_LIVE(PL_I) : Next PL_I
+   PL_BITS=PL_MASK
+   For PL_I=0 To PL_OP_SIZE-1
+      PL_OP_LIVE(PL_I)=PL_BITS mod 2 : PL_BITS=Int(PL_BITS/2)
+   Next PL_I
+   Gosub PL_OP_ACQUIRE
+   Doke PL_AT+4,PL_OP_SLOT : Doke PL_AT+6,PL_OP_OK : Doke PL_AT+8,PL_OP_ERROR
+   For PL_I=0 To 8 : Loke PL_AT+64+PL_I*4,PL_OP_LIVE(PL_I) : Next PL_I
+   __RELEASE_CALL__
+   Doke PL_AT+10,PL_OP_OK : Doke PL_AT+12,PL_OP_ERROR
+   For PL_I=0 To 8 : Loke PL_AT+100+PL_I*4,PL_OP_LIVE(PL_I) : Next PL_I
+   Gosub PL_OP_RELEASE
+   Doke PL_AT+14,PL_OP_OK : Doke PL_AT+16,PL_OP_ERROR
+   For PL_I=0 To 8 : Loke PL_AT+136+PL_I*4,PL_OP_LIVE(PL_I) : Next PL_I
+   PL_OP_SLOT=PL_BAD : Gosub PL_OP_RELEASE
+   Doke PL_AT+18,PL_OP_OK : Doke PL_AT+20,PL_OP_ERROR
+   For PL_I=0 To 8
+      Loke PL_AT+172+PL_I*4,PL_OP_LIVE(PL_I) : Loke PL_AT+208+PL_I*4,PL_PAYLOAD(PL_I)
+   Next PL_I
+   Loke PL_AT+24,PL_OP_SLOT : Loke PL_AT+244,$1A2B3C4D
+Next PL_CASE
+Loke PL_MAILBOX+__PAYLOAD_BYTES__,$1A2B3C4D
+Locate 0,0 : Print "Pool checks complete"
+Locate 0,1 : Print "Count: ";__CASE_COUNT__
+Locate 0,2 : Print "Exit: ";PL_OP_OK
+Repeat : Wait Vbl : Until Inkey$="q"
+Erase 1 : Show
+End

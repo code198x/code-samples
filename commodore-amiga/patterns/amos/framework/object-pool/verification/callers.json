@@ -1,0 +1,241 @@
+{
+  "cases": {
+    "small": {
+      "outputs": [
+        8,
+        0,
+        1,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1,
+        8,
+        0,
+        0,
+        1,
+        60,
+        99
+      ],
+      "program_sha256": "0771e72cdbbc98e4f549b1aeab40ca4439e071f810f3974368895377c073d40f",
+      "image": "caller-small.png",
+      "image_sha256": "303b6e11a659e801e02b15c4f2e9a145889769b8f3605fbf7b57c1f7a1331d25",
+      "server": {
+        "name": "emu198x-amiga",
+        "version": "0.44.1"
+      }
+    },
+    "working": {
+      "outputs": [
+        8,
+        0,
+        1,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1,
+        8,
+        0,
+        0,
+        1,
+        60,
+        99
+      ],
+      "program_sha256": "0771e72cdbbc98e4f549b1aeab40ca4439e071f810f3974368895377c073d40f",
+      "image": "caller-working.png",
+      "image_sha256": "303b6e11a659e801e02b15c4f2e9a145889769b8f3605fbf7b57c1f7a1331d25",
+      "server": {
+        "name": "emu198x-amiga",
+        "version": "0.44.1"
+      }
+    },
+    "custom": {
+      "outputs": [
+        4,
+        0,
+        1,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        0,
+        0,
+        1,
+        60,
+        99
+      ],
+      "program_sha256": "c69ed3d92e95af9346899915e2a521cab84aa14add87899900925b8f69b0e5be",
+      "image": "caller-custom.png",
+      "image_sha256": "964fef8130e08aeab467a1ce4bd6539d1801c50fd67b867db88375a40b226e16",
+      "server": {
+        "name": "emu198x-amiga",
+        "version": "0.44.1"
+      }
+    },
+    "single": {
+      "outputs": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        60,
+        99
+      ],
+      "program_sha256": "1c2fa1ba2f5549a767a3811c3f6fe8045b5395ebcec8e1f0118f7e0560ffe866",
+      "image": "caller-single.png",
+      "image_sha256": "f3872ba58a9a63cd0734be82dfacc2a63bd7d4375bcfd174e5dc3361d8b9be57",
+      "server": {
+        "name": "emu198x-amiga",
+        "version": "0.44.1"
+      }
+    },
+    "wrong": {
+      "outputs": [
+        8,
+        0,
+        1,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1,
+        8,
+        0,
+        8,
+        0,
+        60,
+        99
+      ],
+      "program_sha256": "10a0389a6516855cced7746155ec54fbbf85b31d19a91b3a45bf8f1fffcad95c",
+      "image": "caller-wrong.png",
+      "image_sha256": "6741a248c7b8b55414f73719f04a08e73d259a28e4943c72de3e41223d429437",
+      "server": {
+        "name": "emu198x-amiga",
+        "version": "0.44.1"
+      }
+    },
+    "repaired": {
+      "outputs": [
+        8,
+        0,
+        1,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1,
+        8,
+        0,
+        0,
+        1,
+        60,
+        99
+      ],
+      "program_sha256": "0771e72cdbbc98e4f549b1aeab40ca4439e071f810f3974368895377c073d40f",
+      "image": "caller-repaired.png",
+      "image_sha256": "303b6e11a659e801e02b15c4f2e9a145889769b8f3605fbf7b57c1f7a1331d25",
+      "server": {
+        "name": "emu198x-amiga",
+        "version": "0.44.1"
+      }
+    }
+  },
+  "sources": {
+    "commodore-amiga/patterns/amos/framework/object-pool/age.amos": "489ee06c4b2fb793adc63cba6a2e6726e5be9e5bd68b18bbeb7ae13fbe5f08dd",
+    "commodore-amiga/patterns/amos/framework/object-pool/boundaries.amos": "8b8a6d12cc82190a62f737b77c12200f0ac683d52be71f20f166ca61025b2b5f",
+    "commodore-amiga/patterns/amos/framework/object-pool/caller.amos": "1aeeda2883e6ce51fd381b8d33121e5db059842807e1f5254fa44e0890f3fe23",
+    "commodore-amiga/patterns/amos/framework/object-pool/custom.amos": "86bf0eb267a130fc596bdf05bcbba91c9a8def11fbb0d79e767a557cb8d48490",
+    "commodore-amiga/patterns/amos/framework/object-pool/extremes.amos": "befe3395fdf71ac0f9475bcc95bb3ef69cf9ce7b3568024bc27c72137e0113ae",
+    "commodore-amiga/patterns/amos/framework/object-pool/observer.amos": "1f7a9e7d09b25c33870cc9b98b13f24d67d1762f03885ae2c5dc2e91b2caa446",
+    "commodore-amiga/patterns/amos/framework/object-pool/repaired.amos": "519e0901dbfa621f861944521eb85e7099007cb69e39314569ba347090042035",
+    "commodore-amiga/patterns/amos/framework/object-pool/routines.amos": "84c47d631bd02e97d027a9c13e514c7190aaa1340ec87ebba95379641ad4634d",
+    "commodore-amiga/patterns/amos/framework/object-pool/settings.amos": "97668e0bce598c07de2d110f89cf3db9b8c8f0bd941cb730e7698348ba187b70",
+    "commodore-amiga/patterns/amos/framework/object-pool/wrong.amos": "a904dec03cfb850cb66c511cb0ae8083061723ee6d5aec46a5e3a5965a033dda",
+    "commodore-amiga/patterns/amos/framework/object-pool/oracle.py": "0e5066e2ec34c8f124c146429eacc9ce86dd7465e698eb973b85212965eecb1e",
+    "commodore-amiga/patterns/amos/framework/object-pool/boundary_oracle.py": "8200491a9e9145cf744884f2bf3ea2634aab5e10e0780a467fec381764594d7c",
+    "commodore-amiga/patterns/amos/framework/object-pool/age_oracle.py": "2a3ad6555117f362f9e6051963ecf1b77a17d01a284875765ae53ab33c298fb9",
+    "commodore-amiga/patterns/amos/framework/object-pool/extreme_oracle.py": "2f40fdb63819f4f55aeb619975ca3cf1f16df6d19bf337fdedc326b8a4be03e4",
+    "commodore-amiga/patterns/amos/framework/object-pool/build.py": "1663210614930f03270e062125aa69d91a4a5605ffdc2c53747653675dec4baa",
+    "commodore-amiga/patterns/amos/framework/object-pool/Makefile": "8ef0bbfd7f9d4ea47be70ac0ae7b0917e7eb1788e0504054c37ee4ab428ae71a",
+    "scripts/verify-amos-object-pool.py": "f70cc4b10f2644741f3df31baf4b131d5c10cee7fb04e88e0412210d2b585be5",
+    "scripts/verify-amos-map-queries.py": "b6d6184cf8bf4844653c47a74880935e6b274188825bd7b6ddaa17a0ac7b03c6",
+    "scripts/verify-amos-deadline.py": "69199c4b5e8d3dde09c5a134d9b1ee85c906ad87fb78ff8f04fae08462fa4a17",
+    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/check-amiga-command-loops.py": "75f35ab4d1077f3d3e89f347f4a13496370c55ffc9b772cd280c610d6b4b4326",
+    "commodore-amiga/patterns/amos/framework/turn-deadline/verification/phases/amos-cases-cold.json": "0023900548f7d0c104684ad7137d30130263c22730b2306e5ccf456fa983b0ef",
+    "commodore-amiga/patterns/amos/framework/turn-deadline/verification/phases/amos-cases-blank.json": "96e1195064f7663d87173f898aa184bd3caebf2505d0b560a9bedbeea0be4944",
+    "commodore-amiga/patterns/amos/framework/turn-deadline/verification/phases/working-case.json": "d55ea30bdc671df0acf2cd73770a984a2f76224468e2901fd1799af18f9aaa42",
+    "scripts/verify-amos-object-pool-callers.py": "76b97b6d70911fa77c668d42517f097c335edda14f1711cdfc97118657593254"
+  },
+  "fixture": {
+    "fixture_sha256": "d0275de1e1b98c1b372086352e5affed8aae4e47c3f4ce95fc92e757138d032e",
+    "programs": {
+      "small": "0771e72cdbbc98e4f549b1aeab40ca4439e071f810f3974368895377c073d40f",
+      "working": "0771e72cdbbc98e4f549b1aeab40ca4439e071f810f3974368895377c073d40f",
+      "custom": "c69ed3d92e95af9346899915e2a521cab84aa14add87899900925b8f69b0e5be",
+      "wrong": "10a0389a6516855cced7746155ec54fbbf85b31d19a91b3a45bf8f1fffcad95c",
+      "repaired": "0771e72cdbbc98e4f549b1aeab40ca4439e071f810f3974368895377c073d40f",
+      "single": "1c2fa1ba2f5549a767a3811c3f6fe8045b5395ebcec8e1f0118f7e0560ffe866",
+      "age": "cc3ae1918188707b2cf7c7a9d96cf9de65a903380a5a291c9ea8c01b9f8ed8b5",
+      "boundaries": "32c9f49a234dab8bdd979d6f17d4daff2c6ccd128af264edce8185e98dde17c1",
+      "extremes": "ad722f13cadda0996e04dfdc210e05962f0e2c8b9fbb56bc12b44a4e2b5f0c07",
+      "cases": "1be2a15226e4e62f4a69f7be5e4aa7962ca21018e4277fb101e83a4296e4eb0a",
+      "wrong-cases": "b35a5f6b782fa693125fefb7aed76fdd90520af2f0be7d3bc33bc2877e5cd6cc",
+      "repaired-cases": "1be2a15226e4e62f4a69f7be5e4aa7962ca21018e4277fb101e83a4296e4eb0a"
+    }
+  },
+  "configuration": {
+    "emulator_version": "0.44.1",
+    "emulator_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
+    "firmware_sha256": "6d43840d4099a74170ea0f0425b6257c3891ebcaa39c4d1840075a9ab22b5707",
+    "runtime": "AMOS Professional 2.00",
+    "runtime_media_sha256": "507828d923c0af5e485a03048e396c29c9c5dec7769e8b40b1c933d980ffba3b",
+    "builder_version": "0.2.13",
+    "builder_sha256": "8cee299092889d79d5c0a9b3ade2e3fd272739f3f4b57761b2f51a1046e9a3a8",
+    "configuration": "PAL A1200, 2 MiB chip, no fast RAM",
+    "phase_provenance": "Cold boot, blank editor and ASCII import reuse the command-loop route; load phase retains only the actually used prefix through its first capture."
+  }
+}

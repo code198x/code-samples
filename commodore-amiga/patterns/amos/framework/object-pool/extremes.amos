@@ -1,0 +1,39 @@
+Rem Invalid init/context/index: no array address is computed from a bad slot.
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Dim PL_OP_LIVE(8),PL_PAYLOAD(8)
+Reserve As Work 1,652
+PL_MAILBOX=Start(1)
+Locate 0,3 : Print "Bank: ";PL_MAILBOX
+Locate 0,4 : Print "Size: ";Length(1)
+For PL_CASE=0 To 5
+   Read PL_TEST_OP,PL_TEST_CAP,PL_TEST_SIZE,PL_TEST_SLOT,PL_EXTREME
+   If PL_EXTREME=0 : Dec PL_TEST_CAP : End If
+   If PL_EXTREME=1 : Dec PL_TEST_SIZE : End If
+   If PL_EXTREME=2 : Dec PL_TEST_SLOT : End If
+   For PL_I=0 To 8 : PL_OP_LIVE(PL_I)=77 : PL_PAYLOAD(PL_I)=65537 : Next PL_I
+   PL_OP_LIVE(8)=99
+   PL_OP_CAP=PL_TEST_CAP : PL_OP_SIZE=PL_TEST_SIZE : PL_OP_SLOT=PL_TEST_SLOT
+   PL_OP_OK=77 : PL_OP_ERROR=77
+   If PL_TEST_OP=1 or PL_TEST_OP=4 or PL_TEST_OP=5 : Gosub PL_OP_INIT : End If
+   If PL_TEST_OP=2 or PL_TEST_OP=4 : Gosub PL_OP_ACQUIRE : End If
+   If PL_TEST_OP=3 or PL_TEST_OP=5
+      PL_OP_SLOT=PL_TEST_SLOT : Gosub PL_OP_RELEASE
+   End If
+   PL_AT=PL_MAILBOX+PL_CASE*108
+   Loke PL_AT,PL_TEST_OP : Loke PL_AT+4,PL_TEST_CAP
+   Loke PL_AT+8,PL_TEST_SIZE : Loke PL_AT+12,PL_TEST_SLOT
+   Loke PL_AT+16,PL_OP_SIZE : Loke PL_AT+20,PL_OP_SLOT
+   Loke PL_AT+24,PL_OP_OK : Loke PL_AT+28,PL_OP_ERROR
+   For PL_I=0 To 8
+      Loke PL_AT+32+PL_I*4,PL_OP_LIVE(PL_I)
+      Loke PL_AT+68+PL_I*4,PL_PAYLOAD(PL_I)
+   Next PL_I
+   Loke PL_AT+104,$1A2B3C4D
+Next PL_CASE
+Loke PL_MAILBOX+648,$1A2B3C4D
+Locate 0,0 : Print "Signed minimum complete"
+Locate 0,1 : Print "Count: ";6
+Locate 0,2 : Print "Exit: ";PL_OP_OK
+Repeat : Wait Vbl : Until Inkey$="q"
+Erase 1 : Show
+End

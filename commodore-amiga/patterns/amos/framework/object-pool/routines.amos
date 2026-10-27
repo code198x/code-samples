@@ -1,0 +1,36 @@
+Rem Caller allocates PL_OP_LIVE(8); helper uses slots 0 to size-1 only.
+Rem Private size is set by init; payload and interrupts belong to caller.
+PL_OP_INIT:
+PL_OP_OK=0 : PL_OP_ERROR=1 : PL_OP_SIZE=0 : PL_OP_SLOT=0
+If PL_OP_CAP<1 or PL_OP_CAP>8 : Return : End If
+PL_OP_SIZE=PL_OP_CAP
+For PL_OP_I=0 To PL_OP_SIZE-1
+   PL_OP_LIVE(PL_OP_I)=0
+Next PL_OP_I
+PL_OP_SLOT=PL_OP_SIZE : PL_OP_ERROR=0 : PL_OP_OK=1
+Return
+PL_OP_CHECK:
+PL_OP_OK=0 : PL_OP_ERROR=1
+If PL_OP_SIZE<1 or PL_OP_SIZE>8 : Return : End If
+PL_OP_ERROR=0
+Return
+PL_OP_ACQUIRE:
+Gosub PL_OP_CHECK
+PL_OP_SLOT=PL_OP_SIZE
+If PL_OP_ERROR<>0 : Return : End If
+For PL_OP_I=0 To PL_OP_SIZE-1
+   If PL_OP_OK=0
+      If PL_OP_LIVE(PL_OP_I)=0
+         PL_OP_LIVE(PL_OP_I)=1 : PL_OP_SLOT=PL_OP_I : PL_OP_OK=1
+      End If
+   End If
+Next PL_OP_I
+Return
+PL_OP_RELEASE:
+Gosub PL_OP_CHECK
+If PL_OP_ERROR<>0 : Return : End If
+PL_OP_ERROR=2
+If PL_OP_SLOT<0 or PL_OP_SLOT>=PL_OP_SIZE : Return : End If
+If PL_OP_LIVE(PL_OP_SLOT)=0 : Return : End If
+PL_OP_LIVE(PL_OP_SLOT)=0 : PL_OP_OK=1 : PL_OP_ERROR=0
+Return
