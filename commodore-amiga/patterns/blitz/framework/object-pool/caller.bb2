@@ -1,0 +1,23 @@
+; Amiga-mode caller; the helper neither opens windows nor owns payload.
+WbToScreen 0
+Window 0,0,20,420,180,$1000,"Reusable object pool",1,0
+Dim PL_OP_LIVE.l(8),PL_PAYLOAD.l(8),PL_LIFE.l(8)
+For PL_I.l=0 To 8
+   PL_OP_LIVE.l(PL_I.l)=99 : PL_PAYLOAD.l(PL_I.l)=60 : PL_LIFE.l(PL_I.l)=0
+Next
+Gosub PL_OP_INIT
+WLocate 8,20 : Print "Bounded slots: ",PL_OP_SIZE.l
+For PL_CALL.l=0 To PL_OP_SIZE.l
+   Gosub PL_OP_ACQUIRE
+   WLocate 8,32+PL_CALL.l*12 : Print "Slot: ",PL_OP_SLOT.l," acquired: ",PL_OP_OK.l
+Next
+PL_OP_SLOT.l=0
+Gosub PL_OP_RELEASE
+Gosub PL_OP_ACQUIRE
+PL_ROW.l=32+(PL_OP_SIZE.l+1)*12
+WLocate 8,PL_ROW.l : Print "Reuse: ",PL_OP_SLOT.l," acquired: ",PL_OP_OK.l
+WLocate 8,PL_ROW.l+12 : Print "Payload: ",PL_PAYLOAD.l(0)," guard: ",PL_OP_LIVE.l(8)
+Repeat : VWait : Until Inkey$="q"
+DefaultInput : DefaultOutput
+Free Window 0
+End

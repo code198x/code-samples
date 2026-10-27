@@ -1,0 +1,48 @@
+; One owner supplies Dim PL_OP_LIVE.l(8); slots0..size-1 are usable.
+; All context values are signed longs; payload/lifetime policy stays in the owner.
+.PL_OP_INIT
+PL_OP_OK.l=0 : PL_OP_ERROR.l=1 : PL_OP_SIZE.l=0 : PL_OP_SLOT.l=0
+If PL_OP_CAP.l<1 or PL_OP_CAP.l>8
+   Return
+EndIf
+PL_OP_SIZE.l=PL_OP_CAP.l
+For PL_OP_I.l=0 To PL_OP_SIZE.l-1
+   PL_OP_LIVE.l(PL_OP_I.l)=0
+Next
+PL_OP_SLOT.l=PL_OP_SIZE.l : PL_OP_ERROR.l=0 : PL_OP_OK.l=1
+Return
+.PL_OP_CHECK
+PL_OP_OK.l=0 : PL_OP_ERROR.l=1
+If PL_OP_SIZE.l<1 or PL_OP_SIZE.l>8
+   Return
+EndIf
+PL_OP_ERROR.l=0
+Return
+.PL_OP_ACQUIRE
+Gosub PL_OP_CHECK
+PL_OP_SLOT.l=PL_OP_SIZE.l
+If PL_OP_ERROR.l<>0
+   Return
+EndIf
+For PL_OP_I.l=0 To PL_OP_SIZE.l-1
+   If PL_OP_OK.l=0
+      If PL_OP_LIVE.l(PL_OP_I.l)=0
+         PL_OP_LIVE.l(PL_OP_I.l)=1 : PL_OP_SLOT.l=PL_OP_I.l : PL_OP_OK.l=1
+      EndIf
+   EndIf
+Next
+Return
+.PL_OP_RELEASE
+Gosub PL_OP_CHECK
+If PL_OP_ERROR.l<>0
+   Return
+EndIf
+PL_OP_ERROR.l=2
+If PL_OP_SLOT.l<0 or PL_OP_SLOT.l>=PL_OP_SIZE.l
+   Return
+EndIf
+If PL_OP_LIVE.l(PL_OP_SLOT.l)=0
+   Return
+EndIf
+PL_OP_LIVE.l(PL_OP_SLOT.l)=0 : PL_OP_OK.l=1 : PL_OP_ERROR.l=0
+Return
