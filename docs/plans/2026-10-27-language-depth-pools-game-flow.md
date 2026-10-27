@@ -97,3 +97,53 @@ Release-gatedGWAITcorrectlyheldOE1andreturnedOE0, butthephysical0exitkeyreachedt
 
 ## Bind native Ace dictionary bytes as well as typed source
 All366statecasesandfour15-sampleownerspassedwithsource/ROM/keyboard/capturebindings. Preserveallpositivesource/nativeproofbeforeclosingtheexactcompiled-load-identitygap: record everybyteofour newlycompiled dictionary fromHEREbeforetoHEREafter, beforecallsandaftercalls. Permitonlythetwobytepayloadateachpositivelyqueriedcontext/ownervariableaddress tochange;requireuniquein-rangeaddressesandidenticalremainingcode/header/stringbytes,withrawimagesandhashesretained. NoROMbytes,RAMinjectionorentry-PCchanges. Storeentered-sourcehashperorderedfilerecipe. This addsproof,nothelper/policy:allFTHandoraclesunchanged. Requalifyallfivefreshbootgroupsafterverifierchange;retainedcheckerandnegativecontrols challengecodebyte/identity/address changesaswellasoutputs/stack/pixels. Do notrebindoldsourcehashestoproofwithoutfreshnativeexecution.
+
+## Ace object-pool physical contract before code
+Implement independent pool next;gameflowfce37329alreadyqualified/pushed. Seven2bytecellsPB(base),PC(initcapacity),PS(privateextent),PK(slot),PF(ok),PX(error),PI(scan):14numericpayloadbytesplusdictionaryheaders/code measurednatively. PINIT(basecap--ok)disablesPS0first, accepts1..8, validatesdictionaryRAMbase>=15441/base<HERE and HERE-base>=extent BEFOREC!addressing, clearsconfiguredoccupancyonly. Thisrangecheckcannotidentifytheactualallocatedobject:callerpassesitsownnine-byteCREATEbufferandkeepsitalive;arbitrarycodepointers/undersizedobjectsremainunsupported. Invalidinitreturns0/PX1/PS0withnoarraywrites. PCHK(--)validatesprivateextentandselectedpointerwithoutsubscripts;PGET(--slotok)returns lowestfree/PF1/PX0 orfullslotPS/PF0/PX0,invalidcontextPX1. SearchusesboundedBEGIN/WHILE/REPEAT soearlyEXITisoutsideDO;PIisfoundindexorsizeonfull. PREL(slot--ok)validatescontextandunsignedslot<PSbeforeaddressing, rejectsfree/double/outsidewithPX2, preservespayload. PINITclearDOhaspositiveextentandcompletesbeforeReturn/EXIT. No >R/R>data juggling orFASTcheckdisable.
+CallerCREATE SLOTScontains8occupancybytes77andguard99;PAYLOADnine16bitcells60. SeparateNEWOBJ(--slotok)initialisesonlysuccessfullyacquiredpayloadslot, leavingfullsentinelunsubscripted. PNEW(--ok)selectsSLOTS/PC;PSHOW(--)printsSlot/OK. Settings8PC!,custom4,single1. GenerateddemoPNEWshowflag,9literalNEWOBJcalls(nohugecompiledtrace),release0thenreacquire;wrongreplacesonly0PRELDROPwith0DROP,repairrestoresbytesinnewboot. Smallfirstnativecompile/resource/runprobeonstock3KiB BEFOREfullmasks/boundaries/lifetime:checkall7contextcells,all9flagbytes/9payloadcells,actualresultstack[77,slot,ok],normalreturn/emptyHERE+12,HEREpermodule/CPUstack/pixels andactualguard. Allhelpers/objectdata/sourcekeywordentry/ROMhashbound;failiforiginaldictionarydoesnotfit,reducecallerobserverratherthanincreaseRAM. Futureallmask/invalidpointer/extent/index/doublefree/single/custom/wrongrepair/lifetime/fullcodeidentitychecksneedboundedindependentboots. No combinedpool+gameflowstock-RAMclaim.
+Smallpayloadallocationuses8cells60plusaninth65535guardsoafull-slot8writecannotbehiddenbyre-storing60. Laterqualifiedcustom/singleownerdiagnosticsseedunusedpayloadcellsdistinctlybeforefullrequests.
+
+First original-ROM import passed: helper656 dictionary bytes, storage53,
+caller110; total819 plus the external19-byte NUMBER observer. HERE16279,
+stock top16384. Nine acquisitions, release and reuse preserved prefix77,
+both storage guards, all context and payload; retained full native pixels.
+This is a first probe, not full qualification.
+
+Before full qualification, add oracle.py and scripts/verify-ace-object-pool.py.
+Use one fresh helper boot for all274 occupancy masks at capacities1,4,8
+(2+16+256), alternating nonzero occupied-byte spellings1/128/255. Observe
+every byte/cell, lowest free result, release and double release with an
+independent list model. Keyboard-seed all data; never inject memory. Test
+invalid capacities/private extents, unsigned/signed index spellings and
+dictionary pointer bounds before array access; changing PC after init must
+not alter PS. Keep all dictionary bytes before/after, permitting changes
+only at the seven variable payloads and two actual CREATE buffers. Five
+separate working/custom/single/wrong/repaired owner boots use unique payload
+seeds and exhaust, then release0/reuse; the single-slot boot also ages
+through300 acquire/release cycles;
+wrong omits only the release. Require prefix77/actual result stacks, empty
+return stack position, captured CPU/data separation samples, exact source,
+ordered entered recipe, firmware/emulator hashes and native screen pixels.
+Bound the native run at1800 seconds, save each completed group and retain
+partial evidence on failure. No helper mutation during an active run.
+
+Before publication also execute all five generated caller programs, line for
+line through the original ROM in separate fresh boots, after the serial
+qualification runner exits. The diagnostic owners intentionally exercise
+selected operations; they do not substitute for running the complete
+generated demo (nine requests at every capacity and its final printed
+payload/guards). Add scripts/verify-ace-object-pool-callers.py and separate
+callers-GROUP.json/PNG evidence. Bind exact builder output, typed load/demo
+lines and full RAM/stack after each demo line, plus full final native pixels.
+No mutation of the active native verifier or its frozen input set.
+
+Publish four Ace figures only after native qualification: working/wrong
+pool complete-caller captures and working/wrong game-flow resumed captures.
+Add scripts/export-ace-depth-images.py and test_ace_depth_images.py using the
+existing publication-manifest convention. Ace captures are already320x288:
+copy the PNG bytes unchanged, check every decoded pixel and source/native
+identity, and refuse to overwrite different retained output. No rendering,
+cropping or invented pixels. Store published-working/wrong.png plus
+published-images.json within each topic verification folder. Add retained
+export checks to the pool evidence job; challenge manifests and decoded
+pixels. Then pin website copies to the reviewed source commit.
