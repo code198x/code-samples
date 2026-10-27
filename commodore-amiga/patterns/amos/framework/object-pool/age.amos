@@ -1,0 +1,55 @@
+Rem The owner owns lifetimes; release during traversal, spawn only afterwards.
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Dim PL_OP_LIVE(8),PL_LIFE(8),PL_PAYLOAD(8)
+PL_OP_CAP=4
+For PL_I=0 To 8
+   PL_OP_LIVE(PL_I)=77 : PL_LIFE(PL_I)=77 : PL_PAYLOAD(PL_I)=65537
+Next PL_I
+PL_OP_LIVE(8)=99 : PL_LIFE(8)=99
+Gosub PL_OP_INIT
+For PL_I=0 To 3
+   Gosub PL_OP_ACQUIRE : Read PL_LIFE(PL_OP_SLOT)
+Next PL_I
+Reserve As Work 1,388
+PL_MAILBOX=Start(1)
+Locate 0,3 : Print "Bank: ";PL_MAILBOX
+Locate 0,4 : Print "Size: ";Length(1)
+For PL_FRAME=0 To 2
+   PL_EXPIRED=0
+   For PL_I=0 To PL_OP_SIZE-1
+      If PL_OP_LIVE(PL_I)<>0
+         Dec PL_LIFE(PL_I)
+         If PL_LIFE(PL_I)=0
+            PL_OP_SLOT=PL_I : Gosub PL_OP_RELEASE
+            PL_EXPIRED=PL_EXPIRED+1
+         End If
+      End If
+   Next PL_I
+   Rem The complete pass is over; an expired slot can now be reused.
+   PL_REUSED=PL_OP_SIZE
+   If PL_FRAME=0
+      Gosub PL_OP_ACQUIRE : PL_REUSED=PL_OP_SLOT
+      If PL_OP_OK<>0 : PL_LIFE(PL_OP_SLOT)=2 : End If
+   End If
+   PL_COUNT=0
+   For PL_I=0 To PL_OP_SIZE-1
+      If PL_OP_LIVE(PL_I)<>0 : Inc PL_COUNT : End If
+   Next PL_I
+   PL_AT=PL_MAILBOX+PL_FRAME*128
+   Loke PL_AT,PL_FRAME : Loke PL_AT+4,PL_COUNT
+   Loke PL_AT+8,PL_EXPIRED : Loke PL_AT+12,PL_REUSED
+   For PL_I=0 To 8
+      Loke PL_AT+16+PL_I*4,PL_OP_LIVE(PL_I)
+      Loke PL_AT+52+PL_I*4,PL_LIFE(PL_I)
+      Loke PL_AT+88+PL_I*4,PL_PAYLOAD(PL_I)
+   Next PL_I
+   Loke PL_AT+124,$1A2B3C4D
+Next PL_FRAME
+Loke PL_MAILBOX+384,$1A2B3C4D
+Locate 0,0 : Print "Lifetime checks complete"
+Locate 0,1 : Print "Count: ";3
+Locate 0,2 : Print "Exit: ";0
+Repeat : Wait Vbl : Until Inkey$="q"
+Erase 1 : Show
+End
+Data 1,2,1,3

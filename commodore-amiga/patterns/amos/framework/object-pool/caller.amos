@@ -1,0 +1,17 @@
+Hide : Palette $000,$FFF : Paper 0 : Pen 1 : Cls 0
+Dim PL_OP_LIVE(8),PL_PAYLOAD(8),PL_LIFE(8)
+For PL_I=0 To 8 : PL_OP_LIVE(PL_I)=99 : PL_PAYLOAD(PL_I)=60 : PL_LIFE(PL_I)=0 : Next PL_I
+Gosub PL_OP_INIT
+Print "Bounded slots: ";PL_OP_SIZE
+For PL_CALL=0 To PL_OP_SIZE
+   Gosub PL_OP_ACQUIRE
+   Print "Slot: ";PL_OP_SLOT;" acquired: ";PL_OP_OK
+Next PL_CALL
+PL_OP_SLOT=0
+Gosub PL_OP_RELEASE
+Gosub PL_OP_ACQUIRE
+Print "Reuse: ";PL_OP_SLOT;" acquired: ";PL_OP_OK
+Print "Payload: ";PL_PAYLOAD(0);" guard: ";PL_OP_LIVE(8)
+Repeat : Wait Vbl : Until Inkey$="q"
+Show
+End
