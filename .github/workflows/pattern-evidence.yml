@@ -2087,4 +2087,6 @@ jobs:
         with:
           python-version: '3.14'
       - name: Check native occupancy, owners, lifetimes, signed limits and altered evidence
-        run: python -m unittest discover -s scripts -p 'test_amos_object_pool*.py' -v
+        run: |
+          python -m unittest discover -s scripts -p 'test_amos_object_pool*.py' -v
+          python -m unittest discover -s scripts -p test_amos_depth_images.py -v

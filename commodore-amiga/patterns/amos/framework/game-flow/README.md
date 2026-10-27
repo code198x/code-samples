@@ -46,7 +46,7 @@ Six ordinary integer fields hold 24 bytes of numeric payload using AMOS's four-b
 
 The independent 360-row diagnostic requests a separate 17,284-byte work bank, confirmed by native `Length(1)` pixels. Each 48-byte row records incoming state/events, the complete six-field result, three preserved owner values and a completion marker. It uses 44 bytes of integer fields and a four-byte marker per row, plus the final four-byte completion marker. Bank headers, the resident runtime/editor and screen storage are additional. The small caller needs none of this bank. No timing or throughput claim is inferred from diagnostic completion.
 
-Qualification so far uses original AMOS Professional 2.00 interpreted on a PAL A1200,2 MiB chip RAM and no fast RAM, through released Emu 198 x 0.44.1. It does not qualify other interpreters, compiled output, NTSC, original hardware or smaller machines. Five additional native records reject the signed minimum as a state and as events in each valid state. The guest constructs it by assigning -2147483647 and decrementing once, avoiding an out-of-range positive literal. Adjacent negative values and the positive maximum are also observed.
+Qualification uses original AMOS Professional 2.00 interpreted on a PAL A1200,2 MiB chip RAM and no fast RAM, through released Emu 198 x 0.44.1. It does not qualify other interpreters, compiled output, NTSC, original hardware or smaller machines. Five additional native records reject the signed minimum as a state and as events in each valid state. The guest constructs it by assigning -2147483647 and decrementing once, avoiding an out-of-range positive literal. Adjacent negative values and the positive maximum are also observed.
 
 ## Retained verification
 
@@ -61,3 +61,7 @@ Use `scripts/verify-amos-game-flow.py` and `scripts/verify-amos-game-flow-caller
 For Maths for Games, treat state as a finite set and events as a bit set: the transition table is a function from one old-state/event pair to one next state. Priorities make simultaneous inputs deterministic. For Craft, keep the state decision separate from simulation, rendering and session ownership. A state-entry pulse and a session-reset request serve different jobs.
 
 Primary reference: *AMOS Professional User Guide*, the sections on integer variables, structured control, GOSUB/RETURN and memory banks. Preserve this runtime's syntax when adapting the example; source accepted by another BASIC dialect is insufficient evidence.
+
+## Published native captures
+
+The working and wrong caller captures also have 768x576 publication exports under `verification/published-working.png` and `published-wrong.png`. Every removed framebuffer column has an identical retained partner; complete decoded pixel comparisons and source/published hashes bind the exports to the original 1536x576 native captures. The raw captures remain part of the retained interpreter evidence.
