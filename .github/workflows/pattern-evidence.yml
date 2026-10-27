@@ -14,6 +14,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  ace-object-pool-records:
+    name: Ace stock FORTH pool and complete callers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - run: |
+          python scripts/check-ace-object-pool.py
+          python scripts/check-ace-object-pool-callers.py
+          python -m unittest discover -s scripts -p 'test_ace_object_pool*.py' -v
+          python scripts/export-ace-depth-images.py
+          python -m unittest discover -s scripts -p test_ace_depth_images.py -v
+
   ace-game-flow-records:
     name: Ace stock FORTH game flow and compiled identity
     runs-on: ubuntu-latest

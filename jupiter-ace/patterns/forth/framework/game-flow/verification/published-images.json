@@ -1,0 +1,32 @@
+{
+  "working": {
+    "raw": "working-resumed.png",
+    "published": "published-working.png",
+    "raw_sha256": "ffe9aaae98c97f282aad56a6289d6d7861d2021095a7737e4baf21bec606abbe",
+    "published_sha256": "ffe9aaae98c97f282aad56a6289d6d7861d2021095a7737e4baf21bec606abbe",
+    "raw_size": [
+      320,
+      288
+    ],
+    "published_size": [
+      320,
+      288
+    ],
+    "operation": "Copy original PNG bytes unchanged"
+  },
+  "wrong": {
+    "raw": "wrong-resumed.png",
+    "published": "published-wrong.png",
+    "raw_sha256": "cc022cd74861290592e11a59eaf732067e8e7aa7e60892df3ea680cd14343458",
+    "published_sha256": "cc022cd74861290592e11a59eaf732067e8e7aa7e60892df3ea680cd14343458",
+    "raw_size": [
+      320,
+      288
+    ],
+    "published_size": [
+      320,
+      288
+    ],
+    "operation": "Copy original PNG bytes unchanged"
+  }
+}

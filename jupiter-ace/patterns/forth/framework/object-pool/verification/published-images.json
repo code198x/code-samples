@@ -1,0 +1,32 @@
+{
+  "working": {
+    "raw": "callers-working.png",
+    "published": "published-working.png",
+    "raw_sha256": "878c2b14fd4d52b02ef9406a1cbe3c81b698957aaeb45a93486aa7a5d25a2cf9",
+    "published_sha256": "878c2b14fd4d52b02ef9406a1cbe3c81b698957aaeb45a93486aa7a5d25a2cf9",
+    "raw_size": [
+      320,
+      288
+    ],
+    "published_size": [
+      320,
+      288
+    ],
+    "operation": "Copy original PNG bytes unchanged"
+  },
+  "wrong": {
+    "raw": "callers-wrong.png",
+    "published": "published-wrong.png",
+    "raw_sha256": "f424568fabac358473121530bd2598405df8394ba38593f750c67dcb0af887c7",
+    "published_sha256": "f424568fabac358473121530bd2598405df8394ba38593f750c67dcb0af887c7",
+    "raw_size": [
+      320,
+      288
+    ],
+    "published_size": [
+      320,
+      288
+    ],
+    "operation": "Copy original PNG bytes unchanged"
+  }
+}
