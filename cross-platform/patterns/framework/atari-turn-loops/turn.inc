@@ -18,7 +18,7 @@ init_turn:
 ; No hardware access or waiting. 2 stack bytes for a direct JSR.
 sample_turn:
     sta T+4
-!source "edge-filter.inc"
+!source "../../../../../cross-platform/patterns/framework/atari-turn-loops/edge-filter.inc"
     beq held_or_released
     lda T
     clc

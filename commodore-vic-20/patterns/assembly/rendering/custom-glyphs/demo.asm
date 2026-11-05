@@ -1,7 +1,7 @@
 ; SPDX-License-Identifier: MIT
 ; Original reset caller; mailbox only serves independent verification.
 *=$e000
-G=$0040
+G=$40
 COMMAND=$1600
 start:
     sei

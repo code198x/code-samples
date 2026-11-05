@@ -4,16 +4,16 @@
   "calls": 18,
   "isolated_rejections": 15,
   "sources": {
-    "mattel-aquarius/patterns/assembly/rendering/tile-region/demo.asm": "dab1db2b73a850ca80f14c893308b14a7c3e0d8c6112063a93751e1043e49812",
-    "cross-platform/patterns/rendering/character-regions/build.py": "1766826a7ba9e9570e10dedece279974daf85ba0595d2e917573f95bcd41f9d2",
-    "cross-platform/patterns/rendering/character-regions/systems.json": "466b493083e91b0f5ed1daa5dc0bfd5e2bd460bae683201cb43bf46f5332a508",
+    "mattel-aquarius/patterns/assembly/rendering/tile-region/demo.asm": "e029074dfa6e8eaf33cdd4dbd0409ae730592a9933e6afddb0e01257d90786ac",
+    "cross-platform/patterns/rendering/character-regions/build.py": "b826b6028fda94ca977654c1e32742baf4c794c8fba12f21556559e2bd2270f8",
+    "cross-platform/patterns/rendering/character-regions/systems.json": "a39ded876305e5269bbfb07031b1df5a6fe20d04318875aba5f845e70e247577",
     "cross-platform/patterns/rendering/character-regions/z80.inc": "76ac631ee941b245b143f00e6dfb6d5ee8e4b2a4cb4d93a3a93bddb94c9aaad3",
-    "scripts/verify-character-regions.py": "81f173bff9a942108b923bb043736ee77345059c1c36dbb6c9c5405660a7f731",
+    "scripts/verify-character-regions.py": "d392773dbf6136816a8ceda322f9e7a4a9c957fa6a5bb9f39777ddb167363fd4",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361"
   },
-  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
-  "emulator_sha256": "1cb32eedf980deb18d0b23e38b9142aa3e625bacb0f94d18db6a0eebb28d67e4",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
+  "emulator_sha256": "4f5c61b768dce0a46b5c30d6c5dabb6e0b8730480b73d4c7c836914705d6f134",
   "files": {
     "reject-14.json": "2a74204f997b7a93459d8cae92a6bc12b58e76b3c1d9af734b674103757e7c5d",
     "reject-3.json": "125bbf8a8c73314ca7fc7e4673da918b39151371b0badd4e735c6f25c31720e2",

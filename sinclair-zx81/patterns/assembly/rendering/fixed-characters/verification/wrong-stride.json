@@ -5,7 +5,7 @@
   "variant": "wrong-stride",
   "server": {
     "name": "emu198x-sinclair-zx81",
-    "version": "0.41.0"
+    "version": "0.48.3"
   },
   "flags": [
     129,
@@ -52,7 +52,7 @@
   "firmware_sha256": [
     "14ad84f4243efcd41587ff46ab932d11087043e8d455a1ed2a227b9657828dfa"
   ],
-  "emulator_sha256": "10f64a1fbeff5c1707765e8288dab4417b5f0ca1c8648d6c8a489f78cec43222",
+  "emulator_sha256": "9cdc097b21742b7a123560fc53f82b09fd736c3e28425aca6ce474f706abe4d3",
   "fixture_sha256": "949fa6f144eb6cb585103b049e80a1ab9dba2c31cb99a19cd698afd3a2bc0f61",
   "independent_memory_match": false
 }

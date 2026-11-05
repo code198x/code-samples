@@ -451,26 +451,26 @@
     "fixed-wait-second.png": "56dbc75281d5930186186fca9df5bea682d4382c5e12e6eef48ff3d7f1903c5a"
   },
   "sources": {
-    "atari-800xl/patterns/assembly/framework/turn-loop/Makefile": "c3470cecd314c4c797b004a24f716c8c8577d761fa220282e27de0ff46fb4e48",
+    "atari-800xl/patterns/assembly/framework/turn-loop/Makefile": "cc0f8d9d020acd9b782796cd54454498146a7af6ddf8764f56776064e5561c7e",
     "atari-800xl/patterns/assembly/framework/turn-loop/customise.inc": "29a6c64c6ccd473bec2ecfc31c42287e377a01256a600c99894f9adfa257efaf",
     "atari-800xl/patterns/assembly/framework/turn-loop/demo.asm": "25e27a53cf81058d477cdc95a0168f068f7cf2428dd2ac1cd2b10025b5c9fec2",
     "atari-800xl/patterns/assembly/framework/turn-loop/frame.inc": "b0e7eb53b13a120bdf174af052591a608fae723f1405a09d1f20224f32bfcbf3",
     "atari-800xl/patterns/assembly/framework/turn-loop/loader.py": "47d72d7cbb90f3f6104d50b3d48bf9b3bae668f91fbd94ae79ad479ef964625f",
     "atari-800xl/patterns/assembly/framework/turn-loop/mistakes/no-wait.inc": "671fc9495f9a11d023f5b1e54338959ecb7a1b7a476b07b4e7da01fc078f3ba0",
     "atari-800xl/patterns/assembly/framework/turn-loop/nonzero.inc": "0dcda83ed0374f16d48f6bf07bc616b6b97aa27bae66925c2547483dcc744bf4",
-    "atari-800xl/patterns/assembly/framework/turn-loop/qualification-toolchain.json": "b823ac2e1606c4ba3f0838e4a7b64fd1f0ab7d59a6c25010cc203b49321fcdd3",
+    "atari-800xl/patterns/assembly/framework/turn-loop/qualification-toolchain.json": "a6919b2f52af51746baf02daab2f0120628c341745aecccf15107dca26e21fff",
     "atari-800xl/patterns/assembly/framework/turn-loop/settings.inc": "3210dd66a0751d171e24feb8804579807c4430c6e625388dc7d5966fc67b60f7",
     "atari-800xl/patterns/assembly/framework/turn-loop/wrap.inc": "0da4c7b7b11db18cc16bdaa0a08f10357b8d63f0296debaef16dfa7a3d740032",
     "cross-platform/patterns/framework/atari-turn-loops/edge-filter.inc": "f2a3b0201e5eff4fc008ab9b325457ddb7fe2bd6de48cff122694155aed0fabd",
     "cross-platform/patterns/framework/atari-turn-loops/mistakes/held-as-press.inc": "5970b0dd119d23fc03ea1f85a089fb42b0b04de1f7d94edae8d7bc16ea5f57fd",
-    "cross-platform/patterns/framework/atari-turn-loops/turn.inc": "ad677edf4cd18a41aa72b69353a980edba464135c8d19b17d7d1129640a436fe"
+    "cross-platform/patterns/framework/atari-turn-loops/turn.inc": "29dff7f1ce8806631f515f59176bdc46eb0a2c4a02888693a1e58b94a5ef5d6d"
   },
   "observer_sources": {
     "scripts/verify-xl-coleco-loops.py": "db0535bb029c2d7f34dc3685e9bcd8a78b0bc245a4fc9443a8f5d6532e33b853",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
-  "emulator_sha256": "941eb3229a296e243f5bf9a8ead04fdef5cd9dd7d2ba8ddf9e06735c1f8ebd27",
-  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "emulator_sha256": "a493040ed56479b1701a6baebd2df2330a4956085ebc1cfc6eee01660cc3537c",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "release_tags": {
     "emu198x": "v0.44.1",
     "asm198x": "asm198x-v0.0.71"

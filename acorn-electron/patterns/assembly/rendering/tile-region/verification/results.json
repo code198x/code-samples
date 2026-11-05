@@ -4,16 +4,16 @@
   "calls": 18,
   "isolated_rejections": 15,
   "sources": {
-    "acorn-electron/patterns/assembly/rendering/tile-region/demo.asm": "134ba15db1d7a4963132adb2443a4e3c222eaa965e4cd86a01e19486d08f4009",
-    "cross-platform/patterns/rendering/character-regions/build.py": "1766826a7ba9e9570e10dedece279974daf85ba0595d2e917573f95bcd41f9d2",
-    "cross-platform/patterns/rendering/character-regions/systems.json": "466b493083e91b0f5ed1daa5dc0bfd5e2bd460bae683201cb43bf46f5332a508",
+    "acorn-electron/patterns/assembly/rendering/tile-region/demo.asm": "d1f9e86255ae3764b43b2961da233c99b5dc401a2079398029bc7df3f13d235e",
+    "cross-platform/patterns/rendering/character-regions/build.py": "b826b6028fda94ca977654c1e32742baf4c794c8fba12f21556559e2bd2270f8",
+    "cross-platform/patterns/rendering/character-regions/systems.json": "a39ded876305e5269bbfb07031b1df5a6fe20d04318875aba5f845e70e247577",
     "cross-platform/patterns/rendering/bitmap-regions/6502.inc": "342d459ce58df749876a02cb11af5a78aa9c623c43d5e801dc8f96519f527199",
-    "scripts/verify-character-regions.py": "81f173bff9a942108b923bb043736ee77345059c1c36dbb6c9c5405660a7f731",
+    "scripts/verify-character-regions.py": "d392773dbf6136816a8ceda322f9e7a4a9c957fa6a5bb9f39777ddb167363fd4",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361"
   },
-  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
-  "emulator_sha256": "e11563516deeb748075e4a8b9ec2734909d3743a8ee002de616312d2fe4443cc",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
+  "emulator_sha256": "809a448c39a93c71136d71a6f7aec3227b46c035ddb75e1ef28ddfdcbb56a5c1",
   "files": {
     "reject-14.json": "8905a948b8081d3f1ce007cf7f075fb84dcddf25376878066e7359834dadbd65",
     "reject-3.json": "1916a6515615c9c4d7953306a62cf601f71fce1d4847f2d38d1e79e3c745cb45",

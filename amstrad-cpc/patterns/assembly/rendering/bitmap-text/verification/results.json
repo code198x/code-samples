@@ -4151,7 +4151,7 @@
     "cross-platform/patterns/rendering/bitmap-text/model.py": "cbd0ab77e7f6ebd83d10cfe6c84755fe3ce707ccadd022d7ea600370c041bf31",
     "cross-platform/patterns/rendering/bitmap-text/cases.py": "b559e822d5ecb96633763e80cf722062590971177c86590700cfc360cc629bfe",
     "cross-platform/patterns/rendering/bitmap-text/systems.json": "20969f098fb66dfbef1283437dceded342b23bc2d345d697d02aaa57179b2584",
-    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "4787d21499b7f094684b9259e5d6322e15b129da92e8aa05f59669b1b08de3f1",
+    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "19505583f1acb1492f5afcdee89bf27f0c97c1737379ff76f0d172d21942f291",
     "cross-platform/patterns/rendering/bitmap-text/font.json": "6d78d943cc1e386ba44c79509d39d869dc6aebadd19374d0be445b75bdbb1971",
     "cross-platform/patterns/rendering/bitmap-text/font-z80.inc": "881649d077c75b31eb1f6835b8fafc144512db1fa468f2bc4c778b15e09b08d5",
     "cross-platform/patterns/rendering/bitmap-text/z80.inc": "057e6c9b6fa23310e0006c3e5865e4674ab877de2044dc2dad18d9e36ba422d3",
@@ -4166,8 +4166,8 @@
     "cross-platform/patterns/rendering/geometry/cpc.inc": "d9d6efc67da694e14a2c58fe87b291a3393c5523829822878e31fea830103af7"
   },
   "tools": {
-    "emu198x-amstrad-cpc": "f14170d8453fe0315692c28712826fe449c378b25f3924e39df997897097187b",
-    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emu198x-amstrad-cpc": "af98bd19dfef3f901ad67f7077f7e801b45ee2c12a6b3d73aed37611eebcb43f",
+    "asm198x": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "artifacts": {
     "055-string.dat.z": "4cc74592c58642b8e1db6877bab02731a078abde296f7772da17c7e89d3ca2ff",

@@ -8,7 +8,7 @@
   "variant": "wrong-stride",
   "server": {
     "name": "emu198x-mattel-aquarius",
-    "version": "0.41.0"
+    "version": "0.48.3"
   },
   "flags": [
     129,
@@ -59,7 +59,7 @@
   "firmware_sha256": [
     "0bf4b08b4514f2c437d6f00e13499b6dab0e771c937ea2675df3ec52c8d9f29e"
   ],
-  "emulator_sha256": "1ac7eb676007e84ca8926a02c6cffbc6ad18acd758e4fdf8c2a72683c015e8a7",
+  "emulator_sha256": "4f5c61b768dce0a46b5c30d6c5dabb6e0b8730480b73d4c7c836914705d6f134",
   "fixture_sha256": "60c43f89a4a6383b6d2fdacb294d4abf287b72e20f1fd13400d10232990bfcb7",
   "independent_memory_match": false
 }

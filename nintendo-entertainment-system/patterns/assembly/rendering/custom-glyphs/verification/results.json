@@ -3,8 +3,8 @@
   "variants": {
     "positive": {
       "fixture_sha256": "59b5f11f241776dee04ebe8ed905d1dbc6a9705ed3e514f7b59dfefb1cb1623d",
-      "emulator_sha256": "8fca0c36834bbde0e6e6f466f93049db2c3549d76c650ac28831d2c4c8e38de7",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "2cf174d7cbc870100f1b69bc1e5fd2bd96fa8bfe4ccc0e0401055b6f45f323c1",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 33445,
       "kernel_bytes": 258,
       "cases": [
@@ -442,8 +442,8 @@
     },
     "wrong-slot": {
       "fixture_sha256": "c6ca217e573aa7e6a0ee04eb1885c444d485a2bc16bc2b1ac7ca113d3210da38",
-      "emulator_sha256": "8fca0c36834bbde0e6e6f466f93049db2c3549d76c650ac28831d2c4c8e38de7",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "2cf174d7cbc870100f1b69bc1e5fd2bd96fa8bfe4ccc0e0401055b6f45f323c1",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 33447,
       "kernel_bytes": 260,
       "cases": [
@@ -881,8 +881,8 @@
     },
     "wrong-name": {
       "fixture_sha256": "471f177269fd5177181a117eb5d44bf186bf0d7d9be5155dd10365c13fd397fa",
-      "emulator_sha256": "8fca0c36834bbde0e6e6f466f93049db2c3549d76c650ac28831d2c4c8e38de7",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "2cf174d7cbc870100f1b69bc1e5fd2bd96fa8bfe4ccc0e0401055b6f45f323c1",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 33445,
       "kernel_bytes": 258,
       "cases": [
@@ -1321,8 +1321,8 @@
   },
   "sources": {
     "cross-platform/patterns/rendering/native-glyphs/systems.json": "3d5e2009a65c9061c202122f524a62cc48f5994db4e7d48f1d1e62269ccbbcda",
-    "cross-platform/patterns/rendering/native-glyphs/toolchain.json": "ecce6b336df36686569b620eb316bfdca8250e9d0e43113f91e6e804e7d5fb30",
-    "cross-platform/patterns/rendering/native-glyphs/build.py": "4e3d8fb14ac7867cf211fa31e976fb01d06cfc0c03e53f71b74ae7142f1668c3",
+    "cross-platform/patterns/rendering/native-glyphs/toolchain.json": "21cc055c071a5e2d2e483e7b3f593000c4d13e0c2be930a3904f1d9dce5c45b0",
+    "cross-platform/patterns/rendering/native-glyphs/build.py": "8bc8ad15cf81361df2d58c617c876e757467a9e62834bc3db3543e6272f7500e",
     "cross-platform/patterns/rendering/native-glyphs/model.py": "6255615f711c78d2761a485faf44a6bf339974841e7feeca0ffb76b562ce3525",
     "nintendo-entertainment-system/patterns/assembly/rendering/custom-glyphs/demo.asm": "c4e238100c549b635004f49c1db4e228dfdf5742b784e95ce35c76bb79e62000",
     "nintendo-entertainment-system/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "016197fbab7f661bc27dfdd58b92324ff449926b5443a46b67be9dc4760f1758",

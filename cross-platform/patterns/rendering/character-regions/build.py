@@ -82,7 +82,7 @@ def build(system: str, assembler: str, variant: str = "positive") -> tuple[dict,
     image = out / "fixture.bin"
     image.write_bytes(raw.ljust(c["size"], b"\0"))
     # These are original diagnostic font ROMs, never a claim of writable PET/Aquarius glyphs.
-    glyphs = bytearray(4096 if system != "mattel-aquarius" else 2048)
+    glyphs = bytearray(2048 if system in ("mattel-aquarius", "commodore-pet") else 4096)
     for t in range(4):
         for y in range(8):
             glyphs[t * 8 + y] = sum(

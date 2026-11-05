@@ -5,7 +5,7 @@
     "working": {
       "server": {
         "name": "emu198x-atari-7800",
-        "version": "0.44.0"
+        "version": "0.48.3"
       },
       "states": {
         "initial": 0,
@@ -53,7 +53,7 @@
     "customise": {
       "server": {
         "name": "emu198x-atari-7800",
-        "version": "0.44.0"
+        "version": "0.48.3"
       },
       "states": {
         "initial": 0,
@@ -101,7 +101,7 @@
     "wrap": {
       "server": {
         "name": "emu198x-atari-7800",
-        "version": "0.44.0"
+        "version": "0.48.3"
       },
       "states": {
         "initial": 254,
@@ -149,7 +149,7 @@
     "held-as-press": {
       "server": {
         "name": "emu198x-atari-7800",
-        "version": "0.44.0"
+        "version": "0.48.3"
       },
       "states": {
         "initial": 0,
@@ -197,7 +197,7 @@
     "bad-service": {
       "server": {
         "name": "emu198x-atari-7800",
-        "version": "0.44.0"
+        "version": "0.48.3"
       },
       "states": {
         "initial": 0,
@@ -245,7 +245,7 @@
     "fixed-edge": {
       "server": {
         "name": "emu198x-atari-7800",
-        "version": "0.44.0"
+        "version": "0.48.3"
       },
       "states": {
         "initial": 0,
@@ -293,7 +293,7 @@
     "fixed-service": {
       "server": {
         "name": "emu198x-atari-7800",
-        "version": "0.44.0"
+        "version": "0.48.3"
       },
       "states": {
         "initial": 0,
@@ -341,17 +341,17 @@
   },
   "sources": {
     "atari-7800/patterns/assembly/framework/turn-loop/demo.asm": "fcbc94851dfc3ab45e42b5a7dc21d0444c8cb20ae1466b9932db8e5108140afc",
-    "atari-7800/patterns/assembly/framework/turn-loop/Makefile": "cddf75da1781d3187652236f80676db7b6e955003aa35021627342aa89ddb108",
+    "atari-7800/patterns/assembly/framework/turn-loop/Makefile": "6dcd5135f274f4099f3f201c7f98608523ae09b66b5002834ef85b204f973608",
     "atari-7800/patterns/assembly/framework/turn-loop/settings.inc": "102e3984cff8b906fbdecac6f4ffecf75887e3d10d4306aeef449dbdecb6a6a7",
     "atari-7800/patterns/assembly/framework/turn-loop/customise.inc": "86bf7c493b82cda55dacbf31b88bb190aa6ec38cd49ec3908da5c55f2ad9fb21",
     "atari-7800/patterns/assembly/framework/turn-loop/frame.inc": "67d1275e11ae8caf99de7a3104f6d761d631eb3412d8a999d2837d5fa7d50f80",
     "atari-7800/patterns/assembly/framework/turn-loop/wrap.inc": "b4ea3661999e283e9464291eab12a7c218fdcfd749ca8bcfb3979212dd89f250",
     "atari-7800/patterns/assembly/framework/turn-loop/mistakes/no-wait.inc": "c4312bd221d1cf3e016bf4cee3bc25b95fba662a7421c14c7a008bc60e107112",
     "cross-platform/patterns/framework/atari-turn-loops/edge-filter.inc": "f2a3b0201e5eff4fc008ab9b325457ddb7fe2bd6de48cff122694155aed0fabd",
-    "cross-platform/patterns/framework/atari-turn-loops/turn.inc": "ad677edf4cd18a41aa72b69353a980edba464135c8d19b17d7d1129640a436fe",
+    "cross-platform/patterns/framework/atari-turn-loops/turn.inc": "29dff7f1ce8806631f515f59176bdc46eb0a2c4a02888693a1e58b94a5ef5d6d",
     "cross-platform/patterns/framework/atari-turn-loops/mistakes/held-as-press.inc": "5970b0dd119d23fc03ea1f85a089fb42b0b04de1f7d94edae8d7bc16ea5f57fd",
-    "cross-platform/patterns/framework/atari-turn-loops/toolchain.json": "25f1d7bcd8433772d7f343752c499dc924b66ca72c587afc18195cfdb1e05739",
-    "scripts/verify-atari-turn-loops.py": "9d2edae8a8e884de8cdfd2d451fcb5b943228ae6b9d61b95efb5e1254447d9ea",
+    "cross-platform/patterns/framework/atari-turn-loops/toolchain.json": "281c36465f0b6f56afc8b17f8d9f68f8356a322fb9a8ccd6c0710e8897625117",
+    "scripts/verify-atari-turn-loops.py": "eaedee309cfe90a74f02d73a9d21511a05c203250ad02fb01ddba90f2266239f",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
   "artifacts": {
@@ -422,7 +422,7 @@
     }
   },
   "firmware_sha256": {},
-  "emulator_sha256": "06e16c7a096e22df0b273ce91b7d60fe919d565b680aade9502389879244c30a",
-  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+  "emulator_sha256": "bb10d0d0e7ee1c78c958313b49dee2a0ec8a0fde73839f3d0e82176411c3488b",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "limits": "Named NTSC caller only; 5200 uses pinned BIOS; 7800 reset bypasses BIOS authentication. No original-hardware, PAL, arbitrary workload or deadline qualification."
 }

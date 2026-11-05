@@ -40,15 +40,15 @@ def build(
     ).read_text()
     if variant == "wrong-slot":
         needle, replacement = (
-            ("ld hl,(P+2)\n    add hl,hl", "ld hl,(P+2)\n    inc hl\n    add hl,hl")
+            ("ld hl,(PAT+2)\n    add hl,hl", "ld hl,(PAT+2)\n    inc hl\n    add hl,hl")
             if cfg["cpu"] == "z80"
             else ("lda G+2\n    asl", "lda G+2\n    eor #1\n    asl")
         )
     elif variant == "wrong-name":
         needle, replacement = (
             (
-                "ld hl,(P+8)\n    add hl,hl\n    ld de,$3800",
-                "ld hl,(P+8)\n    add hl,hl\n    ld de,$3801",
+                "ld hl,(PAT+8)\n    add hl,hl\n    ld de,$3800",
+                "ld hl,(PAT+8)\n    add hl,hl\n    ld de,$3801",
             )
             if cfg["cpu"] == "z80"
             else (

@@ -3,7 +3,7 @@
   "machine_id": "coleco-colecovision",
   "server": {
     "name": "emu198x-colecovision",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "configuration": "NTSC ColecoVision, pinned BIOS, title-skipping cartridge",
   "startup_kind": "cartridge-reset",
@@ -35,9 +35,9 @@
   },
   "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
   "binary_sha256": "be10444e6ace2090f5a05b9ecbbe1fb697caa3d724709c07a6a4e354aa0ec4aa",
-  "emulator_sha256": "6f462f1f5d179a2990d8e9d045a43741730c4fe5c0c39927e881041de392f986",
+  "emulator_sha256": "3e704b219967a9452e4504977dfce50220bf1410ec6ce2a19dc821c619555719",
   "sources": {
-    "coleco-colecovision/patterns/assembly/framework/input-loop/demo.asm": "d3c61c3d01b2b3f3d8ae2ec0e34eb28d1a2edb940aa6b61fabc38e5eaec6313d",
+    "coleco-colecovision/patterns/assembly/framework/input-loop/demo.asm": "f2ef31ff5b9765ab1da52f3d6f9f9d8ec3b885e0b3b7c07a8fc49131cca7ec8c",
     "coleco-colecovision/patterns/assembly/framework/input-loop/Makefile": "6c163d6c53fd61c63bde96d6a12f1630b716c3156f9e10359aa054efba7bef02",
     "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",

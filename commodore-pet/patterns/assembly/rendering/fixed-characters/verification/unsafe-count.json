@@ -8,7 +8,7 @@
   "variant": "unsafe-count",
   "server": {
     "name": "emu198x-commodore-pet",
-    "version": "0.41.0"
+    "version": "0.48.3"
   },
   "flags": [
     129,
@@ -53,11 +53,11 @@
   "memory_sha256": "c78edf9d0fe36599575b947e36402ab0a38ba93262682b6be8f710fb22894102",
   "capture_sha256": "e6592426ad33e3a42edce0b6c43fdcc2aff061d8b096318304e70e60c1cc9546",
   "firmware_sha256": [
-    "d066cbc5026c0736fc7d8fbf4023337c15a23cd0365e04f4f94aeb47df46e409",
+    "da3374c21d6ea440cef5f338ce3f524e0a1e40dcb1ef64446c695f92c636f1fa",
     "5b426b5c50350e5d50c4308a81288bb34f310d7384bcc43c66a0e18716a4cdbe",
     "5338b1dffebd695f6110c9995e16f7536bb63a909c2a0062b4789de46904ade9"
   ],
-  "emulator_sha256": "2057d535c9363d08ab0c5ca554a4d09cd9338d9ef147dd842bdff2e27820d470",
-  "fixture_sha256": "860d062fe68a1bae72bcc1f287121e8e473d65ec983c4dfc5e3b733a74e829a9",
+  "emulator_sha256": "3890583fc69030508e89c6d1e79c408d4fdca7373a1686830f389e668ef9aeca",
+  "fixture_sha256": "d1a11e2763cfe921f46aed5cd3cf14eeb656b78497e20f207bc72bc9ad7576f6",
   "independent_memory_match": false
 }

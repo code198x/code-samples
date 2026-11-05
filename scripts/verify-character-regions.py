@@ -144,7 +144,12 @@ def command(c: dict, image: Path, native: Path) -> list[str]:
         str(p / "char.rom"),
     ]
     if c["machine_id"] == "commodore-pet":
-        return cmd + ["--editor", str(p / "editor.rom"), "--columns", "40"]
+        return cmd + [
+            "--editor",
+            str(p / "editor.rom"),
+            "--model",
+            "commodore-pet-2001n-32k",
+        ]
     return cmd + ["--region", "pal", "--ram-expansion", "none"]
 
 

@@ -144,15 +144,19 @@ def execute(c: dict, args: argparse.Namespace, variant: str) -> dict:
             "--kernal",
             str(b / "demo.bin"),
             "--basic",
-            str(fw / "basic.rom"),
+            str(fw / "basic-2.901465-01-02.bin"),
             "--editor",
-            str(fw / "editor.rom"),
+            str(fw / "edit-2-n.901447-24.bin"),
             "--char",
-            str(fw / "char.rom"),
-            "--columns",
-            "40",
+            str(fw / "characters-2.901447-10.bin"),
+            "--model",
+            "commodore-pet-2001n-32k",
         ]
-        roms = [fw / "char.rom", fw / "basic.rom", fw / "editor.rom"]
+        roms = [
+            fw / "characters-2.901447-10.bin",
+            fw / "basic-2.901465-01-02.bin",
+            fw / "edit-2-n.901447-24.bin",
+        ]
     else:
         (b / "bios.rom").write_bytes((b / "demo.bin").read_bytes().ljust(8192, b"\0"))
         cmd += [

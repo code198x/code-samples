@@ -3727,7 +3727,7 @@
     "cross-platform/patterns/rendering/bitmap-text/model.py": "cbd0ab77e7f6ebd83d10cfe6c84755fe3ce707ccadd022d7ea600370c041bf31",
     "cross-platform/patterns/rendering/bitmap-text/cases.py": "b559e822d5ecb96633763e80cf722062590971177c86590700cfc360cc629bfe",
     "cross-platform/patterns/rendering/bitmap-text/systems.json": "20969f098fb66dfbef1283437dceded342b23bc2d345d697d02aaa57179b2584",
-    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "4787d21499b7f094684b9259e5d6322e15b129da92e8aa05f59669b1b08de3f1",
+    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "19505583f1acb1492f5afcdee89bf27f0c97c1737379ff76f0d172d21942f291",
     "cross-platform/patterns/rendering/bitmap-text/font.json": "6d78d943cc1e386ba44c79509d39d869dc6aebadd19374d0be445b75bdbb1971",
     "cross-platform/patterns/rendering/bitmap-text/font-6502.inc": "024889e6291b2040ff2db88f7ffb56db2466f882a648563501a3ec583e5665ba",
     "cross-platform/patterns/rendering/bitmap-text/6502.inc": "4c95430c69d083f0b06824481f0d3553245903c55650af42288105b1a7bd1049",
@@ -3737,13 +3737,13 @@
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
     "cross-platform/patterns/rendering/geometry/model.py": "81848dfb2bab4f8c6ada7f60d736c357791c25508d6f743920a9b4c1cfef5c10",
-    "bbc-micro/patterns/assembly/rendering/bitmap-text/demo.asm": "897752cd30caaa222c5ac7640ad34db6201f8bc53761b221e5778e2d9cf163a9",
+    "bbc-micro/patterns/assembly/rendering/bitmap-text/demo.asm": "1e544e9c531597ce45dc37b2126b2508f519a41508d3ed4a67c4c83973d6e2fa",
     "bbc-micro/patterns/assembly/rendering/bitmap-text/Makefile": "627a0c102ce75dcfcf6bb82fbfbe36680a723b41befefb9796aa4025dd4b42b8",
     "cross-platform/patterns/rendering/drawing-foundations/6502.inc": "b92cebb65b93cd72794a4be4a61b6f734841bb04732c6b2359bc9fc2bb07d1f5"
   },
   "tools": {
-    "emu198x-acorn-bbc-micro": "94e539b3b7642422cd32d4d32dd68b50869e3cab2d014aca3cbdf8c65fdb4f68",
-    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emu198x-acorn-bbc-micro": "cf1bb9edc291ac1fe5d02294d6e877b0041836abb2ee4d0800acb6e371abecfd",
+    "asm198x": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "artifacts": {
     "055-string.dat.z": "857dd827c1a9b4dd625c41336d8e48a045aa3dc9a86495befdf361c465f8b32c",

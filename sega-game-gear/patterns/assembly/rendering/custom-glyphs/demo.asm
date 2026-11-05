@@ -1,6 +1,6 @@
 ; SPDX-License-Identifier: MIT
 ; Original Mode 4 reset caller for sega-game-gear. No OS/BIOS coexistence.
-P equ $c700
+PAT equ $c700
 COMMAND equ $c740
 DUMP_ADDRESS equ COMMAND+4
 BUFFER equ $c000
@@ -11,9 +11,9 @@ start:
     di
     ld sp,$dff0
     ld a,$be
-    ld (P+14),a
+    ld (PAT+14),a
     ld a,$bf
-    ld (P+15),a
+    ld (PAT+15),a
     ld hl,registers
     ld e,0
 register_loop:
@@ -56,21 +56,21 @@ load_colours:
     call pattern_init
 example_install:
     ld hl,original_patterns
-    ld (P),hl
+    ld (PAT),hl
     ld hl,1
-    ld (P+2),hl
+    ld (PAT+2),hl
     ld hl,2
-    ld (P+4),hl
+    ld (PAT+4),hl
     call pattern_install
     ld hl,1
-    ld (P+6),hl
+    ld (PAT+6),hl
     xor a
-    ld (P+10),a
+    ld (PAT+10),a
     ld hl,168
-    ld (P+8),hl
+    ld (PAT+8),hl
     call pattern_select
     ld hl,169
-    ld (P+8),hl
+    ld (PAT+8),hl
     call pattern_select
 ; Diagnostic transport is optional; games call the routine directly.
     xor a
