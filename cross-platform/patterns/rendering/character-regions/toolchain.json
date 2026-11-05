@@ -1,32 +1,32 @@
 [
   {
     "name": "emu198x-acorn-electron-aarch64-apple-darwin.tar.gz",
-    "url": "https://github.com/emu198x/emu198x/releases/download/v0.39.0/emu198x-acorn-electron-aarch64-apple-darwin.tar.gz",
-    "sha256": "463b041d9cd4264c9db9ecbf431ec54bff1eb1b45e3a778142cb39155373bdab",
-    "executable_sha256": "e11563516deeb748075e4a8b9ec2734909d3743a8ee002de616312d2fe4443cc"
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.48.3/emu198x-acorn-electron-aarch64-apple-darwin.tar.gz",
+    "sha256": "6eff8a8b923f9ed039534c5336b044b71e2aaa67907385cfe01d57dacea007fd",
+    "executable_sha256": "809a448c39a93c71136d71a6f7aec3227b46c035ddb75e1ef28ddfdcbb56a5c1"
   },
   {
     "name": "emu198x-commodore-pet-aarch64-apple-darwin.tar.gz",
-    "url": "https://github.com/emu198x/emu198x/releases/download/v0.39.0/emu198x-commodore-pet-aarch64-apple-darwin.tar.gz",
-    "sha256": "32e9baed49597d563f1367698e1769f2ba885433ec2e544eefd36cda5aadb9f4",
-    "executable_sha256": "6ab705a73ec2857d703900884a556b2fda9f9594cd51eafda02c4fd891e7970c"
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.48.3/emu198x-commodore-pet-aarch64-apple-darwin.tar.gz",
+    "sha256": "e7b11e0704ed667ab2ff315541bb25c1cecdcbe38d0c0125a9131d71e333c8a3",
+    "executable_sha256": "3890583fc69030508e89c6d1e79c408d4fdca7373a1686830f389e668ef9aeca"
   },
   {
     "name": "emu198x-commodore-vic-20-aarch64-apple-darwin.tar.gz",
-    "url": "https://github.com/emu198x/emu198x/releases/download/v0.39.0/emu198x-commodore-vic-20-aarch64-apple-darwin.tar.gz",
-    "sha256": "c60468cf1a474b8d3fdd0ef3b4dbe1c69e4aa609ba19b9d745ea73a362a75d72",
-    "executable_sha256": "e1db898b568a50406934f2b378a3b2e78847f2aeb7741cec8bb5e6f178a1bdc6"
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.48.3/emu198x-commodore-vic-20-aarch64-apple-darwin.tar.gz",
+    "sha256": "f3791feff373ee76d7e6bbd86423a561c40b95718a9405e7dba802073d3b4060",
+    "executable_sha256": "97a77625caef4f89f8316ac0cc5e7da795c3a9487bf88fca7c172227da26173d"
   },
   {
     "name": "emu198x-mattel-aquarius-aarch64-apple-darwin.tar.gz",
-    "url": "https://github.com/emu198x/emu198x/releases/download/v0.39.0/emu198x-mattel-aquarius-aarch64-apple-darwin.tar.gz",
-    "sha256": "593692fc3fdeb52e31b635b53cea84cde4e52b6b2a796e29ce430473b73f2ea5",
-    "executable_sha256": "1cb32eedf980deb18d0b23e38b9142aa3e625bacb0f94d18db6a0eebb28d67e4"
+    "url": "https://github.com/emu198x/emu198x/releases/download/v0.48.3/emu198x-mattel-aquarius-aarch64-apple-darwin.tar.gz",
+    "sha256": "7c9a22f3ecd127e7fe6298d76c59351ea9280536ad7b9353e0b236be5df6c7e9",
+    "executable_sha256": "4f5c61b768dce0a46b5c30d6c5dabb6e0b8730480b73d4c7c836914705d6f134"
   },
   {
     "name": "asm198x-aarch64-apple-darwin.tar.xz",
-    "url": "https://github.com/asm198x/asm198x/releases/download/asm198x-v0.0.71/asm198x-aarch64-apple-darwin.tar.xz",
-    "sha256": "97435c1c1aaa349be4d6e1e354030306f7e909e00c14a6f21b2f6d634402978d",
-    "executable_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "url": "https://github.com/asm198x/asm198x/releases/download/asm198x-v0.0.74/asm198x-aarch64-apple-darwin.tar.xz",
+    "sha256": "c04349317f769dc7cfc63b9cad79bdfb8d4f8cc4128853d25f5c8f256f8d06ea",
+    "executable_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   }
 ]

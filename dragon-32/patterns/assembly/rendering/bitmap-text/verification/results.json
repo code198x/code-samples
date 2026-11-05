@@ -3727,7 +3727,7 @@
     "cross-platform/patterns/rendering/bitmap-text/model.py": "cbd0ab77e7f6ebd83d10cfe6c84755fe3ce707ccadd022d7ea600370c041bf31",
     "cross-platform/patterns/rendering/bitmap-text/cases.py": "b559e822d5ecb96633763e80cf722062590971177c86590700cfc360cc629bfe",
     "cross-platform/patterns/rendering/bitmap-text/systems.json": "20969f098fb66dfbef1283437dceded342b23bc2d345d697d02aaa57179b2584",
-    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "4787d21499b7f094684b9259e5d6322e15b129da92e8aa05f59669b1b08de3f1",
+    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "19505583f1acb1492f5afcdee89bf27f0c97c1737379ff76f0d172d21942f291",
     "cross-platform/patterns/rendering/bitmap-text/font.json": "6d78d943cc1e386ba44c79509d39d869dc6aebadd19374d0be445b75bdbb1971",
     "cross-platform/patterns/rendering/bitmap-text/font-6809.inc": "bca0a5d952836d170f0e08095412c7f264046923286c576c9c46af46de8e28ba",
     "cross-platform/patterns/rendering/bitmap-text/6809.inc": "2c624e6d0dcdb82a2ec3c868145296e2281ff79052a45267f0e14909ba3a25d8",
@@ -3742,8 +3742,8 @@
     "cross-platform/patterns/rendering/drawing-foundations/6809.inc": "065ce2d43d07e70f5703251781df72c81012bdd8ed0f3b08e51541a88b33af4b"
   },
   "tools": {
-    "emu198x-dragon": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409",
-    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emu198x-dragon": "501829182338ffe2d61923962c2cb392d04ac476ad25a6e41b01fc8c71173e22",
+    "asm198x": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "artifacts": {
     "055-string.dat.z": "4419143a8f87ea35ecac7ac6bea646a638d09e8812bded5ab71eab64238e365a",

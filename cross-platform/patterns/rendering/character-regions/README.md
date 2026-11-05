@@ -53,7 +53,7 @@ Glyphs come from a fixed character ROM; this component cannot redefine them in s
 
 ## Verification and limits
 
-All four original reset diagnostics execute 18 normal calls each: three accepted draws and fifteen map/bounds/ID rejections. Every rejection is also executed separately after the same three accepted draws: 60 isolated rejection runs. Complete destination allocations, unused tails, colour bits and both mapped guard blocks are compared against independent models. Every native capture pixel is compared with a separate composition, including borders and Electron scaling.
+All four original reset diagnostics execute 18 normal calls each: three accepted draws and fifteen map/bounds/ID rejections. Every rejection is also executed separately after the same three accepted draws: 60 isolated rejection runs. Complete destination allocations, unused tails, colour bits and every mapped guard block are compared against independent models. The PET has one guard, below its screen: a 40-column PET mirrors its 1 KB of screen RAM from $8400 upwards, so there is no separate memory above the screen to guard, and an overrun would land on $8000, which the destination check covers. Every native capture pixel is compared with a separate composition, including borders and Electron scaling.
 
 Both wrong-layout and unsafe-destination controls complete on each machine and fail the same memory checks; wrong-layout captures also fail the pixel oracle. Nonzero per-call markers and a final completion byte distinguish a rejected request from code that never ran.
 
@@ -71,6 +71,6 @@ python3 -m unittest discover -s scripts -p test_character_regions.py -v
 ## Sources
 
 - *The Advanced User Guide for the Acorn Electron*, chapter 14: ULA screen address, mode and palette registers; screen organisation chapters for MODE 4.
-- *PET/CBM Personal Computer Guide* (McGraw-Hill, 1980): display memory, screen codes and character generator. The executed configuration is the emulator's 40-column PET; no 80-column result is transferred.
+- *PET/CBM Personal Computer Guide* (McGraw-Hill, 1980): display memory, screen codes and character generator. The executed configuration is Emu198x's `commodore-pet-2001n-32k`, a 40-column BASIC 2 machine; no 80-column result is transferred.
 - Commodore, *VIC-20 Programmer's Reference Guide*, video register descriptions and user-defined characters: screen/character bases, dimensions and colour RAM. The selected driver uses high-resolution characters and PAL placement.
 - [vdSteenoven's Aquarius technical pages](https://www.vdsteenoven.com/aquarius/), memory allocation and screen/colour discussion. This is a community transcription of Mattel/Radofin material, not a manufacturer manual. Captured output and full memory checks independently establish the selected emulator configuration; original service documentation remains a separate source need.

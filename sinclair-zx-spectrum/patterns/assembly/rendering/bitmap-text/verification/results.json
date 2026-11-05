@@ -3727,7 +3727,7 @@
     "cross-platform/patterns/rendering/bitmap-text/model.py": "cbd0ab77e7f6ebd83d10cfe6c84755fe3ce707ccadd022d7ea600370c041bf31",
     "cross-platform/patterns/rendering/bitmap-text/cases.py": "b559e822d5ecb96633763e80cf722062590971177c86590700cfc360cc629bfe",
     "cross-platform/patterns/rendering/bitmap-text/systems.json": "20969f098fb66dfbef1283437dceded342b23bc2d345d697d02aaa57179b2584",
-    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "4787d21499b7f094684b9259e5d6322e15b129da92e8aa05f59669b1b08de3f1",
+    "cross-platform/patterns/rendering/bitmap-text/toolchain.json": "19505583f1acb1492f5afcdee89bf27f0c97c1737379ff76f0d172d21942f291",
     "cross-platform/patterns/rendering/bitmap-text/font.json": "6d78d943cc1e386ba44c79509d39d869dc6aebadd19374d0be445b75bdbb1971",
     "cross-platform/patterns/rendering/bitmap-text/font-z80.inc": "881649d077c75b31eb1f6835b8fafc144512db1fa468f2bc4c778b15e09b08d5",
     "cross-platform/patterns/rendering/bitmap-text/z80.inc": "057e6c9b6fa23310e0006c3e5865e4674ab877de2044dc2dad18d9e36ba422d3",
@@ -3743,8 +3743,8 @@
     "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02"
   },
   "tools": {
-    "emu198x-spectrum": "f744a6fa42c031e8ab1f2e46e1c6ef382540cec3e93ce2160cb93be9c107c519",
-    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emu198x-spectrum": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167",
+    "asm198x": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "artifacts": {
     "055-string.dat.z": "775500e3d8ddd1398b0fe46a442836e5237944799a98679f975edd710c1531e6",

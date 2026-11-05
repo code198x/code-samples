@@ -6348,7 +6348,7 @@
     "cross-platform/patterns/rendering/geometry/model.py": "81848dfb2bab4f8c6ada7f60d736c357791c25508d6f743920a9b4c1cfef5c10",
     "cross-platform/patterns/rendering/geometry/cases.py": "8439df2b4300b7722791512958fc6a5f6e7cab46410d9fa88e9a2dbc67e45f92",
     "cross-platform/patterns/rendering/geometry/systems.json": "a2c38fe429c6ca41de8170f14cb14ffaeb760d67e5edfa676a22cfc1fe01d491",
-    "cross-platform/patterns/rendering/geometry/toolchain.json": "4787d21499b7f094684b9259e5d6322e15b129da92e8aa05f59669b1b08de3f1",
+    "cross-platform/patterns/rendering/geometry/toolchain.json": "19505583f1acb1492f5afcdee89bf27f0c97c1737379ff76f0d172d21942f291",
     "cross-platform/patterns/rendering/geometry/LICENSE-Zingl.txt": "103e64c39d88be0a05a9337dda24d152ec5642b5e326e0edf7524e06feb1b4bc",
     "cross-platform/patterns/rendering/geometry/arithmetic-bound.json": "be4a8d3be9560812efdd14aafc7b8194169bb7bf1e313835b4d3cd8587150dda",
     "cross-platform/patterns/rendering/geometry/6502.inc": "917d79a43097cc1845f69bd40765e62eae5306bdf71d80d3fe6267d31d744dc5",
@@ -6357,13 +6357,13 @@
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
     "scripts/verify-geometry-arithmetic.py": "05431ae4adfc2f83fb4af5349de3f3aabc825f9d109f5693b9e3a86cee2733d7",
-    "bbc-micro/patterns/assembly/rendering/geometry/demo.asm": "23cfe25ba708d8fa9ffc9d15fb4f00d9ac6367ffcde87c4cbbfe7bf1dc7c76cf",
+    "bbc-micro/patterns/assembly/rendering/geometry/demo.asm": "9045771b42d9523762bb38789b6630ec08a304e3cd361f803c1264b7998732d9",
     "bbc-micro/patterns/assembly/rendering/geometry/Makefile": "86adb4c0446939ccff1647f06ea9492ae9dc6221eea9273b3e51cd82783f557a",
     "cross-platform/patterns/rendering/drawing-foundations/6502.inc": "b92cebb65b93cd72794a4be4a61b6f734841bb04732c6b2359bc9fc2bb07d1f5"
   },
   "tool_identity": {
-    "emu198x-acorn-bbc-micro": "94e539b3b7642422cd32d4d32dd68b50869e3cab2d014aca3cbdf8c65fdb4f68",
-    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emu198x-acorn-bbc-micro": "cf1bb9edc291ac1fe5d02294d6e877b0041836abb2ee4d0800acb6e371abecfd",
+    "asm198x": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "artifacts": {
     "196-fill_ellipse.dat.z": "332f213382807ef965fe2bed2e67e694120d709616cc4b765397c43e74af1ec4",

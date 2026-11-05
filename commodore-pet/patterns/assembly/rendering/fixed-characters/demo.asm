@@ -1,5 +1,5 @@
 *=$f000
-FC=$0070
+FC=$70
 start:
     sei
     cld
@@ -9,6 +9,8 @@ start:
     sta $e880
     lda #$20
     sta $e881
+    lda #12             ; VIA PCR: CA2 low selects the graphics character set
+    sta $e84c
     ldx #0
     lda #32
 clear_screen:

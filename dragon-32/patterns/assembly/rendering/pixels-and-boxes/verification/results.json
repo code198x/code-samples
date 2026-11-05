@@ -1237,8 +1237,8 @@
       ]
     ],
     "fixture_sha256": "8561a400b8bba86764bdb821d32c5aabc2044d44b0595a9ae76da9e3f7cb962b",
-    "emulator_sha256": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409",
-    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emulator_sha256": "501829182338ffe2d61923962c2cb392d04ac476ad25a6e41b01fc8c71173e22",
+    "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "fault": {
     "cases": [
@@ -2478,8 +2478,8 @@
       ]
     ],
     "fixture_sha256": "9d39df5f6ca9ae3eaefbc179c10de00ed05467b14dc104dd40a16cb233cebe1b",
-    "emulator_sha256": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409",
-    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emulator_sha256": "501829182338ffe2d61923962c2cb392d04ac476ad25a6e41b01fc8c71173e22",
+    "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "sources": {
     "dragon-32/patterns/assembly/rendering/pixels-and-boxes/demo.asm": "61153bbba3054a4ad530fc32cfc9fc6bc6f92d5f052d9806d93f6b5cf4899526",
@@ -2489,7 +2489,7 @@
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
     "scripts/check-drawing-foundations.py": "28232108802302350e0a0eca9a1f0d2303c19ffecfcb6468ceeb097485a734b7",
-    "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "7be0fe1dc788fd97ffacded1bd6b4fb0d5b80105dee976831baea8b6bf71565e",
+    "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "a93022104e97dff80ef02e6db062140acd1e05711414efb4254a040403826ff3",
     "cross-platform/patterns/rendering/drawing-foundations/6809.inc": "065ce2d43d07e70f5703251781df72c81012bdd8ed0f3b08e51541a88b33af4b"
   },
   "artifacts": {

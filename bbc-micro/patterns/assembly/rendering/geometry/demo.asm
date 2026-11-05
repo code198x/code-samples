@@ -7,7 +7,7 @@ GEO_PEN_MAX=255
 ; SPDX-License-Identifier: MIT
 ; Original reset fixture; mailbox is verification transport, not a game loop.
 *=$c000
-BP=$0040
+BP=$40
 COMMAND=$0300
 PIXEL_WIDTH=320
 PIXEL_HEIGHT=256

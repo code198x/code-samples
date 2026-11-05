@@ -181,9 +181,9 @@
       "version": "0.38.3"
     },
     "coleco-colecovision": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "253beb8a7c6f6fcb4aca0f2a169cbd359a34b9413334be5696d1c2179f7f19b9",
-      "version": "0.38.3"
+      "commit": "32c46c10f2b4777ad63d4d12f1ac9b65451c731c",
+      "sha256": "3e704b219967a9452e4504977dfce50220bf1410ec6ce2a19dc821c619555719",
+      "release": "v0.48.3"
     },
     "commodore-amiga": {
       "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
@@ -557,7 +557,7 @@
       "kind": "hardware",
       "path": "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound",
       "record": "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "2158b3d78b365321f364b2db01515f8891d0a7097ccb4534444dd8015eae7d99",
+      "record_sha256": "98168e73ad7bc8ec175962795fdae1ff47aac08e430b07aaa5ada0348dd6ad18",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"

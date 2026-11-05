@@ -3,8 +3,8 @@
   "variants": {
     "positive": {
       "fixture_sha256": "8d7b61caaf332bedb3da34b9699f38a89c8e7e9430ecfc2a2a08d7834632796f",
-      "emulator_sha256": "8740bb7b763d2a3cfb71af6ddee513b8dd9486e57c5887c4c383b0360c9cf13a",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 61440,
       "kernel_bytes": 238,
       "cases": [
@@ -442,8 +442,8 @@
     },
     "wrong-slot": {
       "fixture_sha256": "a6471b13ed8efebce9ad16d32f5f7cfb47858fc4cbbdc3810a68bf1f5bcd0d09",
-      "emulator_sha256": "8740bb7b763d2a3cfb71af6ddee513b8dd9486e57c5887c4c383b0360c9cf13a",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 61440,
       "kernel_bytes": 240,
       "cases": [
@@ -881,8 +881,8 @@
     },
     "wrong-name": {
       "fixture_sha256": "e445cfd15cc9119b3942b474171f2bc067e673f9cbd9561ded32b5c5c4a64d91",
-      "emulator_sha256": "8740bb7b763d2a3cfb71af6ddee513b8dd9486e57c5887c4c383b0360c9cf13a",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 61440,
       "kernel_bytes": 238,
       "cases": [
@@ -1321,8 +1321,8 @@
   },
   "sources": {
     "cross-platform/patterns/rendering/native-glyphs/systems.json": "3d5e2009a65c9061c202122f524a62cc48f5994db4e7d48f1d1e62269ccbbcda",
-    "cross-platform/patterns/rendering/native-glyphs/toolchain.json": "ecce6b336df36686569b620eb316bfdca8250e9d0e43113f91e6e804e7d5fb30",
-    "cross-platform/patterns/rendering/native-glyphs/build.py": "4e3d8fb14ac7867cf211fa31e976fb01d06cfc0c03e53f71b74ae7142f1668c3",
+    "cross-platform/patterns/rendering/native-glyphs/toolchain.json": "21cc055c071a5e2d2e483e7b3f593000c4d13e0c2be930a3904f1d9dce5c45b0",
+    "cross-platform/patterns/rendering/native-glyphs/build.py": "8bc8ad15cf81361df2d58c617c876e757467a9e62834bc3db3543e6272f7500e",
     "cross-platform/patterns/rendering/native-glyphs/model.py": "6255615f711c78d2761a485faf44a6bf339974841e7feeca0ffb76b562ce3525",
     "commodore-64/patterns/assembly/rendering/custom-glyphs/demo.asm": "e2cf9a52ad0cdaff44e72d794ad00fb576cfc98252f9b9c8e47632d1f650ed75",
     "commodore-64/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "5f492504afc8856afac1f6816f6469ee7f40ce07c0140251b329674fadafa6a5",

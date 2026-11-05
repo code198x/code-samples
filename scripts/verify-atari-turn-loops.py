@@ -84,6 +84,8 @@ def run(system: str, tools: Path, firmware_root: Path) -> dict[str, Any]:
                     str(tools / "asm198x"),
                     "--dialect",
                     "acme",
+                    "-I",
+                    ".",
                     "demo.asm",
                     f"--sym={sym}",
                     "-o",
@@ -98,7 +100,12 @@ def run(system: str, tools: Path, firmware_root: Path) -> dict[str, Any]:
             executable = tools / f"emu198x-{system}"
             command = [str(executable), "--mcp", "--cart", str(cart)]
             if system == "atari-5200":
-                command += ["--bios", str(firmware_root / "atari-5200/5200.rom")]
+                command += [
+                    "--board",
+                    "ca018087",
+                    "--bios",
+                    str(firmware_root / "atari-5200/5200.rom"),
+                ]
             machine = T.Machine(command)
             try:
 

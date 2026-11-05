@@ -6348,7 +6348,7 @@
     "cross-platform/patterns/rendering/geometry/model.py": "81848dfb2bab4f8c6ada7f60d736c357791c25508d6f743920a9b4c1cfef5c10",
     "cross-platform/patterns/rendering/geometry/cases.py": "8439df2b4300b7722791512958fc6a5f6e7cab46410d9fa88e9a2dbc67e45f92",
     "cross-platform/patterns/rendering/geometry/systems.json": "a2c38fe429c6ca41de8170f14cb14ffaeb760d67e5edfa676a22cfc1fe01d491",
-    "cross-platform/patterns/rendering/geometry/toolchain.json": "4787d21499b7f094684b9259e5d6322e15b129da92e8aa05f59669b1b08de3f1",
+    "cross-platform/patterns/rendering/geometry/toolchain.json": "19505583f1acb1492f5afcdee89bf27f0c97c1737379ff76f0d172d21942f291",
     "cross-platform/patterns/rendering/geometry/LICENSE-Zingl.txt": "103e64c39d88be0a05a9337dda24d152ec5642b5e326e0edf7524e06feb1b4bc",
     "cross-platform/patterns/rendering/geometry/arithmetic-bound.json": "be4a8d3be9560812efdd14aafc7b8194169bb7bf1e313835b4d3cd8587150dda",
     "cross-platform/patterns/rendering/geometry/z80.inc": "d7d1490802885905068f20b5d8cb3f667452ccd698c509f0de713d819735c96b",
@@ -6363,8 +6363,8 @@
     "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02"
   },
   "tool_identity": {
-    "emu198x-spectrum": "f744a6fa42c031e8ab1f2e46e1c6ef382540cec3e93ce2160cb93be9c107c519",
-    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emu198x-spectrum": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167",
+    "asm198x": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "artifacts": {
     "196-fill_ellipse.dat.z": "dbf62309f9c72b22fdd9d4970fa805eefe62bdd1b04a34b0fc3664be4fed5a7e",

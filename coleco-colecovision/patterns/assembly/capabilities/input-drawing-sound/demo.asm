@@ -73,4 +73,4 @@ nmi_return:
     retn
     include "picture.inc"
     include "sound.inc"
-    defs $10000-$,0
+    defs 65536-$,0

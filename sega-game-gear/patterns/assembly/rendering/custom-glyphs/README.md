@@ -1,6 +1,6 @@
 # Game Gear Mode 4: reusable character pictures
 
-Include `glyphs.inc`, reserve P (32 RAM bytes), establish the caller-owned video/interrupt policy, then call the init/install/select/replace entries directly. The complete `demo.asm` shows setup and `example_install`; its mailbox is optional evidence transport.
+Include `glyphs.inc`, reserve PAT (32 RAM bytes), establish the caller-owned video/interrupt policy, then call the init/install/select/replace entries directly. The complete `demo.asm` shows setup and `example_install`; its mailbox is optional evidence transport.
 
 Read the [complete contract, encoding, costs, boundaries and references](../../../../../cross-platform/patterns/rendering/native-glyphs/README.md) before combining this with another renderer. This is a specific allocation, not an OS-safe universal font routine.
 

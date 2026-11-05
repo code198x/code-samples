@@ -1,5 +1,5 @@
 *=$f000
-NR=$0070
+NR=$70
 RESULT=$0300
 MAP=$04f0
 MAP_W=12
@@ -19,6 +19,8 @@ start:
     sta $e880
     lda #$20
     sta $e881
+    lda #12             ; VIA PCR: CA2 low selects the graphics character set
+    sta $e84c
     lda #<$8000
     sta NR+20
     lda #>$8000
@@ -46,19 +48,6 @@ clear_tail_1:
     iny
     cpy #16
     bne clear_tail_1
-    lda #<$8400
-    sta NR+20
-    lda #>$8400
-    sta NR+21
-    ldx #0
-    lda #165
-    ldy #0
-clear_2:
-clear_tail_2:
-    sta (NR+20),y
-    iny
-    cpy #16
-    bne clear_tail_2
     ldx #95
 copy_map:
     lda initial_map,x

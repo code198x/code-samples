@@ -68,4 +68,4 @@ unused_rst:
     ret
 nmi_return:
     retn
-    defs $10000-$,0
+    defs 65536-$,0

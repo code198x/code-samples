@@ -60,9 +60,9 @@ known zero padding, rejects nonempty undeclared data and writes exactly 32,784 b
 It does not turn CHR-ROM into RAM by deleting data. Tests reject contradictory headers
 and discarded assets.
 
-## Sega: the 32-byte P context
+## Sega: the 32-byte PAT context
 
-Define P in private RAM, then include the machine's `glyphs.inc`. Both wrappers
+Define PAT in private RAM, then include the machine's `glyphs.inc`. Both wrappers
 include `mode4.inc` unchanged. All words are little endian.
 
 | Offset | Field |

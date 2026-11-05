@@ -6348,7 +6348,7 @@
     "cross-platform/patterns/rendering/geometry/model.py": "81848dfb2bab4f8c6ada7f60d736c357791c25508d6f743920a9b4c1cfef5c10",
     "cross-platform/patterns/rendering/geometry/cases.py": "8439df2b4300b7722791512958fc6a5f6e7cab46410d9fa88e9a2dbc67e45f92",
     "cross-platform/patterns/rendering/geometry/systems.json": "a2c38fe429c6ca41de8170f14cb14ffaeb760d67e5edfa676a22cfc1fe01d491",
-    "cross-platform/patterns/rendering/geometry/toolchain.json": "4787d21499b7f094684b9259e5d6322e15b129da92e8aa05f59669b1b08de3f1",
+    "cross-platform/patterns/rendering/geometry/toolchain.json": "19505583f1acb1492f5afcdee89bf27f0c97c1737379ff76f0d172d21942f291",
     "cross-platform/patterns/rendering/geometry/LICENSE-Zingl.txt": "103e64c39d88be0a05a9337dda24d152ec5642b5e326e0edf7524e06feb1b4bc",
     "cross-platform/patterns/rendering/geometry/arithmetic-bound.json": "be4a8d3be9560812efdd14aafc7b8194169bb7bf1e313835b4d3cd8587150dda",
     "cross-platform/patterns/rendering/geometry/6809.inc": "6080ac9cf5ffbc344e161c97dc19d4922ca81bb68516ce38d06559c61dd29d70",
@@ -6362,8 +6362,8 @@
     "cross-platform/patterns/rendering/drawing-foundations/6809.inc": "065ce2d43d07e70f5703251781df72c81012bdd8ed0f3b08e51541a88b33af4b"
   },
   "tool_identity": {
-    "emu198x-dragon": "750278a713e2a152b09e762a6912e1f7f5f64a087a3a3d31e3d0c2a201ced409",
-    "asm198x": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "emu198x-dragon": "501829182338ffe2d61923962c2cb392d04ac476ad25a6e41b01fc8c71173e22",
+    "asm198x": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "artifacts": {
     "196-fill_ellipse.dat.z": "3eecec069546d3811de83bb60d571ae84e717c25d2dac99ab8e56c7f7e8572de",

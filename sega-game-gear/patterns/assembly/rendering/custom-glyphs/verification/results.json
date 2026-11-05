@@ -3,8 +3,8 @@
   "variants": {
     "positive": {
       "fixture_sha256": "7a88ecc74255f2e1f21ec2715074a72618601fec3d3c16ce8ce0d5e3c2601471",
-      "emulator_sha256": "c257dcb7bfadfcdd013865c7bde39f21fc6b17a1269ee8bb61ae5058f29d69c0",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "103642b97e52d761c075695ac5b67992f3c93385b9493eb4b8736a02eb97e926",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 8192,
       "kernel_bytes": 239,
       "cases": [
@@ -875,8 +875,8 @@
     },
     "wrong-slot": {
       "fixture_sha256": "c632af5ec2ede99e6e7fba4aa360ae29e9489a47ba9270fe096a2918bf4d41f1",
-      "emulator_sha256": "c257dcb7bfadfcdd013865c7bde39f21fc6b17a1269ee8bb61ae5058f29d69c0",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "103642b97e52d761c075695ac5b67992f3c93385b9493eb4b8736a02eb97e926",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 8192,
       "kernel_bytes": 240,
       "cases": [
@@ -1747,8 +1747,8 @@
     },
     "wrong-name": {
       "fixture_sha256": "cc1d95cb164489d3121a7253057a9f2d41fdac1fdc41b08b90e6917204ce8188",
-      "emulator_sha256": "c257dcb7bfadfcdd013865c7bde39f21fc6b17a1269ee8bb61ae5058f29d69c0",
-      "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
+      "emulator_sha256": "103642b97e52d761c075695ac5b67992f3c93385b9493eb4b8736a02eb97e926",
+      "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
       "bulk_address": 8192,
       "kernel_bytes": 239,
       "cases": [
@@ -2620,12 +2620,12 @@
   },
   "sources": {
     "cross-platform/patterns/rendering/native-glyphs/systems.json": "3d5e2009a65c9061c202122f524a62cc48f5994db4e7d48f1d1e62269ccbbcda",
-    "cross-platform/patterns/rendering/native-glyphs/toolchain.json": "ecce6b336df36686569b620eb316bfdca8250e9d0e43113f91e6e804e7d5fb30",
-    "cross-platform/patterns/rendering/native-glyphs/build.py": "4e3d8fb14ac7867cf211fa31e976fb01d06cfc0c03e53f71b74ae7142f1668c3",
+    "cross-platform/patterns/rendering/native-glyphs/toolchain.json": "21cc055c071a5e2d2e483e7b3f593000c4d13e0c2be930a3904f1d9dce5c45b0",
+    "cross-platform/patterns/rendering/native-glyphs/build.py": "8bc8ad15cf81361df2d58c617c876e757467a9e62834bc3db3543e6272f7500e",
     "cross-platform/patterns/rendering/native-glyphs/model.py": "6255615f711c78d2761a485faf44a6bf339974841e7feeca0ffb76b562ce3525",
-    "sega-game-gear/patterns/assembly/rendering/custom-glyphs/demo.asm": "84b8bf152ffadd4badebc38d87f41e17ae768f88201b088485b0f17f5848c36f",
-    "sega-game-gear/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "fd0ef99f2eda1bc3b03148e5645307b3db02c1b8d7ad02e31ab9c4b9644be3c0",
-    "cross-platform/patterns/rendering/native-glyphs/mode4.inc": "53f41493fd6d6236e381b1763e35e66dcf51ac5d8563348eeb14b0842e12fa96",
+    "sega-game-gear/patterns/assembly/rendering/custom-glyphs/demo.asm": "bd5510d95b6546ed511104e0ff042dfce7415a0c519e173295ad878a7deb747b",
+    "sega-game-gear/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "efda8929abc89239487b513b4ed309bff19582031ab2b65c7e8541c80f0f4b36",
+    "cross-platform/patterns/rendering/native-glyphs/mode4.inc": "809d36c4429d5559ce2b3943a6995538b296ffa3263461cd81205207265e5ae6",
     "scripts/verify-native-glyphs.py": "5343a154af9dcd9786fc683a5c9e06a5cdda3940d7deceeffda7c5b085ca925f",
     "scripts/check-native-glyphs.py": "67986c349630e2a1978af839401492f9c739bbe6b498dc3006a2ea530339965d",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",

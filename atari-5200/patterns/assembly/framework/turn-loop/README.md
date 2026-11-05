@@ -1,7 +1,7 @@
 # Atari 5200: keep the picture running while turns wait
 
 Build with `make` using Asm198x, then start `build/demo.bin`.
-Qualified startup: NTSC 32 KiB cartridge handed over by the identified 5200 BIOS. No original hardware or PAL claim.
+Qualified startup: NTSC 32 KiB cartridge handed over by the identified 5200 BIOS, on the emulated original four-port board (CA018087). No original hardware, other board or PAL claim.
 
 ## Reuse
 

@@ -4,16 +4,16 @@
   "calls": 18,
   "isolated_rejections": 15,
   "sources": {
-    "commodore-vic-20/patterns/assembly/rendering/tile-region/demo.asm": "b4cda8f38692f75691d1a795b27a070dcdd0a1b2b5f2e8cdd86340ba91da9514",
-    "cross-platform/patterns/rendering/character-regions/build.py": "1766826a7ba9e9570e10dedece279974daf85ba0595d2e917573f95bcd41f9d2",
-    "cross-platform/patterns/rendering/character-regions/systems.json": "466b493083e91b0f5ed1daa5dc0bfd5e2bd460bae683201cb43bf46f5332a508",
+    "commodore-vic-20/patterns/assembly/rendering/tile-region/demo.asm": "6efe491f6d6f6488d10e6b61daf34efc9db4be16d85fda9df6823269362f16b6",
+    "cross-platform/patterns/rendering/character-regions/build.py": "b826b6028fda94ca977654c1e32742baf4c794c8fba12f21556559e2bd2270f8",
+    "cross-platform/patterns/rendering/character-regions/systems.json": "a39ded876305e5269bbfb07031b1df5a6fe20d04318875aba5f845e70e247577",
     "cross-platform/patterns/rendering/character-regions/6502.inc": "ee11d97fbf84f85ef7e8130bd10a911108830ab543295a3fdd7bb4c6fecfa175",
-    "scripts/verify-character-regions.py": "81f173bff9a942108b923bb043736ee77345059c1c36dbb6c9c5405660a7f731",
+    "scripts/verify-character-regions.py": "d392773dbf6136816a8ceda322f9e7a4a9c957fa6a5bb9f39777ddb167363fd4",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361"
   },
-  "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
-  "emulator_sha256": "e1db898b568a50406934f2b378a3b2e78847f2aeb7741cec8bb5e6f178a1bdc6",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
+  "emulator_sha256": "97a77625caef4f89f8316ac0cc5e7da795c3a9487bf88fca7c172227da26173d",
   "files": {
     "reject-14.json": "fb1873166dd2a28acbc3c76307a596e1845f13ecc43aec053c4baea906955a27",
     "reject-3.json": "c1f149df7f272c55df1d8562985d4957c40fe2a1b0dba1d8226d0740dbdcc1ad",

@@ -176,7 +176,7 @@
     "pixel_faults": 0,
     "fixture_sha256": "93b943e909704ebe7081d06378017dbf3c6251c334c75807446059765bbbb197",
     "emulator_sha256": "a6bc980cbfda17db144c8bc129c2a785c3ace7644f7ad30a96a05dd3088dc500",
-    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "fault": {
     "cases": [
@@ -355,7 +355,7 @@
     "pixel_faults": 5,
     "fixture_sha256": "393b4b22ec09af1532f66925d43d800ed5dc5bcab3b5de8189d8209f7b0bed19",
     "emulator_sha256": "a6bc980cbfda17db144c8bc129c2a785c3ace7644f7ad30a96a05dd3088dc500",
-    "assembler_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244"
+    "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
   },
   "sources": {
     "msx/patterns/assembly/rendering/custom-glyphs/demo.asm": "f858997be1a907ec391c231a53bb36775d3338ea90df729fa70e751c62b60cd6",
@@ -365,7 +365,7 @@
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-tilemaps.py": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
     "scripts/check-drawing-foundations.py": "28232108802302350e0a0eca9a1f0d2303c19ffecfcb6468ceeb097485a734b7",
-    "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "7be0fe1dc788fd97ffacded1bd6b4fb0d5b80105dee976831baea8b6bf71565e",
+    "cross-platform/patterns/rendering/drawing-foundations/toolchain.json": "a93022104e97dff80ef02e6db062140acd1e05711414efb4254a040403826ff3",
     "msx/patterns/assembly/rendering/custom-glyphs/glyphs.inc": "bb7eea6ec18c814694a8380d81c99f93bfc7bd0986aba8a9639bb883235ab816"
   },
   "artifacts": {
