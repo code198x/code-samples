@@ -31,9 +31,6 @@ class RecordGuards(unittest.TestCase):
             for fault in (
                 "no-cases",
                 "missing-case",
-                "no-sources",
-                "wrong-source",
-                "no-observer",
                 "wrong-machine",
                 "no-images",
                 "wrong-tool",
@@ -47,12 +44,6 @@ class RecordGuards(unittest.TestCase):
                     record["cases"] = {}
                 elif fault == "missing-case":
                     del record["cases"]["fixed"]
-                elif fault == "no-sources":
-                    record["sources"] = {}
-                elif fault == "wrong-source":
-                    record["sources"][next(iter(record["sources"]))] = "0" * 64
-                elif fault == "no-observer":
-                    record["observer_sources"] = {}
                 elif fault == "wrong-machine":
                     record["machine_id"] = "other"
                 elif fault == "no-images":
@@ -72,6 +63,35 @@ class RecordGuards(unittest.TestCase):
                     self.assertRaises(ValueError),
                 ):
                     C.check(system, record)
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A record claiming other program bytes or text is caught by the rebuild."""
+        for system in C.SYSTEMS:
+            record = json.loads(
+                (C.folder_for(system) / "verification/results.json").read_text()
+            )
+            record["cases"]["nonzero"]["program_sha256"] = "0" * 64
+            message = (
+                "^Typed program differs"
+                if system in ("bbc-micro", "acorn-electron")
+                else "^Program bytes differ"
+            )
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, message),
+            ):
+                C.check(system, record)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or observer digests alone do not make a record stale."""
+        for system in C.SYSTEMS:
+            record = json.loads(
+                (C.folder_for(system) / "verification/results.json").read_text()
+            )
+            record["sources"] = dict.fromkeys(record["sources"], "0" * 64)
+            record["observer_sources"] = {}
+            with self.subTest(system=system):
+                C.check(system, record)
 
 
 if __name__ == "__main__":
