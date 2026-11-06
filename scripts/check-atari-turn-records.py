@@ -1,4 +1,9 @@
-"""Check retained Atari observations and inputs, without fresh machine execution."""
+"""Check retained Atari observations and programs, without fresh machine execution.
+
+A record is stale when a variant's cartridge bytes change: each is rebuilt
+through the recorder's build() with the Asm198x release the record pins and
+compared with its recorded digest. Source and script digests are provenance.
+"""
 
 from __future__ import annotations
 
@@ -16,6 +21,12 @@ if SPEC is None or SPEC.loader is None:
     raise RuntimeError("Cannot load verifier")
 V = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(V)
+_E = importlib.util.spec_from_file_location(
+    "atari_turn_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def require(value: bool, message: str) -> None:
@@ -32,26 +43,6 @@ def check(system: str, record: dict[str, Any] | None = None, root: Path = ROOT) 
         record["status"] == "passed" and record["machine_id"] == system,
         "Wrong machine/status",
     )
-    inputs = {
-        str(p.relative_to(root))
-        for p in folder.rglob("*")
-        if p.is_file()
-        and "verification" not in p.parts
-        and "build" not in p.parts
-        and (p.suffix in [".asm", ".inc"] or p.name == "Makefile")
-    }
-    inputs |= {str(p.relative_to(root)) for p in (root / V.SHARED).rglob("*.inc")}
-    inputs |= {
-        str(V.SHARED / "toolchain.json"),
-        "scripts/verify-atari-turn-loops.py",
-        "scripts/verify-game-loops.py",
-    }
-    require(set(record["sources"]) == inputs, "Incomplete source bindings")
-    for name, digest in record["sources"].items():
-        require(
-            hashlib.sha256((root / name).read_bytes()).hexdigest() == digest,
-            "Changed source " + name,
-        )
     require(set(record["variants"]) == set(V.VARIANTS), "Missing completed variant")
     require(set(record["binaries"]) == set(V.VARIANTS), "Missing executable identity")
     expected_images = {
@@ -113,6 +104,21 @@ def check(system: str, record: dict[str, Any] | None = None, root: Path = ROOT) 
             "Invalid binary identity",
         )
         require(binary["routine_bytes"] > 0, "No compiled routine")
+    extension = V.SYSTEMS[system][1]
+    for variant in V.VARIANTS:
+        output = f"build/evidence/{variant}.{extension}"
+        E.require_program(
+            E.function(
+                root / "scripts/verify-atari-turn-loops.py",
+                "build",
+                (system, E.ASSEMBLER, variant, "build/evidence"),
+                folder,
+                (output,),
+            ),
+            output,
+            record["assembler_sha256"],
+            recorded_sha256=record["binaries"][variant]["sha256"],
+        )
     for fixed in ["fixed-edge", "fixed-service"]:
         require(
             record["binaries"][fixed] == record["binaries"]["working"],
