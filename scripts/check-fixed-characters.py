@@ -1,7 +1,13 @@
-"""Validate retained calls, source bindings, images and independent destinations.
+"""Validate retained calls, rebuilt programs, images and independent destinations.
 
 Fresh font-pixel qualification needs the locally supplied firmware; this check
 checks retained hashes and destination semantics, not a fresh emulator run.
+
+A record is stale when its program's bytes change: each variant's driver is
+rebuilt through the recorder's own build() with the Asm198x release the
+record pins and compared with its fixture_sha256. The ZX80 and ZX81 callers
+are typed in, so caller.bas text is part of their program (rule 2). Other
+source digests are provenance only.
 """
 
 from __future__ import annotations
@@ -17,6 +23,12 @@ spec = importlib.util.spec_from_file_location("model", SHARED / "model.py")
 assert spec and spec.loader
 M = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(M)
+SPEC = importlib.util.spec_from_file_location(
+    "fixed_character_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
 
 
 def sha(p: Path) -> str:
@@ -51,19 +63,26 @@ def validate(root: Path = ROOT) -> int:
                 and r["independent_memory_match"] == same
             )
             assert r["pixel_match"] == (variant == "positive")
-            if variant == "positive":
-                required = [
-                    p / "demo.asm",
-                    p / "characters.inc",
+            # The record is stale when its program's bytes change, not its sources' text.
+            E.require_program(
+                E.function(
                     root / "scripts/verify-fixed-characters.py",
-                    root / SHARED.relative_to(ROOT) / "systems.json",
-                ]
+                    "build",
+                    (c["id"], E.ASSEMBLER, variant),
+                    p,
+                    ("build/demo.bin",),
+                ),
+                "build/demo.bin",
+                r["assembler_sha256"],
+                recorded_sha256=r["fixture_sha256"],
+            )
+            if variant == "positive":
                 if c["id"].startswith("sinclair-"):
-                    required.append(p / "caller.bas")
-                assert set(r["sources"]) == {str(f.relative_to(root)) for f in required}
-                assert all(
-                    sha(root / path) == digest for path, digest in r["sources"].items()
-                )
+                    # Typed in, so its text is the program (rule 2).
+                    typed = str((p / "caller.bas").relative_to(root))
+                    assert r["sources"][typed] == sha(p / "caller.bas"), (
+                        "Typed caller differs from the record: " + typed
+                    )
                 assert (
                     r["active_origin"] and r["firmware_sha256"] and r["emulator_sha256"]
                 )

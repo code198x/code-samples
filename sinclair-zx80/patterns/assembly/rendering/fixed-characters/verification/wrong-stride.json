@@ -53,6 +53,7 @@
     "9374711cb6a5fd53c1c98d1d20ecb444d01d621a322f3d066ef216d515ac5161"
   ],
   "emulator_sha256": "3827d1d14ad373330052896b2f586aa43bf4544da8381508d1f75f0d761194aa",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
   "fixture_sha256": "89c5ade30730a0bae1c9a3543af0b3c6e0749bda24dab5876314271816b6f928",
   "independent_memory_match": false
 }

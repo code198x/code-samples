@@ -88,10 +88,22 @@ def boot_zx(m: Any, c: dict, p: Path) -> None:
     m.call("run_frames", frames=150)
 
 
-def execute(c: dict, args: argparse.Namespace, variant: str) -> dict:
+def machine(machine_id: str) -> dict:
+    """One machine's entry in the shared systems.json."""
+    return next(
+        c
+        for c in json.loads((SHARED / "systems.json").read_text())
+        if c["id"] == machine_id
+    )
+
+
+def build(machine_id: str, assembler: str, variant: str) -> None:
+    """Assemble one variant of a machine's driver to build/demo.bin.
+
+    The recorder and the checker both build through this function.
+    """
+    c = machine(machine_id)
     p = ROOT / c["id"] / "patterns/assembly/rendering/fixed-characters"
-    out = p / "verification"
-    out.mkdir(exist_ok=True)
     b = p / "build"
     b.mkdir(exist_ok=True)
     source = (p / "demo.asm").read_text()
@@ -119,7 +131,7 @@ def execute(c: dict, args: argparse.Namespace, variant: str) -> dict:
     )
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "acme" if c["cpu"] == "6502" else "pasmo",
             "build/selected.asm",
@@ -131,6 +143,14 @@ def execute(c: dict, args: argparse.Namespace, variant: str) -> dict:
         timeout=45,
         capture_output=True,
     )
+
+
+def execute(c: dict, args: argparse.Namespace, variant: str) -> dict:
+    p = ROOT / c["id"] / "patterns/assembly/rendering/fixed-characters"
+    out = p / "verification"
+    out.mkdir(exist_ok=True)
+    b = p / "build"
+    build(c["id"], str(args.assembler), variant)
     zx = "sinclair" in c["id"]
     fw = args.firmware_root / c["id"]
     roms = []
@@ -273,6 +293,7 @@ def execute(c: dict, args: argparse.Namespace, variant: str) -> dict:
             "capture_sha256": T.sha(capture),
             "firmware_sha256": [T.sha(x) for x in roms],
             "emulator_sha256": T.sha(args.native / ("emu198x-" + c["id"])),
+            "assembler_sha256": T.sha(args.assembler),
             "fixture_sha256": T.sha(b / "demo.bin"),
             "independent_memory_match": ok,
         }
