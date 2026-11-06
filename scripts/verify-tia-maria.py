@@ -124,59 +124,72 @@ def expected(
     return memory, (w, h), pixels
 
 
+def stage(system: str, mutation: str, dest: Path, root: Path = ROOT) -> Path:
+    """Copy the caller into `dest` with one diagnostic variant applied.
+
+    The recorder builds each variant from this staged copy, and the checker
+    rebuilds it from the same copy to compare the cartridge bytes.
+    """
+    name, _ = CONFIG[system]
+    folder = root / system / "patterns/assembly/rendering" / name
+    for path in folder.iterdir():
+        if path.is_file():
+            (dest / path.name).write_bytes(path.read_bytes())
+    repaired = mutation.endswith("-fixed")
+    fault = mutation.removesuffix("-fixed")
+    case = next(
+        (c for c in MISTAKES if c["system"] == system and c["variant"] == fault),
+        None,
+    )
+    if case:
+        path = dest / case["target"]
+        text = path.read_text()
+        wrong, fix = fragment(case, root=root), fragment(case, True, root)
+        chosen = fix if repaired else wrong
+        if fault == "bad-terminator":
+            anchor = "    lda #>DLL"
+            require(text.count(anchor) == 1, "Terminator fixture anchor")
+            text = text.replace(anchor, chosen + "\n" + anchor)
+        else:
+            require(text.count(fix) == 1, "Diagnostic replacement must match once")
+            text = text.replace(fix, chosen)
+        path.write_text(text)
+    elif mutation == "wrong-width":
+        path = dest / "objects.inc"
+        text = path.read_text()
+        require(text.count("lda #32\n    sec") == 1, "Width anchor")
+        path.write_text(text.replace("lda #32\n    sec", "lda #31\n    sec"))
+    elif mutation == "reflection":
+        path = dest / "demo.asm"
+        path.write_text(
+            path.read_text().replace("    sta $0a", "    lda #1\n    sta $0a")
+        )
+    else:
+        require(not mutation, "Unknown diagnostic variant")
+    return dest
+
+
 def verify(system: str, tools: Path, out: Path, mutation: str = "") -> dict:
     name, ext = CONFIG[system]
     folder = ROOT / system / "patterns/assembly/rendering" / name
     with tempfile.TemporaryDirectory(prefix="tia-maria-check-") as temporary:
-        stage = Path(temporary)
-        for path in folder.iterdir():
-            if path.is_file():
-                (stage / path.name).write_bytes(path.read_bytes())
+        staged = stage(system, mutation, Path(temporary))
         repaired = mutation.endswith("-fixed")
         fault = mutation.removesuffix("-fixed")
-        case = next(
-            (c for c in MISTAKES if c["system"] == system and c["variant"] == fault),
-            None,
-        )
-        if case:
-            path = stage / case["target"]
-            text = path.read_text()
-            wrong, fix = fragment(case), fragment(case, True)
-            chosen = fix if repaired else wrong
-            if fault == "bad-terminator":
-                anchor = "    lda #>DLL"
-                require(text.count(anchor) == 1, "Terminator fixture anchor")
-                text = text.replace(anchor, chosen + "\n" + anchor)
-            else:
-                require(text.count(fix) == 1, "Diagnostic replacement must match once")
-                text = text.replace(fix, chosen)
-            path.write_text(text)
-        elif mutation == "wrong-width":
-            path = stage / "objects.inc"
-            text = path.read_text()
-            require(text.count("lda #32\n    sec") == 1, "Width anchor")
-            path.write_text(text.replace("lda #32\n    sec", "lda #31\n    sec"))
-        elif mutation == "reflection":
-            path = stage / "demo.asm"
-            path.write_text(
-                path.read_text().replace("    sta $0a", "    lda #1\n    sta $0a")
-            )
-        else:
-            require(not mutation, "Unknown diagnostic variant")
         subprocess.run(
             ["make", f"ASM198X={tools / 'asm198x'}"],
-            cwd=stage,
+            cwd=staged,
             check=True,
             capture_output=True,
             timeout=60,
         )
-        syms = T.T.symbols(stage / "build/demo.sym")
+        syms = T.T.symbols(staged / "build/demo.sym")
         machine = T.T.Machine(
             [
                 str(tools / f"emu198x-{system}"),
                 "--mcp",
                 "--cart",
-                str(stage / f"build/demo.{ext}"),
+                str(staged / f"build/demo.{ext}"),
             ]
         )
         try:
@@ -248,10 +261,10 @@ def verify(system: str, tools: Path, out: Path, mutation: str = "") -> dict:
                 "frame_sha256": T.T.sha(capture),
                 "period_colour_clocks": period,
                 "frame_dimensions": size,
-                "cart_sha256": T.T.sha(stage / f"build/demo.{ext}"),
+                "cart_sha256": T.T.sha(staged / f"build/demo.{ext}"),
                 "staged_source_sha256": {
                     p.name: T.T.sha(p)
-                    for p in stage.iterdir()
+                    for p in staged.iterdir()
                     if p.suffix in (".asm", ".inc")
                 },
             }
@@ -275,7 +288,7 @@ def verify(system: str, tools: Path, out: Path, mutation: str = "") -> dict:
                 "frame_sha256": T.T.sha(capture),
                 "memory": actual,
                 "period_colour_clocks": period,
-                "cart_sha256": T.T.sha(stage / f"build/demo.{ext}"),
+                "cart_sha256": T.T.sha(staged / f"build/demo.{ext}"),
                 "source_sha256": {
                     p.name: T.T.sha(p)
                     for p in folder.iterdir()

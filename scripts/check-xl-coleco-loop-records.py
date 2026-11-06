@@ -3,11 +3,26 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
+import tempfile
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def module(name: str, file: str) -> Any:
+    spec = importlib.util.spec_from_file_location(name, Path(__file__).with_name(file))
+    if spec is None or spec.loader is None:
+        raise RuntimeError(file)
+    result = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(result)
+    return result
+
+
+R = module("xl_coleco_recorder", "verify-xl-coleco-loops.py")
+E = module("xl_coleco_bytes", "evidence_bytes.py")
 CONFIGS = {
     "atari-basic": ("atari-800xl", "basic", "command-loop"),
     "atari-assembly": ("atari-800xl", "assembly", "turn-loop"),
@@ -24,8 +39,7 @@ ASM_VARIANTS = {
     "fixed-wait",
 }
 BASIC_VARIANTS = {"working", "customise", "wrap", "nonzero", "reset-mistake", "fixed"}
-SHARED = "cross-platform/patterns/framework/atari-turn-loops"
-FONT = "cross-platform/patterns/rendering/bitmap-text/font-z80.inc"
+OUTPUTS = {"atari-assembly": "build/demo.bin", "coleco": "build/demo.cv"}
 
 
 def require(value: bool, message: str) -> None:
@@ -53,31 +67,6 @@ def check(key: str, record: dict[str, Any] | None = None, root: Path = ROOT) -> 
         and record["language"] == language,
         "Wrong configuration/status",
     )
-    inputs = {
-        str(p.relative_to(root))
-        for p in folder.rglob("*")
-        if p.is_file()
-        and "build" not in p.parts
-        and "verification" not in p.parts
-        and p.name != "README.md"
-    }
-    if not basic:
-        inputs |= (
-            {FONT}
-            if key == "coleco"
-            else {str(p.relative_to(root)) for p in (root / SHARED).rglob("*.inc")}
-        )
-    require(set(record["sources"]) == inputs, "Incomplete source bindings")
-    require(
-        set(record["observer_sources"])
-        == {"scripts/verify-xl-coleco-loops.py", "scripts/verify-game-loops.py"},
-        "Incomplete observer bindings",
-    )
-    for name, digest in {**record["sources"], **record["observer_sources"]}.items():
-        require(
-            hashlib.sha256((root / name).read_bytes()).hexdigest() == digest,
-            "Changed source: " + name,
-        )
     tools = json.loads((folder / "qualification-toolchain.json").read_text())
     require(
         record["emulator_sha256"] == tools["emulator_binary_sha256"]
@@ -188,6 +177,39 @@ def check(key: str, record: dict[str, Any] | None = None, root: Path = ROOT) -> 
             "Repair differs from the working program",
         )
     require(record["program_sha256"]["customise"] != good, "Customisation never built")
+    programs(key, record, root)
+
+
+def programs(key: str, record: dict[str, Any], root: Path = ROOT) -> None:
+    """Rebuild every variant from the recorder's staged copy and compare.
+
+    The record is stale when a program changes, not its sources' text. The
+    assembly routes compare the assembled bytes, rebuilt with the Asm198x
+    the record pins. Atari BASIC is typed in, so its program is the listing
+    the recorder types, and any change to that text, a REM included, counts.
+    """
+    with tempfile.TemporaryDirectory(prefix="xl-coleco-bytes-") as temporary:
+        for variant, recorded in sorted(record["program_sha256"].items()):
+            target = R.stage(key, variant, Path(temporary) / variant, root)
+            if key == "atari-basic":
+                text = R.listing(target, variant).encode()
+                if hashlib.sha256(text).hexdigest() != recorded:
+                    raise AssertionError(
+                        f"Program bytes differ from the record: {key} {variant} "
+                        f"listing is {hashlib.sha256(text).hexdigest()}, "
+                        f"the record has {recorded}"
+                    )
+            else:
+                try:
+                    E.require_program(
+                        E.make(target, (OUTPUTS[key],)),
+                        OUTPUTS[key],
+                        record["assembler_sha256"],
+                        recorded_sha256=recorded,
+                    )
+                except AssertionError as error:
+                    # The staged copy is outside the tree, so name what was staged.
+                    raise AssertionError(f"{error} ({key} {variant})") from None
 
 
 if __name__ == "__main__":

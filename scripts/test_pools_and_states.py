@@ -11,6 +11,11 @@ s = importlib.util.spec_from_file_location(
 )
 C = importlib.util.module_from_spec(s)
 s.loader.exec_module(C)
+s = importlib.util.spec_from_file_location(
+    "forgery", Path(__file__).with_name("native_case_forgery.py")
+)
+F = importlib.util.module_from_spec(s)
+s.loader.exec_module(F)
 
 
 class Evidence(unittest.TestCase):
@@ -28,7 +33,6 @@ class Evidence(unittest.TestCase):
             )
             for fault in (
                 (
-                    "source",
                     "config",
                     "case",
                     "producer",
@@ -50,9 +54,7 @@ class Evidence(unittest.TestCase):
             ):
                 r = copy.deepcopy(original)
                 c = r["cases"]["demo"]
-                if fault == "source":
-                    r["sources"][next(iter(r["sources"]))] = "0" * 64
-                elif fault == "config":
+                if fault == "config":
                     r["configuration"]["emulator_sha256"] = "0" * 64
                 elif fault == "case":
                     r["cases"].pop("custom")
@@ -91,6 +93,31 @@ class Evidence(unittest.TestCase):
                     self.assertRaises((AssertionError, KeyError, ValueError)),
                 ):
                     C.check(topic, system, r)
+
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for topic, system in C.targets():
+            C.V.TOPIC = topic
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            F.forge(r["cases"]["custom"], system, C.V.H.hunk)
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+            ):
+                C.check(topic, system, r)
+
+    def test_source_digests_are_provenance(self):
+        """Changed source or script text alone does not make a record stale."""
+        for topic, system in C.targets():
+            C.V.TOPIC = topic
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            r["sources"] = {path: "0" * 64 for path in r["sources"]}
+            with self.subTest(system=system):
+                C.check(topic, system, r)
 
     def test_coupled_picture(self):
         for topic, system in C.targets():

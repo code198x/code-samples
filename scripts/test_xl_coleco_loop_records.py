@@ -28,9 +28,6 @@ class RecordGuards(unittest.TestCase):
             original = json.loads((C.paths(key)[1] / "results.json").read_text())
             for fault in (
                 "empty-cases",
-                "missing-source",
-                "stale-source",
-                "missing-observer",
                 "wrong-language",
                 "missing-images",
                 "wrong-image",
@@ -43,12 +40,6 @@ class RecordGuards(unittest.TestCase):
                 record = copy.deepcopy(original)
                 if fault == "empty-cases":
                     record["variants"] = {}
-                elif fault == "missing-source":
-                    record["sources"] = {}
-                elif fault == "stale-source":
-                    record["sources"][next(iter(record["sources"]))] = "0" * 64
-                elif fault == "missing-observer":
-                    record["observer_sources"] = {}
                 elif fault == "wrong-language":
                     record["language"] = "other"
                 elif fault == "missing-images":
@@ -89,6 +80,36 @@ class RecordGuards(unittest.TestCase):
                     self.assertRaises(ValueError),
                 ):
                     C.check(key, record)
+
+    def test_forged_programs_are_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for key in C.CONFIGS:
+            original = json.loads((C.paths(key)[1] / "results.json").read_text())
+            basic = key == "atari-basic"
+            for forged in (
+                ("working", "fixed")
+                if basic
+                else ("working", "fixed-edge", "fixed-wait"),
+                ("customise",),
+                ("reset-mistake",) if basic else ("held-as-press",),
+            ):
+                record = copy.deepcopy(original)
+                for variant in forged:
+                    record["program_sha256"][variant] = "0" * 64
+                with (
+                    self.subTest(key=key, forged=forged[0]),
+                    self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+                ):
+                    C.check(key, record)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or script text alone does not make a record stale."""
+        for key in C.CONFIGS:
+            record = json.loads((C.paths(key)[1] / "results.json").read_text())
+            for field in ("sources", "observer_sources"):
+                record[field] = dict.fromkeys(record[field], "0" * 64)
+            with self.subTest(key=key):
+                C.check(key, record)
 
 
 if __name__ == "__main__":

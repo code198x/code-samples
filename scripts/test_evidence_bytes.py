@@ -29,6 +29,7 @@ def module(name: str, file: str) -> Any:
 E = module("evidence_bytes", "evidence_bytes.py")
 A = module("additional_pools", "check-additional-object-pools.py")
 N = module("native_pools", "check-object-pool.py")
+K = module("gamekit", "check-gamekit.py")
 POOL = "patterns/assembly/framework/object-pool"
 SHARED = "cross-platform/patterns/framework"
 
@@ -135,15 +136,90 @@ class NativePools(unittest.TestCase):
                 self.rebuild(system, ("lda #$5a\n", "lda #$5b\n"))
 
 
+class AmigaDisks(unittest.TestCase):
+    """A gamekit Amiga caller: Asm198x builds the executable, build198x the ADF."""
+
+    FOLDER = "commodore-amiga/patterns/assembly/rendering/animation-timeline"
+
+    def rebuild(self, change: tuple[str, str] | None) -> None:
+        record = json.loads(
+            (ROOT / self.FOLDER / "verification/results.json").read_text()
+        )
+        config = record["configuration"]
+        with tempfile.TemporaryDirectory() as temp:
+            tree = Path(temp)
+            copy(
+                tree,
+                self.FOLDER,
+                "commodore-amiga/patterns/assembly/framework/turn-deadline",
+            )
+            folder = tree / self.FOLDER
+            if change is not None:
+                edit(folder / "component.inc", *change)
+            K.V.TOPIC = "animation-timeline"
+            build = E.make(
+                folder,
+                K.program("commodore-amiga").outputs,
+                build198x=True,
+            )
+            case = record["cases"]["demo"]
+            for output, field in (
+                ("build/demo.adf", "program_zlib"),
+                ("build/demo", "exe_zlib"),
+            ):
+                E.require_program(
+                    build,
+                    output,
+                    config["assembler_sha256"],
+                    recorded=zlib.decompress(bytes.fromhex(case[field])),
+                    build198x=config["build198x_sha256"],
+                )
+
+    def test_comment_matches(self) -> None:
+        self.rebuild(None)
+        self.rebuild(
+            ("animation_timeline_step:\n", "animation_timeline_step:\n; A note\n")
+        )
+
+    def test_changed_operand_is_stale(self) -> None:
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            self.rebuild(
+                (
+                    "    move.b #0,d0\n    move.b d0,FRAME\n",
+                    "    move.b #1,d0\n    move.b d0,FRAME\n",
+                )
+            )
+
+
 class Assemblers(unittest.TestCase):
     def test_unknown_pin_is_refused(self) -> None:
         with self.assertRaises(LookupError):
             E.release_for("0" * 64)
 
-    def test_every_release_names_every_target(self) -> None:
+    def test_every_release_names_its_targets(self) -> None:
+        """Asm198x releases name all four targets; every release names CI's."""
         for tag, release in E.releases().items():
             with self.subTest(tag=tag):
-                self.assertEqual(set(release["targets"]), set(E.TARGETS))
+                self.assertLessEqual(set(release["targets"]), set(E.TARGETS))
+                self.assertIn(E.CI_TARGET, release["targets"])
+                if E.tool_of(tag) == "asm198x":
+                    self.assertEqual(set(release["targets"]), set(E.TARGETS))
+
+    def test_pin_must_name_the_right_tool(self) -> None:
+        builder = E.releases()["build198x-v0.2.9"]["targets"]["aarch64-apple-darwin"]
+        with self.assertRaisesRegex(LookupError, "which is not asm198x"):
+            E.assembler(builder["executable_sha256"])
+
+    def test_build198x_pin_is_required_exactly_when_used(self) -> None:
+        pin = next(t for t in E.releases() if E.tool_of(t) == "asm198x")
+        builder = next(t for t in E.releases() if E.tool_of(t) == "build198x")
+        with tempfile.TemporaryDirectory() as temp:
+            uses = E.make(Path(temp), ("absent.adf",), build198x=True)
+            plain = E.make(Path(temp), ("absent.bin",))
+            with self.assertRaisesRegex(ValueError, "build198x pin"):
+                E.rebuild(uses, pin)
+            with self.assertRaisesRegex(ValueError, "build198x pin"):
+                E.rebuild(plain, pin, builder)
 
     def test_missing_output_fails(self) -> None:
         pin = next(iter(E.releases()))
