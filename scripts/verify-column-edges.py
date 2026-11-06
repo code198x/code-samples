@@ -1,3 +1,7 @@
+"""Observe a missing edge filter fail the held-input guard on each cartridge."""
+
+from __future__ import annotations
+
 import argparse
 import importlib.util
 import json
@@ -5,10 +9,6 @@ import subprocess
 from pathlib import Path
 
 r = Path(__file__).resolve().parents[1]
-parser = argparse.ArgumentParser()
-parser.add_argument("--native", type=Path, required=True)
-args = parser.parse_args()
-native = args.native.resolve()
 
 
 def mod(name, path):
@@ -20,10 +20,66 @@ def mod(name, path):
 
 V = mod("cols", r / "scripts/verify-column-hardware.py")
 T = V.T
-# Extra fresh cartridge starts observe a missing edge filter. The same held-input invariant must fail.
-for row in json.loads((r / "docs/column-expansion.json").read_text())["routes"]:
-    if row["track"] != "assembly" or row.get("mos"):
-        continue
+
+
+def build(system: str, assembler: str, output: str = "build") -> None:
+    """Assemble mistakes/no-edge.asm into `output`, packaged as the cartridge runs it."""
+    cfg = V.CONFIGS[system]
+    folder = r / system / "patterns/assembly/input/read-action"
+    (folder / output).mkdir(parents=True, exist_ok=True)
+    binary = (
+        folder
+        / output
+        / (
+            "no-edge.bin"
+            if system == "tatung-einstein"
+            else "no-edge." + cfg["extension"]
+        )
+    )
+    subprocess.run(
+        [
+            assembler,
+            "--dialect",
+            cfg["dialect"],
+            *cfg["finalise"],
+            str(folder / "mistakes/no-edge.asm"),
+            "-o",
+            str(binary),
+        ],
+        cwd=folder,
+        check=True,
+        capture_output=True,
+    )
+    if system.startswith("sega"):
+        subprocess.run(
+            ["python3", str(r / "scripts/build-sega-probe.py"), str(binary)],
+            check=True,
+            capture_output=True,
+        )
+    if system == "tatung-einstein":
+        binary.with_suffix(".dsk").write_bytes(
+            V.H.PACK.einstein_disk(binary.read_bytes())
+        )
+
+
+def output_name(system: str, output: str = "build") -> str:
+    """The file `build` leaves for the emulator, relative to the route folder."""
+    extension = V.CONFIGS[system]["extension"]
+    return f"{output}/no-edge.{extension}"
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--native", type=Path, required=True)
+    native = parser.parse_args().native.resolve()
+    # Extra fresh cartridge starts observe a missing edge filter. The same held-input invariant must fail.
+    for row in json.loads((r / "docs/column-expansion.json").read_text())["routes"]:
+        if row["track"] != "assembly" or row.get("mos"):
+            continue
+        record(row, native)
+
+
+def record(row: dict, native: Path) -> None:
     system = row["system"]
     cfg = V.CONFIGS[system]
     folder = r / row["folder"]
@@ -45,39 +101,8 @@ for row in json.loads((r / "docs/column-expansion.json").read_text())["routes"]:
         .replace('"picture.inc"', '"../picture.inc"')
         .replace('"sound.inc"', '"../sound.inc"')
     )
-    binary = (
-        folder
-        / "build"
-        / (
-            "no-edge.bin"
-            if system == "tatung-einstein"
-            else "no-edge." + cfg["extension"]
-        )
-    )
-    subprocess.run(
-        [
-            str(native / "asm198x"),
-            "--dialect",
-            cfg["dialect"],
-            *cfg["finalise"],
-            str(wrong),
-            "-o",
-            str(binary),
-        ],
-        cwd=folder,
-        check=True,
-        capture_output=True,
-    )
-    if system.startswith("sega"):
-        subprocess.run(
-            ["python3", str(r / "scripts/build-sega-probe.py"), str(binary)],
-            check=True,
-            capture_output=True,
-        )
-    if system == "tatung-einstein":
-        p = binary.with_suffix(".dsk")
-        p.write_bytes(V.H.PACK.einstein_disk(binary.read_bytes()))
-        binary = p
+    build(system, str(native / "asm198x"))
+    binary = folder / output_name(system)
     command = [str(native / cfg["binary"]), "--mcp"]
     if cfg["flag"]:
         command += [cfg["flag"], str(binary)]
@@ -142,3 +167,7 @@ for row in json.loads((r / "docs/column-expansion.json").read_text())["routes"]:
         print("PASS missing edge", system, first, held, flush=True)
     finally:
         machine.close()
+
+
+if __name__ == "__main__":
+    main()

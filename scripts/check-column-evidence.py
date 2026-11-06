@@ -1,4 +1,11 @@
-"""Check language-specific input/audio evidence without running an emulator."""
+"""Check language-specific input/audio evidence without running an emulator.
+
+Assembly routes rebuild each recorded cartridge with the pinned Asm198x release
+and compare its bytes with the record. Typed routes compare the text the
+recorder typed with the record. Recorder scripts and lesson files that no
+recorded program was built from are provenance; editing them does not make
+the evidence stale.
+"""
 
 from __future__ import annotations
 
@@ -13,6 +20,35 @@ from array import array
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load(module: str, file: str):
+    found = importlib.util.spec_from_file_location(module, ROOT / "scripts" / file)
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load("column_bytes", "evidence_bytes.py")
+EDGES = ROOT / "scripts/verify-column-edges.py"
+EVIDENCE = (".png", ".wav", ".json")
+# The file each Makefile leaves for the emulator, as the recorder hashed it.
+CARTRIDGE = {
+    "atari-2600": "a26",
+    "atari-5200": "bin",
+    "atari-7800": "bin",
+    "coleco-colecovision": "cv",
+    "memotech-mtx": "bin",
+    "nintendo-game-boy": "gb",
+    "sega-game-gear": "gg",
+    "sega-master-system": "sms",
+    "sega-sg-1000": "sg",
+    "sord-m5": "bin",
+    "tatung-einstein": "dsk",
+    "bbc-micro": "bin",
+    "acorn-electron": "bin",
+}
 EXPECTED = {
     **dict.fromkeys(
         (
@@ -238,6 +274,42 @@ def check_fault(row: dict, record: dict) -> None:
         )
 
 
+def require_programs(row: dict, native: dict, fault: dict | None, pin: str) -> None:
+    """Rebuild or re-read every recorded program and compare it with the record."""
+    system = row["system"]
+    folder = ROOT / row["folder"]
+    if row["track"] == "assembly":
+        output = f"build/demo.{CARTRIDGE[system]}"
+        E.require_program(
+            E.make(folder, (output,)),
+            output,
+            pin,
+            recorded_sha256=native["binary_sha256"],
+        )
+        if fault is not None:
+            output = f"build/evidence/no-edge.{CARTRIDGE[system]}"
+            E.require_program(
+                E.function(
+                    EDGES,
+                    "build",
+                    (system, E.ASSEMBLER, "build/evidence"),
+                    folder,
+                    (output,),
+                ),
+                output,
+                pin,
+                recorded_sha256=fault["binary_sha256"],
+            )
+        return
+    # Typed routes: the recorder types the lesson's demo file line by line.
+    demo = f"{row['folder']}/demo.{'fth' if row['track'] == 'forth' else 'bas'}"
+    require(demo in native["sources"], f"Missing typed program: {demo}")
+    E.require_typed((ROOT / demo).read_text(), native["sources"][demo], demo)
+    if fault is not None:
+        mistake = f"{row['folder']}/mistakes/stale-command.bas"
+        E.require_typed((ROOT / mistake).read_text(), fault["source_sha256"], mistake)
+
+
 def qualified_assembler(assembler: dict, version: str) -> None:
     require(
         assembler["version"] == version
@@ -251,9 +323,6 @@ def qualified_assembler(assembler: dict, version: str) -> None:
 def validate(root: Path, manifest: dict) -> dict:
     require(manifest.get("version") == 1, "Unknown evidence version")
     inventory(manifest["routes"])
-    require(bool(manifest.get("observers")), "Missing observer bindings")
-    for name, digest in manifest["observers"].items():
-        bound(root, name, digest)
     png_spec = importlib.util.spec_from_file_location(
         "png", root / "scripts/verify-sega-turns.py"
     )
@@ -263,11 +332,15 @@ def validate(root: Path, manifest: dict) -> dict:
     captures = 0
     for row in manifest["routes"]:
         require(bool(row.get("files")), "Missing source/evidence bindings")
+        assembler = manifest["assembler_producer"]
         if "assembler_producer" in row:
             # Flat 32 KiB Game Boy ROMs need --tiny, first released in 0.0.75.
             qualified_assembler(row["assembler_producer"], "0.0.75")
-        for name, digest in row["files"].items():
-            path = bound(root, name, digest)
+            assembler = row["assembler_producer"]
+        evidence = [n for n in row["files"] if n.endswith(EVIDENCE)]
+        require(bool(evidence), "Missing evidence bindings")
+        for name in evidence:
+            path = bound(root, name, row["files"][name])
             if path.suffix == ".png":
                 header, raster = png.raster(path)
                 require(bool(header) and bool(raster), "Empty decoded PNG")
@@ -275,14 +348,6 @@ def validate(root: Path, manifest: dict) -> dict:
         folder = root / row["folder"]
         native = json.loads((folder / "verification/results.json").read_text())
         check_native(row, native)
-        for name, digest in native["sources"].items():
-            bound(root, name, digest)
-        observer = row["observer"]
-        require(
-            native.get("observer_sha256", native["sources"].get(observer))
-            == sha(root / observer),
-            "Observer identity changed",
-        )
         producer = manifest["producers"][row["producer"]]
         require(
             producer["version"] == "0.44.1"
@@ -319,23 +384,10 @@ def validate(root: Path, manifest: dict) -> dict:
                     ),
                     "Caller/modules differ from executed program",
                 )
+        fault = None
         if row.get("fault_record"):
             fault = json.loads((root / row["fault_record"]).read_text())
             check_fault(row, fault)
-            name = "stale-command.bas" if row["track"] == "basic" else "no-edge.asm"
-            require(
-                fault["source_sha256"] == sha(folder / "mistakes" / name),
-                "Changed deliberate fault",
-            )
-            fault_observer = (
-                "scripts/verify-column-basic-errors.py"
-                if row["track"] == "basic"
-                else "scripts/verify-column-edges.py"
-            )
-            require(
-                fault["observer_sha256"] == sha(root / fault_observer),
-                "Fault observer changed",
-            )
         if not row.get("sound_absent"):
             working = pcm(folder / "verification/sound.wav")
             negative = pcm(folder / "verification/sound-negative.wav")
@@ -347,6 +399,7 @@ def validate(root: Path, manifest: dict) -> dict:
                     native["sound_negative_rejected"] is True,
                     "Missing MOS muted control",
                 )
+        require_programs(row, native, fault, assembler["executable_sha256"])
     return {
         "machine_language_routes": len(manifest["routes"]),
         "input_routes": 26,

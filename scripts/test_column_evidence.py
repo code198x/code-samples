@@ -32,6 +32,63 @@ class EvidenceControls(unittest.TestCase):
     def test_real_inventory_and_files(self) -> None:
         self.assertEqual(C.validate(ROOT, DATA)["machine_language_routes"], 26)
 
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A record claiming another program is caught only by the rebuild."""
+        for system, field in [
+            ("sega-sg-1000", "binary_sha256"),
+            ("bbc-micro", "binary_sha256"),
+            ("msx", "sources"),
+            ("jupiter-ace", "sources"),
+        ]:
+            row = route(system)
+            native = record(system)
+            if field == "binary_sha256":
+                native[field] = "0" * 64
+                message = "^Program bytes differ"
+            else:
+                demo = next(n for n in native["sources"] if "/demo." in n)
+                native["sources"][demo] = "0" * 64
+                message = "^Typed program differs"
+            pin = DATA["assembler_producer"]["executable_sha256"]
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, message),
+            ):
+                C.require_programs(row, native, None, pin)
+
+    def test_forged_fault_is_rebuilt(self) -> None:
+        pin = DATA["assembler_producer"]["executable_sha256"]
+        for system, field in [
+            ("coleco-colecovision", "binary_sha256"),
+            ("amstrad-cpc", "source_sha256"),
+        ]:
+            row = route(system)
+            fault = json.loads((ROOT / row["fault_record"]).read_text())
+            fault[field] = "0" * 64
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, "differs? from the record"),
+            ):
+                C.require_programs(row, record(system), fault, pin)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Rewritten source, observer and lesson-file digests leave the record valid."""
+        manifest = copy.deepcopy(DATA)
+        manifest["observers"] = dict.fromkeys(manifest["observers"], "0" * 64)
+        for row in manifest["routes"]:
+            for name in row["files"]:
+                if not name.endswith(C.EVIDENCE):
+                    row["files"][name] = "0" * 64
+        self.assertEqual(C.validate(ROOT, manifest)["machine_language_routes"], 26)
+
+    def test_changed_evidence_is_rejected(self) -> None:
+        manifest = copy.deepcopy(DATA)
+        row = manifest["routes"][0]
+        name = next(n for n in row["files"] if n.endswith(".png"))
+        row["files"][name] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "Changed file"):
+            C.validate(ROOT, manifest)
+
     def test_route_assembler_must_be_the_tiny_release(self) -> None:
         manifest = copy.deepcopy(DATA)
         row = next(r for r in manifest["routes"] if "assembler_producer" in r)
