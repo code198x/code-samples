@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 import math
@@ -17,6 +16,12 @@ assert SPEC and SPEC.loader
 V = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(V)
 T = V.T
+_E = importlib.util.spec_from_file_location(
+    "zx_map_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def decode(raw: list, system: str) -> str:
@@ -80,7 +85,12 @@ def validate(record: dict) -> None:
         == "Stock BASIC ROM, PAL, 16384 bytes RAM, keyword keyboard entry",
         "Wrong ROM/RAM/startup contract",
     )
-    T.require(record["sources"] == V.sources(system), "Changed source/observer binding")
+    # The BASIC is typed in by keyword entry, so its text is the program
+    # (rule 2); script digests are provenance only.
+    typed = [p for p in V.sources(system) if p.endswith(".bas")]
+    T.require(set(typed) <= set(record["sources"]), "Missing typed source binding")
+    for path in typed:
+        E.require_typed((ROOT / path).read_bytes(), record["sources"][path], path)
     T.require(set(record["variants"]) == set(V.VARIANTS), "Missing execution variant")
     locked = json.loads((ROOT / "docs/zx-basic-map-tools.json").read_text())[system]
     for name in ("emulator_sha256", "firmware_sha256"):
@@ -109,10 +119,7 @@ def validate(record: dict) -> None:
                 (V.folder(system) / "customise.bas").read_text(),
             )
         program = V.harness(system) + routine.read_text() + room
-        T.require(
-            run["program_sha256"] == hashlib.sha256(program.encode()).hexdigest(),
-            "Wrong executed listing",
-        )
+        E.require_typed(program, run["program_sha256"], f"{variant} listing")
         T.require(run["server"]["version"] == "0.44.1", "Wrong runtime version")
         data = [tile for row in V.ROWS for tile in row] + [9]
         for index, (case, actual) in enumerate(

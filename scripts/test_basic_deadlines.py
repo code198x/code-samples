@@ -31,7 +31,7 @@ class Evidence(unittest.TestCase):
                 lambda r, b: r.update(status="built"),
                 lambda r, b: r.update(system="other"),
                 lambda r, b: r.update(language="assembly"),
-                lambda r, b: r.update(sources={}),
+                lambda r, b: r["variants"]["custom"].update(source_sha256="0" * 64),
                 lambda r, b: r.update(emulator_sha256=""),
                 lambda r, b: r.update(firmware_sha256={}),
                 lambda r, b: r["variants"].pop("repaired"),
@@ -69,8 +69,38 @@ class Evidence(unittest.TestCase):
                 with self.subTest(machine=machine, mutation=i):
                     r, b = copy.deepcopy(record), copy.deepcopy(boundaries)
                     mutate(r, b)
-                    with self.assertRaises(ValueError):
+                    with self.assertRaises((AssertionError, ValueError)):
                         C.check(machine, r, b)
+
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming another typed listing is caught by the typed-text check."""
+        for machine in C.SYSTEMS:
+            p = C.folder(machine) / "verification"
+            record = json.loads((p / "native.json").read_text())
+            boundaries = json.loads((p / "boundaries.json").read_text())
+            forged = copy.deepcopy(record)
+            forged["variants"]["custom"]["source_sha256"] = "0" * 64
+            with (
+                self.subTest(machine=machine),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                C.check(machine, forged, boundaries)
+            forged = copy.deepcopy(boundaries)
+            forged["listing_sha256"] = "0" * 64
+            with (
+                self.subTest(machine=machine, record="boundaries"),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                C.check(machine, record, forged)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or Makefile digests alone do not make a record stale."""
+        for machine in C.SYSTEMS:
+            p = C.folder(machine) / "verification"
+            record = json.loads((p / "native.json").read_text())
+            record["sources"] = dict.fromkeys(record["sources"], "0" * 64)
+            with self.subTest(machine=machine):
+                C.check(machine, record)
 
 
 if __name__ == "__main__":

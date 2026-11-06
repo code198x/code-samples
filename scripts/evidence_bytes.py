@@ -329,6 +329,22 @@ def require_program(
     return data
 
 
+def require_typed(text: str | bytes, recorded_sha256: str, label: str) -> None:
+    """Require typed-in program text to match the record's digest (rule 2).
+
+    The machine is given this text, BASIC or FORTH typed in at its prompt,
+    so the text is the program: any change to it, a comment or REM
+    included, makes the record stale. Pass the text as the recorder
+    generates it, not a copy of the record's.
+    """
+    data = text.encode() if isinstance(text, str) else text
+    if sha256(data) != recorded_sha256:
+        raise AssertionError(
+            f"Typed program differs from the record: {label} is now "
+            f"{sha256(data)}, the record has {recorded_sha256}"
+        )
+
+
 def tap_block(index: int) -> Callable[[bytes], bytes]:
     """An `extract` for one ZX Spectrum TAP block's data, without flag or checksum.
 

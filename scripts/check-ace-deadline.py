@@ -11,6 +11,12 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 FOLDER = ROOT / "jupiter-ace/patterns/forth/framework/turn-deadline"
+_E = importlib.util.spec_from_file_location(
+    "ace_deadline_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def require(value: bool, message: str) -> None:
@@ -23,8 +29,12 @@ def sha(path: Path) -> str:
 
 
 def check(
-    record: dict[str, Any] | None = None, boundaries: dict[str, Any] | None = None
+    record: dict[str, Any] | None = None,
+    boundaries: dict[str, Any] | None = None,
+    manifest: dict[str, str] | None = None,
 ) -> None:
+    """Check the retained runs. The FORTH is typed in, so its text is the
+    program (rule 2); script and Makefile digests are provenance only."""
     if record is None:
         record = json.loads((FOLDER / "verification/native.json").read_text())
     if boundaries is None:
@@ -45,22 +55,18 @@ def check(
         == locked["firmware_sha256"],
         "Wrong runtime identity",
     )
-    manifest = json.loads((FOLDER / "verification/sources.json").read_text())
-    paths = (
-        sorted(FOLDER.glob("*.fth"))
-        + sorted((FOLDER / "mistakes").glob("*.fth"))
-        + [
-            FOLDER / "Makefile",
-            ROOT / "scripts/verify-ace-deadline.py",
-            ROOT / "scripts/verify-ace-deadline-boundaries.py",
-            ROOT / "scripts/verify-game-loops.py",
-            ROOT / "scripts/check-amiga-command-loops.py",
-        ]
-    )
+    if manifest is None:
+        manifest = json.loads((FOLDER / "verification/sources.json").read_text())
+    # The manifest pins the FORTH both records typed, boundaries.fth included.
+    typed = sorted(FOLDER.glob("*.fth")) + sorted((FOLDER / "mistakes").glob("*.fth"))
     require(
-        manifest == {str(p.relative_to(ROOT)): sha(p) for p in paths},
-        "Changed source/observer binding",
+        {p for p in manifest if p.endswith(".fth")}
+        == {str(p.relative_to(ROOT)) for p in typed},
+        "Changed typed source inventory",
     )
+    for path in typed:
+        name = str(path.relative_to(ROOT))
+        E.require_typed(path.read_bytes(), manifest[name], name)
     require(
         set(record["cases"]) == {"working", "custom", "wrong", "repaired"},
         "Missing native caller",
@@ -74,10 +80,9 @@ def check(
             "caller.fth",
             "customise.fth" if variant == "custom" else "settings.fth",
         ]
-        require(
-            case["sources"] == {p: sha(FOLDER / p) for p in files},
-            "Wrong entered source recipe",
-        )
+        require(set(case["sources"]) == set(files), "Wrong entered source recipe")
+        for p in files:
+            E.require_typed((FOLDER / p).read_bytes(), case["sources"][p], p)
         require(
             case["ram_top"] == 16384
             and set(case["addresses"]) == {"DU", "DR", "DA", "DP", "DE", "KP"},

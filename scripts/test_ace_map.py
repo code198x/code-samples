@@ -76,6 +76,22 @@ class AceMaps(unittest.TestCase):
                 with self.assertRaises((AssertionError, KeyError, ValueError)):
                     C.validate(record)
 
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming other typed FORTH is caught by the typed-text check."""
+        record = copy.deepcopy(self.record)
+        key = next(k for k in record["sources"] if k.endswith("room.fth"))
+        record["sources"][key] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.validate(record)
+
+    def test_script_digests_are_provenance(self) -> None:
+        """Changed script or configuration digests alone do not make it stale."""
+        record = copy.deepcopy(self.record)
+        for key in record["sources"]:
+            if not key.endswith(".fth"):
+                record["sources"][key] = "0" * 64
+        C.validate(record)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -80,6 +80,26 @@ class MemoryRecords(unittest.TestCase):
     def test_wrong_source(self) -> None:
         self.rejected(lambda d: d.update(sources={}))
 
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming other typed BASIC is caught by the typed-text check."""
+        data = copy.deepcopy(self.good)
+        key = next(k for k in data["sources"] if k.endswith("compact/routines.bas"))
+        data["sources"][key] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            K.compact(data, self.system)
+        data = copy.deepcopy(self.readable)
+        data["sources"]["room.bas"] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            K.readable(data, self.system, 4096, True)
+
+    def test_script_digests_are_provenance(self) -> None:
+        """Changed script digests alone do not make a record stale."""
+        data = copy.deepcopy(self.good)
+        for key in data["sources"]:
+            if not key.endswith(".bas"):
+                data["sources"][key] = "0" * 64
+        K.compact(data, self.system)
+
     def test_empty_program(self) -> None:
         self.rejected(lambda d: d.update(program_hex=""))
 

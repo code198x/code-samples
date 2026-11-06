@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -34,8 +35,7 @@ class Evidence(unittest.TestCase):
         faults = (
             "complete",
             "group",
-            "producer",
-            "source",
+            "forged",
             "runtime",
             "order",
             "size",
@@ -60,10 +60,8 @@ class Evidence(unittest.TestCase):
                 r["complete"] = False
             elif fault == "group":
                 r["group"] = "other"
-            elif fault == "producer":
-                r["producer_sha256"] = "0" * 64
-            elif fault == "source":
-                r["sources"][next(iter(r["sources"]))] = "0" * 64
+            elif fault == "forged":
+                r["program_sha256"] = hashlib.sha256(b"77 FORGED").hexdigest()
             elif fault == "runtime":
                 r["configuration"]["ram_top"] = 32768
             elif fault == "order":
@@ -98,6 +96,20 @@ class Evidence(unittest.TestCase):
                 r["final_stack"]["screen_hex"] = "00" * 768
             with self.subTest(fault=fault):
                 self.reject(r)
+
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming another typed program is caught by the typed-text check."""
+        r = self.original()
+        r["program_sha256"] = hashlib.sha256(b"77 FORGED").hexdigest()
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            K.check_group("working", r)
+
+    def test_producer_and_source_digests_are_provenance(self) -> None:
+        """Changed producer, source or script digests alone do not make it stale."""
+        r = self.original()
+        r["producer_sha256"] = "0" * 64
+        r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+        K.check_group("working", r)
 
     def test_every_owner_context_and_array_cell(self) -> None:
         for group in K.B.VARIANTS:

@@ -20,6 +20,7 @@ V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
 T, C = V.T, V.C
 P = V.module("pool_png", ROOT / "scripts/check-amiga-command-loops.py")
+E = V.module("pool_bytes", ROOT / "scripts/evidence_bytes.py")
 GROUPS = ("masks", "bounds", "working", "custom", "single", "wrong", "repaired")
 ADDRESS = {
     "PB": 15469,
@@ -160,7 +161,6 @@ def capture(group: str, record: dict[str, Any], state: dict[str, int]) -> None:
 
 def check_group(group: str, r: dict[str, Any]) -> None:
     T.require(group in GROUPS and r.get("complete") is True, "Incomplete native group")
-    T.require(r["sources"] == V.sources(), "Source or native observer identity differs")
     T.require(
         r["configuration"]
         == json.loads((ROOT / "docs/ace-map-tools.json").read_text()),
@@ -178,12 +178,12 @@ def check_group(group: str, r: dict[str, Any]) -> None:
         and r["addresses"] == ADDRESS,
         "Changed native layout, resource size or load order",
     )
-    T.require(
-        r["entered_source_sha256"]
-        == hashlib.sha256(
-            "".join((V.F / f).read_text() for f in files).encode("ascii")
-        ).hexdigest(),
-        "Changed ordered typed source",
+    # The FORTH is typed in, so the entered text is the program (rule 2);
+    # source and script digests are provenance only.
+    E.require_typed(
+        "".join((V.F / f).read_text() for f in files).encode("ascii"),
+        r["entered_source_sha256"],
+        " + ".join(files),
     )
     initial = bytes.fromhex(r["dictionary_before_hex"])
     T.require(len(initial) == 819, "Truncated compiled dictionary")

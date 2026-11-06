@@ -62,6 +62,26 @@ class Evidence(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     C.check(r, b)
 
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming other typed FORTH is caught by the typed-text check."""
+        r = json.loads((C.FOLDER / "verification/native.json").read_text())
+        r["cases"]["custom"]["sources"]["routines.fth"] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.check(r)
+        manifest = json.loads((C.FOLDER / "verification/sources.json").read_text())
+        key = next(k for k in manifest if k.endswith("boundaries.fth"))
+        manifest[key] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.check(manifest=manifest)
+
+    def test_script_digests_are_provenance(self) -> None:
+        """Changed script or Makefile digests alone do not make a record stale."""
+        manifest = json.loads((C.FOLDER / "verification/sources.json").read_text())
+        for key in manifest:
+            if not key.endswith(".fth"):
+                manifest[key] = "0" * 64
+        C.check(manifest=manifest)
+
 
 if __name__ == "__main__":
     unittest.main()

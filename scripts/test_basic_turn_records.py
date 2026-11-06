@@ -28,7 +28,6 @@ class EvidenceTests(unittest.TestCase):
             C.check(system)
             mutations = [
                 ("sources", {}),
-                ("observer_sources", {}),
                 ("images", {}),
                 ("traces", {**original["traces"], "default": [0, 1, 1]}),
                 ("traces", {**original["traces"], "reset-mistake": [0, 1, 2]}),
@@ -41,6 +40,40 @@ class EvidenceTests(unittest.TestCase):
                     record[key] = value
                     with self.assertRaises(ValueError):
                         C.check(system, record=record)
+
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming other typed BASIC is caught by the typed-text check."""
+        for system in C.SYSTEMS:
+            record = json.loads(
+                (
+                    C.ROOT
+                    / system
+                    / "patterns/basic/framework/command-loop/verification/reusable/results.json"
+                ).read_text()
+            )
+            key = next(k for k in record["sources"] if k.endswith("/routines.bas"))
+            record["sources"][key] = "0" * 64
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                C.check(system, record=record)
+
+    def test_observer_digests_are_provenance(self) -> None:
+        """Changed observer script digests alone do not make a record stale."""
+        for system in C.SYSTEMS:
+            record = json.loads(
+                (
+                    C.ROOT
+                    / system
+                    / "patterns/basic/framework/command-loop/verification/reusable/results.json"
+                ).read_text()
+            )
+            record["observer_sources"] = dict.fromkeys(
+                record["observer_sources"], "0" * 64
+            )
+            with self.subTest(system=system):
+                C.check(system, record=record)
 
 
 if __name__ == "__main__":

@@ -15,6 +15,12 @@ assert SPEC and SPEC.loader
 V = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(V)
 T = V.T
+_E = importlib.util.spec_from_file_location(
+    "ace_map_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def validate(record: dict) -> None:
@@ -24,7 +30,12 @@ def validate(record: dict) -> None:
         and record["language"] == "forth",
         "Wrong qualification",
     )
-    T.require(record["sources"] == V.sources(), "Source/observer binding changed")
+    # The FORTH is typed in, so its text is the program (rule 2); script and
+    # configuration digests are provenance only.
+    typed = {p: d for p, d in V.sources().items() if p.endswith(".fth")}
+    T.require(set(typed) <= set(record["sources"]), "Missing typed source binding")
+    for path in typed:
+        E.require_typed((ROOT / path).read_bytes(), record["sources"][path], path)
     T.require(len(V.cases()) == 59, "Missing case inventory")
     T.require(set(record["observations"]) == set(V.VARIANTS), "Missing variant")
     initial = [cell for row in V.ROWS for cell in row] + [165]
