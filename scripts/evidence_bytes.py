@@ -122,7 +122,14 @@ def release_for(pin: str) -> str:
 
 
 def tools_dir() -> Path:
-    return Path(os.environ.get("CODE198X_TOOLS", Path.home() / ".cache/code198x/tools"))
+    """Where downloaded tools are kept, as an absolute path.
+
+    Builds run `make` in each pattern's folder, so a relative
+    `CODE198X_TOOLS` would name a different place there.
+    """
+    return Path(
+        os.environ.get("CODE198X_TOOLS", Path.home() / ".cache/code198x/tools")
+    ).resolve()
 
 
 def download(url: str, target: Path) -> None:
