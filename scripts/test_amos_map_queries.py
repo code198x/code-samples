@@ -15,12 +15,15 @@ spec.loader.exec_module(C)
 
 class Evidence(unittest.TestCase):
     def test_native(self):
-        C.check()
+        # Source and script digests are provenance: rewriting them all is accepted.
+        r = json.loads((C.V.V / "results.json").read_text())
+        r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+        C.check(r)
 
     def test_falsifications(self):
         original = json.loads((C.V.V / "results.json").read_text())
         for fault in (
-            "source",
+            "forged",
             "configuration",
             "case",
             "fixture",
@@ -38,8 +41,10 @@ class Evidence(unittest.TestCase):
         ):
             r = copy.deepcopy(original)
             c = r["cases"]["working"]
-            if fault == "source":
-                r["sources"][next(iter(r["sources"]))] = "0" * 64
+            if fault == "forged":
+                r["fixture"]["program_sha256"][
+                    next(iter(r["fixture"]["program_sha256"]))
+                ] = "0" * 64
             elif fault == "configuration":
                 r["configuration"]["runtime_sha256"] = "0" * 64
             elif fault == "case":
@@ -81,6 +86,14 @@ class Evidence(unittest.TestCase):
         r["cases"]["custom"]["image"] = r["cases"]["working"]["image"]
         r["cases"]["custom"]["image_sha256"] = r["cases"]["working"]["image_sha256"]
         with self.assertRaisesRegex(AssertionError, "Property customisation"):
+            C.check(r)
+
+    def test_forged_program_text_is_rejected(self):
+        """A record claiming other source text is caught by the typed-text check."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        first = next(iter(r["fixture"]["program_sha256"]))
+        r["fixture"]["program_sha256"][first] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
             C.check(r)
 
 

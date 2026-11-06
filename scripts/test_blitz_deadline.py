@@ -66,6 +66,15 @@ class Evidence(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     C.check(record)
 
+    def test_forged_imported_program_is_rejected(self) -> None:
+        """A record consistently claiming other source text is caught by the typed-text check."""
+        record = json.loads((C.FOLDER / "verification/results.json").read_text())
+        forged = "0" * 64
+        record["cases"]["custom"]["program_sha256"] = forged
+        record["fixture"]["program_sha256"]["custom"] = forged
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.check(record)
+
 
 if __name__ == "__main__":
     unittest.main()

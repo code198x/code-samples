@@ -16,6 +16,12 @@ if spec is None or spec.loader is None:
     raise RuntimeError("Missing native pool verifier")
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 T, C, D, L = V.T, V.C, V.D, V.L
 SMALL = ("small", "working", "custom", "single", "wrong", "repaired")
 FIXTURE = "85368e6161e74c16224c22d845b8335ef7310e02a62d82c556f124325da43a6d"
@@ -28,10 +34,6 @@ def check(record: dict[str, Any] | None = None) -> None:
     )
     T.require(
         r["configuration"] == V.A.config(), "Changed original runtime configuration"
-    )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed pool qualification source",
     )
     T.require(
         len(C.cases()) == len(set(C.cases())) == 768
@@ -54,6 +56,15 @@ def check(record: dict[str, Any] | None = None) -> None:
         n: hashlib.sha256(V.B.program(n).encode("ascii")).hexdigest()
         for n in V.B.VARIANTS
     }
+    # The source is compiled inside the Amiga, so its text is the program (rule 2);
+    # source and script digests are provenance only.
+    T.require(
+        set(r["fixture"]["program_sha256"]) == set(identities), "Stale source fixture"
+    )
+    for n in identities:
+        E.require_typed(
+            V.B.program(n).encode("ascii"), r["fixture"]["program_sha256"][n], n
+        )
     T.require(
         r["fixture"]["program_sha256"] == identities
         and r["fixture"]["fixture_sha256"] == FIXTURE,

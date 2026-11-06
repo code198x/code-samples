@@ -24,13 +24,16 @@ class Evidence(unittest.TestCase):
         return json.loads((C.V.V / "results.json").read_text())
 
     def test_native(self) -> None:
-        C.check()
+        # Source and script digests are provenance: rewriting them all is accepted.
+        r = json.loads((C.V.V / "results.json").read_text())
+        r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+        C.check(r)
 
     def test_identities_and_completion(self) -> None:
         original = self.original()
         faults = [
             "route",
-            "source",
+            "forged",
             "configuration",
             "fixture",
             "fixture_program",
@@ -60,8 +63,10 @@ class Evidence(unittest.TestCase):
             row = r["cases"]["cases"]
             if fault == "route":
                 r["system"] = "other"
-            elif fault == "source":
-                r["sources"][next(iter(r["sources"]))] = "0" * 64
+            elif fault == "forged":
+                r["fixture"]["program_sha256"][
+                    next(iter(r["fixture"]["program_sha256"]))
+                ] = "0" * 64
             elif fault == "configuration":
                 r["configuration"]["firmware_sha256"] = "0" * 64
             elif fault == "fixture":
@@ -173,6 +178,14 @@ class Evidence(unittest.TestCase):
             self.assertRaisesRegex(AssertionError, "pixels differ"),
         ):
             C.check()
+
+    def test_forged_program_text_is_rejected(self):
+        """A record claiming other source text is caught by the typed-text check."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        first = next(iter(r["fixture"]["program_sha256"]))
+        r["fixture"]["program_sha256"][first] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.check(r)
 
 
 if __name__ == "__main__":

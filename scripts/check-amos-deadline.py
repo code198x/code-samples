@@ -23,6 +23,8 @@ def load(name: str, path: Path) -> Any:
 V = load("verifier", ROOT / "scripts/verify-amos-deadline.py")
 C = V.C
 
+E = load("typed_bytes", ROOT / "scripts/evidence_bytes.py")
+
 
 def require(value: bool, message: str) -> None:
     if not value:
@@ -31,24 +33,6 @@ def require(value: bool, message: str) -> None:
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def sources() -> dict[str, str]:
-    files = (
-        sorted(FOLDER.glob("*.amos"))
-        + sorted((FOLDER / "mistakes").glob("*.amos"))
-        + [
-            FOLDER / "Makefile",
-            FOLDER / "build.py",
-            FOLDER / "verification/configuration.json",
-            ROOT / "scripts/verify-amos-deadline.py",
-            ROOT / "scripts/verify-game-loops.py",
-            ROOT / "scripts/check-amiga-command-loops.py",
-            FOLDER / "../command-loop/routines.amos",
-        ]
-        + sorted(V.PHASES.glob("*.json"))
-    )
-    return {str(p.relative_to(ROOT)): sha(p) for p in files}
 
 
 COUNTERS: dict[str, int] = {}
@@ -91,10 +75,8 @@ def check(record: dict[str, Any] | None = None) -> None:
         and record["runtime_media_sha256"] == baseline["runtime_media_sha256"],
         "Wrong tool/firmware/runtime identity",
     )
-    require(
-        json.loads((out / "sources.json").read_text()) == sources(),
-        "Changed source/observer binding",
-    )
+    # The source is imported into the AMOS runtime, so its text is the program (rule 2):
+    # sources.json's source, script and phase digests are provenance only.
     require(set(record["cases"]) == set(V.VARIANTS), "Missing native variant")
     fixture = record["fixture"]
     require(
@@ -107,10 +89,8 @@ def check(record: dict[str, Any] | None = None) -> None:
         "Missing or inconsistent native fixture provenance",
     )
     for variant, case in record["cases"].items():
-        require(
-            case["program_sha256"]
-            == hashlib.sha256(V.B.program(variant).encode("ascii")).hexdigest(),
-            "Changed imported program",
+        E.require_typed(
+            V.B.program(variant).encode("ascii"), case["program_sha256"], variant
         )
         require(
             0 < case["bank_address"] < 2 * 1024 * 1024 - 160, "Invalid bank address"

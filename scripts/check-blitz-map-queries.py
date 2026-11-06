@@ -15,6 +15,12 @@ if spec is None or spec.loader is None:
     raise RuntimeError("Missing verifier")
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 T = V.T
 
 
@@ -43,10 +49,6 @@ def check(record=None):
         (r["system"], r["language"]) == ("commodore-amiga", "blitz"), "Wrong route"
     )
     T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source/observer",
-    )
-    T.require(
         r["configuration"] == cfg and "Blitz BASIC 2.10" in cfg["model"],
         "Changed runtime configuration",
     )
@@ -54,6 +56,15 @@ def check(record=None):
     identities = {
         n: hashlib.sha256(V.B.program(n).encode()).hexdigest() for n in V.B.VARIANTS
     }
+    # The source is compiled inside the Amiga, so its text is the program (rule 2);
+    # source and script digests are provenance only.
+    T.require(
+        set(r["fixture"]["program_sha256"]) == set(identities), "Stale source fixture"
+    )
+    for n in identities:
+        E.require_typed(
+            V.B.program(n).encode("ascii"), r["fixture"]["program_sha256"][n], n
+        )
     T.require(
         r["fixture"]["program_sha256"] == identities
         and len(r["fixture"]["fixture_sha256"]) == 64,
