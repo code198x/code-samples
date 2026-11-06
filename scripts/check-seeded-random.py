@@ -8,6 +8,7 @@ import importlib.util
 import json
 import zlib
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,7 +22,25 @@ def module(name, file):
 
 V = module("native", "verify-seeded-random.py")
 P = module("png", "check-amiga-command-loops.py")
+E = module("native_bytes", "evidence_bytes.py")
 T = V.T
+EXTENSIONS = {
+    "commodore-64": ".prg",
+    "nintendo-entertainment-system": ".nes",
+    "sinclair-zx-spectrum": ".tap",
+    "commodore-amiga": ".adf",
+}
+
+
+def program(system: str) -> Any:
+    """The pattern Makefile, run with the tools the record pins.
+
+    The Amiga route also keeps the executable that its ADF carries.
+    """
+    names = tuple("build/" + n for n in V.VARIANTS)
+    outputs = tuple(n + EXTENSIONS[system] for n in names)
+    amiga = system == "commodore-amiga"
+    return E.make(V.folder(system), outputs + (names if amiga else ()), build198x=amiga)
 
 
 def pixels(c, system):
@@ -106,11 +125,8 @@ def check(system, record=None):
         and r["configuration"] == cfg,
         "Changed configuration",
     )
-    T.require(
-        r["sources"]
-        == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths(system)},
-        "Changed source",
-    )
+    build = program(system)
+    builder = cfg["build198x_sha256"] if system == "commodore-amiga" else None
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing completed case")
     expected = V.O.packet()
     T.require(
@@ -139,6 +155,22 @@ def check(system, record=None):
             and hashlib.sha256(binary).hexdigest() == c["program_sha256"],
             "Program differs",
         )
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            build,
+            "build/" + name + EXTENSIONS[system],
+            cfg["assembler_sha256"],
+            recorded=binary,
+            build198x=builder,
+        )
+        if system == "commodore-amiga":
+            E.require_program(
+                build,
+                "build/" + name,
+                cfg["assembler_sha256"],
+                recorded=zlib.decompress(bytes.fromhex(c["exe_zlib"])),
+                build198x=builder,
+            )
         loaded = bytes(c["loaded_bytes"])
         T.require(
             hashlib.sha256(loaded).hexdigest() == c["loaded_sha256"],

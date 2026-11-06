@@ -40,6 +40,58 @@ VARIANTS = (
 )
 
 
+def initial_value(variant: str) -> int:
+    return 254 if variant == "wrap" else 37 if variant == "nonzero" else 0
+
+
+def stage(key: str, variant: str, dest: Path, root: Path = ROOT) -> Path:
+    """Copy the caller into `dest` with this variant's files substituted.
+
+    The recorder builds (or, for BASIC, lists) each variant from this staged
+    copy, and the checker rebuilds it from the same copy to compare bytes.
+    Returns the staged pattern folder.
+    """
+    system, language, slug = CONFIGS[key]
+    coleco = system == "coleco-colecovision"
+    rel = Path(system) / f"patterns/{language}/framework/{slug}"
+    target = dest / rel
+    shutil.copytree(
+        root / rel, target, ignore=shutil.ignore_patterns("build", "verification")
+    )
+    if language == "basic":
+        return target
+    shutil.copytree(root / SHARED, dest / SHARED)
+    (dest / FONT).parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(root / FONT, dest / FONT)
+    if variant in ("customise", "wrap", "nonzero"):
+        shutil.copyfile(target / (variant + ".inc"), target / "settings.inc")
+    if variant == "held-as-press":
+        src = (
+            target / "mistakes/held-as-press.inc"
+            if coleco
+            else dest / SHARED / "mistakes/held-as-press.inc"
+        )
+        dst = target / "edge.inc" if coleco else dest / SHARED / "edge-filter.inc"
+        shutil.copyfile(src, dst)
+    if variant == "bad-wait":
+        shutil.copyfile(target / "mistakes/no-wait.inc", target / "frame.inc")
+    return target
+
+
+def listing(target: Path, variant: str) -> str:
+    """The BASIC program typed into the machine: the caller, then the routines."""
+    caller = (
+        "mistakes/reset-each-turn.bas"
+        if variant == "reset-mistake"
+        else "customise.bas"
+        if variant == "customise"
+        else "caller.bas"
+    )
+    return (target / caller).read_text().replace(
+        "N=0", f"N={initial_value(variant)}", 1
+    ) + (target / "routines.bas").read_text()
+
+
 def qualify(key: str, args: argparse.Namespace) -> dict[str, Any]:
     system, language, slug = CONFIGS[key]
     basic = language == "basic"
@@ -62,49 +114,13 @@ def qualify(key: str, args: argparse.Namespace) -> dict[str, Any]:
     )
     for variant in variants:
         with tempfile.TemporaryDirectory(prefix="xl-coleco-case-") as temp:
-            stage = Path(temp)
-            target = stage / rel
-            shutil.copytree(
-                folder, target, ignore=shutil.ignore_patterns("build", "verification")
-            )
-            initial = 254 if variant == "wrap" else 37 if variant == "nonzero" else 0
+            target = stage(key, variant, Path(temp))
+            initial = initial_value(variant)
             step = 2 if variant == "customise" else 1
             if basic:
-                caller = (
-                    "mistakes/reset-each-turn.bas"
-                    if variant == "reset-mistake"
-                    else "customise.bas"
-                    if variant == "customise"
-                    else "caller.bas"
-                )
-                listing = (target / caller).read_text().replace(
-                    "N=0", f"N={initial}", 1
-                ) + (target / "routines.bas").read_text()
-                data = listing.encode()
+                text = listing(target, variant)
+                data = text.encode()
             else:
-                shutil.copytree(ROOT / SHARED, stage / SHARED)
-                (stage / FONT).parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / FONT, stage / FONT)
-                if variant in ("customise", "wrap", "nonzero"):
-                    shutil.copyfile(
-                        target / (variant + ".inc"), target / "settings.inc"
-                    )
-                if variant == "held-as-press":
-                    src = (
-                        target / "mistakes/held-as-press.inc"
-                        if coleco
-                        else stage / SHARED / "mistakes/held-as-press.inc"
-                    )
-                    dst = (
-                        target / "edge.inc"
-                        if coleco
-                        else stage / SHARED / "edge-filter.inc"
-                    )
-                    shutil.copyfile(src, dst)
-                if variant == "bad-wait":
-                    shutil.copyfile(
-                        target / "mistakes/no-wait.inc", target / "frame.inc"
-                    )
                 subprocess.run(
                     ["make", f"ASM198X={asm}"],
                     cwd=target,
@@ -115,7 +131,7 @@ def qualify(key: str, args: argparse.Namespace) -> dict[str, Any]:
                 data = (
                     target / ("build/demo.cv" if coleco else "build/demo.bin")
                 ).read_bytes()
-                listing = "" if coleco else (target / "build/loader.bas").read_text()
+                text = "" if coleco else (target / "build/loader.bas").read_text()
             programs[variant] = hashlib.sha256(data).hexdigest()
             command = [str(binary), "--mcp", "--rom-dir", str(fw)]
             if coleco:
@@ -176,7 +192,7 @@ def qualify(key: str, args: argparse.Namespace) -> dict[str, Any]:
 
                 frames(300 if coleco else 900)
                 if not coleco:
-                    for line in (listing + "RUN\n").splitlines():
+                    for line in (text + "RUN\n").splitlines():
                         typed(line + "\n")
                 if basic:
                     T.require(

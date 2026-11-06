@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import tempfile
 from pathlib import Path
 
 SPEC = importlib.util.spec_from_file_location(
@@ -18,15 +19,43 @@ CUSTOM_SPEC = importlib.util.spec_from_file_location(
 assert CUSTOM_SPEC and CUSTOM_SPEC.loader
 C = importlib.util.module_from_spec(CUSTOM_SPEC)
 CUSTOM_SPEC.loader.exec_module(C)
+BYTES_SPEC = importlib.util.spec_from_file_location(
+    "tia_maria_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert BYTES_SPEC and BYTES_SPEC.loader
+E = importlib.util.module_from_spec(BYTES_SPEC)
+BYTES_SPEC.loader.exec_module(E)
 ROOT = Path(__file__).resolve().parents[1]
 SHARED = Path("cross-platform/patterns/rendering/tia-maria/verification")
 
 
+def is_record(relative: str) -> bool:
+    """A retained record file, as opposed to a source or script it was made from."""
+    return "verification" in Path(relative).parts
+
+
+def assembler_pin(shared: Path) -> str:
+    """The Asm198x binary the records were built with, from the bound tools.json."""
+    tools = json.loads((shared / "tools.json").read_text())
+    return next(t["binary_sha256"] for t in tools if t["tool"] == "asm198x")
+
+
 def validate(root: Path = ROOT) -> int:
+    with tempfile.TemporaryDirectory(prefix="tia-maria-bytes-") as temporary:
+        return _validate(root, Path(temporary))
+
+
+def _validate(root: Path, staging: Path) -> int:
     shared = root / SHARED
     bindings = json.loads((shared / "bindings.json").read_text())
+    # Record files stay bound. Sources and scripts are provenance: the
+    # rebuilt cartridges below decide whether a record is stale.
     for relative, digest in bindings.items():
-        V.require(V.T.T.sha(root / relative) == digest, f"Stale evidence: {relative}")
+        if is_record(relative):
+            V.require(
+                V.T.T.sha(root / relative) == digest, f"Stale evidence: {relative}"
+            )
+    pin = assembler_pin(shared)
     bounds = json.loads((shared / "bounds.json").read_text())
     V.require(
         [
@@ -37,7 +66,7 @@ def validate(root: Path = ROOT) -> int:
         "Bounds coverage",
     )
     count = 0
-    for system, (name, _) in V.CONFIG.items():
+    for system, (name, ext) in V.CONFIG.items():
         folder = root / system / "patterns/assembly/rendering" / name
         records = json.loads((folder / "verification/results.json").read_text())
         variants = (
@@ -104,13 +133,23 @@ def validate(root: Path = ROOT) -> int:
                 (memory_ok and pixels == want_pixels and period_ok) == good,
                 "Good/faulty control classification",
             )
-            if good and variant == "native":
-                for filename, digest in record["staged_source_sha256"].items():
-                    V.require(
-                        V.T.T.sha(folder / filename) == digest, "Native source binding"
-                    )
+            # The record is stale when its cartridge's bytes change, not its
+            # sources' text. Rebuild from the same staged copy the recorder ran.
+            staged = staging / system / variant
+            staged.mkdir(parents=True)
+            V.stage(system, "" if variant == "native" else variant, staged, root)
+            try:
+                E.require_program(
+                    E.make(staged, (f"build/demo.{ext}",)),
+                    f"build/demo.{ext}",
+                    pin,
+                    recorded_sha256=record["cart_sha256"],
+                )
+            except AssertionError as error:
+                # The staged copy is outside the tree, so name what was staged.
+                raise AssertionError(f"{error} ({system} {variant})") from None
             count += 1
-    for case, (machine, name, _) in C.CASES.items():
+    for case, (machine, name, ext) in C.CASES.items():
         folder = root / machine / "patterns/assembly/rendering" / name / "customise"
         record = json.loads((folder / "verification" / (case + ".json")).read_text())
         V.require(
@@ -119,8 +158,12 @@ def validate(root: Path = ROOT) -> int:
             and record["system"] == machine,
             "Custom caller identity/completion",
         )
-        for source, digest in record["sources"].items():
-            V.require(V.T.T.sha(root / source) == digest, "Custom source binding")
+        E.require_program(
+            E.make(folder, (f"build/{case}.{ext}",)),
+            f"build/{case}.{ext}",
+            pin,
+            recorded_sha256=record["cart_sha256"],
+        )
         frame = folder / "verification" / (case + ".png")
         V.require(V.T.T.sha(frame) == record["frame_sha256"], "Custom image binding")
         memory, size, pixels = C.expected(case)

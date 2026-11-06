@@ -1,21 +1,25 @@
-"""Rebuild a record's program with the assembler it pins and compare bytes.
+"""Rebuild a record's program with the tools it pins and compare bytes.
 
 A record is stale when its program's bytes change, not when the text of a
 source or a script changes. A checker describes how its family builds each
 program (the family's own Makefile or build.py, with the assembler passed in
-`ASM198X` as its recorder passes it), and this module rebuilds that program
-with the Asm198x release the record pins and compares the bytes with the
-record. See plans/2026-11-06-evidence-byte-check.md.
+`ASM198X` and build198x in `BUILD198X` as its recorder passes them), and this
+module rebuilds that program with the Asm198x (and build198x) release the
+record pins and compares the bytes with the record. See
+plans/2026-11-06-evidence-byte-check.md.
 
-The record pins the assembler by the digest of the binary it ran, usually a
-macOS one. `evidence-assemblers.json` maps each release to every target's
-archive and binary digests, taken from the release's own source locks, so
-the same release can be fetched and verified on any host. A fetched binary
-is never run until both digests match the table.
+The record pins each tool by the digest of the binary it ran, usually a
+macOS one. `evidence-assemblers.json` maps each Asm198x and build198x release
+to every published target's archive and binary digests, taken from the
+release's own source locks, or, for a release that publishes none, from its
+`.sha256` files and the extracted binary. So the same release can be fetched
+and verified on any host. A fetched binary is never run until both digests
+match the table.
 
 Command line:
   python3 scripts/evidence_bytes.py fetch <binary-sha256-or-tag>
   python3 scripts/evidence_bytes.py add-release asm198x-v0.0.74
+  python3 scripts/evidence_bytes.py add-release build198x-v0.2.9
 """
 
 import argparse
@@ -28,6 +32,7 @@ import subprocess
 import tarfile
 import tempfile
 import time
+import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
 from functools import cache
@@ -36,7 +41,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES = Path(__file__).with_name("evidence-assemblers.json")
 ASSEMBLER = "{asm198x}"
-DOWNLOAD = "https://github.com/asm198x/asm198x/releases/download/{tag}/{name}"
+BUILDER = "{build198x}"
+TOOLS = ("asm198x", "build198x")
+DOWNLOAD = "https://github.com/{tool}/{tool}/releases/download/{tag}/{name}"
+CI_TARGET = "x86_64-unknown-linux-gnu"
 TARGETS = (
     "aarch64-apple-darwin",
     "x86_64-apple-darwin",
@@ -50,7 +58,8 @@ class Build:
     """One run of a family's own build, and the files it must write.
 
     `command` and `env` values may contain `{asm198x}`, replaced with the
-    pinned assembler's path. `outputs` are relative to `cwd`; each is deleted
+    pinned assembler's path, and `{build198x}`, replaced with the pinned
+    build198x's path. `outputs` are relative to `cwd`; each is deleted
     before the build runs, so a build that writes nothing cannot pass by
     leaving an old file behind.
     """
@@ -85,6 +94,14 @@ def host_target() -> str:
             f"No Asm198x release target for {platform.system()} {machine}"
         )
     return f"{cpu}-{system}"
+
+
+def tool_of(tag: str) -> str:
+    """The tool a release tag belongs to: `asm198x-v0.0.74` is Asm198x's."""
+    name = tag.rpartition("-v")[0]
+    if name not in TOOLS:
+        raise LookupError(f"{tag} is not an Asm198x or build198x release")
+    return name
 
 
 def release_for(pin: str) -> str:
@@ -123,21 +140,35 @@ def download(url: str, target: Path) -> None:
             time.sleep(2 * (attempt + 1))
 
 
-@cache
 def assembler(pin: str) -> Path:
     """Return a verified local binary of the Asm198x release this record pins."""
+    return fetch("asm198x", pin)
+
+
+def builder(pin: str) -> Path:
+    """Return a verified local binary of the build198x release this record pins."""
+    return fetch("build198x", pin)
+
+
+@cache
+def fetch(tool: str, pin: str) -> Path:
+    """Return a verified local binary of the `tool` release this pin names."""
     tag = release_for(pin)
+    if tool_of(tag) != tool:
+        raise LookupError(f"{pin} names {tag}, which is not {tool}")
     target = host_target()
     entry = releases()[tag]["targets"].get(target)
     if entry is None:
         raise LookupError(f"{tag} has no {target} binary in {RELEASES.name}")
-    binary = tools_dir() / tag / target / "asm198x"
+    binary = tools_dir() / tag / target / tool
     if not binary.is_file():
         binary.parent.mkdir(parents=True, exist_ok=True)
         work = Path(tempfile.mkdtemp(dir=binary.parent))
         try:
             archive = work / entry["archive"]
-            download(DOWNLOAD.format(tag=tag, name=entry["archive"]), archive)
+            download(
+                DOWNLOAD.format(tool=tool, tag=tag, name=entry["archive"]), archive
+            )
             if sha256(archive.read_bytes()) != entry["archive_sha256"]:
                 raise AssertionError(
                     f"Downloaded {entry['archive']} for {tag} has the wrong digest"
@@ -146,7 +177,7 @@ def assembler(pin: str) -> Path:
                 member = next(
                     m
                     for m in tar.getmembers()
-                    if m.isfile() and Path(m.name).name == "asm198x"
+                    if m.isfile() and Path(m.name).name == tool
                 )
                 tar.extract(member, work / "x", filter="data")
             extracted = work / "x" / member.name
@@ -159,33 +190,48 @@ def assembler(pin: str) -> Path:
     return binary
 
 
-def _fill(value: str, path: Path) -> str:
-    return value.replace(ASSEMBLER, str(path))
+def _uses_builder(build: Build) -> bool:
+    return any(BUILDER in part for part in build.command) or any(
+        BUILDER in value for _, value in build.env
+    )
 
 
 @cache
-def rebuild(build: Build, pin: str) -> dict[str, bytes]:
-    """Run the build with the pinned assembler and return each output's bytes.
+def rebuild(build: Build, pin: str, build198x: str | None = None) -> dict[str, bytes]:
+    """Run the build with the pinned tools and return each output's bytes.
+
+    `pin` names the assembler; `build198x` names the build198x release, and
+    is required exactly when the build uses `{build198x}`.
 
     Results are kept for the life of the process, so a checker that checks
     many records (and many altered copies of them) builds each program once.
     Tests that change a source must build from a copy in another folder.
     """
-    path = assembler(pin)
+    if _uses_builder(build) != (build198x is not None):
+        raise ValueError("Pass a build198x pin exactly when the build runs {build198x}")
+    tools = {ASSEMBLER: str(assembler(pin))}
+    if build198x is not None:
+        tools[BUILDER] = str(builder(build198x))
+
+    def fill(value: str) -> str:
+        for placeholder, path in tools.items():
+            value = value.replace(placeholder, path)
+        return value
+
     for name in build.outputs:
         (build.cwd / name).unlink(missing_ok=True)
     result = subprocess.run(
-        [_fill(part, path) for part in build.command],
+        [fill(part) for part in build.command],
         check=False,
         cwd=build.cwd,
-        env=os.environ | {k: _fill(v, path) for k, v in build.env},
+        env=os.environ | {k: fill(v) for k, v in build.env},
         capture_output=True,
         text=True,
         timeout=120,
     )
     if result.returncode != 0:
         raise AssertionError(
-            f"Program no longer builds with the pinned assembler in {build.cwd}:\n"
+            f"Program no longer builds with the pinned tools in {build.cwd}:\n"
             + (result.stdout + result.stderr).strip()[-2000:]
         )
     missing = [name for name in build.outputs if not (build.cwd / name).is_file()]
@@ -201,15 +247,17 @@ def require_program(
     *,
     recorded_sha256: str | None = None,
     recorded: bytes | None = None,
+    build198x: str | None = None,
 ) -> bytes:
     """Rebuild `output` and require its bytes to match the record.
 
     Pass the recorded program bytes when the record keeps them, so a failure
     names the first differing offset; otherwise pass the recorded digest.
+    Pass `build198x` when the build runs build198x (an Amiga ADF, say).
     """
     if (recorded_sha256 is None) == (recorded is None):
         raise ValueError("Pass exactly one of recorded_sha256 and recorded")
-    data = rebuild(build, pin)[output]
+    data = rebuild(build, pin, build198x)[output]
     label = (
         str((build.cwd / output).relative_to(ROOT))
         if build.cwd.is_relative_to(ROOT)
@@ -237,39 +285,106 @@ def require_program(
     return data
 
 
-def make(folder: Path, outputs: tuple[str, ...]) -> Build:
-    """A pattern Makefile run as its recorder runs it, always rebuilding."""
-    return Build(
-        folder, ("make", "-B", "--no-print-directory", f"ASM198X={ASSEMBLER}"), outputs
-    )
+def make(folder: Path, outputs: tuple[str, ...], *, build198x: bool = False) -> Build:
+    """A pattern Makefile run as its recorder runs it, always rebuilding.
+
+    With `build198x`, the Makefile is also given `BUILD198X`, as recorders
+    that write Amiga ADFs pass it.
+    """
+    command = ("make", "-B", "--no-print-directory", f"ASM198X={ASSEMBLER}")
+    if build198x:
+        command += (f"BUILD198X={BUILDER}",)
+    return Build(folder, command, outputs)
+
+
+def _fetch_text(url: str) -> str | None:
+    """The asset's text, or None when the release does not publish it."""
+    try:
+        with urllib.request.urlopen(url, timeout=60) as response:
+            return response.read().decode()
+    except urllib.error.HTTPError as error:
+        if error.code == 404:
+            return None
+        raise
+
+
+def _unlocked_target(tool: str, tag: str, target: str) -> dict[str, str] | None:
+    """Digests for a target of a release that publishes no source lock.
+
+    The archive digest comes from the release's own `.sha256` file; the
+    binary digest from hashing the binary extracted from that archive.
+    """
+    archive = f"{tool}-{target}.tar.xz"
+    listed = _fetch_text(DOWNLOAD.format(tool=tool, tag=tag, name=archive + ".sha256"))
+    if listed is None:
+        return None
+    archive_sha256 = listed.split()[0]
+    with tempfile.TemporaryDirectory() as temp:
+        work = Path(temp)
+        download(DOWNLOAD.format(tool=tool, tag=tag, name=archive), work / archive)
+        if sha256((work / archive).read_bytes()) != archive_sha256:
+            raise ValueError(f"{tag} {target}: archive does not match its .sha256")
+        with tarfile.open(work / archive) as tar:
+            member = next(
+                m for m in tar.getmembers() if m.isfile() and Path(m.name).name == tool
+            )
+            tar.extract(member, work / "x", filter="data")
+        executable = sha256((work / "x" / member.name).read_bytes())
+    return {
+        "archive": archive,
+        "archive_sha256": archive_sha256,
+        "executable_sha256": executable,
+    }
 
 
 def add_release(tag: str) -> None:
-    """Add a release's per-target digests to the table from its source locks."""
+    """Add a release's per-target digests to the table.
+
+    Digests come from the release's source locks; a release that publishes
+    none (Asm198x before 0.0.67, build198x before 0.2.13) is read from its
+    `.sha256` files and extracted binaries instead. A target the release does
+    not publish is left out, but the CI target must be there.
+    """
+    tool = tool_of(tag)
     table = releases() if RELEASES.exists() else {}
     targets = {}
     commits = set()
+    locked = 0
     for target in TARGETS:
-        with urllib.request.urlopen(
-            DOWNLOAD.format(tag=tag, name=f"asm198x-{target}-source-lock.json"),
-            timeout=60,
-        ) as response:
-            lock = json.load(response)
+        text = _fetch_text(
+            DOWNLOAD.format(
+                tool=tool, tag=tag, name=f"{tool}-{target}-source-lock.json"
+            )
+        )
+        if text is None:
+            unlocked = _unlocked_target(tool, tag, target)
+            if unlocked is not None:
+                targets[target] = unlocked
+            continue
+        lock = json.loads(text)
         if lock.get("kind") != "producer-source-lock" or lock.get("target") != target:
             raise ValueError(f"{tag} {target}: not a source lock for this target")
-        if f"asm198x-v{lock['version']}" != tag:
+        if f"{tool}-v{lock['version']}" != tag:
             raise ValueError(f"{tag} {target}: lock names version {lock['version']}")
         commits.add(lock["source_commit"])
+        locked += 1
         targets[target] = {
             "archive": lock["archive"],
             "archive_sha256": lock["archive_sha256"],
             "executable_sha256": lock["executable_sha256"],
         }
-    if len(commits) != 1:
+    if CI_TARGET not in targets:
+        raise ValueError(f"{tag}: no {CI_TARGET} binary, so CI could not check it")
+    if len(commits) > 1:
         raise ValueError(
             f"{tag}: targets were built from different commits {sorted(commits)}"
         )
-    table[tag] = {"source_commit": commits.pop(), "targets": targets}
+    if commits and locked != len(targets):
+        raise ValueError(f"{tag}: only some targets publish a source lock")
+    table[tag] = {
+        "source_commit": commits.pop() if commits else None,
+        "targets": targets,
+    }
     RELEASES.write_text(json.dumps(dict(sorted(table.items())), indent=2) + "\n")
 
 
