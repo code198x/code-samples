@@ -42,7 +42,7 @@ An untimed world waits for an accepted action. A timed turn needs its own clock,
 
 ## Verification
 
-The original baseline probe remains separate. Run `scripts/verify-msx-gameboy-loops.py --native /path/to/binaries-and-locks --assembler /path/to/asm198x --system nintendo-game-boy --track assembly` from the repository root. The qualified released tools are Emu198x 0.44.1 and Asm198x 0.0.71, with verified archive and executable hashes plus before/after/committed producer locks.
+The original baseline probe remains separate. Run `scripts/verify-msx-gameboy-loops.py --native /path/to/binaries-and-locks --assembler /path/to/asm198x --system nintendo-game-boy --track assembly` from the repository root. The qualified released tools are Emu198x 0.44.1 and Asm198x 0.0.75, with verified archive and executable hashes plus before/after/committed producer locks.
 
 The six common cold starts check normal use, step three, reset fault/repair, wraparound and nonzero initialisation. Idle, first accepted action, waiting/holding, ignored input and a second accepted action are retained as native captures and actual observations. Assembly adds no-edge and no-wait controls for eight cold starts. The complete 32 KiB CPU-visible ROM is compared with the finalised cartridge. The checker compares actual palette framebuffers for both parity states and checks the service counter against 120 native frames. This does not establish calibrated real-world speed or a catch-up policy.
 

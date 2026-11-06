@@ -3,7 +3,7 @@
   "machine_id": "sord-m5",
   "server": {
     "name": "emu198x-sord-m5",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "configuration": "Sord M5 NTSC, monitor-started cartridge",
   "startup_kind": "cartridge-reset",
@@ -35,11 +35,11 @@
   },
   "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
   "binary_sha256": "ef51e50c44656629b8bcd1fec1c09d26b0412daaa287cc46f82f010a7c65512c",
-  "emulator_sha256": "1259bff295712625080677677982e6888a9dacab68fd450834908749d3c2d0a0",
+  "emulator_sha256": "b410781cab8c556b7250b5aaaac790869d0c217e7965143f8e167a067140b972",
   "sources": {
     "sord-m5/patterns/assembly/framework/input-loop/demo.asm": "9f68914a9a53d55706848d7667b8fb78e5d1ac2eca75d4b7646b3a7a1b97e83f",
     "sord-m5/patterns/assembly/framework/input-loop/Makefile": "86c0985608f5e4ff05bbd2ce985ebb74acfc1d49050bee332f83c99dd9b3ae18",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },

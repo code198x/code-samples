@@ -3,7 +3,7 @@
   "machine_id": "tatung-einstein",
   "server": {
     "name": "emu198x-tatung-einstein",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "configuration": "Einstein TC-01 PAL, stock MOS 1.2, Ctrl-BREAK disk boot",
   "startup_kind": "stock-mos-disk-boot",
@@ -35,11 +35,11 @@
   },
   "emulator_source_commit": "57a7453eeb3452d9f2be7ba4a453c13baa521a58",
   "binary_sha256": "38654ea9c86dd8dd7352eb1ba47648a15b43f42c01b8fb452126056f6c4e667d",
-  "emulator_sha256": "8a19dd6c2821f8d99f082dabcfb398acb25c09f9a03a5d9294200c513c1e46c5",
+  "emulator_sha256": "5b6e60947763115ae352f73a0b06b5ef0526d5359481f93939dfd5d2a83be12f",
   "sources": {
     "tatung-einstein/patterns/assembly/framework/input-loop/demo.asm": "1824d35b68634697031cf62cba2ef2b2f286a2535583ff6c6cdf9af41770aecf",
     "tatung-einstein/patterns/assembly/framework/input-loop/Makefile": "09bf0c104841ee7289e4bb127234f98a4c6332576f7544512f8ecbab11b1bb23",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/build-stock-probe.py": "b6314275a92e128dc88ce2a1e5950b45e9243c5b3293a60471e47407294e1e84"

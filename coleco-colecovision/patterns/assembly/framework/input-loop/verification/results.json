@@ -39,7 +39,7 @@
   "sources": {
     "coleco-colecovision/patterns/assembly/framework/input-loop/demo.asm": "f2ef31ff5b9765ab1da52f3d6f9f9d8ec3b885e0b3b7c07a8fc49131cca7ec8c",
     "coleco-colecovision/patterns/assembly/framework/input-loop/Makefile": "6c163d6c53fd61c63bde96d6a12f1630b716c3156f9e10359aa054efba7bef02",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },

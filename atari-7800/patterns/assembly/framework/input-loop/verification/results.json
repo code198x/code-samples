@@ -3,7 +3,7 @@
   "machine_id": "atari-7800",
   "server": {
     "name": "emu198x-atari-7800",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "configuration": "NTSC 48 KiB cartridge reset without BIOS authentication",
   "startup_kind": "cartridge-reset",
@@ -33,11 +33,11 @@
   "firmware_sha256": {},
   "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
   "binary_sha256": "de13c82ce960339972a8d6198bb1ade2f5567cef2385016bce177de11de77e72",
-  "emulator_sha256": "79e35872ed67065cd5188c7f89b1a644f42a4f257ad579e139402e8a17700ede",
+  "emulator_sha256": "bb10d0d0e7ee1c78c958313b49dee2a0ec8a0fde73839f3d0e82176411c3488b",
   "sources": {
     "atari-7800/patterns/assembly/framework/input-loop/demo.asm": "be0723d934b437528972bf071032ca769bc63e7f31546edcef73269e8d5f3f1d",
     "atari-7800/patterns/assembly/framework/input-loop/Makefile": "db9c6aa4d90ce7b04e8eca5979f2296963946ea4fc95d500fd78972bd2d9829d",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },

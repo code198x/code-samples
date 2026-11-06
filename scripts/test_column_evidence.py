@@ -32,6 +32,13 @@ class EvidenceControls(unittest.TestCase):
     def test_real_inventory_and_files(self) -> None:
         self.assertEqual(C.validate(ROOT, DATA)["machine_language_routes"], 26)
 
+    def test_route_assembler_must_be_the_tiny_release(self) -> None:
+        manifest = copy.deepcopy(DATA)
+        row = next(r for r in manifest["routes"] if "assembler_producer" in r)
+        row["assembler_producer"]["version"] = "0.0.74"
+        with self.assertRaisesRegex(ValueError, "Unqualified assembler"):
+            C.validate(ROOT, manifest)
+
     def test_empty_inventory(self) -> None:
         with self.assertRaisesRegex(ValueError, "Missing/duplicate"):
             C.inventory([])

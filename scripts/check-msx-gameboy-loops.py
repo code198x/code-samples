@@ -52,7 +52,7 @@ def check_record(root: Path, r: dict) -> None:
             bound(root, name, digest)
     for key, version in [
         ("producer_source_lock", "0.44.1"),
-        ("assembler_source_lock", "0.0.71"),
+        ("assembler_source_lock", "0.0.75"),
     ]:
         p = r[key]
         require(

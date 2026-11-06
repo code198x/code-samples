@@ -8,7 +8,7 @@ Build this original caller, start it through the route below, and press primary 
 make
 ```
 
-Output: `build/demo.bin`. Tested configuration: **NTSC 32 KiB cartridge, recorded BIOS**. [demo.asm](demo.asm) is the complete caller; [Makefile](Makefile) shows the assembler dialect and packaging. Use Asm198x, plus Python 3 for the MTX/Einstein packaging helper. Supply your own legally obtained firmware where the machine requires it.
+Output: `build/demo.bin`. Tested configuration: **NTSC 32 KiB cartridge, recorded BIOS, emulated original four-port board (CA018087)**. [demo.asm](demo.asm) is the complete caller; [Makefile](Makefile) shows the assembler dialect and packaging. Use Asm198x, plus Python 3 for the MTX/Einstein packaging helper. Supply your own legally obtained firmware where the machine requires it.
 
 Wait for a fresh VCOUNT bit-7 transition. GTIA TRIG0 uses active-low bit 0, unlike the 2600 TIA bit 7. ANTIC DMA and NMI are disabled; GTIA background colour provides feedback. This does not qualify analogue stick ranges or the keypad.
 

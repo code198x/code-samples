@@ -34,7 +34,7 @@ An untimed world waits for an accepted action. A timed turn needs its own clock,
 
 ## Verification
 
-The original baseline probe remains separate. Run `scripts/verify-msx-gameboy-loops.py --native /path/to/binaries-and-locks --assembler /path/to/asm198x --system msx --track assembly` from the repository root. The qualified released tools are Emu198x 0.44.1 and Asm198x 0.0.71, with verified archive and executable hashes plus before/after/committed producer locks.
+The original baseline probe remains separate. Run `scripts/verify-msx-gameboy-loops.py --native /path/to/binaries-and-locks --assembler /path/to/asm198x --system msx --track assembly` from the repository root. The qualified released tools are Emu198x 0.44.1 and Asm198x 0.0.75, with verified archive and executable hashes plus before/after/committed producer locks.
 
 The six common cold starts check normal use, step three, reset fault/repair, wraparound and nonzero initialisation. Idle, first accepted action, waiting/holding, ignored input and a second accepted action are retained as native captures and actual observations. Assembly adds a seventh no-edge cold start, full exact payload readback before USR, actual VDP I/O write traces (address zero followed by eight character bytes), and working BASIC arithmetic after return. Raw I/O traces are bounded to one native frame and 4096 sampled events; retained records identify the VDP-write subset. The state byte and the actual emitted character bytes must agree.
 

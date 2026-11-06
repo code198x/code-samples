@@ -18,6 +18,9 @@ def sha(path: Path) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tools", type=Path, required=True)
+    parser.add_argument(
+        "--only", help="re-bind one machine's route; other routes keep their bindings"
+    )
     args = parser.parse_args()
     path = ROOT / "docs/column-expansion.json"
     data = json.loads(path.read_text())
@@ -35,8 +38,23 @@ def main() -> None:
         "build-sega-probe.py",
     ):
         data["observers"]["scripts/" + name] = sha(ROOT / "scripts" / name)
-    data["producers"] = {}
+    assembler = json.loads(
+        (args.tools / "asm198x-aarch64-apple-darwin-source-lock.json").read_text()
+    )
+    if sha(args.tools / "asm198x") != assembler["executable_sha256"]:
+        raise ValueError("Changed executable: asm198x")
+    if args.only and args.only not in {row["system"] for row in data["routes"]}:
+        raise ValueError("No route for " + args.only)
+    if not args.only:
+        data["producers"] = {}
+        data["assembler_producer"] = assembler
     for row in data["routes"]:
+        if args.only and row["system"] != args.only:
+            continue
+        # A route built by a different assembler release names it here.
+        row.pop("assembler_producer", None)
+        if assembler != data["assembler_producer"]:
+            row["assembler_producer"] = assembler
         folder = ROOT / row["folder"]
         target = folder / "verification"
         target.mkdir(exist_ok=True)
@@ -89,11 +107,12 @@ def main() -> None:
             and "build" not in p.relative_to(folder).parts
             and p.name not in ("README.md", ".DS_Store")
         }
-    data["assembler_producer"] = json.loads(
-        (args.tools / "asm198x-aarch64-apple-darwin-source-lock.json").read_text()
-    )
     path.write_text(json.dumps(data, indent=2) + "\n")
-    print("Bound", len(data["routes"]), "native machine/language routes")
+    print(
+        "Bound",
+        1 if args.only else len(data["routes"]),
+        "native machine/language routes",
+    )
 
 
 if __name__ == "__main__":

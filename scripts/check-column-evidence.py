@@ -238,6 +238,16 @@ def check_fault(row: dict, record: dict) -> None:
         )
 
 
+def qualified_assembler(assembler: dict, version: str) -> None:
+    require(
+        assembler["version"] == version
+        and assembler["before_lock_sha256"]
+        == assembler["after_lock_sha256"]
+        == assembler["committed_lock_sha256"],
+        "Unqualified assembler producer",
+    )
+
+
 def validate(root: Path, manifest: dict) -> dict:
     require(manifest.get("version") == 1, "Unknown evidence version")
     inventory(manifest["routes"])
@@ -249,17 +259,13 @@ def validate(root: Path, manifest: dict) -> dict:
     )
     png = importlib.util.module_from_spec(png_spec)
     png_spec.loader.exec_module(png)
-    assembler = manifest["assembler_producer"]
-    require(
-        assembler["version"] == "0.0.71"
-        and assembler["before_lock_sha256"]
-        == assembler["after_lock_sha256"]
-        == assembler["committed_lock_sha256"],
-        "Unqualified assembler producer",
-    )
+    qualified_assembler(manifest["assembler_producer"], "0.0.71")
     captures = 0
     for row in manifest["routes"]:
         require(bool(row.get("files")), "Missing source/evidence bindings")
+        if "assembler_producer" in row:
+            # Flat 32 KiB Game Boy ROMs need --tiny, first released in 0.0.75.
+            qualified_assembler(row["assembler_producer"], "0.0.75")
         for name, digest in row["files"].items():
             path = bound(root, name, digest)
             if path.suffix == ".png":

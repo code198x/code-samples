@@ -11,7 +11,7 @@
     "nintendo-game-boy/patterns/assembly/input/read-action/sample.inc": "de5f39ea174fe866990e5b93870d67a54a342a3428598979060cf707e085cd7f",
     "nintendo-game-boy/patterns/assembly/input/read-action/picture.inc": "0538c8c230374f153334cd5a689d89e6e1cde914788e00db0c075060025f107f",
     "nintendo-game-boy/patterns/assembly/input/read-action/sound.inc": "19e24a3cbc1d6d514ea2278e787513c20c16a8913e4c7e68f5cdef0b03d91855",
-    "nintendo-game-boy/patterns/assembly/input/read-action/Makefile": "78633cfd16b114eed107572ecc3dd3dec6a4df622442e782f54f802d2ee9ca7f"
+    "nintendo-game-boy/patterns/assembly/input/read-action/Makefile": "2b9bd5f63766197174a235b503a1cb8c7f4ae5db696d25b4981acb9689b82d12"
   },
   "observer_sha256": "eadc99c35398bace6a7663406a78d47010eb6da63cb59cd880b3a04e3b529a2c",
   "emulator_sha256": "a049446762da8f2329ec855c7e5bd332fb2820d50beba1a12ca16349dbe4658f",
