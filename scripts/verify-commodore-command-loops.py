@@ -48,6 +48,74 @@ def decode(raw: list[int]) -> str:
     )
 
 
+def program(
+    system: str, track: str, variant: str, assembler: str = "", output: str = "build"
+) -> None:
+    """Write the program one variant gives the machine under <folder>/<output>/<variant>.
+
+    BASIC: the typed listing, entered.bas. Assembly: the generated demo.asm
+    and the PRG Asm198x builds from it. The recorder and the checker both
+    build here.
+    """
+    initial, step = VARIANTS[variant]
+    folder = ROOT / system / f"patterns/{track}/framework/command-loop"
+    case = folder / output / variant
+    case.mkdir(parents=True, exist_ok=True)
+    if track == "basic":
+        caller = (
+            folder
+            / (
+                "customise.bas"
+                if variant == "step-three"
+                else "mistakes/reset-each-command.bas"
+                if variant == "wrong-reset"
+                else "caller.bas"
+            )
+        ).read_text()
+        if variant in ("wrap", "nonzero"):
+            caller = caller.replace("N=0:S=1", f"N={initial}:S={step}")
+        (case / "entered.bas").write_text(
+            caller + (folder / "routines.bas").read_text()
+        )
+        return
+    caller = (
+        folder
+        / (
+            "customise.inc"
+            if variant == "step-three"
+            else "mistakes/reset-each-command.inc"
+            if variant == "wrong-reset"
+            else "caller.inc"
+        )
+    ).read_text()
+    if variant in ("wrap", "nonzero"):
+        caller = caller.replace(
+            "lda #0\n    sta turn_count", f"lda #{initial}\n    sta turn_count"
+        ).replace("lda #1\n    sta turn_step", f"lda #{step}\n    sta turn_step")
+    demo = (folder / "demo.asm").read_text()
+    for include in ["caller", "routines", "presentation"]:
+        demo = demo.replace(
+            f'    !source "{include}.inc"',
+            caller if include == "caller" else (folder / f"{include}.inc").read_text(),
+        )
+    (case / "demo.asm").write_text(demo)
+    subprocess.run(
+        [
+            assembler,
+            "--dialect",
+            "acme",
+            "--prg",
+            str(case / "demo.asm"),
+            "--sym=" + str(case / "demo.sym"),
+            "-o",
+            str(case / "demo.prg"),
+        ],
+        check=True,
+        capture_output=True,
+        timeout=30,
+    )
+
+
 def execute(system: str, track: str, args: argparse.Namespace) -> None:
     folder = ROOT / system / f"patterns/{track}/framework/command-loop"
     out = folder / "verification/reusable"
@@ -72,63 +140,8 @@ def execute(system: str, track: str, args: argparse.Namespace) -> None:
     records = {}
     for variant, (initial, step) in VARIANTS.items():
         case = build / variant
-        case.mkdir(exist_ok=True)
-        if track == "basic":
-            caller = (
-                folder
-                / (
-                    "customise.bas"
-                    if variant == "step-three"
-                    else "mistakes/reset-each-command.bas"
-                    if variant == "wrong-reset"
-                    else "caller.bas"
-                )
-            ).read_text()
-            if variant in ("wrap", "nonzero"):
-                caller = caller.replace("N=0:S=1", f"N={initial}:S={step}")
-            program = caller + (folder / "routines.bas").read_text()
-            (case / "entered.bas").write_text(program)
-        else:
-            caller = (
-                folder
-                / (
-                    "customise.inc"
-                    if variant == "step-three"
-                    else "mistakes/reset-each-command.inc"
-                    if variant == "wrong-reset"
-                    else "caller.inc"
-                )
-            ).read_text()
-            if variant in ("wrap", "nonzero"):
-                caller = caller.replace(
-                    "lda #0\n    sta turn_count", f"lda #{initial}\n    sta turn_count"
-                ).replace(
-                    "lda #1\n    sta turn_step", f"lda #{step}\n    sta turn_step"
-                )
-            demo = (folder / "demo.asm").read_text()
-            for include in ["caller", "routines", "presentation"]:
-                demo = demo.replace(
-                    f'    !source "{include}.inc"',
-                    caller
-                    if include == "caller"
-                    else (folder / f"{include}.inc").read_text(),
-                )
-            (case / "demo.asm").write_text(demo)
-            subprocess.run(
-                [
-                    str(args.assembler),
-                    "--dialect",
-                    "acme",
-                    "--prg",
-                    str(case / "demo.asm"),
-                    "--sym=" + str(case / "demo.sym"),
-                    "-o",
-                    str(case / "demo.prg"),
-                ],
-                check=True,
-                capture_output=True,
-                timeout=30,
-            )
+        program(system, track, variant, str(args.assembler))
+        if track == "assembly":
             sym = T.symbols(case / "demo.sym")
         machine = T.Machine(command)
         observations = []

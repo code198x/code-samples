@@ -1,4 +1,10 @@
-"""Validate bound native screen observations; never claims fresh execution."""
+"""Validate bound native screen observations; never claims fresh execution.
+
+Each variant's program is regenerated through the recorder's program(): the
+BASIC listing as typed text (rule 2), and the assembly PRG rebuilt with the
+Asm198x release the record pins (rule 1). Source and observer digests are
+provenance only.
+"""
 
 from __future__ import annotations
 
@@ -14,6 +20,12 @@ _spec = importlib.util.spec_from_file_location(
 assert _spec and _spec.loader
 V = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(V)
+_E = importlib.util.spec_from_file_location(
+    "cbm_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def require(condition: bool, message: str) -> None:
@@ -31,42 +43,6 @@ def check(
         (r["status"], r["machine"], r["track"]) == ("passed", system, track),
         "Wrong successful route",
     )
-    expected_inputs = (
-        {
-            "caller.bas",
-            "routines.bas",
-            "complete.bas",
-            "customise.bas",
-            "mistakes/reset-each-command.bas",
-        }
-        if track == "basic"
-        else {
-            "caller.inc",
-            "routines.inc",
-            "presentation.inc",
-            "demo.asm",
-            "customise.inc",
-            "mistakes/reset-each-command.inc",
-        }
-    )
-    prefix = str(folder.relative_to(root))
-    require(
-        set(r["sources"]) == {prefix + "/" + p for p in expected_inputs},
-        "Missing source binding",
-    )
-    require(
-        set(r["observer_sources"])
-        == {
-            "scripts/verify-commodore-command-loops.py",
-            "scripts/verify-game-loops.py",
-        },
-        "Missing observer binding",
-    )
-    for name, digest in {**r["sources"], **r["observer_sources"]}.items():
-        require(
-            hashlib.sha256((root / name).read_bytes()).hexdigest() == digest,
-            "Changed input " + name,
-        )
     # Rebuild the exact entered source independently from maintained callers.
     # A record from the wrong caller must not qualify a different variant.
     require(
@@ -104,46 +80,34 @@ def check(
         "Missing firmware",
     )
     for variant, (initial, step) in V.VARIANTS.items():
-        if track == "basic":
-            filename = (
-                "customise.bas"
-                if variant == "step-three"
-                else "mistakes/reset-each-command.bas"
-                if variant == "wrong-reset"
-                else "caller.bas"
-            )
-            caller = (folder / filename).read_text()
-            if variant in ("wrap", "nonzero"):
-                caller = caller.replace("N=0:S=1", f"N={initial}:S={step}")
-            entered = caller + (folder / "routines.bas").read_text()
-        else:
-            filename = (
-                "customise.inc"
-                if variant == "step-three"
-                else "mistakes/reset-each-command.inc"
-                if variant == "wrong-reset"
-                else "caller.inc"
-            )
-            caller = (folder / filename).read_text()
-            if variant in ("wrap", "nonzero"):
-                caller = caller.replace(
-                    "lda #0\n    sta turn_count", f"lda #{initial}\n    sta turn_count"
-                ).replace(
-                    "lda #1\n    sta turn_step", f"lda #{step}\n    sta turn_step"
-                )
-            entered = (folder / "demo.asm").read_text()
-            for include in ["caller", "routines", "presentation"]:
-                entered = entered.replace(
-                    f'    !source "{include}.inc"',
-                    caller
-                    if include == "caller"
-                    else (folder / f"{include}.inc").read_text(),
-                )
         case = r["cases"][variant]
-        require(
-            hashlib.sha256(entered.encode()).hexdigest() == case["entered_sha256"],
-            "Wrong entered caller identity",
-        )
+        script = root / "scripts/verify-commodore-command-loops.py"
+        if track == "basic":
+            output = f"build/evidence/{variant}/entered.bas"
+            build = E.function(
+                script,
+                "program",
+                (system, track, variant, "", "build/evidence"),
+                folder,
+                (output,),
+            )
+            E.require_typed(
+                E.rebuild(build, None)[output], case["entered_sha256"], output
+            )
+        else:
+            output = f"build/evidence/{variant}/demo.prg"
+            E.require_program(
+                E.function(
+                    script,
+                    "program",
+                    (system, track, variant, E.ASSEMBLER, "build/evidence"),
+                    folder,
+                    (output,),
+                ),
+                output,
+                r["assembler_source_lock"]["executable_sha256"],
+                recorded_sha256=case["prg_sha256"],
+            )
         obs = case["observations"]
         first = (initial + step) % 256
         second = (initial + step * 2) % 256
