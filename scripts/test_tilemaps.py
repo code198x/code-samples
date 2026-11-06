@@ -66,8 +66,54 @@ class EvidenceFailures(unittest.TestCase):
         )
         p = self.root / row["implementation"] / "routines.bas"
         p.write_text(p.read_text() + "1600 END\n")
-        with self.assertRaisesRegex(ValueError, "changed source"):
+        with self.assertRaisesRegex(ValueError, "routines differ"):
             G.verify(self.root)
+
+    def record(self, kind: str) -> tuple[dict, Path, dict]:
+        row = next(r for r in self.inventory["systems"] if r["kind"] == kind)
+        path = self.root / row["record"]
+        return row, path, json.loads(path.read_text())
+
+    def test_changed_typed_demo_fails(self) -> None:
+        row, _, _ = self.record("basic-numeric-map")
+        p = self.root / row["implementation"] / "demo.bas"
+        p.write_text(p.read_text().replace("D=R*W+C", "D=R*W+C+0"))
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            G.verify(self.root)
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A record claiming another program is caught only by the byte check."""
+        for kind, message in [
+            ("native-byte-map", "^Program bytes differ"),
+            ("basic-numeric-map", "^Typed program differs"),
+        ]:
+            row, path, record = self.record(kind)
+            original = path.read_text()
+            if kind == "native-byte-map":
+                record["fixture_sha256"] = "0" * 64
+            else:
+                record["sources"][row["implementation"] + "/demo.bas"] = "0" * 64
+            path.write_text(json.dumps(record))
+            with (
+                self.subTest(kind=kind),
+                self.assertRaisesRegex(AssertionError, message),
+            ):
+                G.verify(self.root)
+            path.write_text(original)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Rewritten recorder and source digests leave the evidence valid."""
+        for row in self.inventory["systems"]:
+            path = self.root / row["record"]
+            record = json.loads(path.read_text())
+            demo = row["implementation"] + "/demo.bas"
+            record["sources"] = {
+                name: digest if name == demo else "0" * 64
+                for name, digest in record["sources"].items()
+            }
+            record["observer_sha256"] = record["transport_sha256"] = "0" * 64
+            path.write_text(json.dumps(record))
+        self.assertEqual(G.verify(self.root), {"basic": 10, "native": 20})
 
     def test_uncompleted_negative_fails(self) -> None:
         row = next(

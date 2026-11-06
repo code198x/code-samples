@@ -1,4 +1,10 @@
-"""Validate retained map evidence; this does not rerun the guest machines."""
+"""Validate retained map evidence; this does not rerun the guest machines.
+
+Native routes rebuild each diagnostic fixture with the pinned Asm198x release
+and compare its bytes with the record. BASIC routes compare the typed demo with
+the record. Recorder scripts are provenance; editing them does not make the
+evidence stale.
+"""
 
 from __future__ import annotations
 
@@ -26,6 +32,39 @@ def module(name: str, path: Path):
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m
+
+
+E = module("tilemap_bytes", ROOT / "scripts/evidence_bytes.py")
+BUILD = ROOT / "cross-platform/patterns/rendering/tile-map/build.py"
+
+
+def require_program(row: dict, record: dict, folder: Path) -> None:
+    """Rebuild or re-read the recorded program and compare it with the record."""
+    if row["kind"] == "native-byte-map":
+        output = "build/fixture.bin"
+        E.require_program(
+            E.function(
+                BUILD,
+                "build",
+                (row["machine_id"], E.ASSEMBLER),
+                # build.py always writes beside the committed sources.
+                ROOT / row["implementation"],
+                (output,),
+            ),
+            output,
+            record["assembler_sha256"],
+            recorded_sha256=record["fixture_sha256"],
+        )
+        return
+    # The recorder types demo.bas, wrapped in its own completion and hold lines.
+    demo = f"{row['implementation']}/demo.bas"
+    require(demo in record["sources"], f"{row['machine_id']}: missing typed program")
+    source = (folder / "demo.bas").read_text()
+    E.require_typed(source, record["sources"][demo], demo)
+    require(
+        source[source.index("1000 E=") :] == (folder / "routines.bas").read_text(),
+        f"{row['machine_id']}: distributed routines differ from the typed caller",
+    )
 
 
 def verify(root: Path) -> dict:
@@ -56,14 +95,6 @@ def verify(root: Path) -> dict:
         record = json.loads((root / row["record"]).read_text())
         require(record["status"] == "passed", f"{name}: execution did not pass")
         require(bool(record["sources"]), f"{name}: missing source identities")
-        for relative, digest in record["sources"].items():
-            require(
-                sha(root / relative) == digest, f"{name}: changed source {relative}"
-            )
-        require(
-            record["transport_sha256"] == sha(root / "scripts/verify-game-loops.py"),
-            f"{name}: changed transport",
-        )
         if row["kind"] == "native-byte-map":
             counts["native"] += 1
             require(name in native_ids, f"{name}: missing native configuration")
@@ -73,11 +104,6 @@ def verify(root: Path) -> dict:
                 f"{name}: widened native claim",
             )
             require(record["machine_id"] == name, f"{name}: wrong machine record")
-            require(
-                record["observer_sha256"]
-                == sha(root / "scripts/verify-native-tilemaps.py"),
-                f"{name}: changed observer",
-            )
             expected = list(native.expected())
             require(
                 record["actual"] == record["expected"] == expected,
@@ -122,10 +148,6 @@ def verify(root: Path) -> dict:
             require(
                 record["system"] == row["implementation"].split("/")[0],
                 f"{name}: wrong dialect record",
-            )
-            require(
-                record["observer_sha256"] == sha(root / "scripts/verify-tilemaps.py"),
-                f"{name}: changed observer",
             )
             require(
                 set(record["case_counts"]) == {"queries", "writes", "pixels", "region"}
@@ -176,6 +198,7 @@ def verify(root: Path) -> dict:
             )
         else:
             raise ValueError(f"{name}: unknown evidence kind")
+        require_program(row, record, folder)
         require(
             row["native_graphics"] == "not-qualified-by-map-query-evidence",
             f"{name}: unproved graphics claim",
