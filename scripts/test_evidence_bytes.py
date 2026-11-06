@@ -10,6 +10,7 @@ import json
 import shutil
 import tempfile
 import unittest
+import unittest.mock
 import zlib
 from pathlib import Path
 from typing import Any
@@ -192,6 +193,12 @@ class AmigaDisks(unittest.TestCase):
 
 
 class Assemblers(unittest.TestCase):
+    def test_a_relative_tools_folder_is_made_absolute(self) -> None:
+        """`make` runs in each pattern's folder, so the path must not be relative."""
+        with unittest.mock.patch.dict("os.environ", {"CODE198X_TOOLS": "rel/tools"}):
+            self.assertTrue(E.tools_dir().is_absolute())
+            self.assertEqual(E.tools_dir(), Path("rel/tools").resolve())
+
     def test_unknown_pin_is_refused(self) -> None:
         with self.assertRaises(LookupError):
             E.release_for("0" * 64)
