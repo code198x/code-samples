@@ -171,7 +171,7 @@ Each batch is one pull request with CI green. Counts are checkers.
 | 2 | **Makefile families:** game-rules, gamekit, gameplay-patterns, nightone, nighttwo, playtools, pools-and-states, seeded-random, toolkit, worldkit, tia-maria, xl-coleco. Teaches the module build198x, whose ADFs these Amiga routes record. Staged-copy recorders (tia-maria, xl-coleco) rebuild from the same staged copy. Inventory files such as `bindings.json` stop comparing source and script entries; their record-file entries stay. | 12 | build198x in the module |
 | 3 | **Shared `build.py` families:** the rendering families (character, glyph, text, region, tile and bitmap patterns) and the rectangle-overlap ports. | 23 | — |
 | 4 | **Recorder-built programs:** the deadlines, input-edges, map and sprite recorders. Each recorder's source generator and argument list move into a function the checker also calls. | 23 | — |
-| 4b | **Unassigned and re-recorded:** `check-c64-rom-font.py`, whose recorder's build moves into a function the checker calls. The sprite lifecycle, clipping and phases checkers and `check-rendering-evidence.py`: their records kept no program identity, so each recorder gains a build-only `programs()` and the records are re-recorded, with the tools they pin, to add `fixture_programs` (and `caller_programs` where the recorder builds callers with their Makefiles). `check-fixed-characters.py` waits on a decision: its records pin no assembler. | 5 | build198x-adf in the module |
+| 4b | **Unassigned and re-recorded:** `check-c64-rom-font.py`, whose recorder's build moves into a function the checker calls. The sprite lifecycle, clipping and phases checkers and `check-rendering-evidence.py`: their records kept no program identity, so each recorder gains a build-only `programs()` and the records are re-recorded, with the tools they pin, to add `fixture_programs` (and `caller_programs` where the recorder builds callers with their Makefiles). `check-fixed-characters.py` follows in its own pull request: its records pinned no assembler, so they are re-recorded with Asm198x 0.0.75 to name one. | 6 | build198x-adf in the module |
 | 5 | **build198x BASIC:** the 23 `check-basic-*` families and the C64 adventure parser. C64 and Spectrum routes rebuild with build198x 0.2.9; the BBC Micro route is typed (rule 2). | 24 | rule 2 |
 | 6 | **Typed BASIC and FORTH:** the Ace FORTH families and the stock-ROM BASIC deadlines and maps. | 15 | rule 2 |
 | 7 | **AMOS and Blitz.** | 13 | rule 2 |
@@ -217,8 +217,18 @@ None blocks batch 1, whose programs are all host-built by released tools.
   digests, rather than given a rule 3 exception. Every observation, count,
   control and capture came out identical to the committed record; only
   `fixture_programs`, `caller_programs` and the provenance digests of the
-  edited recorder scripts changed. This is the one batch that edits
-  records.
+  edited recorder scripts changed. Batch 4b and the fixed-characters
+  follow-up below are the only changes in this plan that edit records.
+- **Records without an assembler pin are re-recorded with the newest
+  release:** *agreed 2026-11-06*, for `check-fixed-characters.py`. Its
+  records kept each driver's `fixture_sha256` but named no assembler, so no
+  release could be chosen for the rebuild. They were re-recorded with
+  Asm198x 0.0.75, the newest release, and the Emu198x 0.48.3 emulators they
+  pin, and now name it in `assembler_sha256`. Every fixture, memory dump,
+  flag, capture and pixel result came out identical; only the new pin and
+  the provenance digest of the edited recorder changed. The ZX80 and ZX81
+  callers are typed in, so their `caller.bas` text stays part of the
+  program (rule 2).
 - **Rule 3:** keeping a text pin, without scripts, for programs built by an
   unreleased tool. The alternative is to re-record those families with a
   released Asm198x first. Needed only if batch 8's survey of the
