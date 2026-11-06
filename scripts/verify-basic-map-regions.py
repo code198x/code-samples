@@ -110,30 +110,24 @@ def region_program(system: str, reference: bool = False) -> tuple[str, int]:
     return "\n".join(lines) + "\n", count + 3
 
 
-def qualify_region(system: str) -> None:
-    folder = R.ROOT / system / "patterns/basic/rendering/text-region"
-    (folder / "build/verification/results.json").unlink(missing_ok=True)
+def region_callers(system: str) -> tuple[dict[str, str], int]:
+    """Each text-region caller by label, as a generator writes it, and the case count."""
     working, n = region_program(system)
     reference, _ = region_program(system, True)
-    a = R.run(system, working, "checked", folder)
-    b = R.run(system, reference, "reference", folder)
-    R.T.require(a == b, system + ": region differs from independent literal output")
     bad = working.replace("D=R*W+C", "D=R*(W-1)+C")
     R.T.require(bad != working, "No stride mutant")
-    c = R.run(system, bad, "wrong-stride", folder)
-    R.T.require(c != b, system + ": wrong stride accepted")
-    print("PASS region", system, n, flush=True)
-    write_record(folder, system, "text-region", n)
+    return {"checked": working, "reference": reference, "wrong-stride": bad}, n
 
 
-def qualify_map(system: str) -> None:
+def map_callers(system: str) -> tuple[dict[str, str], dict[str, int]]:
+    """Each tile-map caller by label, as a generator writes it, and the case counts."""
     folder = R.ROOT / system / "patterns/basic/rendering/tile-map"
     # Independent test generator has explicit per-call expected numbers.
-    (folder / "build/verification/results.json").unlink(missing_ok=True)
     source = (folder / "demo.bas").read_text()
     pet = (
         R.ROOT / "commodore-pet/patterns/basic/rendering/tile-map/demo.bas"
     ).read_text()
+    callers = {}
     counts = {}
     for kind in ["queries", "writes", "pixels"]:
         actual, n = R.V.cases("commodore-pet", pet, kind)
@@ -166,24 +160,68 @@ def qualify_map(system: str) -> None:
                         )
                 rows.append(row)
             expected = "\n".join(rows) + "\n"
+        callers[kind] = actual
+        callers[kind + "-reference"] = expected
+        counts[kind] = n
+    callers["demo"] = source
+    callers["wrong-stride"] = source.replace("D=R*W+C", "D=R*(W-1)+C")
+    return callers, counts
+
+
+def callers(system: str, kind: str) -> dict[str, str]:
+    """The callers one route's record pins, by label, before preparation."""
+    return (region_callers if kind == "text-region" else map_callers)(system)[0]
+
+
+def build_callers(system: str, kind: str, build198x: str = "") -> None:
+    """Prepare and build every caller of one route, without running any.
+
+    The recorder builds each caller through the same transport functions
+    before running it; the checker calls this to rebuild them.
+    """
+    folder = R.ROOT / system / "patterns/basic/rendering" / kind
+    for label, source in callers(system, kind).items():
+        R.build(system, R.prepare(system, source), label, folder, build198x)
+
+
+def qualify_region(system: str) -> None:
+    folder = R.ROOT / system / "patterns/basic/rendering/text-region"
+    (folder / "build/verification/results.json").unlink(missing_ok=True)
+    texts, n = region_callers(system)
+    a = R.run(system, texts["checked"], "checked", folder)
+    b = R.run(system, texts["reference"], "reference", folder)
+    R.T.require(a == b, system + ": region differs from independent literal output")
+    c = R.run(system, texts["wrong-stride"], "wrong-stride", folder)
+    R.T.require(c != b, system + ": wrong stride accepted")
+    print("PASS region", system, n, flush=True)
+    write_record(folder, system, "text-region", n, list(texts))
+
+
+def qualify_map(system: str) -> None:
+    folder = R.ROOT / system / "patterns/basic/rendering/tile-map"
+    (folder / "build/verification/results.json").unlink(missing_ok=True)
+    texts, counts = map_callers(system)
+    for kind in ["queries", "writes", "pixels"]:
         R.T.require(
-            R.run(system, actual, kind, folder)
-            == R.run(system, expected, kind + "-reference", folder),
+            R.run(system, texts[kind], kind, folder)
+            == R.run(system, texts[kind + "-reference"], kind + "-reference", folder),
             system + ": " + kind + " differs",
         )
-        counts[kind] = n
-    wrong = source.replace("D=R*W+C", "D=R*(W-1)+C")
     R.T.require(
-        R.run(system, source, "demo", folder)
-        != R.run(system, wrong, "wrong-stride", folder),
+        R.run(system, texts["demo"], "demo", folder)
+        != R.run(system, texts["wrong-stride"], "wrong-stride", folder),
         system + ": stride mutation not visible",
     )
     print("PASS map", system, counts, flush=True)
-    write_record(folder, system, "tile-map", counts)
+    write_record(folder, system, "tile-map", counts, list(texts))
 
 
 def write_record(
-    folder: Path, system: str, kind: str, counts: dict[str, int] | int
+    folder: Path,
+    system: str,
+    kind: str,
+    counts: dict[str, int] | int,
+    labels: list[str],
 ) -> None:
     output = folder / "build/verification"
     exe = R.NATIVE / ("emu198x-" + R.ALIASES.get(system, system))
@@ -217,6 +255,7 @@ def write_record(
         "independent_full_raster_match": True,
         "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
     }
+    result.update(R.published(system, folder, labels))
     (output / "results.json").write_text(json.dumps(result, indent=2) + "\n")
 
 

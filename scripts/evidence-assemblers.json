@@ -149,6 +149,31 @@
       }
     }
   },
+  "build198x-v0.2.13": {
+    "source_commit": "971dce11d75903f8441e96b407ea428859363b73",
+    "targets": {
+      "aarch64-apple-darwin": {
+        "archive": "build198x-aarch64-apple-darwin.tar.xz",
+        "archive_sha256": "12c9f61f121907b3403a7f4047093589ca7602a2bafe3b7a0322858cb6b2ed72",
+        "executable_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7"
+      },
+      "x86_64-apple-darwin": {
+        "archive": "build198x-x86_64-apple-darwin.tar.xz",
+        "archive_sha256": "6ee18d16f1b7271a31decb5e37ed8fb5b065fc7311422cadaee30c4fb873d4a3",
+        "executable_sha256": "7af96c171fe20a9b361748e6fa899eeab39dd4c75167fa1f739330aababe6a12"
+      },
+      "x86_64-unknown-linux-gnu": {
+        "archive": "build198x-x86_64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "cfda688ba30e811852efdc3e80949affeaf247d7360141a6d343aa36d13eb755",
+        "executable_sha256": "1e4d9c94bbbfda1fefb63f3d150a6896def339480f225f2981ebb37dfcfd4019"
+      },
+      "aarch64-unknown-linux-gnu": {
+        "archive": "build198x-aarch64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "be04a389229bbb9c7ac524ea34ca9666a0f6f3309fb8eedef617754f3f30ca00",
+        "executable_sha256": "6afff7d8d1a32e3e79fd4d09cd17f6ae20d56f42b90726af052db7794ecba3d6"
+      }
+    }
+  },
   "build198x-v0.2.9": {
     "source_commit": null,
     "targets": {

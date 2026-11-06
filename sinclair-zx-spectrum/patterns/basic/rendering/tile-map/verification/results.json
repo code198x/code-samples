@@ -15,7 +15,7 @@
   "firmware": {
     "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
   },
-  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "observer_sha256": "248f48d2598186750cc9e4bb9485f9892293d0e0d6bdbc0e699d5276e6fed4de",
   "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
   "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
   "producer": {
@@ -48,7 +48,7 @@
     ],
     "compiled_dependency_graph": "unknown"
   },
-  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "transport_sha256": "7cd4117e9cf16681d4d6df4ba03c5addd86e550417b2eab7eed7c5e07b33f577",
   "captures": {
     "writes.png": "358087ec1684928d8e7beae4990dc32592f73c1928b9fe740335a5ae3ee29e1e",
     "queries-reference.png": "2e3533db99bbf2d6ed7e3f3ac432fd4e25e112c75064962a1ad186eca34c9f90",
@@ -63,14 +63,14 @@
   "independent_full_raster_match": true,
   "limits": "Released emulator, stock firmware. Text-cell region output and checked logical queries; no native graphics or original hardware claim.",
   "callers": {
-    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/writes-reference.bas": "1beceb37918025b5a22b021c60c1e60d6fcc0471b6be34b67f1480c5870f6023",
-    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/pixels-reference.bas": "77f74402e326c526fbb07051360cc7c8c066c0afb6d12d6bc2a54aff781646b9",
-    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/writes.bas": "56d08804b64b013a77dd4ae05fb356bbb9839558d1865b2bd5b8989e91930ebe",
-    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/demo.bas": "7a43d8b9e987a67dd82b9d8fcf63266ed413d8f8503d45eb8f43eec82240d14b",
     "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/queries.bas": "c3a6727c59800c0fd664384deb9a57769139bf52971e97d04e7c72674679c478",
-    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/wrong-stride.bas": "602e04d63e23a72c1eba92fa00640aff14a9dedb19fd2a59f7999e6ec332859d",
+    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/queries-reference.bas": "2216283926e4e7efbe55f1928b2c9f658a777cdb3660b0c9350d6ac700427d7b",
+    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/writes.bas": "56d08804b64b013a77dd4ae05fb356bbb9839558d1865b2bd5b8989e91930ebe",
+    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/writes-reference.bas": "1beceb37918025b5a22b021c60c1e60d6fcc0471b6be34b67f1480c5870f6023",
     "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/pixels.bas": "1a365c0aa139fd52a2d2b4fd0ee2f959f841bfb8c5d2998c38f369dab2865e43",
-    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/queries-reference.bas": "2216283926e4e7efbe55f1928b2c9f658a777cdb3660b0c9350d6ac700427d7b"
+    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/pixels-reference.bas": "77f74402e326c526fbb07051360cc7c8c066c0afb6d12d6bc2a54aff781646b9",
+    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/demo.bas": "7a43d8b9e987a67dd82b9d8fcf63266ed413d8f8503d45eb8f43eec82240d14b",
+    "sinclair-zx-spectrum/patterns/basic/rendering/tile-map/verification/callers/wrong-stride.bas": "602e04d63e23a72c1eba92fa00640aff14a9dedb19fd2a59f7999e6ec332859d"
   },
   "configuration": "48K stock ROM, real tape load; harness CLEAR 59999 reserves the completion byte at 60000",
   "basic_builder": "Build198x 0.2.13",
@@ -103,5 +103,15 @@
       "--target=aarch64-apple-darwin"
     ],
     "compiled_dependency_graph": "unknown"
+  },
+  "tap_sha256": {
+    "queries": "b0132f8373555915ca77d49142fbf515f307b401f755337d13907d7b7aefcb8d",
+    "queries-reference": "6bab16e1139733e0a6ea155d38f01b8bcffabdaf48796d7b677e14209393dd73",
+    "writes": "2a55f08b1fdd043830275501d1a9b5f54dc3d1c98e6f32d1b26b5dd1a7fb2286",
+    "writes-reference": "d0160ee2edb14b49a90d73f18e939ef09e146a2314324d13633c8b22a351ba80",
+    "pixels": "31e70d9ea3133b8614e49153b3b7f8bdbada8d9085ebb900def24c12377054c4",
+    "pixels-reference": "70dd851e1f34f794f1da10d205463637cb027cd034fe753e7e0a81d36dd81834",
+    "demo": "dbf1af1449841629bb6d541348d0ce3ad9993c93f0c7ef1b3d477193d49c1f17",
+    "wrong-stride": "2c9e27069887a2225bc1ad0154c7aa932f1632b7e2f37ada59e2a11c257dbd7c"
   }
 }

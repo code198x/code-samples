@@ -217,8 +217,9 @@ None blocks batch 1, whose programs are all host-built by released tools.
   digests, rather than given a rule 3 exception. Every observation, count,
   control and capture came out identical to the committed record; only
   `fixture_programs`, `caller_programs` and the provenance digests of the
-  edited recorder scripts changed. Batch 4b and the fixed-characters
-  follow-up below are the only changes in this plan that edit records.
+  edited recorder scripts changed. Batch 4b, the fixed-characters
+  follow-up and the BASIC rendering follow-up below are the only changes in
+  this plan that edit records.
 - **Records without an assembler pin are re-recorded with the newest
   release:** *agreed 2026-11-06*, for `check-fixed-characters.py`. Its
   records kept each driver's `fixture_sha256` but named no assembler, so no
@@ -229,6 +230,19 @@ None blocks batch 1, whose programs are all host-built by released tools.
   the provenance digest of the edited recorder changed. The ZX80 and ZX81
   callers are typed in, so their `caller.bas` text stays part of the
   program (rule 2).
+- **Generated BASIC rendering callers are regenerated; the Spectrum's
+  tapes are re-recorded under rule 1:** *agreed 2026-11-06*, for
+  `check-basic-rendering.py`. Its callers are written by generators and
+  were retained, so the three generators now produce each caller without
+  an emulator and the checker regenerates and compares every one: by text
+  on the typed routes (rule 2), and on the Spectrum by rebuilding its tape
+  with the release the record names, build198x 0.2.13 (`lint --fix`, then
+  tokenise). Before any record changed, the generators reproduced all 117
+  retained callers byte for byte. The three Spectrum records, which kept no
+  tape identity, were re-recorded with that pipeline and their pinned
+  Emu198x 0.44.1 emulator to add `tap_sha256`; every observation, capture
+  and caller came out identical, and only the new digests and the edited
+  scripts' provenance changed. Rule 3 stays for unreleased tools only.
 - **Rule 3:** keeping a text pin, without scripts, for programs built by an
   unreleased tool. The alternative is to re-record those families with a
   released Asm198x first. Needed only if batch 8's survey of the

@@ -41,6 +41,114 @@ ROMS = {
     "sinclair-zx-spectrum": "sinclair-zx-spectrum-48k",
 }
 
+CONFIGURATION = {
+    "sinclair-zx-spectrum": "48K stock ROM, real tape load; harness CLEAR 59999 reserves the completion byte at 60000",
+    "mattel-aquarius": "16 KB RAM expansion; stock Aquarius BASIC; keyboard-loaded harness",
+}
+
+
+def published(system: str, folder: Path, labels: list[str]) -> dict[str, Any]:
+    """The record fields that name each caller the machine was given.
+
+    Typed callers are pinned by their text, published under
+    verification/callers/. The Spectrum's callers are tokenised on the host,
+    so its record also names the build198x release and each tape's digest.
+    """
+    output = folder / "build/verification"
+    fields: dict[str, Any] = {
+        "callers": {
+            str((folder / "verification/callers" / (n + ".bas")).relative_to(ROOT)): (
+                T.sha(output / (n + ".bas"))
+            )
+            for n in labels
+        },
+        "configuration": CONFIGURATION.get(
+            system, "Stock firmware, keyboard-loaded BASIC harness"
+        ),
+        "basic_builder": None,
+    }
+    if system == "sinclair-zx-spectrum":
+        lock = json.loads(
+            (NATIVE / "build198x-aarch64-apple-darwin-source-lock.json").read_text()
+        )
+        T.require(
+            T.sha(NATIVE / "build198x") == lock["executable_sha256"],
+            "build198x is not the locked release",
+        )
+        fields["basic_builder"] = "Build198x " + lock["version"]
+        fields["builder_producer"] = lock
+        fields["tap_sha256"] = {n: T.sha(output / (n + ".tap")) for n in labels}
+    return fields
+
+
+def prepare(system: str, source: str) -> str:
+    """The caller text a generator's program becomes before the machine gets it.
+
+    END and STOP become a self-loop (the Spectrum's also sets the completion
+    byte), and the Spectrum caller reserves that byte with CLEAR.
+    """
+    held = []
+    for line in source.splitlines():
+        if re.search(r"\b(END|STOP)$", line):
+            n = int(line.split()[0])
+            line = (
+                f"{n} "
+                + ("POKE 60000,202:" if system == "sinclair-zx-spectrum" else "")
+                + ("GO TO" if system == "sinclair-zx-spectrum" else "GOTO")
+                + f" {n}"
+            )
+        held.append(line)
+    source = "\n".join(held) + "\n"
+    if system == "sinclair-zx-spectrum":
+        source = "1 CLEAR 59999\n" + source
+    return source
+
+
+def build(
+    system: str, source: str, label: str, folder: Path, build198x: Path | str
+) -> Path | None:
+    """Write a prepared caller to build/verification/<label>.bas.
+
+    Typed routes stop there: that text is what the machine is given. The
+    Spectrum caller is linted with --fix and tokenised to <label>.tap by
+    build198x, and that tape is what the machine loads.
+    """
+    output = folder / "build/verification"
+    output.mkdir(parents=True, exist_ok=True)
+    (output / (label + ".bas")).write_text(source)
+    if system != "sinclair-zx-spectrum":
+        return None
+    tap = output / (label + ".tap")
+    subprocess.run(
+        [
+            str(build198x),
+            "basic",
+            "lint",
+            str(output / (label + ".bas")),
+            "--machine",
+            system,
+            "--fix",
+        ],
+        check=True,
+        capture_output=True,
+        timeout=40,
+    )
+    subprocess.run(
+        [
+            str(build198x),
+            "basic",
+            str(output / (label + ".bas")),
+            "--machine",
+            system,
+            "-o",
+            str(tap),
+        ],
+        check=True,
+        capture_output=True,
+        timeout=40,
+    )
+    return tap
+
 
 def run(
     system: str, source: str, label: str, folder: Path
@@ -73,52 +181,8 @@ def run(
     if system == "mattel-aquarius":
         cmd += ["--expansion-kb", "16"]
     output = folder / "build/verification"
-    output.mkdir(parents=True, exist_ok=True)
-    held = []
-    for line in source.splitlines():
-        if re.search(r"\b(END|STOP)$", line):
-            n = int(line.split()[0])
-            line = (
-                f"{n} "
-                + ("POKE 60000,202:" if system == "sinclair-zx-spectrum" else "")
-                + ("GO TO" if system == "sinclair-zx-spectrum" else "GOTO")
-                + f" {n}"
-            )
-        held.append(line)
-    source = "\n".join(held) + "\n"
-    if system == "sinclair-zx-spectrum":
-        source = "1 CLEAR 59999\n" + source
-    (output / (label + ".bas")).write_text(source)
-    if system == "sinclair-zx-spectrum":
-        tap = output / (label + ".tap")
-        subprocess.run(
-            [
-                str(NATIVE / "build198x"),
-                "basic",
-                "lint",
-                str(output / (label + ".bas")),
-                "--machine",
-                system,
-                "--fix",
-            ],
-            check=True,
-            capture_output=True,
-            timeout=40,
-        )
-        subprocess.run(
-            [
-                str(NATIVE / "build198x"),
-                "basic",
-                str(output / (label + ".bas")),
-                "--machine",
-                system,
-                "-o",
-                str(tap),
-            ],
-            check=True,
-            capture_output=True,
-            timeout=40,
-        )
+    source = prepare(system, source)
+    tap = build(system, source, label, folder, NATIVE / "build198x")
     started = time.monotonic()
     m = T.Machine(cmd)
     try:

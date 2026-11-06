@@ -13,7 +13,7 @@
   "firmware": {
     "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
   },
-  "observer_sha256": "90162198469a3ad1da042b469f3c4cc227c430df6e88beb6ffb53ac4c3866821",
+  "observer_sha256": "248f48d2598186750cc9e4bb9485f9892293d0e0d6bdbc0e699d5276e6fed4de",
   "generator_sha256": "3c75a51614dea1b93d7612e2c510d59f6c20aa5ff2422469bcc777f310b00361",
   "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
   "producer": {
@@ -46,7 +46,7 @@
     ],
     "compiled_dependency_graph": "unknown"
   },
-  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "transport_sha256": "7cd4117e9cf16681d4d6df4ba03c5addd86e550417b2eab7eed7c5e07b33f577",
   "captures": {
     "wrong-stride.png": "4b87c9bef1f2b571d91c3f64db80056b156ee8c4876343d4f857dc056c11f4db",
     "reference.png": "62a6afe671fc03137323122f09782eb47bcde36f6b7d30d078097668468dac65",
@@ -91,5 +91,10 @@
       "--target=aarch64-apple-darwin"
     ],
     "compiled_dependency_graph": "unknown"
+  },
+  "tap_sha256": {
+    "checked": "636f209540ac16562dd7152ad684c2777c0e2fe644ac22fd7110de43fd481fbe",
+    "reference": "bb948b5d4d8b916d2d9af5827a19e000716359163a62cbb2e7279fd81eaf1d2c",
+    "wrong-stride": "6e76ada66f759f7239977abb29016b73f16a925807522273d417782cd0870766"
   }
 }
