@@ -42,28 +42,21 @@ def reference(system: str) -> list[str]:
     )
 
 
-def verify(system: str) -> None:
+def pixel_callers(system: str) -> tuple[dict[str, str], int]:
+    """Each pixel-box caller by label, as the generator writes it, and the case count."""
     folder = R.ROOT / system / "patterns/basic/rendering/pixel-box"
-    (folder / "build/verification/results.json").unlink(missing_ok=True)
     source = (folder / "demo.bas").read_text()
     routine = (folder / "routines.bas").read_text()
     prefix = (folder / "caller.bas").read_text().splitlines()[0]
     sine = system == "sinclair-zx-spectrum"
     gosub = "GO SUB" if sine else "GOSUB"
     let = "LET " if sine else ""
-    # Read the real raster, compare every pixel with direct ROM line drawing.
     rows = (
         [prefix]
         + [f"{20 + 10 * i} {x}" for i, x in enumerate(reference(system))]
         + ['800 PRINT "DONE"', "900 STOP" if sine else "900 END"]
     )
-    expected = R.run(system, "\n".join(rows) + "\n", "reference", folder)
-    actual = R.run(system, source, "demo", folder)
-    R.T.require(
-        actual == expected,
-        system + ": full raster differs from direct line-drawing reference",
-    )
-    # Both wrong units and omitted pixels must fail the same complete-raster guard.
+    texts = {"reference": "\n".join(rows) + "\n", "demo": source}
     needle = {
         "acorn-bbc-micro": "PLOT 69,X*4,Y*4",
         "acorn-electron": "PLOT 69,X*4,Y*4",
@@ -71,11 +64,7 @@ def verify(system: str) -> None:
         "sinclair-zx-spectrum": "PLOT X,Y",
     }[system]
     R.T.require(source.count(needle) == 1, "Ambiguous plot primitive")
-    omitted = source.replace(needle, "REM DRAW OMITTED")
-    R.T.require(
-        R.run(system, omitted, "omitted-draw", folder) != expected,
-        system + ": omitted plotting passed",
-    )
+    texts["omitted-draw"] = source.replace(needle, "REM DRAW OMITTED")
     if sine:
         wrong = source.replace(needle, "PLOT X+1,Y")
     else:
@@ -85,10 +74,7 @@ def verify(system: str) -> None:
             if "69" in needle
             else "PLOT X,Y,V",
         )
-    R.T.require(
-        R.run(system, wrong, "wrong-units", folder) != expected,
-        system + ": wrong units passed",
-    )
+    texts["wrong-units"] = wrong
     # Rejected calls must not write pixels; flags are printed as explicit characters.
     w, h = {
         "acorn-bbc-micro": (320, 256),
@@ -133,12 +119,8 @@ def verify(system: str) -> None:
         )
         + "\n"
     )
-    R.T.require(
-        R.run(system, working, "bounds", folder)
-        == R.run(system, baseline, "bounds-reference", folder),
-        system + ": bad request changed flags or pixels",
-    )
-    # Boundary coordinates and one-cell-thick boxes must draw the full perimeter.
+    texts["bounds"] = working
+    texts["bounds-reference"] = baseline
     c = [
         let + f"W={w}:" + let + f"H={h}:" + let + "V=1",
         let + f"X={w - 1}:" + let + f"Y={h - 1}:" + gosub + " 2000",
@@ -177,16 +159,63 @@ def verify(system: str) -> None:
         )
         + "\n"
     )
+    texts["edges"] = prog
+    texts["edges-reference"] = refprog
+    return texts, len(cases)
+
+
+def callers(system: str, kind: str = "pixel-box") -> dict[str, str]:
+    """The callers the pixel-box record pins, by label, before preparation."""
+    return pixel_callers(system)[0]
+
+
+def build_callers(system: str, kind: str = "pixel-box", build198x: str = "") -> None:
+    """Prepare and build every pixel-box caller, without running any.
+
+    The recorder builds each caller through the same transport functions
+    before running it; the checker calls this to rebuild them.
+    """
+    folder = R.ROOT / system / "patterns/basic/rendering/pixel-box"
+    for label, source in callers(system).items():
+        R.build(system, R.prepare(system, source), label, folder, build198x)
+
+
+def verify(system: str) -> None:
+    folder = R.ROOT / system / "patterns/basic/rendering/pixel-box"
+    (folder / "build/verification/results.json").unlink(missing_ok=True)
+    texts, count = pixel_callers(system)
+    # Read the real raster, compare every pixel with direct ROM line drawing.
+    expected = R.run(system, texts["reference"], "reference", folder)
+    actual = R.run(system, texts["demo"], "demo", folder)
     R.T.require(
-        R.run(system, prog, "edges", folder)
-        == R.run(system, refprog, "edges-reference", folder),
+        actual == expected,
+        system + ": full raster differs from direct line-drawing reference",
+    )
+    # Both wrong units and omitted pixels must fail the same complete-raster guard.
+    R.T.require(
+        R.run(system, texts["omitted-draw"], "omitted-draw", folder) != expected,
+        system + ": omitted plotting passed",
+    )
+    R.T.require(
+        R.run(system, texts["wrong-units"], "wrong-units", folder) != expected,
+        system + ": wrong units passed",
+    )
+    R.T.require(
+        R.run(system, texts["bounds"], "bounds", folder)
+        == R.run(system, texts["bounds-reference"], "bounds-reference", folder),
+        system + ": bad request changed flags or pixels",
+    )
+    # Boundary coordinates and one-cell-thick boxes must draw the full perimeter.
+    R.T.require(
+        R.run(system, texts["edges"], "edges", folder)
+        == R.run(system, texts["edges-reference"], "edges-reference", folder),
         system + ": edge pixels/degenerate boxes failed",
     )
     result = {
         "system": system,
         "kind": "pixel-box",
         "status": "passed",
-        "bounds_cases": len(cases),
+        "bounds_cases": count,
         "wrong_units_rejected": True,
         "omitted_draw_rejected": True,
         "edge_and_one_cell_boxes": True,
@@ -217,6 +246,7 @@ def verify(system: str) -> None:
         ),
         "limits": "Stock-ROM APIs in released Emu198x. Whole decoded raster compared with independent direct line-drawing caller. No speed/original-hardware claim.",
     }
+    result.update(R.published(system, folder, list(texts)))
     (folder / "build/verification/results.json").write_text(
         json.dumps(result, indent=2) + "\n"
     )

@@ -19,9 +19,15 @@ class RenderingRecords(unittest.TestCase):
     def test_complete_inventory(self) -> None:
         self.assertEqual(R.check(), 24)
 
-    def changed_record(self, change) -> None:
+    def changed_record(
+        self, change, system: str = "acorn-bbc-micro", accepted: bool = False
+    ) -> None:
         manifest = json.loads((R.ROOT / "docs/basic-rendering.json").read_text())
-        route = next(r for r in manifest["routes"] if r["kind"] == "pixel-box")
+        route = next(
+            r
+            for r in manifest["routes"]
+            if r["kind"] == "pixel-box" and r["system"] == system
+        )
         record = json.loads((R.ROOT / route["record"]).read_text())
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -53,8 +59,12 @@ class RenderingRecords(unittest.TestCase):
             R.check_record(root, route)
             change(record)
             (root / route["record"]).write_text(json.dumps(record))
-            with self.assertRaises((ValueError, KeyError)):
+            if accepted:
                 R.check_record(root, route)
+                return
+            with self.assertRaises((ValueError, KeyError)) as caught:
+                R.check_record(root, route)
+            return caught
 
     def test_missing_raster_match(self) -> None:
         self.changed_record(lambda r: r.update(independent_full_raster_match=False))
@@ -62,16 +72,44 @@ class RenderingRecords(unittest.TestCase):
     def test_zero_cases(self) -> None:
         self.changed_record(lambda r: r.update(bounds_cases=0))
 
-    def test_source_changed(self) -> None:
-        self.changed_record(
-            lambda r: r["sources"].update({next(iter(r["sources"])): "0" * 64})
+    def test_script_and_source_digests_are_provenance(self) -> None:
+        """Changed source, observer or transport digests alone are accepted."""
+
+        def provenance(r: dict) -> None:
+            r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+            r.update(observer_sha256="0" * 64, native_transport_sha256="0" * 64)
+            r.update(transport_sha256="0" * 64)
+
+        for system in ["acorn-bbc-micro", "sinclair-zx-spectrum"]:
+            with self.subTest(system=system):
+                self.changed_record(provenance, system, accepted=True)
+
+    def test_forged_typed_caller_is_rejected(self) -> None:
+        """A record claiming another typed caller is caught by regenerating it."""
+        manifest = json.loads((R.ROOT / "docs/basic-rendering.json").read_text())
+        route = next(
+            r
+            for r in manifest["routes"]
+            if (r["system"], r["kind"]) == ("acorn-bbc-micro", "pixel-box")
         )
+        record = json.loads((R.ROOT / route["record"]).read_text())
+        key = next(k for k in record["callers"] if k.endswith("/demo.bas"))
+        record["callers"][key] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            R.require_callers(R.ROOT, route, record)
 
-    def test_observer_changed(self) -> None:
-        self.changed_record(lambda r: r.update(observer_sha256="0" * 64))
-
-    def test_native_transport_changed(self) -> None:
-        self.changed_record(lambda r: r.update(native_transport_sha256="0" * 64))
+    def test_forged_spectrum_tape_is_rebuilt(self) -> None:
+        """A record claiming another tape is caught only by rebuilding it."""
+        manifest = json.loads((R.ROOT / "docs/basic-rendering.json").read_text())
+        route = next(
+            r
+            for r in manifest["routes"]
+            if (r["system"], r["kind"]) == ("sinclair-zx-spectrum", "pixel-box")
+        )
+        record = json.loads((R.ROOT / route["record"]).read_text())
+        record["tap_sha256"]["demo"] = record["tap_sha256"]["demo"][::-1]
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            R.require_callers(R.ROOT, route, record)
 
     def test_missing_firmware(self) -> None:
         self.changed_record(lambda r: r.update(firmware={}))

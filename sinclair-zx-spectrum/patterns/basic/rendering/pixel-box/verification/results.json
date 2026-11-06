@@ -11,7 +11,7 @@
     "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/caller.bas": "56f53d7e31bf446b28cc32323f430c83e7c129a0010d5409a8786461b14fa698",
     "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/demo.bas": "ac5ee03f19a2a69275e46d997db74853f59850c7580b2d9d15f032f126912c33"
   },
-  "observer_sha256": "913f3b0c453525935b2a3940511dd36dd9e2c86043558a414d0b18e1db23da4e",
+  "observer_sha256": "e637e4c2148b63c0fe18d6a0288d1c0ba75cfb4936aefa10c26b6391bdb25964",
   "native_transport_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
   "firmware": {
     "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
@@ -47,7 +47,7 @@
     "compiled_dependency_graph": "unknown"
   },
   "independent_full_raster_match": true,
-  "transport_sha256": "df33d24cbbe7e66eaaf7efcbb48325070c1a17e4e65662fbc7ead00f5f9de07e",
+  "transport_sha256": "7cd4117e9cf16681d4d6df4ba03c5addd86e550417b2eab7eed7c5e07b33f577",
   "captures": {
     "edges.png": "e3e65279aa2f038fb0ca180c2d9e1cf9215ecccc840f4e1745e0ff764acafcdc",
     "edges-reference.png": "e3e65279aa2f038fb0ca180c2d9e1cf9215ecccc840f4e1745e0ff764acafcdc",
@@ -61,14 +61,14 @@
   "emulator_sha256": "575dbc84165bcf64ab7e0e3db013c094bf485331e9c44e921f3ff651a039bfa8",
   "limits": "Stock-ROM APIs in released Emu198x. Whole decoded raster compared with independent direct line-drawing caller. No speed/original-hardware claim.",
   "callers": {
-    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/wrong-units.bas": "4fd933d0ef55ab3106dda1207b0468a636e2192419aa811a55694fba1076fec4",
-    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/omitted-draw.bas": "68aac87366910698e37ad953b7dd79a64cc323ac352749406afe34b958685e1a",
-    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/bounds-reference.bas": "0f850c74ec92ff1550463027942af3ff7e1ea413fe6704432a06d9a4ebeb6560",
-    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/bounds.bas": "58b785a2c3b138ede3105d145916bc39581333a9085863e12c4e4717a35eaabc",
-    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/edges-reference.bas": "6dc1d356f4d2e6dbeb880ee9260c62c8fd2cb8bcccd4b0de3598621c9785af15",
-    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/edges.bas": "432d629e9ee0648d87e3a2f8be74b4eb2ccc95417c6e3a1015d4582ac9deace3",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/reference.bas": "ad8ba421cda3743aa6ec8b34d35002caef3879881c302d086c346f096c4f0095",
     "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/demo.bas": "4921e442d8f9e019b9d1781e29b8a550b5f7bfde58d2f6b4f4207b914afcc146",
-    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/reference.bas": "ad8ba421cda3743aa6ec8b34d35002caef3879881c302d086c346f096c4f0095"
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/omitted-draw.bas": "68aac87366910698e37ad953b7dd79a64cc323ac352749406afe34b958685e1a",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/wrong-units.bas": "4fd933d0ef55ab3106dda1207b0468a636e2192419aa811a55694fba1076fec4",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/bounds.bas": "58b785a2c3b138ede3105d145916bc39581333a9085863e12c4e4717a35eaabc",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/bounds-reference.bas": "0f850c74ec92ff1550463027942af3ff7e1ea413fe6704432a06d9a4ebeb6560",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/edges.bas": "432d629e9ee0648d87e3a2f8be74b4eb2ccc95417c6e3a1015d4582ac9deace3",
+    "sinclair-zx-spectrum/patterns/basic/rendering/pixel-box/verification/callers/edges-reference.bas": "6dc1d356f4d2e6dbeb880ee9260c62c8fd2cb8bcccd4b0de3598621c9785af15"
   },
   "configuration": "48K stock ROM, real tape load; harness CLEAR 59999 reserves the completion byte at 60000",
   "basic_builder": "Build198x 0.2.13",
@@ -101,5 +101,15 @@
       "--target=aarch64-apple-darwin"
     ],
     "compiled_dependency_graph": "unknown"
+  },
+  "tap_sha256": {
+    "reference": "317fe2f321d9749afa78a08312611a378e935eaedc1948256434ffef75135a29",
+    "demo": "7e34b3dd4263f0f47fb55a50e259001f60ced3841be82441e2695b0d674a9bfc",
+    "omitted-draw": "13cd50c5779b6c5ee8fcc363dba5eb73d45b52a9a0ad04992d04b0c7a8cd68a5",
+    "wrong-units": "40cbdbb9289ea4eaa53ddff6e9ab42af604b0ca9f5ae9bf9cdfb8a4e4c1f58cc",
+    "bounds": "eea2c0d55ea45e01728fb461d4cce4b784f375571492817b2cec8325e5a9300b",
+    "bounds-reference": "52c7173bc678852cc76b9973e22dba62fc0fd3a3407e348d296403794353a134",
+    "edges": "e2d5902f7d627bb69efb80801c7683c27d5c5531f70f38685efa5f713efbba87",
+    "edges-reference": "d3e625cab993827cea3685c7dea26fbd4f36be4027409aff86c081de6aa49133"
   }
 }
