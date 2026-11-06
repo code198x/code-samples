@@ -6,7 +6,9 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -19,6 +21,78 @@ if SPEC is None or SPEC.loader is None:
 T = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(T)
 SYSTEMS = ("acorn-atom", "bbc-micro", "acorn-electron", "amstrad-cpc")
+
+
+def folder_for(system: str) -> Path:
+    basic = system in ("bbc-micro", "acorn-electron")
+    return (
+        ROOT
+        / system
+        / f"patterns/{'basic/framework/turn-loop' if basic else 'assembly/framework/command-loop'}"
+    )
+
+
+def build(
+    system: str, variant: str, assembler: str = "", output: str = "build/variants"
+) -> None:
+    """Write the program one variant gives the machine, under <folder>/<output>.
+
+    BASIC: the typed listing, <variant>.bas. Assembly: the staged build's
+    <variant>.bin and the typed loader made from it, <variant>-loader.bas;
+    the settings and dispatch swaps happen in a staged copy, never in the
+    committed folder. The recorder and the checker both build here.
+    """
+    basic = system in ("bbc-micro", "acorn-electron")
+    folder = folder_for(system)
+    source = folder_for("bbc-micro") if basic else folder
+    out = folder / output
+    out.mkdir(parents=True, exist_ok=True)
+    initial = 37 if variant == "nonzero" else 254 if variant == "wrap" else 0
+    step = 2 if variant == "step-two" else 1
+    if basic:
+        caller = (
+            (source / "caller.bas")
+            .read_text()
+            .replace("N%=0:S%=1", f"N%={initial}:S%={step}")
+        )
+        routines = source / (
+            "mistakes/no-edge.bas" if variant == "wrong" else "routines.bas"
+        )
+        (out / f"{variant}.bas").write_text(caller + routines.read_text())
+        return
+    cpu = "6502" if system == "acorn-atom" else "z80"
+    shared = Path("cross-platform/patterns/framework/command-turns") / f"{cpu}.inc"
+    rel = folder.relative_to(ROOT)
+    with tempfile.TemporaryDirectory(prefix="loop-language-") as scratch:
+        stage = Path(scratch)
+        shutil.copytree(
+            folder, stage / rel, ignore=shutil.ignore_patterns("build", "verification")
+        )
+        (stage / shared).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / shared, stage / shared)
+        staged = stage / rel
+        settings = (
+            (staged / "settings.inc")
+            .read_text()
+            .replace("INITIAL = 0", f"INITIAL = {initial}")
+            .replace("STEP = 1", f"STEP = {step}")
+            .replace("INITIAL equ 0", f"INITIAL equ {initial}")
+            .replace("STEP equ 1", f"STEP equ {step}")
+        )
+        (staged / "settings.inc").write_text(settings)
+        if variant == "wrong":
+            shutil.copyfile(
+                staged / "mistakes/reset-each-command.inc", staged / "dispatch.inc"
+            )
+        subprocess.run(
+            ["make", f"ASM198X={assembler}"],
+            cwd=staged,
+            check=True,
+            timeout=30,
+            stdout=subprocess.DEVNULL,
+        )
+        shutil.copyfile(staged / "build/demo.bin", out / f"{variant}.bin")
+        shutil.copyfile(staged / "build/loader.bas", out / f"{variant}-loader.bas")
 
 
 def qualify(system: str, args: argparse.Namespace) -> dict[str, Any]:
@@ -53,242 +127,187 @@ def qualify(system: str, args: argparse.Namespace) -> dict[str, Any]:
     traces: dict[str, Any] = {}
     images: dict[str, str] = {}
     variants = ("default", "step-two", "nonzero", "wrap", "wrong", "fixed")
-    original_settings = (source / "settings.inc").read_text() if not basic else ""
-    original_dispatch = (source / "dispatch.inc").read_text() if not basic else ""
-    try:
-        for variant in variants:
-            initial = 37 if variant == "nonzero" else 254 if variant == "wrap" else 0
-            step = 2 if variant == "step-two" else 1
-            if basic:
-                caller = (
-                    (source / "caller.bas")
-                    .read_text()
-                    .replace("N%=0:S%=1", f"N%={initial}:S%={step}")
-                )
-                routines = source / (
-                    "mistakes/no-edge.bas" if variant == "wrong" else "routines.bas"
-                )
-                listing = caller + routines.read_text()
-            else:
-                settings = (
-                    original_settings.replace("INITIAL = 0", f"INITIAL = {initial}")
-                    .replace("STEP = 1", f"STEP = {step}")
-                    .replace("INITIAL equ 0", f"INITIAL equ {initial}")
-                    .replace("STEP equ 1", f"STEP equ {step}")
-                )
-                (source / "settings.inc").write_text(settings)
-                (source / "dispatch.inc").write_text(
-                    (source / "mistakes/reset-each-command.inc").read_text()
-                    if variant == "wrong"
-                    else original_dispatch
-                )
-                subprocess.run(
-                    [
-                        "make",
-                        f"ASM198X={args.tools / 'asm198x-aarch64-apple-darwin/asm198x'}",
-                    ],
-                    cwd=folder,
-                    check=True,
-                    timeout=30,
-                    stdout=subprocess.DEVNULL,
-                )
-                listing = (folder / "build/loader.bas").read_text()
-            machine = T.Machine(command)
-            try:
-                machine.call("run_frames", frames=150)
-                result = machine.call(
-                    "type_string",
-                    text=listing + "RUN\n",
-                    hold_frames=2,
-                    settle_frames=10,
-                )
-                T.require(
-                    result["chars_typed"] == len(listing) + 4,
-                    "Incomplete keyboard entry",
-                )
-                machine.call("run_frames", frames=20)
-                address = (
-                    0x3000 if basic else 0x2700 if system == "acorn-atom" else 0x8FF0
-                )
-
-                def state(machine: Any = machine, address: int = address) -> list[int]:
-                    raw = machine.call("memory_read", addr=address, len=6)["bytes"]
-                    T.require(raw[4:] == [165, 90], f"{system}: state boundary changed")
-                    return raw[:4]
-
-                def frames(n: int, machine: Any = machine) -> None:
-                    machine.call("run_frames", frames=n)
-
-                def key(pressed: bool, machine: Any = machine) -> None:
-                    machine.call(
-                        "input", events=[{"Key": {"name": "space", "pressed": pressed}}]
-                    )
-                    frames(8)
-
-                def typed(text: str, machine: Any = machine) -> None:
-                    machine.call(
-                        "type_string", text=text, hold_frames=2, settle_frames=10
-                    )
-                    frames(8)
-
-                def capture(
-                    label: str, machine: Any = machine, variant: str = variant
-                ) -> None:
-                    image = output / f"{variant}-{label}.png"
-                    machine.call("save_screenshot", path=str(image))
-                    images[image.name] = T.sha(image)
-
-                if not basic:
-                    for _ in range(24):
-                        if state()[1] == step:
-                            break
-                        frames(10)
-                    T.require(state()[1] == step, "Loader did not reach initialisation")
-                    frames(60)
-                T.require(
-                    state()[0] == initial, f"{system}/{variant}: startup {state()}"
-                )
-                capture("waiting")
-                first = state()
-                frames(60)
-                if not basic:
-                    for _ in range(24):
-                        if state()[1] == step:
-                            break
-                        frames(10)
-                    T.require(state()[1] == step, "Loader did not reach initialisation")
-                    frames(60)
-                T.require(state()[0] == initial, "Idle advanced the world")
-                rate = None
-                if basic:
-                    before = state()
-                    frames(30)
-                    after = state()
-                    rate = (
-                        (after[1] + 256 * after[2]) - (before[1] + 256 * before[2])
-                    ) & 65535
-                    T.normal_rate(rate, 30)
-                    key(True)
-                    held_start = state()[0]
-                    frames(30)
-                    held_end = state()[0]
-                    if variant == "wrong":
-                        T.require(
-                            held_end != held_start, "Broken edge was not observable"
-                        )
-                    else:
-                        T.require(
-                            held_start == (initial + step) & 255
-                            and held_end == held_start,
-                            f"Held key repeated {state()}",
-                        )
-                    capture("held")
-                    key(False)
-                    key(True)
-                    second = state()[0]
-                    if variant != "wrong":
-                        T.require(
-                            second == (initial + 2 * step) & 255, "Second press lost"
-                        )
-                    capture("action")
-                    key(False)
-                    observations = [initial, held_start, held_end, second]
-                else:
-                    binary = (folder / "build/demo.bin").read_bytes()
-                    base = 0x2800 if system == "acorn-atom" else 0x9000
-                    installed = bytes(
-                        machine.call("memory_read", addr=base, len=len(binary))["bytes"]
-                    )
-                    T.require(
-                        installed == binary, "Typed loader differs from assembled bytes"
-                    )
-                    typed("X")
-                    T.require(
-                        state()[0] == (0 if variant == "wrong" else initial)
-                        and state()[2:] == [0, 88],
-                        "Rejected command changed state/flag",
-                    )
-                    observed = []
-                    for n in (1, 2):
-                        typed("G")
-                        expected = (
-                            step if variant == "wrong" else (initial + n * step) & 255
-                        )
-                        T.require(
-                            state() == [expected, step, 1, 71],
-                            f"Accepted command: {state()}",
-                        )
-                        observed.append(state()[0])
-                        frames(60)
-                        T.require(state()[0] == expected, "Idle changed command state")
-                    capture("action")
-                    observations = [initial, *observed]
-                traces[variant] = {
-                    "startup": first,
-                    "program_sha256": hashlib.sha256(
-                        listing.encode() if basic else binary
-                    ).hexdigest(),
-                    "progression": observations,
-                    "updates_per_30_fields": rate,
-                }
-                print(system, variant, traces[variant], flush=True)
-            finally:
-                machine.close()
+    assembler = str(args.tools / "asm198x-aarch64-apple-darwin/asm198x")
+    for variant in variants:
+        initial = 37 if variant == "nonzero" else 254 if variant == "wrap" else 0
+        step = 2 if variant == "step-two" else 1
+        build(system, variant, assembler)
+        built = folder / "build/variants"
         if basic:
-            # A separate cold run isolates the missing-wait error from the edge error.
-            machine = T.Machine(command)
-            try:
-                machine.call("run_frames", frames=150)
-                listing = (source / "caller.bas").read_text() + (
-                    source / "mistakes/no-wait.bas"
-                ).read_text()
-                result = machine.call(
-                    "type_string",
-                    text=listing + "RUN\n",
-                    hold_frames=2,
-                    settle_frames=10,
-                )
-                T.require(
-                    result["chars_typed"] == len(listing) + 4,
-                    "Incomplete faulty listing",
-                )
+            listing = (built / f"{variant}.bas").read_text()
+        else:
+            listing = (built / f"{variant}-loader.bas").read_text()
+        machine = T.Machine(command)
+        try:
+            machine.call("run_frames", frames=150)
+            result = machine.call(
+                "type_string",
+                text=listing + "RUN\n",
+                hold_frames=2,
+                settle_frames=10,
+            )
+            T.require(
+                result["chars_typed"] == len(listing) + 4,
+                "Incomplete keyboard entry",
+            )
+            machine.call("run_frames", frames=20)
+            address = 0x3000 if basic else 0x2700 if system == "acorn-atom" else 0x8FF0
 
-                def count() -> int:
-                    raw = machine.call("memory_read", addr=0x3001, len=2)["bytes"]
-                    return raw[0] + 256 * raw[1]
+            def state(machine: Any = machine, address: int = address) -> list[int]:
+                raw = machine.call("memory_read", addr=address, len=6)["bytes"]
+                T.require(raw[4:] == [165, 90], f"{system}: state boundary changed")
+                return raw[:4]
 
-                before = count()
-                machine.call("run_frames", frames=30)
-                delta = (count() - before) & 65535
-                rejected = False
-                try:
-                    T.normal_rate(delta, 30)
-                except AssertionError:
-                    rejected = True
-                T.require(rejected, "No-wait control passed field-rate guard")
-                image = output / "no-wait-action.png"
+            def frames(n: int, machine: Any = machine) -> None:
+                machine.call("run_frames", frames=n)
+
+            def key(pressed: bool, machine: Any = machine) -> None:
+                machine.call(
+                    "input", events=[{"Key": {"name": "space", "pressed": pressed}}]
+                )
+                frames(8)
+
+            def typed(text: str, machine: Any = machine) -> None:
+                machine.call("type_string", text=text, hold_frames=2, settle_frames=10)
+                frames(8)
+
+            def capture(
+                label: str, machine: Any = machine, variant: str = variant
+            ) -> None:
+                image = output / f"{variant}-{label}.png"
                 machine.call("save_screenshot", path=str(image))
                 images[image.name] = T.sha(image)
-                traces["no-wait"] = {
-                    "updates_per_30_fields": delta,
-                    "rate_guard_rejected": rejected,
-                }
-            finally:
-                machine.close()
-    finally:
-        if not basic:
-            (source / "settings.inc").write_text(original_settings)
-            (source / "dispatch.inc").write_text(original_dispatch)
-            subprocess.run(
-                [
-                    "make",
-                    f"ASM198X={args.tools / 'asm198x-aarch64-apple-darwin/asm198x'}",
-                ],
-                cwd=folder,
-                check=True,
-                timeout=30,
-                stdout=subprocess.DEVNULL,
+
+            if not basic:
+                for _ in range(24):
+                    if state()[1] == step:
+                        break
+                    frames(10)
+                T.require(state()[1] == step, "Loader did not reach initialisation")
+                frames(60)
+            T.require(state()[0] == initial, f"{system}/{variant}: startup {state()}")
+            capture("waiting")
+            first = state()
+            frames(60)
+            if not basic:
+                for _ in range(24):
+                    if state()[1] == step:
+                        break
+                    frames(10)
+                T.require(state()[1] == step, "Loader did not reach initialisation")
+                frames(60)
+            T.require(state()[0] == initial, "Idle advanced the world")
+            rate = None
+            if basic:
+                before = state()
+                frames(30)
+                after = state()
+                rate = (
+                    (after[1] + 256 * after[2]) - (before[1] + 256 * before[2])
+                ) & 65535
+                T.normal_rate(rate, 30)
+                key(True)
+                held_start = state()[0]
+                frames(30)
+                held_end = state()[0]
+                if variant == "wrong":
+                    T.require(held_end != held_start, "Broken edge was not observable")
+                else:
+                    T.require(
+                        held_start == (initial + step) & 255 and held_end == held_start,
+                        f"Held key repeated {state()}",
+                    )
+                capture("held")
+                key(False)
+                key(True)
+                second = state()[0]
+                if variant != "wrong":
+                    T.require(second == (initial + 2 * step) & 255, "Second press lost")
+                capture("action")
+                key(False)
+                observations = [initial, held_start, held_end, second]
+            else:
+                binary = (folder / f"build/variants/{variant}.bin").read_bytes()
+                base = 0x2800 if system == "acorn-atom" else 0x9000
+                installed = bytes(
+                    machine.call("memory_read", addr=base, len=len(binary))["bytes"]
+                )
+                T.require(
+                    installed == binary, "Typed loader differs from assembled bytes"
+                )
+                typed("X")
+                T.require(
+                    state()[0] == (0 if variant == "wrong" else initial)
+                    and state()[2:] == [0, 88],
+                    "Rejected command changed state/flag",
+                )
+                observed = []
+                for n in (1, 2):
+                    typed("G")
+                    expected = (
+                        step if variant == "wrong" else (initial + n * step) & 255
+                    )
+                    T.require(
+                        state() == [expected, step, 1, 71],
+                        f"Accepted command: {state()}",
+                    )
+                    observed.append(state()[0])
+                    frames(60)
+                    T.require(state()[0] == expected, "Idle changed command state")
+                capture("action")
+                observations = [initial, *observed]
+            traces[variant] = {
+                "startup": first,
+                "program_sha256": hashlib.sha256(
+                    listing.encode() if basic else binary
+                ).hexdigest(),
+                "progression": observations,
+                "updates_per_30_fields": rate,
+            }
+            print(system, variant, traces[variant], flush=True)
+        finally:
+            machine.close()
+    if basic:
+        # A separate cold run isolates the missing-wait error from the edge error.
+        machine = T.Machine(command)
+        try:
+            machine.call("run_frames", frames=150)
+            listing = (source / "caller.bas").read_text() + (
+                source / "mistakes/no-wait.bas"
+            ).read_text()
+            result = machine.call(
+                "type_string",
+                text=listing + "RUN\n",
+                hold_frames=2,
+                settle_frames=10,
             )
+            T.require(
+                result["chars_typed"] == len(listing) + 4,
+                "Incomplete faulty listing",
+            )
+
+            def count() -> int:
+                raw = machine.call("memory_read", addr=0x3001, len=2)["bytes"]
+                return raw[0] + 256 * raw[1]
+
+            before = count()
+            machine.call("run_frames", frames=30)
+            delta = (count() - before) & 65535
+            rejected = False
+            try:
+                T.normal_rate(delta, 30)
+            except AssertionError:
+                rejected = True
+            T.require(rejected, "No-wait control passed field-rate guard")
+            image = output / "no-wait-action.png"
+            machine.call("save_screenshot", path=str(image))
+            images[image.name] = T.sha(image)
+            traces["no-wait"] = {
+                "updates_per_30_fields": delta,
+                "rate_guard_rejected": rejected,
+            }
+        finally:
+            machine.close()
     paths = [
         p
         for p in source.rglob("*")

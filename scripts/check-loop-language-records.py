@@ -1,8 +1,15 @@
-"""Validate retained loop evidence; this does not rerun the machines."""
+"""Validate retained loop evidence; this does not rerun the machines.
+
+Each variant's program is rebuilt through the recorder's build(): the Atom
+and CPC binaries with the Asm198x release the record pins (rule 1), the
+BBC Micro and Electron listings as typed text (rule 2). Source and observer
+digests are provenance only.
+"""
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 from typing import Any
@@ -10,6 +17,12 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEMS = ("acorn-atom", "bbc-micro", "acorn-electron", "amstrad-cpc")
 VARIANTS = {"default", "step-two", "nonzero", "wrap", "wrong", "fixed"}
+_E = importlib.util.spec_from_file_location(
+    "loop_language_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def require(value: bool, message: str) -> None:
@@ -30,7 +43,6 @@ def check(system: str, record: dict[str, Any] | None = None, root: Path = ROOT) 
     require(system in SYSTEMS, "Unknown machine")
     basic = system in ("bbc-micro", "acorn-electron")
     folder = folder_for(system, root)
-    source = folder_for("bbc-micro", root) if system == "acorn-electron" else folder
     out = folder / "verification"
     if record is None:
         record = json.loads((out / "results.json").read_text())
@@ -39,29 +51,6 @@ def check(system: str, record: dict[str, Any] | None = None, root: Path = ROOT) 
         "Wrong machine/status",
     )
     require(record["language"] == ("basic" if basic else "assembly"), "Wrong language")
-    paths = {
-        str(p.relative_to(root))
-        for p in source.rglob("*")
-        if p.is_file()
-        and "build" not in p.parts
-        and "verification" not in p.parts
-        and p.name != "README.md"
-    }
-    if system == "acorn-electron":
-        paths.add(str((folder / "qualification-toolchain.json").relative_to(root)))
-    if not basic:
-        cpu = "6502" if system == "acorn-atom" else "z80"
-        paths.add(f"cross-platform/patterns/framework/command-turns/{cpu}.inc")
-    require(set(record["sources"]) == paths, "Incomplete source bindings")
-    observers = {"scripts/verify-loop-language-gaps.py", "scripts/verify-game-loops.py"}
-    require(
-        set(record["observer_sources"]) == observers, "Incomplete observer bindings"
-    )
-    for name, digest in {**record["sources"], **record["observer_sources"]}.items():
-        require(
-            hashlib.sha256((root / name).read_bytes()).hexdigest() == digest,
-            "Changed source: " + name,
-        )
     tools = json.loads((folder / "qualification-toolchain.json").read_text())
     require(
         record["executable_sha256"] == tools["emulator_binary_sha256"],
@@ -130,6 +119,33 @@ def check(system: str, record: dict[str, Any] | None = None, root: Path = ROOT) 
                 else [initial, (initial + step) & 255, (initial + 2 * step) & 255]
             )
             require(observed == expected, "Command progression failed")
+    script = root / "scripts/verify-loop-language-gaps.py"
+    for variant in sorted(VARIANTS):
+        recorded = record["cases"][variant]["program_sha256"]
+        if basic:
+            output = f"build/evidence/{variant}.bas"
+            build = E.function(
+                script,
+                "build",
+                (system, variant, "", "build/evidence"),
+                folder,
+                (output,),
+            )
+            E.require_typed(E.rebuild(build, None)[output], recorded, output)
+        else:
+            output = f"build/evidence/{variant}.bin"
+            E.require_program(
+                E.function(
+                    script,
+                    "build",
+                    (system, variant, E.ASSEMBLER, "build/evidence"),
+                    folder,
+                    (output, f"build/evidence/{variant}-loader.bas"),
+                ),
+                output,
+                record["assembler_sha256"],
+                recorded_sha256=recorded,
+            )
     if basic:
         fault = record["cases"]["no-wait"]
         require(
