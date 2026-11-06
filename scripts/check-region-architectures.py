@@ -6,8 +6,27 @@ import argparse
 import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+
+SPEC = importlib.util.spec_from_file_location(
+    "region_architectures_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
+
+
+def fixture(root: Path, system: str, variant: str, folder: Path) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        root / "cross-platform/patterns/rendering/region-architectures/build.py",
+        "build",
+        (system, E.ASSEMBLER, variant),
+        folder,
+        ("build/fixture.bin",),
+    )
 
 
 def verify(root: Path) -> int:
@@ -67,12 +86,6 @@ def verify(root: Path) -> int:
             == (["cpu", "blitter"] if c["cpu"] == "m68000" else ["native"]),
             "Missing backend qualification",
         )
-        need(
-            set(r["sources"]) == {str(p.relative_to(root)) for p in o.source_paths(c)},
-            "Missing source identity",
-        )
-        for path, h in r["sources"].items():
-            need(o.T.sha(root / path) == h, "Changed source: " + path)
         variants = o.variants(c)
         files = {v + ext for v in variants for ext in [".bin", ".json"]} | {
             v + ".png" for v in variants if "reject-" not in v
@@ -85,6 +98,18 @@ def verify(root: Path) -> int:
         for label in variants:
             d = json.loads((v / (label + ".json")).read_text())
             raw = (v / (label + ".bin")).read_bytes()
+            # The record is stale when its program's bytes change, not its sources' text.
+            E.require_program(
+                fixture(
+                    root,
+                    c["machine_id"],
+                    label,
+                    root / c["folder"] / "patterns/assembly/rendering/tile-region",
+                ),
+                "build/fixture.bin",
+                r["assembler_sha256"],
+                recorded_sha256=d["fixture_sha256"],
+            )
             need(
                 len(raw) == c["length"] + 32
                 and o.hashlib.sha256(raw).hexdigest() == d["memory_sha256"],

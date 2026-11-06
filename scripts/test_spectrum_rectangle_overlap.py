@@ -23,11 +23,29 @@ class Evidence(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, "table"):
             C.tables((F / "cases.inc").read_text(), "case_table:\n    defb 0\n")
 
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for lang, F in C.V.FS.items():
+            r = json.loads((F / "verification/results.json").read_text())
+            r["cases"]["wrong"]["tap_sha256"] = "0" * 64
+            with (
+                self.subTest(lang=lang),
+                self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+            ):
+                C.check(lang, r)
+
+    def test_source_digests_are_provenance(self):
+        """Changed, added or removed source text alone does not make a record stale."""
+        for lang, F in C.V.FS.items():
+            r = json.loads((F / "verification/results.json").read_text())
+            r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+            with self.subTest(lang=lang):
+                C.check(lang, r)
+
     def test_falsifications(self):
         for lang, F in C.V.FS.items():
             original = json.loads((F / "verification/results.json").read_text())
             for fault in (
-                "source",
                 "configuration",
                 "case",
                 "complete",
@@ -41,9 +59,7 @@ class Evidence(unittest.TestCase):
             ):
                 r = copy.deepcopy(original)
                 c = r["cases"]["demo"]
-                if fault == "source":
-                    r["sources"][next(iter(r["sources"]))] = "0" * 64
-                elif fault == "configuration":
+                if fault == "configuration":
                     r["configuration"]["rom_sha256"] = "0" * 64
                 elif fault == "case":
                     r["cases"].pop("custom")

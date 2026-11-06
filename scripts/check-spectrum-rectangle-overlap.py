@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -22,6 +23,25 @@ def module(name, file):
 V = module("native", "verify-spectrum-rectangle-overlap.py")
 P = module("png", "check-amiga-command-loops.py")
 T = V.T
+E = module("rectangle_bytes", "evidence_bytes.py")
+PATTERNS = ROOT / "sinclair-zx-spectrum/patterns"
+
+
+def tap(lang: str, name: str) -> str:
+    """The TAP each case loads, relative to PATTERNS, as the recorder picks it."""
+    stem = "demo" if lang == "assembly" and name == "boundaries" else name
+    return f"{lang}/physics/rectangle-overlap/build/{stem}.tap"
+
+
+def programs() -> Any:
+    """Both routes' programs, built by the recorder's own build(), pinned tools."""
+    return E.function(
+        ROOT / "scripts/verify-spectrum-rectangle-overlap.py",
+        "build",
+        (E.ASSEMBLER, E.BUILDER),
+        PATTERNS,
+        tuple(sorted({tap(lang, name) for lang in V.FS for name in V.VARIANTS})),
+    )
 
 
 def pixels(c, lang):
@@ -78,11 +98,6 @@ def check(lang, record=None):
         (r["system"], r["language"]) == ("sinclair-zx-spectrum", lang), "Wrong route"
     )
     T.require(
-        r["sources"]
-        == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths(lang)},
-        "Changed source/observer",
-    )
-    T.require(
         r["configuration"] == cfg and cfg["model"] == "Spectrum 48K PAL stock ROM",
         "Changed configuration",
     )
@@ -93,6 +108,14 @@ def check(lang, record=None):
             and hashlib.sha256(bytes(c["loaded_bytes"])).hexdigest()
             == c["payload_sha256"],
             "Changed loaded program",
+        )
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            programs(),
+            tap(lang, name),
+            cfg["assembler_sha256"],
+            recorded_sha256=c["tap_sha256"],
+            build198x=cfg["build198x_sha256"],
         )
         T.require(c["server"]["version"] == "0.44.2", "Wrong producer")
         if lang == "assembly" or name == "boundaries":
@@ -150,5 +173,6 @@ if __name__ == "__main__":
     for lang in V.FS:
         check(lang)
     print(
-        "Spectrum rectangle routes: native cases, independent oracle, source/code/pixel gates passed"
+        "Spectrum rectangle routes: native cases, independent oracle, program bytes,"
+        " code and pixel gates passed"
     )

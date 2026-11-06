@@ -44,10 +44,20 @@ class BitmapText(unittest.TestCase):
         r["positive"]["cases"] = []
         self.reject(c, f, r)
 
-    def test_missing_source(self):
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
         c, f, r = self.fixture()
-        r["sources"].pop(next(iter(r["sources"])))
-        self.reject(c, f, r)
+        next(iter(r["faults"].values()))["fixture_sha256"] = "0" * 64
+        (f / "results.json").write_text(json.dumps(r))
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check(c, f)
+
+    def test_source_digests_are_provenance(self):
+        """Changed, added or removed source text alone does not make a record stale."""
+        c, f, r = self.fixture()
+        r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+        (f / "results.json").write_text(json.dumps(r))
+        C.check(c, f)
 
     def test_missing_completion(self):
         c, f, r = self.fixture()

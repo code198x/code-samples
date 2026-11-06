@@ -5,7 +5,9 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,7 +23,18 @@ def module(name, file):
 
 V = module("native", "verify-c64-rectangle-overlap.py")
 P = module("png", "check-amiga-command-loops.py")
+E = module("rectangle_bytes", "evidence_bytes.py")
 T = V.T
+
+
+def program() -> Any:
+    """The pattern's build.py, run as the recorder runs it, with the pinned assembler."""
+    return E.Build(
+        V.F,
+        (sys.executable, "build.py"),
+        tuple(f"build/{name}.prg" for name in V.VARIANTS),
+        (("ASM198X", E.ASSEMBLER),),
+    )
 
 
 def pixels(c, cfg):
@@ -61,10 +74,6 @@ def check(record=None):
         (r["system"], r["language"]) == ("commodore-64", "assembly"), "Wrong route"
     )
     T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source/observer",
-    )
-    T.require(
         r["configuration"] == cfg and cfg["model"] == "C64 PAL, stock ROMs",
         "Changed configuration",
     )
@@ -101,6 +110,13 @@ def check(record=None):
             and hashlib.sha256(bytes([1, 8] + c["loaded_bytes"])).hexdigest()
             == c["loaded_sha256"],
             "Changed loaded program",
+        )
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            program(),
+            f"build/{name}.prg",
+            cfg["assembler_sha256"],
+            recorded=bytes([1, 8] + c["loaded_bytes"]),
         )
         T.require(
             c["helper_code_bytes"] == (76 if name == "wrong" else 68)

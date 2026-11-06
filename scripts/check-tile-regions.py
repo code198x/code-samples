@@ -6,8 +6,27 @@ import argparse
 import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+
+SPEC = importlib.util.spec_from_file_location(
+    "tile_regions_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
+
+
+def fixture(root: Path, system: str, variant: str, folder: Path) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        root / "cross-platform/patterns/rendering/tile-region/build.py",
+        "build",
+        (system, E.ASSEMBLER, variant),
+        folder,
+        ("build/fixture.bin",),
+    )
 
 
 def load(path: Path):
@@ -71,22 +90,16 @@ def verify(root: Path) -> int:
             == {"wrong-stride", "unsafe-destination"},
             "Missing controls",
         )
-        expected_sources = {
-            str((folder / "demo.asm").relative_to(root)),
-            "cross-platform/patterns/rendering/tile-region/region.inc",
-            "cross-platform/patterns/rendering/tile-region/systems.json",
-            "cross-platform/patterns/rendering/tile-region/build.py",
-            "cross-platform/patterns/rendering/tile-map/z80.inc",
-            "scripts/verify-tile-regions.py",
-            "scripts/verify-tilemaps.py",
-            "scripts/verify-game-loops.py",
-        }
-        require(set(record["sources"]) == expected_sources, "Missing source identities")
-        for path, digest in record["sources"].items():
-            require(oracle.T.sha(root / path) == digest, "Changed source: " + path)
         for variant in ["positive", "wrong-stride", "unsafe-destination"]:
             d = json.loads((v / (variant + ".json")).read_text())
             png = v / (variant + ".png")
+            # The record is stale when its program's bytes change, not its sources' text.
+            E.require_program(
+                fixture(root, cfg["machine_id"], variant, folder),
+                "build/fixture.bin",
+                record["assembler_sha256"],
+                recorded_sha256=d["fixture_sha256"],
+            )
             require(d["capture_sha256"] == oracle.T.sha(png), "Changed capture")
             require(
                 len(d["flags"]) == 23 and d["flags"][0] == 239, "Unfinished diagnostic"

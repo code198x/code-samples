@@ -19,6 +19,23 @@ spec.loader.exec_module(V)
 M = V.M
 S = V.S
 require = V.require
+spec = importlib.util.spec_from_file_location(
+    "remaining_primitives_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert spec and spec.loader
+E = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(E)
+
+
+def fixture(c: dict[str, Any], variant: str) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        S / "build.py",
+        "build",
+        (c["machine_id"], E.ASSEMBLER, variant),
+        ROOT / c["folder"] / "patterns/assembly/rendering/pixels-and-boxes",
+        ("build/fixture.bin",),
+    )
 
 
 def check(c: dict[str, Any], folder: Path | None = None) -> dict[str, Any]:
@@ -30,15 +47,19 @@ def check(c: dict[str, Any], folder: Path | None = None) -> dict[str, Any]:
     )
     r = json.loads((folder / "results.json").read_text())
     require(r["machine_id"] == c["machine_id"], "Machine identity differs")
-    require(
-        r["sources"] == {str(p.relative_to(ROOT)): V.V.T.sha(p) for p in V.sources(c)},
-        "Source bindings differ",
-    )
     tools = {t["tool"]: t for t in json.loads((S / "toolchain.json").read_text())}
     require(
         r["tools"] == {k: tools[k]["binary_sha256"] for k in [c["binary"], "asm198x"]},
         "Tool identity differs",
     )
+    # The record is stale when its programs' bytes change, not its sources' text.
+    for variant, run in {"positive": r["positive"], **r["faults"]}.items():
+        E.require_program(
+            fixture(c, variant),
+            "build/fixture.bin",
+            r["tools"]["asm198x"],
+            recorded_sha256=run["fixture_sha256"],
+        )
     used = set()
     for name, digest in r["artifacts"].items():
         require(

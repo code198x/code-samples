@@ -74,14 +74,17 @@ def basic_cases():
     return c
 
 
-def build(args):
+def build(assembler: str, build198x: str) -> None:
+    """Build both routes' programs, as the recorder runs them and the checker rebuilds.
+
+    Each route's build.py, then the BASIC boundaries listing generated here.
+    """
     for F in FS.values():
         subprocess.run(
             ["python3", str(F / "build.py")],
             check=True,
             timeout=60,
-            env=os.environ
-            | {"ASM198X": str(args.assembler), "BUILD198X": str(args.build198x)},
+            env=os.environ | {"ASM198X": assembler, "BUILD198X": build198x},
         )
     F = FS["basic"]
     B = F / "build"
@@ -105,7 +108,7 @@ def build(args):
     (B / "boundaries.bas").write_text(D.canonical(src))
     subprocess.run(
         [
-            str(args.build198x),
+            build198x,
             "basic",
             str(B / "boundaries.bas"),
             "--machine",
@@ -232,7 +235,7 @@ def main():
     for name in ("assembler", "build198x", "emulator", "rom"):
         p.add_argument("--" + name, type=Path, required=True)
     args = p.parse_args()
-    build(args)
+    build(str(args.assembler), str(args.build198x))
     for lang, F in FS.items():
         V = F / "verification"
         V.mkdir(exist_ok=True)

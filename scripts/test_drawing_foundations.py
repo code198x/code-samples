@@ -73,11 +73,20 @@ class DrawingEvidence(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("No matching system", result.stderr)
 
-    def test_sources_must_match(self):
-        cfg, root, _, record = self.fixture()
-        p = root / next(iter(record["sources"]))
-        p.write_text(p.read_text() + "\n; drift\n")
-        self.reject(cfg, root)
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        cfg, root, out, record = self.fixture()
+        record["fault"]["fixture_sha256"] = "0" * 64
+        (out / "results.json").write_text(json.dumps(record))
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check(cfg, root)
+
+    def test_source_digests_are_provenance(self):
+        """Changed, added or removed source text alone does not make a record stale."""
+        cfg, root, out, record = self.fixture()
+        record["sources"] = dict.fromkeys(list(record["sources"])[1:], "0" * 64)
+        (out / "results.json").write_text(json.dumps(record))
+        C.check(cfg, root)
 
     def test_no_empty_records(self):
         cfg, root, out, _ = self.fixture()

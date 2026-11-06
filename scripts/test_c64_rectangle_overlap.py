@@ -1,6 +1,7 @@
 """False evidence must fail the rectangle publication gate."""
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -20,7 +21,6 @@ class Evidence(unittest.TestCase):
     def test_falsifications(self):
         original = json.loads((C.V.V / "results.json").read_text())
         for fault in (
-            "source",
             "configuration",
             "case",
             "complete",
@@ -36,9 +36,7 @@ class Evidence(unittest.TestCase):
         ):
             r = copy.deepcopy(original)
             c = r["cases"]["demo"]
-            if fault == "source":
-                r["sources"][next(iter(r["sources"]))] = "0" * 64
-            elif fault == "configuration":
+            if fault == "configuration":
                 r["configuration"]["emulator_sha256"] = "0" * 64
             elif fault == "case":
                 r["cases"].pop("custom")
@@ -67,6 +65,23 @@ class Evidence(unittest.TestCase):
                 self.assertRaises((AssertionError, KeyError, ValueError)),
             ):
                 C.check(r)
+
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        c = r["cases"]["wrong"]
+        c["loaded_bytes"][0] ^= 1
+        c["loaded_sha256"] = hashlib.sha256(
+            bytes([1, 8] + c["loaded_bytes"])
+        ).hexdigest()
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check(r)
+
+    def test_source_digests_are_provenance(self):
+        """Changed, added or removed source text alone does not make a record stale."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+        C.check(r)
 
     def test_table_include(self):
         with self.assertRaisesRegex(AssertionError, "table"):

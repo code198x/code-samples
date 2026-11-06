@@ -25,6 +25,18 @@ def load(name: str, path: Path):
 V = load("geometry_observer", ROOT / "scripts/verify-geometry.py")
 M, C, T, PNG = V.M, V.C, V.T, V.PNG
 require = V.require
+E = load("geometry_bytes", ROOT / "scripts/evidence_bytes.py")
+
+
+def fixture(c: dict[str, Any], variant: str) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        SHARED / "build.py",
+        "build",
+        (c["machine_id"], E.ASSEMBLER, variant),
+        ROOT / c["folder"] / "patterns/assembly/rendering/geometry",
+        ("build/fixture.bin",),
+    )
 
 
 def check_system(c: dict[str, Any], folder: Path | None = None) -> dict[str, int]:
@@ -34,17 +46,20 @@ def check_system(c: dict[str, Any], folder: Path | None = None) -> dict[str, int
     )
     result = json.loads((folder / "results.json").read_text())
     require(result["machine_id"] == c["machine_id"], "Machine identity differs")
-    required_sources = {str(p.relative_to(ROOT)): T.sha(p) for p in V.sources(c)}
-    require(
-        result["sources"] == required_sources,
-        "Source bindings differ or are incomplete",
-    )
     tools = {t["tool"]: t for t in json.loads((SHARED / "toolchain.json").read_text())}
     require(
         result["tool_identity"]
         == {key: tools[key]["binary_sha256"] for key in [c["binary"], "asm198x"]},
         "Tool identities differ",
     )
+    # The record is stale when its programs' bytes change, not its sources' text.
+    for variant, run in {"positive": result["positive"], **result["faults"]}.items():
+        E.require_program(
+            fixture(c, variant),
+            "build/fixture.bin",
+            result["tool_identity"]["asm198x"],
+            recorded_sha256=run["fixture_sha256"],
+        )
     artifact_names = set()
     for name, digest in result["artifacts"].items():
         require(Path(name).name == name, "Artifact path escaped retained directory")

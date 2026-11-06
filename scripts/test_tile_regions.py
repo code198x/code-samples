@@ -64,19 +64,32 @@ class RegionEvidenceFailures(unittest.TestCase):
     def test_unmodified_evidence_passes(self) -> None:
         self.assertEqual(G.verify(self.root), 9)
 
-    def test_changed_kernel_fails(self) -> None:
-        p = self.root / "cross-platform/patterns/rendering/tile-region/region.inc"
-        p.write_text(p.read_text() + "; changed\n")
-        with self.assertRaisesRegex(AssertionError, "Changed source"):
+    def forge(self, variant: str) -> None:
+        """Claim other bytes for one variant consistently, rebinding its file."""
+        v = self.v
+        d = json.loads((v / (variant + ".json")).read_text())
+        d["fixture_sha256"] = "0" * 64
+        (v / (variant + ".json")).write_text(json.dumps(d))
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        self.forge("positive")
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
             G.verify(self.root)
 
-    def test_missing_kernel_identity_fails(self) -> None:
-        p = self.v / "results.json"
-        d = json.loads(p.read_text())
-        d["sources"].pop("cross-platform/patterns/rendering/tile-region/region.inc")
-        p.write_text(json.dumps(d))
-        with self.assertRaisesRegex(AssertionError, "Missing source identities"):
+    def test_forged_control_program_is_rebuilt(self) -> None:
+        self.forge("unsafe-destination")
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
             G.verify(self.root)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        p = self.root / "cross-platform/patterns/rendering/tile-region/region.inc"
+        p.write_text(p.read_text() + "; changed\n")
+        r = json.loads((self.v / "results.json").read_text())
+        r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+        (self.v / "results.json").write_text(json.dumps(r))
+        self.assertEqual(G.verify(self.root), 9)
 
     def test_zero_is_not_evidence_of_a_completed_rejection(self) -> None:
         p = self.v / "positive.json"

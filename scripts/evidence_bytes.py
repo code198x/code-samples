@@ -20,15 +20,18 @@ Command line:
   python3 scripts/evidence_bytes.py fetch <binary-sha256-or-tag>
   python3 scripts/evidence_bytes.py add-release asm198x-v0.0.74
   python3 scripts/evidence_bytes.py add-release build198x-v0.2.9
+  python3 scripts/evidence_bytes.py call <script.py> <function> [args...]
 """
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import platform
 import shutil
 import subprocess
+import sys
 import tarfile
 import tempfile
 import time
@@ -304,6 +307,40 @@ def make(folder: Path, outputs: tuple[str, ...], *, build198x: bool = False) -> 
     return Build(folder, command, outputs)
 
 
+def function(
+    script: Path, name: str, args: tuple[str, ...], cwd: Path, outputs: tuple[str, ...]
+) -> Build:
+    """A build function in a Python file, called as its recorder calls it.
+
+    The recorder imports `script` and calls `name(*args)`; this runs the same
+    call in a fresh interpreter (`evidence_bytes.py call`), with `{asm198x}`
+    in `args` replaced by the pinned assembler. `outputs` are relative to
+    `cwd`, as for any build.
+    """
+    return Build(
+        cwd,
+        (
+            sys.executable,
+            str(Path(__file__).resolve()),
+            "call",
+            str(script),
+            name,
+            *args,
+        ),
+        outputs,
+    )
+
+
+def call(script: Path, name: str, args: list[str]) -> None:
+    """Import `script` and call `name(*args)`, as `function()` builds run it."""
+    spec = importlib.util.spec_from_file_location("evidence_build_script", script)
+    if spec is None or spec.loader is None:
+        raise ImportError(script)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    getattr(module, name)(*args)
+
+
 def _fetch_text(url: str) -> str | None:
     """The asset's text, or None when the release does not publish it."""
     try:
@@ -404,9 +441,15 @@ def main() -> None:
         "pin"
     )
     sub.add_parser("add-release", help="record a release's digests").add_argument("tag")
+    run = sub.add_parser("call", help="call a build function in a Python file")
+    run.add_argument("script", type=Path)
+    run.add_argument("function")
+    run.add_argument("args", nargs="*")
     args = parser.parse_args()
     if args.command == "fetch":
         print(assembler(args.pin))
+    elif args.command == "call":
+        call(args.script, args.function, args.args)
     else:
         add_release(args.tag)
         print(f"Recorded {args.tag} in {RELEASES.relative_to(ROOT)}")
