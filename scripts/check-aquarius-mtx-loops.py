@@ -17,6 +17,19 @@ PNG = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(PNG)
 
 
+def _load(module: str, file: str):
+    found = importlib.util.spec_from_file_location(module, ROOT / "scripts" / file)
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load("loop_bytes", "evidence_bytes.py")
+V = _load("loop_recorder", "verify-aquarius-mtx-loops.py")
+BUILD = ROOT / "scripts/build-aquarius-mtx-loops.py"
+
+
 def require(value: bool, message: str) -> None:
     if not value:
         raise ValueError(message)
@@ -34,6 +47,57 @@ def bound(root: Path, name: str, digest: str) -> Path:
     return p
 
 
+def entered(system: str, variant: str, r: dict) -> list[str]:
+    """The listing the recorder types for a BASIC case.
+
+    The MTX listing carries its screen reader, assembled with the pinned
+    Asm198x, so the reader's bytes are part of the typed text.
+    """
+    folder = ROOT / system / "patterns/basic/framework/command-loop"
+    output = f"build/{variant}/entered.bas"
+    pin = r["assembler_source_lock"]["executable_sha256"]
+    mtx = system == "memotech-mtx"
+    build = E.function(
+        ROOT / "scripts/verify-aquarius-mtx-loops.py",
+        "entered",
+        (system, variant, E.ASSEMBLER if mtx else ""),
+        folder,
+        (output,),
+    )
+    return E.rebuild(build, pin if mtx else None)[output].decode().split("\n")
+
+
+def require_programs(r: dict) -> None:
+    """Rebuild or regenerate every case's program and compare it with the record."""
+    system = r["system"]
+    folder = ROOT / system / "patterns" / r["track"] / "framework/command-loop"
+    # The typed program is reusable.bas; the lesson presents it as two parts.
+    require(
+        r["track"] == "assembly"
+        or (folder / "reusable.bas").read_text()
+        == (folder / "caller.bas").read_text() + (folder / "routines.bas").read_text(),
+        "Reusable program differs from its caller and routines",
+    )
+    for variant, case in sorted(r["cases"].items()):
+        if r["track"] == "assembly":
+            ext = "gb" if system == "nintendo-game-boy" else "bin"
+            output = f"build/{variant}/demo.{ext}"
+            E.require_program(
+                E.function(
+                    BUILD, "build", (system, E.ASSEMBLER, variant), folder, (output,)
+                ),
+                output,
+                r["assembler_source_lock"]["executable_sha256"],
+                recorded=bytes(case["loaded_bytes"]),
+            )
+        else:
+            E.require_typed(
+                "\n".join(entered(system, variant, r)),
+                hashlib.sha256(case["entered_source"].encode()).hexdigest(),
+                f"{system} {variant} listing",
+            )
+
+
 def check_record(root: Path, r: dict) -> None:
     require(r["status"] == "passed", "Missing pass")
     asm = r["track"] == "assembly"
@@ -47,10 +111,6 @@ def check_record(root: Path, r: dict) -> None:
         "nonzero",
     } | ({"no-edge"} if asm else set())
     require(set(r["cases"]) == required, "Missing cases")
-    for section in ("sources", "observer_sources"):
-        require(bool(r[section]), "Missing source bindings")
-        for name, digest in r[section].items():
-            bound(root, name, digest)
     for key, version in [
         ("producer_source_lock", "0.44.1"),
         ("assembler_source_lock", "0.0.71"),
@@ -160,6 +220,11 @@ def check_record(root: Path, r: dict) -> None:
             set(parity_frames) == {0, 1} and parity_frames[0] != parity_frames[1],
             "Backdrop did not actually change",
         )
+
+    # The program decides staleness: assembly payloads are rebuilt with the
+    # pinned Asm198x (rule 1), typed listings are regenerated (rule 2).
+    # Source and observer digests are provenance only.
+    require_programs(r)
 
 
 def check(root: Path) -> int:
