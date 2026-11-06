@@ -34,7 +34,10 @@ for name in ("demo", "custom", "wrong", "repaired"):
             "--sym",
             str(F / (name + ".asm")),
             "-o",
-            str(B / (name + ".tap")),
+            name + ".tap",
         ],
         check=True,
+        # pasmo names the tape's CODE block after the -o path as given, so a
+        # bare name keeps the tape the same wherever the checkout is.
+        cwd=B,
     )
