@@ -60,7 +60,6 @@ class MapRecords(unittest.TestCase):
                 "language": lambda r: r.update(language="basic"),
                 "machine": lambda r: r.update(machine="other"),
                 "ram": lambda r: r["configuration"].update(results=0),
-                "source": lambda r: r["sources"].update({"missing": "0" * 64}),
                 "wrong read": lambda r: r["observations"]["positive"].__setitem__(
                     0, 99
                 ),
@@ -94,6 +93,25 @@ class MapRecords(unittest.TestCase):
                         (RuntimeError, ValueError, AssertionError, KeyError)
                     ):
                         C.validate(cfg, altered)
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for cfg in json.loads(C.V.CONFIG.read_text()):
+            r = json.loads((C.V.folder(cfg) / "verification/results.json").read_text())
+            r["fixtures"]["wrong-stride"] = "0" * 64
+            with (
+                self.subTest(system=cfg["system"]),
+                self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+            ):
+                C.validate(cfg, r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        for cfg in json.loads(C.V.CONFIG.read_text()):
+            r = json.loads((C.V.folder(cfg) / "verification/results.json").read_text())
+            r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+            with self.subTest(system=cfg["system"]):
+                C.validate(cfg, r)
 
 
 if __name__ == "__main__":

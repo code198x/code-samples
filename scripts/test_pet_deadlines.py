@@ -36,7 +36,8 @@ class Evidence(unittest.TestCase):
                 if fault == 0:
                     r["machine"] = "other"
                 elif fault == 1:
-                    r["sources"].pop(next(iter(r["sources"])))
+                    # A consistent claim of other bytes; only the rebuild rejects it.
+                    r["cases"]["custom-duration"]["prg_sha256"] = "0" * 64
                 elif fault == 2:
                     r["cases"].pop("repaired")
                 elif fault == 3:
@@ -59,9 +60,25 @@ class Evidence(unittest.TestCase):
                     r["cases"]["working"]["observations"][-1]["active"] = 1
                 with (
                     self.subTest(system=system, fault=fault),
-                    self.assertRaises(AssertionError),
+                    self.assertRaisesRegex(
+                        AssertionError, "^Program bytes differ" if fault == 1 else ""
+                    ),
                 ):
                     C.check(system, r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        for system in C.V.SYSTEMS:
+            r = json.loads(
+                (
+                    C.ROOT
+                    / system
+                    / "patterns/assembly/framework/turn-deadline/verification/results.json"
+                ).read_text()
+            )
+            r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+            with self.subTest(system=system):
+                C.check(system, r)
 
 
 if __name__ == "__main__":

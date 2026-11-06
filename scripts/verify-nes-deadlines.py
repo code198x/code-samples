@@ -200,7 +200,11 @@ irq:
     return text
 
 
-def run(args, name):
+def build(assembler, name):
+    """Write the named caller's source and assemble it to an NROM cartridge.
+
+    The recorder and the checker both build through this function.
+    """
     B = F / "build" / name
     B.mkdir(exist_ok=True, parents=True)
     source = (
@@ -211,7 +215,7 @@ def run(args, name):
     (B / "demo.asm").write_text(source)
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "ca65",
             "-I",
@@ -225,6 +229,11 @@ def run(args, name):
         capture_output=True,
         timeout=30,
     )
+    return B, source
+
+
+def run(args, name):
+    B, source = build(str(args.assembler), name)
     sym = T.symbols(B / "demo.sym")
     cart = (B / "demo.nes").read_bytes()
     T.require(len(cart) == 40976, "Wrong NROM layout")

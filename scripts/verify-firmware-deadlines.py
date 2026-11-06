@@ -84,8 +84,11 @@ def expected_arithmetic() -> list[int]:
     return expected + [239]
 
 
-def arithmetic(system: str, args: argparse.Namespace) -> dict[str, Any]:
-    """Independent native arithmetic observations, deliberately separate from stock boot."""
+def arithmetic_build(system: str, assembler: str, variant: str) -> Path:
+    """Build one arithmetic fixture's reset ROM image.
+
+    The recorder and the checker both build through this function.
+    """
     atom = system == "acorn-atom"
     p = folder(system) / "build/arithmetic"
     p.mkdir(parents=True, exist_ok=True)
@@ -116,45 +119,53 @@ def arithmetic(system: str, args: argparse.Namespace) -> dict[str, Any]:
         if atom
         else f"    ld a,239\n    ld (${end:04x}),a\nstop: jr stop\n"
     )
+    selected = helper
+    if variant != "working":
+        selected = (
+            helper.replace("    bne deadline_done\n", "    beq deadline_done\n")
+            if atom
+            else helper.replace(
+                "    jr z,deadline_expired\n", "    jr nz,deadline_expired\n"
+            )
+        )
+        T.require(selected != helper, "Fault did not change helper")
+    source = p / (variant + ".asm")
+    source.write_text(code + selected)
+    raw = p / (variant + ".bin")
+    subprocess.run(
+        [
+            assembler,
+            "--dialect",
+            "acme" if atom else "pasmo",
+            str(source),
+            "-o",
+            str(raw),
+        ],
+        check=True,
+        capture_output=True,
+        timeout=30,
+    )
+    program = raw.read_bytes()
+    if atom:
+        T.require(len(program) < 0x2FFC, "Fixture reaches vectors")
+        rom = bytearray(24576)
+        rom[0x3000 : 0x3000 + len(program)] = program
+        rom[0x5FFC:0x5FFE] = bytes([0, 208])
+    else:
+        T.require(len(program) < 16384, "Fixture exceeds lower ROM")
+        rom = program.ljust(32768, b"\x00")
+    image = p / (variant + ".rom")
+    image.write_bytes(rom)
+    return image
+
+
+def arithmetic(system: str, args: argparse.Namespace) -> dict[str, Any]:
+    """Independent native arithmetic observations, deliberately separate from stock boot."""
+    atom = system == "acorn-atom"
+    result_base = 0x2100 if atom else 0x4100
     observations = {}
     for variant in ("working", "wrong-zero-boundary"):
-        selected = helper
-        if variant != "working":
-            selected = (
-                helper.replace("    bne deadline_done\n", "    beq deadline_done\n")
-                if atom
-                else helper.replace(
-                    "    jr z,deadline_expired\n", "    jr nz,deadline_expired\n"
-                )
-            )
-            T.require(selected != helper, "Fault did not change helper")
-        source = p / (variant + ".asm")
-        source.write_text(code + selected)
-        raw = p / (variant + ".bin")
-        subprocess.run(
-            [
-                str(args.assembler),
-                "--dialect",
-                "acme" if atom else "pasmo",
-                str(source),
-                "-o",
-                str(raw),
-            ],
-            check=True,
-            capture_output=True,
-            timeout=30,
-        )
-        program = raw.read_bytes()
-        if atom:
-            T.require(len(program) < 0x2FFC, "Fixture reaches vectors")
-            rom = bytearray(24576)
-            rom[0x3000 : 0x3000 + len(program)] = program
-            rom[0x5FFC:0x5FFE] = bytes([0, 208])
-        else:
-            T.require(len(program) < 16384, "Fixture exceeds lower ROM")
-            rom = program.ljust(32768, b"\x00")
-        image = p / (variant + ".rom")
-        image.write_bytes(rom)
+        image = arithmetic_build(system, str(args.assembler), variant)
         command = [str(executable(system, args)), "--mcp", "--rom", str(image)]
         if atom:
             command += ["--model", "acorn-atom-full"]
@@ -188,11 +199,14 @@ def executable(system: str, args: argparse.Namespace) -> Path:
     return args.tools / f"emu198x-{system}-aarch64-apple-darwin" / f"emu198x-{system}"
 
 
-def public_case(system: str, variant: str, args: argparse.Namespace) -> dict[str, Any]:
+def public_build(system: str, assembler: str, variant: str) -> tuple[Path, int]:
+    """Build one public caller's binary and its typed BASIC loader.
+
+    The recorder and the checker both build through this function. Returns
+    the build folder and the configured duration.
+    """
     atom = system == "acorn-atom"
     p = folder(system)
-    out = p / "verification"
-    out.mkdir(exist_ok=True)
     build = p / "build" / variant
     build.mkdir(parents=True, exist_ok=True)
     duration = (
@@ -229,7 +243,7 @@ def public_case(system: str, variant: str, args: argparse.Namespace) -> dict[str
     binary = build / "demo.bin"
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "acme" if atom else "pasmo",
             str(build / "selected.asm"),
@@ -246,6 +260,15 @@ def public_case(system: str, variant: str, args: argparse.Namespace) -> dict[str
     loader = build / "loader.py"
     loader.write_text((p / "loader.py").read_text())
     subprocess.run(["python3", str(loader)], check=True, timeout=20)
+    return build, duration
+
+
+def public_case(system: str, variant: str, args: argparse.Namespace) -> dict[str, Any]:
+    atom = system == "acorn-atom"
+    out = folder(system) / "verification"
+    out.mkdir(exist_ok=True)
+    build, duration = public_build(system, str(args.assembler), variant)
+    binary = build / "demo.bin"
     listing = (build / "build/loader.bas").read_text() + "RUN\n"
     command = [
         str(executable(system, args)),

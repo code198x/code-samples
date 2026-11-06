@@ -88,17 +88,6 @@ def check(record: dict | None = None, regression: dict | None = None) -> None:
         if regression is not None
         else json.loads((folder / "loader-regression.json").read_text())
     )
-    T.require(
-        g["sources"]
-        == {
-            str(p.relative_to(ROOT)): T.sha(p)
-            for p in (
-                ROOT / "scripts/verify-ace-loader.py",
-                ROOT / "scripts/verify-game-loops.py",
-            )
-        },
-        "Regression source changed",
-    )
     expected = [245, 197, 213, 229, 175, 50, 81, 62]
     T.require(
         g["early"] != expected

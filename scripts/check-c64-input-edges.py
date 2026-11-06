@@ -1,4 +1,4 @@
-"""Reject changed sources, native input histories, matrix outputs and capture pixels."""
+"""Reject changed programs, native input histories, matrix outputs and capture pixels."""
 
 from __future__ import annotations
 
@@ -22,6 +22,7 @@ def module(name: str, file: str) -> Any:
 
 V = module("native", "verify-c64-input-edges.py")
 P = module("png", "check-amiga-command-loops.py")
+E = module("edges_bytes", "evidence_bytes.py")
 T = V.T
 
 
@@ -46,10 +47,6 @@ def check(record: dict[str, Any] | None = None) -> None:
     T.require(
         (r["system"], r["language"]) == ("commodore-64", "assembly"), "Wrong route"
     )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source or observer",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native case")
     T.require(
         all(
@@ -67,19 +64,17 @@ def check(record: dict[str, Any] | None = None) -> None:
             and hashlib.sha256(bytes(data)).hexdigest() == c["loaded_sha256"],
             "Loaded code differs",
         )
-        text = (
-            V.fixture(variant == "wrong-boundary")
-            if "boundar" in variant
-            else (
-                V.F
-                / {"custom": "edges-custom.asm", "wrong": "edges-wrong.asm"}.get(
-                    variant, "edges-demo.asm"
-                )
-            ).read_text()
-        )
-        T.require(
-            hashlib.sha256(text.encode()).hexdigest() == c["source_sha256"],
-            "Changed selected caller",
+        # The record is stale when its program's bytes change, not its sources' text.
+        # It keeps the PRG's payload, without its two-byte load address.
+        output = f"build/edges/{variant}/demo.prg"
+        E.require_program(
+            E.function(
+                Path(V.__file__), "build", (E.ASSEMBLER, variant), V.F, (output,)
+            ),
+            output,
+            r["assembler_sha256"],
+            recorded=bytes(data),
+            extract=lambda prg: prg[2:],
         )
         if "boundar" in variant:
             expected = (

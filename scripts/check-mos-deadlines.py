@@ -26,6 +26,13 @@ if png_spec is None or png_spec.loader is None:
     raise RuntimeError("Missing native PNG reader")
 P = importlib.util.module_from_spec(png_spec)
 png_spec.loader.exec_module(P)
+bytes_spec = importlib.util.spec_from_file_location(
+    "mos_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+if bytes_spec is None or bytes_spec.loader is None:
+    raise RuntimeError("Missing evidence_bytes")
+E = importlib.util.module_from_spec(bytes_spec)
+bytes_spec.loader.exec_module(E)
 DIGITS = {
     (60, 102, 110, 126, 118, 102, 60, 0): "0",
     (24, 56, 24, 24, 24, 24, 126, 0): "1",
@@ -67,10 +74,6 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
         == ("native-checked", system, "assembly"),
         "Wrong status/machine/language",
     )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Source/observer binding changed",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native variant")
     T.require(len(r["assembler_sha256"]) == 64, "Missing assembler identity")
     # Tool/firmware identities are bound in the checked-in configuration, not inferred from a filename.
@@ -89,6 +92,17 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
             "Tool/firmware changed",
         )
         T.require(c["server"]["version"] == "0.44.1", "Wrong native release")
+        # The record is stale when its program's bytes change, not its sources'
+        # text. Both machines run the BBC Micro build, typed in by its loader.
+        output = f"build/{variant}/build/demo.bin"
+        E.require_program(
+            E.function(
+                Path(V.__file__), "build", (variant, E.ASSEMBLER), V.FOLDER, (output,)
+            ),
+            output,
+            r["assembler_sha256"],
+            recorded_sha256=c["binary_sha256"],
+        )
         T.require(
             c["binary_bytes"] > 0
             and c["helper_bytes"] > 0

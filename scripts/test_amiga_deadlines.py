@@ -1,9 +1,11 @@
 """Native timer evidence must reject missing, altered and coupled wrong claims."""
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
+import zlib
 from pathlib import Path
 
 s = importlib.util.spec_from_file_location(
@@ -20,7 +22,6 @@ class Evidence(unittest.TestCase):
     def test_falsifications(self):
         original = json.loads((C.V.V / "results.json").read_text())
         for fault in (
-            "source",
             "configuration",
             "case",
             "producer",
@@ -47,9 +48,7 @@ class Evidence(unittest.TestCase):
             r = copy.deepcopy(original)
             c = r["cases"]["demo"]
             by = {v["stage"]: v for v in c["samples"]}
-            if fault == "source":
-                r["sources"][next(iter(r["sources"]))] = "0" * 64
-            elif fault == "configuration":
+            if fault == "configuration":
                 r["configuration"]["emulator_sha256"] = "0" * 64
             elif fault == "case":
                 r["cases"].pop("custom")
@@ -98,6 +97,31 @@ class Evidence(unittest.TestCase):
                 self.assertRaises((AssertionError, KeyError, ValueError)),
             ):
                 C.check(r)
+
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        c = r["cases"]["custom"]
+        raw = bytearray(zlib.decompress(bytes.fromhex(c["hunk_zlib"])))
+        _, relocs = C.V.H.hunk(bytes(raw))
+        moved = {i + k for i in relocs for k in range(4)}
+        i = next(i for i in range(len(raw) - 32) if i not in moved)
+        raw[32 + i] ^= 1  # the code hunk's body starts 32 bytes in
+        c["hunk_zlib"] = zlib.compress(bytes(raw)).hex()
+        c["executable_sha256"] = hashlib.sha256(raw).hexdigest()
+        for seg in c["segments"]:
+            if seg["first"] <= i < seg["last"]:
+                seg["bytes"][i - seg["first"]] ^= 1
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check(r)
+
+    def test_source_digests_are_provenance(self):
+        """Changed, added or removed source text alone does not make a record stale."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+        for c in r["cases"].values():
+            c["source_sha256"] = "0" * 64
+        C.check(r)
 
     def test_coupled_pixels(self):
         c = copy.deepcopy(

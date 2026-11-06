@@ -187,7 +187,11 @@ program_end:
 """
 
 
-def build(args, name):
+def build(assembler, build198x, name):
+    """Write the named caller's source and build its executable and ADF.
+
+    The recorder and the checker both build through this function.
+    """
     B = F / "build/verification" / name
     B.mkdir(exist_ok=True, parents=True)
     src = (
@@ -200,7 +204,7 @@ def build(args, name):
     (B / "demo.asm").write_text(src)
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "vasm",
             "--exe",
@@ -217,7 +221,7 @@ def build(args, name):
     )
     subprocess.run(
         [
-            str(args.build198x),
+            build198x,
             "adf",
             str(B / "demo"),
             "-o",
@@ -235,7 +239,7 @@ def build(args, name):
 
 
 def run(args, name):
-    B, src = build(args, name)
+    B, src = build(str(args.assembler), str(args.build198x), name)
     sym = T.symbols(B / "demo.sym")
     exe = (B / "demo").read_bytes()
     body, relocs = H.hunk(exe)

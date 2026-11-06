@@ -104,7 +104,11 @@ irq:
     )
 
 
-def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+def build(assembler: str, variant: str) -> tuple[Path, str]:
+    """Write the variant's caller and assemble it to an NROM cartridge.
+
+    The recorder and the checker both build through this function.
+    """
     out = F / "build/edges" / variant
     out.mkdir(parents=True, exist_ok=True)
     source = (
@@ -120,7 +124,7 @@ def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
     (out / "demo.asm").write_text(source)
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "ca65",
             "-I",
@@ -134,6 +138,11 @@ def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
         capture_output=True,
         timeout=30,
     )
+    return out, source
+
+
+def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+    out, source = build(str(args.assembler), variant)
     cart = (out / "demo.nes").read_bytes()
     T.require(len(cart) == 40976 and cart[:8] == b"NES\x1a\x02\x01\0\0", "Wrong NROM")
     sym = T.symbols(out / "demo.sym")
