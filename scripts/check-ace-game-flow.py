@@ -19,6 +19,7 @@ V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
 T, C = V.T, V.C
 P = V.module("ace_flow_png", ROOT / "scripts/check-amiga-command-loops.py")
+E = V.module("ace_flow_bytes", ROOT / "scripts/evidence_bytes.py")
 WAIT_CASES = {0, 1, 18, 20, 40, 64, 315, 320, 365}
 
 
@@ -46,10 +47,12 @@ def identity(c: dict[str, Any], files: list[str], names: tuple[str, ...]) -> Non
         "Wrong stock allocation or entered file order",
     )
     T.require(sizes["routines.fth"] - before == 492, "Helper dictionary cost differs")
-    entered = hashlib.sha256(
-        "".join((V.F / f).read_text() for f in files).encode("ascii")
-    ).hexdigest()
-    T.require(c["entered_source_sha256"] == entered, "Wrong entered source identity")
+    # The FORTH is typed in, so the entered text is the program (rule 2).
+    E.require_typed(
+        "".join((V.F / f).read_text() for f in files).encode("ascii"),
+        c["entered_source_sha256"],
+        " + ".join(files),
+    )
     addresses = c["addresses"]
     T.require(
         set(addresses) == set(names) and len(set(addresses.values())) == len(names),
@@ -163,7 +166,6 @@ def check(record: dict[str, Any] | None = None) -> None:
         and r["configuration"] == V.config(),
         "Wrong stock runtime identity",
     )
-    T.require(r["sources"] == V.sources(), "Changed source or observer identity")
     T.require(
         len(C.cases()) == len(set(C.cases())) == 366,
         "Empty or incomplete independent model",

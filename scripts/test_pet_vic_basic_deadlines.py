@@ -33,7 +33,7 @@ class Evidence(unittest.TestCase):
                 if fault == 0:
                     r["machine"] = "other"
                 elif fault == 1:
-                    r["sources"].pop(next(iter(r["sources"])))
+                    case["source_sha256"] = "0" * 64
                 elif fault == 2:
                     r["cases"].pop("repaired")
                 elif fault == 3:
@@ -63,6 +63,29 @@ class Evidence(unittest.TestCase):
                     self.assertRaises((AssertionError, ValueError)),
                 ):
                     C.check(system, r)
+
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming another typed listing is caught by the typed-text check."""
+        for system in C.V.SYSTEMS:
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            r["cases"]["custom"]["source_sha256"] = "0" * 64
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                C.check(system, r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or script digests alone do not make a record stale."""
+        for system in C.V.SYSTEMS:
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+            with self.subTest(system=system):
+                C.check(system, r)
 
 
 if __name__ == "__main__":

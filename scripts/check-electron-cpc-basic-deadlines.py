@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 from functools import cache
@@ -18,6 +17,12 @@ if spec is None or spec.loader is None:
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
 T = V.T
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 png_spec = importlib.util.spec_from_file_location(
@@ -48,11 +53,8 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
         == ("native-checked", system, "basic"),
         "Wrong identity/status",
     )
-    T.require(
-        r["sources"]
-        == {str(f.relative_to(ROOT)): T.sha(f) for f in V.source_paths(system)},
-        "Changed source/observer bindings",
-    )
+    # The BASIC is typed in, so its text is the program (rule 2); source
+    # and script digests are provenance only.
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native cases")
     for variant, c in r["cases"].items():
         T.require(
@@ -62,10 +64,7 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
             "Different native configuration",
         )
         source = V.listing(system, variant)
-        T.require(
-            c["listing_sha256"] == hashlib.sha256(source.encode()).hexdigest(),
-            "Changed entered listing",
-        )
+        E.require_typed(source, c["listing_sha256"], f"{variant} listing")
         if variant in ("boundaries", "wrong-boundary"):
             expected = []
             cases = [

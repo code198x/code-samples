@@ -1,8 +1,14 @@
-"""Check retained observations and source bindings; does not rerun emulators."""
+"""Check retained observations and typed-program bindings; does not rerun emulators.
+
+The BASIC is typed into stock ROM, so its text is the program (rule 2): a
+change to a typed file, a REM included, makes the record stale. Observer
+script digests are provenance only.
+"""
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 from typing import Any
@@ -16,7 +22,12 @@ INPUTS = {
     "mistakes/reset-each-turn.bas",
     "qualification-toolchain.json",
 }
-OBSERVERS = {"scripts/verify-basic-turn-routines.py", "scripts/verify-game-loops.py"}
+_E = importlib.util.spec_from_file_location(
+    "turn_record_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def require(ok: bool, message: str) -> None:
@@ -38,14 +49,14 @@ def check(system: str, root: Path = ROOT, record: dict[str, Any] | None = None) 
         set(record["sources"]) == {f"{prefix}/{s}" for s in INPUTS},
         "Incomplete source bindings",
     )
-    require(
-        set(record["observer_sources"]) == OBSERVERS, "Incomplete observer bindings"
-    )
-    for p, digest in {**record["sources"], **record["observer_sources"]}.items():
-        require(
-            hashlib.sha256((root / p).read_bytes()).hexdigest() == digest,
-            f"Changed input {p}",
-        )
+    for p, digest in record["sources"].items():
+        if p.endswith(".bas"):
+            E.require_typed((root / p).read_bytes(), digest, p)
+        else:
+            require(
+                hashlib.sha256((root / p).read_bytes()).hexdigest() == digest,
+                f"Changed toolchain configuration {p}",
+            )
     expected = {
         "default": [0, 1, 2],
         "step-two": [0, 2, 4],

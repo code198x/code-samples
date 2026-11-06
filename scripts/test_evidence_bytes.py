@@ -241,6 +241,17 @@ class Assemblers(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "build198x pin"):
                 E.rebuild(plain, pin, builder)
 
+    def test_typed_text_is_the_program(self) -> None:
+        """Rule 2: any change to typed text, a REM included, differs."""
+        listing = "10 PRINT 1\n"
+        E.require_typed(listing, E.sha256(listing.encode()), "listing")
+        for changed in ["10 PRINT 2\n", "10 PRINT 1\n20 REM NOTE\n", "10 PRINT  1\n"]:
+            with (
+                self.subTest(changed=changed),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                E.require_typed(changed, E.sha256(listing.encode()), "listing")
+
     def test_missing_output_fails(self) -> None:
         pin = next(iter(E.releases()))
         with tempfile.TemporaryDirectory() as temp:

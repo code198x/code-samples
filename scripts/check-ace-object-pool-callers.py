@@ -17,7 +17,7 @@ if spec is None or spec.loader is None:
     raise RuntimeError("Missing retained pool checker")
 C = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(C)
-V, T = C.V, C.T
+V, T, E = C.V, C.T, C.E
 B = V.module("pool_builder", V.F / "build.py")
 PRODUCER = ROOT / "scripts/verify-ace-object-pool-callers.py"
 
@@ -27,12 +27,12 @@ def check_group(group: str, r: dict[str, Any]) -> None:
         group in B.VARIANTS and r.get("complete") is True and r["group"] == group,
         "Missing or different generated caller",
     )
+    # producer_sha256 and sources are provenance only: the program is the
+    # FORTH typed in (rule 2), checked below.
     T.require(
-        r["producer_sha256"] == T.sha(PRODUCER)
-        and r["sources"] == V.sources()
-        and r["configuration"]
+        r["configuration"]
         == json.loads((ROOT / "docs/ace-map-tools.json").read_text()),
-        "Changed caller, source or original runtime",
+        "Changed original runtime",
     )
     files = [
         "routines.fth",
@@ -50,12 +50,12 @@ def check_group(group: str, r: dict[str, Any]) -> None:
     )
     loaded = "".join((V.F / f).read_text() for f in files)
     program = B.program(group)
-    T.require(
-        program.startswith(loaded)
-        and r["entered_source_sha256"]
-        == hashlib.sha256(loaded.encode("ascii")).hexdigest()
-        and r["program_sha256"] == hashlib.sha256(program.encode("ascii")).hexdigest(),
-        "Generated program differs from typed source",
+    T.require(program.startswith(loaded), "Generated program differs from typed source")
+    E.require_typed(
+        loaded.encode("ascii"), r["entered_source_sha256"], " + ".join(files)
+    )
+    E.require_typed(
+        program.encode("ascii"), r["program_sha256"], f"build.py program({group!r})"
     )
     demo = program[len(loaded) :].splitlines()
     T.require(

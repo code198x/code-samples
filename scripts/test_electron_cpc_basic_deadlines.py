@@ -32,7 +32,7 @@ class Evidence(unittest.TestCase):
             for kind in [
                 "language",
                 "machine",
-                "source",
+                "forged",
                 "variant",
                 "guard",
                 "decode",
@@ -55,8 +55,8 @@ class Evidence(unittest.TestCase):
                     r["language"] = "assembly"
                 elif kind == "machine":
                     r["system"] = "other"
-                elif kind == "source":
-                    r["sources"].pop(next(iter(r["sources"])))
+                elif kind == "forged":
+                    r["cases"]["working"]["listing_sha256"] = "0" * 64
                 elif kind == "variant":
                     r["cases"].pop("repaired")
                 elif kind == "guard":
@@ -104,6 +104,29 @@ class Evidence(unittest.TestCase):
                     C.check(system, r)
                 controls += 1
         self.assertEqual(controls, 36)
+
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming another typed listing is caught by the typed-text check."""
+        for system in C.V.SYSTEMS:
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            r["cases"]["custom"]["listing_sha256"] = "0" * 64
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                C.check(system, r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or script digests alone do not make a record stale."""
+        for system in C.V.SYSTEMS:
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+            with self.subTest(system=system):
+                C.check(system, r)
 
 
 if __name__ == "__main__":

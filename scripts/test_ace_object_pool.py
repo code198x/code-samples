@@ -34,7 +34,7 @@ class Evidence(unittest.TestCase):
         C.check_group("bounds", self.original())
         faults = (
             "complete",
-            "source",
+            "forged",
             "runtime",
             "files",
             "sizes",
@@ -64,8 +64,8 @@ class Evidence(unittest.TestCase):
                 row = r["rows"][0]
                 if fault == "complete":
                     r["complete"] = False
-                elif fault == "source":
-                    r["sources"][next(iter(r["sources"]))] = "0" * 64
+                elif fault == "forged":
+                    r["entered_source_sha256"] = "0" * 64
                 elif fault == "runtime":
                     r["configuration"]["ram_top"] = 32768
                 elif fault == "files":
@@ -105,6 +105,19 @@ class Evidence(unittest.TestCase):
                 elif fault == "prefix":
                     row["stack"][0] = 78
                 self.reject(r)
+
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming other typed FORTH is caught by the typed-text check."""
+        r = self.original()
+        r["entered_source_sha256"] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.check_group("bounds", r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or script digests alone do not make a record stale."""
+        r = self.original()
+        r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+        C.check_group("bounds", r)
 
     def test_bounds_all_cells_and_storage(self) -> None:
         for field in ("state", "before_state"):

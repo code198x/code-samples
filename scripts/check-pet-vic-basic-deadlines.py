@@ -22,6 +22,12 @@ def module(name: str, file: str) -> Any:
 V = module("pet_vic_basic", "verify-pet-vic-basic-deadlines.py")
 C = module("cbm_pixels", "check-commodore-deadlines.py")
 T = V.T
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def visible(system: str, path: Path) -> tuple[int, int, int]:
@@ -84,13 +90,8 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
         == (system, "basic", "native-checked"),
         "Wrong route identity",
     )
-    T.require(
-        r["sources"]
-        == {
-            str(p.resolve().relative_to(ROOT)): T.sha(p) for p in V.source_paths(system)
-        },
-        "Changed source or observer",
-    )
+    # The BASIC is typed in, so its text is the program (rule 2); source
+    # and script digests are provenance only.
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing case")
     T.require(
         r["emulator_release"] == "0.44.2"
@@ -106,12 +107,8 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
     )
     for variant, c in r["cases"].items():
         source = listing(system, variant)
-        import hashlib
 
-        T.require(
-            c["source_sha256"] == hashlib.sha256(source.encode()).hexdigest(),
-            "Changed entered program",
-        )
+        E.require_typed(source, c["source_sha256"], f"{variant} listing")
         T.require(c["server"]["version"] == "0.44.2", "Wrong actual emulator version")
         memory = c["memory"]
         workspace = memory["workspace_bytes"]

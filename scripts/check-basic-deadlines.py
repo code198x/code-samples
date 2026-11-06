@@ -3,12 +3,19 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEMS = ("commodore-64", "bbc-micro")
+_E = importlib.util.spec_from_file_location(
+    "basic_deadline_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def require(value: bool, message: str) -> None:
@@ -54,19 +61,8 @@ def check(
         and record["language"] == "basic",
         "Wrong identity/status",
     )
-    sources = (
-        sorted(p.glob("*.bas"))
-        + sorted((p / "mistakes").glob("*.bas"))
-        + [p / "Makefile"]
-    )
-    if system == "commodore-64":
-        sources += [
-            ROOT / "commodore-64/patterns/basic/framework/command-loop/routines.bas"
-        ]
-    require(
-        record["sources"] == {str(f.relative_to(ROOT)): sha(f) for f in sources},
-        "Changed source binding",
-    )
+    # The BASIC is typed in, so its text is the program (rule 2); source
+    # and Makefile digests are provenance only.
     require(len(record["emulator_sha256"]) == 64, "Missing emulator identity")
     firmware = (
         {"os.rom", "basic.rom"}
@@ -83,10 +79,8 @@ def check(
         "Missing native variant",
     )
     for variant, case in record["variants"].items():
-        require(
-            case["source_sha256"]
-            == hashlib.sha256(listing(system, variant).encode()).hexdigest(),
-            "Changed entered program",
+        E.require_typed(
+            listing(system, variant), case["source_sha256"], f"{variant} listing"
         )
         samples = case["samples"]
         require(len(samples) > 7, "No native trace")
@@ -261,10 +255,7 @@ def check(
     source = (
         (p / "boundaries.bas").read_text() + (p / "routines.bas").read_text() + monitor
     )
-    require(
-        boundaries["listing_sha256"] == hashlib.sha256(source.encode()).hexdigest(),
-        "Changed boundary caller",
-    )
+    E.require_typed(source, boundaries["listing_sha256"], "boundaries listing")
     cases = [
         list(map(int, l.split(" DATA ")[1].split(",")))
         for l in source.splitlines()

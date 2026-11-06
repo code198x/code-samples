@@ -45,13 +45,42 @@ class ZxBasicMaps(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 C.validate_captures(system, {})
 
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming other typed BASIC is caught by the typed-text check."""
+        for record in self.records():
+            forged = copy.deepcopy(record)
+            forged["variants"]["closed-exit"]["program_sha256"] = "0" * 64
+            with (
+                self.subTest(machine=record["machine"]),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                C.validate(forged)
+            forged = copy.deepcopy(record)
+            key = next(k for k in forged["sources"] if k.endswith("/demo.bas"))
+            forged["sources"][key] = "0" * 64
+            with (
+                self.subTest(machine=record["machine"], file="demo.bas"),
+                self.assertRaisesRegex(AssertionError, "^Typed program differs"),
+            ):
+                C.validate(forged)
+
+    def test_script_digests_are_provenance(self) -> None:
+        """Changed script digests alone do not make a record stale."""
+        for record in self.records():
+            for key in record["sources"]:
+                if not key.endswith(".bas"):
+                    record["sources"][key] = "0" * 64
+            C.validate(record)
+
     def test_falsifications(self) -> None:
         mutations = {
             "wrong language": lambda r: r.update(language="assembly"),
             "wrong machine": lambda r: r.update(machine="other"),
             "wrong RAM": lambda r: r.update(ram_bytes=1024),
             "missing startup": lambda r: r.update(configuration=""),
-            "source": lambda r: r.update(sources={}),
+            "forged": lambda r: r["variants"]["closed-exit"].update(
+                program_sha256="0" * 64
+            ),
             "emulator": lambda r: r.update(emulator_sha256="0" * 64),
             "ROM": lambda r: r.update(firmware_sha256="0" * 64),
             "limits": lambda r: r.update(limits=""),

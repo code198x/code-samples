@@ -31,7 +31,7 @@ class Evidence(unittest.TestCase):
         original = self.original()
         controls = [
             "route",
-            "source",
+            "forged",
             "runtime",
             "missing_table",
             "missing_owner",
@@ -71,8 +71,8 @@ class Evidence(unittest.TestCase):
             row = table["rows"][0]
             if fault == "route":
                 r["language"] = "other"
-            elif fault == "source":
-                r["sources"][next(iter(r["sources"]))] = "0" * 64
+            elif fault == "forged":
+                r["cases"]["custom"]["entered_source_sha256"] = "0" * 64
             elif fault == "runtime":
                 r["configuration"]["firmware_sha256"] = "0" * 64
             elif fault == "missing_table":
@@ -144,6 +144,21 @@ class Evidence(unittest.TestCase):
                 self.assertRaises((AssertionError, KeyError, ValueError)),
             ):
                 C.check(r)
+
+    def test_forged_typed_program_is_rejected(self) -> None:
+        """A record claiming other typed FORTH is caught by the typed-text check."""
+        r = self.original()
+        r["cases"]["custom"]["entered_source_sha256"] = hashlib.sha256(
+            b"forged"
+        ).hexdigest()
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.check(r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or script digests alone do not make a record stale."""
+        r = self.original()
+        r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+        C.check(r)
 
     def test_complete_cells_and_owner_context(self) -> None:
         original = self.original()

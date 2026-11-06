@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -14,6 +13,12 @@ spec = importlib.util.spec_from_file_location(
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
 T = V.T
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 F = V.folder("msx")
 
 
@@ -47,13 +52,8 @@ def check(record=None):
         == ("msx", "basic", "native-checked"),
         "Wrong route",
     )
-    T.require(
-        r["sources"]
-        == {
-            str(p.resolve().relative_to(ROOT)): T.sha(p) for p in V.source_paths("msx")
-        },
-        "Changed source or observer",
-    )
+    # The BASIC is typed in, so its text is the program (rule 2); source
+    # and script digests are provenance only.
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing caller")
     T.require(
         r["emulator_sha256"] == cfg["emulator_sha256"]
@@ -64,10 +64,7 @@ def check(record=None):
     )
     for variant, c in r["cases"].items():
         T.require(c["server"]["version"] == "0.44.2", "Wrong actual emulator")
-        T.require(
-            c["source_sha256"] == hashlib.sha256(listing(variant).encode()).hexdigest(),
-            "Changed entered source",
-        )
+        E.require_typed(listing(variant), c["source_sha256"], f"{variant} listing")
         T.require(
             T.sha(F / "verification" / c["image"]) == c["image_sha256"],
             "Changed capture",

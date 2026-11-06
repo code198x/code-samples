@@ -16,6 +16,23 @@ assert spec and spec.loader
 C = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(C)
 M = C.M
+_E = importlib.util.spec_from_file_location(
+    "zx_memory_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
+
+
+def require_typed(recorded: dict, expected: dict) -> None:
+    """The BASIC is typed in, so its text is the program (rule 2).
+
+    `expected` maps each typed file's record key to its path; script digests
+    in the record are provenance only.
+    """
+    require(set(expected) <= set(recorded), "Missing typed source binding")
+    for key, path in expected.items():
+        E.require_typed(path.read_bytes(), recorded[key], key)
 
 
 def require(value: object, message: str) -> None:
@@ -135,10 +152,8 @@ def readable(d: dict, system: str, ram: int, passed: bool) -> None:
     }
     require(d["identity"] == expected_identity[system], "Unqualified executable/ROM")
     p = C.V.folder(system)
-    require(
-        d["sources"]
-        == {n: C.T.sha(p / n) for n in ("routines.bas", "room.bas", "demo.bas")},
-        "Readable source binding",
+    require_typed(
+        d["sources"], {n: p / n for n in ("routines.bas", "room.bas", "demo.bas")}
     )
     for s in d["snapshots"]:
         snapshot(s, system, ram)
@@ -200,7 +215,10 @@ def compact(d: dict, system: str) -> None:
         d["status"] == "passed" and d["ram_bytes"] == 1024 and d["machine"] == system,
         "Stock qualification",
     )
-    require(d["sources"] == C.sources(system), "Compact source binding")
+    require_typed(
+        d["sources"],
+        {k: ROOT / k for k in C.sources(system) if k.endswith(".bas")},
+    )
     lines = stored(d["program_hex"], system)
     require(lines == d["lines"], "Compact stored program")
     require(

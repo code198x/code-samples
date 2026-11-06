@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -22,6 +21,12 @@ def module(name: str, file: str) -> Any:
 
 V = module("native", "verify-atari-xl-basic-deadlines.py")
 T = V.T
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 F = V.F
 P = module("png", "check-amiga-command-loops.py")
 
@@ -63,10 +68,8 @@ def check(record: dict[str, Any] | None = None) -> None:
     )
     cfg = json.loads((F / "verification/configuration.json").read_text())
     T.require((r["machine"], r["language"]) == ("atari-800xl", "basic"), "Wrong route")
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source or observer",
-    )
+    # The BASIC is typed in, so its text is the program (rule 2); source
+    # and script digests are provenance only.
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing caller")
     T.require(
         all(r[k] == cfg[k] for k in ["emulator_sha256", "firmware_sha256"])
@@ -77,10 +80,7 @@ def check(record: dict[str, Any] | None = None) -> None:
     for variant, c in r["cases"].items():
         T.require(c["server"]["version"] == "0.44.2", "Wrong emulator")
         text = V.listing(variant)
-        T.require(
-            c["source_sha256"] == hashlib.sha256(text.encode()).hexdigest(),
-            "Changed selected listing",
-        )
+        E.require_typed(text, c["source_sha256"], f"{variant} listing")
         T.require(
             T.sha(F / "verification" / c["image"]) == c["image_sha256"],
             "Changed capture",
