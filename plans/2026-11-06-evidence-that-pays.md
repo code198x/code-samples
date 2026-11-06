@@ -71,11 +71,12 @@ What did find bugs, on 5 November alone:
 4. **Re-running against new tools is a job, not a re-record.** One command,
    `scripts/replay-evidence`, runs every recorder in check mode against the
    pinned or the latest tools and reports any observation that differs,
-   without writing records. Moving the pin means running it and then
-   re-recording only what differs, which is usually nothing. Most machines
-   need private firmware, so this runs where the firmware is: locally, or on
-   a self-hosted runner such as the one G02 already uses. It can't run on
-   GitHub's hosted runners.
+   without writing records. Most machines need private firmware, so it runs
+   locally, where the firmware is. It can't run on GitHub's hosted runners.
+   **Moving the pin runs it:** `scripts/update-toolchain.py` replays every
+   pattern against the new tools and refuses to write the new pin while any
+   observation differs and isn't re-recorded in the same change. The tools
+   can't move without the replay having passed.
 5. **CI runs what a change touches.** Each evidence job gets a `paths` filter
    for its recorder, checker, sources and records, and the root toolchain
    pin.
@@ -98,7 +99,9 @@ so the history above stays comparable.
    `scripts/fetch-toolchain.py` to download and verify. Point every recorder
    and checker at it, delete the 31 family files and the 62 hard-coded
    versions. *Check:* every checker still passes, and grepping `scripts/` for
-   a version literal finds none.
+   a version literal finds none. The script refuses to move the pin until
+   step 3's replay exists and passes, so step 3 lands before the next pin
+   move.
 2. **Byte check instead of text pins.** Teach the shared checker helpers to
    rebuild a record's program and compare bytes, and stop comparing `sources`
    and script digests. Leave the fields in existing records as provenance
@@ -121,8 +124,11 @@ so the history above stays comparable.
 
 - **Agree the rules** in *The rules after this change*, especially rule 2:
   bytes, not source text, decide staleness.
-- **Where the replay runs:** locally only, or also on a self-hosted runner,
-  nightly or on demand. Local only needs nothing new.
+- **Where the replay runs:** *agreed 2026-11-06* — locally, enforced by the
+  pin-update script (rule 4). A nightly self-hosted run would also catch
+  drift between releases, but it needs a runner kept up and the firmware on
+  it. Revisit only if the gated pin move proves too slow to catch
+  something.
 - **The pending Game Boy `--tiny` change:** its eight ROMs are byte-identical,
   so after step 2 it needs no re-record. But Asm198x 0.0.75's plain
   `--gb-rom` refuses those eight builds, so once 0.0.75 is out they fail
