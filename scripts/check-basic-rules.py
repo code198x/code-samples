@@ -42,6 +42,7 @@ def select(topic: str) -> None:
 
 
 P = module("png", ROOT / "scripts/check-amiga-command-loops.py")
+E = module("basic_bytes", ROOT / "scripts/evidence_bytes.py")
 SYSTEMS = ("commodore-64", "sinclair-zx-spectrum", "bbc-micro")
 VARIANTS = ("demo", "custom", "wrong", "repaired")
 
@@ -157,31 +158,6 @@ def check(system: str, variant: str, record: dict | None = None) -> None:
     )
     for key in ["emulator_sha256", "builder_sha256", "firmware_sha256"]:
         require(r[key] == cfg[key], "Changed configuration")
-    expected_sources = {
-        str(path.relative_to(ROOT))
-        for path in [
-            *f.glob("*.bas"),
-            f / "build.py",
-            f / "Makefile",
-            ROOT / f"cross-platform/patterns/framework/{TOPIC}/basic_oracle.py",
-            ROOT / "scripts/verify-basic-rules.py",
-            ROOT / "scripts/verify-basic-deadlines.py",
-            ROOT / "scripts/verify-game-loops.py",
-        ]
-    }
-    require(set(r["sources"]) == expected_sources, "Incomplete source inventory")
-    require(
-        bool(r["sources"])
-        and all(sha(ROOT / path) == value for path, value in r["sources"].items()),
-        "Changed source",
-    )
-    require(
-        r["source_sha256"] == sha(f / "build" / (variant + ".bas"))
-        if (f / "build" / (variant + ".bas")).exists()
-        else r["source_sha256"]
-        == hashlib.sha256(combined(f, variant).encode()).hexdigest(),
-        "Combined source differs",
-    )
     require(r["packet"] == M.packet(variant), "State packet differs")
     require(
         r["count"] == len(M.packet(variant))
@@ -219,7 +195,55 @@ def check(system: str, variant: str, record: dict | None = None) -> None:
             == hashlib.sha256(bytes(program)).hexdigest(),
             "Loaded Spectrum program differs",
         )
+    require_program(system, variant, r, cfg)
     pixels(r, system)
+
+
+def require_program(system: str, variant: str, r: dict, cfg: dict) -> None:
+    """Rebuild the program the machine was given and compare it with the record.
+
+    The recorder runs the folder's Makefile, as here. build198x tokenises the
+    C64 and Spectrum listings on the host (rule 1), so their loaded bytes
+    decide; the BBC Micro listing is typed in (rule 2), so its text decides.
+    """
+    f = folder(system)
+    command = ("make", "-B", "--no-print-directory")
+    if system == "bbc-micro":
+        E.require_program(
+            E.Build(f, command, tuple(f"build/{v}.bas" for v in VARIANTS)),
+            f"build/{variant}.bas",
+            None,
+            recorded_sha256=r["source_sha256"],
+        )
+        return
+    zx = system == "sinclair-zx-spectrum"
+    ext = ".tap" if zx else ".prg"
+    program = bytes(r["memory"]["program_bytes"])
+    E.require_program(
+        E.Build(
+            f,
+            command,
+            tuple(f"build/{v}{ext}" for v in VARIANTS),
+            (("BUILD198X", E.BUILDER),),
+        ),
+        f"build/{variant}{ext}",
+        None,
+        recorded=program if zx else bytes([1, 8]) + program,
+        build198x=cfg["builder_sha256"],
+        extract=E.tap_block(1) if zx else None,
+    )
+
+
+def forge(r: dict, system: str) -> None:
+    """Claim other program bytes consistently, so only the rebuild can tell."""
+    if system == "bbc-micro":
+        r["source_sha256"] = hashlib.sha256(b"10 REM forged\n").hexdigest()
+        return
+    r["memory"]["program_bytes"][8] ^= 1
+    program = bytes(r["memory"]["program_bytes"])
+    r["loaded_program_sha256"] = hashlib.sha256(program).hexdigest()
+    if system == "commodore-64":
+        r["program_sha256"] = hashlib.sha256(bytes([1, 8]) + program).hexdigest()
 
 
 def combined(f: Path, variant: str) -> str:
@@ -242,9 +266,13 @@ def qualify() -> None:
                 (f / "verification" / (variant + ".json")).read_text()
             )
             check(system, variant)
+            # Source and script digests are provenance: rewriting them all is accepted.
+            provenance = copy.deepcopy(original)
+            provenance["sources"] = dict.fromkeys(provenance["sources"], "0" * 64)
+            check(system, variant, provenance)
             for fault in [
                 "identity",
-                "source",
+                "forged",
                 "configuration",
                 "packet",
                 "completion",
@@ -256,8 +284,8 @@ def qualify() -> None:
                 r = copy.deepcopy(original)
                 if fault == "identity":
                     r["system"] = "unknown"
-                elif fault == "source":
-                    r["sources"][next(iter(r["sources"]))] = "0" * 64
+                elif fault == "forged":
+                    forge(r, system)
                 elif fault == "configuration":
                     r["builder_sha256"] = "0" * 64
                 elif fault == "packet":
@@ -281,7 +309,13 @@ def qualify() -> None:
                         r["display_prefix"] = [0] * 128
                 try:
                     check(system, variant, r)
-                except (AssertionError, KeyError, ValueError):
+                except (AssertionError, KeyError, ValueError) as error:
+                    if fault == "forged" and not str(error).startswith(
+                        "Program bytes differ"
+                    ):
+                        raise AssertionError(
+                            f"Forged {system}/{variant} escaped the byte check: {error}"
+                        ) from error
                     rejected += 1
                 else:
                     raise AssertionError(f"Accepted {system}/{variant}/{fault}")
