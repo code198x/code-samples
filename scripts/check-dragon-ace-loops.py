@@ -1,9 +1,16 @@
-"""Independently decode retained Dragon/Ace state and reject changed evidence."""
+"""Independently decode retained Dragon/Ace state and reject changed evidence.
+
+Assembly routes rebuild each case's caller with the pinned Asm198x release and
+compare it with the bytes the record says were loaded. Typed routes regenerate
+the text the recorder typed and compare it with the record. Edits to recorder
+scripts do not invalidate the evidence; only a change to the program does.
+"""
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
 import wave
@@ -11,6 +18,19 @@ from array import array
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load(module: str, file: str):
+    found = importlib.util.spec_from_file_location(module, ROOT / "scripts" / file)
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load("dragon_ace_bytes", "evidence_bytes.py")
+VARIANTS = _load("dragon_ace_variants", "verify-dragon-ace-language-variants.py")
+BUILD = ROOT / "scripts/build-dragon-ace-loops.py"
 
 
 def require(value: bool, message: str) -> None:
@@ -40,12 +60,44 @@ def bound(root: Path, name: str, digest: str) -> None:
     require(sha(path) == digest, f"Changed evidence: {name}")
 
 
+def require_programs(record: dict, dragon: bool, assembly: bool) -> None:
+    """Rebuild or regenerate every case's program and compare it with the record."""
+    system = "dragon-32" if dragon else "jupiter-ace"
+    if assembly:
+        folder = ROOT / system / "patterns/assembly/framework/command-loop"
+        for variant, case in sorted(record["cases"].items()):
+            output = f"build/{variant}/demo.bin"
+            E.require_program(
+                E.function(
+                    BUILD, "build", (system, E.ASSEMBLER, variant), folder, (output,)
+                ),
+                output,
+                record["assembler_source_lock"]["executable_sha256"],
+                recorded=bytes(case["loaded_bytes"]),
+            )
+        return
+    programs = VARIANTS.variants(system)
+    for variant, case in sorted(record["cases"].items()):
+        E.require_typed(
+            programs[variant],
+            hashlib.sha256(case["entered_source"].encode()).hexdigest(),
+            f"{system} {variant} listing",
+        )
+    suffix = "bas" if dragon else "fth"
+    folder = ROOT / system / "patterns" / record["track"] / "framework/command-loop"
+    # The lesson's customisation and mistake files are the recorder's own output.
+    for variant, name in [
+        ("step-three", f"customise.{suffix}"),
+        ("wrong-reset", f"mistakes/reset-each-command.{suffix}"),
+    ]:
+        require(
+            (folder / name).read_text() == programs[variant],
+            f"{name} differs from its generated variant",
+        )
+
+
 def check_record(root: Path, record: dict, dragon: bool, assembly: bool) -> None:
     require(record.get("status") == "passed", "Missing pass")
-    for section in ("sources", "observer_sources"):
-        require(bool(record.get(section)), f"Missing {section}")
-        for name, digest in record[section].items():
-            bound(root, name, digest)
     cases = record["cases"]
     required = {"working", "step-three", "wrong-reset", "repaired", "nonzero"}
     if assembly:
@@ -169,6 +221,7 @@ def check_record(root: Path, record: dict, dragon: bool, assembly: bool) -> None
             powers[0][0] > 200 and powers[0][1] > max(1000, 4 * powers[1][1]),
             "Sound negative did not reject same PCM guard",
         )
+    require_programs(record, dragon, assembly)
 
 
 def check(root: Path) -> int:
@@ -224,10 +277,13 @@ def check(root: Path) -> int:
                 and record["producer_source_lock"]["version"] == "0.44.1",
                 "Stale language probe",
             )
-            for key in ("sources", "refresh_observer_sources", "captures"):
-                require(bool(record[key]), f"Missing refresh {key}")
-                for name, digest in record[key].items():
-                    bound(root, name, digest)
+            require(bool(record["captures"]), "Missing refresh captures")
+            for name, digest in record["captures"].items():
+                bound(root, name, digest)
+            # The typed program is the lesson's demo file; script digests are provenance.
+            demo = f"{system}/patterns/{track}/{category}/demo.{'bas' if track == 'basic' else 'fth'}"
+            require(demo in record["sources"], f"Missing typed program: {demo}")
+            E.require_typed((root / demo).read_text(), record["sources"][demo], demo)
     return 4
 
 
