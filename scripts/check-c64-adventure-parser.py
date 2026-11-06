@@ -20,6 +20,7 @@ def module(name, file):
 V = module("native", "verify-c64-adventure-parser.py")
 P = module("png", "check-amiga-command-loops.py")
 T = V.T
+E = module("parser_bytes", "evidence_bytes.py")
 
 
 def pixels(c, name):
@@ -55,10 +56,6 @@ def check(record=None):
         "Changed route/configuration",
     )
     T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source",
-    )
-    T.require(
         set(r["cases"]) == set(V.VARIANTS) and len(V.commands()) == 62,
         "Missing native cases",
     )
@@ -71,9 +68,15 @@ def check(record=None):
             and c["loaded_bytes"] == list(prg[2:]),
             "Loaded BASIC differs",
         )
-        T.require(
-            hashlib.sha256(V.source(name).encode()).hexdigest() == c["source_sha256"],
-            "Caller source differs",
+        # build198x tokenises this BASIC on the host (rule 1): the record is
+        # stale when the tokenised program changes, not its listing's text.
+        output = f"build/verification/{name}/demo.prg"
+        E.require_program(
+            E.function(Path(V.__file__), "build", (name, E.BUILDER), V.F, (output,)),
+            output,
+            None,
+            recorded=prg,
+            build198x=cfg["build198x_sha256"],
         )
         m = c["layout"]
         T.require(

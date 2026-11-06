@@ -186,14 +186,18 @@ def number(v):
     return (-1 if v[1] & 128 else 1) * mantissa * (2 ** (v[0] - 129))
 
 
-def run(args, name):
+def build(name: str, build198x: str) -> str:
+    """Write one case's listing and tokenise it with build198x to demo.prg.
+
+    The recorder and the checker both build through this function.
+    """
     out = F / "build/verification" / name
     out.mkdir(parents=True, exist_ok=True)
     src = source(name)
     (out / "program.bas").write_text(src)
     subprocess.run(
         [
-            str(args.build198x),
+            build198x,
             "basic",
             str(out / "program.bas"),
             "--machine",
@@ -205,6 +209,12 @@ def run(args, name):
         capture_output=True,
         timeout=30,
     )
+    return src
+
+
+def run(args, name):
+    out = F / "build/verification" / name
+    src = build(name, str(args.build198x))
     prg = (out / "demo.prg").read_bytes()
     snapshot = out / "import.vsf"
     script = out / "import.json"
