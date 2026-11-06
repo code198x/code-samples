@@ -26,7 +26,7 @@ class EvidenceTests(unittest.TestCase):
                 ).read_text()
             )
             C.check(system)
-            for field in ["sources", "variants", "artifacts", "binaries"]:
+            for field in ["variants", "artifacts", "binaries"]:
                 record = copy.deepcopy(original)
                 record[field] = {}
                 with (
@@ -60,6 +60,38 @@ class EvidenceTests(unittest.TestCase):
                     self.assertRaises(ValueError),
                 ):
                     C.check(system, record)
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for system in C.V.SYSTEMS:
+            record = json.loads(
+                (
+                    C.ROOT
+                    / system
+                    / "patterns/assembly/framework/turn-loop/verification/results.json"
+                ).read_text()
+            )
+            for variant in ["working", "fixed-edge", "fixed-service"]:
+                record["binaries"][variant]["sha256"] = "0" * 64
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+            ):
+                C.check(system, record)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or script digests alone do not make a record stale."""
+        for system in C.V.SYSTEMS:
+            record = json.loads(
+                (
+                    C.ROOT
+                    / system
+                    / "patterns/assembly/framework/turn-loop/verification/results.json"
+                ).read_text()
+            )
+            record["sources"] = dict.fromkeys(record["sources"], "0" * 64)
+            with self.subTest(system=system):
+                C.check(system, record)
 
 
 if __name__ == "__main__":
