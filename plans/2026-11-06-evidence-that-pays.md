@@ -106,8 +106,14 @@ make the 1,668 records that pin those scripts stale.
    locks by a committed `scripts/update-toolchain.py`, with
    `scripts/fetch-toolchain.py` to download and verify. Point every recorder
    and checker at it, delete the 31 family files and the 62 hard-coded
-   versions. *Check:* every checker still passes, and grepping `scripts/` for
-   a version literal finds none. The script refuses to move the pin until
+   versions. The website's `scripts/build-artefacts.sh`, which rebuilds every
+   program from code-samples at deploy time, reads its Asm198x and build198x
+   versions from this file instead of its own defaults: it pinned Asm198x
+   0.0.65 while the records pinned 0.0.71 to 0.0.74, and broke the deploy
+   on 2026-11-06 when the Game Boy sources first needed 0.0.75's `--tiny`
+   (code198x/website#1395). *Check:* every checker still passes, grepping
+   `scripts/` for a version literal finds none, and the website's build
+   script names no version. The script refuses to move the pin until
    step 3's replay exists and passes, so step 3 lands before the next pin
    move.
 3. **`scripts/replay-evidence`.** Read each family's recorder from an index
