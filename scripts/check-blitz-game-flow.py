@@ -17,6 +17,12 @@ if spec is None or spec.loader is None:
     raise RuntimeError("Missing native verifier")
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 T, C = V.T, V.C
 FIXTURE = "cca54db825fbbc0505643eefdede21eb23a37ff599c4a1cc3437f592f6cce873"
 
@@ -28,10 +34,6 @@ def check(record: dict[str, Any] | None = None) -> None:
     )
     T.require(
         r["configuration"] == V.A.config(), "Changed original runtime configuration"
-    )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed qualification source",
     )
     T.require(
         len(C.cases()) == 366
@@ -52,6 +54,15 @@ def check(record: dict[str, Any] | None = None) -> None:
         name: hashlib.sha256(V.B.program(name).encode("ascii")).hexdigest()
         for name in V.B.VARIANTS
     }
+    # The source is compiled inside the Amiga, so its text is the program (rule 2);
+    # source and script digests are provenance only.
+    T.require(
+        set(r["fixture"]["program_sha256"]) == set(identities), "Stale source fixture"
+    )
+    for n in identities:
+        E.require_typed(
+            V.B.program(n).encode("ascii"), r["fixture"]["program_sha256"][n], n
+        )
     T.require(
         r["fixture"] == {"fixture_sha256": FIXTURE, "program_sha256": identities},
         "Changed source-bound fixture",

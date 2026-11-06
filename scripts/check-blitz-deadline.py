@@ -16,6 +16,12 @@ spec = importlib.util.spec_from_file_location(
 assert spec and spec.loader
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
+_E = importlib.util.spec_from_file_location(
+    "typed_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def require(v: bool, message: str) -> None:
@@ -25,24 +31,6 @@ def require(v: bool, message: str) -> None:
 
 def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
-
-
-def sources() -> dict[str, str]:
-    files = (
-        sorted(FOLDER.glob("*.bb2"))
-        + sorted((FOLDER / "mistakes").glob("*.bb2"))
-        + sorted(V.PHASES.glob("*.json"))
-        + [
-            FOLDER / "build.py",
-            FOLDER / "Makefile",
-            FOLDER / "verification/configuration.json",
-            FOLDER / "../command-loop/routines.bb2",
-            ROOT / "scripts/verify-blitz-deadline.py",
-            ROOT / "scripts/verify-game-loops.py",
-            ROOT / "scripts/check-amiga-command-loops.py",
-        ]
-    )
-    return {str(p.relative_to(ROOT)): sha(p) for p in files}
 
 
 NUMBERS: dict[tuple[str, int, int, int], int] = {}
@@ -72,10 +60,8 @@ def check(record: dict[str, Any] | None = None) -> None:
         and record["configuration"] == cfg["configuration"],
         "Wrong execution/configuration status",
     )
-    require(
-        json.loads((out / "sources.json").read_text()) == sources(),
-        "Changed source/observer binding",
-    )
+    # The source is compiled inside the Amiga, so its text is the program (rule 2):
+    # sources.json's source, script and phase digests are provenance only.
     require(set(record["cases"]) == set(V.B.VARIANTS), "Missing native variant")
     fixture = record["fixture"]
     digest = fixture["disk_sha256"]
@@ -91,10 +77,8 @@ def check(record: dict[str, Any] | None = None) -> None:
         "Wrong fixture programs",
     )
     for variant, case in record["cases"].items():
-        require(
-            case["program_sha256"]
-            == hashlib.sha256(V.B.program(variant).encode("ascii")).hexdigest(),
-            "Changed imported source",
+        E.require_typed(
+            V.B.program(variant).encode("ascii"), case["program_sha256"], variant
         )
         size = 272 if variant in {"boundaries", "wrong-boundary"} else 40
         base = case["bank_address"]

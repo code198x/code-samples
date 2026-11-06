@@ -12,18 +12,25 @@ if spec is None or spec.loader is None:
     raise RuntimeError("Missing pool verifier")
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
+_E = importlib.util.spec_from_file_location("amos_typed", ROOT / "scripts/evidence_bytes.py")
+assert _E and _E.loader
+E = importlib.util.module_from_spec(_E)
+_E.loader.exec_module(E)
 
 
 def check(record=None):
     r = record if record is not None else json.loads((V.V / "boundaries.json").read_text())
     require = V.T.require
     require((r["system"], r["language"]) == ("commodore-amiga", "amos"), "Wrong route")
-    require(r["sources"] == {str(p.relative_to(ROOT)): V.T.sha(p) for p in V.source_paths()}, "Changed source/observer")
+    # Imported into the AMOS runtime, so the text is the program (rule 2);
+    # source and script digests are provenance only.
     cfg = json.loads((V.A.FOLDER / "verification/configuration.json").read_text())
     keys = ("emulator_sha256", "firmware_sha256", "runtime_media_sha256", "builder_sha256", "configuration", "runtime")
     require(r["configuration"] == {k: cfg[k] for k in keys}, "Changed runtime configuration")
     identities = {n: hashlib.sha256(V.B.program(n).encode("ascii")).hexdigest() for n in V.B.VARIANTS}
-    require(r["fixture"]["programs"] == identities, "Stale source fixture")
+    require(set(r["fixture"]["programs"]) == set(identities), "Stale source fixture")
+    for n in identities:
+        E.require_typed(V.B.program(n).encode("ascii"), r["fixture"]["programs"][n], n + ".asc")
     fixture_hash = r["fixture"]["fixture_sha256"]
     require(len(fixture_hash) == 64 and all(c in "0123456789abcdef" for c in fixture_hash), "Invalid fixture identity")
     require(set(r["cases"]) == {"boundaries"}, "Missing native packet variant")

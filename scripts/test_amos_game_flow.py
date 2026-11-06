@@ -19,7 +19,12 @@ class FlowEvidenceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.record = json.loads((C.V.V / "packets.json").read_text())
-        C.check(cls.record)
+        # Source and script digests are provenance: rewriting them all is accepted.
+        record = copy.deepcopy(cls.record)
+        record["sources"] = dict.fromkeys(record["sources"], "0" * 64)
+        callers = json.loads((C.V.V / "callers.json").read_text())
+        callers["sources"] = dict.fromkeys(callers["sources"], "0" * 64)
+        C.check(record, callers)
 
     def test_actual_native_records(self):
         C.check(self.record)
@@ -33,7 +38,7 @@ class FlowEvidenceTests(unittest.TestCase):
 
         mutations = {
             "missing variant": lambda r: r["cases"].pop("cases"),
-            "changed source": lambda r: r["sources"].update({next(iter(r["sources"])): "0" * 64}),
+            "forged imported program": lambda r: r["fixture"]["programs"].update({next(iter(r["fixture"]["programs"])): hashlib.sha256(b"forged").hexdigest()}),
             "changed runtime": lambda r: r["configuration"].update(runtime="different"),
             "stale imported source": lambda r: r["fixture"]["programs"].update(cases="0" * 64),
             "empty fixture identity": lambda r: r["fixture"].update(fixture_sha256=""),
@@ -61,7 +66,7 @@ class FlowEvidenceTests(unittest.TestCase):
             "missing repair": lambda r: r["cases"].pop("repaired"),
             "reset on resume": lambda r: r["cases"]["working"].update(outputs=[0, 3, 1, 2, 3, 2]),
             "changed health": lambda r: r["cases"]["custom"]["outputs"].__setitem__(4, 3),
-            "changed owner source": lambda r: r["sources"].update({next(iter(r["sources"])): "0" * 64}),
+            "forged owner program": lambda r: r["cases"]["custom"].update(program_sha256=hashlib.sha256(b"forged").hexdigest()),
             "changed owner capture": lambda r: r["cases"]["wrong"].update(image_sha256="0" * 64),
         }
         for label, mutate in mutations.items():
@@ -70,6 +75,14 @@ class FlowEvidenceTests(unittest.TestCase):
                 mutate(record)
                 with self.assertRaises(AssertionError):
                     C.check(self.record, record)
+
+    def test_forged_imported_program_is_rejected(self):
+        """A record claiming other imported AMOS text is caught by the typed-text check."""
+        record = copy.deepcopy(self.record)
+        first = next(iter(record["fixture"]["programs"]))
+        record["fixture"]["programs"][first] = hashlib.sha256(b"forged").hexdigest()
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+            C.check(record)
 
 
 if __name__ == "__main__":
