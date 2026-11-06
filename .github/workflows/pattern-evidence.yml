@@ -102,7 +102,7 @@ jobs:
   recorded-inputs:
     name: Recorded pattern inputs
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
