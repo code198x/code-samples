@@ -7,18 +7,49 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def load(system):
-    name = {"dragon-32": "dragon", "jupiter-ace": "ace", "msx": "msx", "sinclair-zx-spectrum": "spectrum"}[system]
+    name = {
+        "dragon-32": "dragon",
+        "jupiter-ace": "ace",
+        "msx": "msx",
+        "sinclair-zx-spectrum": "spectrum",
+    }[system]
     spec = importlib.util.spec_from_file_location(
         "native", ROOT / f"scripts/verify-{name}-assembly-deadlines.py"
     )
     value = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(value)
     return value
+
+
+spec = importlib.util.spec_from_file_location(
+    "deadline_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+E = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(E)
+
+
+def require_program(V: Any, system: str, variant: str, pin: str, loaded: list) -> None:
+    """Rebuild one variant through the recorder's build() and compare its code.
+
+    The record keeps the loaded code. On the Spectrum the build writes a TAP,
+    whose CODE header names the build's path, so only the loaded block is
+    compared.
+    """
+    spectrum = system == "sinclair-zx-spectrum"
+    output = f"build/{variant}/demo.{'tap' if spectrum else 'bin'}"
+    E.require_program(
+        E.function(Path(V.__file__), "build", (E.ASSEMBLER, variant), V.F, (output,)),
+        output,
+        pin,
+        recorded=bytes(loaded),
+        extract=E.tap_block(3) if spectrum else None,
+    )
 
 
 def check(system="dragon-32", record=None):
@@ -28,10 +59,6 @@ def check(system="dragon-32", record=None):
     r = record if record is not None else json.loads((f / "results.json").read_text())
     cfg = json.loads((f / "configuration.json").read_text())
     T.require((r["machine"], r["language"]) == (system, "assembly"), "Wrong route")
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source or observer",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native case")
     T.require(
         all(
@@ -56,9 +83,16 @@ def check(system="dragon-32", record=None):
             == c["loaded_sha256"],
             "Loaded payload mismatch",
         )
+        # The record is stale when its program's bytes change, not its sources' text.
+        require_program(V, system, variant, r["assembler_sha256"], c["loaded_bytes"])
         T.require(T.sha(f / c["image"]) == c["image_sha256"], "Changed native image")
         if variant == "no-entry":
-            T.require(spectrum and c["ready"] == [0, 0] and any("0 OK, 30:1" in line for line in c["screen"]), "Missing loader-entry control")
+            T.require(
+                spectrum
+                and c["ready"] == [0, 0]
+                and any("0 OK, 30:1" in line for line in c["screen"]),
+                "Missing loader-entry control",
+            )
             continue
         if "boundar" in variant:
             data = c["bytes"]
@@ -175,7 +209,9 @@ def check(system="dragon-32", record=None):
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
-        "--system", default="dragon-32", choices=("dragon-32", "jupiter-ace", "msx", "sinclair-zx-spectrum")
+        "--system",
+        default="dragon-32",
+        choices=("dragon-32", "jupiter-ace", "msx", "sinclair-zx-spectrum"),
     )
     a = p.parse_args()
     check(a.system)

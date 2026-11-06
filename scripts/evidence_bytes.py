@@ -37,6 +37,7 @@ import tempfile
 import time
 import urllib.error
 import urllib.request
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import cache
 from pathlib import Path
@@ -200,26 +201,32 @@ def fetch(tool: str, pin: str) -> Path:
     return binary
 
 
-def _uses_builder(build: Build) -> bool:
-    return any(BUILDER in part for part in build.command) or any(
-        BUILDER in value for _, value in build.env
+def _uses(build: Build, placeholder: str) -> bool:
+    return any(placeholder in part for part in build.command) or any(
+        placeholder in value for _, value in build.env
     )
 
 
 @cache
-def rebuild(build: Build, pin: str, build198x: str | None = None) -> dict[str, bytes]:
+def rebuild(
+    build: Build, pin: str | None, build198x: str | None = None
+) -> dict[str, bytes]:
     """Run the build with the pinned tools and return each output's bytes.
 
-    `pin` names the assembler; `build198x` names the build198x release, and
-    is required exactly when the build uses `{build198x}`.
+    `pin` names the assembler, and may be None only for a build that runs
+    no assembler (a BASIC program build198x tokenises); `build198x` names
+    the build198x release, and is required exactly when the build uses
+    `{build198x}`.
 
     Results are kept for the life of the process, so a checker that checks
     many records (and many altered copies of them) builds each program once.
     Tests that change a source must build from a copy in another folder.
     """
-    if _uses_builder(build) != (build198x is not None):
+    if _uses(build, BUILDER) != (build198x is not None):
         raise ValueError("Pass a build198x pin exactly when the build runs {build198x}")
-    tools = {ASSEMBLER: str(assembler(pin))}
+    if pin is None and _uses(build, ASSEMBLER):
+        raise ValueError("Pass an assembler pin when the build runs {asm198x}")
+    tools = {} if pin is None else {ASSEMBLER: str(assembler(pin))}
     if build198x is not None:
         tools[BUILDER] = str(builder(build198x))
 
@@ -253,17 +260,20 @@ def rebuild(build: Build, pin: str, build198x: str | None = None) -> dict[str, b
 def require_program(
     build: Build,
     output: str,
-    pin: str,
+    pin: str | None,
     *,
     recorded_sha256: str | None = None,
     recorded: bytes | None = None,
     build198x: str | None = None,
+    extract: Callable[[bytes], bytes] | None = None,
 ) -> bytes:
     """Rebuild `output` and require its bytes to match the record.
 
     Pass the recorded program bytes when the record keeps them, so a failure
     names the first differing offset; otherwise pass the recorded digest.
     Pass `build198x` when the build runs build198x (an Amiga ADF, say).
+    Pass `extract` when the record keeps only part of the output, such as
+    the block a tape loads, and compare that part.
     """
     if (recorded_sha256 is None) == (recorded is None):
         raise ValueError("Pass exactly one of recorded_sha256 and recorded")
@@ -273,6 +283,9 @@ def require_program(
         if build.cwd.is_relative_to(ROOT)
         else output
     )
+    if extract is not None:
+        data = extract(data)
+        label += " (loaded block)"
     if recorded is not None:
         if data != recorded:
             at = next(
@@ -293,6 +306,26 @@ def require_program(
             f"the record has {recorded_sha256}"
         )
     return data
+
+
+def tap_block(index: int) -> Callable[[bytes], bytes]:
+    """An `extract` for one ZX Spectrum TAP block's data, without flag or checksum.
+
+    Asm198x names a TAP's CODE header after the path it was given, so a
+    whole TAP built from absolute paths differs by checkout. The block a
+    record keeps (the code the machine loads) does not.
+    """
+
+    def extract(data: bytes) -> bytes:
+        blocks = []
+        at = 0
+        while at < len(data):
+            length = int.from_bytes(data[at : at + 2], "little")
+            blocks.append(data[at + 2 : at + 2 + length])
+            at += 2 + length
+        return blocks[index][1:-1]
+
+    return extract
 
 
 def make(folder: Path, outputs: tuple[str, ...], *, build198x: bool = False) -> Build:

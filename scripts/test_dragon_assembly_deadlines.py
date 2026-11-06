@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -23,7 +24,12 @@ def exercise(test, system):
         r = copy.deepcopy(original)
         c = r["cases"]["working"]
         if fault == 0:
-            r["sources"].pop(next(iter(r["sources"])))
+            # A consistent claim of other bytes is caught only by the rebuild.
+            forged = r["cases"]["custom"]
+            forged["loaded_bytes"][0] ^= 1
+            forged["loaded_sha256"] = hashlib.sha256(
+                bytes(forged["loaded_bytes"])
+            ).hexdigest()
         elif fault == 1:
             r["cases"].pop("repaired")
         elif fault == 2:
@@ -44,14 +50,29 @@ def exercise(test, system):
             r["firmware_sha256"] = {}
         with (
             test.subTest(system=system, fault=fault),
-            test.assertRaises(AssertionError),
+            test.assertRaisesRegex(
+                AssertionError, "^Program bytes differ" if fault == 0 else ""
+            ),
         ):
             C.check(system, r)
+
+
+def provenance(test, system):
+    """Changed, added or removed source text alone does not make a record stale."""
+    V = C.load(system)
+    r = json.loads((V.F / "verification/results.json").read_text())
+    r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+    with test.subTest(system=system):
+        C.check(system, r)
 
 
 class Evidence(unittest.TestCase):
     def test_dragon(self):
         exercise(self, "dragon-32")
+
+    def test_source_digests_are_provenance(self):
+        for system in ("dragon-32", "msx", "jupiter-ace", "sinclair-zx-spectrum"):
+            provenance(self, system)
 
 
 if __name__ == "__main__":

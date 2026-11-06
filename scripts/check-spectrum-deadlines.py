@@ -22,6 +22,7 @@ def module(name: str, file: str):
 
 A = module("assembly", "verify-spectrum-assembly-deadlines.py")
 B = module("basic", "verify-spectrum-basic-deadlines.py")
+E = module("spectrum_bytes", "evidence_bytes.py")
 C = module("generic", "check-dragon-assembly-deadlines.py")
 P = module("png", "check-amiga-command-loops.py")
 T = A.T
@@ -76,21 +77,6 @@ def check_assembly(record=None):
             and c["startup"][-1]["pc"] == 32768,
             "Code was not checked at USR entry",
         )
-        source = (
-            A.fixture(variant == "wrong-boundary")
-            if "boundar" in variant
-            else (
-                A.F
-                / {
-                    "custom": "customise.asm",
-                    "wrong": "wrong-baseline.asm",
-                }.get(variant, "demo.asm")
-            ).read_text()
-        )
-        T.require(
-            c["entered_source_sha256"] == hashlib.sha256(source.encode()).hexdigest(),
-            "Changed compiled source",
-        )
         if "boundar" not in variant:
             pixels(
                 c,
@@ -115,10 +101,6 @@ def check_basic(record=None):
         (r["machine"], r["language"]) == ("sinclair-zx-spectrum", "basic"),
         "Wrong route",
     )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in B.source_paths()},
-        "Changed source/observer",
-    )
     T.require(set(r["cases"]) == set(B.VARIANTS), "Missing native variant")
     T.require(
         all(
@@ -132,15 +114,22 @@ def check_basic(record=None):
     for variant, c in r["cases"].items():
         T.require(c["server"]["version"] == "0.44.2", "Wrong actual emulator")
         text = B.listing(variant)
-        T.require(
-            c["source_sha256"] == hashlib.sha256(text.encode()).hexdigest(),
-            "Changed entered listing",
-        )
         lay = c["layout"]
         program = lay["program_bytes"]
         T.require(
             hashlib.sha256(bytes(program)).hexdigest() == c["program_sha256"],
             "Changed native program",
+        )
+        # build198x tokenises this BASIC on the host (rule 1): the record is
+        # stale when the tokenised program changes, not its listing's text.
+        output = f"build/{variant}/caller.tap"
+        E.require_program(
+            E.function(Path(B.__file__), "build", (E.BUILDER, variant), B.F, (output,)),
+            output,
+            None,
+            recorded=bytes(program),
+            build198x=cfg["build198x_sha256"],
+            extract=E.tap_block(1),
         )
         nums = [int(line.split()[0]) for line in text.splitlines()]
         T.require(

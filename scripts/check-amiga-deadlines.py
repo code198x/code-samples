@@ -19,6 +19,7 @@ def module(name, file):
 
 
 V = module("native", "verify-amiga-deadlines.py")
+E = module("deadline_bytes", "evidence_bytes.py")
 P = module("png", "check-amiga-command-loops.py")
 T = V.T
 
@@ -65,10 +66,6 @@ def check(record=None):
         r["configuration"] == cfg and len(cfg["emulator_sha256"]) == 64,
         "Changed configuration",
     )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source/observer",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native case")
     math = [v for row in V.expected_math() for v in row]
     policy = [v for row in V.expected_policy() for v in row]
@@ -107,6 +104,29 @@ def check(record=None):
             and hashlib.sha256(exe).hexdigest() == c["executable_sha256"],
             "Changed Hunk",
         )
+        # The record is stale when its program's bytes change, not its sources' text.
+        out = f"build/verification/{name}/demo"
+        build = E.function(
+            Path(V.__file__),
+            "build",
+            (E.ASSEMBLER, E.BUILDER, name),
+            V.F,
+            (out, out + ".adf"),
+        )
+        E.require_program(
+            build,
+            out,
+            cfg["assembler_sha256"],
+            recorded=exe,
+            build198x=cfg["build198x_sha256"],
+        )
+        E.require_program(
+            build,
+            out + ".adf",
+            cfg["assembler_sha256"],
+            recorded_sha256=c["adf_sha256"],
+            build198x=cfg["build198x_sha256"],
+        )
         body, relocs = V.H.hunk(exe)
         relocated = bytearray(body)
         for i in relocs:
@@ -120,17 +140,6 @@ def check(record=None):
                 and seg["bytes"] == list(relocated[seg["first"] : seg["last"]]),
                 "Changed relocated code",
             )
-        src = (
-            V.lifecycle()
-            if name == "lifecycle"
-            else V.fixture(name == "wrong-boundary")
-            if "boundar" in name
-            else (V.F / (name + ".asm")).read_text()
-        )
-        T.require(
-            hashlib.sha256(src.encode()).hexdigest() == c["source_sha256"],
-            "Changed caller",
-        )
         if name == "lifecycle":
             a = c["words"]
             T.require(

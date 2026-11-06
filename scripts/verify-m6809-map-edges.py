@@ -18,6 +18,13 @@ assert SPEC and SPEC.loader
 V = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(V)
 T = V.T
+SPEC = importlib.util.spec_from_file_location(
+    "edge_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
+FIXTURE = "build/boundaries/fixture.bin"
 FOLDER = ROOT / "dragon-32/patterns/assembly/rendering/tile-map"
 MAP = bytes((i * 7 + 3) % 256 for i in range(512))
 PROPERTIES = bytes(i ^ 0x55 for i in range(256))
@@ -158,13 +165,19 @@ def validate(record: dict) -> None:
     )
     T.require(record["cases"] == CASES, "Boundary cases changed")
     T.require(bytes(record["actual"]) == expected(), "6809 boundary result changed")
-    T.require(record["sources"] == bindings(), "Stale 6809 boundary evidence")
     for key in ("assembler_sha256", "emulator_sha256", "fixture_sha256"):
         T.require(
             len(record[key]) == 64
             and all(c in "0123456789abcdef" for c in record[key]),
             "Bad digest",
         )
+    # The record is stale when its program's bytes change, not its sources' text.
+    E.require_program(
+        E.function(Path(__file__), "build", (E.ASSEMBLER,), FOLDER, (FIXTURE,)),
+        FIXTURE,
+        record["assembler_sha256"],
+        recorded_sha256=record["fixture_sha256"],
+    )
 
 
 def bindings() -> dict[str, str]:
@@ -179,17 +192,13 @@ def bindings() -> dict[str, str]:
     }
 
 
-def main() -> None:
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--native", type=Path, required=True)
-    p.add_argument("--assembler", default="asm198x")
-    args = p.parse_args()
-    assembler = which(args.assembler)
-    T.require(assembler is not None, "Missing assembler")
+def build(assembler: str) -> Path:
+    """Write the boundary caller and build its ROM image.
+
+    The recorder and its record check both build through this function.
+    """
     out = FOLDER / "build/boundaries"
     out.mkdir(parents=True, exist_ok=True)
-    retained = FOLDER / "verification/boundaries.json"
-    retained.unlink(missing_ok=True)
     caller = out / "caller.asm"
     caller.write_text(source())
     raw = out / "raw.bin"
@@ -199,10 +208,23 @@ def main() -> None:
         timeout=45,
     )
     T.require(raw.stat().st_size <= 16382, "Boundary caller exceeds firmware socket")
-    image = out / "fixture.bin"
+    image = FOLDER / FIXTURE
     image.write_bytes(
         raw.read_bytes().ljust(16382, b"\x00") + struct.pack(">H", 0x8000)
     )
+    return image
+
+
+def main() -> None:
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--native", type=Path, required=True)
+    p.add_argument("--assembler", default="asm198x")
+    args = p.parse_args()
+    assembler = which(args.assembler)
+    T.require(assembler is not None, "Missing assembler")
+    retained = FOLDER / "verification/boundaries.json"
+    retained.unlink(missing_ok=True)
+    image = build(assembler)
     emulator = args.native.resolve() / "emu198x-dragon"
     machine = T.Machine(
         [str(emulator), "--mcp", "--model", "dragon32", "--rom", str(image)]

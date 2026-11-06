@@ -1,4 +1,4 @@
-"""Check retained Atom/CPC deadline observations and exact source bindings.
+"""Check retained Atom/CPC deadline observations and their rebuilt programs.
 
 This reads evidence; it does not execute an emulator or establish hardware timing.
 """
@@ -18,6 +18,34 @@ if SPEC is None or SPEC.loader is None:
     raise RuntimeError("Missing native verifier")
 V = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(V)
+SPEC = importlib.util.spec_from_file_location(
+    "deadline_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+if SPEC is None or SPEC.loader is None:
+    raise RuntimeError("Missing evidence_bytes")
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
+
+
+def require_program(
+    system: str, function: str, variant: str, output: str, pin: str, digest: str
+) -> None:
+    """Rebuild through the recorder's build function and compare the digest.
+
+    The record is stale when its program's bytes change, not its sources' text.
+    """
+    E.require_program(
+        E.function(
+            Path(V.__file__),
+            function,
+            (system, E.ASSEMBLER, variant),
+            V.folder(system),
+            (output,),
+        ),
+        output,
+        pin,
+        recorded_sha256=digest,
+    )
 
 
 def require(value: bool, message: str) -> None:
@@ -37,18 +65,6 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
         and record["language"] == "assembly",
         "Wrong machine/language/status",
     )
-    expected_sources = {
-        str(p.relative_to(ROOT)): V.sha(p) for p in V.source_paths(system)
-    }
-    require(record["sources"] == expected_sources, "Changed or missing source bindings")
-    observers = {
-        str(p.relative_to(ROOT)): V.sha(p)
-        for p in [
-            ROOT / "scripts/verify-firmware-deadlines.py",
-            ROOT / "scripts/verify-game-loops.py",
-        ]
-    }
-    require(record["observers"] == observers, "Changed or missing observer bindings")
     for key in ("emulator_sha256", "assembler_sha256"):
         digest = record[key]
         require(
@@ -77,6 +93,14 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
             case["binary_bytes"] > 0
             and len(case["binary_sha256"]) == len(case["loader_sha256"]) == 64,
             "Missing built caller identity",
+        )
+        require_program(
+            system,
+            "public_build",
+            variant,
+            f"build/{variant}/demo.bin",
+            record["assembler_sha256"],
+            case["binary_sha256"],
         )
         before, after = case["idle"], case["after_idle"]
         require(
@@ -185,6 +209,14 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
             "Arithmetic control outcome disagrees",
         )
         require(len(observation["fixture_sha256"]) == 64, "Missing fixture identity")
+        require_program(
+            system,
+            "arithmetic_build",
+            variant,
+            f"build/arithmetic/{variant}.rom",
+            record["assembler_sha256"],
+            observation["fixture_sha256"],
+        )
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -30,7 +31,6 @@ class Evidence(unittest.TestCase):
         ]:
             original = json.loads((V.F / "verification/results.json").read_text())
             for fault in [
-                "source",
                 "case",
                 "producer",
                 "firmware",
@@ -43,9 +43,7 @@ class Evidence(unittest.TestCase):
                 "pixels",
             ]:
                 r = copy.deepcopy(original)
-                if fault == "source":
-                    r["sources"][next(iter(r["sources"]))] = "0" * 64
-                elif fault == "case":
+                if fault == "case":
                     r["cases"].pop("custom")
                 elif fault == "producer":
                     r["emulator_sha256"] = "0" * 64
@@ -74,6 +72,38 @@ class Evidence(unittest.TestCase):
                     ),
                 ):
                     check(r)
+
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for language, V, check, field, digest in [
+            ("assembly", C.A, C.check_assembly, None, "loaded"),
+            ("basic", C.B, C.check_basic, "layout", "program"),
+        ]:
+            r = json.loads((V.F / "verification/results.json").read_text())
+            c = r["cases"]["custom"]
+            held = c[field] if field else c
+            data = held[digest + "_bytes"]
+            # A letter inside a line body, so line headers still parse.
+            data[next(i for i in range(4, len(data)) if 97 <= data[i] <= 122)] ^= 1
+            c[digest + "_sha256"] = hashlib.sha256(
+                bytes(held[digest + "_bytes"])
+            ).hexdigest()
+            with (
+                self.subTest(language=language),
+                self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+            ):
+                check(r)
+
+    def test_source_digests_are_provenance(self):
+        """Changed, added or removed source text alone does not make a record stale."""
+        for language, V, check in [
+            ("assembly", C.A, C.check_assembly),
+            ("basic", C.B, C.check_basic),
+        ]:
+            r = json.loads((V.F / "verification/results.json").read_text())
+            r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+            with self.subTest(language=language):
+                check(r)
 
     def test_specific_spectrum_controls(self):
         original = json.loads((C.A.F / "verification/results.json").read_text())

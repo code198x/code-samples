@@ -215,14 +215,18 @@ def memory_layout(m: Any) -> dict[str, Any]:
     }
 
 
-def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+def build(build198x: str, variant: str) -> tuple[Path, str, list[int]]:
+    """Write the variant's listing and tokenise it to a TAP with build198x.
+
+    The recorder and the checker both build through this function.
+    """
     out = F / "build" / variant
     out.mkdir(parents=True, exist_ok=True)
     text = listing(variant)
     (out / "caller.bas").write_text(text)
     subprocess.run(
         [
-            str(args.build198x),
+            build198x,
             "basic",
             str(out / "caller.bas"),
             "--machine",
@@ -234,7 +238,11 @@ def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
         timeout=30,
         capture_output=True,
     )
-    program = list(A.blocks(out / "caller.tap", 2)[1][1:-1])
+    return out, text, list(A.blocks(out / "caller.tap", 2)[1][1:-1])
+
+
+def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+    out, text, program = build(str(args.build198x), variant)
     m = T.Machine([str(args.emulator), "--mcp", "--rom", str(args.rom)])
     frames = 0
     samples = []

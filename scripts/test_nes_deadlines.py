@@ -1,6 +1,7 @@
 """Falsify native timer, policy, input and visible-output claims."""
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -20,7 +21,6 @@ class Evidence(unittest.TestCase):
     def test_falsifications(self):
         original = json.loads((C.V.V / "results.json").read_text())
         for fault in (
-            "source",
             "configuration",
             "case",
             "producer",
@@ -44,9 +44,7 @@ class Evidence(unittest.TestCase):
             r = copy.deepcopy(original)
             c = r["cases"]["demo"]
             by = {s["stage"]: s for s in c["samples"]}
-            if fault == "source":
-                r["sources"][next(iter(r["sources"]))] = "0" * 64
-            elif fault == "configuration":
+            if fault == "configuration":
                 r["configuration"]["emulator_sha256"] = "0" * 64
             elif fault == "case":
                 r["cases"].pop("custom")
@@ -96,6 +94,25 @@ class Evidence(unittest.TestCase):
         c["display"][0] ^= 1
         with self.assertRaisesRegex(AssertionError, "PNG"):
             C.pixels(c)
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        c = r["cases"]["custom"]
+        c["loaded_prg_bytes"][0] ^= 1
+        prg = bytes(c["loaded_prg_bytes"])
+        c["loaded_prg_sha256"] = hashlib.sha256(prg).hexdigest()
+        f = bytes(C.font())
+        cart = b"NES\x1a" + bytes([2, 1]) + bytes(10) + prg + f + bytes(8192 - len(f))
+        c["cartridge_sha256"] = hashlib.sha256(cart).hexdigest()
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check(r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        r = json.loads((C.V.V / "results.json").read_text())
+        r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+        C.check(r)
 
 
 if __name__ == "__main__":

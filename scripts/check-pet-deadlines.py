@@ -21,6 +21,7 @@ def module(name: str, file: str) -> Any:
 
 V = module("cbm_deadline", "verify-pet-deadlines.py")
 P = module("png_reader", "check-amiga-command-loops.py")
+E = module("cbm_bytes", "evidence_bytes.py")
 T = V.T
 DIGITS = {
     "commodore-64": [
@@ -81,11 +82,6 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
         == (system, "assembly", "native-checked"),
         "Wrong record identity",
     )
-    T.require(
-        r["sources"]
-        == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths(system)},
-        "Source binding changed",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing variant")
     T.require(
         r["assembler_sha256"] == cfg["assembler_sha256"]
@@ -100,6 +96,20 @@ def check(system: str, record: dict[str, Any] | None = None) -> None:
         "Wrong machine configuration",
     )
     for variant, c in r["cases"].items():
+        # The record is stale when its program's bytes change, not its sources' text.
+        output = f"build/{variant}/demo.prg"
+        E.require_program(
+            E.function(
+                Path(V.__file__),
+                "build",
+                (system, variant, E.ASSEMBLER),
+                ROOT / system / "patterns/assembly/framework/turn-deadline",
+                (output,),
+            ),
+            output,
+            r["assembler_sha256"],
+            recorded_sha256=c["prg_sha256"],
+        )
         T.require(
             c["emulator_sha256"] == cfg["emulator_sha256"]
             and c["firmware_sha256"] == cfg["firmware_sha256"]

@@ -22,6 +22,29 @@ def load_verifier() -> ModuleType:
 
 
 V = load_verifier()
+
+
+def load_bytes() -> ModuleType:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "map_bytes", ROOT / "scripts/evidence_bytes.py"
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+E = load_bytes()
+
+
+def fixture(system: str, assembler: str, variant: str) -> None:
+    """Build one machine's variant through the recorder's build()."""
+    config = next(c for c in json.loads(V.CONFIG.read_text()) if c["system"] == system)
+    V.build(config, assembler, variant)
+
+
 SYSTEMS = {
     "msx",
     "dragon-32",
@@ -41,7 +64,6 @@ def validate(c: dict, r: dict) -> None:
         r["machine"] == c["system"] and r["configuration"] == c,
         "Wrong machine or RAM layout",
     )
-    V.T.require(r["sources"] == V.inputs(c), "Source or observer binding changed")
     observations = r["observations"]
     V.T.require(
         set(observations)
@@ -50,6 +72,20 @@ def validate(c: dict, r: dict) -> None:
     )
     V.T.require(set(r["fixtures"]) == set(observations), "Missing fixture hash")
     V.T.require(len(set(r["fixtures"].values())) == 4, "Fixtures were not distinct")
+    # The record is stale when its programs' bytes change, not its sources' text.
+    for variant, digest in r["fixtures"].items():
+        E.require_program(
+            E.function(
+                Path(__file__),
+                "fixture",
+                (c["system"], E.ASSEMBLER, variant),
+                V.folder(c),
+                (f"build/{variant}/fixture.bin",),
+            ),
+            f"build/{variant}/fixture.bin",
+            r["assembler_sha256"],
+            recorded_sha256=digest,
+        )
     for name, raw in observations.items():
         V.T.require(len(raw) == 44 and raw[-1] == 239, "Caller did not complete")
         expected = bytearray(V.V.expected())
@@ -91,9 +127,7 @@ def main() -> None:
     )
     for c in configs:
         validate(c, json.loads((V.folder(c) / "verification/results.json").read_text()))
-    print(
-        "PASS 6 assembly map ports; 24 completed native executions and source bindings"
-    )
+    print("PASS 6 assembly map ports; 24 completed native executions and program bytes")
 
 
 if __name__ == "__main__":

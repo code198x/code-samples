@@ -22,6 +22,7 @@ def module(name: str, file: str) -> Any:
 
 V = module("native", "verify-spectrum-input-edges.py")
 P = module("png", "check-amiga-command-loops.py")
+E = module("edges_bytes", "evidence_bytes.py")
 T = V.T
 
 
@@ -56,11 +57,6 @@ def check(record: dict[str, Any] | None = None) -> None:
         (r["system"], r["language"]) == ("sinclair-zx-spectrum", "assembly"),
         "Wrong route",
     )
-    T.require(
-        r["sources"]
-        == {str(p.resolve().relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source or observer",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing caller")
     T.require(
         all(
@@ -72,21 +68,19 @@ def check(record: dict[str, Any] | None = None) -> None:
     )
     for variant, c in r["cases"].items():
         T.require(c["server"]["version"] == "0.44.2", "Wrong native emulator")
-        text = (
-            V.fixture(variant == "wrong-boundary")
-            if "boundar" in variant
-            else (
-                V.F
-                / {"custom": "edges-custom.asm", "wrong": "edges-wrong.asm"}.get(
-                    variant, "edges-demo.asm"
-                )
-            ).read_text()
-        )
-        T.require(
-            c["source_sha256"] == hashlib.sha256(text.encode()).hexdigest(),
-            "Changed caller",
-        )
         payload = c["payload"]
+        # The record is stale when its program's bytes change, not its sources'
+        # text. It keeps the CODE block; the TAP's header names the build path.
+        output = f"build/edges/{variant}/demo.tap"
+        E.require_program(
+            E.function(
+                Path(V.__file__), "build", (E.ASSEMBLER, variant), V.F, (output,)
+            ),
+            output,
+            r["assembler_sha256"],
+            recorded=bytes(payload),
+            extract=E.tap_block(-1),
+        )
         loaded = c["loaded_image"]
         mutable = c["mutable_offsets"]
         T.require(

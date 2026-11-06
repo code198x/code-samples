@@ -90,7 +90,11 @@ hold:
     )
 
 
-def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+def build(assembler: str, variant: str) -> tuple[Path, str]:
+    """Write the variant's caller and assemble it to a TAP.
+
+    The recorder and the checker both build through this function.
+    """
     out = F / "build/edges" / variant
     out.mkdir(parents=True, exist_ok=True)
     source = (
@@ -106,7 +110,7 @@ def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
     (out / "demo.asm").write_text(source)
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "pasmo",
             "--cpu",
@@ -123,6 +127,11 @@ def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
         capture_output=True,
         timeout=30,
     )
+    return out, source
+
+
+def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+    out, source = build(str(args.assembler), variant)
     data = list(A.blocks(out / "demo.tap")[-1][1:-1])
     sym = T.symbols(out / "demo.sym")
     m = T.Machine([str(args.emulator), "--mcp", "--rom", str(args.rom)])

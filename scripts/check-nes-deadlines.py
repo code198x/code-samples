@@ -21,6 +21,7 @@ def module(name, file):
 
 V = module("native", "verify-nes-deadlines.py")
 P = module("png", "check-amiga-command-loops.py")
+E = module("deadline_bytes", "evidence_bytes.py")
 T = V.T
 
 
@@ -59,10 +60,6 @@ def check(record=None):
         (r["system"], r["language"]) == ("nintendo-nes", "assembly"), "Wrong route"
     )
     T.require(r["configuration"] == cfg, "Changed native configuration")
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source/observer",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native case")
     T.require(
         len(V.expected_math()) == 96 and len(V.expected_policy()) == 96,
@@ -108,14 +105,13 @@ def check(record=None):
             hashlib.sha256(cart).hexdigest() == c["cartridge_sha256"],
             "Cartridge/CHR differs",
         )
-        src = (
-            V.fixture(name == "wrong-boundary")
-            if "boundar" in name
-            else (V.F / (name + ".asm")).read_text()
-        )
-        T.require(
-            hashlib.sha256(src.encode()).hexdigest() == c["source_sha256"],
-            "Changed selected caller",
+        # The record is stale when its program's bytes change, not its sources' text.
+        output = f"build/{name}/demo.nes"
+        E.require_program(
+            E.function(Path(V.__file__), "build", (E.ASSEMBLER, name), V.F, (output,)),
+            output,
+            cfg["assembler_sha256"],
+            recorded=cart,
         )
         if "boundar" in name:
             raw = c["bytes"]

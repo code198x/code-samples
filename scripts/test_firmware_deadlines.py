@@ -32,8 +32,6 @@ class DeadlineEvidence(unittest.TestCase):
                 lambda x: x.update(status="built"),
                 lambda x: x.update(machine_id="another-machine"),
                 lambda x: x.update(language="basic"),
-                lambda x: x.update(sources={}),
-                lambda x: x.update(observers={}),
                 lambda x: x.update(firmware_sha256={}),
                 lambda x: x.update(emulator_sha256=""),
                 lambda x: x["cases"].pop("repaired"),
@@ -63,6 +61,37 @@ class DeadlineEvidence(unittest.TestCase):
                     mutate(bad)
                     with self.assertRaises((ValueError, KeyError)):
                         C.check(machine, bad)
+
+    def test_forged_programs_are_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for machine in C.V.SYSTEMS:
+            original = json.loads(
+                (C.V.folder(machine) / "verification/results.json").read_text()
+            )
+            for forged in ("caller", "arithmetic"):
+                bad = copy.deepcopy(original)
+                if forged == "caller":
+                    bad["cases"]["custom-duration"]["binary_sha256"] = "0" * 64
+                else:
+                    bad["arithmetic"]["observations"]["wrong-zero-boundary"][
+                        "fixture_sha256"
+                    ] = "0" * 64
+                with (
+                    self.subTest(machine=machine, forged=forged),
+                    self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+                ):
+                    C.check(machine, bad)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        for machine in C.V.SYSTEMS:
+            r = json.loads(
+                (C.V.folder(machine) / "verification/results.json").read_text()
+            )
+            r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+            r["observers"] = {}
+            with self.subTest(machine=machine):
+                C.check(machine, r)
 
 
 if __name__ == "__main__":

@@ -93,7 +93,11 @@ previous: !byte 0
     )
 
 
-def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+def build(assembler: str, variant: str) -> tuple[Path, str]:
+    """Write the variant's caller and assemble it to a PRG.
+
+    The recorder and the checker both build through this function.
+    """
     out = F / "build/edges" / variant
     out.mkdir(parents=True, exist_ok=True)
     source = (
@@ -109,7 +113,7 @@ def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
     (out / "demo.asm").write_text(source)
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "acme",
             "--prg",
@@ -124,6 +128,11 @@ def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
         capture_output=True,
         timeout=30,
     )
+    return out, source
+
+
+def run(args: argparse.Namespace, variant: str) -> dict[str, Any]:
+    out, source = build(str(args.assembler), variant)
     sym = T.symbols(out / "demo.sym")
     exe = args.emulator
     script = out / "import.json"

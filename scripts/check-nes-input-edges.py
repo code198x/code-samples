@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 import zlib
@@ -23,6 +22,7 @@ def module(name: str, file: str) -> Any:
 
 V = module("native", "verify-nes-input-edges.py")
 P = module("png", "check-amiga-command-loops.py")
+E = module("edges_bytes", "evidence_bytes.py")
 T = V.T
 EXPECTED = bytes(
     sum(
@@ -71,11 +71,6 @@ def check(record: dict[str, Any] | None = None) -> None:
     T.require(
         (r["system"], r["language"]) == ("nintendo-nes", "assembly"), "Wrong route"
     )
-    T.require(
-        r["sources"]
-        == {str(p.resolve().relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source or observer",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native case")
     T.require(
         all(r[k] == cfg[k] for k in ["emulator_sha256", "assembler_sha256"])
@@ -84,24 +79,20 @@ def check(record: dict[str, Any] | None = None) -> None:
     )
     for variant, c in r["cases"].items():
         T.require(c["server"]["version"] == "0.44.2", "Wrong emulator")
-        text = (
-            V.fixture(variant == "wrong-boundary")
-            if "boundar" in variant
-            else (
-                V.F
-                / {"custom": "edges-custom.asm", "wrong": "edges-wrong.asm"}.get(
-                    variant, "edges-demo.asm"
-                )
-            ).read_text()
-        )
-        T.require(
-            c["source_sha256"] == hashlib.sha256(text.encode()).hexdigest(),
-            "Changed selected caller",
-        )
         T.require(
             c["cart_sha256"] == cfg["cart_sha256"][variant]
             and c["native_prg_sha256"] == cfg["native_prg_sha256"][variant],
             "Native cartridge/PRG differs",
+        )
+        # The record is stale when its program's bytes change, not its sources' text.
+        output = f"build/edges/{variant}/demo.nes"
+        E.require_program(
+            E.function(
+                Path(V.__file__), "build", (E.ASSEMBLER, variant), V.F, (output,)
+            ),
+            output,
+            r["assembler_sha256"],
+            recorded_sha256=c["cart_sha256"],
         )
         if "boundar" in variant:
             raw = zlib.decompress(bytes.fromhex(c["rows_zlib_hex"]))

@@ -24,6 +24,7 @@ def module(name: str, file: str) -> Any:
 V = module("native", "verify-atari-xl-assembly-deadlines.py")
 T = V.T
 P = module("png", "check-amiga-command-loops.py")
+E = module("deadline_bytes", "evidence_bytes.py")
 
 
 def pixels(case: dict[str, Any], text: str) -> None:
@@ -65,10 +66,6 @@ def check(record: dict[str, Any] | None = None) -> None:
     T.require(
         (r["machine"], r["language"]) == ("atari-800xl", "assembly"), "Wrong route"
     )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source or observer",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native caller")
     T.require(
         all(
@@ -87,20 +84,15 @@ def check(record: dict[str, Any] | None = None) -> None:
             and hashlib.sha256(bytes(data)).hexdigest() == c["loaded_sha256"],
             "Loaded bytes differ",
         )
-        source = (
-            V.fixture(variant == "wrong-boundary")
-            if "boundar" in variant
-            else (
-                V.F
-                / {
-                    "custom": "customise.asm",
-                    "wrong": "mistakes/reset-baseline.asm",
-                }.get(variant, "demo.asm")
-            ).read_text()
-        )
-        T.require(
-            c["entered_source_sha256"] == hashlib.sha256(source.encode()).hexdigest(),
-            "Changed selected program",
+        # The record is stale when its program's bytes change, not its sources' text.
+        output = f"build/{variant}/demo.bin"
+        E.require_program(
+            E.function(
+                Path(V.__file__), "build", (E.ASSEMBLER, variant), V.F, (output,)
+            ),
+            output,
+            r["assembler_sha256"],
+            recorded=bytes(data),
         )
         reserve = c["reservation"]
         loader = c["loader_ready"]
