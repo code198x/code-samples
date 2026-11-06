@@ -1,6 +1,6 @@
 # Make pattern evidence re-record only when behaviour can change
 
-**Status:** Proposed 2026-11-06, for agreement before any change.
+**Status:** Agreed 2026-11-06. Steps run in the order below.
 
 Pattern evidence costs more than it returns. Over two months, more than half
 the re-recording work changed nothing a learner could notice. This plan keeps
@@ -92,9 +92,17 @@ force a re-record, so they cost little.
 ## Steps
 
 Each step is one pull request. Every record's observations stay as they are,
-so the history above stays comparable.
+so the history above stays comparable. The byte check goes first: until it
+lands, the edits the toolchain pin makes to every recorder and checker would
+make the 1,668 records that pin those scripts stale.
 
-1. **Root toolchain pin.** Add `toolchain.json`, generated from the release
+1. **Byte check instead of text pins.** Teach the shared checker helpers to
+   rebuild a record's program and compare bytes, and stop comparing `sources`
+   and script digests. Leave the fields in existing records as provenance
+   until each family next re-records. *Check:* reverting today's two-digit
+   `ptr=$70` fix still passes, because the bytes match, while changing an
+   operand fails.
+2. **Root toolchain pin.** Add `toolchain.json`, generated from the release
    locks by a committed `scripts/update-toolchain.py`, with
    `scripts/fetch-toolchain.py` to download and verify. Point every recorder
    and checker at it, delete the 31 family files and the 62 hard-coded
@@ -102,12 +110,6 @@ so the history above stays comparable.
    a version literal finds none. The script refuses to move the pin until
    step 3's replay exists and passes, so step 3 lands before the next pin
    move.
-2. **Byte check instead of text pins.** Teach the shared checker helpers to
-   rebuild a record's program and compare bytes, and stop comparing `sources`
-   and script digests. Leave the fields in existing records as provenance
-   until each family next re-records. *Check:* reverting today's two-digit
-   `ptr=$70` fix still passes, because the bytes match, while changing an
-   operand fails.
 3. **`scripts/replay-evidence`.** Read each family's recorder from an index
    (recorder, arguments, machines), run in check mode, and print any
    differing observation. *Check:* it reports today's PET failure against
