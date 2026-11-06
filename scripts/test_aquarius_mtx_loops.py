@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -59,10 +60,34 @@ class EvidenceTests(unittest.TestCase):
             lambda r: r["cases"]["working"]["observations"][2].update(count=99)
         )
 
-    def test_changed_source_fails(self) -> None:
-        self.rejected(
-            lambda r: r["sources"].update({next(iter(r["sources"])): "0" * 64})
-        )
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of another program is caught only by the rebuild."""
+        for original in self.records:
+            r = copy.deepcopy(original)
+            case = r["cases"]["nonzero"]
+            if r["track"] == "assembly":
+                case["loaded_bytes"][0] ^= 1
+                case["loaded_sha256"] = hashlib.sha256(
+                    bytes(case["loaded_bytes"])
+                ).hexdigest()
+                message = "^Program bytes differ"
+            else:
+                case["entered_source"] += " "
+                message = "^Typed program differs"
+            with (
+                self.subTest(system=r["system"], track=r["track"]),
+                self.assertRaisesRegex(AssertionError, message),
+            ):
+                C.check_record(ROOT, r)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or observer digests alone do not make a record stale."""
+        for original in self.records:
+            r = copy.deepcopy(original)
+            r["sources"] = dict.fromkeys(r["sources"], "0" * 64)
+            r["observer_sources"] = dict.fromkeys(r["observer_sources"], "0" * 64)
+            with self.subTest(system=r["system"], track=r["track"]):
+                C.check_record(ROOT, r)
 
     def test_changed_capture_fails(self) -> None:
         self.rejected(

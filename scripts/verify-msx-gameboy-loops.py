@@ -72,20 +72,7 @@ def verify(args) -> None:
             out, data, lines = B.build(system, args.assembler, variant)
             symbols = T.symbols(out / "demo.sym")
         else:
-            file = {
-                "step-three": "customise.bas",
-                "wrong-reset": "mistakes/reset-each-command.bas",
-            }.get(variant, "reusable.bas")
-            source = (folder / file).read_text()
-            if variant == "wrap":
-                source = source.replace("N=0", "N=254")
-            if variant == "nonzero":
-                source = source.replace("N=0", "N=100").replace("S=1", "S=255")
-            # Diagnostic only: copy actual SCREEN 0 cells, not N, out of VDP RAM.
-            source = source.replace(
-                "30 INPUT", "25 FOR J=0 TO 959:POKE 53248+J,VPEEK(J):NEXT J\n30 INPUT"
-            )
-            lines = ["1 CLEAR 200,53247"] + source.splitlines() + ["RUN"]
+            lines = basic_lines(variant)
         command = [str(exe), "--mcp"] + (
             ["--rom", str(out / "demo.gb")]
             if gb
@@ -323,6 +310,25 @@ def verify(args) -> None:
     (
         retained / ("smoke-results.json" if args.variant else "reusable-results.json")
     ).write_text(json.dumps(record, indent=2) + "\n")
+
+
+def basic_lines(variant: str) -> list[str]:
+    """The lines typed into MSX BASIC for one variant, RUN included."""
+    folder = ROOT / "msx/patterns/basic/framework/command-loop"
+    file = {
+        "step-three": "customise.bas",
+        "wrong-reset": "mistakes/reset-each-command.bas",
+    }.get(variant, "reusable.bas")
+    source = (folder / file).read_text()
+    if variant == "wrap":
+        source = source.replace("N=0", "N=254")
+    if variant == "nonzero":
+        source = source.replace("N=0", "N=100").replace("S=1", "S=255")
+    # Diagnostic only: copy actual SCREEN 0 cells, not N, out of VDP RAM.
+    source = source.replace(
+        "30 INPUT", "25 FOR J=0 TO 959:POKE 53248+J,VPEEK(J):NEXT J\n30 INPUT"
+    )
+    return ["1 CLEAR 200,53247"] + source.splitlines() + ["RUN"]
 
 
 def main() -> None:

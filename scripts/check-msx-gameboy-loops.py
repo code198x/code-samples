@@ -15,6 +15,19 @@ spec = importlib.util.spec_from_file_location(
 )
 PNG = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(PNG)
+
+
+def _load(module: str, file: str):
+    found = importlib.util.spec_from_file_location(module, ROOT / "scripts" / file)
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load("loop_bytes", "evidence_bytes.py")
+V = _load("loop_recorder", "verify-msx-gameboy-loops.py")
+BUILD = ROOT / "scripts/build-msx-gameboy-loops.py"
 ROUTES = [("msx", "basic"), ("msx", "assembly"), ("nintendo-game-boy", "assembly")]
 
 
@@ -35,6 +48,42 @@ def bound(root: Path, name: str, digest: str) -> Path:
     return p
 
 
+def entered(system: str, variant: str, r: dict) -> list[str]:
+    """The listing the recorder types for a BASIC case."""
+    return V.basic_lines(variant)
+
+
+def require_programs(r: dict) -> None:
+    """Rebuild or regenerate every case's program and compare it with the record."""
+    system = r["system"]
+    folder = ROOT / system / "patterns" / r["track"] / "framework/command-loop"
+    # The typed program is reusable.bas; the lesson presents it as two parts.
+    require(
+        r["track"] == "assembly"
+        or (folder / "reusable.bas").read_text()
+        == (folder / "caller.bas").read_text() + (folder / "routines.bas").read_text(),
+        "Reusable program differs from its caller and routines",
+    )
+    for variant, case in sorted(r["cases"].items()):
+        if r["track"] == "assembly":
+            ext = "gb" if system == "nintendo-game-boy" else "bin"
+            output = f"build/{variant}/demo.{ext}"
+            E.require_program(
+                E.function(
+                    BUILD, "build", (system, E.ASSEMBLER, variant), folder, (output,)
+                ),
+                output,
+                r["assembler_source_lock"]["executable_sha256"],
+                recorded=bytes(case["loaded_bytes"]),
+            )
+        else:
+            E.require_typed(
+                "\n".join(entered(system, variant, r)),
+                hashlib.sha256(case["entered_source"].encode()).hexdigest(),
+                f"{system} {variant} listing",
+            )
+
+
 def check_record(root: Path, r: dict) -> None:
     require(r["status"] == "passed", "Incomplete native run")
     require((r["system"], r["track"]) in ROUTES, "Unknown machine/language route")
@@ -46,10 +95,6 @@ def check_record(root: Path, r: dict) -> None:
         | ({"no-wait"} if gb else set())
     )
     require(set(r["cases"]) == required, "Missing cases")
-    for section in ("sources", "observer_sources"):
-        require(bool(r[section]), "Missing source bindings")
-        for name, digest in r[section].items():
-            bound(root, name, digest)
     for key, version in [
         ("producer_source_lock", "0.44.1"),
         ("assembler_source_lock", "0.0.75"),
@@ -188,6 +233,11 @@ def check_record(root: Path, r: dict) -> None:
         require(
             set(parity) == {0, 1} and parity[0] != parity[1], "No actual palette change"
         )
+
+    # The program decides staleness: assembly payloads are rebuilt with the
+    # pinned Asm198x (rule 1), typed listings are regenerated (rule 2).
+    # Source and observer digests are provenance only.
+    require_programs(r)
 
 
 def check(root: Path) -> int:

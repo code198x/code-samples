@@ -23,6 +23,71 @@ T = module("transport", "verify-game-loops.py")
 B = module("build", "build-aquarius-mtx-loops.py")
 
 
+def basic_lines(
+    system: str, variant: str, assembler: str = ""
+) -> tuple[list[str], bytes | None]:
+    """The lines typed into BASIC for one variant, RUN included, and the MTX reader.
+
+    The MTX listing carries a 44-byte screen reader, assembled with Asm198x
+    from verification/read-screen.asm and typed as DATA lines.
+    """
+    aq = system == "mattel-aquarius"
+    folder = ROOT / system / "patterns/basic/framework/command-loop"
+    out = folder / "build" / variant
+    out.mkdir(parents=True, exist_ok=True)
+    lines: list[str] = []
+    reader = None
+    name = {
+        "working": "reusable.bas",
+        "step-three": "customise.bas",
+        "wrong-reset": "mistakes/reset-each-command.bas",
+        "repaired": "reusable.bas",
+    }.get(variant, "reusable.bas")
+    program = (folder / name).read_text()
+    if variant == "wrap":
+        program = program.replace("N=0", "N=254")
+    if variant == "nonzero":
+        program = program.replace("N=0", "N=100").replace("S=1", "S=255")
+    if not aq:
+        binary = out / "read-screen.bin"
+        binary.unlink(missing_ok=True)
+        subprocess.run(
+            [
+                assembler,
+                "--dialect",
+                "pasmo",
+                str(folder / "verification/read-screen.asm"),
+                "-o",
+                str(binary),
+            ],
+            check=True,
+            timeout=30,
+        )
+        reader = binary.read_bytes()
+        T.require(len(reader) == 44, "Changed reader shape")
+        lines = [
+            f"1 FOR J=57344 TO {57343 + len(reader)}",
+            "2 READ B:POKE J,B:NEXT J",
+            "3 GOTO 10",
+        ]
+        program = program.replace("30 INPUT", "25 LET V=USR(57344)\n30 INPUT")
+    lines += program.splitlines()
+    if reader:
+        lines += [
+            f"{3000 + i} DATA " + ",".join(map(str, reader[i : i + 12]))
+            for i in range(0, len(reader), 12)
+        ]
+    lines += ["RUN"]
+    return lines, reader
+
+
+def entered(system: str, variant: str, assembler: str = "") -> None:
+    """Write one variant's typed listing to build/<variant>/entered.bas."""
+    lines, _ = basic_lines(system, variant, assembler)
+    out = ROOT / system / "patterns/basic/framework/command-loop/build" / variant
+    (out / "entered.bas").write_text("\n".join(lines))
+
+
 def verify(args, system: str, track: str) -> None:
     aq = system == "mattel-aquarius"
     asm = track == "assembly"
@@ -64,52 +129,11 @@ def verify(args, system: str, track: str) -> None:
         out.mkdir(parents=True, exist_ok=True)
         data = None
         lines = []
-        program = None
         reader = None
         if asm:
             out, data, lines = B.build(system, args.assembler, variant)
         else:
-            name = {
-                "working": "reusable.bas",
-                "step-three": "customise.bas",
-                "wrong-reset": "mistakes/reset-each-command.bas",
-                "repaired": "reusable.bas",
-            }.get(variant, "reusable.bas")
-            program = (folder / name).read_text()
-            if variant == "wrap":
-                program = program.replace("N=0", "N=254")
-            if variant == "nonzero":
-                program = program.replace("N=0", "N=100").replace("S=1", "S=255")
-            if not aq:
-                binary = out / "read-screen.bin"
-                binary.unlink(missing_ok=True)
-                subprocess.run(
-                    [
-                        str(args.assembler),
-                        "--dialect",
-                        "pasmo",
-                        str(retained / "read-screen.asm"),
-                        "-o",
-                        str(binary),
-                    ],
-                    check=True,
-                    timeout=30,
-                )
-                reader = binary.read_bytes()
-                T.require(len(reader) == 44, "Changed reader shape")
-                lines = [
-                    f"1 FOR J=57344 TO {57343 + len(reader)}",
-                    "2 READ B:POKE J,B:NEXT J",
-                    "3 GOTO 10",
-                ]
-                program = program.replace("30 INPUT", "25 LET V=USR(57344)\n30 INPUT")
-            lines += program.splitlines()
-            if reader:
-                lines += [
-                    f"{3000 + i} DATA " + ",".join(map(str, reader[i : i + 12]))
-                    for i in range(0, len(reader), 12)
-                ]
-            lines += ["RUN"]
+            lines, reader = basic_lines(system, variant, str(args.assembler))
         m = T.Machine(command)
         observations = []
 
