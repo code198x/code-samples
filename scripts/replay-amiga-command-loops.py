@@ -35,7 +35,10 @@ def substitute(value: Any, replacements: dict[str, str]) -> Any:
     return value
 
 
-def prepare(builder: Path, output: Path) -> None:
+def prepare(builder: Path | str, output: Path | str) -> None:
+    """Write the AMOS case disk the phases import, from the lesson's sources."""
+    builder, output = Path(builder), Path(output)
+    output.mkdir(parents=True, exist_ok=True)
     folder = ROOT / "commodore-amiga/patterns/amos/framework/command-loop"
     demo = (folder / "demo.amos").read_text()
     for name, initial in [
@@ -70,6 +73,24 @@ def prepare(builder: Path, output: Path) -> None:
             timeout=30,
             check=True,
         )
+
+
+def blitz_program(variant: str) -> str:
+    """The text each Blitz case types into Ted: the lesson file without comments."""
+    folder = ROOT / "commodore-amiga/patterns/blitz/framework/command-loop"
+    demo = (folder / "demo.bb2").read_text()
+    initial = "PL_count.l=0 : PL_step.l=1"
+    source = {
+        "working": demo,
+        "custom": (folder / "customise.bb2").read_text(),
+        "wrong": (folder / "mistakes/reset-each-command.bb2").read_text(),
+        "fixed": demo,
+        "wrap": demo.replace(initial, "PL_count.l=254 : PL_step.l=1"),
+        "nonzero": demo.replace(initial, "PL_count.l=100 : PL_step.l=255"),
+    }[variant]
+    return "".join(
+        line for line in source.splitlines(keepends=True) if not line.startswith(";")
+    )
 
 
 def replay(args: argparse.Namespace) -> None:

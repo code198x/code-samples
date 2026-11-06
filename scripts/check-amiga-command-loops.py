@@ -3,11 +3,19 @@
 This rechecks retained execution, not fresh emulation. Font shapes were inspected
 in the native captures; recognition uses fixed glyphs, never recorded counter
 values. Unexpected glyphs, blank screens and a requester cannot pass.
+
+AMOS imports its programs from a case disk, so the checker rebuilds that disk
+with the pinned build198x-adf release and compares its bytes with the record.
+Blitz types its programs, so the checker regenerates the typed text from the
+lesson files and compares it with the retained phases. Recorder scripts and
+other source digests are provenance; editing them does not make the evidence
+stale.
 """
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import struct
 import zlib
@@ -27,6 +35,20 @@ DIGITS = {
     "9": (120, 204, 204, 124, 12, 24, 112, 0),
 }
 VARIANTS = {"working", "custom", "wrong", "fixed", "wrap", "nonzero"}
+COMMANDS = "a\nx\na\nq\n"
+
+
+def _load(module: str, file: str):
+    found = importlib.util.spec_from_file_location(module, ROOT / "scripts" / file)
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load("amiga_loop_bytes", "evidence_bytes.py")
+REPLAY = ROOT / "scripts/replay-amiga-command-loops.py"
+R = _load("amiga_loop_replay", "replay-amiga-command-loops.py")
 
 
 def require(value: bool, message: str) -> None:
@@ -181,6 +203,39 @@ def expected(variant: str) -> list[int]:
     return values
 
 
+def require_programs(language: str, out: Path, toolchain: dict) -> None:
+    """Rebuild the AMOS case disk, or regenerate each Blitz case's typed text."""
+    folder = ROOT / f"commodore-amiga/patterns/{language}/framework/command-loop"
+    extension = "amos" if language == "amos" else "bb2"
+    require(
+        (folder / f"demo.{extension}").read_text()
+        == (folder / f"caller.{extension}").read_text()
+        + "\n"
+        + (folder / f"routines.{extension}").read_text(),
+        "Caller/routines differ from the program",
+    )
+    if language == "amos":
+        output = "build/evidence/cases.adf"
+        E.require_program(
+            E.function(
+                REPLAY, "prepare", (E.BUILDER, "build/evidence"), folder, (output,)
+            ),
+            output,
+            None,
+            recorded_sha256=toolchain["source_fixture_sha256"],
+            build198x=toolchain["build198x-adf"]["executable_sha256"],
+        )
+        return
+    for variant in sorted(VARIANTS):
+        steps = json.loads((out / f"phases/blitz-{variant}-case.json").read_text())
+        typed = "".join(s["text"] for s in steps if s["action"] == "type_string")
+        E.require_typed(
+            R.blitz_program(variant) + COMMANDS,
+            hashlib.sha256(typed.encode()).hexdigest(),
+            f"Blitz {variant} case",
+        )
+
+
 def check(
     language: str, root: Path = ROOT, record: dict[str, Any] | None = None
 ) -> None:
@@ -228,19 +283,13 @@ def check(
         (record["runtime"], record["runtime_media_sha256"]) == runtimes[language],
         "Different native language runtime",
     )
-    required = {
-        str(p.relative_to(root))
-        for p in folder.rglob("*")
-        if p.is_file() and "verification" not in p.parts and p.name != "README.md"
-    }
-    required |= {
-        "scripts/replay-amiga-command-loops.py",
-        "scripts/verify-game-loops.py",
-    }
-    required |= {str(p.relative_to(root)) for p in (out / "phases").glob("*.json")}
-    require(set(record["sources"]) == required, "Incomplete source/phase bindings")
-    for name, digest in record["sources"].items():
-        require(sha(root / name) == digest, "Changed source: " + name)
+    # Phases are the retained inputs, so they stay bound; the rest is provenance.
+    phases = {str(p.relative_to(root)) for p in (out / "phases").glob("*.json")}
+    require(
+        bool(phases) and phases <= set(record["sources"]), "Incomplete phase bindings"
+    )
+    for name in phases:
+        require(sha(root / name) == record["sources"][name], "Changed phase: " + name)
     require(set(record["variants"]) == VARIANTS, "Missing native case")
     artifacts = {"toolchain.json"}
     toolchain = json.loads((out / "toolchain.json").read_text())
@@ -261,6 +310,7 @@ def check(
         == "7ee707641dc632a001863918ef36ffc1e1b383cd4a215463a138e4e269048f61",
         "Different source fixture",
     )
+    require_programs(language, out, toolchain)
     for variant, details in record["variants"].items():
         require(
             set(details) == {"captures", "observed", "transport"}, "Incomplete case"
