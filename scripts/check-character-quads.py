@@ -17,6 +17,24 @@ if spec is None or spec.loader is None:
     raise ValueError("Cannot load verifier")
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
+spec = importlib.util.spec_from_file_location(
+    "quads_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+if spec is None or spec.loader is None:
+    raise ValueError("Cannot load evidence_bytes")
+E = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(E)
+
+
+def fixture(c: dict[str, Any], variant: str, root: Path = ROOT) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        root / V.S.relative_to(ROOT) / "build.py",
+        "build",
+        (c["machine_id"], E.ASSEMBLER, variant),
+        root / c["folder"] / "patterns/assembly/rendering/character-quads",
+        (f"build/{variant}/fixture.bin",),
+    )
 
 
 def check(c: dict[str, Any], root: Path = ROOT) -> None:
@@ -29,12 +47,6 @@ def check(c: dict[str, Any], root: Path = ROOT) -> None:
         "Incomplete record",
     )
     V.require(record["machine_id"] == c["machine_id"], "Wrong machine")
-    V.require(
-        set(record["sources"]) == {str(p.relative_to(ROOT)) for p in V.paths(c)},
-        "Incomplete bound source set",
-    )
-    for name, digest in record["sources"].items():
-        V.require(V.V.T.sha(root / name) == digest, "Changed source " + name)
     tools = {
         t["tool"]: t
         for t in json.loads(
@@ -52,6 +64,13 @@ def check(c: dict[str, Any], root: Path = ROOT) -> None:
         V.require(
             r["assembler_sha256"] == tools["asm198x"]["binary_sha256"],
             "Wrong assembler",
+        )
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            fixture(c, variant, root),
+            f"build/{variant}/fixture.bin",
+            r["assembler_sha256"],
+            recorded_sha256=r["fixture_sha256"],
         )
         V.require(
             r["glyph_bytes"] == 205 and r["quad_bytes"] > 0,

@@ -100,8 +100,49 @@ class Retained(unittest.TestCase):
             )
         )
 
-    def test_stale_source(self) -> None:
-        self.corrupt(lambda r, f: r["sources"].update({"bogus": "0" * 64}))
+    def retained(
+        self, change: Callable[[dict[str, Any]], None], rejection: str | None = None
+    ) -> None:
+        """Check every machine's record after `change`, in a copy of its folder.
+
+        With `rejection`, each check must fail with a message matching it.
+        """
+        for c in json.loads((C.V.S / "systems.json").read_text()):
+            original = (
+                ROOT
+                / c["folder"]
+                / "patterns/assembly/rendering/glyph-transform/verification"
+            )
+            with (
+                self.subTest(system=c["machine_id"]),
+                tempfile.TemporaryDirectory() as name,
+            ):
+                folder = Path(name)
+                shutil.copytree(original, folder, dirs_exist_ok=True)
+                result = json.loads((folder / "results.json").read_text())
+                change(result)
+                (folder / "results.json").write_text(json.dumps(result))
+                if rejection is None:
+                    C.check(c, folder)
+                else:
+                    with self.assertRaisesRegex(AssertionError, rejection):
+                        C.check(c, folder)
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+
+        def forge(r: dict[str, Any]) -> None:
+            r["variants"]["customise"]["fixture_sha256"] = "0" * 64
+
+        self.retained(forge, "^Program bytes differ")
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+
+        def rewrite(r: dict[str, Any]) -> None:
+            r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+
+        self.retained(rewrite)
 
     def test_missing_variant(self) -> None:
         self.corrupt(lambda r, f: r["variants"].pop("rotation-fixed"))

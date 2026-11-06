@@ -5,8 +5,10 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import sys
 import zlib
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,6 +25,17 @@ def module(name, file):
 V = module("native", "verify-amiga-rectangle-overlap.py")
 P = module("png", "check-amiga-command-loops.py")
 T = V.T
+E = module("rectangle_bytes", "evidence_bytes.py")
+
+
+def program() -> Any:
+    """The pattern's build.py, run as the recorder runs it, with the pinned tools."""
+    return E.Build(
+        V.F,
+        (sys.executable, "build.py"),
+        tuple(f"build/{n}{ext}" for n in V.VARIANTS for ext in ("", ".adf")),
+        (("ASM198X", E.ASSEMBLER), ("BUILD198X", E.BUILDER)),
+    )
 
 
 def glyph(result):
@@ -69,10 +82,6 @@ def check(record=None):
     T.require(
         (r["system"], r["language"]) == ("commodore-amiga", "assembly"), "Wrong route"
     )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source/observer",
-    )
     T.require(r["configuration"] == cfg, "Changed configuration")
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing case")
     expected = [c["expected"] for c in V.C.cases(65535)]
@@ -99,6 +108,21 @@ def check(record=None):
             hashlib.sha256(raw).hexdigest() == c["executable_sha256"]
             and len(raw) == c["executable_bytes"],
             "Changed executable",
+        )
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            program(),
+            f"build/{name}",
+            cfg["assembler_sha256"],
+            recorded=raw,
+            build198x=cfg["build198x_sha256"],
+        )
+        E.require_program(
+            program(),
+            f"build/{name}.adf",
+            cfg["assembler_sha256"],
+            recorded_sha256=c["adf_sha256"],
+            build198x=cfg["build198x_sha256"],
         )
         body, relocs = V.hunk(raw)
         for i in relocs:

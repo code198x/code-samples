@@ -9,7 +9,9 @@ import shutil
 import tempfile
 import unittest
 import zlib
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
@@ -96,10 +98,49 @@ class TextLayout(unittest.TestCase):
         r["variants"]["positive"]["cases"] = []
         self.reject(c, f, r)
 
-    def test_missing_source(self) -> None:
-        c, f, r = self.fixture()
-        r["sources"].pop(next(iter(r["sources"])))
-        self.reject(c, f, r)
+    def retained(
+        self, change: Callable[[dict[str, Any]], None], rejection: str | None = None
+    ) -> None:
+        """Check every machine's record after `change`, in a copy of its folder.
+
+        With `rejection`, each check must fail with a message matching it.
+        """
+        for c in json.loads((C.V.S / "systems.json").read_text()):
+            original = (
+                ROOT
+                / c["folder"]
+                / "patterns/assembly/rendering/word-wrap/verification"
+            )
+            with (
+                self.subTest(system=c["machine_id"]),
+                tempfile.TemporaryDirectory() as name,
+            ):
+                folder = Path(name)
+                shutil.copytree(original, folder, dirs_exist_ok=True)
+                result = json.loads((folder / "results.json").read_text())
+                change(result)
+                (folder / "results.json").write_text(json.dumps(result))
+                if rejection is None:
+                    C.check(c, folder)
+                else:
+                    with self.assertRaisesRegex(AssertionError, rejection):
+                        C.check(c, folder)
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+
+        def forge(r: dict[str, Any]) -> None:
+            r["variants"]["customise"]["fixture_sha256"] = "0" * 64
+
+        self.retained(forge, "^Program bytes differ")
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+
+        def rewrite(r: dict[str, Any]) -> None:
+            r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+
+        self.retained(rewrite)
 
     def test_incomplete_call(self) -> None:
         c, f, r = self.fixture()

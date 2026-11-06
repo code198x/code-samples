@@ -96,9 +96,19 @@ class EvidenceControls(unittest.TestCase):
         self.record["variants"]["positive"]["emulator_sha256"] = "0" * 64
         self.reject()
 
-    def test_unbound_source_fails(self) -> None:
-        self.record["sources"].pop(next(iter(self.record["sources"])))
-        self.reject()
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        self.record["variants"]["wrong-name"]["fixture_sha256"] = "0" * 64
+        self.save()
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check(self.cfg, self.root)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        sources = list(self.record["sources"])[1:]
+        self.record["sources"] = dict.fromkeys(sources, "0" * 64)
+        self.save()
+        C.check(self.cfg, self.root)
 
     def test_unknown_machine_cannot_check_nothing(self) -> None:
         result = subprocess.run(

@@ -130,9 +130,19 @@ class EvidenceControls(unittest.TestCase):
         del self.record["variants"]["stride-fixed"]
         self.reject()
 
-    def test_missing_source_rejects(self) -> None:
-        self.record["sources"].pop(next(iter(self.record["sources"])))
-        self.reject()
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        self.record["variants"]["customise"]["fixture_sha256"] = "0" * 64
+        (self.out / "results.json").write_text(json.dumps(self.record))
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check(self.c, self.root)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        sources = list(self.record["sources"])[1:]
+        self.record["sources"] = dict.fromkeys(sources, "0" * 64)
+        (self.out / "results.json").write_text(json.dumps(self.record))
+        C.check(self.c, self.root)
 
     def test_missing_call_rejects(self) -> None:
         name = "positive.json.z"

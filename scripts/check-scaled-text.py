@@ -6,6 +6,7 @@ import importlib.util
 import json
 import zlib
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
@@ -17,6 +18,23 @@ spec.loader.exec_module(V)
 S = V.S
 M = V.M
 require = V.require
+BYTES = importlib.util.spec_from_file_location(
+    "scaled_text_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert BYTES and BYTES.loader
+E = importlib.util.module_from_spec(BYTES)
+BYTES.loader.exec_module(E)
+
+
+def fixture(c: dict[str, Any], variant: str) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        V.S / "build.py",
+        "build",
+        (c["machine_id"], E.ASSEMBLER, variant),
+        ROOT / c["folder"] / "patterns/assembly/rendering/scaled-text",
+        (f"build/{variant}/fixture.bin",),
+    )
 
 
 def check(c: dict, folder: Path | None = None) -> int:
@@ -26,11 +44,6 @@ def check(c: dict, folder: Path | None = None) -> int:
     )
     result = json.loads((folder / "results.json").read_text())
     require(result["machine_id"] == c["machine_id"], "Wrong machine")
-    require(
-        result["sources"]
-        == {str(f.relative_to(ROOT)): V.V.T.sha(f) for f in V.sources(c)},
-        "Source binding differs",
-    )
     tools = {t["tool"]: t for t in json.loads((S / "toolchain.json").read_text())}
     require(
         result["tools"]
@@ -38,6 +51,14 @@ def check(c: dict, folder: Path | None = None) -> int:
         "Tool binding differs",
     )
     require(set(result["variants"]) == set(V.B.VARIANTS), "Missing variant")
+    # The record is stale when its programs' bytes change, not its sources' text.
+    for variant, value in result["variants"].items():
+        E.require_program(
+            fixture(c, variant),
+            f"build/{variant}/fixture.bin",
+            result["tools"]["asm198x"],
+            recorded_sha256=value["fixture_sha256"],
+        )
     for name, digest in result["artifacts"].items():
         require(Path(name).name == name, "Escaped artifact")
         require(V.V.T.sha(folder / name) == digest, "Artifact checksum differs")

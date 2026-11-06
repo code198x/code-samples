@@ -69,18 +69,33 @@ class CellEvidenceFailures(unittest.TestCase):
     def test_unchanged_passes(self):
         self.assertEqual(G.verify(self.root), 4)
 
-    def test_changed_shared_source_fails(self):
-        p = self.root / "cross-platform/patterns/rendering/character-regions/6502.inc"
-        p.write_text(p.read_text() + "; changed\n")
-        with self.assertRaisesRegex(AssertionError, "Changed source"):
+    def forge(self, variant: str) -> None:
+        """Claim other bytes for one variant consistently, rebinding its file."""
+        v = self.folder()
+        d = json.loads((v / (variant + ".json")).read_text())
+        d["fixture_sha256"] = "0" * 64
+        (v / (variant + ".json")).write_text(json.dumps(d))
+        self.refresh()
+
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        self.forge("positive")
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
             G.verify(self.root)
 
-    def test_missing_source_identity_fails(self):
-        r = json.loads((self.folder() / "results.json").read_text())
-        r["sources"].pop(next(iter(r["sources"])))
-        self.save("results.json", r)
-        with self.assertRaisesRegex(AssertionError, "Missing source"):
+    def test_forged_control_program_is_rebuilt(self) -> None:
+        self.forge("unsafe-destination")
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
             G.verify(self.root)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed, added or removed source text alone does not make a record stale."""
+        p = self.root / "cross-platform/patterns/rendering/character-regions/6502.inc"
+        p.write_text(p.read_text() + "; changed\n")
+        r = json.loads((self.folder() / "results.json").read_text())
+        r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+        (self.folder() / "results.json").write_text(json.dumps(r))
+        self.assertEqual(G.verify(self.root), 4)
 
     def test_missing_rejection_fails(self):
         r = json.loads((self.folder() / "results.json").read_text())

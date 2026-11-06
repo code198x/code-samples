@@ -46,10 +46,20 @@ class GeometryEvidence(unittest.TestCase):
         r["positive"]["cases"] = []
         self.reject(cfg, out, r)
 
-    def test_no_missing_source(self):
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
         cfg, out, r = self.fixture()
-        r["sources"].pop(next(iter(r["sources"])))
-        self.reject(cfg, out, r)
+        next(iter(r["faults"].values()))["fixture_sha256"] = "0" * 64
+        (out / "results.json").write_text(json.dumps(r))
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.check_system(cfg, out)
+
+    def test_source_digests_are_provenance(self):
+        """Changed, added or removed source text alone does not make a record stale."""
+        cfg, out, r = self.fixture()
+        r["sources"] = dict.fromkeys(list(r["sources"])[1:], "0" * 64)
+        (out / "results.json").write_text(json.dumps(r))
+        C.check_system(cfg, out)
 
     def test_completed_receipt_required(self):
         cfg, out, r = self.fixture()

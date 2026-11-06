@@ -6,8 +6,27 @@ import argparse
 import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+
+SPEC = importlib.util.spec_from_file_location(
+    "bitmap_regions_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
+
+
+def fixture(root: Path, system: str, variant: str, folder: Path) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        root / "cross-platform/patterns/rendering/bitmap-regions/build.py",
+        "build",
+        (system, E.ASSEMBLER, variant),
+        folder,
+        ("build/fixture.bin",),
+    )
 
 
 def verify(root: Path) -> int:
@@ -64,10 +83,6 @@ def verify(root: Path) -> int:
             record["calls"] == 18 and record["isolated_rejections"] == 15,
             "Incomplete case counts",
         )
-        required = {str(p.relative_to(root)) for p in oracle.sources(cfg)}
-        require(set(record["sources"]) == required, "Missing source identity")
-        for path, digest in record["sources"].items():
-            require(oracle.T.sha(root / path) == digest, "Changed source: " + path)
         require(set(record["files"]) == files, "Missing evidence file")
         for path, digest in record["files"].items():
             require(oracle.T.sha(v / path) == digest, "Changed evidence: " + path)
@@ -75,6 +90,13 @@ def verify(root: Path) -> int:
         for variant in variants:
             item = json.loads((v / (variant + ".json")).read_text())
             raw = (v / (variant + ".bin")).read_bytes()
+            # The record is stale when its program's bytes change, not its sources' text.
+            E.require_program(
+                fixture(root, cfg["machine_id"], variant, folder),
+                "build/fixture.bin",
+                record["assembler_sha256"],
+                recorded_sha256=item["fixture_sha256"],
+            )
             require(
                 len(item["flags"]) == 19 and item["flags"][0] == 239,
                 "Unfinished execution",

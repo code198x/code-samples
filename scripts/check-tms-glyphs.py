@@ -20,6 +20,24 @@ V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
 M = V.M
 require = V.require
+spec = importlib.util.spec_from_file_location(
+    "glyph_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+if spec is None or spec.loader is None:
+    raise ValueError("Cannot load evidence_bytes")
+E = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(E)
+
+
+def fixture(c: dict[str, Any], variant: str, root: Path = ROOT) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        root / V.S.relative_to(ROOT) / "build.py",
+        "build",
+        (c["machine_id"], E.ASSEMBLER, variant),
+        root / c["folder"] / "patterns/assembly/rendering/custom-glyphs",
+        ("build/fixture.bin",),
+    )
 
 
 def check(c: dict[str, Any], root: Path = ROOT) -> None:
@@ -30,10 +48,6 @@ def check(c: dict[str, Any], root: Path = ROOT) -> None:
         "Incomplete evidence record",
     )
     require(record["machine_id"] == c["machine_id"], "Wrong machine")
-    required = {str(p.relative_to(ROOT)) for p in V.paths(c)}
-    require(set(record["sources"]) == required, "Source set incomplete")
-    for name, digest in record["sources"].items():
-        require(V.T.sha(root / name) == digest, "Source changed: " + name)
     tools = {
         t["tool"]: t
         for t in json.loads(
@@ -46,6 +60,13 @@ def check(c: dict[str, Any], root: Path = ROOT) -> None:
     required_artifacts = set()
     for variant in M.VARIANTS:
         result = record["variants"][variant]
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            fixture(c, variant, root),
+            "build/fixture.bin",
+            result["assembler_sha256"],
+            recorded_sha256=result["fixture_sha256"],
+        )
         require(
             result["emulator_sha256"] == tools[c["binary"]]["binary_sha256"],
             "Wrong emulator",

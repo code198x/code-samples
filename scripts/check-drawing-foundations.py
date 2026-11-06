@@ -7,6 +7,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 S = ROOT / "cross-platform/patterns/rendering/drawing-foundations"
@@ -17,6 +18,23 @@ assert spec and spec.loader
 V = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(V)
 require = V.require
+spec = importlib.util.spec_from_file_location(
+    "drawing_bytes", ROOT / "scripts/evidence_bytes.py"
+)
+assert spec and spec.loader
+E = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(E)
+
+
+def fixture(c: dict, variant: str, root: Path = ROOT) -> Any:
+    """The shared build.py's build(), called as the recorder calls it."""
+    return E.function(
+        root / S.relative_to(ROOT) / "build.py",
+        "build",
+        (c["machine_id"], E.ASSEMBLER, variant),
+        root / c["folder"] / "patterns/assembly/rendering" / c["family"],
+        ("build/fixture.bin",),
+    )
 
 
 def sha(p: Path) -> str:
@@ -31,31 +49,6 @@ def check(c: dict, root: Path = ROOT) -> None:
         set(record) == {"positive", "fault", "sources", "artifacts"},
         "Incomplete result record",
     )
-    required = {
-        str(p.relative_to(ROOT))
-        for p in [
-            S / "build.py",
-            S / "systems.json",
-            S / "toolchain.json",
-            Path(__file__),
-            ROOT / "scripts/verify-drawing-foundations.py",
-            ROOT / "scripts/verify-game-loops.py",
-            ROOT / "scripts/verify-tilemaps.py",
-        ]
-    }
-    required.add(str((folder / "demo.asm").relative_to(root)))
-    required.add(
-        str((S / (c["cpu"] + ".inc")).relative_to(ROOT))
-        if c["family"] == "pixels-and-boxes"
-        else str((folder / "glyphs.inc").relative_to(root))
-    )
-    if c["machine_id"] == "spectrum":
-        required.add(
-            "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc"
-        )
-    require(set(record["sources"]) == required, "Source set incomplete")
-    for name, digest in record["sources"].items():
-        require(sha(root / name) == digest, "Source changed: " + name)
     require(bool(record["artifacts"]), "No retained observations")
     for name, digest in record["artifacts"].items():
         require(Path(name).name == name, "Unsafe evidence name")
@@ -65,6 +58,13 @@ def check(c: dict, root: Path = ROOT) -> None:
     assembler = next(t for t in tools if t["tool"] == "asm198x")
     for variant in ["positive", "fault"]:
         r = record[variant]
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            fixture(c, variant, root),
+            "build/fixture.bin",
+            r["assembler_sha256"],
+            recorded_sha256=r["fixture_sha256"],
+        )
         require(
             r["emulator_sha256"] == tool["binary_sha256"], "Wrong released emulator"
         )
@@ -212,7 +212,7 @@ def check(c: dict, root: Path = ROOT) -> None:
                 )
     print(
         c["machine_id"],
-        "retained memory, pixels, costs, source identities and controls PASS",
+        "retained memory, pixels, costs, program bytes and controls PASS",
     )
 
 

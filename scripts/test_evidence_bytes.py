@@ -235,6 +235,23 @@ class Assemblers(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "did not write"):
                 E.rebuild(build, pin)
 
+    def test_function_build_calls_the_recorders_function(self) -> None:
+        """A function build imports the script and calls it with the pinned tool."""
+        pin = next(iter(E.releases()))
+        with tempfile.TemporaryDirectory() as temp:
+            script = Path(temp) / "build.py"
+            script.write_text(
+                "from pathlib import Path\n\n\n"
+                "def build(assembler, name):\n"
+                "    Path(name).write_text(assembler)\n"
+            )
+            build = E.function(
+                script, "build", (E.ASSEMBLER, "out.txt"), Path(temp), ("out.txt",)
+            )
+            self.assertEqual(
+                E.rebuild(build, pin)["out.txt"], str(E.assembler(pin)).encode()
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
