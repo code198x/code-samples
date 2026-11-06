@@ -26,7 +26,33 @@
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61"
   },
-  "observer_sha256": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
+  "observer_sha256": "edf2c82d4abe4069f8aa86a2b2cf7ba84dbdff33c5f68939664ee7e07702526a",
+  "fixture_programs": {
+    "spectrum/0/caller.sna": "5725af0350d8eadd506cc787392cbfddc00a206e8acc197ba4ef53a6da55965b",
+    "spectrum/1/caller.sna": "a4dca85d3acd8ee0d229bb41e4b018d2f5d3c6b952677ee63c7007f1d3e34830",
+    "spectrum/2/caller.sna": "228615a623ef0da443d13a1e453e6b43fe06fe02519fd7bd65af4037ab0e6d74",
+    "spectrum/3/caller.sna": "8276e10104c113b38b53c088d346724e91e79868cd772f7aeda9db5954791c78",
+    "spectrum/4/caller.sna": "724d2ce0ef8877d62e3e7408e60e8788ba84d67156ec387443f75d20d93052dc",
+    "spectrum/5/caller.sna": "080eb642b3d12ccd44b6e1e7e2aaf7fbb1d814a8e0d04e2dc420f1abc9bbc352",
+    "spectrum/6/caller.sna": "bce9ef03008e3386983ef24496fc55fffbf937aed30345eb686d5ccc1bcb25de",
+    "nes/0-0/fixture.nes": "b09c8424c9b9e532b6edae28a666595bc3d8f521ca04a76e7a2744543a4a3a5a",
+    "nes/1-0/fixture.nes": "cd61ad301ee1ee9a11295a151eb8f3bdc13d0a523135a39214232590167a4127",
+    "nes/8-0/fixture.nes": "b27e9afa56477a07cd0fceabf484415fb4aedc8c621ad1105a9c3d982aa5cb6d",
+    "nes/9-8/fixture.nes": "e1ffac9f2f67b533961fd3d9b05bf1d5d217c221c441d023d013d1430d27014e",
+    "nes/12-11/fixture.nes": "282777fd06ea0678be65649d3049d32220c89ad0d7fcb8283f8c48f242d9d61b",
+    "nes/63-32/fixture.nes": "4be5c175f8365fa74ff6df16a1e3c7908ba904cfa6faaa4ff5d00c3a355259f1",
+    "nes/64-0/fixture.nes": "c89c7b4b8ead44f7abc81e4b3cb2d0a860a2e94e511a7937b96614b85c96d5c1",
+    "nes/64-63/fixture.nes": "573402e27b540aa0452df4d7bbd169f727aaae8c029766d37377434b41b0e007",
+    "nes/64-255/fixture.nes": "9b76d8e878721feff799fab88eb6109b119bdbfd1023e2cf11ef05920e7969b1",
+    "nes/65-0/fixture.nes": "669703ecdf9977653f4bf56e9361c298486d4a246605255805376623fc246e9c",
+    "nes/255-0/fixture.nes": "c2040fe619ccdbc4122961b573127c4ce8804a63776291aae7245844256f3e22",
+    "bbc/fixture.bin": "c897e316d9eecebc213fd636fe82aabb7159d3a75e04d48d5abd3f23459e857a"
+  },
+  "caller_programs": {
+    "sinclair-zx-spectrum/patterns/assembly/rendering/software-scrolling/build/demo.tap": "9e17ba5abcb8edcac2610d616721d94fdc9d88d0a536ea1b88802570d3b606ca",
+    "nintendo-entertainment-system/patterns/assembly/rendering/nametable-scrolling/build/demo.nes": "686e6d1891b60e6cb991a4d7169f0ab81f00c360a936a7f20c5bb39cca95e816",
+    "bbc-micro/patterns/assembly/rendering/masked-sprites/build/loader.bas": "bc493ceb024cb4ae3b6880a82a9f80ed47d1a83053b119b339203c5c04abce9e"
+  },
   "captures": {
     "bbc.png": "2303de6ac046e18eb137e12ff5d2231b01a9f1a3fbd943a04fff3cdc77b4c6bb",
     "nes.png": "f8bff51f03496be3a24769d674373d84feee52bb5a1da1f6058325a0b487a839",

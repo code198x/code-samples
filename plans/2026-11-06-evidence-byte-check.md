@@ -171,10 +171,11 @@ Each batch is one pull request with CI green. Counts are checkers.
 | 2 | **Makefile families:** game-rules, gamekit, gameplay-patterns, nightone, nighttwo, playtools, pools-and-states, seeded-random, toolkit, worldkit, tia-maria, xl-coleco. Teaches the module build198x, whose ADFs these Amiga routes record. Staged-copy recorders (tia-maria, xl-coleco) rebuild from the same staged copy. Inventory files such as `bindings.json` stop comparing source and script entries; their record-file entries stay. | 12 | build198x in the module |
 | 3 | **Shared `build.py` families:** the rendering families (character, glyph, text, region, tile and bitmap patterns) and the rectangle-overlap ports. | 23 | — |
 | 4 | **Recorder-built programs:** the deadlines, input-edges, map and sprite recorders. Each recorder's source generator and argument list move into a function the checker also calls. | 23 | — |
+| 4b | **Unassigned and re-recorded:** `check-c64-rom-font.py`, whose recorder's build moves into a function the checker calls. The sprite lifecycle, clipping and phases checkers and `check-rendering-evidence.py`: their records kept no program identity, so each recorder gains a build-only `programs()` and the records are re-recorded, with the tools they pin, to add `fixture_programs` (and `caller_programs` where the recorder builds callers with their Makefiles). `check-fixed-characters.py` waits on a decision: its records pin no assembler. | 5 | build198x-adf in the module |
 | 5 | **build198x BASIC:** the 23 `check-basic-*` families and the C64 adventure parser. C64 and Spectrum routes rebuild with build198x 0.2.9; the BBC Micro route is typed (rule 2). | 24 | rule 2 |
 | 6 | **Typed BASIC and FORTH:** the Ace FORTH families and the stock-ROM BASIC deadlines and maps. | 15 | rule 2 |
 | 7 | **AMOS and Blitz.** | 13 | rule 2 |
-| 8 | **Mixed routes and inventories:** column-evidence, commodore-command-loops, dragon-ace, loop-language, msx-gameboy, aquarius-mtx and tilemaps, each route by its own rule; capability-coverage, probe-coverage and pattern-evidence stop re-hashing other families' sources and leave staleness to the owning checker. Any rule 3 case. | 10 | rule 2 |
+| 8 | **Mixed routes and inventories:** column-evidence, commodore-command-loops, dragon-ace, loop-language, msx-gameboy, aquarius-mtx, tilemaps, atari-turn-records and amiga-command-loops, each route by its own rule; capability-coverage, probe-coverage and pattern-evidence stop re-hashing other families' sources and leave staleness to the owning checker. Any rule 3 case. | 12 | rule 2 |
 
 The two checkers with no text pin (`check-c64-starters.py`,
 `check-pattern-library-prototype.py`) need no change.
@@ -207,6 +208,17 @@ None blocks batch 1, whose programs are all host-built by released tools.
 - **Each record rebuilds with the release it pins:** *agreed 2026-11-06*,
   until step 2's root pin. Step 2 then changes only `assembler()`, and the
   replay re-records whatever differs.
+- **Records without program identity are re-recorded under rule 1:**
+  *agreed 2026-11-06*, for batch 4b. The sprite lifecycle, clipping and
+  phases records and the rendering-families record kept sources, observer
+  and capture digests but no program bytes or digest, so there was nothing
+  to rebuild against. They were re-recorded with the same Asm198x and
+  build198x releases and emulators they already pin, adding only program
+  digests, rather than given a rule 3 exception. Every observation, count,
+  control and capture came out identical to the committed record; only
+  `fixture_programs`, `caller_programs` and the provenance digests of the
+  edited recorder scripts changed. This is the one batch that edits
+  records.
 - **Rule 3:** keeping a text pin, without scripts, for programs built by an
   unreleased tool. The alternative is to re-record those families with a
   released Asm198x first. Needed only if batch 8's survey of the

@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import shutil
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -64,36 +65,97 @@ def read(machine: Any, address: int, count: int) -> bytes:
     )
 
 
-def spectrum(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
+SCROLL_INITIAL = bytes((i * 37 + i // 29 + 19) % 256 for i in range(6144))
+SCROLL_CASES = [
+    (0, 0, 1),
+    (0, 1, 1),
+    (63, 2, 1),
+    (64, 64, 1),
+    (127, 2, 2),
+    (191, 1, 8),
+    (0, 192, 1),
+]
+NES_CASES = [
+    (0, 0),
+    (1, 0),
+    (8, 0),
+    (9, 8),
+    (12, 11),
+    (63, 32),
+    (64, 0),
+    (64, 63),
+    (64, 255),
+    (65, 0),
+    (255, 0),
+]
+
+
+def scroll_edge(height: int) -> bytes:
+    return bytes((i * 17 + 1) % 256 for i in range(height))
+
+
+def assemble_caller(folder: Path, source: str, assembler: str) -> None:
+    """Assemble a Spectrum CPU caller exactly as Z.execute does, without running it.
+
+    The checker rebuilds a recorded caller.sna through this, so if the two
+    ever assembled differently the rebuilt bytes would not match the record.
+    """
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "caller.asm").write_text(source)
+    shutil.copy2(
+        SP.parent / "bitmap-addressing/bitmap-addressing.inc",
+        folder / "bitmap-addressing.inc",
+    )
+    run(
+        [
+            assembler,
+            "--dialect",
+            "pasmo",
+            "--cpu",
+            "z80",
+            "--sym=caller.sym",
+            "--sna",
+            "caller.asm",
+            "-o",
+            "caller.sna",
+        ],
+        folder,
+    )
+
+
+def spectrum_callers(broken: bool = False) -> list[str]:
+    """The CPU caller each Spectrum scroll case assembles, in case order."""
     code = (SP / "scroll.inc").read_text()
     if broken:
         code = code.replace("    rra ", "    or a ; ")
     code += "\n" + (SP.parent / "bitmap-addressing/bitmap-addressing.inc").read_text()
-    initial = bytes((i * 37 + i // 29 + 19) % 256 for i in range(6144))
-    cases = [
-        (0, 0, 1),
-        (0, 1, 1),
-        (63, 2, 1),
-        (64, 64, 1),
-        (127, 2, 2),
-        (191, 1, 8),
-        (0, 192, 1),
-    ]
-    for n, (top, height, steps) in enumerate(cases):
-        edge = bytes((i * 17 + 1) % 256 for i in range(height))
+    callers = []
+    for top, height, steps in SCROLL_CASES:
+        edge = scroll_edge(height)
         body = "    ld hl,initial\n    ld de,$4000\n    ld bc,6144\n    ldir\n"
         for _ in range(steps):
             body += f"    ld hl,edge\n    ld d,{top}\n    ld b,{height}\n    call scroll_band_left\n"
         # Inputs and a page-end canary must survive. Caller helper checks stack.
         data = (
             "org $9000\ninitial: defb "
-            + ",".join(map(str, initial))
+            + ",".join(map(str, SCROLL_INITIAL))
             + "\norg $b100\nedge: defb "
             + ",".join(map(str, edge + b"\xa7"))
         )
+        callers.append(Z.caller(body, code, data))
+    return callers
+
+
+def spectrum(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
+    initial = SCROLL_INITIAL
+    cases = SCROLL_CASES
+    for n, ((top, height, steps), source) in enumerate(
+        zip(cases, spectrum_callers(broken), strict=True)
+    ):
+        edge = scroll_edge(height)
         actual = Z.execute(
             out / str(n),
-            Z.caller(body, code, data),
+            source,
             [(0x4000, 6144), (0xB100, len(edge) + 1)],
             argparse.Namespace(assembler=args.assembler, emulator=args.spectrum),
         )
@@ -114,9 +176,10 @@ def spectrum(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
     return len(cases)
 
 
-def nes_fixture(
-    args: argparse.Namespace, out: Path, count: int, first: int, broken: bool = False
-) -> None:
+def nes_build(
+    assembler: str, out: Path, count: int, first: int, broken: bool = False
+) -> dict[str, bytes]:
+    """Write and assemble one NES OAM fixture; return the object inputs it holds."""
     out.mkdir(parents=True, exist_ok=True)
     # Same independent generated inputs on every guest, including inactive and hidden rows.
     arrays = {
@@ -168,7 +231,7 @@ def nes_fixture(
     (out / "fixture.asm").write_text(text)
     run(
         [
-            args.assembler,
+            assembler,
             "--dialect",
             "ca65",
             "fixture.asm",
@@ -178,6 +241,13 @@ def nes_fixture(
         ],
         out,
     )
+    return arrays
+
+
+def nes_fixture(
+    args: argparse.Namespace, out: Path, count: int, first: int, broken: bool = False
+) -> None:
+    arrays = nes_build(args.assembler, out, count, first, broken)
     m = T.Machine(
         [args.nes, "--mcp", "--rom", str(out / "fixture.nes"), "--region", "ntsc"]
     )
@@ -236,33 +306,39 @@ def nes_fixture(
         m.close()
 
 
-def bbc(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
+BBC_ADDRESSES = [0x5800, 0x5808, 0x5938, 0x5940, 0x7FF8]
+BBC_BACKGROUND = bytes([0x13, 0xA5, 0xFF, 0, 0x81, 0x24, 0x42, 0x7E])
+BBC_SHAPE = bytes(
+    [
+        0xE7,
+        0x18,
+        0xC3,
+        0x3C,
+        0x81,
+        0x7E,
+        0x24,
+        0xDB,
+        0,
+        0xFF,
+        0xA5,
+        0x5A,
+        0xDB,
+        0x24,
+        0xFF,
+        0,
+    ]
+)
+
+
+def bbc_build(assembler: str, out: Path, broken: bool = False) -> None:
+    """Write and assemble the BBC masked-cell fixture."""
     out.mkdir(parents=True, exist_ok=True)
     code = (BB / "masked.inc").read_text()
     if broken:
         code = code.replace("    and mask_byte", "    ora mask_byte")
-    addresses = [0x5800, 0x5808, 0x5938, 0x5940, 0x7FF8]
-    bg = bytes([0x13, 0xA5, 0xFF, 0, 0x81, 0x24, 0x42, 0x7E])
-    shape = bytes(
-        [
-            0xE7,
-            0x18,
-            0xC3,
-            0x3C,
-            0x81,
-            0x7E,
-            0x24,
-            0xDB,
-            0,
-            0xFF,
-            0xA5,
-            0x5A,
-            0xDB,
-            0x24,
-            0xFF,
-            0,
-        ]
-    )
+    addresses = BBC_ADDRESSES
+    bg = BBC_BACKGROUND
+    shape = BBC_SHAPE
     text = "*=$3000\nstart:\n cld\n cli\n lda #<shape\n sta pairs_ptr\n lda #>shape\n sta pairs_ptr+1\n"
     for n, addr in enumerate(addresses):
         text += f" lda #<{addr}\n sta screen_ptr\n lda #>{addr}\n sta screen_ptr+1\n ldy #7\nseed_{n}:\n lda background,y\n sta (screen_ptr),y\n dey\n bpl seed_{n}\n jsr save_background\n jsr draw_masked_cell\n ldy #7\nrecord_{n}:\n lda (screen_ptr),y\n sta ${0x4000 + n * 16:04x},y\n dey\n bpl record_{n}\n jsr restore_background\n ldy #7\nrestore_{n}:\n lda (screen_ptr),y\n sta ${0x4008 + n * 16:04x},y\n dey\n bpl restore_{n}\n"
@@ -278,7 +354,7 @@ def bbc(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
     (out / "fixture.asm").write_text(text)
     run(
         [
-            args.assembler,
+            assembler,
             "--dialect",
             "acme",
             "fixture.asm",
@@ -288,6 +364,13 @@ def bbc(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
         ],
         out,
     )
+
+
+def bbc(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
+    bbc_build(args.assembler, out, broken)
+    addresses = BBC_ADDRESSES
+    bg = BBC_BACKGROUND
+    shape = BBC_SHAPE
     data = (out / "fixture.bin").read_bytes()
     lines = [
         "10 MODE 4",
@@ -334,6 +417,37 @@ def bbc(args: argparse.Namespace, out: Path, broken: bool = False) -> int:
     finally:
         m.close()
     return len(addresses)
+
+
+CALLER_PROGRAMS = [
+    (SP, "build/demo.tap"),
+    (NS, "build/demo.nes"),
+    (BB, "build/loader.bas"),
+]
+
+
+def fixture_programs() -> list[str]:
+    """Each fixture program the record pins, relative to the output folder."""
+    return (
+        [f"spectrum/{n}/caller.sna" for n in range(len(SCROLL_CASES))]
+        + [f"nes/{count}-{first}/fixture.nes" for count, first in NES_CASES]
+        + ["bbc/fixture.bin"]
+    )
+
+
+def programs(assembler: str, out: str) -> None:
+    """Build every fixture program the record pins into `out`, without running any.
+
+    The recorder builds the same programs through the same functions before
+    running them; the checker calls this to rebuild them with the pinned
+    assembler and compare their bytes with the record.
+    """
+    folder = Path(out)
+    for n, source in enumerate(spectrum_callers()):
+        assemble_caller(folder / "spectrum" / str(n), source, assembler)
+    for count, first in NES_CASES:
+        nes_build(assembler, folder / f"nes/{count}-{first}", count, first)
+    bbc_build(assembler, folder / "bbc")
 
 
 def capture_callers(args: argparse.Namespace, out: Path) -> None:
@@ -430,19 +544,7 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     (out / "results.json").unlink(missing_ok=True)
     counts = {"spectrum": spectrum(args, out / "spectrum")}
-    cases = [
-        (0, 0),
-        (1, 0),
-        (8, 0),
-        (9, 8),
-        (12, 11),
-        (63, 32),
-        (64, 0),
-        (64, 63),
-        (64, 255),
-        (65, 0),
-        (255, 0),
-    ]
+    cases = NES_CASES
     for count, first in cases:
         nes_fixture(args, out / f"nes/{count}-{first}", count, first)
     counts["nes"] = len(cases)
@@ -486,6 +588,11 @@ def main() -> None:
         "mutants_rejected": rejected,
         "sources": {str(f.relative_to(ROOT)): sha(f) for f in files},
         "observer_sha256": sha(Path(__file__)),
+        "fixture_programs": {name: sha(out / name) for name in fixture_programs()},
+        "caller_programs": {
+            str((folder / name).relative_to(ROOT)): sha(folder / name)
+            for folder, name in CALLER_PROGRAMS
+        },
         "captures": {p.name: sha(p) for p in sorted((out / "callers").glob("*.png"))},
         "tools": {
             name: sha(Path(getattr(args, name)))

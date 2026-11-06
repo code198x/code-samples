@@ -1,35 +1,63 @@
-"""Reject stale clipping execution records. This guard does not run a guest."""
+"""Reject stale clipping execution records. This guard does not run a guest.
+
+A record is stale when its programs' bytes change. The guard rebuilds every
+fixture through the recorder's own programs(), with the Asm198x and
+build198x releases the record pins, and compares the bytes with the record.
+Source and observer digests are provenance only.
+"""
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDERS = {
-    prefix + "/patterns/assembly/rendering/clipped-sprites/": {
-        "clip.inc",
-        "draw.inc",
-        "shapes.inc",
-        "demo.asm",
-        "Makefile",
-    }
-    | ({"loader.py"} if prefix == "bbc-micro" else set())
-    for prefix in ["sinclair-zx-spectrum", "bbc-micro", "commodore-amiga"]
-}
-REQUIRED = {prefix + name for prefix, names in FOLDERS.items() for name in names} | {
-    "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc",
-    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc",
-    "scripts/verify-sprite-lifecycle.py",
-    "scripts/verify-rendering-families.py",
-    "scripts/verify-game-loops.py",
-    "scripts/verify-z80-library-routines.py",
-}
+RECORDER = "scripts/verify-sprite-clipping.py"
+EVIDENCE = "docs/sprite-clipping/verification"
+
+SPEC = importlib.util.spec_from_file_location(
+    "clipping_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
 
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def recorder(root: Path) -> Any:
+    spec = importlib.util.spec_from_file_location("clipping_recorder", root / RECORDER)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def require_programs(root: Path, record: dict) -> None:
+    """Rebuild every pinned program with the pinned tools and compare bytes."""
+    tools = record.get("tools", {})
+    pin, builder = tools.get("assembler"), tools.get("build198x")
+    if not pin or not builder:
+        raise ValueError("Missing clipping tool pins")
+    fixtures = record.get("fixture_programs", {})
+    if set(fixtures) != set(recorder(root).fixture_programs()):
+        raise ValueError("Missing clipping program bindings")
+    out = root / "build/evidence/sprite-clipping"
+    out.mkdir(parents=True, exist_ok=True)
+    build = E.function(
+        root / RECORDER,
+        "programs",
+        (E.ASSEMBLER, E.BUILDER, str(out)),
+        out,
+        tuple(sorted(fixtures)),
+    )
+    for name, digest in sorted(fixtures.items()):
+        E.require_program(build, name, pin, recorded_sha256=digest, build198x=builder)
 
 
 def validate(root: Path, record: dict) -> None:
@@ -47,27 +75,17 @@ def validate(root: Path, record: dict) -> None:
         isinstance(value, str) and "mismatch" in value for value in controls.values()
     ):
         raise ValueError("Missing clipping failure controls")
-    if set(record.get("sources", {})) != REQUIRED:
-        raise ValueError("Missing clipping source bindings")
-    for path, digest in record["sources"].items():
-        if sha(root / path) != digest:
-            raise ValueError("Changed clipping source: " + path)
-    if sha(root / "scripts/verify-sprite-clipping.py") != record.get("observer_sha256"):
-        raise ValueError("Changed clipping observer")
     if set(record.get("captures", {})) != {"spectrum.png", "amiga.png", "bbc.png"}:
         raise ValueError("Missing clipping caller captures")
     for name, digest in record["captures"].items():
-        if sha(root / "docs/sprite-clipping/verification" / name) != digest:
+        if sha(root / EVIDENCE / name) != digest:
             raise ValueError("Changed clipping capture: " + name)
+    require_programs(root, record)
 
 
 if __name__ == "__main__":
-    validate(
-        ROOT,
-        json.loads(
-            (ROOT / "docs/sprite-clipping/verification/results.json").read_text()
-        ),
-    )
+    validate(ROOT, json.loads((ROOT / EVIDENCE / "results.json").read_text()))
     print(
-        "Clipping source, observer, workload, controls and captures match retained evidence. No fresh runtime execution by this guard."
+        "Clipping programs rebuild to the recorded bytes; workload, controls and "
+        "captures match retained evidence. No fresh runtime execution by this guard."
     )

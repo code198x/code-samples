@@ -49,28 +49,50 @@ def masked_picture(background: bytes, pairs: bytes, x: int, y: int) -> bytes:
     return bytes(out)
 
 
-def spectrum(args: argparse.Namespace, out: Path, mutant: str = "") -> dict:
+SPECTRUM_INITIAL = bytes((i * 37 + i // 19 + 31) % 256 for i in range(6144))
+SPECTRUM_RECTANGLES = [
+    (0, 0, 0, 16),
+    (31, 191, 1, 1),
+    (0, 0, 32, 192),
+    (1, 63, 2, 2),
+    (10, 127, 3, 2),
+    (30, 176, 2, 16),
+    (0, 0, 32, 0),
+]
+SPECTRUM_OVERLAPS = [
+    (64, 56, 72, 64),
+    (112, 120, 120, 128),
+    (240, 168, 232, 176),
+    (0, 0, 0, 8),
+]
+
+
+AMIGA_RECTANGLES = [
+    (0, 16, 40),
+    (2, 0, 40),
+    (1, 1, 4),
+    (2, 16, 40),
+    (20, 3, 40),
+    (64, 1, 128),
+    (1, 1024, 2),
+]
+BBC_OVERLAPS = [(0x5800, 0x5800), (0x5938, 0x5940), (0x7FF8, 0x7FF8)]
+
+
+def spectrum_callers(mutant: str = "") -> dict[str, str]:
+    """The CPU caller each Spectrum case assembles, by case folder name."""
     code = (SP / "background.inc").read_text()
     if mutant == "save":
         code = code.replace("    ld (hl),a", "    xor a\n    ld (hl),a")
     code += "\n" + (SP.parent / "bitmap-addressing/bitmap-addressing.inc").read_text()
-    initial = bytes((i * 37 + i // 19 + 31) % 256 for i in range(6144))
     declarations = (
         "org $9000\ninitial: defb "
-        + ",".join(map(str, initial))
+        + ",".join(map(str, SPECTRUM_INITIAL))
         + "\norg $b100\nbuffer: defs 6145,$a7\n"
     )
     seed = "    ld hl,initial\n    ld de,$4000\n    ld bc,6144\n    ldir\n"
-    cases = [
-        (0, 0, 0, 16),
-        (31, 191, 1, 1),
-        (0, 0, 32, 192),
-        (1, 63, 2, 2),
-        (10, 127, 3, 2),
-        (30, 176, 2, 16),
-        (0, 0, 32, 0),
-    ]
-    for n, (column, y, width, height) in enumerate(cases):
+    callers = {}
+    for n, (column, y, width, height) in enumerate(SPECTRUM_RECTANGLES):
         address = Z.screen_address(y, column)
         body = (
             seed
@@ -78,9 +100,33 @@ def spectrum(args: argparse.Namespace, out: Path, mutant: str = "") -> dict:
         )
         body += "    ld hl,$4000\n    ld de,$4001\n    ld bc,6143\n    ld (hl),0\n    ldir\n"
         body += f"    ld de,${address:04x}\n    ld hl,buffer\n    ld bc,{width * 256 + height}\n    call restore_rect\n"
+        callers[f"rect-{n}"] = Z.caller(body, code, declarations)
+    masked = (SP.parent / "masked-sprites/masked.inc").read_text()
+    extra = "\nSPRITE_W equ 2\n" + masked + "\n" + (SP / "shapes.inc").read_text()
+    for n, (ax, ay, bx, by) in enumerate(SPECTRUM_OVERLAPS):
+        aa = Z.screen_address(ay, ax // 8)
+        ba = Z.screen_address(by, bx // 8)
+        body = seed
+        for address, slot, label in [(aa, 0xD100, "shape_a"), (ba, 0xD200, "shape_b")]:
+            body += f"    ld de,${address:04x}\n    ld hl,${slot:04x}\n    ld bc,$0210\n    call save_rect\n    ld de,${address:04x}\n    ld hl,{label}\n    ld c,16\n    call draw_sprite\n"
+        body += "    ld hl,$4000\n    ld de,$b000\n    ld bc,6144\n    ldir\n"
+        restore = [(ba, 0xD200), (aa, 0xD100)]
+        if mutant == "order":
+            restore.reverse()
+        for address, slot in restore:
+            body += f"    ld de,${address:04x}\n    ld hl,${slot:04x}\n    ld bc,$0210\n    call restore_rect\n"
+        callers[f"overlap-{n}"] = Z.caller(body, code + extra, declarations)
+    return callers
+
+
+def spectrum(args: argparse.Namespace, out: Path, mutant: str = "") -> dict:
+    initial = SPECTRUM_INITIAL
+    cases = SPECTRUM_RECTANGLES
+    callers = spectrum_callers(mutant)
+    for n, (column, y, width, height) in enumerate(cases):
         actual = Z.execute(
             out / f"rect-{n}",
-            Z.caller(body, code, declarations),
+            callers[f"rect-{n}"],
             [(0x4000, 6144), (0xB100, width * height + 1), (0xB000, 2)],
             argparse.Namespace(assembler=args.assembler, emulator=args.spectrum),
         )
@@ -100,29 +146,11 @@ def spectrum(args: argparse.Namespace, out: Path, mutant: str = "") -> dict:
             "Spectrum buffer pointer mismatch",
         )
     a, b = shape_pairs()
-    masked = (SP.parent / "masked-sprites/masked.inc").read_text()
-    extra = "\nSPRITE_W equ 2\n" + masked + "\n" + (SP / "shapes.inc").read_text()
-    locations = [
-        (64, 56, 72, 64),
-        (112, 120, 120, 128),
-        (240, 168, 232, 176),
-        (0, 0, 0, 8),
-    ]
+    locations = SPECTRUM_OVERLAPS
     for n, (ax, ay, bx, by) in enumerate(locations):
-        aa = Z.screen_address(ay, ax // 8)
-        ba = Z.screen_address(by, bx // 8)
-        body = seed
-        for address, slot, label in [(aa, 0xD100, "shape_a"), (ba, 0xD200, "shape_b")]:
-            body += f"    ld de,${address:04x}\n    ld hl,${slot:04x}\n    ld bc,$0210\n    call save_rect\n    ld de,${address:04x}\n    ld hl,{label}\n    ld c,16\n    call draw_sprite\n"
-        body += "    ld hl,$4000\n    ld de,$b000\n    ld bc,6144\n    ldir\n"
-        restore = [(ba, 0xD200), (aa, 0xD100)]
-        if mutant == "order":
-            restore.reverse()
-        for address, slot in restore:
-            body += f"    ld de,${address:04x}\n    ld hl,${slot:04x}\n    ld bc,$0210\n    call restore_rect\n"
         actual = Z.execute(
             out / f"overlap-{n}",
-            Z.caller(body, code + extra, declarations),
+            callers[f"overlap-{n}"],
             [(0x4000, 6144), (0xB000, 6144)],
             argparse.Namespace(assembler=args.assembler, emulator=args.spectrum),
         )
@@ -134,7 +162,10 @@ def spectrum(args: argparse.Namespace, out: Path, mutant: str = "") -> dict:
     return {"rectangles": len(cases), "overlaps": len(locations)}
 
 
-def amiga(args: argparse.Namespace, out: Path, mutant: str = "") -> dict:
+def amiga_build(
+    assembler: str, build198x: str, out: Path, mutant: str = ""
+) -> list[tuple[str, bytes]]:
+    """Write, assemble and master the Amiga fixture; return its byte checks."""
     out.mkdir(parents=True, exist_ok=True)
     code = (AM / "bob.inc").read_text()
     if mutant == "mask":
@@ -149,15 +180,7 @@ start:
 """
     data = []
     checks = []
-    cases = [
-        (0, 16, 40),
-        (2, 0, 40),
-        (1, 1, 4),
-        (2, 16, 40),
-        (20, 3, 40),
-        (64, 1, 128),
-        (1, 1024, 2),
-    ]
+    cases = AMIGA_RECTANGLES
     for n, (width, height, stride) in enumerate(cases):
         length = stride * height
         size = width * height * 2
@@ -291,7 +314,7 @@ ready: dc.w 0
     (out / "fixture.asm").write_text(body + "\n".join(data) + "\n")
     R.run(
         [
-            args.assembler,
+            assembler,
             "--dialect",
             "vasm",
             "--exe",
@@ -303,9 +326,14 @@ ready: dc.w 0
         out,
     )
     R.run(
-        [args.build198x, "adf", "fixture", "-o", "fixture.adf", "--name", "fixture"],
+        [build198x, "adf", "fixture", "-o", "fixture.adf", "--name", "fixture"],
         out,
     )
+    return checks
+
+
+def amiga(args: argparse.Namespace, out: Path, mutant: str = "") -> dict:
+    checks = amiga_build(args.assembler, args.build198x, out, mutant)
     symbols = T.symbols(out / "fixture.sym")
     m = T.Machine(
         [
@@ -329,7 +357,7 @@ ready: dc.w 0
         (out / "observations.json").write_text(json.dumps(observed, indent=2) + "\n")
     finally:
         m.close()
-    return {"rectangles": len(cases), "overlaps": 1}
+    return {"rectangles": len(AMIGA_RECTANGLES), "overlaps": 1}
 
 
 def amiga_base(m: Any, symbols: dict) -> int:
@@ -348,7 +376,10 @@ def amiga_base(m: Any, symbols: dict) -> int:
     raise ValueError("Amiga executable did not reach its ready marker")
 
 
-def bbc(args: argparse.Namespace, out: Path, wrong_order: bool = False) -> dict:
+def bbc_build(
+    assembler: str, out: Path, wrong_order: bool = False
+) -> tuple[bytes, bytes, bytes]:
+    """Write and assemble the BBC fixture; return its expected bytes and shapes."""
     out.mkdir(parents=True, exist_ok=True)
     bg = bytes([0x13, 0xA5, 0xFF, 0, 0x81, 0x24, 0x42, 0x7E])
     a = bytes(
@@ -393,7 +424,7 @@ def bbc(args: argparse.Namespace, out: Path, wrong_order: bool = False) -> dict:
     )
     body = "*=$3000\nstart:\n cld\n cli\n"
     expected = bytearray()
-    cases = [(0x5800, 0x5800), (0x5938, 0x5940), (0x7FF8, 0x7FF8)]
+    cases = BBC_OVERLAPS
     for n, (aa, ba) in enumerate(cases):
         scene = {aa: bg, ba: bg}
         for k, address in enumerate(dict.fromkeys([aa, ba])):
@@ -441,7 +472,7 @@ def bbc(args: argparse.Namespace, out: Path, wrong_order: bool = False) -> dict:
     (out / "fixture.asm").write_text(body)
     R.run(
         [
-            args.assembler,
+            assembler,
             "--dialect",
             "acme",
             "--sym=fixture.sym",
@@ -451,6 +482,11 @@ def bbc(args: argparse.Namespace, out: Path, wrong_order: bool = False) -> dict:
         ],
         out,
     )
+    return bytes(expected), a, b
+
+
+def bbc(args: argparse.Namespace, out: Path, wrong_order: bool = False) -> dict:
+    expected, a, b = bbc_build(args.assembler, out, wrong_order)
     m = bbc_load(args, (out / "fixture.bin").read_bytes())
     try:
         for _ in range(100):
@@ -469,7 +505,7 @@ def bbc(args: argparse.Namespace, out: Path, wrong_order: bool = False) -> dict:
         (out / "observations.json").write_text(json.dumps(list(actual)) + "\n")
     finally:
         m.close()
-    return {"overlaps": len(cases)}
+    return {"overlaps": len(BBC_OVERLAPS)}
 
 
 def bbc_ptr(address: int, slot: str) -> str:
@@ -506,6 +542,35 @@ def bbc_load(args: argparse.Namespace, data: bytes) -> Any:
     except BaseException:
         m.close()
         raise
+
+
+CALLER_PROGRAMS = [
+    (SP, "build/demo.tap"),
+    (BB, "build/demo.bin"),
+    (AM, "build/demo.adf"),
+]
+
+
+def fixture_programs() -> list[str]:
+    """Each fixture program the record pins, relative to the output folder."""
+    return [f"spectrum/{name}/caller.sna" for name in spectrum_callers()] + [
+        "amiga/fixture.adf",
+        "bbc/fixture.bin",
+    ]
+
+
+def programs(assembler: str, build198x: str, out: str) -> None:
+    """Build every fixture program the record pins into `out`, without running any.
+
+    The recorder builds the same programs through the same functions before
+    running them; the checker calls this to rebuild them with the pinned
+    tools and compare their bytes with the record.
+    """
+    folder = Path(out)
+    for name, source in spectrum_callers().items():
+        R.assemble_caller(folder / "spectrum" / name, source, assembler)
+    amiga_build(assembler, build198x, folder / "amiga")
+    bbc_build(assembler, folder / "bbc")
 
 
 def callers(args: argparse.Namespace, out: Path) -> None:
@@ -644,6 +709,11 @@ def main() -> None:
         "rejected_controls": controls,
         "sources": {str(p.relative_to(ROOT)): R.sha(p) for p in sorted(files)},
         "observer_sha256": R.sha(Path(__file__)),
+        "fixture_programs": {name: R.sha(out / name) for name in fixture_programs()},
+        "caller_programs": {
+            str((folder / name).relative_to(ROOT)): R.sha(folder / name)
+            for folder, name in CALLER_PROGRAMS
+        },
         "tools": {
             n: R.sha(Path(getattr(args, n)))
             for n in ["assembler", "build198x", "spectrum", "bbc", "amiga"]

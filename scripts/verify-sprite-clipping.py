@@ -110,12 +110,12 @@ def data_bytes(data: bytes, directive: str) -> str:
     )
 
 
-def compile_bbc(args: argparse.Namespace, out: Path, source: str) -> tuple[bytes, dict]:
+def compile_bbc(assembler: str, out: Path, source: str) -> tuple[bytes, dict]:
     out.mkdir(parents=True, exist_ok=True)
     (out / "fixture.asm").write_text(source)
     R.run(
         [
-            args.assembler,
+            assembler,
             "--dialect",
             "acme",
             "--sym=fixture.sym",
@@ -161,14 +161,13 @@ def bbc_cpu_load(args: argparse.Namespace, data: bytes) -> Any:
         raise
 
 
-def amiga_machine(
-    args: argparse.Namespace, out: Path, source: str
-) -> tuple[Any, dict, int]:
+def amiga_build(assembler: str, build198x: str, out: Path, source: str) -> None:
+    """Assemble an Amiga fixture and master it to fixture.adf."""
     out.mkdir(parents=True, exist_ok=True)
     (out / "fixture.asm").write_text(source)
     R.run(
         [
-            args.assembler,
+            assembler,
             "--dialect",
             "vasm",
             "--exe",
@@ -179,7 +178,13 @@ def amiga_machine(
         ],
         out,
     )
-    R.run([args.build198x, "fixture", "-o", "fixture.adf", "--name", "fixture"], out)
+    R.run([build198x, "fixture", "-o", "fixture.adf", "--name", "fixture"], out)
+
+
+def amiga_machine(
+    args: argparse.Namespace, out: Path, source: str
+) -> tuple[Any, dict, int]:
+    amiga_build(args.assembler, args.build198x, out, source)
     symbols = T.symbols(out / "fixture.sym")
     machine = T.Machine(
         [
@@ -200,9 +205,8 @@ def amiga_machine(
         raise
 
 
-def axes(
-    args: argparse.Namespace, out: Path, system: str, broken: bool = False
-) -> None:
+def axis_source(system: str, broken: bool = False) -> str:
+    """The caller that runs every axis case through one system's clip_axis."""
     code = (folder(system) / "clip.inc").read_text()
     if broken:
         code = code.replace(
@@ -223,21 +227,13 @@ axis_next:
     sbc hl,de
     jr nz,axis_next
 """
-        source = Z.caller(
+        return Z.caller(
             body,
             code,
             "org $9000\nrecords:\n" + data_bytes(table(), "defb") + "records_end:\n",
         )
-        actual = bytes(
-            Z.execute(
-                out,
-                source,
-                [(0x9000, len(table()))],
-                argparse.Namespace(assembler=args.assembler, emulator=args.spectrum),
-            )[0]
-        )
-    elif system == "bbc":
-        source = (
+    if system == "bbc":
+        return (
             """*=$3000
 start:
     cld
@@ -270,20 +266,8 @@ hold: jmp hold
             + data_bytes(table(), "!byte")
             + "records_end:\n"
         )
-        data, symbols = compile_bbc(args, out, source)
-        m = bbc_cpu_load(args, data)
-        try:
-            for _ in range(100):
-                if R.read(m, 0x2FFF, 1) == b"\xca":
-                    break
-                m.call("run_frames", frames=20)
-            require(R.read(m, 0x2FFF, 1) == b"\xca", "BBC axis caller did not finish")
-            actual = R.read(m, symbols["records"], len(table()))
-        finally:
-            m.close()
-    else:
-        source = (
-            """    section code,code_c
+    return (
+        """    section code,code_c
 start:
     lea records,a3
 axis_next:
@@ -304,11 +288,39 @@ signature: dc.b "198XCLIPAXIS",0
     even
 ready: dc.w 0
 """
-            + code
-            + "\nrecords:\n"
-            + data_bytes(table(True), "dc.b")
-            + "records_end:\n"
+        + code
+        + "\nrecords:\n"
+        + data_bytes(table(True), "dc.b")
+        + "records_end:\n"
+    )
+
+
+def axes(
+    args: argparse.Namespace, out: Path, system: str, broken: bool = False
+) -> None:
+    source = axis_source(system, broken)
+    if system == "spectrum":
+        actual = bytes(
+            Z.execute(
+                out,
+                source,
+                [(0x9000, len(table()))],
+                argparse.Namespace(assembler=args.assembler, emulator=args.spectrum),
+            )[0]
         )
+    elif system == "bbc":
+        data, symbols = compile_bbc(args.assembler, out, source)
+        m = bbc_cpu_load(args, data)
+        try:
+            for _ in range(100):
+                if R.read(m, 0x2FFF, 1) == b"\xca":
+                    break
+                m.call("run_frames", frames=20)
+            require(R.read(m, 0x2FFF, 1) == b"\xca", "BBC axis caller did not finish")
+            actual = R.read(m, symbols["records"], len(table()))
+        finally:
+            m.close()
+    else:
         m, symbols, base = amiga_machine(args, out, source)
         try:
             actual = R.read(m, base + symbols["records"], len(table(True)))
@@ -384,10 +396,29 @@ def flatten(path: Path) -> str:
     )
 
 
-def scenes(
-    args: argparse.Namespace, out: Path, system: str, broken: bool = False
-) -> None:
+def spectrum_tap(assembler: str, out: Path, source: str) -> None:
+    """Assemble a Spectrum scene to a BASIC-loader tape, fixture.tap."""
     out.mkdir(parents=True, exist_ok=True)
+    (out / "fixture.asm").write_text(source)
+    R.run(
+        [
+            assembler,
+            "--dialect",
+            "pasmo",
+            "--cpu",
+            "z80",
+            "--tapbas",
+            "--sym=fixture.sym",
+            "fixture.asm",
+            "-o",
+            "fixture.tap",
+        ],
+        out,
+    )
+
+
+def scene_source(system: str, broken: bool = False) -> str:
+    """One system's scene caller, flattened, optionally without its LEFT crop."""
     source = flatten(folder(system) / "demo.asm")
     if broken:
         # Deliberately lose LEFT crop source offset, leaving clipping bounds intact.
@@ -400,23 +431,16 @@ def scenes(
             )
         else:
             source = source.replace("    add.w d6,d1", "    add.w #0,d1")
+    return source
+
+
+def scenes(
+    args: argparse.Namespace, out: Path, system: str, broken: bool = False
+) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    source = scene_source(system, broken)
     if system == "spectrum":
-        (out / "fixture.asm").write_text(source)
-        R.run(
-            [
-                args.assembler,
-                "--dialect",
-                "pasmo",
-                "--cpu",
-                "z80",
-                "--tapbas",
-                "--sym=fixture.sym",
-                "fixture.asm",
-                "-o",
-                "fixture.tap",
-            ],
-            out,
-        )
+        spectrum_tap(args.assembler, out, source)
         symbols = T.symbols(out / "fixture.sym")
         m = T.Machine([args.spectrum, "--mcp", "--rom", str(args.rom)])
         try:
@@ -445,7 +469,7 @@ def scenes(
         finally:
             m.close()
     elif system == "bbc":
-        data, symbols = compile_bbc(args, out, source)
+        data, symbols = compile_bbc(args.assembler, out, source)
         m = bbc_cpu_load(args, data) if broken else L.bbc_load(args, data)
         try:
             for _ in range(100):
@@ -509,6 +533,40 @@ def _scene_tail(
     )
     if not broken:
         m.call("save_screenshot", path=str(out / capture))
+
+
+FIXTURES = {"spectrum": "caller.sna", "bbc": "fixture.bin", "amiga": "fixture.adf"}
+SCENES = {"spectrum": "fixture.tap", "bbc": "fixture.bin", "amiga": "fixture.adf"}
+
+
+def fixture_programs() -> list[str]:
+    """Each fixture program the record pins, relative to the output folder."""
+    return [
+        f"{system}/{kind}/{name}"
+        for system in SYSTEMS
+        for kind, name in [("axis", FIXTURES[system]), ("scene", SCENES[system])]
+    ]
+
+
+def programs(assembler: str, build198x: str, out: str) -> None:
+    """Build every fixture program the record pins into `out`, without running any.
+
+    The recorder builds the same programs through the same functions before
+    running them; the checker calls this to rebuild them with the pinned
+    tools and compare their bytes with the record.
+    """
+    for system in SYSTEMS:
+        axis = Path(out) / system / "axis"
+        scene = Path(out) / system / "scene"
+        if system == "spectrum":
+            R.assemble_caller(axis, axis_source(system), assembler)
+            spectrum_tap(assembler, scene, scene_source(system))
+        elif system == "bbc":
+            compile_bbc(assembler, axis, axis_source(system))
+            compile_bbc(assembler, scene, scene_source(system))
+        else:
+            amiga_build(assembler, build198x, axis, axis_source(system))
+            amiga_build(assembler, build198x, scene, scene_source(system))
 
 
 def main() -> None:
@@ -575,6 +633,7 @@ def main() -> None:
         "rejected_controls": controls,
         "sources": {str(p.relative_to(ROOT)): R.sha(p) for p in sorted(sources)},
         "observer_sha256": R.sha(Path(__file__)),
+        "fixture_programs": {name: R.sha(out / name) for name in fixture_programs()},
         "tools": {
             n: R.sha(Path(getattr(args, n)))
             for n in ["assembler", "build198x", "spectrum", "bbc", "amiga"]

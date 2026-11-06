@@ -32,7 +32,7 @@
     "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/demo.asm": "8ef5eefb9b6fe54dc9560c139fb16dc58009da34d05df23a460a34129a9e734d",
     "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/shapes.inc": "dc504b3456b7c1c90d1ae01513f5936582776313823b5c858ad3ee1319535633",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-    "scripts/verify-rendering-families.py": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
+    "scripts/verify-rendering-families.py": "edf2c82d4abe4069f8aa86a2b2cf7ba84dbdff33c5f68939664ee7e07702526a",
     "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
     "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
     "sinclair-zx-spectrum/patterns/assembly/rendering/masked-sprites/masked.inc": "344c460f648671a7c0a8deff620629c5f7ae781befe5d7b954bd464a8c1f1f20",
@@ -41,7 +41,27 @@
     "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/demo.asm": "5bb785abb73d49d71c8462cb4f27bff0c46968cb8c2514347eae6dca0d5d6dda",
     "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/shapes.inc": "b7c829201861ea6e419f0b820c988144111a7f80802b5f224c0fd5eb72f552d9"
   },
-  "observer_sha256": "9756dbf035ee59a7cde1a729d8f4290976faf546b3308442eb164c332f743a9e",
+  "observer_sha256": "c7749c7f5ad60cd6ddf72b815763fb7eccd7e96c9b8e7a776b71c3fa67d346f7",
+  "fixture_programs": {
+    "spectrum/rect-0/caller.sna": "e230460dda795f02c3d0fa0ea2559689a4d906cd15d2860dd30fbcde49f60591",
+    "spectrum/rect-1/caller.sna": "84fad951683ccafd42f88c085a397129ba3b9a69deec9e40a4030d389a24b7f7",
+    "spectrum/rect-2/caller.sna": "0f9c8f1c7b87d61c17b080fd4d605ec4c75d3b13e4761ebbba20319d23b58721",
+    "spectrum/rect-3/caller.sna": "3b7096f012e29af40bcbe95980bbe518826d27385bda6b980baeffa852e4fd41",
+    "spectrum/rect-4/caller.sna": "6a43ac1f51937a207d7fc658fdc9960c369b63043b871e01332def3b00ca8d5e",
+    "spectrum/rect-5/caller.sna": "73d3bc17888708dea0f5156b7a5f8c31d2fcbe4cc4d1d5f9c00d39d0048f86eb",
+    "spectrum/rect-6/caller.sna": "576a82ecdbe11d854d987d37aeaa89301e00699314cd02726d95c967a1b42f4b",
+    "spectrum/overlap-0/caller.sna": "60aa3e7e4a6a97980ae8718b20827f4a2bc40b173425fc4e8015cfb9731bb3a3",
+    "spectrum/overlap-1/caller.sna": "14250e9b2b9aa60d74646cae3384f36ff711c60b8d2923598437fae9c7c5ea09",
+    "spectrum/overlap-2/caller.sna": "d6ff8c22f377ca8dab9de6aeaf1e2b4f955ea90ad640d793ab1af6e2620de5bc",
+    "spectrum/overlap-3/caller.sna": "1971a104d4d659e82ba0b34659a285133ce8f85fabbfc9f6ac538a7c7345f352",
+    "amiga/fixture.adf": "25531611ff5bd1597320907ef17d2dc2946bc6b4261dbed7d724617bc9340453",
+    "bbc/fixture.bin": "a322e153c7c92ca36b1f76145ddafc12a31debd59a6fb829a4c185130e5da344"
+  },
+  "caller_programs": {
+    "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/build/demo.tap": "c16f6b847eda0b3fe8fcb5b4427a39eafe9309a5f97c3c5ad3ac3e0f53fb082d",
+    "bbc-micro/patterns/assembly/rendering/sprite-lifecycle/build/demo.bin": "52fd66235cd8f1c51d95f1882af0a0b5351cc9898f25ae8f47e9486b261a246e",
+    "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/build/demo.adf": "84ce512325a3ff1573afcb796e5951675ce195059bb1ca049629443b5da29887"
+  },
   "tools": {
     "assembler": "f546f460f43d25ccbf84edffec100b7b2fe1d69b38477dddb88ce1c008ca3570",
     "build198x": "248bed66d985f433c20f2cfb439a02cb0382a26bc8b44762270d785e80879e93",

@@ -145,14 +145,18 @@ program_end:
     )
 
 
-def run(args, name):
+def build(assembler, name):
+    """Write the named caller's source and assemble it to a PRG.
+
+    The recorder and the checker both build through this function.
+    """
     out = F / "build/rom-verification" / name
     out.mkdir(parents=True, exist_ok=True)
     src = fixture() if name == "rom-boundaries" else (F / (name + ".asm")).read_text()
     (out / "demo.asm").write_text(src)
     subprocess.run(
         [
-            str(args.assembler),
+            assembler,
             "--dialect",
             "acme",
             "--prg",
@@ -167,6 +171,11 @@ def run(args, name):
         capture_output=True,
         timeout=30,
     )
+    return out, src
+
+
+def run(args, name):
+    out, src = build(str(args.assembler), name)
     sym = T.symbols(out / "demo.sym")
     prg = (out / "demo.prg").read_bytes()
     script = out / "import.json"
