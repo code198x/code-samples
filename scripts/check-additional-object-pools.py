@@ -6,6 +6,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -23,6 +24,7 @@ def module(name: str, path: Path) -> Any:
 
 V = module("additional_native", ROOT / "scripts/verify-additional-object-pools.py")
 P = module("pool_png", ROOT / "scripts/check-amiga-command-loops.py")
+E = module("pool_bytes", ROOT / "scripts/evidence_bytes.py")
 
 
 def require(condition: bool, message: str) -> None:
@@ -32,6 +34,16 @@ def require(condition: bool, message: str) -> None:
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def program(folder: Path, variant: str) -> Any:
+    """The machine's own build.py, run with the assembler the record pins."""
+    return E.Build(
+        folder,
+        (sys.executable, "build.py", variant),
+        ("build/" + variant + ".bin",),
+        (("ASM198X", E.ASSEMBLER),),
+    )
 
 
 def search(rows: list[bytes], pattern: list[bytes]) -> list[tuple[int, int]]:
@@ -206,15 +218,18 @@ def check(system: str, r: dict, cfg: dict) -> None:
         "Wrong machine/language/variant",
     )
     require(
-        r["sources"] == {str(p.relative_to(ROOT)): sha(p) for p in V.sources(system)},
-        "Stale source/observer",
-    )
-    require(
         all(
             r[k] == cfg[k]
             for k in ["emulator_sha256", "assembler_sha256", "firmware_sha256"]
         ),
         "Changed native producer",
+    )
+    # The record is stale when its program's bytes change, not its sources' text.
+    E.require_program(
+        program(f, variant),
+        "build/" + variant + ".bin",
+        cfg["assembler_sha256"],
+        recorded_sha256=r["program_sha256"],
     )
     require(r["server"]["version"] == "0.48.3", "Wrong actual emulator version")
     require(
@@ -298,7 +313,6 @@ def qualify(system: str) -> None:
             ("emulator_sha256", "0" * 64),
             ("assembler_sha256", "0" * 64),
             ("firmware_sha256", {}),
-            ("sources", {}),
             ("transcript", []),
             ("observer_frames", 0),
             ("machine", "other"),
@@ -315,6 +329,23 @@ def qualify(system: str) -> None:
                 rejected += 1
             else:
                 raise AssertionError("Accepted altered " + variant + "/" + key)
+        # A consistent claim of other bytes; only the rebuild can reject it.
+        forged = copy.deepcopy(record)
+        forged["loaded_program"][0] ^= 1
+        digest = hashlib.sha256(bytes(forged["loaded_program"])).hexdigest()
+        forged["program_sha256"] = forged["loaded_sha256"] = digest
+        forged_cfg = copy.deepcopy(cfg)
+        forged_cfg["programs"][variant] = digest
+        try:
+            check(system, forged, forged_cfg)
+        except AssertionError as error:
+            require(
+                str(error).startswith("Program bytes differ"),
+                "Forged program rejected for another reason: " + str(error),
+            )
+            rejected += 1
+        else:
+            raise AssertionError("Accepted forged program " + variant)
         if variant != "wrong":
             bad = copy.deepcopy(record)
             bad["image"] = records["wrong"]["image"]

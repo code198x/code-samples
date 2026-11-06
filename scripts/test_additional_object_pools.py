@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 
@@ -59,6 +60,17 @@ class Contract(unittest.TestCase):
     def test_native_observations_and_rejections(self) -> None:
         for system in C.V.CONFIG:
             C.qualify(system)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or script text alone does not make a record stale."""
+        for system in C.V.CONFIG:
+            f = C.V.folder(system) / "verification"
+            cfg = json.loads((f / "configuration.json").read_text())
+            for variant in C.V.B.VARIANTS:
+                r = json.loads((f / (variant + ".json")).read_text())
+                r["sources"] = {path: "0" * 64 for path in r["sources"]}
+                with self.subTest(system=system, variant=variant):
+                    C.check(system, r, cfg)
 
 
 if __name__ == "__main__":

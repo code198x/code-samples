@@ -1,0 +1,52 @@
+{
+  "asm198x-v0.0.72": {
+    "source_commit": "7f3750d13d508f594f0ddbc794ee24cfd5132d28",
+    "targets": {
+      "aarch64-apple-darwin": {
+        "archive": "asm198x-aarch64-apple-darwin.tar.xz",
+        "archive_sha256": "34ddd6deef1a942b435a40ddbe8e3d3498df8bacad7b0172021b1aa6612c7572",
+        "executable_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279"
+      },
+      "x86_64-apple-darwin": {
+        "archive": "asm198x-x86_64-apple-darwin.tar.xz",
+        "archive_sha256": "81f5a4fb9ca2ea77b23dc8f445db337383213e060e34bfd4646fadf441766ea8",
+        "executable_sha256": "46ccdd2f9417acf1f966390ae8b650651547eb91809dedf95e494424d23c69e3"
+      },
+      "x86_64-unknown-linux-gnu": {
+        "archive": "asm198x-x86_64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "6af8048b7989bb007cea376894694914c0119a1f35ae255d3b15296bc023b157",
+        "executable_sha256": "ca6e3392a0d3cc7a89d2f0cc4f2b22f36eed4ce41922e27ceadf1002438434d0"
+      },
+      "aarch64-unknown-linux-gnu": {
+        "archive": "asm198x-aarch64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "85fd8dbcf5d4280202a7cac66e21a7b4e61fb163284b335d9923132a5478f6f0",
+        "executable_sha256": "517d256beb9916640b01aae6399e754a2d97893f83e794730507aa1b08b8cdb7"
+      }
+    }
+  },
+  "asm198x-v0.0.74": {
+    "source_commit": "08ed11cc3a67f33932c6fc9447c1ad2db9a55e05",
+    "targets": {
+      "aarch64-apple-darwin": {
+        "archive": "asm198x-aarch64-apple-darwin.tar.xz",
+        "archive_sha256": "c04349317f769dc7cfc63b9cad79bdfb8d4f8cc4128853d25f5c8f256f8d06ea",
+        "executable_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4"
+      },
+      "x86_64-apple-darwin": {
+        "archive": "asm198x-x86_64-apple-darwin.tar.xz",
+        "archive_sha256": "9778174df531d5c09833cc8d4589d591b278293c6edd813a33301199a8e7e41d",
+        "executable_sha256": "51cd0174188964b7bf0252d125f8baa399a39bf3c721027b3905390baa3435b9"
+      },
+      "x86_64-unknown-linux-gnu": {
+        "archive": "asm198x-x86_64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "e9423f8716d17e5f69f50a922427c39fb31e1512035ff749821b80b17c76320e",
+        "executable_sha256": "7862210f1c9988347b9a9c3253907955908e301add7a7269a833322cbf1939ef"
+      },
+      "aarch64-unknown-linux-gnu": {
+        "archive": "asm198x-aarch64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "b2a4fb306b679a78583e1394da3dd4a8e8c44baae49d8b85ef7c72c04c23fc3f",
+        "executable_sha256": "931d23445d31c744c1aa3dc4adfd8d7b1fcda6e817f88a54771fc19c1cf9eb27"
+      }
+    }
+  }
+}
