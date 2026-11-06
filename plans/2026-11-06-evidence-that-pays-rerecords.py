@@ -23,18 +23,18 @@ REPO = Path(sys.argv[1])
 IDENTITY = re.compile(
     r"sha256|sha1|digest|hash|version|revision|commit|emulator|assembler|"
     r"firmware|producer|lock|toolchain|tool|archive|url|tag|server|identity",
-    re.I,
+    re.IGNORECASE,
 )
-CAPTURE = re.compile(r"\.(png|wav|bin|dat|z|a26|gb|cv|prg|tap|sna|adf|ppm)\b|capture|image|frame|screenshot|memory", re.I)
+CAPTURE = re.compile(r"\.(png|wav|bin|dat|z|a26|gb|cv|prg|tap|sna|adf|ppm)\b|capture|image|frame|screenshot|memory", re.IGNORECASE)
 HEX = re.compile(r"^[0-9a-f]{40}$|^[0-9a-f]{64}$")
 
 
 def git(*args):
-    return subprocess.run(["git", "-C", str(REPO), *args], capture_output=True, text=True).stdout
+    return subprocess.run(["git", "-C", str(REPO), *args], capture_output=True, text=True, check=False).stdout
 
 
 def load(rev, path):
-    out = subprocess.run(["git", "-C", str(REPO), "show", f"{rev}:{path}"], capture_output=True, text=True)
+    out = subprocess.run(["git", "-C", str(REPO), "show", f"{rev}:{path}"], capture_output=True, text=True, check=False)
     if out.returncode:
         return None
     try:
@@ -113,11 +113,11 @@ for line in filter(None, commits):
         binary_caps = [p for s, p in files if s == "M" and not p.endswith(".json")]
         subject = git("log", "-1", "--format=%s", sha).strip()
         rows.append(
-            dict(
-                sha=sha[:8], date=date, pattern=pdir, input_changed=input_changed,
-                obs=sorted(obs), caps=sorted(cap) + binary_caps, ident=len(ident),
-                subject=subject,
-            )
+            {
+                "sha": sha[:8], "date": date, "pattern": pdir, "input_changed": input_changed,
+                "obs": sorted(obs), "caps": sorted(cap) + binary_caps, "ident": len(ident),
+                "subject": subject,
+            }
         )
 
 forced = [r for r in rows if not r["input_changed"]]
@@ -137,4 +137,5 @@ s_changed = summary("With an input change", sourced)
 print("\nForced re-records that changed something:")
 for r in f_changed:
     print(f"  {r['date']} {r['sha']} {r['pattern']}: obs={r['obs'][:3]} caps={r['caps'][:2]}  [{r['subject'][:70]}]")
-json.dump(rows, open(Path(sys.argv[2]), "w"), indent=1)
+with Path(sys.argv[2]).open("w") as out:
+    json.dump(rows, out, indent=1)
