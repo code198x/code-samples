@@ -79,6 +79,45 @@ class Records(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Native amos/working"):
                 C.check("amos", root=root, record=record)
 
+    def test_forged_case_disk_is_rebuilt(self) -> None:
+        """A record claiming another AMOS disk is caught only by the rebuild."""
+        out = self.folder / "verification"
+        toolchain = json.loads((out / "toolchain.json").read_text())
+        toolchain["source_fixture_sha256"] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            C.require_programs("amos", out, toolchain)
+
+    def test_forged_blitz_typing_is_regenerated(self) -> None:
+        """A phase that typed another program is caught only by the regeneration."""
+        folder = C.ROOT / "commodore-amiga/patterns/blitz/framework/command-loop"
+        toolchain = json.loads((folder / "verification/toolchain.json").read_text())
+        with tempfile.TemporaryDirectory(prefix="amiga-loop-blitz-") as temp:
+            out = Path(temp)
+            shutil.copytree(folder / "verification/phases", out / "phases")
+            phase = out / "phases/blitz-working-case.json"
+            steps = json.loads(phase.read_text())
+            typed = next(s for s in steps if s["action"] == "type_string")
+            typed["text"] = typed["text"].replace("=1", "=2")
+            phase.write_text(json.dumps(steps))
+            with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
+                C.require_programs("blitz", out, toolchain)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Rewritten script and lesson-file digests leave the evidence valid."""
+        for language in ["amos", "blitz"]:
+            folder = C.ROOT / f"commodore-amiga/patterns/{language}"
+            record = json.loads(
+                (
+                    folder / "framework/command-loop/verification/results.json"
+                ).read_text()
+            )
+            record["sources"] = {
+                name: digest if "/phases/" in name else "0" * 64
+                for name, digest in record["sources"].items()
+            }
+            with self.subTest(language=language):
+                C.check(language, record=record)
+
     def test_arithmetic_boundaries(self) -> None:
         self.assertEqual(C.expected("wrap"), [254, 255, 255, 0])
         self.assertEqual(C.expected("nonzero"), [100, 99, 99, 98])
