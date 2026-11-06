@@ -5,7 +5,7 @@
   "capacity": 8,
   "server": {
     "name": "emu198x-acorn-bbc-micro",
-    "version": "0.44.2"
+    "version": "0.48.3"
   },
   "sources": {
     "bbc-micro/patterns/assembly/framework/object-pool/boundary-max.asm": "bfc3b90105a859aa39efd1d0d12800b0d58ab31205bf33de9bb046f64704554d",
@@ -15,7 +15,7 @@
     "bbc-micro/patterns/assembly/framework/object-pool/repaired.asm": "f636ca804c883299b7435b590fd01f5484759f52426a1c6bb858a93a894354b7",
     "bbc-micro/patterns/assembly/framework/object-pool/wrong.asm": "d04f29fdf93717028f0f796e056d684c747ddafcbe29741f1535e126243e9929",
     "bbc-micro/patterns/assembly/framework/object-pool/age.inc": "c6e76c23f5f6f1d92ccd297b2fbac49dfa1a357304e2dece3b16608067c4f047",
-    "bbc-micro/patterns/assembly/framework/object-pool/caller.inc": "e2bbb83a36a339914b465b3065c342fbe06d1f6e45adf41b835a90ec2c79af02",
+    "bbc-micro/patterns/assembly/framework/object-pool/caller.inc": "c4e17362666be0a661740b8440acf1c7d3847a174f264816e717a39335d9c8f7",
     "bbc-micro/patterns/assembly/framework/object-pool/pool.inc": "3b828a6a7521332a391d6b28457d381ee85db32749a8dcf7aeb1b56dac457f02",
     "bbc-micro/patterns/assembly/framework/object-pool/Makefile": "12816b3f5c17b961f9590cd47d2153e8f98cfc6351aff003d2514dbad0ec991a",
     "bbc-micro/patterns/assembly/framework/object-pool/build.py": "e78d44276f0c8bab8adf929a1e9412b421516d0d11dd12017b859df1da28bfe2",
@@ -26,8 +26,8 @@
     "cross-platform/patterns/framework/additional-object-pools/boundaryz80.inc": "a704de591744df9f3bfbaf212842dd40fe598b6f5ca1c51acd9f3b828970dc2f",
     "cross-platform/patterns/framework/additional-object-pools/exercise6502.inc": "583a3b2c2b75ffedbf3bbe57e91211ac4a1d3875b92947afdaa3d7b2fac45e17",
     "cross-platform/patterns/framework/additional-object-pools/exercisez80.inc": "29f825910cdc63c82467cf85a559ebb1c4177f567cf287bcebdd7f5bb9f97932",
-    "scripts/verify-additional-object-pools.py": "abaf96d85645fdf7aa678565cab869f210a999e0cdc262b1e24d8caaf9bb0689",
-    "scripts/check-additional-object-pools.py": "e3d6a45ff65103a1bbfcb5526bb49e8cdce7b76c4f6b3b5b95221df4e0c24515",
+    "scripts/verify-additional-object-pools.py": "ab2552e653dcf781b2cb27fd18249a2cc5a8b7fec83cd1010b8f5635d8f6e336",
+    "scripts/check-additional-object-pools.py": "60ebcb1a44ce304e88825b0927af41f717beca148680fdd300ebc1fca1b22370",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-atari-xl-assembly-deadlines.py": "fb9ddcf69237ec09c18aa54d5b3f514789a1ef7eb4e6ba2e630912dc46ba2791",
     "scripts/verify-dragon-basic-deadlines.py": "6c03ba4091410f9a50d7e93113558d91426fb87b0b2444d71a745d64d5887afb",
@@ -2156,8 +2156,8 @@
   },
   "image": "repaired.png",
   "image_sha256": "a26471c1a63a14bf706c63d2fe037d292a0245e175e760687284eccb3878963e",
-  "emulator_sha256": "3bd2c441655497a6223fd38d5a5f0ef9aa4279cb5620bfefba8f416c06defe39",
-  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "cf1bb9edc291ac1fe5d02294d6e877b0041836abb2ee4d0800acb6e371abecfd",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "firmware_sha256": {
     "os.rom": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
     "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",

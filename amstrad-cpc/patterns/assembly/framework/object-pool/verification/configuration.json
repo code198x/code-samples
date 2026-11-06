@@ -1,6 +1,6 @@
 {
-  "emulator_sha256": "768e35d2fd0f4f160a51aa26964c73f7ffd75b338707eb3bf4dfefdec89ad632",
-  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "af98bd19dfef3f901ad67f7077f7e801b45ee2c12a6b3d73aed37611eebcb43f",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "firmware_sha256": {
     "cpc464.rom": "00960d9bf75b2b90856c970f1aa078e1e2aa028b2c104f1dded0262f5d37b15e",
     "cpc6128.rom": "31c3668c67bea027dab698ece233c9434d9324f9ba7dac84db58f400b6689562",

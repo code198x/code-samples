@@ -5,7 +5,7 @@
   "capacity": 8,
   "server": {
     "name": "emu198x-atari-800xl",
-    "version": "0.44.2"
+    "version": "0.48.3"
   },
   "sources": {
     "atari-800xl/patterns/assembly/framework/object-pool/boundary-max.asm": "bfc3b90105a859aa39efd1d0d12800b0d58ab31205bf33de9bb046f64704554d",
@@ -15,7 +15,7 @@
     "atari-800xl/patterns/assembly/framework/object-pool/repaired.asm": "f636ca804c883299b7435b590fd01f5484759f52426a1c6bb858a93a894354b7",
     "atari-800xl/patterns/assembly/framework/object-pool/wrong.asm": "d04f29fdf93717028f0f796e056d684c747ddafcbe29741f1535e126243e9929",
     "atari-800xl/patterns/assembly/framework/object-pool/age.inc": "c6e76c23f5f6f1d92ccd297b2fbac49dfa1a357304e2dece3b16608067c4f047",
-    "atari-800xl/patterns/assembly/framework/object-pool/caller.inc": "f1af35e5dbb2a0cafdf362a06264d7f1cd61422187e67826747cb7d8abed9dd8",
+    "atari-800xl/patterns/assembly/framework/object-pool/caller.inc": "c5efb9c866b42b6d2143be0b9a1aa46d61d8c141b92389063fc5e6fb32d14b82",
     "atari-800xl/patterns/assembly/framework/object-pool/pool.inc": "3b828a6a7521332a391d6b28457d381ee85db32749a8dcf7aeb1b56dac457f02",
     "atari-800xl/patterns/assembly/framework/object-pool/Makefile": "12816b3f5c17b961f9590cd47d2153e8f98cfc6351aff003d2514dbad0ec991a",
     "atari-800xl/patterns/assembly/framework/object-pool/build.py": "e78d44276f0c8bab8adf929a1e9412b421516d0d11dd12017b859df1da28bfe2",
@@ -26,8 +26,8 @@
     "cross-platform/patterns/framework/additional-object-pools/boundaryz80.inc": "a704de591744df9f3bfbaf212842dd40fe598b6f5ca1c51acd9f3b828970dc2f",
     "cross-platform/patterns/framework/additional-object-pools/exercise6502.inc": "583a3b2c2b75ffedbf3bbe57e91211ac4a1d3875b92947afdaa3d7b2fac45e17",
     "cross-platform/patterns/framework/additional-object-pools/exercisez80.inc": "29f825910cdc63c82467cf85a559ebb1c4177f567cf287bcebdd7f5bb9f97932",
-    "scripts/verify-additional-object-pools.py": "abaf96d85645fdf7aa678565cab869f210a999e0cdc262b1e24d8caaf9bb0689",
-    "scripts/check-additional-object-pools.py": "e3d6a45ff65103a1bbfcb5526bb49e8cdce7b76c4f6b3b5b95221df4e0c24515",
+    "scripts/verify-additional-object-pools.py": "ab2552e653dcf781b2cb27fd18249a2cc5a8b7fec83cd1010b8f5635d8f6e336",
+    "scripts/check-additional-object-pools.py": "60ebcb1a44ce304e88825b0927af41f717beca148680fdd300ebc1fca1b22370",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-atari-xl-assembly-deadlines.py": "fb9ddcf69237ec09c18aa54d5b3f514789a1ef7eb4e6ba2e630912dc46ba2791",
     "scripts/verify-dragon-basic-deadlines.py": "6c03ba4091410f9a50d7e93113558d91426fb87b0b2444d71a745d64d5887afb",
@@ -3188,8 +3188,8 @@
   },
   "image": "repaired.png",
   "image_sha256": "8afaacf9e87b30a396ee15aa2818be1720064169053e38af1223fa4272523677",
-  "emulator_sha256": "7b82d697d1a1d8f87276d2217b8aaf4e659ffeecbf62f71305afe6cbb61d09d3",
-  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "a493040ed56479b1701a6baebd2df2330a4956085ebc1cfc6eee01660cc3537c",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "firmware_sha256": {
     "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0",
     "atarixl-hias-1.30.rom": "64f13699592f2c068e468dfb22c245c63b1317fd0f871aca798c29688424955d",

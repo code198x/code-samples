@@ -17,7 +17,7 @@ saved_iy=$861a
 POOL_FLAGS=$8700
 POOL_LIFE=$8900
 OUTPUT=$9000
-ptr=$00cb
+ptr=$cb
 start:
     pla
     php

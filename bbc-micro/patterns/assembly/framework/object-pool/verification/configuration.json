@@ -1,6 +1,6 @@
 {
-  "emulator_sha256": "3bd2c441655497a6223fd38d5a5f0ef9aa4279cb5620bfefba8f416c06defe39",
-  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "cf1bb9edc291ac1fe5d02294d6e877b0041836abb2ee4d0800acb6e371abecfd",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "firmware_sha256": {
     "os.rom": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
     "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079",

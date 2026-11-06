@@ -17,7 +17,7 @@ saved_iy=$3e1a
 POOL_FLAGS=$4000
 POOL_LIFE=$4200
 OUTPUT=$4800
-ptr=$0070
+ptr=$70
 start:
     php
     pha

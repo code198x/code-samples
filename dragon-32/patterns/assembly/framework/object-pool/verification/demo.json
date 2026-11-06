@@ -5,7 +5,7 @@
   "capacity": 8,
   "server": {
     "name": "emu198x-dragon",
-    "version": "0.44.2"
+    "version": "0.48.3"
   },
   "sources": {
     "dragon-32/patterns/assembly/framework/object-pool/boundary-max.asm": "d6509cf8e2f1d21cf48c9b9d1c9c834d20c98f3ff5d049258223d45aa22abbb6",
@@ -26,8 +26,8 @@
     "cross-platform/patterns/framework/additional-object-pools/boundaryz80.inc": "a704de591744df9f3bfbaf212842dd40fe598b6f5ca1c51acd9f3b828970dc2f",
     "cross-platform/patterns/framework/additional-object-pools/exercise6502.inc": "583a3b2c2b75ffedbf3bbe57e91211ac4a1d3875b92947afdaa3d7b2fac45e17",
     "cross-platform/patterns/framework/additional-object-pools/exercisez80.inc": "29f825910cdc63c82467cf85a559ebb1c4177f567cf287bcebdd7f5bb9f97932",
-    "scripts/verify-additional-object-pools.py": "abaf96d85645fdf7aa678565cab869f210a999e0cdc262b1e24d8caaf9bb0689",
-    "scripts/check-additional-object-pools.py": "e3d6a45ff65103a1bbfcb5526bb49e8cdce7b76c4f6b3b5b95221df4e0c24515",
+    "scripts/verify-additional-object-pools.py": "ab2552e653dcf781b2cb27fd18249a2cc5a8b7fec83cd1010b8f5635d8f6e336",
+    "scripts/check-additional-object-pools.py": "60ebcb1a44ce304e88825b0927af41f717beca148680fdd300ebc1fca1b22370",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-atari-xl-assembly-deadlines.py": "fb9ddcf69237ec09c18aa54d5b3f514789a1ef7eb4e6ba2e630912dc46ba2791",
     "scripts/verify-dragon-basic-deadlines.py": "6c03ba4091410f9a50d7e93113558d91426fb87b0b2444d71a745d64d5887afb",
@@ -2536,8 +2536,8 @@
   "capture": {},
   "image": "demo.png",
   "image_sha256": "9185a103d8f5d1fe898aab29b6c41125056981112a1c69c5157ad2f9497c5469",
-  "emulator_sha256": "5390120f0bbe2cb3e448e23ab69c14a6ec5844736a84a6053572f02a2d7c753e",
-  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "501829182338ffe2d61923962c2cb392d04ac476ad25a6e41b01fc8c71173e22",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "firmware_sha256": {
     "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
   }
