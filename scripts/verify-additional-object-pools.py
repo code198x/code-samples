@@ -138,7 +138,7 @@ def execute(
 
     try:
         T.require(
-            m.server["serverInfo"]["version"] == "0.44.2",
+            m.server["serverInfo"]["version"] == "0.48.3",
             "Unexpected actual emulator version",
         )
         advance(900 if system == "atari-800xl" else 150)

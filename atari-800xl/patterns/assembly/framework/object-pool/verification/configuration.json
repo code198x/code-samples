@@ -1,6 +1,6 @@
 {
-  "emulator_sha256": "7b82d697d1a1d8f87276d2217b8aaf4e659ffeecbf62f71305afe6cbb61d09d3",
-  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "a493040ed56479b1701a6baebd2df2330a4956085ebc1cfc6eee01660cc3537c",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "firmware_sha256": {
     "ataribas.rom": "4988cb41121921f997ab17a59dd1909fece9273699eba0c6fbaafae104aa27b0",
     "atarixl-hias-1.30.rom": "64f13699592f2c068e468dfb22c245c63b1317fd0f871aca798c29688424955d",

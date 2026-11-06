@@ -1,6 +1,6 @@
 {
-  "emulator_sha256": "5390120f0bbe2cb3e448e23ab69c14a6ec5844736a84a6053572f02a2d7c753e",
-  "assembler_sha256": "4af9b5c9ca150838cd190073e5e805a9a687933f4dd72c5a68cc6ba9f0a1f279",
+  "emulator_sha256": "501829182338ffe2d61923962c2cb392d04ac476ad25a6e41b01fc8c71173e22",
+  "assembler_sha256": "2cf4e23aaebc4f3fb5a91c6994506cfbc03820fc51fd48cdf2eaa241d56b8ea4",
   "firmware_sha256": {
     "dragon32.rom": "fc0e900bfec6b52f0f80ba1e65a4712808d2a411b5b00496639ef1a2152351f1"
   },

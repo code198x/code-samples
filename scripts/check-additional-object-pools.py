@@ -216,7 +216,7 @@ def check(system: str, r: dict, cfg: dict) -> None:
         ),
         "Changed native producer",
     )
-    require(r["server"]["version"] == "0.44.2", "Wrong actual emulator version")
+    require(r["server"]["version"] == "0.48.3", "Wrong actual emulator version")
     require(
         r["program_sha256"] == r["loaded_sha256"] == cfg["programs"][variant]
         and hashlib.sha256(bytes(r["loaded_program"])).hexdigest()
