@@ -1,6 +1,7 @@
 """Corruptions must fail for each independent language route."""
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -27,7 +28,9 @@ class Evidence(unittest.TestCase):
         """A consistent claim of other bytes is caught only by the rebuild."""
         for lang, F in C.V.FS.items():
             r = json.loads((F / "verification/results.json").read_text())
-            r["cases"]["wrong"]["tap_sha256"] = "0" * 64
+            c = r["cases"]["wrong"]
+            c["loaded_bytes"][0] ^= 1
+            c["payload_sha256"] = hashlib.sha256(bytes(c["loaded_bytes"])).hexdigest()
             with (
                 self.subTest(lang=lang),
                 self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
