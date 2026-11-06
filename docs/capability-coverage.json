@@ -137,7 +137,7 @@
     "scripts/verify-zx-capabilities.py": "ca48266f74f7e835c582e4946f0a2bc33249e6c9f5615436954837ddf426de87",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07"
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84"
   },
   "emulator_builds": {
     "acorn-atom": {
@@ -231,9 +231,9 @@
       "version": "0.38.3"
     },
     "nintendo-game-boy": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "f812ab7db5603cc628809c0e7cc049bf12a7f2dcf0623dca1e2da7f18675ea0e",
-      "version": "0.38.3"
+      "commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+      "sha256": "a049446762da8f2329ec855c7e5bd332fb2820d50beba1a12ca16349dbe4658f",
+      "release": "v0.44.1"
     },
     "nintendo-nes": {
       "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
@@ -872,7 +872,7 @@
       "kind": "hardware",
       "path": "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound",
       "record": "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "784b9aae37e0ca6be387c44bdccb444ab1bdfbe656678fc7e5c373ce5d33dc91",
+      "record_sha256": "be532d4fd975dab9fe0c8547b453754e9c253e245a69590b100993e275ba2b6c",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"

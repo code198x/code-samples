@@ -3,7 +3,7 @@
   "machine_id": "nintendo-game-boy",
   "server": {
     "name": "emu198x-game-boy",
-    "version": "0.34.2"
+    "version": "0.44.1"
   },
   "configuration": "DMG default reset, no boot ROM",
   "startup_kind": "cartridge-reset",
@@ -33,11 +33,11 @@
   "firmware_sha256": {},
   "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
   "binary_sha256": "e631c206a7aa7e9815850f1a8207bd70c4595e40c12e9be81304148db91e285d",
-  "emulator_sha256": "41ade13b95fc2acadbd7ae10e1a7b053609e09189fede8b2d993a3b82654aef5",
+  "emulator_sha256": "a049446762da8f2329ec855c7e5bd332fb2820d50beba1a12ca16349dbe4658f",
   "sources": {
     "nintendo-game-boy/patterns/assembly/framework/input-loop/demo.asm": "140b4fd62326e6a20273c3baa55f16fc908ffe1cc0cae36c271e9c4d727092e2",
-    "nintendo-game-boy/patterns/assembly/framework/input-loop/Makefile": "168482caea63ce7a00bb5d57e49219c8bd43386e83bc8af1796df53e69febc51",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "nintendo-game-boy/patterns/assembly/framework/input-loop/Makefile": "6768ab3fd20a7e7b46a682f02feb682383e5bf0253819f75db98942d2e9a94b5",
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },

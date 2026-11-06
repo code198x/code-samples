@@ -3,7 +3,7 @@
   "machine_id": "memotech-mtx",
   "server": {
     "name": "emu198x-memotech-mtx",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "configuration": "MTX500 PAL, stock OS/BASIC, typed DATA/POKE loader and USR($E000)",
   "startup_kind": "stock-basic-poke-usr",
@@ -35,11 +35,11 @@
   },
   "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
   "binary_sha256": "595842302a841b7612fdd707dc9bfeee9fa544fd7c59ae60967f39eb1c72a4ab",
-  "emulator_sha256": "6f9589efb04c4708413ac1131d47402bb37924520a803cf93e0016c6f249078f",
+  "emulator_sha256": "5879f58ca90709ce4f5913ff988f6774b50d78fe0a8a5b30c7da9defdb69d6af",
   "sources": {
     "memotech-mtx/patterns/assembly/framework/input-loop/demo.asm": "3e1a2889a69901271f35e86202a60747c52ff322080def83e33b638584c90123",
     "memotech-mtx/patterns/assembly/framework/input-loop/Makefile": "556d68eb1e145245208a1f2e644e6b0eb88d92925ec97a5fcc153ad1a89f1579",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
     "scripts/build-stock-probe.py": "b6314275a92e128dc88ce2a1e5950b45e9243c5b3293a60471e47407294e1e84"

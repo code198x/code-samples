@@ -52,6 +52,9 @@ CONFIGS = {
         "model": "NTSC 32 KiB cartridge, pinned BIOS",
         "boot": 900,
         "firmware": "atari-5200/5200.rom",
+        # Emu198x 0.48 retired the generic profile; name the original
+        # four-port board.
+        "board": "ca018087",
     },
     "atari-7800": {
         "binary": "emu198x-atari-7800",
@@ -139,6 +142,8 @@ def run(system: str, native: Path, firmware_root: Path) -> dict:
         command = [str(executable), "--mcp"]
         if cfg["flag"]:
             command += [cfg["flag"], str(path)]
+        if cfg.get("board"):
+            command += ["--board", cfg["board"]]
         if cfg.get("firmware"):
             command += [
                 cfg.get("firmware_flag", "--bios"),
@@ -322,7 +327,8 @@ def run(system: str, native: Path, firmware_root: Path) -> dict:
             "status": "passed",
             "machine_id": system,
             "server": server,
-            "configuration": cfg["model"],
+            "configuration": cfg["model"]
+            + (f", {cfg['board'].upper()} board" if cfg.get("board") else ""),
             "startup_kind": cfg.get("startup_kind", "cartridge-reset"),
             "normal_ticks_in_30_frames": delta,
             "idle_frames": 120,

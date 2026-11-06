@@ -40,24 +40,24 @@
     "schema_version": 1,
     "kind": "producer-source-lock",
     "signed": false,
-    "source_commit": "60babae495e4e37963a5bbec23068ae21ff71eb3",
-    "committed_lock_sha256": "0ee4b612d610b2d581a5b32e1666f431bdfcf55b99cfaed65841aa48e369958a",
-    "before_lock_sha256": "0ee4b612d610b2d581a5b32e1666f431bdfcf55b99cfaed65841aa48e369958a",
-    "after_lock_sha256": "0ee4b612d610b2d581a5b32e1666f431bdfcf55b99cfaed65841aa48e369958a",
+    "source_commit": "0e27a0e3323f858fa3feeba86ad71499d0fba174",
+    "committed_lock_sha256": "6726b451f3ea3945cb597f00c99c6ca8aa7eac6fac3b82dcc7d63e2394d6cc16",
+    "before_lock_sha256": "6726b451f3ea3945cb597f00c99c6ca8aa7eac6fac3b82dcc7d63e2394d6cc16",
+    "after_lock_sha256": "6726b451f3ea3945cb597f00c99c6ca8aa7eac6fac3b82dcc7d63e2394d6cc16",
     "target": "aarch64-apple-darwin",
     "archive": "asm198x-aarch64-apple-darwin.tar.xz",
-    "archive_sha256": "97435c1c1aaa349be4d6e1e354030306f7e909e00c14a6f21b2f6d634402978d",
-    "executable_sha256": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
-    "version": "0.0.71",
+    "archive_sha256": "11c14f0de24742cc0df32376ba3b0c4c1761b5c347eecc511573a1a9ad5b0338",
+    "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+    "version": "0.0.75",
     "build": {
       "job": "build-local-artifacts",
-      "run_id": "38947879894",
+      "run_id": "42208531237",
       "run_attempt": "1"
     },
     "command": [
       "dist",
       "build",
-      "--tag=asm198x-v0.0.71",
+      "--tag=asm198x-v0.0.75",
       "--print=linkage",
       "--output-format=json",
       "--artifacts=local",
@@ -75,8 +75,8 @@
     "nintendo-game-boy/patterns/assembly/framework/command-loop/mistakes/reset-each-command.asm": "3838c5554d6931f1f71857749823d14b07ec01a3014a2666fb5c3c4e0422f97f"
   },
   "observer_sources": {
-    "scripts/verify-msx-gameboy-loops.py": "b9d751c7a2a0bb80024e99e82c0d07100a3cba8662d9b3cc51b1fb8ce9e9c6c0",
-    "scripts/build-msx-gameboy-loops.py": "0ffc6d9cbcc10d906ff5e443723848aa14bc3316a65303cea336b95bd366747f",
+    "scripts/verify-msx-gameboy-loops.py": "bf7b64e71a24160ed7ff23cb34e4bb6bfdbc8674072d0b51581d090a217d350a",
+    "scripts/build-msx-gameboy-loops.py": "9a1fe3dfc7dac5dd133490b9cfc7a5fd5c1f9a953edf1fb75e31a447bdbe26c6",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
   "cases": {

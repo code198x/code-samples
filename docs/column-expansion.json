@@ -679,7 +679,7 @@
       "observer": "scripts/verify-column-hardware.py",
       "producer": "emu198x-game-boy",
       "files": {
-        "nintendo-game-boy/patterns/assembly/input/read-action/Makefile": "78633cfd16b114eed107572ecc3dd3dec6a4df622442e782f54f802d2ee9ca7f",
+        "nintendo-game-boy/patterns/assembly/input/read-action/Makefile": "2b9bd5f63766197174a235b503a1cb8c7f4ae5db696d25b4981acb9689b82d12",
         "nintendo-game-boy/patterns/assembly/input/read-action/demo.asm": "341cc3a090c902694c1b3cca974dafa17bd00293bbe4fb23c4b947f83b2ea9da",
         "nintendo-game-boy/patterns/assembly/input/read-action/mistakes/no-edge.asm": "6593d71cccce04e83840a896d8231a0eec07eb4bfa6f6368fc13e5bbf918f8f3",
         "nintendo-game-boy/patterns/assembly/input/read-action/mistakes/no-sound.asm": "bbe4009d1f1465a76c7ab46a7bea3da87721ff110cc2d9361d86ed5eef234839",
@@ -693,12 +693,41 @@
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/no-edge.png": "0c765535da765e1e8095c184aabb0b78ac83ffb666d686696114123a2f78493f",
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/pressed.png": "219e9788631863b6fba6c34b1088428a83b071df2bb2017145700b33f549dbba",
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/ready.png": "0c765535da765e1e8095c184aabb0b78ac83ffb666d686696114123a2f78493f",
-        "nintendo-game-boy/patterns/assembly/input/read-action/verification/results.json": "9230a2825e7b7fc0ba3409ef70f167b586a06db36a15ec5a90e52423f5b6f391",
+        "nintendo-game-boy/patterns/assembly/input/read-action/verification/results.json": "80728dac11c9ceaf52c063a3391bb6a19aeb21bb04caab00ed22e0fd8381aebc",
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/second-press.png": "0c765535da765e1e8095c184aabb0b78ac83ffb666d686696114123a2f78493f",
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/sound-negative-after.png": "219e9788631863b6fba6c34b1088428a83b071df2bb2017145700b33f549dbba",
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/sound-negative-before.png": "0c765535da765e1e8095c184aabb0b78ac83ffb666d686696114123a2f78493f",
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/sound-negative.wav": "5cec8bc26ebc26fdd4acae6c47dd788654c135d99cee046b54d05e83e97a03f8",
         "nintendo-game-boy/patterns/assembly/input/read-action/verification/sound.wav": "387dcad3ff2fad3cdbf12d3ba58d1638a82d6c3bc173451cea2d6a25998163ae"
+      },
+      "assembler_producer": {
+        "schema_version": 1,
+        "kind": "producer-source-lock",
+        "signed": false,
+        "source_commit": "0e27a0e3323f858fa3feeba86ad71499d0fba174",
+        "committed_lock_sha256": "6726b451f3ea3945cb597f00c99c6ca8aa7eac6fac3b82dcc7d63e2394d6cc16",
+        "before_lock_sha256": "6726b451f3ea3945cb597f00c99c6ca8aa7eac6fac3b82dcc7d63e2394d6cc16",
+        "after_lock_sha256": "6726b451f3ea3945cb597f00c99c6ca8aa7eac6fac3b82dcc7d63e2394d6cc16",
+        "target": "aarch64-apple-darwin",
+        "archive": "asm198x-aarch64-apple-darwin.tar.xz",
+        "archive_sha256": "11c14f0de24742cc0df32376ba3b0c4c1761b5c347eecc511573a1a9ad5b0338",
+        "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+        "version": "0.0.75",
+        "build": {
+          "job": "build-local-artifacts",
+          "run_id": "42208531237",
+          "run_attempt": "1"
+        },
+        "command": [
+          "dist",
+          "build",
+          "--tag=asm198x-v0.0.75",
+          "--print=linkage",
+          "--output-format=json",
+          "--artifacts=local",
+          "--target=aarch64-apple-darwin"
+        ],
+        "compiled_dependency_graph": "unknown"
       }
     },
     {
@@ -1115,7 +1144,7 @@
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
     "scripts/verify-collect-and-respond.py": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
-    "scripts/verify-hardware-input-loops.py": "8580fa925103c01502b1555c0f42c428204ab8ebe6abcf08c61f9964ff6d2e07",
+    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
     "scripts/build-stock-probe.py": "b6314275a92e128dc88ce2a1e5950b45e9243c5b3293a60471e47407294e1e84",
     "scripts/build-sega-probe.py": "ea7f375b2c9f7549e9bcc0add9db92218f624d43f727e68c27074bb1c7465a2b"
   },

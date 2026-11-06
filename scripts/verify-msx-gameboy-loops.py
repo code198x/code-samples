@@ -41,7 +41,7 @@ def verify(args) -> None:
     )
     for binary, producer, version in [
         (exe, lock, "0.44.1"),
-        (args.assembler, alock, "0.0.71"),
+        (args.assembler, alock, "0.0.75"),
     ]:
         T.require(
             T.sha(binary) == producer["executable_sha256"]

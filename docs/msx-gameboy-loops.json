@@ -3,24 +3,24 @@
   "routes": {
     "msx/basic": {
       "record": "msx/patterns/basic/framework/command-loop/verification/reusable-results.json",
-      "record_sha256": "4c8f87e137578d7dd0c0b3fdbc544e437253b0ec162fc732c142574f6aeacc81",
+      "record_sha256": "81a88d6295f9e16533f946cd11e3d17100d8613053a9ffe63bf0521dc9e8a6d3",
       "cases": 6,
       "scope": "Untimed loops only; no new broad I/O probe claim"
     },
     "msx/assembly": {
       "record": "msx/patterns/assembly/framework/command-loop/verification/reusable-results.json",
-      "record_sha256": "99356f323e966c8a268b219b0117414a27e5edb75db1b3508d7caa16980afd4a",
+      "record_sha256": "b44195c7b8375e4cc4b4abe7f410290bdaca38af8c4ea574f19d6063c53a91e0",
       "cases": 7,
       "scope": "Untimed loops only; no new broad I/O probe claim"
     },
     "nintendo-game-boy/assembly": {
       "record": "nintendo-game-boy/patterns/assembly/framework/command-loop/verification/reusable-results.json",
-      "record_sha256": "21a3c206d172da58279bc172ed924af6c51342591dfb85ef761338fb40394be5",
+      "record_sha256": "3a700abe894f23af770eda7b23a9fe1d01399a3e7a7d337355900d8c2065c1b3",
       "cases": 8,
       "scope": "Untimed loops only; no new broad I/O probe claim"
     }
   },
   "emulator": "0.44.1",
-  "assembler": "0.0.71",
+  "assembler": "0.0.75",
   "limits": "Separate BASIC/assembly records; no stock DMG BASIC/FORTH, new audio or original-hardware claim."
 }
