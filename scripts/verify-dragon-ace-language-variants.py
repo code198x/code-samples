@@ -16,14 +16,14 @@ T = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(T)
 
 
-def verify(args, system: str) -> None:
+def variants(system: str) -> dict[str, str]:
+    """Return the text typed for each variant, derived from the lesson's demo."""
     dragon = system == "dragon-32"
     track = "basic" if dragon else "forth"
     suffix = "bas" if dragon else "fth"
-    name = "dragon" if dragon else system
     folder = ROOT / system / "patterns" / track / "framework/command-loop"
     source = (folder / f"demo.{suffix}").read_text()
-    variants = {
+    return {
         "working": source,
         "step-three": source.replace("N=N+1", "N=N+3")
         if dragon
@@ -36,13 +36,22 @@ def verify(args, system: str) -> None:
         if dragon
         else source.replace(": TURNS 0 BEGIN", ": TURNS 37 BEGIN"),
     }
-    (folder / f"customise.{suffix}").write_text(variants["step-three"])
+
+
+def verify(args, system: str) -> None:
+    dragon = system == "dragon-32"
+    track = "basic" if dragon else "forth"
+    suffix = "bas" if dragon else "fth"
+    name = "dragon" if dragon else system
+    folder = ROOT / system / "patterns" / track / "framework/command-loop"
+    programs = variants(system)
+    (folder / f"customise.{suffix}").write_text(programs["step-three"])
     (folder / "mistakes").mkdir(exist_ok=True)
     (folder / f"mistakes/reset-each-command.{suffix}").write_text(
-        variants["wrong-reset"]
+        programs["wrong-reset"]
     )
     result = {}
-    for variant, program in variants.items():
+    for variant, program in programs.items():
         out = folder / "verification/current-release" / variant
         out.mkdir(parents=True, exist_ok=True)
         m = T.Machine(

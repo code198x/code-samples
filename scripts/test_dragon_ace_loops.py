@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -72,10 +73,36 @@ class EvidenceTests(unittest.TestCase):
             lambda r: r["cases"]["working"]["observations"][2].update(screen=[32] * 160)
         )
 
-    def test_changed_source_fails(self) -> None:
-        self.rejected(
-            lambda r: r["sources"].update({next(iter(r["sources"])): "0" * 64})
-        )
+    def test_forged_program_is_rebuilt(self) -> None:
+        """A consistent claim of another program is caught only by the rebuild."""
+        for original, dragon, assembly in self.records:
+            record = copy.deepcopy(original)
+            case = record["cases"]["nonzero"]
+            if assembly:
+                case["loaded_bytes"][0] ^= 1
+                case["loaded_sha256"] = hashlib.sha256(
+                    bytes(case["loaded_bytes"])
+                ).hexdigest()
+                message = "^Program bytes differ"
+            else:
+                case["entered_source"] += " "
+                message = "^Typed program differs"
+            with (
+                self.subTest(dragon=dragon, assembly=assembly),
+                self.assertRaisesRegex(AssertionError, message),
+            ):
+                C.check_record(ROOT, record, dragon, assembly)
+
+    def test_source_digests_are_provenance(self) -> None:
+        """Changed source or observer digests alone do not make a record stale."""
+        for original, dragon, assembly in self.records:
+            record = copy.deepcopy(original)
+            record["sources"] = dict.fromkeys(record["sources"], "0" * 64)
+            record["observer_sources"] = dict.fromkeys(
+                record["observer_sources"], "0" * 64
+            )
+            with self.subTest(dragon=dragon, assembly=assembly):
+                C.check_record(ROOT, record, dragon, assembly)
 
     def test_changed_capture_fails(self) -> None:
         self.rejected(
