@@ -129,11 +129,7 @@ so the history above stays comparable.
   drift between releases, but it needs a runner kept up and the firmware on
   it. Revisit only if the gated pin move proves too slow to catch
   something.
-- **The pending Game Boy `--tiny` change:** its eight ROMs are byte-identical,
-  so after step 2 it needs no re-record. But Asm198x 0.0.75's plain
-  `--gb-rom` refuses those eight builds, so once 0.0.75 is out they fail
-  until `--tiny` lands. Either land it straight after the release with a
-  re-record under the current rules (about the 12 records and 8 machines
-  listed on that branch), or hold the release until step 2. I'd land it now
-  under the current rules: the re-record costs an afternoon, and holding a
-  release for a process change mixes two decisions.
+- **The Game Boy `--tiny` change:** *settled 2026-11-06.* It landed under
+  the current rules (code198x/code-samples#426): 13 records re-recorded for
+  eight ROMs that were byte-identical before and after. Step 2 would have
+  needed none of them.
