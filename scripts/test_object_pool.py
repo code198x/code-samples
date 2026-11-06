@@ -1,9 +1,11 @@
 """Corrupt retained observations to ensure the ownership gate can reject claims."""
 
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
+import zlib
 from pathlib import Path
 
 spec = importlib.util.spec_from_file_location(
@@ -25,7 +27,6 @@ class PoolEvidence(unittest.TestCase):
                 (C.V.folder(system) / "verification/results.json").read_text()
             )
             faults = (
-                "source",
                 "config",
                 "variant",
                 "producer",
@@ -51,9 +52,7 @@ class PoolEvidence(unittest.TestCase):
             for fault in faults:
                 r = copy.deepcopy(source)
                 c = r["cases"]["demo"]
-                if fault == "source":
-                    r["sources"][next(iter(r["sources"]))] = "0" * 64
-                elif fault == "config":
+                if fault == "config":
                     r["configuration"]["emulator_sha256"] = "0" * 64
                 elif fault == "variant":
                     r["cases"].pop("wrong")
@@ -105,6 +104,40 @@ class PoolEvidence(unittest.TestCase):
                     self.assertRaises((AssertionError, KeyError, ValueError)),
                 ):
                     C.check(system, r)
+
+    def test_forged_program_is_rebuilt(self):
+        """A consistent claim of other bytes is caught only by the rebuild."""
+        for system in C.V.SYSTEMS:
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            c = r["cases"]["custom"]
+            binary = bytearray(zlib.decompress(bytes.fromhex(c["program_zlib"])))
+            used = set()
+            for prefix in ("helper", "age"):
+                start = c[prefix + "_offset"]
+                used |= set(range(start, start + c[prefix + "_code_bytes"]))
+            i = next(i for i in range(len(c["loaded_bytes"])) if i not in used)
+            binary[i + (2 if system == C.V.SYSTEMS[0] else 16)] ^= 1
+            c["loaded_bytes"][i] ^= 1
+            c["program_zlib"] = zlib.compress(bytes(binary)).hex()
+            c["program_sha256"] = hashlib.sha256(binary).hexdigest()
+            c["loaded_sha256"] = hashlib.sha256(bytes(c["loaded_bytes"])).hexdigest()
+            with (
+                self.subTest(system=system),
+                self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+            ):
+                C.check(system, r)
+
+    def test_source_digests_are_provenance(self):
+        """Changed source or script text alone does not make a record stale."""
+        for system in C.V.SYSTEMS:
+            r = json.loads(
+                (C.V.folder(system) / "verification/results.json").read_text()
+            )
+            r["sources"] = {path: "0" * 64 for path in r["sources"]}
+            with self.subTest(system=system):
+                C.check(system, r)
 
     def test_picture_independent_of_claimed_values(self):
         for system in C.V.SYSTEMS:

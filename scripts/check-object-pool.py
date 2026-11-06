@@ -18,7 +18,14 @@ def module(name, file):
 
 V = module("pool_native", "verify-object-pool.py")
 P = module("native_pictures", "check-seeded-random.py")
+E = module("pool_bytes", "evidence_bytes.py")
 T = V.T
+
+
+def program(folder, system):
+    """The pattern Makefile, run with the assembler the record pins."""
+    ext = ".prg" if system == V.SYSTEMS[0] else ".nes"
+    return E.make(folder, tuple("build/" + n + ext for n in V.VARIANTS)), ext
 
 
 def pixels(c, system):
@@ -56,11 +63,7 @@ def check(system, record=None):
         r["configuration"] == json.loads((v / "configuration.json").read_text()),
         "Changed configuration",
     )
-    T.require(
-        r["sources"]
-        == {str(p.relative_to(V.ROOT)): T.sha(p) for p in V.source_paths(system)},
-        "Changed source",
-    )
+    build, ext = program(f, system)
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing native variant")
     for name, c in r["cases"].items():
         cap = 4 if name == "custom" else 8
@@ -85,6 +88,13 @@ def check(system, record=None):
             len(binary) == c["program_bytes"]
             and hashlib.sha256(binary).hexdigest() == c["program_sha256"],
             "Program identity differs",
+        )
+        # The record is stale when its program's bytes change, not its sources' text.
+        E.require_program(
+            build,
+            "build/" + name + ext,
+            r["configuration"]["assembler_sha256"],
+            recorded=binary,
         )
         T.require(
             hashlib.sha256(loaded).hexdigest() == c["loaded_sha256"],
