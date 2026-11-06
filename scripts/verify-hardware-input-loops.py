@@ -28,7 +28,7 @@ CONFIGS = {
         "ram": 0xC000,
         "button": "a",
         "dialect": "rgbasm",
-        "finalise": ["--gb-rom"],
+        "finalise": ["--gb-rom", "--tiny"],
         "model": "DMG default reset, no boot ROM",
     },
     "atari-2600": {

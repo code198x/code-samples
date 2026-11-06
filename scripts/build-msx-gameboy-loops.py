@@ -50,7 +50,8 @@ def build(
         "--sym",
     ]
     if gb:
-        command += ["--gb-rom"]
+        # One flat 32 KB ROM0, which needs rgblink -t's layout.
+        command += ["--gb-rom", "--tiny"]
     subprocess.run(
         command + [str(out / "demo.asm"), "-o", str(binary)], check=True, timeout=30
     )
