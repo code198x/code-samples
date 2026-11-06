@@ -33,6 +33,33 @@ def tap(lang: str, name: str) -> str:
     return f"{lang}/physics/rectangle-overlap/build/{stem}.tap"
 
 
+def require_loaded(lang: str, name: str, recorded: list[int], cfg: dict) -> None:
+    """Rebuild the case's TAP and compare the block the machine loads and runs.
+
+    The assembly TAP's CODE header carries the first ten characters of the
+    build's absolute path, so the whole file (`tap_sha256`) differs by
+    checkout. The record keeps the loaded block itself, taken from the TAP
+    as the recorder takes it, and that is what is compared.
+    """
+    E.rebuild(programs(), cfg["assembler_sha256"], cfg["build198x_sha256"])
+    rebuilt = list(
+        V.A.blocks(PATTERNS / tap(lang, name), 4 if lang == "assembly" else 2)[-1][1:-1]
+    )
+    if rebuilt != recorded:
+        at = next(
+            (
+                i
+                for i, (a, b) in enumerate(zip(rebuilt, recorded, strict=False))
+                if a != b
+            ),
+            min(len(rebuilt), len(recorded)),
+        )
+        raise AssertionError(
+            f"Program bytes differ from the record: {tap(lang, name)} loaded block "
+            f"at offset {at} ({len(rebuilt)} rebuilt, {len(recorded)} recorded)"
+        )
+
+
 def programs() -> Any:
     """Both routes' programs, built by the recorder's own build(), pinned tools."""
     return E.function(
@@ -110,13 +137,7 @@ def check(lang, record=None):
             "Changed loaded program",
         )
         # The record is stale when its program's bytes change, not its sources' text.
-        E.require_program(
-            programs(),
-            tap(lang, name),
-            cfg["assembler_sha256"],
-            recorded_sha256=c["tap_sha256"],
-            build198x=cfg["build198x_sha256"],
-        )
+        require_loaded(lang, name, c["loaded_bytes"], cfg)
         T.require(c["server"]["version"] == "0.44.2", "Wrong producer")
         if lang == "assembly" or name == "boundaries":
             expected = (
