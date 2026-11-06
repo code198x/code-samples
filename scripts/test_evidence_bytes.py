@@ -217,6 +217,19 @@ class Assemblers(unittest.TestCase):
         with self.assertRaisesRegex(LookupError, "which is not asm198x"):
             E.assembler(builder["executable_sha256"])
 
+    def test_build198x_adf_pin_names_a_builder(self) -> None:
+        """Recorders that write ADFs ran build198x or build198x-adf; both are builders."""
+        adf = E.releases()["build198x-adf-v0.2.12"]["targets"][E.CI_TARGET]
+        self.assertEqual(
+            E.tool_of(E.release_for(adf["executable_sha256"])), "build198x-adf"
+        )
+        self.assertEqual(E.REPOSITORY["build198x-adf"], "build198x")
+        with self.assertRaisesRegex(LookupError, "which is not asm198x"):
+            E.assembler(adf["executable_sha256"])
+        assembler = next(t for t in E.releases() if E.tool_of(t) == "asm198x")
+        with self.assertRaisesRegex(LookupError, "which is not build198x"):
+            E.builder(assembler)
+
     def test_build198x_pin_is_required_exactly_when_used(self) -> None:
         pin = next(t for t in E.releases() if E.tool_of(t) == "asm198x")
         builder = next(t for t in E.releases() if E.tool_of(t) == "build198x")

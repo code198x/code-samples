@@ -64,9 +64,9 @@
     "cross-platform/patterns/rendering/pre-shifted-sprites/sprite.json": "8cb80d2bad3f13e8816b827a1cc946a5175b805857f376fb90c06674e884ec5e",
     "cross-platform/patterns/rendering/pre-shifted-sprites/verification/verify.py": "756f857968d09d74988bb54ec387c85219a5f0cb8486572387667f18427988ee",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-    "scripts/verify-rendering-families.py": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
-    "scripts/verify-sprite-clipping.py": "5cfabd5723a2d442d2674f40bde29b4a630c5bac222f29a0b97b8c5179844f93",
-    "scripts/verify-sprite-lifecycle.py": "9756dbf035ee59a7cde1a729d8f4290976faf546b3308442eb164c332f743a9e",
+    "scripts/verify-rendering-families.py": "edf2c82d4abe4069f8aa86a2b2cf7ba84dbdff33c5f68939664ee7e07702526a",
+    "scripts/verify-sprite-clipping.py": "2090101c5006cc534d581ccc1db244e316ea7d1eabba1866d504d01d2b4bf684",
+    "scripts/verify-sprite-lifecycle.py": "c7749c7f5ad60cd6ddf72b815763fb7eccd7e96c9b8e7a776b71c3fa67d346f7",
     "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
     "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
     "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/clip.inc": "08800d6676a9fcae1ffdbb24ee352f75bcc0385cc7527d406dd9cb4bc888fcad",
@@ -76,7 +76,13 @@
     "sinclair-zx-spectrum/patterns/assembly/rendering/pre-shifted-sprites/phase.inc": "e58259e70f75d51c515297f85e5f90315f71d02d816ddc549500aab67b4ed3cc",
     "sinclair-zx-spectrum/patterns/assembly/rendering/pre-shifted-sprites/phases.inc": "889c5a085d8d3b12cac66a098fa0ebbe353bf41dea5b45b03b460493fce8a269"
   },
-  "observer_sha256": "0d5f84b074fe2e6f0d4c127896c4f39640fc0a2d9d97456e89a53e53d653aaae",
+  "observer_sha256": "911351c46c4681a16bf2a2864e3e2655603f2143d8285aaadeb7a5a023c4d361",
+  "fixture_programs": {
+    "spectrum/fixture.tap": "a03940c3dfbc01e4ad2928acd17bd9d82efd763312393d2a7da0a2ad0e38858f",
+    "bbc/fixture.bin": "ef497813ea9802e0acebf7dba38877d3b17ad1a91268d17d53cbfcc680853df1",
+    "bbc/loader.bas": "ba4b0978a8314fb230e6144d75b7660d46f6e8e4b7e26c21b22f39b247b28e50",
+    "amiga/fixture.adf": "e9d842b3bcdf6d01aadbaf7da1c96589ffd391131bdedb1b9aa37c01729ccb54"
+  },
   "tools": {
     "assembler": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
     "build198x": "62cb2470ae88d239881f63251502f53b122c9b415f48795c1786a6ffccd941c4",

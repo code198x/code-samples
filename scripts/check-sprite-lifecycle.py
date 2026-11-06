@@ -1,45 +1,82 @@
-"""Reject stale lifecycle execution records. This guard does not run a guest."""
+"""Reject stale lifecycle execution records. This guard does not run a guest.
+
+A record is stale when its programs' bytes change. The guard rebuilds every
+fixture through the recorder's own programs() and every caller through its
+Makefile, with the Asm198x and build198x releases the record pins, and
+compares the bytes with the record. Source and observer digests are
+provenance only.
+"""
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDERS = {
-    "sinclair-zx-spectrum/patterns/assembly/rendering/sprite-lifecycle/": {
-        "background.inc",
-        "shapes.inc",
-        "demo.asm",
-        "Makefile",
-    },
-    "bbc-micro/patterns/assembly/rendering/sprite-lifecycle/": {
-        "background.inc",
-        "demo.asm",
-        "loader.py",
-        "Makefile",
-    },
-    "commodore-amiga/patterns/assembly/rendering/sprite-lifecycle/": {
-        "bob.inc",
-        "shapes.inc",
-        "demo.asm",
-        "Makefile",
-    },
-}
-REQUIRED = {prefix + name for prefix, names in FOLDERS.items() for name in names} | {
-    "sinclair-zx-spectrum/patterns/assembly/rendering/masked-sprites/masked.inc",
-    "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc",
-    "bbc-micro/patterns/assembly/rendering/masked-sprites/masked.inc",
-    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc",
-    "scripts/verify-rendering-families.py",
-    "scripts/verify-game-loops.py",
-    "scripts/verify-z80-library-routines.py",
-}
+RECORDER = "scripts/verify-sprite-lifecycle.py"
+EVIDENCE = "docs/sprite-lifecycle/verification"
+
+SPEC = importlib.util.spec_from_file_location(
+    "lifecycle_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
 
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def recorder(root: Path) -> Any:
+    spec = importlib.util.spec_from_file_location("lifecycle_recorder", root / RECORDER)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def require_programs(root: Path, record: dict) -> None:
+    """Rebuild every pinned program with the pinned tools and compare bytes."""
+    tools = record.get("tools", {})
+    pin, builder = tools.get("assembler"), tools.get("build198x")
+    if not pin or not builder:
+        raise ValueError("Missing lifecycle tool pins")
+    recorded = recorder(root)
+    fixtures = record.get("fixture_programs", {})
+    callers = record.get("caller_programs", {})
+    expected_callers = {
+        str((folder / name).relative_to(recorded.ROOT))
+        for folder, name in recorded.CALLER_PROGRAMS
+    }
+    if set(fixtures) != set(recorded.fixture_programs()) or set(callers) != (
+        expected_callers
+    ):
+        raise ValueError("Missing lifecycle program bindings")
+    out = root / "build/evidence/sprite-lifecycle"
+    out.mkdir(parents=True, exist_ok=True)
+    build = E.function(
+        root / RECORDER,
+        "programs",
+        (E.ASSEMBLER, E.BUILDER, str(out)),
+        out,
+        tuple(sorted(fixtures)),
+    )
+    for name, digest in sorted(fixtures.items()):
+        E.require_program(build, name, pin, recorded_sha256=digest, build198x=builder)
+    for path, digest in sorted(callers.items()):
+        folder, _, name = path.partition("/build/")
+        output = "build/" + name
+        E.require_program(
+            E.make(root / folder, (output,), build198x=True),
+            output,
+            pin,
+            recorded_sha256=digest,
+            build198x=builder,
+        )
 
 
 def validate(root: Path, record: dict) -> None:
@@ -57,29 +94,17 @@ def validate(root: Path, record: dict) -> None:
         "bbc-order",
     }:
         raise ValueError("Missing lifecycle failure controls")
-    if set(record.get("sources", {})) != REQUIRED:
-        raise ValueError("Missing lifecycle source bindings")
-    for path, digest in record["sources"].items():
-        if sha(root / path) != digest:
-            raise ValueError("Changed lifecycle source: " + path)
-    if sha(root / "scripts/verify-sprite-lifecycle.py") != record.get(
-        "observer_sha256"
-    ):
-        raise ValueError("Changed lifecycle observer")
     if set(record.get("captures", {})) != {"spectrum.png", "amiga.png", "bbc.png"}:
         raise ValueError("Missing lifecycle caller captures")
     for name, digest in record["captures"].items():
-        if sha(root / "docs/sprite-lifecycle/verification" / name) != digest:
+        if sha(root / EVIDENCE / name) != digest:
             raise ValueError("Changed lifecycle capture: " + name)
+    require_programs(root, record)
 
 
 if __name__ == "__main__":
-    validate(
-        ROOT,
-        json.loads(
-            (ROOT / "docs/sprite-lifecycle/verification/results.json").read_text()
-        ),
-    )
+    validate(ROOT, json.loads((ROOT / EVIDENCE / "results.json").read_text()))
     print(
-        "Lifecycle source, observer, workload, controls and captures match retained evidence. No fresh runtime execution by this guard."
+        "Lifecycle programs rebuild to the recorded bytes; workload, controls and "
+        "captures match retained evidence. No fresh runtime execution by this guard."
     )

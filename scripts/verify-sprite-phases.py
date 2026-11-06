@@ -144,6 +144,19 @@ def variant(source: str, system: str, broken: str) -> str:
     return source.replace(old, new)
 
 
+def phase_source(system: str, broken: str = "") -> str:
+    """One system's phase gallery caller, flattened, optionally broken."""
+    return variant(C.flatten(folder(system) / "demo.asm"), system, broken)
+
+
+def bbc_loader(out: Path, data: bytes) -> list[str]:
+    """Write the BASIC loader the BBC types for `data`, and return its lines."""
+    loader = R.module("loader", folder("bbc") / "loader.py")
+    lines = loader.lines(data)
+    (out / "loader.bas").write_text("\n".join(lines) + "\n")
+    return lines
+
+
 def bbc_load(args: argparse.Namespace, out: Path, data: bytes, injected: bool) -> Any:
     m = T.Machine(
         [
@@ -173,10 +186,7 @@ def bbc_load(args: argparse.Namespace, out: Path, data: bytes, injected: bool) -
             )
             m.call("type_string", text="CALL &4000\n", hold_frames=2, settle_frames=10)
         else:
-            loader = R.module("loader", folder("bbc") / "loader.py")
-            lines = loader.lines(data)
-            (out / "loader.bas").write_text("\n".join(lines) + "\n")
-            for line in lines:
+            for line in bbc_loader(out, data):
                 m.call("type_string", text=line + "\n", hold_frames=2, settle_frames=2)
             m.call("type_string", text="RUN\n", hold_frames=2, settle_frames=10)
         return m
@@ -187,24 +197,9 @@ def bbc_load(args: argparse.Namespace, out: Path, data: bytes, injected: bool) -
 
 def observe(args: argparse.Namespace, out: Path, system: str, broken: str = "") -> None:
     out.mkdir(parents=True, exist_ok=True)
-    source = variant(C.flatten(folder(system) / "demo.asm"), system, broken)
+    source = phase_source(system, broken)
     if system == "spectrum":
-        (out / "fixture.asm").write_text(source)
-        R.run(
-            [
-                args.assembler,
-                "--dialect",
-                "pasmo",
-                "--cpu",
-                "z80",
-                "--tapbas",
-                "--sym=fixture.sym",
-                "fixture.asm",
-                "-o",
-                "fixture.tap",
-            ],
-            out,
-        )
+        C.spectrum_tap(args.assembler, out, source)
         symbols = T.symbols(out / "fixture.sym")
         base = 0
         m = T.Machine([args.spectrum, "--mcp", "--rom", str(args.rom)])
@@ -235,7 +230,7 @@ def observe(args: argparse.Namespace, out: Path, system: str, broken: str = "") 
         finally:
             m.close()
     elif system == "bbc":
-        data, symbols = C.compile_bbc(args, out, source)
+        data, symbols = C.compile_bbc(args.assembler, out, source)
         base = 0
         C.require(0x4000 + len(data) <= 0x5800, "BBC caller overlaps screen")
         m = bbc_load(args, out, data, bool(broken))
@@ -281,6 +276,41 @@ def observe(args: argparse.Namespace, out: Path, system: str, broken: str = "") 
     C.require(
         assets == asset_bytes(system, symbols, base), system + " phase source mismatch"
     )
+
+
+FIXTURES = {
+    "spectrum": ["fixture.tap"],
+    "bbc": ["fixture.bin", "loader.bas"],
+    "amiga": ["fixture.adf"],
+}
+
+
+def fixture_programs() -> list[str]:
+    """Each fixture program the record pins, relative to the output folder.
+
+    The BBC gallery is typed in as a BASIC loader, so the loader is pinned
+    as well as the code it carries.
+    """
+    return [f"{system}/{name}" for system in SYSTEMS for name in FIXTURES[system]]
+
+
+def programs(assembler: str, build198x: str, out: str) -> None:
+    """Build every fixture program the record pins into `out`, without running any.
+
+    The recorder builds the same programs through the same functions before
+    running them; the checker calls this to rebuild them with the pinned
+    tools and compare their bytes with the record.
+    """
+    for system in SYSTEMS:
+        folder_out = Path(out) / system
+        source = phase_source(system)
+        if system == "spectrum":
+            C.spectrum_tap(assembler, folder_out, source)
+        elif system == "bbc":
+            data, _ = C.compile_bbc(assembler, folder_out, source)
+            bbc_loader(folder_out, data)
+        else:
+            C.amiga_build(assembler, build198x, folder_out, source)
 
 
 def main() -> None:
@@ -370,6 +400,7 @@ def main() -> None:
         "rejected_controls": controls,
         "sources": {str(p.relative_to(ROOT)): R.sha(p) for p in sorted(files)},
         "observer_sha256": R.sha(Path(__file__)),
+        "fixture_programs": {name: R.sha(out / name) for name in fixture_programs()},
         "tools": {
             n: R.sha(Path(getattr(args, n)))
             for n in ["assembler", "build198x", "spectrum", "bbc", "amiga"]

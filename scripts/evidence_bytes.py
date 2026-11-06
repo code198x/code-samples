@@ -5,7 +5,9 @@ source or a script changes. A checker describes how its family builds each
 program (the family's own Makefile or build.py, with the assembler passed in
 `ASM198X` and build198x in `BUILD198X` as its recorder passes them), and this
 module rebuilds that program with the Asm198x (and build198x) release the
-record pins and compares the bytes with the record. See
+record pins and compares the bytes with the record. The build198x a record
+pins may be the main `build198x` binary or the separate `build198x-adf` one
+the same repository releases; `{build198x}` names whichever it is. See
 plans/2026-11-06-evidence-byte-check.md.
 
 The record pins each tool by the digest of the binary it ran, usually a
@@ -20,6 +22,7 @@ Command line:
   python3 scripts/evidence_bytes.py fetch <binary-sha256-or-tag>
   python3 scripts/evidence_bytes.py add-release asm198x-v0.0.74
   python3 scripts/evidence_bytes.py add-release build198x-v0.2.9
+  python3 scripts/evidence_bytes.py add-release build198x-adf-v0.2.12
   python3 scripts/evidence_bytes.py call <script.py> <function> [args...]
 """
 
@@ -46,8 +49,16 @@ ROOT = Path(__file__).resolve().parents[1]
 RELEASES = Path(__file__).with_name("evidence-assemblers.json")
 ASSEMBLER = "{asm198x}"
 BUILDER = "{build198x}"
-TOOLS = ("asm198x", "build198x")
-DOWNLOAD = "https://github.com/{tool}/{tool}/releases/download/{tag}/{name}"
+TOOLS = ("asm198x", "build198x", "build198x-adf")
+BUILDERS = ("build198x", "build198x-adf")
+# Each tool's GitHub organisation and repository; build198x-adf is released
+# from the build198x repository.
+REPOSITORY = {
+    "asm198x": "asm198x",
+    "build198x": "build198x",
+    "build198x-adf": "build198x",
+}
+DOWNLOAD = "https://github.com/{repo}/{repo}/releases/download/{tag}/{name}"
 CI_TARGET = "x86_64-unknown-linux-gnu"
 TARGETS = (
     "aarch64-apple-darwin",
@@ -104,7 +115,9 @@ def tool_of(tag: str) -> str:
     """The tool a release tag belongs to: `asm198x-v0.0.74` is Asm198x's."""
     name = tag.rpartition("-v")[0]
     if name not in TOOLS:
-        raise LookupError(f"{tag} is not an Asm198x or build198x release")
+        raise LookupError(
+            f"{tag} is not an Asm198x, build198x or build198x-adf release"
+        )
     return name
 
 
@@ -157,8 +170,15 @@ def assembler(pin: str) -> Path:
 
 
 def builder(pin: str) -> Path:
-    """Return a verified local binary of the build198x release this record pins."""
-    return fetch("build198x", pin)
+    """Return a verified local binary of the build198x release this record pins.
+
+    The pin may name a `build198x` or a `build198x-adf` release; recorders
+    that write Amiga ADFs have run either.
+    """
+    tool = tool_of(release_for(pin))
+    if tool not in BUILDERS:
+        raise LookupError(f"{pin} names {release_for(pin)}, which is not build198x")
+    return fetch(tool, pin)
 
 
 @cache
@@ -178,7 +198,8 @@ def fetch(tool: str, pin: str) -> Path:
         try:
             archive = work / entry["archive"]
             download(
-                DOWNLOAD.format(tool=tool, tag=tag, name=entry["archive"]), archive
+                DOWNLOAD.format(repo=REPOSITORY[tool], tag=tag, name=entry["archive"]),
+                archive,
             )
             if sha256(archive.read_bytes()) != entry["archive_sha256"]:
                 raise AssertionError(
@@ -392,13 +413,18 @@ def _unlocked_target(tool: str, tag: str, target: str) -> dict[str, str] | None:
     binary digest from hashing the binary extracted from that archive.
     """
     archive = f"{tool}-{target}.tar.xz"
-    listed = _fetch_text(DOWNLOAD.format(tool=tool, tag=tag, name=archive + ".sha256"))
+    listed = _fetch_text(
+        DOWNLOAD.format(repo=REPOSITORY[tool], tag=tag, name=archive + ".sha256")
+    )
     if listed is None:
         return None
     archive_sha256 = listed.split()[0]
     with tempfile.TemporaryDirectory() as temp:
         work = Path(temp)
-        download(DOWNLOAD.format(tool=tool, tag=tag, name=archive), work / archive)
+        download(
+            DOWNLOAD.format(repo=REPOSITORY[tool], tag=tag, name=archive),
+            work / archive,
+        )
         if sha256((work / archive).read_bytes()) != archive_sha256:
             raise ValueError(f"{tag} {target}: archive does not match its .sha256")
         with tarfile.open(work / archive) as tar:
@@ -430,7 +456,7 @@ def add_release(tag: str) -> None:
     for target in TARGETS:
         text = _fetch_text(
             DOWNLOAD.format(
-                tool=tool, tag=tag, name=f"{tool}-{target}-source-lock.json"
+                repo=REPOSITORY[tool], tag=tag, name=f"{tool}-{target}-source-lock.json"
             )
         )
         if text is None:

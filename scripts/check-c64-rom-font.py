@@ -18,6 +18,7 @@ def module(name, file):
 
 V = module("native", "verify-c64-rom-font.py")
 P = module("png", "check-amiga-command-loops.py")
+E = module("font_bytes", "evidence_bytes.py")
 T = V.T
 
 
@@ -44,10 +45,6 @@ def check(record=None):
         and r["configuration"] == cfg,
         "Changed configuration/route",
     )
-    T.require(
-        r["sources"] == {str(p.relative_to(ROOT)): T.sha(p) for p in V.source_paths()},
-        "Changed source",
-    )
     T.require(set(r["cases"]) == set(V.VARIANTS), "Missing case")
     for name, c in r["cases"].items():
         T.require(c["server"]["version"] == "0.44.2", "Wrong producer")
@@ -58,12 +55,14 @@ def check(record=None):
             and c["loaded_bytes"] == list(prg[2:]),
             "PRG identity differs",
         )
-        src = (
-            V.fixture()
-            if name == "rom-boundaries"
-            else (V.F / (name + ".asm")).read_text()
+        # The record is stale when its program's bytes change, not its sources' text.
+        output = f"build/rom-verification/{name}/demo.prg"
+        E.require_program(
+            E.function(Path(V.__file__), "build", (E.ASSEMBLER, name), V.F, (output,)),
+            output,
+            cfg["assembler_sha256"],
+            recorded=prg,
         )
-        T.require(V.digest(src.encode()) == c["source_sha256"], "Caller differs")
         if name == "rom-boundaries":
             T.require(len(c["boundaries"]) == 6, "Incomplete boundaries")
             for i, b in enumerate(c["boundaries"]):

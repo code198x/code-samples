@@ -1,43 +1,63 @@
-"""Reject stale phases execution records. This guard does not run a guest."""
+"""Reject stale phases execution records. This guard does not run a guest.
+
+A record is stale when its programs' bytes change. The guard rebuilds every
+fixture through the recorder's own programs(), with the Asm198x and
+build198x releases the record pins, and compares the bytes with the record.
+Source and observer digests are provenance only.
+"""
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDERS = {
-    prefix + "/patterns/assembly/rendering/pre-shifted-sprites/": {
-        "phase.inc",
-        "phases.inc",
-        "demo.asm",
-        "Makefile",
-    }
-    | ({"draw.inc"} if prefix != "commodore-amiga" else set())
-    | ({"loader.py"} if prefix == "bbc-micro" else set())
-    for prefix in ["sinclair-zx-spectrum", "bbc-micro", "commodore-amiga"]
-}
-REQUIRED = {prefix + name for prefix, names in FOLDERS.items() for name in names} | {
-    "cross-platform/patterns/rendering/pre-shifted-sprites/prepare.py",
-    "cross-platform/patterns/rendering/pre-shifted-sprites/sprite.json",
-    "cross-platform/patterns/rendering/pre-shifted-sprites/verification/verify.py",
-    "scripts/verify-sprite-clipping.py",
-    "scripts/verify-sprite-lifecycle.py",
-    "scripts/verify-rendering-families.py",
-    "scripts/verify-game-loops.py",
-    "scripts/verify-z80-library-routines.py",
-    "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/clip.inc",
-    "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc",
-    "bbc-micro/patterns/assembly/rendering/clipped-sprites/clip.inc",
-    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/clip.inc",
-    "commodore-amiga/patterns/assembly/rendering/clipped-sprites/draw.inc",
-    "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc",
-}
+RECORDER = "scripts/verify-sprite-phases.py"
+EVIDENCE = "docs/sprite-phases/verification"
+
+SPEC = importlib.util.spec_from_file_location(
+    "phases_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+assert SPEC and SPEC.loader
+E = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(E)
 
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def recorder(root: Path) -> Any:
+    spec = importlib.util.spec_from_file_location("phases_recorder", root / RECORDER)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def require_programs(root: Path, record: dict) -> None:
+    """Rebuild every pinned program with the pinned tools and compare bytes."""
+    tools = record.get("tools", {})
+    pin, builder = tools.get("assembler"), tools.get("build198x")
+    if not pin or not builder:
+        raise ValueError("Missing phases tool pins")
+    fixtures = record.get("fixture_programs", {})
+    if set(fixtures) != set(recorder(root).fixture_programs()):
+        raise ValueError("Missing phases program bindings")
+    out = root / "build/evidence/sprite-phases"
+    out.mkdir(parents=True, exist_ok=True)
+    build = E.function(
+        root / RECORDER,
+        "programs",
+        (E.ASSEMBLER, E.BUILDER, str(out)),
+        out,
+        tuple(sorted(fixtures)),
+    )
+    for name, digest in sorted(fixtures.items()):
+        E.require_program(build, name, pin, recorded_sha256=digest, build198x=builder)
 
 
 def validate(root: Path, record: dict) -> None:
@@ -64,25 +84,17 @@ def validate(root: Path, record: dict) -> None:
         != {s + "-" + k for s in expected for k in ["mask", "image"]}
     ):
         raise ValueError("Missing host pixel and failure workload")
-    if set(record.get("sources", {})) != REQUIRED:
-        raise ValueError("Missing phases source bindings")
-    for path, digest in record["sources"].items():
-        if sha(root / path) != digest:
-            raise ValueError("Changed phases source: " + path)
-    if sha(root / "scripts/verify-sprite-phases.py") != record.get("observer_sha256"):
-        raise ValueError("Changed phases observer")
     if set(record.get("captures", {})) != {"spectrum.png", "amiga.png", "bbc.png"}:
         raise ValueError("Missing phases caller captures")
     for name, digest in record["captures"].items():
-        if sha(root / "docs/sprite-phases/verification" / name) != digest:
+        if sha(root / EVIDENCE / name) != digest:
             raise ValueError("Changed phases capture: " + name)
+    require_programs(root, record)
 
 
 if __name__ == "__main__":
-    validate(
-        ROOT,
-        json.loads((ROOT / "docs/sprite-phases/verification/results.json").read_text()),
-    )
+    validate(ROOT, json.loads((ROOT / EVIDENCE / "results.json").read_text()))
     print(
-        "Phases source, observer, workload, controls and captures match retained evidence. No fresh runtime execution by this guard."
+        "Phases programs rebuild to the recorded bytes; workload, controls and "
+        "captures match retained evidence. No fresh runtime execution by this guard."
     )

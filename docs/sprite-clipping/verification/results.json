@@ -39,8 +39,8 @@
     "commodore-amiga/patterns/assembly/rendering/clipped-sprites/draw.inc": "528903e83f1c1adf58d731915e3920cddf15474ce7f77b47a0ec62dacecf6f43",
     "commodore-amiga/patterns/assembly/rendering/clipped-sprites/shapes.inc": "153ecaaca5924c8cd2fd61ed65c7ee5e6980c5e6b14ded6d1485191ea0faa30d",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-    "scripts/verify-rendering-families.py": "c8bae0e80028550238eb821867383b4b873af417cb173a2d72f61196dc697c12",
-    "scripts/verify-sprite-lifecycle.py": "9756dbf035ee59a7cde1a729d8f4290976faf546b3308442eb164c332f743a9e",
+    "scripts/verify-rendering-families.py": "edf2c82d4abe4069f8aa86a2b2cf7ba84dbdff33c5f68939664ee7e07702526a",
+    "scripts/verify-sprite-lifecycle.py": "c7749c7f5ad60cd6ddf72b815763fb7eccd7e96c9b8e7a776b71c3fa67d346f7",
     "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
     "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
     "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/Makefile": "bbaade6aa9824a0ce12b30a91c83e2a599d737a5a86ebf835e8213f69398c4fd",
@@ -49,7 +49,15 @@
     "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/draw.inc": "834d0d52355241b3bc3617b3d1b738acd45b4c5caa32f0b1f40fea0fc84266ec",
     "sinclair-zx-spectrum/patterns/assembly/rendering/clipped-sprites/shapes.inc": "a5565733a319bd18fe1ae13b7e17b2b26c6f3454ca53ea5d1807562e0a59824b"
   },
-  "observer_sha256": "5cfabd5723a2d442d2674f40bde29b4a630c5bac222f29a0b97b8c5179844f93",
+  "observer_sha256": "2090101c5006cc534d581ccc1db244e316ea7d1eabba1866d504d01d2b4bf684",
+  "fixture_programs": {
+    "spectrum/axis/caller.sna": "e69eff3c02450568a622e1515177ddb29cbc10f8e19ddf162c61f3a2c173215b",
+    "spectrum/scene/fixture.tap": "218ca3ec05a879a74ce6c3a76882a9b2de33e03a639249accda68a8a5a079b56",
+    "bbc/axis/fixture.bin": "94e9537ae286f28def3c91100cc0d9693d82fc237d7f43104bd0b2695bd1311c",
+    "bbc/scene/fixture.bin": "a144c6fbec045fa06889ab69b511f831ca46caee55e8ed048e35143913bf9244",
+    "amiga/axis/fixture.adf": "f18e77284283ed9b40c055d8236e5c5bcf2b7da69d19eee7b6a6c3218ff36577",
+    "amiga/scene/fixture.adf": "e9a2f1b8e2c09f7d3fe890556f0407816ad5c65ef8de352403dad0cba095a9e9"
+  },
   "tools": {
     "assembler": "b69ca743cf66ae19cc8de6d8d0118e61bf2c0b7fba45208f722e241716696244",
     "build198x": "62cb2470ae88d239881f63251502f53b122c9b415f48795c1786a6ffccd941c4",
