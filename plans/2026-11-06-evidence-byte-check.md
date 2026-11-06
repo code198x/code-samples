@@ -200,12 +200,13 @@ The two checkers with no text pin (`check-c64-starters.py`,
 
 None blocks batch 1, whose programs are all host-built by released tools.
 
-- **Rule 2:** typed, imported and in-machine-compiled programs keep their
-  text as the program, so a comment in BASIC, FORTH, AMOS or Blitz source
-  still needs a re-record. The alternative, dropping their pin and relying
-  on the replay (rule 4 of the parent plan), saves those re-records but
-  lets a changed program pass CI until the next replay. Needed before
-  batch 5.
+- **Rule 2:** *agreed 2026-11-06.* Typed, imported and in-machine-compiled
+  programs keep their text as the program, so a comment in BASIC, FORTH,
+  AMOS or Blitz source still needs a re-record. A `REM` is in the machine's
+  memory and in its `LIST`, so editing it does change the program.
+- **Each record rebuilds with the release it pins:** *agreed 2026-11-06*,
+  until step 2's root pin. Step 2 then changes only `assembler()`, and the
+  replay re-records whatever differs.
 - **Rule 3:** keeping a text pin, without scripts, for programs built by an
   unreleased tool. The alternative is to re-record those families with a
   released Asm198x first. Needed only if batch 8's survey of the
