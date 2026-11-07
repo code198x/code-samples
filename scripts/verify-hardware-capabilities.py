@@ -157,6 +157,8 @@ def verify(
     command = [str(executable), "--mcp"]
     if cfg["flag"]:
         command += [cfg["flag"], str(cart)]
+    if cfg.get("board"):
+        command += ["--board", cfg["board"]]
     firmware = firmware_root / cfg["firmware"] if cfg.get("firmware") else None
     if firmware:
         command += [cfg.get("firmware_flag", "--bios"), str(firmware)]
@@ -308,7 +310,8 @@ def verify(
         result = {
             "status": "passed",
             "machine_id": system,
-            "configuration": cfg["model"],
+            "configuration": cfg["model"]
+            + (f", {cfg['board'].upper()} board" if cfg.get("board") else ""),
             "server": server,
             "sources": {
                 str(p.relative_to(ROOT)): T.sha(p)

@@ -784,12 +784,29 @@
       ],
       "pins": {
         "asm198x": "0.0.75",
-        "emulator": "0.48.3, except where a later release changes the record: atari-2600 0.45.1 (0.46.1 on starts the trigger tone 38 samples earlier), nintendo-game-boy 0.45.1 (0.46.1 on never samples the A press) and atari-5200 0.46.2 (0.47.0 on refuses the generic board profile)"
+        "emulator": "0.48.3",
+        "follow_ups": {
+          "atari-2600": {
+            "emulator": "0.45.1",
+            "reason": "from 0.46.1 the trigger tone starts 38 samples earlier (sample 459 rather than 497)",
+            "issue": "https://github.com/emu198x/emu198x/issues/2311",
+            "undo": "re-record on the newest release once the issue closes"
+          },
+          "nintendo-game-boy": {
+            "emulator": "0.45.1",
+            "reason": "from 0.46.1 the A press is never sampled",
+            "issue": "https://github.com/emu198x/emu198x/issues/2310",
+            "undo": "re-record on the newest release once the issue closes"
+          }
+        }
       },
       "build_programs": "build_programs(system, assembler, output): the caller and its drawing and sound negatives",
       "records": "*/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
       "evidence": "Copy build/verification/{ready,pressed,second-press,drawing-negative-*,sound-negative-*}.png to verification/evidence; sound-excerpt.wav is the first 0.2 s of sound.wav (the manifest's excerpt_frames). Update docs/capability-coverage.json (record_sha256, captures, sound, emulator_builds).",
-      "checker": "scripts/check-capability-coverage.py (hardware rows)"
+      "checker": "scripts/check-capability-coverage.py (hardware rows)",
+      "machine_choices": {
+        "atari-5200": "--board ca018087 (Emu198x models each physical 5200 board; the generic profile was retired in 0.47.0, emu198x#2144)"
+      }
     }
   ]
 }

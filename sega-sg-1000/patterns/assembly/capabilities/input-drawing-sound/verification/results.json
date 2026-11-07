@@ -12,7 +12,7 @@
     "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "4f3e73770d6e304e98040dbc715971324b7528ec1889259b9c6681bfee546fec",
     "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound/Makefile": "e1f5825e47fd5254e054bba6a79b70e52e6edeab00ea90ca946bdf3d6a907037"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "7bf6eac4afd9945bb60fde0b434739725d8b3b4455622b8b6cd3f530577a7f2e",
   "binary_sha256": "f80b39741c32d25fd67d7e9684d6f1e943e42cd8346089a19e8f1b56f5b1e9fd",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
