@@ -4,14 +4,35 @@
   "startup": "48K snapshot; TAP is built separately and requires tape execution qualification",
   "server": {
     "name": "emu198x-spectrum",
-    "version": "0.38.3"
+    "version": "0.48.3"
   },
-  "emulator_sha256": "fa5a9dc110bf2158dac1e82999c9acbb1691adc61b7fe0c126da0272ace12992",
+  "emulator_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167",
   "firmware_sha256": {
     "48.rom": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
   },
   "binary_sha256": "963486675010be8b044e723e3defcbd910d35dc31037ac0a8b933672714190a0",
-  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.sna": "963486675010be8b044e723e3defcbd910d35dc31037ac0a8b933672714190a0",
+    "demo.tap": "80f1db0e35be72edb678296cfb598398b33bcf7b1c42b09ecddc6b679f2c0a4c"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167"
+    }
+  },
+  "observer_sha256": "0d715601aef50b999837ba55f8a21a338be30f15b0607e0762c45b4e3f17d84b",
   "sources": {
     "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/sound-beep.inc": "275fdad2e271244623ca2984b89f8d84d71351368593192036452170c4ca975a",
     "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/Makefile": "6b2c75a52b6f2f95c1d346911ae6c8199257d5b5a34ccd9059dfdcf1c649420e",

@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 import wave
@@ -56,8 +57,42 @@ def collected(state: dict) -> None:
     )
 
 
-def verify(name: str, args: argparse.Namespace) -> dict:
-    folder = (
+PROGRAMS = {
+    "c64": ["demo.prg"],
+    "spectrum": ["demo.sna", "demo.tap"],
+    "amiga": ["demo.adf"],
+    "nes": ["demo.nes"],
+    "bbc": ["demo.bin", "loader.bas"],
+    "electron": ["demo.bin", "loader.bas"],
+}
+# Registry machine ids, as the capability manifest names these callers.
+MACHINES = {
+    "commodore-c64": "c64",
+    "sinclair-zx-spectrum": "spectrum",
+    "commodore-amiga": "amiga",
+    "nintendo-nes": "nes",
+    "acorn-bbc-micro": "bbc",
+    "acorn-electron": "electron",
+}
+
+
+def evidence_bytes():
+    """The shared evidence module, loaded only by a recording run.
+
+    Other recorders import this file for pcm_range from a copied scripts
+    folder, so it must not need evidence_bytes.py to import.
+    """
+    found = importlib.util.spec_from_file_location(
+        "collect_evidence_bytes", Path(__file__).with_name("evidence_bytes.py")
+    )
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+def folder_of(name: str) -> Path:
+    return (
         ROOT
         / SYSTEMS[name]
         / (
@@ -66,16 +101,80 @@ def verify(name: str, args: argparse.Namespace) -> dict:
             else "patterns/assembly/framework/collect-and-respond"
         )
     )
+
+
+def build(name: str, assembler: str, builder: str, out: Path) -> dict[str, Path]:
+    """Assemble each program the machine is given, without the emulator.
+
+    The NES negative control is an assembled caller, so it is built here too;
+    the others patch the running caller. Returns each program by the name the
+    record keeps.
+    """
+    folder = folder_of(name)
     subprocess.run(
-        ["make", f"BUILD198X={args.build198x}"],
+        ["make", "-B", f"ASM198X={assembler}", f"BUILD198X={builder}"],
         cwd=folder,
         check=True,
         capture_output=True,
         timeout=60,
     )
-    sym = T.symbols(folder / "build/demo.sym")
+    out.mkdir(parents=True, exist_ok=True)
+    programs = {n: folder / "build" / n for n in PROGRAMS[name]}
+    if name == "nes":
+        negative_rules = folder / "negative-rules.inc"
+        negative_source = folder / "negative.asm"
+        original = (folder / "rules.inc").read_text()
+        T.require(
+            original.count("jsr boxes_overlap") == 1, "Ambiguous negative control"
+        )
+        negative_rules.write_text(
+            original.replace("jsr boxes_overlap", "clc\n    nop\n    nop")
+        )
+        negative_source.write_text(
+            (folder / "demo.asm")
+            .read_text()
+            .replace('"rules.inc"', '"negative-rules.inc"')
+        )
+        try:
+            subprocess.run(
+                [
+                    assembler,
+                    "--dialect",
+                    "ca65",
+                    str(negative_source),
+                    "-o",
+                    str(out / "negative.nes"),
+                ],
+                check=True,
+                capture_output=True,
+                timeout=30,
+            )
+        finally:
+            negative_rules.unlink()
+            negative_source.unlink()
+        programs["negative.nes"] = out / "negative.nes"
+    return programs
+
+
+def build_programs(
+    machine: str, assembler: str, output: str, builder: str = "build198x"
+) -> None:
+    """Write each program the machine is given into output, without the emulator.
+
+    `machine` is a registry machine id; `builder` is used only by the Amiga.
+    """
+    out = Path(output).resolve()
+    for program, path in build(MACHINES[machine], assembler, builder, out).items():
+        if path != out / program:
+            shutil.copyfile(path, out / program)
+
+
+def verify(name: str, args: argparse.Namespace) -> dict:
+    folder = folder_of(name)
     out = folder / "build/verification"
-    out.mkdir(exist_ok=True)
+    programs = build(name, args.assembler, args.build198x, out)
+    E = evidence_bytes()
+    sym = T.symbols(folder / "build/demo.sym")
     executable = args.native / (
         "emu198x-"
         + {"bbc": "acorn-bbc-micro", "electron": "acorn-electron"}.get(name, name)
@@ -317,37 +416,7 @@ def verify(name: str, args: argparse.Namespace) -> dict:
         reset()
         # Disable the real collection path only AFTER all positive checks.
         if name == "nes":
-            negative_rules = folder / "negative-rules.inc"
-            negative_source = folder / "negative.asm"
-            original = (folder / "rules.inc").read_text()
-            T.require(
-                original.count("jsr boxes_overlap") == 1, "Ambiguous negative control"
-            )
-            negative_rules.write_text(
-                original.replace("jsr boxes_overlap", "clc\n    nop\n    nop")
-            )
-            negative_source.write_text(
-                (folder / "demo.asm")
-                .read_text()
-                .replace('"rules.inc"', '"negative-rules.inc"')
-            )
-            try:
-                subprocess.run(
-                    [
-                        "asm198x",
-                        "--dialect",
-                        "ca65",
-                        str(negative_source),
-                        "-o",
-                        str(out / "negative.nes"),
-                    ],
-                    check=True,
-                    capture_output=True,
-                    timeout=30,
-                )
-            finally:
-                negative_rules.unlink()
-                negative_source.unlink()
+            # The assembled negative control, built before the run.
             machine.close()
             machine = T.Machine(
                 [
@@ -403,6 +472,29 @@ def verify(name: str, args: argparse.Namespace) -> dict:
             "emulator_sha256": T.sha(executable),
             "firmware_sha256": {p.name: T.sha(p) for p in firmware},
             "binary_sha256": T.sha(binary),
+            "assembler_sha256": T.sha(
+                Path(shutil.which(args.assembler) or args.assembler)
+            ),
+            # Each program the machine is given, so the checker can rebuild it.
+            "programs": {n: T.sha(path) for n, path in programs.items()},
+            "tools": {
+                "assembler": E.tool_identity(args.assembler),
+                "emulator": E.tool_identity(executable),
+                **(
+                    {"build198x": E.tool_identity(args.build198x)}
+                    if name == "amiga"
+                    else {}
+                ),
+            },
+            **(
+                {
+                    "build198x_sha256": T.sha(
+                        Path(shutil.which(args.build198x) or args.build198x)
+                    )
+                }
+                if name == "amiga"
+                else {}
+            ),
             "observer_sha256": T.sha(Path(__file__)),
             "sources": {
                 str(p.relative_to(ROOT)): T.sha(p) for p in sorted(dependencies)
@@ -439,6 +531,7 @@ def main() -> None:
         "--firmware-root", type=Path, default=Path.home() / ".emu198x/roms"
     )
     parser.add_argument("--build198x", default="build198x")
+    parser.add_argument("--assembler", default="asm198x")
     parser.add_argument("--only", choices=SYSTEMS)
     parser.add_argument(
         "--tape",

@@ -31,9 +31,13 @@ E = _load_evidence_bytes()
 # These records belong to check-dragon-ace-loops.py, which judges their programs.
 OWNED = {"dragon", "jupiter-ace"}
 # The recorder of each kind whose records list their programs. Its
-# build_programs(machine, assembler, output) assembles every program the
-# machine was given, without the emulator.
-RECORDERS = {"hardware": "scripts/verify-hardware-capabilities.py"}
+# build_programs(machine, assembler, output[, build198x]) builds every program
+# the machine was given, without the emulator.
+RECORDERS = {
+    "hardware": "scripts/verify-hardware-capabilities.py",
+    "composition": "scripts/verify-collect-and-respond.py",
+    "electron": "scripts/verify-collect-and-respond.py",
+}
 
 
 def require_program(root: Path, machine: str, record: dict, kind: str = "") -> None:
@@ -41,7 +45,7 @@ def require_program(root: Path, machine: str, record: dict, kind: str = "") -> N
 
     Typed routes compare the typed demo with its recorded digest (rule 2).
     Records another checker owns are left to it. A record that lists its
-    programs is judged by rebuilding them with its pinned assembler (rule 1).
+    programs is judged by rebuilding them with its pinned tools (rule 1).
     Other host-built programs still compare their source digests until their
     family is re-recorded.
     """
@@ -54,10 +58,11 @@ def require_program(root: Path, machine: str, record: dict, kind: str = "") -> N
         if not isinstance(programs, dict) or not programs:
             raise ValueError(f"Record names no programs to rebuild: {machine}")
         out = f"build/evidence/capability-{machine}"
+        builder = record.get("build198x_sha256")
         build = E.function(
             root / RECORDERS[kind],
             "build_programs",
-            (machine, E.ASSEMBLER, out),
+            (machine, E.ASSEMBLER, out, *((E.BUILDER,) if builder else ())),
             root,
             tuple(f"{out}/{name}" for name in programs),
         )
@@ -67,6 +72,7 @@ def require_program(root: Path, machine: str, record: dict, kind: str = "") -> N
                 f"{out}/{name}",
                 record.get("assembler_sha256"),
                 recorded_sha256=digest,
+                build198x=builder,
             )
         return
     sources = record.get("sources_sha256", record.get("sources", {}))

@@ -4,16 +4,36 @@
   "startup": "ROM boot and PRG import; snapshot resumes imported BASIC state; typed RUN",
   "server": {
     "name": "emu198x-c64",
-    "version": "0.38.3"
+    "version": "0.48.3"
   },
-  "emulator_sha256": "6b8a4eec00631d23b927429a844a302eee57dfb6e03335f3cf7c437148bc1b1a",
+  "emulator_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6",
   "firmware_sha256": {
     "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
     "kernal.rom": "83c60d47047d7beab8e5b7bf6f67f80daa088b7a6a27de0d7e016f6484042721",
     "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
   },
   "binary_sha256": "842ec8bd0a70b75be90bf4ff7530ac9f4838ded67ee592f56dae769b081c4954",
-  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.prg": "842ec8bd0a70b75be90bf4ff7530ac9f4838ded67ee592f56dae769b081c4954"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-c64",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6"
+    }
+  },
+  "observer_sha256": "0d715601aef50b999837ba55f8a21a338be30f15b0607e0762c45b4e3f17d84b",
   "sources": {
     "commodore-64/patterns/assembly/audio/sid-note-trigger/sid-note.inc": "e46ac2a5130017ebc5b466d2f3295fb0463ab2a93344ca4437dcc7ade7a80049",
     "commodore-64/patterns/assembly/framework/collect-and-respond/Makefile": "961e7ade6b348813a1c79ab3f41268c5a24ec5819e1813fc09640c8d2672fd11",

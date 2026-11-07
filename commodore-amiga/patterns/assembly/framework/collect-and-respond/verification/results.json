@@ -4,14 +4,42 @@
   "startup": "Cold boot original ADF; A500 OCS PAL/Kickstart 1.3",
   "server": {
     "name": "emu198x-amiga",
-    "version": "0.38.3"
+    "version": "0.44.1"
   },
-  "emulator_sha256": "a3350d755a40ed7a4ca2f58807dea1cb518690ccef81126c146f1782c4dd7426",
+  "emulator_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
   "firmware_sha256": {
     "kick13.rom": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
   },
   "binary_sha256": "ce91c9d3468f09fe65ea2cb061d62fe4d5fa492edb3faf511a8088821668c029",
-  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.adf": "ce91c9d3468f09fe65ea2cb061d62fe4d5fa492edb3faf511a8088821668c029"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-amiga",
+      "version": "0.44.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.44.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765"
+    },
+    "build198x": {
+      "tool": "build198x",
+      "version": "0.2.13",
+      "release": "https://github.com/build198x/build198x/releases/tag/build198x-v0.2.13",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7"
+    }
+  },
+  "build198x_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+  "observer_sha256": "0d715601aef50b999837ba55f8a21a338be30f15b0607e0762c45b4e3f17d84b",
   "sources": {
     "commodore-amiga/patterns/assembly/audio/playing-a-sample/paula-sample.inc": "a6c1dcda0cc8e9bc864f44cc8e4795cc9cfbe27bfdd63ecad0f8d4a081b9b8d9",
     "commodore-amiga/patterns/assembly/framework/collect-and-respond/Makefile": "1f45f8bc65d41a5a0f3ca0096b9557b3426977c87e3be1a5d516571a9d309347",
