@@ -63,7 +63,9 @@ class CapabilityCoverageTests(unittest.TestCase):
     def test_dropping_machine_from_both_inventories_fails(self) -> None:
         machine = self.manifest["systems"].pop()["machine_id"]
         self.manifest["registry"]["systems"] = [
-            r for r in self.manifest["registry"]["systems"] if r["machine_id"] != machine
+            r
+            for r in self.manifest["registry"]["systems"]
+            if r["machine_id"] != machine
         ]
         with self.assertRaisesRegex(ValueError, "Pinned registry membership"):
             GUARD.validate(self.root, self.manifest)
@@ -102,7 +104,7 @@ class CapabilityCoverageTests(unittest.TestCase):
         saved = path.read_bytes()
         try:
             path.write_bytes(saved + b"\nREM altered\n")
-            with self.assertRaisesRegex(ValueError, "Changed file"):
+            with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
                 GUARD.validate(self.root, self.manifest)
         finally:
             path.write_bytes(saved)

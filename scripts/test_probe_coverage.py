@@ -72,12 +72,12 @@ class ProbeCoverageTests(unittest.TestCase):
     def command_record(self, probe: str = "command-driven") -> dict:
         import hashlib
 
-        source = self.root / "caller.bas"
+        source = self.root / "demo.bas"
         source.write_text("10 INPUT A\n")
         proof = {
             "status": "passed",
             "server": {"name": "binary-one"},
-            "sources": {"caller.bas": hashlib.sha256(source.read_bytes()).hexdigest()},
+            "sources": {"demo.bas": hashlib.sha256(source.read_bytes()).hexdigest()},
             "accepted_command_states": [1, 2],
             "negative_control": {
                 "type": "bypass-command",
@@ -126,11 +126,17 @@ class ProbeCoverageTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.retained_check(proof)
 
-    def test_changed_source_cannot_keep_a_qualified_claim(self) -> None:
+    def test_changed_typed_program_cannot_keep_a_qualified_claim(self) -> None:
         proof = self.command_record()
-        (self.root / "caller.bas").write_text("10 GOTO 10\n")
-        with self.assertRaisesRegex(ValueError, "Source missing or changed"):
+        (self.root / "demo.bas").write_text("10 GOTO 10\n")
+        with self.assertRaisesRegex(AssertionError, "^Typed program differs"):
             self.retained_check(proof)
+
+    def test_script_digests_are_provenance(self) -> None:
+        proof = self.command_record()
+        proof["sources"]["scripts/verify-command-loops.py"] = "0" * 64
+        proof["observer_sha256"] = "0" * 64
+        self.assertEqual(self.retained_check(proof), (1, 1))
 
     def test_missing_accepted_states_cannot_keep_a_qualified_claim(self) -> None:
         proof = self.command_record()

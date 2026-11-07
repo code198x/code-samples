@@ -4,12 +4,51 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
+import tomllib
 from pathlib import Path
 
-import tomllib
-
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load_evidence_bytes():
+    found = importlib.util.spec_from_file_location(
+        "coverage_evidence_bytes", ROOT / "scripts/evidence_bytes.py"
+    )
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load_evidence_bytes()
+# These records belong to check-dragon-ace-loops.py, which judges their programs.
+OWNED = {"dragon", "jupiter-ace"}
+
+
+def require_program(root: Path, machine: str, record: dict) -> None:
+    """Judge a record by the program the machine was given, not script digests.
+
+    Typed routes compare the typed demo with its recorded digest (rule 2).
+    Records another checker owns are left to it. Host-built programs still
+    compare their source digests until their family is re-recorded.
+    """
+    if machine in OWNED:
+        return
+    sources = record.get("sources_sha256", record.get("sources", {}))
+    if not record.get("binary_sha256"):
+        demos = [n for n in sources if Path(n).name in ("demo.bas", "demo.fth")]
+        if len(demos) != 1:
+            raise ValueError(f"No typed demo identified: {machine}")
+        E.require_typed((root / demos[0]).read_text(), sources[demos[0]], demos[0])
+        return
+    for name, digest in sources.items():
+        if name.startswith("scripts/") or "build" in Path(name).parts:
+            continue
+        path = root / name
+        if not path.is_file() or E.sha256(path.read_bytes()) != digest:
+            raise ValueError(f"Source missing or changed since qualification: {name}")
 
 
 def check(manifest: Path, registry: Path) -> tuple[int, int]:
@@ -37,27 +76,9 @@ def check(manifest: Path, registry: Path) -> tuple[int, int]:
         proof = json.loads((ROOT / row["record"]).read_text())
         if proof["status"] != "passed" or proof["server"]["name"] != row["crate"]:
             raise ValueError(f"Proof does not qualify {row['machine_id']}")
-        sources = proof.get("sources_sha256", proof.get("sources", {}))
-        if not sources:
+        if not proof.get("sources_sha256", proof.get("sources", {})):
             raise ValueError("Qualified record has no identified sources")
-        for name, digest in sources.items():
-            if "build" in Path(name).parts:
-                continue  # Generated loader/binaries are separately retained hashes.
-            path = ROOT / name
-            if (
-                not path.is_file()
-                or hashlib.sha256(path.read_bytes()).hexdigest() != digest
-            ):
-                raise ValueError(
-                    f"Source missing or changed since qualification: {name}"
-                )
-        if "observer_sha256" in proof:
-            observer = ROOT / "scripts/verify-game-loops.py"
-            if (
-                hashlib.sha256(observer.read_bytes()).hexdigest()
-                != proof["observer_sha256"]
-            ):
-                raise ValueError("Frame observer changed since qualification")
+        require_program(ROOT, row["machine_id"], proof)
         if "negative_controls" in proof:
             controls = proof["negative_controls"]
             if set(controls) != {"no-wait", "no-edge"} or not all(
