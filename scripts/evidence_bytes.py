@@ -422,8 +422,9 @@ def _fetch_text(url: str) -> str | None:
         raise
 
 
-def _emulator_version(path: str) -> tuple[str, str]:
-    """The (name, version) an Emu198x emulator reports when it starts over MCP."""
+def _emulator_version(path: str) -> tuple[str, str] | None:
+    """The (name, version) an Emu198x emulator reports when it starts over MCP,
+    or None when it does not answer (some builds need firmware to start)."""
     request = {
         "jsonrpc": "2.0",
         "id": 1,
@@ -442,13 +443,34 @@ def _emulator_version(path: str) -> tuple[str, str]:
         text=True,
     ) as process:
         assert process.stdin and process.stdout
-        process.stdin.write(json.dumps(request) + "\n")
-        process.stdin.flush()
-        reply = json.loads(process.stdout.readline())
-        process.stdin.close()
-        process.wait(timeout=30)
-    info = reply["result"]["serverInfo"]
+        try:
+            process.stdin.write(json.dumps(request) + "\n")
+            process.stdin.flush()
+            reply = json.loads(process.stdout.readline())
+            info = reply["result"]["serverInfo"]
+        except (BrokenPipeError, json.JSONDecodeError, KeyError):
+            return None
+        finally:
+            process.stdin.close()
+            process.wait(timeout=30)
     return info["name"], info["version"]
+
+
+def _emulator_release_by_digest(name: str, digest: str, target: str) -> str | None:
+    """Search Emu198x releases' source locks for this binary; return the version."""
+    for page in range(1, 4):
+        listing = _fetch_text(
+            "https://api.github.com/repos/emu198x/emu198x/releases"
+            f"?per_page=100&page={page}"
+        )
+        releases = json.loads(listing) if listing else []
+        for release in releases:
+            version = release["tag_name"].removeprefix("v")
+            if digest in _emulator_release_digests(name, version, target):
+                return version
+        if len(releases) < 100:
+            break
+    return None
 
 
 def _emulator_release_digests(name: str, version: str, target: str) -> set[str]:
@@ -508,9 +530,15 @@ def tool_identity(path: str | Path) -> dict[str, str]:
         }
     name = Path(found).name
     if name.startswith("emu198x-"):
-        name, version = _emulator_version(found)
         target = host_target()
-        released = digest in _emulator_release_digests(name, version, target)
+        reported = _emulator_version(found)
+        if reported:
+            name, version = reported
+            released = digest in _emulator_release_digests(name, version, target)
+        else:
+            found_version = _emulator_release_by_digest(name, digest, target)
+            version = found_version or "unknown"
+            released = found_version is not None
         return {
             "tool": name,
             "version": version,
