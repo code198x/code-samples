@@ -3,16 +3,37 @@
   "system": "electron",
   "server": {
     "name": "emu198x-acorn-electron",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "startup": "Fresh Electron OS/BASIC boot; same typed loader and executable; executable bytes compared excluding declared state",
   "firmware_sha256": {
     "mos": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4",
     "basic": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
   },
-  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-  "emulator_sha256": "68961b5a98ad0c93859fcd36fb523431d8e5995eb3039084acda451653346d81",
+  "observer_sha256": "8aa0918caa858a5365d5579fda5347f78c0cc09244ed485354792f7411498a65",
+  "emulator_sha256": "809a448c39a93c71136d71a6f7aec3227b46c035ddb75e1ef28ddfdcbb56a5c1",
   "binary_sha256": "bbe2aa4c739f8f653d284aae7f7d10cbdd6eea9c4d2ae2cc3a39badd0565f823",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.bin": "bbe2aa4c739f8f653d284aae7f7d10cbdd6eea9c4d2ae2cc3a39badd0565f823",
+    "loader.bas": "c8367e516c706e13c668b39710a7d05e700776d6f7764828375f4689d6f46ff8"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-acorn-electron",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "809a448c39a93c71136d71a6f7aec3227b46c035ddb75e1ef28ddfdcbb56a5c1"
+    }
+  },
   "sources": {
     "bbc-micro/patterns/assembly/framework/game-loop/demo.asm": "22b1feea3b51987e8135c2be5b95114bc942f9fa2fbbe1c9c326bb99f126432d",
     "bbc-micro/patterns/assembly/framework/game-loop/frame.inc": "1be91c5fac2dce415184eac1e8a51dcdee5af85f874e8ac1e9aa5b3acbe3532b",

@@ -3,15 +3,43 @@
   "system": "amiga",
   "server": {
     "name": "emu198x-amiga",
-    "version": "0.34.2"
+    "version": "0.44.1"
   },
   "startup": "Cold ADF boot, A500 OCS PAL, KS1.3",
   "firmware_sha256": {
     "kickstart": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53"
   },
-  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-  "emulator_sha256": "b6a15607882f3e8240d8d1f9385f58ed0c472f71b0ca255c015ad82c965813df",
+  "observer_sha256": "8aa0918caa858a5365d5579fda5347f78c0cc09244ed485354792f7411498a65",
+  "emulator_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
   "binary_sha256": "baccf61ac6dba5edbdf6eebdde7acdb4f3b3370db30317cfd9bd9c08725ae494",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.adf": "baccf61ac6dba5edbdf6eebdde7acdb4f3b3370db30317cfd9bd9c08725ae494"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-amiga",
+      "version": "0.44.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.44.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765"
+    },
+    "build198x": {
+      "tool": "build198x",
+      "version": "0.2.13",
+      "release": "https://github.com/build198x/build198x/releases/tag/build198x-v0.2.13",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7"
+    }
+  },
+  "build198x_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
   "sources": {
     "commodore-amiga/patterns/assembly/framework/game-loop/demo.asm": "9e831c6a32380c15a5a746bba92b7cab387de09f2e1485a1c97a26ba3c41388d",
     "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce",

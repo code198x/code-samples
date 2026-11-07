@@ -3,15 +3,36 @@
   "system": "spectrum",
   "server": {
     "name": "emu198x-spectrum",
-    "version": "0.32.5"
+    "version": "0.48.3"
   },
   "startup": "48K snapshot; separate tape qualification required",
   "firmware_sha256": {
     "48k": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
   },
-  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-  "emulator_sha256": "51fe786fb9cec0b552b67125abc11e28f062f6105cb75fb01b923cffbcd81f89",
+  "observer_sha256": "8aa0918caa858a5365d5579fda5347f78c0cc09244ed485354792f7411498a65",
+  "emulator_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167",
   "binary_sha256": "14ddfad362553a54feda17aa62e9156add3f642c4b1bd2c8d361357a29c73d9e",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.sna": "14ddfad362553a54feda17aa62e9156add3f642c4b1bd2c8d361357a29c73d9e",
+    "demo.tap": "c267a348d0fb948a3ba24594c78c593efc3adb16369c1849c8b569b2bb2750f2"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167"
+    }
+  },
   "sources": {
     "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/demo.asm": "39a2c2fcd68d9c7ddcf412804d4f8eda974a3a7e653ba5289826a6fc0035b024",
     "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc": "e71788e7988d26c0a681cdded7c5d8aa93ae898a98e25939c9b4c04c4ce05233",

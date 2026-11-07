@@ -3,13 +3,34 @@
   "system": "nes",
   "server": {
     "name": "emu198x-nes",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "startup": "NTSC NROM reset",
   "firmware_sha256": {},
-  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-  "emulator_sha256": "443939d595a3f33ee4cc6248c493b2be0a39d472351725e8dd2bb362d0a87872",
+  "observer_sha256": "8aa0918caa858a5365d5579fda5347f78c0cc09244ed485354792f7411498a65",
+  "emulator_sha256": "2cf174d7cbc870100f1b69bc1e5fd2bd96fa8bfe4ccc0e0401055b6f45f323c1",
   "binary_sha256": "7635c853aafc05b21cb70a639f5b04130f6bc8a3618bd362805c0d3b141eaacb",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.nes": "7635c853aafc05b21cb70a639f5b04130f6bc8a3618bd362805c0d3b141eaacb",
+    "negative.nes": "d76c47551c1f0acbea4cfbcd874095a5e72c1463c079437fe6619fa293a58d36"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-nes",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "2cf174d7cbc870100f1b69bc1e5fd2bd96fa8bfe4ccc0e0401055b6f45f323c1"
+    }
+  },
   "sources": {
     "nintendo-entertainment-system/patterns/assembly/framework/game-loop/demo.asm": "9d71c95a2783055e5161f9e0bf479d4e903e8835a3705e612a7e4d67f6c135fa",
     "nintendo-entertainment-system/patterns/assembly/framework/game-loop/frame.inc": "35b326cc5614f5a28a40f3dd3b0dfc77d55a78ecee01c47baef6c0adf13ef38e",
