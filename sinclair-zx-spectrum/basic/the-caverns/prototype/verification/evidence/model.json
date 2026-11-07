@@ -1,5 +1,5 @@
 {
-  "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
+  "source_sha256": "dc780a9b025dd4ecd53119db5b63456e73cbb5e24018e090826b771c899224f1",
   "reachable_nonterminal_states": 534,
   "arrival_states_with_safe_escape": 50,
   "examples": {
