@@ -12,7 +12,7 @@
     "atari-2600/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "16954bdd23710645968e79fdb65414b5605bfe73c839a8ee4f422f455daee101",
     "atari-2600/patterns/assembly/capabilities/input-drawing-sound/Makefile": "4864a7b1ea5da9578196ec721d5e9d498ec899f82197cf3834d4eb3ec7af2d2f"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "89259b0599c52e2ec4c8e6503767aef6f64ac63298abb7e1033fe323fbbeb065",
   "binary_sha256": "62f4e82bfa2f714fd007ef0a9208fdb757974c6af6824bc2d684392a4be1c855",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",

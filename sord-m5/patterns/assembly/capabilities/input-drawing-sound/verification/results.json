@@ -12,7 +12,7 @@
     "sord-m5/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "c18074b82c015aad4be0c67c757f93d490c5ab4e49c154de6b65e0783c48f761",
     "sord-m5/patterns/assembly/capabilities/input-drawing-sound/Makefile": "52c0941c69ee5b0f7acf5bfe6da2ba2020619554b1a8ee6718823b5150235007"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "b410781cab8c556b7250b5aaaac790869d0c217e7965143f8e167a067140b972",
   "binary_sha256": "6a47a0794df19a7801970607225898459232a1bbbb15b53717f32faa4828f05e",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
