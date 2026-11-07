@@ -83,6 +83,8 @@ planes: dcb.b 81920,0
             cmd, cwd=folder, capture_output=True, text=True, timeout=40, check=False
         )
         T.require(result.returncode == 0, result.stderr or result.stdout)
+    if args.emulator is None:
+        return {}  # build_programs(): the disk is all that is needed.
     sym = T.symbols(folder / "demo.sym")
     machine = T.Machine(
         [
@@ -152,10 +154,23 @@ planes: dcb.b 81920,0
         "source_sha256": sha(SOURCE),
         "observer_sha256": sha(Path(__file__)),
         "binary_sha256": sha(folder / "demo"),
+        "assembler_sha256": sha(Path(shutil.which(args.assembler) or args.assembler)),
+        "build198x_sha256": sha(Path(args.build198x)),
+        # The disk the machine boots, so the checker can rebuild it.
+        "programs": {"demo.adf": sha(folder / "demo.adf")},
         "emulator_sha256": sha(Path(args.emulator)),
         "firmware_sha256": sha(args.kickstart),
         "limits": __doc__,
     }
+
+
+def build_programs(assembler: str, builder: str, output: str) -> None:
+    """Build the caller's disk into output/demo.adf, without the emulator."""
+    run(
+        argparse.Namespace(
+            emulator=None, assembler=assembler, build198x=builder, output=Path(output)
+        )
+    )
 
 
 def main() -> None:

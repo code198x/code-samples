@@ -64,6 +64,8 @@ def execute(args: argparse.Namespace, negative: bool) -> dict:
             cmd, cwd=out, capture_output=True, text=True, timeout=40, check=False
         )
         T.require(r.returncode == 0, r.stderr or r.stdout)
+    if args.emulator is None:
+        return {}  # build_programs(): the disk is all that is needed.
     sym = T.symbols(out / "demo.sym")
     m = T.Machine(
         [
@@ -158,6 +160,22 @@ def execute(args: argparse.Namespace, negative: bool) -> dict:
     }
 
 
+# The disks the machine boots: the music and its disabled-DMA control.
+PROGRAMS = ["playing/demo.adf", "dma-disabled/demo.adf"]
+
+
+def build_programs(assembler: str, builder: str, output: str) -> None:
+    """Build both disks into output, without the emulator."""
+    args = argparse.Namespace(
+        emulator=None,
+        assembler=assembler,
+        build198x=builder,
+        output=Path(output).resolve(),
+    )
+    execute(args, False)
+    execute(args, True)
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--emulator", required=True)
@@ -201,6 +219,10 @@ def main() -> None:
         "observer_sha256": sha(Path(__file__)),
         "emulator_sha256": sha(Path(args.emulator)),
         "firmware_sha256": sha(args.kickstart),
+        "assembler_sha256": sha(Path(shutil.which(args.assembler) or args.assembler)),
+        "build198x_sha256": sha(Path(args.build198x)),
+        # Each disk the machine boots, so the checker can rebuild it.
+        "programs": {name: sha(args.output / name) for name in PROGRAMS},
         "limits": "Named configuration and bounded waveform sequencer only. No MOD-format, tracker effects, original-hardware or pitch-accuracy qualification.",
     }
     (args.output / "results.json").write_text(json.dumps(result, indent=2) + "\n")

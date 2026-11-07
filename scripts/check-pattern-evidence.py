@@ -25,9 +25,9 @@ AUDIT_SELECTION = Path(__file__).with_name("routine-audit-evidence.json")
 AUDIT_BINDINGS = {
     "z80": 0,
     "basic": 0,
-    "amiga-lines": 2,
-    "amiga-edges": 3,
-    "amiga-music": 4,
+    "amiga-lines": 0,
+    "amiga-edges": 0,
+    "amiga-music": 0,
     "nes-movement": 2,
     "c64-scroll": 2,
     "spectrum-states": 0,

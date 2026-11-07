@@ -26,53 +26,28 @@
   {
     "name": "amiga-lines",
     "record": "docs/audit/2026-10-19-pattern-routines/amiga-lines.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-amiga-library-routines.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/rendering/blitter-line-draw/line.inc",
-        "record_keys": [
-          "source_sha256"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-amiga-library-routines.py",
+      "args": [
+        "{asm198x}",
+        "{build198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "amiga-music",
     "record": "docs/audit/2026-10-19-pattern-routines/amiga-music.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-amiga-music.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/audio/four-channel-music/demo.asm",
-        "record_keys": [
-          "sources",
-          "commodore-amiga/patterns/assembly/audio/four-channel-music/demo.asm"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/audio/four-channel-music/music.inc",
-        "record_keys": [
-          "sources",
-          "commodore-amiga/patterns/assembly/audio/four-channel-music/music.inc"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc",
-        "record_keys": [
-          "sources",
-          "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-amiga-music.py",
+      "args": [
+        "{asm198x}",
+        "{build198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "nes-movement",
@@ -125,27 +100,14 @@
   {
     "name": "amiga-edges",
     "record": "docs/audit/2026-10-19-pattern-routines/amiga-edges.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-amiga-edges.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/input/joystick-edge-detection/edges.inc",
-        "record_keys": [
-          "sources",
-          "commodore-amiga/patterns/assembly/input/joystick-edge-detection/edges.inc"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc",
-        "record_keys": [
-          "sources",
-          "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-amiga-edges.py",
+      "args": [
+        "{asm198x}",
+        "{build198x}",
+        "{output}"
+      ]
+    }
   }
 ]
