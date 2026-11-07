@@ -319,10 +319,12 @@
         "sinclair-zx-spectrum-48k/48.rom"
       ],
       "pins": {
-        "build198x": "097892fa\u2026 (local build; re-record with 0.2.13 pending)",
+        "build198x": "0.2.13",
         "emu198x-spectrum": "0.38.3"
       },
-      "checker": "scripts/check-pattern-evidence.py --parser (parser-basic, still compares source digests)"
+      "checker": "scripts/check-pattern-evidence.py --parser (parser-basic)",
+      "build_programs": "build_programs(builder, output)",
+      "records": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/verification/results.json"
     },
     {
       "script": "sinclair-zx-spectrum/patterns/assembly/framework/profile-a-routine/verify.py",
