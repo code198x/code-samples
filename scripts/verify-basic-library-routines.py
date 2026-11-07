@@ -68,6 +68,9 @@ def boot(name: str, lines: list[str], args: argparse.Namespace) -> tuple[bytes, 
         timeout=40,
         check=True,
     )
+    if args.emulator is None:
+        # build_programs(): the tape is all that is needed; nothing is observed.
+        return bytes(6144), bytes(768)
     m = T.Machine([args.emulator, "--mcp", "--rom", str(args.rom)])
     try:
         m.call("load_media", slot="tape-1", kind="tape", path=str(out / "caller.tap"))
@@ -215,14 +218,45 @@ def run(args: argparse.Namespace) -> dict:
             {"routine": name, "source_sha256": sha(PATTERNS / (name + ".bas"))}
         )
         print("PASS", name, flush=True)
+    if args.emulator is None:
+        return {}
     return {
         "status": "passed",
         "routines": outcomes,
         "observer_sha256": sha(Path(__file__)),
         "emulator_sha256": sha(Path(args.emulator)),
         "firmware_sha256": sha(args.rom),
+        "build198x_sha256": sha(Path(args.build198x)),
+        # Each caller tape the machine loads, so the checker can rebuild it.
+        "programs": {
+            str(tape.relative_to(args.output)): sha(tape)
+            for tape in sorted(args.output.glob("*/caller.tap"))
+        },
         "limits": "Spectrum48K ROM TAP loading, declared valid inputs and exact static display footprints. No speed or original-hardware qualification. Seven-segment rendering adds lit segments; caller clears its old rectangle before replacing a digit.",
     }
+
+
+def build_programs(builder: str, output: str) -> None:
+    """Build every caller tape into output/<routine>/caller.tap, without the
+    emulator. The recorder's checks are skipped because nothing is observed."""
+    args = argparse.Namespace(
+        emulator=None,
+        build198x=builder,
+        rom=None,
+        output=Path(output).resolve(),
+        only=None,
+        expect_rejection=False,
+    )
+    args.output.mkdir(parents=True, exist_ok=True)
+    # Expected pictures read the ROM font; nothing is compared, so zeros do.
+    args.rom = args.output / "unused.rom"
+    args.rom.write_bytes(bytes(16384))
+    real = T.require
+    T.require = lambda condition, message: None
+    try:
+        run(args)
+    finally:
+        T.require = real
 
 
 def main() -> None:

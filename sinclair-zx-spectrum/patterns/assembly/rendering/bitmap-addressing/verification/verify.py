@@ -208,6 +208,33 @@ def check(
             )
 
 
+# Every passing case's program, as (folder, first row, end row, bottom probe).
+PROGRAM_CASES = [
+    *[(f"rows-{start:03}", start, start + 16, False) for start in range(0, 192, 16)],
+    *[(f"timing-{y}", y, y + 1, False) for y in [0, 7, 63]],
+    ("bottom-row", 191, 192, True),
+]
+
+
+def write_program(directory: Path, include: str, bottom_probe: bool) -> None:
+    directory.mkdir(parents=True, exist_ok=True)
+    caller = (ROOT / "caller.asm").read_text()
+    if bottom_probe:
+        caller = caller.replace("jr z,bottom_row", "; deliberate out-of-contract probe")
+    (directory / "caller.asm").write_text(caller)
+    (directory / "bitmap-addressing.inc").write_text(include)
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every passing case's snapshot into output/<case>/program.sna,
+    without the emulator."""
+    include = (ROOT / "bitmap-addressing.inc").read_text()
+    for name, _start, _stop, bottom in PROGRAM_CASES:
+        directory = Path(output).resolve() / name
+        write_program(directory, include, bottom)
+        assemble(directory, assembler, None)
+
+
 def run_case(
     directory: Path,
     assembler: str,
@@ -218,13 +245,9 @@ def run_case(
     include: str,
     bottom_probe: bool = False,
 ) -> dict[str, Any]:
-    directory.mkdir(parents=True, exist_ok=True)
-    caller = (ROOT / "caller.asm").read_text()
     if bottom_probe:
         require(start == 191 and stop == 192, "Bottom probe must isolate row 191")
-        caller = caller.replace("jr z,bottom_row", "; deliberate out-of-contract probe")
-    (directory / "caller.asm").write_text(caller)
-    (directory / "bitmap-addressing.inc").write_text(include)
+    write_program(directory, include, bottom_probe)
     symbols = assemble(directory, assembler, pasmo)
     data, routines = observe(directory, emulator, symbols, start, stop)
     check(data, start, stop, layout(), bottom_probe)
@@ -354,6 +377,12 @@ def main() -> None:
         "bottom_row_characterisation": bottom,
         "timing_path_probes": timing,
         "negative_controls": mutations,
+        "assembler_sha256": sha(Path(assembler)),
+        # Each passing case's snapshot, so the checker can rebuild it.
+        "programs": {
+            f"{name}/program.sna": sha(output / name / "program.sna")
+            for name, *_ in PROGRAM_CASES
+        },
     }
     (output / "results.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(

@@ -6,20 +6,16 @@
   "source_sha256": {
     "caller.asm": "c3cdf6e56e889892abdbd26f66dfd8cb5db34be441f6c6c49b073a0fe51299f4",
     "bitmap-addressing.inc": "929a109ca24ffea6b0e79d0827e35b7c61bb2fcb0053b0551c96e6575e91ea02",
-    "verify.py": "c1d37cfc4bd5db850814581a0f9d92c975834a3d0b7f405740c46c8d2d222eb0"
+    "verify.py": "d9c29f9a448624cd60826336651a20e73e1845ade730b567c34f1151e2d2e04e"
   },
   "tools": {
     "assembler": {
-      "path": "/opt/homebrew/Cellar/asm198x/0.0.64/bin/asm198x",
+      "path": "/private/tmp/claude-501/-Users-stevehill-Projects-198x/cacbe3db-d513-471a-9207-8aa342fe6760/scratchpad/toolcache-8b/asm198x-v0.0.64/aarch64-apple-darwin/asm198x",
       "sha256": "2286f8ba5ac3648a15cad0940acf62c6aa578c81808ed0ced7ee7bbb7aba65ee"
     },
     "emulator": {
-      "path": "/opt/homebrew/Cellar/emu198x-spectrum/0.32.5/bin/emu198x-spectrum",
+      "path": "/private/tmp/claude-501/-Users-stevehill-Projects-198x/cacbe3db-d513-471a-9207-8aa342fe6760/scratchpad/emu8b/0.32.5/emu198x-spectrum-aarch64-apple-darwin/emu198x-spectrum",
       "sha256": "51fe786fb9cec0b552b67125abc11e28f062f6105cb75fb01b923cffbcd81f89"
-    },
-    "pasmo": {
-      "path": "/usr/local/bin/pasmo",
-      "sha256": "e9628f5c32f3c74a963c649781e6cb87e9eaeb4bbfe7b52d3de27f4986bbf136"
     }
   },
   "pixel_inputs_checked": 49152,
@@ -344,5 +340,24 @@
       "rejected": true,
       "failure": "pixel_down mismatch at (0,7)"
     }
-  ]
+  ],
+  "assembler_sha256": "2286f8ba5ac3648a15cad0940acf62c6aa578c81808ed0ced7ee7bbb7aba65ee",
+  "programs": {
+    "rows-000/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-016/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-032/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-048/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-064/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-080/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-096/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-112/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-128/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-144/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-160/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "rows-176/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "timing-0/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "timing-7/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "timing-63/program.sna": "a993f09f20ad57ab9561c6bd98fee1b3ce6f7db215858c27a47f358c420a681d",
+    "bottom-row/program.sna": "91c13d4b6e23b22b532107a89927feb878ec20ff9e4a1dd3f9c47f500558f42c"
+  }
 }

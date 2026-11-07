@@ -108,29 +108,14 @@
   {
     "name": "spectrum",
     "record": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/results.json",
-    "bindings": [
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/caller.asm",
-        "record_keys": [
-          "source_sha256",
-          "caller.asm"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc",
-        "record_keys": [
-          "source_sha256",
-          "bitmap-addressing.inc"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/verify.py",
-        "record_keys": [
-          "source_sha256",
-          "verify.py"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/verify.py",
+      "args": [
+        "{asm198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "aabb",

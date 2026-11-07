@@ -425,6 +425,69 @@
       "records": "docs/audit/2026-10-19-pattern-routines/z80.json (copied from results.json)",
       "checker": "scripts/check-pattern-evidence.py --audit (z80)",
       "notes": "Asm198x 0.0.75 rejects characters/string-0 (`message` is not a value at `ld hl,message`), so this record stays on its pinned 0.0.64."
+    },
+    {
+      "script": "scripts/verify-spectrum-states.py",
+      "args": [
+        "--emulator PATH",
+        "--assembler PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K, emulator's built-in ROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emu198x-spectrum": "0.38.3"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "docs/audit/2026-10-19-pattern-routines/spectrum-states.json",
+      "checker": "scripts/check-pattern-evidence.py --audit (spectrum-states)"
+    },
+    {
+      "script": "scripts/verify-basic-library-routines.py",
+      "args": [
+        "--emulator PATH",
+        "--build198x PATH",
+        "--rom PATH",
+        "--output DIR",
+        "--only ROUTINE",
+        "--expect-rejection"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "build198x": "0.2.13",
+        "emu198x-spectrum": "0.38.3"
+      },
+      "build_programs": "build_programs(builder, output)",
+      "records": "docs/audit/2026-10-19-pattern-routines/basic.json",
+      "checker": "scripts/check-pattern-evidence.py --audit (basic)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--pasmo PATH (optional oracle)",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K snapshot, synthetic ROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.64",
+        "emu198x-spectrum": "0.32.5"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/verification/results.json",
+      "checker": "scripts/check-pattern-evidence.py (spectrum); CI also runs it fresh"
     }
   ]
 }
