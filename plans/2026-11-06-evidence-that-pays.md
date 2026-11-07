@@ -77,6 +77,7 @@ What did find bugs, on 5 November alone:
    Amiga recorders run there too. It runs weekly, on any pull request that
    moves the pin, and when a recorder or its sources change. It is too slow
    to run on every pull request, so ordinary changes rely on the byte check.
+   A pin move replays only the families whose entries moved.
    **Moving the pin runs it:** a pull request that moves the pin must pass
    the replay, with any observation that differs re-recorded in the same
    change. The tools can't move without the replay having passed. The same
@@ -115,7 +116,14 @@ make the 1,668 records that pin those scripts stale.
    versions from this file instead of its own defaults: it pinned Asm198x
    0.0.65 while the records pinned 0.0.71 to 0.0.74, and broke the deploy
    on 2026-11-06 when the Game Boy sources first needed 0.0.75's `--tiny`
-   (code198x/website#1395). *Check:* every checker still passes, grepping
+   (code198x/website#1395). Emulators are pinned per machine family, not
+   as one Emu198x version. Emu198x is splitting into family repositories
+   (`coleco-colecovision`, `atari-7800`, `apple-ii`), each with its own
+   releases. A family release then moves only its own entry, and the pull
+   request that moves it replays only that family's patterns, fetching
+   one family's emulator and corpus archive. While Emu198x ships as one
+   release, every family entry names the same version; the format doesn't
+   change when the families split. *Check:* every checker still passes, grepping
    `scripts/` for a version literal finds none, and the website's build
    script names no version. The script refuses to move the pin until
    step 3's replay exists and passes, so step 3 lands before the next pin
