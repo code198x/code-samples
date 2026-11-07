@@ -71,12 +71,16 @@ What did find bugs, on 5 November alone:
 4. **Re-running against new tools is a job, not a re-record.** One command,
    `scripts/replay-evidence`, runs every recorder in check mode against the
    pinned or the latest tools and reports any observation that differs,
-   without writing records. Most machines need private firmware, so it runs
-   locally, where the firmware is. It can't run on GitHub's hosted runners.
-   **Moving the pin runs it:** `scripts/update-toolchain.py` replays every
-   pattern against the new tools and refuses to write the new pin while any
-   observation differs and isn't re-recorded in the same change. The tools
-   can't move without the replay having passed.
+   without writing records. It runs in CI: a replay workflow takes the
+   firmware it needs from the private accuracy corpora, as Emu198x's
+   `c64-pattern.yml` and `amiga-pattern.yml` already do, so the C64 and
+   Amiga recorders run there too. It runs weekly, on any pull request that
+   moves the pin, and when a recorder or its sources change. It is too slow
+   to run on every pull request, so ordinary changes rely on the byte check.
+   **Moving the pin runs it:** a pull request that moves the pin must pass
+   the replay, with any observation that differs re-recorded in the same
+   change. The tools can't move without the replay having passed. The same
+   command also runs locally.
 5. **CI runs what a change touches.** Each evidence job gets a `paths` filter
    for its recorder, checker, sources and records, and the root toolchain
    pin.
@@ -118,8 +122,14 @@ make the 1,668 records that pin those scripts stale.
    move.
 3. **`scripts/replay-evidence`.** Read each family's recorder from an index
    (recorder, arguments, machines), run in check mode, and print any
-   differing observation. *Check:* it reports today's PET failure against
-   the old fixtures on Emu198x 0.48.3, and reports nothing on `main`.
+   differing observation. A workflow runs it in CI with firmware from the
+   private accuracy corpora: only the archives each machine needs, each
+   checked against the corpus `SHA256SUMS`, with the credential confined to
+   same-repository runs so fork pull requests never reach it. It runs weekly,
+   on pin moves and on changes to a recorder or its sources. *Check:* it
+   reports today's PET failure against the old fixtures on Emu198x 0.48.3,
+   reports nothing on `main`, and its C64 and Amiga jobs fail rather than
+   skip when the corpus is unavailable.
 4. **Path filters** on the 154 evidence jobs, generated from the same index.
    *Check:* a pull request touching one pattern runs that family's job and
    no other.
@@ -132,11 +142,13 @@ make the 1,668 records that pin those scripts stale.
 
 - **Agree the rules** in *The rules after this change*, especially rule 2:
   bytes, not source text, decide staleness.
-- **Where the replay runs:** *agreed 2026-11-06* — locally, enforced by the
-  pin-update script (rule 4). A nightly self-hosted run would also catch
-  drift between releases, but it needs a runner kept up and the firmware on
-  it. Revisit only if the gated pin move proves too slow to catch
-  something.
+- **Where the replay runs:** *agreed 2026-11-07* — in code-samples CI,
+  with firmware from the private accuracy corpora (rule 4, step 3). This
+  replaces the 2026-11-06 choice of a local run: Emu198x's pattern
+  workflows showed hosted runners can get the firmware safely. Every
+  recorder then runs somewhere automatic, so a broken recorder is found
+  within a week, not whenever someone next runs it by hand. code-samples
+  needs the corpus secret and repository variable before step 3 can land.
 - **The Game Boy `--tiny` change:** *settled 2026-11-06.* It landed under
   the current rules (code198x/code-samples#426): 13 records re-recorded for
   eight ROMs that were byte-identical before and after. Step 2 would have
