@@ -12,9 +12,31 @@
     "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "7094c06d07a45a7f0fa5e596a307a41896d2aa95ad289623648e5b6593c2fa91",
     "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/Makefile": "bdd8da6c220fd9e34113fadd143d604c68152046e5dc29534a3f806fc3ba400a"
   },
-  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
+  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
   "emulator_sha256": "3e704b219967a9452e4504977dfce50220bf1410ec6ce2a19dc821c619555719",
   "binary_sha256": "5ff39930260b18c0f9ba6735952affa8fa71bc45a5bcf20325174e0c829834a4",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.cv": "5ff39930260b18c0f9ba6735952affa8fa71bc45a5bcf20325174e0c829834a4",
+    "drawing.cv": "fda9e77fbf1b1b883d85cb4b8cbe3dca074d6f616088a11d15c8e8241c4e40aa",
+    "sound.cv": "6fed843e4b60dca0a78ba3101cc4239acfd69ea20a3c26ebbe82bf345bf7f414"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-colecovision",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "3e704b219967a9452e4504977dfce50220bf1410ec6ce2a19dc821c619555719"
+    }
+  },
   "firmware_sha256": "990bf1956f10207d8781b619eb74f89b00d921c8d45c95c334c16c8cceca09ad",
   "input": "idle, press once, held without repeat, release and second press",
   "drawing": "VRAM glyph changes position and restores; fixed backdrop",

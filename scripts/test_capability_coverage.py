@@ -37,6 +37,13 @@ class CapabilityCoverageTests(unittest.TestCase):
             target = cls.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / name, target)
+        # Records that list their programs are rebuilt by their recorders.
+        shutil.copytree(
+            ROOT / "scripts",
+            cls.root / "scripts",
+            dirs_exist_ok=True,
+            ignore=shutil.ignore_patterns("__pycache__"),
+        )
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -44,6 +51,8 @@ class CapabilityCoverageTests(unittest.TestCase):
 
     def setUp(self) -> None:
         self.manifest = copy.deepcopy(self.original)
+        # Rebuilds are cached per build; these tests change the sources.
+        GUARD.E.rebuild.cache_clear()
 
     def test_complete_evidence_passes(self) -> None:
         result = GUARD.validate(self.root, self.manifest)
@@ -108,6 +117,89 @@ class CapabilityCoverageTests(unittest.TestCase):
                 GUARD.validate(self.root, self.manifest)
         finally:
             path.write_bytes(saved)
+
+    def rebuilt_row(self) -> dict:
+        return next(
+            r
+            for r in self.manifest["systems"]
+            if r["machine_id"] == "coleco-colecovision"
+        )
+
+    def edit_source(self, row: dict, old: str, new: str) -> None:
+        path = self.root / row["path"] / "demo.asm"
+        text = path.read_text()
+        self.assertEqual(text.count(old), 1)
+        path.write_text(text.replace(old, new))
+
+    def restore_sources(self, row: dict) -> None:
+        for name in ("demo.asm", "picture.inc", "sound.inc"):
+            shutil.copy2(ROOT / row["path"] / name, self.root / row["path"] / name)
+
+    def test_rebuilt_program_ignores_a_comment(self) -> None:
+        row = self.rebuilt_row()
+        try:
+            self.edit_source(
+                row, "    call draw_picture", "    call draw_picture ; draw it"
+            )
+            GUARD.validate(self.root, self.manifest)
+        finally:
+            self.restore_sources(row)
+
+    def test_rebuilt_program_with_a_changed_operand_fails(self) -> None:
+        row = self.rebuilt_row()
+        path = self.root / row["path"] / "picture.inc"
+        text = path.read_text()
+        self.assertEqual(text.count("    ld a,$9f"), 1)
+        try:
+            path.write_text(text.replace("    ld a,$9f", "    ld a,$9e"))
+            with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+                GUARD.validate(self.root, self.manifest)
+        finally:
+            self.restore_sources(row)
+
+    def test_forged_program_digest_fails(self) -> None:
+        row = self.rebuilt_row()
+        path = self.root / row["record"]
+        saved = path.read_bytes()
+        record = json.loads(saved)
+        record["programs"]["sound.cv"] = "0" * 64
+        try:
+            path.write_text(json.dumps(record))
+            row["record_sha256"] = GUARD.sha(path)
+            with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+                GUARD.validate(self.root, self.manifest)
+        finally:
+            path.write_bytes(saved)
+
+    def test_tampered_record_fails(self) -> None:
+        row = self.rebuilt_row()
+        path = self.root / row["record"]
+        saved = path.read_bytes()
+        try:
+            path.write_bytes(saved.replace(b'"passed"', b'"passed" ', 1))
+            with self.assertRaisesRegex(ValueError, "Changed file"):
+                GUARD.validate(self.root, self.manifest)
+        finally:
+            path.write_bytes(saved)
+
+    def test_rebuilt_records_name_released_tools_without_local_paths(self) -> None:
+        rebuilt = 0
+        for row in self.original["systems"]:
+            record = json.loads((ROOT / row["record"]).read_text())
+            if "programs" not in record:
+                continue
+            rebuilt += 1
+            self.assertIn(row["kind"], GUARD.RECORDERS)
+            assembler = record["tools"]["assembler"]
+            self.assertEqual(assembler["executable_sha256"], record["assembler_sha256"])
+            self.assertTrue(assembler["release"].startswith("https://github.com/"))
+            emulator = record["tools"]["emulator"]
+            self.assertEqual(emulator["executable_sha256"], record["emulator_sha256"])
+            self.assertTrue(emulator["release"].startswith("https://github.com/"))
+            for tool in record["tools"].values():
+                for value in tool.values():
+                    self.assertFalse(value.startswith("/"), value)
+        self.assertGreater(rebuilt, 0)
 
     def test_missing_picture_fails(self) -> None:
         row = self.manifest["systems"][0]

@@ -4,7 +4,7 @@
   "configuration": "MTX500 PAL, stock OS/BASIC, typed DATA/POKE loader and USR($E000)",
   "server": {
     "name": "emu198x-memotech-mtx",
-    "version": "0.38.3"
+    "version": "0.48.3"
   },
   "sources": {
     "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "536688e337126c649a6914adc4f39d15e34d3d00cff6f103e2f3d0595692fdc2",
@@ -12,9 +12,31 @@
     "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "d3045b17ab0e2c791c7a632265af223c44db75cd8ee72fa51fc0064c6a79018e",
     "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/Makefile": "db9bc9b939de1fc0f30539461eec3694647b83fcf747c258bfcb1378ffb67c72"
   },
-  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
-  "emulator_sha256": "00390980f6d527128217fd4909ba79f42d3b8b6d8f3a72e2be4126bd5155fb52",
+  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "emulator_sha256": "5879f58ca90709ce4f5913ff988f6774b50d78fe0a8a5b30c7da9defdb69d6af",
   "binary_sha256": "2b7e8b000ab0f6241afd67e784d45f58c3329d6fb8e120c0c57fb5aa019a2c13",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.bin": "2b7e8b000ab0f6241afd67e784d45f58c3329d6fb8e120c0c57fb5aa019a2c13",
+    "drawing.bin": "3ce41d7e5b69eb4b2ab1f3fd64d9d495df14a1c947baf699b1152c7a61015f72",
+    "sound.bin": "f9f44016038229c0ed368d3686a8273a19b56c721cb68ff81e26bdb5c1cdbc40"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-memotech-mtx",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "5879f58ca90709ce4f5913ff988f6774b50d78fe0a8a5b30c7da9defdb69d6af"
+    }
+  },
   "firmware_sha256": "e93edd8490f320c1828f879460a857f393ce15213fa8d8cc853beb700bc71b0f",
   "input": "idle, press once, held without repeat, release and second press",
   "drawing": "VRAM glyph changes position and restores; fixed backdrop",

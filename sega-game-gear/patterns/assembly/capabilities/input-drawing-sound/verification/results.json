@@ -4,7 +4,7 @@
   "configuration": "NTSC stock cartridge configuration",
   "server": {
     "name": "emu198x-sega-game-gear",
-    "version": "0.38.3"
+    "version": "0.48.3"
   },
   "sources": {
     "sega-game-gear/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "364e8a7b7b08df0d60fa85137b65ce465f0ed35f25d0edc41cb332f7c89a8d88",
@@ -12,9 +12,31 @@
     "sega-game-gear/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "4f3e73770d6e304e98040dbc715971324b7528ec1889259b9c6681bfee546fec",
     "sega-game-gear/patterns/assembly/capabilities/input-drawing-sound/Makefile": "66cd2d7df43d87cf4fa8c597428b04b80cf81aae39643d5f9d43eb45e2d78a0f"
   },
-  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
-  "emulator_sha256": "e29c80002943c7ea385b1644c7a2d384fa6e37571fdd1a6a8b01b0dded248f01",
+  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "emulator_sha256": "103642b97e52d761c075695ac5b67992f3c93385b9493eb4b8736a02eb97e926",
   "binary_sha256": "6433fd3254eaffc11381ae87c1ed24f86f17dc723e2c7504bab5f1c6860e4b7e",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.gg": "6433fd3254eaffc11381ae87c1ed24f86f17dc723e2c7504bab5f1c6860e4b7e",
+    "drawing.gg": "07761abf0dd81c73837169aee90d39287f4b3ed40d9a1e4e0a08af9f8702d23a",
+    "sound.gg": "737345bb78fe58820bc3303353438b856e0a3325564496c42c96e454c371b043"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-sega-game-gear",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "103642b97e52d761c075695ac5b67992f3c93385b9493eb4b8736a02eb97e926"
+    }
+  },
   "firmware_sha256": null,
   "input": "idle, press once, held without repeat, release and second press",
   "drawing": "VRAM glyph changes position and restores; fixed backdrop",
