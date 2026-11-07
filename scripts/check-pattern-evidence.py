@@ -34,7 +34,7 @@ AUDIT_BINDINGS = {
 }
 
 PARSER_SELECTION = Path(__file__).with_name("adventure-parser-evidence.json")
-PARSER_BINDINGS = {"parser-basic": 4, "parser-z80": 0, "parser-callers": 0}
+PARSER_BINDINGS = {"parser-basic": 0, "parser-z80": 0, "parser-callers": 0}
 
 
 def _load_evidence_bytes():
@@ -65,11 +65,12 @@ def require_programs(name: str, recorder: dict, record: dict) -> int:
         tuple(f"{out}/{program}" for program in programs),
     )
     builder = record["build198x_sha256"] if E.BUILDER in args else None
+    assembler = record["assembler_sha256"] if E.ASSEMBLER in args else None
     for program, digest in programs.items():
         E.require_program(
             build,
             f"{out}/{program}",
-            record["assembler_sha256"],
+            assembler,
             recorded_sha256=digest,
             build198x=builder,
         )
@@ -106,6 +107,8 @@ def inspect(
                 raise ValueError("Audit record must describe a passing execution")
             if "recorder" in fixture:
                 rebuilt = require_programs(name, fixture["recorder"], record)
+            elif not bindings:
+                raise ValueError("Fixture names no recorder and binds no input")
             for binding in bindings:
                 expected = record
                 keys = binding["record_keys"]

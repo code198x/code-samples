@@ -138,7 +138,7 @@ class ParserEvidenceTests(unittest.TestCase):
 
     def test_forged_program_is_rebuilt(self):
         """A record claiming other program bytes is caught only by the rebuild."""
-        for name in ["parser-z80", "parser-callers"]:
+        for name in ["parser-basic", "parser-z80", "parser-callers"]:
             fixture, record = self.parser_fixture(name)
             program = next(iter(record["programs"]))
             record["programs"][program] = "0" * 64
@@ -150,7 +150,7 @@ class ParserEvidenceTests(unittest.TestCase):
 
     def test_source_digests_are_provenance(self):
         """Rewritten source and recorder digests leave the programs valid."""
-        for name in ["parser-z80", "parser-callers"]:
+        for name in ["parser-basic", "parser-z80", "parser-callers"]:
             fixture, record = self.parser_fixture(name)
             record["sources"] = dict.fromkeys(record["sources"], "0" * 64)
             record["observer_sha256"] = "0" * 64
@@ -163,32 +163,21 @@ class ParserEvidenceTests(unittest.TestCase):
         selection = json.loads(E.PARSER_SELECTION.read_text())
         result = E.inspect(ROOT, selection, E.PARSER_BINDINGS)
         self.assertEqual(result["failures"], [])
-        self.assertEqual(result["bindings_checked"], 4)
+        self.assertEqual(result["bindings_checked"], 0)
         with self.assertRaises(ValueError):
             E.inspect(ROOT, selection[:-1], E.PARSER_BINDINGS)
-        selection[0]["bindings"].pop()
+        # A fixture that names no recorder and binds nothing checks nothing.
+        del selection[0]["recorder"]
         self.assertTrue(E.inspect(ROOT, selection, E.PARSER_BINDINGS)["failures"])
 
-    def test_changed_source_observer_and_failed_record_require_requalification(self):
+    def test_failed_record_requires_requalification(self):
         selection = json.loads(E.PARSER_SELECTION.read_text())
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             for item in selection:
-                for name in [item["record"], *[b["path"] for b in item["bindings"]]]:
-                    p = root / name
-                    p.parent.mkdir(parents=True, exist_ok=True)
-                    p.write_bytes((ROOT / name).read_bytes())
-            for name in [
-                selection[0]["bindings"][0]["path"],
-                selection[0]["bindings"][-1]["path"],
-            ]:
-                p = root / name
-                before = p.read_bytes()
-                p.write_bytes(before + b"\nchanged\n")
-                self.assertTrue(
-                    E.inspect(root, selection, E.PARSER_BINDINGS)["failures"]
-                )
-                p.write_bytes(before)
+                p = root / item["record"]
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_bytes((ROOT / item["record"]).read_bytes())
             p = root / selection[0]["record"]
             r = json.loads(p.read_text())
             r["status"] = "failed"

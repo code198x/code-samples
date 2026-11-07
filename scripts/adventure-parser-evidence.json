@@ -2,35 +2,14 @@
   {
     "name": "parser-basic",
     "record": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/verification/results.json",
-    "bindings": [
-      {
-        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas",
-        "record_keys": [
-          "sources",
-          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/parser.bas"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas",
-        "record_keys": [
-          "sources",
-          "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/vocabulary.bas"
-        ]
-      },
-      {
-        "path": "scripts/verify-game-loops.py",
-        "record_keys": [
-          "sources",
-          "scripts/verify-game-loops.py"
-        ]
-      },
-      {
-        "path": "scripts/verify-adventure-parser.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-adventure-parser.py",
+      "args": [
+        "{build198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "parser-z80",

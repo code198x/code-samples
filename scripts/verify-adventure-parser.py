@@ -120,6 +120,8 @@ def boot(
     )
     if r.returncode:
         raise ValueError(r.stdout + r.stderr)
+    if args.emulator is None:
+        return []  # build_programs(): the caller tape is all that is needed.
     m = T.Machine([args.emulator, "--mcp", "--rom", str(args.rom)])
     try:
         m.call("load_media", slot="tape-1", kind="tape", path=str(out / "caller.tap"))
@@ -170,6 +172,8 @@ def batch(
     lines += ['1900 PRINT "Parser checks complete": POKE 60000,202: STOP']
     lines += parser.splitlines() + vocabulary.splitlines()
     data = boot(lines, out, args, len(cases) * 3)
+    if args.emulator is None:
+        return
     for i, text in enumerate(cases):
         expected = oracle(text, verbs, nouns) if initialise else (9, 0, 0)
         actual = tuple(data[i * 3 : i * 3 + 3])
@@ -240,6 +244,19 @@ def main() -> None:
     )
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
+    run(args)
+
+
+def build_programs(builder: str, output: str) -> None:
+    """Build every caller tape into output/<case>/caller.tap, without the emulator."""
+    run(
+        argparse.Namespace(
+            emulator=None, build198x=builder, rom=None, output=Path(output)
+        )
+    )
+
+
+def run(args: argparse.Namespace) -> None:
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "results.json").unlink(missing_ok=True)
@@ -326,7 +343,7 @@ def main() -> None:
             + cfg.splitlines()
         )
         actual = boot(lines, args.output / f"config-{i}", args, 5)
-        if actual != [10, 0, 9, 0, 0]:
+        if args.emulator is not None and actual != [10, 0, 9, 0, 0]:
             raise ValueError(f"Invalid vocabulary {i} accepted: {actual}")
     mutant = parser.replace("wc>2", "wc>3")
     assert mutant != parser
@@ -343,6 +360,8 @@ def main() -> None:
         if not str(e).startswith("Parser result mismatch"):
             raise
         rejected = True
+    if args.emulator is None:
+        return
     if not rejected:
         raise ValueError("Broken extra-word parser passed the oracle")
     report = {
@@ -364,9 +383,9 @@ def main() -> None:
         "emulator_sha256": sha(Path(args.emulator)),
         "firmware_sha256": sha(args.rom),
         "build198x_sha256": sha(Path(args.build198x)),
-        # Each caller's tape, so the program can be rebuilt and compared.
-        "caller_taps": {
-            str(tape.parent.relative_to(args.output)): sha(tape)
+        # Each caller tape the machine loads, so the checker can rebuild it.
+        "programs": {
+            str(tape.relative_to(args.output)): sha(tape)
             for tape in sorted(args.output.glob("*/caller.tap"))
         },
         "limits": __doc__,
