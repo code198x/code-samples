@@ -12,7 +12,7 @@
     "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "cc950847b42d03d88b3efe4f75f521b83cb768978c5bf304d024c360e3c14d2b",
     "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/Makefile": "65cda2cfae7d81af21a08849efabf61e937d89745d0998e26f202a96688f1543"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "5b6e60947763115ae352f73a0b06b5ef0526d5359481f93939dfd5d2a83be12f",
   "binary_sha256": "82e3951c45465e9fc227bb1d6ef5578f148c8a034f9ffe8c63839206a7252c64",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",

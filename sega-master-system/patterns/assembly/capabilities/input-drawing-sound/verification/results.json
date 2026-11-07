@@ -12,7 +12,7 @@
     "sega-master-system/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "4f3e73770d6e304e98040dbc715971324b7528ec1889259b9c6681bfee546fec",
     "sega-master-system/patterns/assembly/capabilities/input-drawing-sound/Makefile": "635b5bf406f751bc0a930d9175342f84aedf226f9c8c17c50b67920a38877397"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "14338171b8ceeb15be100f027737ffc185f7392ad03ea930aa3927c46420acc3",
   "binary_sha256": "537d265eda6c1e54692ee844d5ffa6c2ea04cf62bda1cfdb703e1befd03d582c",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",

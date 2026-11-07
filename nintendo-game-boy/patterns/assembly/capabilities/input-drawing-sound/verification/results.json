@@ -12,7 +12,7 @@
     "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "19e24a3cbc1d6d514ea2278e787513c20c16a8913e4c7e68f5cdef0b03d91855",
     "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/Makefile": "18c7782cf7c70556be852dca1597c1cff5f8df7642e63f6b924b30d6687ca124"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "004f6b18c77f3ff141c5a9e3b61b8f66c5901580e331d8b2a58d3cdb59ad9038",
   "binary_sha256": "0923be477735bfbcb3c65d00060dbdc4f3efe7f285d7214077c1d6cd422ac2c9",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",

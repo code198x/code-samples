@@ -132,7 +132,7 @@
   "verification_tools": {
     "scripts/verify-collect-and-respond.py": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
     "scripts/verify-basic-capabilities.py": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
-    "scripts/verify-hardware-capabilities.py": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+    "scripts/verify-hardware-capabilities.py": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
     "scripts/verify-ace-capabilities.py": "3c43c81a0689d0c0c7ddd61dc9eb22a74c5ac4768854c13ae0a65e24577568ac",
     "scripts/verify-zx-capabilities.py": "ca48266f74f7e835c582e4946f0a2bc33249e6c9f5615436954837ddf426de87",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
@@ -166,9 +166,9 @@
       "release": "v0.45.1"
     },
     "atari-5200": {
-      "commit": "d57ba23fafe0e28acb414c3ccc43fa040fd90243",
-      "sha256": "e89ab8df34c67678743329c920ac20b3949430735c46ab451c9916a4d1fb04d7",
-      "release": "v0.46.2"
+      "commit": "32c46c10f2b4777ad63d4d12f1ac9b65451c731c",
+      "sha256": "a216171ac181a4a861537a19a5aafeada2bb5b518753ebf74806be475b1099b9",
+      "release": "v0.48.3"
     },
     "atari-7800": {
       "commit": "32c46c10f2b4777ad63d4d12f1ac9b65451c731c",
@@ -421,7 +421,7 @@
       "kind": "hardware",
       "path": "atari-2600/patterns/assembly/capabilities/input-drawing-sound",
       "record": "atari-2600/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "e7556b463a86f6b4e4d314a005d880a2f081d93b66d93d77f8396e116daf62be",
+      "record_sha256": "d94214ae7d47eab2a2d0e615d6f3ccfed87cbb17602baf7a6917b13f57470de1",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -456,7 +456,7 @@
       "kind": "hardware",
       "path": "atari-5200/patterns/assembly/capabilities/input-drawing-sound",
       "record": "atari-5200/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "ba41ba2bab5e22c5c86bb89f517baf1f44fc3b4849495d7cc7f70dde41632ffe",
+      "record_sha256": "cea4f608e7101a75fc443814d153be6662d7443d281abd85f3c7d2b269ee3314",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -478,10 +478,10 @@
         "status": "executed",
         "contract": "Captured PCM changes after program sound trigger; rejected with sound disabled",
         "excerpt": "atari-5200/patterns/assembly/capabilities/input-drawing-sound/verification/evidence/sound-excerpt.wav",
-        "excerpt_sha256": "95826fa3bd7af8f4b7d3dac10333b9a68c098b855d8fffdf08bb6c242bb6dc9c",
+        "excerpt_sha256": "a20ed310709709dbd4c6be97ebc591f1ca571e0016beff7350bf10dba18ad538",
         "excerpt_start_frame": 0,
         "excerpt_frames": 9600,
-        "full_capture_sha256": "f4080fe76f7baf593cab353e7befced15b250600b440a1181a28d02025cad27f"
+        "full_capture_sha256": "a5a9fbf868ebedabd430344ca4256811292ad32c8677c5b2f5ab3e59dc6cae66"
       }
     },
     {
@@ -491,7 +491,7 @@
       "kind": "hardware",
       "path": "atari-7800/patterns/assembly/capabilities/input-drawing-sound",
       "record": "atari-7800/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "5b8d5ea9eaacead5f74d78648e28d7127bc9d86866e3989f783f69624bddeb32",
+      "record_sha256": "d26cdb068274c4e0b026ec830bd40743feeef2ef457709ae73a9ecca98dd5c74",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -557,7 +557,7 @@
       "kind": "hardware",
       "path": "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound",
       "record": "coleco-colecovision/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "f8a0f309b9a81acc6d75429a09be458ee9a413357ec4f22788c653da3f6699c4",
+      "record_sha256": "6dc974c3506510a4dc2cd68ba5fbc092f0db7d4f37ba98fca27eed4f9384a88f",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -806,7 +806,7 @@
       "kind": "hardware",
       "path": "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound",
       "record": "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "8850ad7dcb2e6b9bbe9e73c9530b999afc927081bda1014cbb4a0551f278e068",
+      "record_sha256": "448542272281bdc6ff49824c4f9258643bf14327714a551865fa584c23b92431",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -872,7 +872,7 @@
       "kind": "hardware",
       "path": "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound",
       "record": "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "57380ed6dfa568d999f3fe1c7e9bb89fce205e46d5bf559ccff93285adf21f03",
+      "record_sha256": "ddabd6e3ea240a613c304b32841ee21b05ff383f61017f69209e24c47317bdb5",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -968,7 +968,7 @@
       "kind": "hardware",
       "path": "sega-game-gear/patterns/assembly/capabilities/input-drawing-sound",
       "record": "sega-game-gear/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "2e27e093f633cd5eb78f5da6be8bc9020fbf544dd69380aaf05454b67caa0456",
+      "record_sha256": "1a471481ed019e2ba047269edfe2aa7de5918524d5de0013ff6f135f790c9280",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -1003,7 +1003,7 @@
       "kind": "hardware",
       "path": "sega-master-system/patterns/assembly/capabilities/input-drawing-sound",
       "record": "sega-master-system/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "780d153cf76597262b25d88c745c0971f17021e7a7406d9de01209002aeeb9b2",
+      "record_sha256": "9ded9214355b3dc6dce4979a4f2b7a56887830d1b071f208a8bd3c3d20c3f0ea",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -1038,7 +1038,7 @@
       "kind": "hardware",
       "path": "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound",
       "record": "sega-sg-1000/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "c2dcd251bad82deb22cd318acb29cc53c3725d774e175953d06b9546f91c0362",
+      "record_sha256": "14b9a49c3cfff6aa2eba451a4e76b082498d80ba21d52195ca11b53dbd54ac80",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -1154,7 +1154,7 @@
       "kind": "hardware",
       "path": "sord-m5/patterns/assembly/capabilities/input-drawing-sound",
       "record": "sord-m5/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "cbacf4026606a6d93ac1e5132cad17acd36abb98bf41400502e512538440e04a",
+      "record_sha256": "429d1b31e93341dd741ec218e8a28c42b2bd0f263f3a041a642a3f1e8a25d3d2",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"
@@ -1220,7 +1220,7 @@
       "kind": "hardware",
       "path": "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound",
       "record": "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "7e2cbf66540b89d7865c46dd3f1675aed2576ad782e806b2699c83264994538a",
+      "record_sha256": "4b5035527ebb620cb500bd4471564f5efe85b4930fc71cc1e5fe7acd650967f3",
       "input": {
         "status": "executed",
         "contract": "idle, press once, held without repeat, release and second press"

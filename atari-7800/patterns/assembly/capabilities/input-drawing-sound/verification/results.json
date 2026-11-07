@@ -12,7 +12,7 @@
     "atari-7800/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "9ae50c2992587db6eeb4ebd367baa7c8b1c4d7fbb0e9fd59101b7e540fb6765b",
     "atari-7800/patterns/assembly/capabilities/input-drawing-sound/Makefile": "8b70bffe4ef8364f485f2b0a0c330e0c9c804ef0b2c612fbc7613952ea405766"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "bb10d0d0e7ee1c78c958313b49dee2a0ec8a0fde73839f3d0e82176411c3488b",
   "binary_sha256": "42cdca94918a301e85527cddce8858d31b5469c5aa77935c6fc2430111977ed1",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
