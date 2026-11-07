@@ -14,8 +14,8 @@ destination must be writable and must not overlap its code or stack.
 
 Use Python 3 and native [Asm198x](https://github.com/asm198x/asm198x/releases)
 and [Emu198x](https://github.com/emu198x/emu198x/releases) binaries. The retained
-run used Asm198x 0.0.59 and the Emu198x 0.31.0 build; provenance and executable
-hashes are in `verification/`.
+run used the Asm198x 0.0.75 and Emu198x 0.48.3 releases; provenance and
+executable hashes are in `verification/`.
 
 From this directory:
 

@@ -1,17 +1,16 @@
 {
-  "date": "2026-10-07",
+  "date": "2026-11-07",
   "assembler": {
-    "version": "0.0.59",
-    "revision": "4d50d25980337768169721cc89fd2e97978286bd",
-    "workflow": "https://github.com/asm198x/asm198x/actions/runs/37595675011",
-    "artifact_id": 11469714771
+    "version": "0.0.75",
+    "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+    "target": "aarch64-apple-darwin",
+    "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
   },
   "emulator": {
-    "build_version": "0.31.0",
-    "revision": "3023b6a3794edcb10a7821bbb5c38a1794a18faa",
-    "workflow": "https://github.com/emu198x/emu198x/actions/runs/37678730043",
-    "artifact_id": 11508782065,
-    "note": "The Linux binary artifact is used; this is not a claim that every job in the release workflow succeeded."
+    "version": "0.48.3",
+    "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+    "target": "aarch64-apple-darwin",
+    "executable_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167"
   },
-  "verification": "Archive SHA-256 values matched the GitHub artifact digests; the Spectrum archive also matched its bundled checksum. Executable hashes and source/build hashes are in results.json."
+  "verification": "Both tools are published releases; executable digests match their release source locks. Re-recorded from the 2026-10-07 CI-artifact builds (Asm198x 0.0.59, Emu198x 0.31.0): program, snapshot, symbols, listing and every measurement are unchanged; only the Debug198x sidecar digests and the tool digests differ."
 }
