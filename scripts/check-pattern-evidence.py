@@ -1,7 +1,14 @@
-"""Check selected recorded inputs; this does not execute machine fixtures."""
+"""Check selected recorded inputs; this does not execute machine fixtures.
+
+A fixture that names its recorder is judged by the programs the machine was
+given: the checker rebuilds each one with the tools the record pins and
+compares its bytes with the record. Recorder and source digests are then
+provenance. Other fixtures still compare their declared source digests.
+"""
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
 import sys
@@ -16,7 +23,7 @@ REQUIRED_BINDINGS = {"c64": 5, "nes": 3, "amiga": 5, "spectrum": 3, "aabb": 2}
 
 AUDIT_SELECTION = Path(__file__).with_name("routine-audit-evidence.json")
 AUDIT_BINDINGS = {
-    "z80": 9,
+    "z80": 0,
     "basic": 5,
     "amiga-lines": 2,
     "amiga-edges": 3,
@@ -27,7 +34,46 @@ AUDIT_BINDINGS = {
 }
 
 PARSER_SELECTION = Path(__file__).with_name("adventure-parser-evidence.json")
-PARSER_BINDINGS = {"parser-basic": 4, "parser-z80": 7, "parser-callers": 16}
+PARSER_BINDINGS = {"parser-basic": 4, "parser-z80": 0, "parser-callers": 0}
+
+
+def _load_evidence_bytes():
+    found = importlib.util.spec_from_file_location(
+        "pattern_evidence_bytes", ROOT / "scripts/evidence_bytes.py"
+    )
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load_evidence_bytes()
+
+
+def require_programs(name: str, recorder: dict, record: dict) -> int:
+    """Rebuild every program the record names and compare it byte for byte."""
+    programs = record.get("programs")
+    if not isinstance(programs, dict) or not programs:
+        raise ValueError("Record names no programs to rebuild")
+    out = f"build/evidence/{name}"
+    args = tuple(str(a).replace("{output}", out) for a in recorder["args"])
+    build = E.function(
+        ROOT / recorder["script"],
+        recorder.get("function", "build_programs"),
+        args,
+        ROOT,
+        tuple(f"{out}/{program}" for program in programs),
+    )
+    builder = record["build198x_sha256"] if E.BUILDER in args else None
+    for program, digest in programs.items():
+        E.require_program(
+            build,
+            f"{out}/{program}",
+            record["assembler_sha256"],
+            recorded_sha256=digest,
+            build198x=builder,
+        )
+    return len(programs)
 
 
 def inspect(
@@ -58,6 +104,8 @@ def inspect(
                 raise ValueError("Execution record must be a nonempty object")
             if required_bindings is not None and record.get("status") != "passed":
                 raise ValueError("Audit record must describe a passing execution")
+            if "recorder" in fixture:
+                rebuilt = require_programs(name, fixture["recorder"], record)
             for binding in bindings:
                 expected = record
                 keys = binding["record_keys"]
@@ -89,9 +137,10 @@ def inspect(
                     "record": fixture["record"],
                     "record_sha256": hashlib.sha256(raw).hexdigest(),
                     "bindings": checks,
+                    **({"programs_rebuilt": rebuilt} if "recorder" in fixture else {}),
                 }
             )
-        except (OSError, KeyError, TypeError, ValueError) as error:
+        except (OSError, KeyError, TypeError, ValueError, AssertionError) as error:
             failures.append(f"{name}: {error}")
             observations.append(
                 {

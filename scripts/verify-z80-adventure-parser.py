@@ -28,19 +28,10 @@ E = load("cpu", ROOT / "scripts/verify-z80-library-routines.py")
 V = load("vocabulary", FOLDER / "generate_vocabulary.py")
 
 
-def batch(
-    cases: list[str],
-    code: str,
-    tables: str,
-    out: Path,
-    args: argparse.Namespace,
-    init: bool = True,
-    verbs: dict = O.VERBS,
-    nouns: dict = O.NOUNS,
-) -> None:
+def program(cases: list[str], code: str, tables: str, init: bool = True) -> str:
+    """The caller that parses each case into $B000 onwards."""
     body = "    call parser_init\n" if init else ""
     text = "    org $a0fc\n"
-    size = 0
     for i, value in enumerate(cases):
         body += f"    ld a,254\n    ld (verb_id),a\n    ld a,253\n    ld (noun_id),a\n    ld hl,message_{i}\n    ld bc,{len(value)}\n    call parse_command\n    ld (${0xB000 + i * 3:04x}),a\n    ld a,(verb_id)\n    ld (${0xB001 + i * 3:04x}),a\n    ld a,(noun_id)\n    ld (${0xB002 + i * 3:04x}),a\n"
         # Guard byte after every counted span must not be read or written.
@@ -49,10 +40,91 @@ def batch(
             + ",".join(map(str, value.encode("latin1") + b"\xff"))
             + "\n"
         )
-        size += len(value) + 1
+    return E.caller(body, code + "\n" + tables, text)
+
+
+def jobs() -> list[dict]:
+    """Every caller the recorder runs, in order, with its oracle."""
+    code = (FOLDER / "parser.inc").read_text()
+    tables = V.compile_tables(json.loads((FOLDER / "vocabulary.json").read_text()))
+    cases = command_cases()
+    out = [
+        {
+            "name": f"commands-{i // 10}",
+            "cases": cases[i : i + 10],
+            "code": code,
+            "tables": tables,
+        }
+        for i in range(0, len(cases), 10)
+    ]
+    out.append(
+        {
+            "name": "not-ready",
+            "cases": ["LOOK"],
+            "code": code,
+            "tables": tables,
+            "init": False,
+        }
+    )
+    out.append(
+        {
+            "name": "custom",
+            "cases": ["open box", "OPEN", "LOOK", "OPEN LAMP"],
+            "code": code,
+            "tables": V.compile_tables(
+                {
+                    "verbs": [{"word": "OPEN", "id": 17, "noun_policy": 1}],
+                    "nouns": [{"word": "BOX", "id": 23}],
+                }
+            ),
+            "verbs": {"OPEN": (17, 1)},
+            "nouns": {"BOX": 23},
+        }
+    )
+    mutant = code.replace(
+        "    cp 3\n    jp nc,parse_extra", "    cp 4\n    jp nc,parse_extra"
+    )
+    assert mutant != code
+    out.append(
+        {
+            "name": "negative-extra-word",
+            "cases": ["TAKE LAMP EXTRA"],
+            "code": mutant,
+            "tables": tables,
+            "mutant": True,
+        }
+    )
+    return out
+
+
+def command_cases() -> list[str]:
+    return O.command_cases() + [
+        "L" + chr(255),
+        "LOOK" + chr(128),
+        "L" + " " * 254,
+        "L" + " " * 255,
+    ]
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every caller into output/<job>/caller.sna, without the emulator."""
+    for job in jobs():
+        E.assemble(
+            Path(output) / job["name"],
+            program(job["cases"], job["code"], job["tables"], job.get("init", True)),
+            assembler,
+        )
+
+
+def batch(job: dict, out: Path, args: argparse.Namespace) -> None:
+    cases = job["cases"]
+    init = job.get("init", True)
+    verbs = job.get("verbs", O.VERBS)
+    nouns = job.get("nouns", O.NOUNS)
+    size = sum(len(value) + 1 for value in cases)
     actual = E.execute(
         out,
-        E.caller(body, code + "\n" + tables, text),
+        program(cases, job["code"], job["tables"], init),
         [(0xB000, len(cases) * 3), (0xA0FC, size)],
         args,
     )
@@ -87,51 +159,18 @@ def main() -> None:
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "results.json").unlink(missing_ok=True)
-    code = (FOLDER / "parser.inc").read_text()
-    tables = V.compile_tables(json.loads((FOLDER / "vocabulary.json").read_text()))
-    cases = O.command_cases() + [
-        "L" + chr(255),
-        "LOOK" + chr(128),
-        "L" + " " * 254,
-        "L" + " " * 255,
-    ]
-    for i in range(0, len(cases), 10):
-        batch(
-            cases[i : i + 10], code, tables, args.output / f"commands-{i // 10}", args
-        )
-    batch(["LOOK"], code, tables, args.output / "not-ready", args, init=False)
-    custom = V.compile_tables(
-        {
-            "verbs": [{"word": "OPEN", "id": 17, "noun_policy": 1}],
-            "nouns": [{"word": "BOX", "id": 23}],
-        }
-    )
-    batch(
-        ["open box", "OPEN", "LOOK", "OPEN LAMP"],
-        code,
-        custom,
-        args.output / "custom",
-        args,
-        verbs={"OPEN": (17, 1)},
-        nouns={"BOX": 23},
-    )
-    mutant = code.replace(
-        "    cp 3\n    jp nc,parse_extra", "    cp 4\n    jp nc,parse_extra"
-    )
-    assert mutant != code
+    cases = command_cases()
     rejected = False
-    try:
-        batch(
-            ["TAKE LAMP EXTRA"],
-            mutant,
-            tables,
-            args.output / "negative-extra-word",
-            args,
-        )
-    except ValueError as error:
-        if not str(error).startswith("Z80 command result mismatch"):
-            raise
-        rejected = True
+    for job in jobs():
+        if not job.get("mutant"):
+            batch(job, args.output / job["name"], args)
+            continue
+        try:
+            batch(job, args.output / job["name"], args)
+        except ValueError as error:
+            if not str(error).startswith("Z80 command result mismatch"):
+                raise
+            rejected = True
     if not rejected:
         raise ValueError("Extra-word mutant passed")
     symbols = O.T.symbols(args.output / "commands-0/caller.sym")
@@ -156,6 +195,12 @@ def main() -> None:
         },
         "observer_sha256": O.sha(Path(__file__)),
         "emulator_sha256": O.sha(Path(args.emulator)),
+        "assembler_sha256": O.sha(Path(args.assembler)),
+        # Each caller snapshot the machine loads, so the checker can rebuild it.
+        "programs": {
+            f"{job['name']}/caller.sna": O.sha(args.output / job["name"] / "caller.sna")
+            for job in jobs()
+        },
         "limits": __doc__,
     }
     (args.output / "results.json").write_text(json.dumps(report, indent=2) + "\n")

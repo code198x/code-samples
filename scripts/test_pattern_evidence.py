@@ -68,6 +68,35 @@ class PatternEvidenceTests(unittest.TestCase):
             self.assertIn("need revalidation", result.stderr)
         return report
 
+    def test_forged_audit_program_is_rebuilt(self) -> None:
+        """An audit record claiming other caller bytes fails only the rebuild."""
+        import importlib.util
+
+        found = importlib.util.spec_from_file_location("checker", CHECKER)
+        assert found and found.loader
+        checker = importlib.util.module_from_spec(found)
+        found.loader.exec_module(checker)
+        fixture = next(
+            f
+            for f in json.loads(checker.AUDIT_SELECTION.read_text())
+            if f["name"] == "z80"
+        )
+        record = json.loads((ROOT / fixture["record"]).read_text())
+        # Source and recorder digests are provenance only.
+        for case in record["cases"]:
+            case["source_sha256"] = "0" * 64
+        record["input_dependency_sha256"] = record["bitmap_dependency_sha256"] = (
+            "0" * 64
+        )
+        record["observer_sha256"] = "0" * 64
+        self.assertEqual(
+            checker.require_programs("z80", fixture["recorder"], record),
+            len(record["programs"]),
+        )
+        record["programs"]["keyboard/0/caller.sna"] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            checker.require_programs("z80", fixture["recorder"], record)
+
     def test_current_recorded_sources_match(self) -> None:
         self.run_check(True)
 

@@ -54,13 +54,8 @@ def screen_address(y: int, column: int) -> int:
     raise ValueError("Invalid display row")
 
 
-def execute(
-    folder: Path,
-    source: str,
-    reads: list[tuple[int, int]],
-    args: argparse.Namespace,
-    inputs: list[str] | None = None,
-) -> list[list[int]]:
+def assemble(folder: Path, source: str, assembler: str) -> dict[str, int]:
+    """Write and assemble one caller into folder/caller.sna, without running it."""
     folder.mkdir(parents=True, exist_ok=True)
     (folder / "caller.asm").write_text(source)
     for extra in ["bitmap-addressing.inc"]:
@@ -72,7 +67,7 @@ def execute(
         )
     command(
         [
-            args.assembler,
+            assembler,
             "--dialect",
             "pasmo",
             "--cpu",
@@ -97,6 +92,17 @@ def execute(
         "done" in symbols and symbols["done"] < 0x9000,
         "Missing/overlapping completion marker",
     )
+    return symbols
+
+
+def execute(
+    folder: Path,
+    source: str,
+    reads: list[tuple[int, int]],
+    args: argparse.Namespace,
+    inputs: list[str] | None = None,
+) -> list[list[int]]:
+    symbols = assemble(folder, source, args.assembler)
     rom = bytearray(16384)
     for char in range(32, 128):
         for row in range(8):
@@ -449,6 +455,37 @@ walk_frames: defb 0,1,2,1
     return 25
 
 
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every caller the routines run, without the emulator.
+
+    Each routine runs with an executor that only assembles, so the callers
+    come from exactly the code that generates them for a recording. The
+    recorder's own checks are skipped because nothing is observed.
+    """
+    global execute, require
+    real = execute, require
+
+    def assemble_only(
+        folder: Path,
+        source: str,
+        reads: list[tuple[int, int]],
+        args: argparse.Namespace,
+        inputs: list[str] | None = None,
+    ) -> list[list[int]]:
+        assemble(folder, source, assembler)
+        return [[0] * length for _, length in reads]
+
+    execute, require = assemble_only, lambda condition, message: None
+    try:
+        args = argparse.Namespace(assembler=assembler, emulator=None)
+        for name, rel in PATHS.items():
+            globals()[name](
+                Path(output).resolve() / name, (ROOT / rel).read_text(), args
+            )
+    finally:
+        execute, require = real
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--assembler", default="asm198x")
@@ -514,6 +551,12 @@ def main() -> None:
         "status": "regressions-characterised" if args.expect_rejection else "passed",
         "cases": results,
         "observer_sha256": sha(Path(__file__)),
+        "assembler_sha256": sha(Path(shutil.which(args.assembler) or args.assembler)),
+        # Every caller snapshot the machine loads, so the checker can rebuild it.
+        "programs": {
+            str(path.relative_to(args.output)): sha(path)
+            for path in sorted(args.output.glob("*/**/caller.sna"))
+        },
         "tools": {
             name: {
                 "sha256": sha(Path(shutil.which(value) or value)),
