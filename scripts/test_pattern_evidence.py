@@ -28,6 +28,11 @@ class PatternEvidenceTests(unittest.TestCase):
                 target = self.root / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / relative, target)
+        # The aabb fixture runs its verifier again, from this copy.
+        for relative in [f"{AABB}/aabb.py", f"{AABB}/verification/verify.py"]:
+            target = self.root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, target)
         self.selection = self.root / "selection.json"
         self.save_selection()
         self.output = self.root / "report.json"
@@ -51,7 +56,8 @@ class PatternEvidenceTests(unittest.TestCase):
             ],
             capture_output=True,
             text=True,
-            timeout=15,
+            # Fixtures that name a recorder rebuild their programs on each run.
+            timeout=300,
             check=False,
         )
         self.assertEqual(result.returncode, 0 if success else 1, result.stderr)
@@ -60,7 +66,7 @@ class PatternEvidenceTests(unittest.TestCase):
         if success:
             self.assertEqual(report["status"], "recorded_inputs_match")
             self.assertEqual(report["fixtures_checked"], 5)
-            self.assertEqual(report["bindings_checked"], 15)
+            self.assertEqual(report["bindings_checked"], 0)
             self.assertEqual(report["runtime_execution"], "not performed by this check")
         else:
             self.assertTrue(report["failures"])
@@ -100,14 +106,15 @@ class PatternEvidenceTests(unittest.TestCase):
     def test_current_recorded_sources_match(self) -> None:
         self.run_check(True)
 
-    def test_changed_source_and_observer_require_revalidation(self) -> None:
-        for relative in [f"{AABB}/aabb.py", f"{AABB}/verification/verify.py"]:
-            with self.subTest(path=relative):
-                path = self.root / relative
-                original = path.read_bytes()
-                path.write_bytes(original + b"\n# changed after the recorded run\n")
-                self.run_check(False, f"stale recorded input: {relative}")
-                path.write_bytes(original)
+    def test_aabb_comment_passes_and_behaviour_change_fails(self) -> None:
+        """aabb is run again: a comment cannot make it stale, a wrong result can."""
+        source = self.root / AABB / "aabb.py"
+        original = source.read_text()
+        source.write_text(original + "\n# A comment changes no behaviour.\n")
+        self.run_check(True)
+        anchor = "return not (ay >= by + bh or ay + ah <= by)"
+        source.write_text(original.replace(anchor, "return False"))
+        self.run_check(False, "Fresh run failed")
 
     def test_missing_record_or_source_fails(self) -> None:
         for relative in [self.fixtures[0]["record"], f"{AABB}/aabb.py"]:
@@ -115,21 +122,20 @@ class PatternEvidenceTests(unittest.TestCase):
                 path = self.root / relative
                 original = path.read_bytes()
                 path.unlink()
-                self.run_check(False, relative)
+                self.run_check(
+                    False,
+                    self.fixtures[0]["name"]
+                    if relative == self.fixtures[0]["record"]
+                    else "aabb",
+                )
                 path.write_bytes(original)
 
-    def test_missing_record_key_and_malformed_hash_fail(self) -> None:
+    def test_forged_program_digest_fails(self) -> None:
         path = self.root / self.fixtures[0]["record"]
-        original = json.loads(path.read_text())
-        for value in [None, "not-a-sha256"]:
-            with self.subTest(value=value):
-                record = json.loads(json.dumps(original))
-                if value is None:
-                    del record["sources"]["demo.asm"]
-                else:
-                    record["sources"]["demo.asm"] = value
-                path.write_text(json.dumps(record))
-                self.run_check(False, "demo.asm")
+        record = json.loads(path.read_text())
+        record["programs"][next(iter(record["programs"]))] = "not-a-sha256"
+        path.write_text(json.dumps(record))
+        self.run_check(False, "Program bytes differ")
 
     def test_empty_or_malformed_record_fails(self) -> None:
         path = self.root / self.fixtures[0]["record"]
@@ -146,18 +152,15 @@ class PatternEvidenceTests(unittest.TestCase):
                 self.save_selection()
                 self.run_check(False, "once each")
 
-    def test_omitted_or_duplicate_binding_fails(self) -> None:
-        original = json.loads(json.dumps(self.fixtures))
-        for bindings in [
-            [],
-            original[0]["bindings"][:-1],
-            [original[0]["bindings"][0]] * 5,
-        ]:
-            with self.subTest(binding_count=len(bindings)):
-                self.fixtures = json.loads(json.dumps(original))
-                self.fixtures[0]["bindings"] = bindings
+    def test_fixture_that_checks_nothing_fails(self) -> None:
+        for kind in ["recorder", "fresh"]:
+            with self.subTest(kind=kind):
+                original = json.loads(json.dumps(self.fixtures))
+                del next(f for f in self.fixtures if kind in f)[kind]
                 self.save_selection()
-                self.run_check(False)
+                self.run_check(False, "names no recorder")
+                self.fixtures = original
+                self.save_selection()
 
     def test_wrong_aabb_result_fails_the_real_observer(self) -> None:
         source = self.root / AABB / "aabb.py"

@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -90,6 +91,8 @@ starts_y: .byte """
             check=False,
         )
         T.require(r.returncode == 0, r.stderr or r.stdout)
+        if args.emulator is None:
+            continue  # build_programs(): the program is all that is needed.
         m = T.Machine(
             [
                 args.emulator,
@@ -127,6 +130,8 @@ starts_y: .byte """
             {"buttons": mask, "binary_sha256": sha(folder / "caller.nes"), "cases": 249}
         )
         cases += 249
+    if args.emulator is None:
+        return {}
     return {
         "status": "passed",
         "cases": cases,
@@ -135,8 +140,23 @@ starts_y: .byte """
         "observer_sha256": sha(Path(__file__)),
         "emulator_sha256": sha(Path(args.emulator)),
         "records": records,
+        "assembler_sha256": sha(Path(shutil.which(args.assembler) or args.assembler)),
+        # Each program the machine loads, so the checker can rebuild it.
+        "programs": {
+            f"buttons-{r['buttons']:02x}/caller.nes": r["binary_sha256"]
+            for r in records
+        },
         "limits": "CPU/state checks on NTSC NROM; rendering disabled, no controller hardware input or original-hardware claim. Opposing directions follow the documented sequential order.",
     }
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble the 16 button-mask callers into output, without the emulator."""
+    run(
+        argparse.Namespace(
+            emulator=None, assembler=assembler, output=Path(output).resolve()
+        )
+    )
 
 
 def main() -> None:

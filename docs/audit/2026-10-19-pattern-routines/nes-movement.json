@@ -3,89 +3,108 @@
   "cases": 3984,
   "button_masks": 16,
   "source_sha256": "a15ede08debb127271e9ba92dc4f6a69f58e3fee5e1ef6cdbe2628712f376b8a",
-  "observer_sha256": "272ffbe7ec9f21502ecf34c5c4eec2a6200eeb2b262e6efc2fc33373654912d9",
+  "observer_sha256": "2981d3ffd7d26381ed9ae4896ad6e6f9e3b44a13578261a2cda4858499b88f8e",
   "emulator_sha256": "e30e3c819679f293c32ff372c1c3599e348aec30f6dc04082225bce9f74a5b76",
   "records": [
     {
       "buttons": 0,
-      "binary_sha256": "f107de6365418b301e63855d4e4f6e93cf4715d56e0108b5c68ba0f371309e2e",
+      "binary_sha256": "a80f37acf07612871d0207a7e7a79a8c355edb69130fec4417ff5c379c126a39",
       "cases": 249
     },
     {
       "buttons": 1,
-      "binary_sha256": "6ab198dca9b89ab9296adf77f1f5fef0b8b75c36140668a01bf8d120582915f5",
+      "binary_sha256": "116df157808d573f44ea783b4d017692e428d127dcf73f91e2f7bf590b0c5bc8",
       "cases": 249
     },
     {
       "buttons": 2,
-      "binary_sha256": "8a2c5f8a73215c1df0ecd4720dde14eef47a418ed7dcfb30b2e6f593cb55544c",
+      "binary_sha256": "0c459096a6fc1fe40780e8052ae6fd7d5da2b53c25c7277125d803afbda4c16d",
       "cases": 249
     },
     {
       "buttons": 3,
-      "binary_sha256": "0372120b9344169505805f58479e740de6b7c2ec6cd651f89d9d992568356e0b",
+      "binary_sha256": "81e1f76787ed6b341389a251d79db757cead697b7130046d05221b9e648088dd",
       "cases": 249
     },
     {
       "buttons": 4,
-      "binary_sha256": "ad3bd9e555c144fb7fbb1dbcf353f00a7f639d5be82a2c5a7264749236e2caf8",
+      "binary_sha256": "0dd6e56f0c1c8def9bbdde0f2e6f51b5d55f02b8faa5c5d1e2a3481dce868a01",
       "cases": 249
     },
     {
       "buttons": 5,
-      "binary_sha256": "ffb19a6728296f5fae018a9026440523d45869e1e33fb90ff03d85b2f12cc4fe",
+      "binary_sha256": "5c3905e6bf1cb7485b96ef8c3f6fca0944deeb3faf065467dc2cbd50edc62547",
       "cases": 249
     },
     {
       "buttons": 6,
-      "binary_sha256": "e58f84aafb83e525559536d9663aef064194157fb9c2f723191f00db87bf39d1",
+      "binary_sha256": "5b89663b1454d41629a5b3dd067535f788fd19ebff2cce849f7a1e650348aa1d",
       "cases": 249
     },
     {
       "buttons": 7,
-      "binary_sha256": "4dbf3b724de3cf1ff2239ef66bff2e19c1d47ca685201ced7723b5b3871528c5",
+      "binary_sha256": "77ae53fe53d2b4efa2d7fc66855825fccacb9244bc3dd22db8515e55dcc2a7f8",
       "cases": 249
     },
     {
       "buttons": 8,
-      "binary_sha256": "821ff1d3b3d902328825006752363db14f5368040167f5ba1eb2c0a62f8ccb2c",
+      "binary_sha256": "6246902c4b932933e4c7e9c4236f4ccefdb3b8396d186cbabf4371dc8e700740",
       "cases": 249
     },
     {
       "buttons": 9,
-      "binary_sha256": "73206e5b54a0a949d62ec879cae7bddeab9c8ab758306d9079c82c1cc413e7a1",
+      "binary_sha256": "50d267f6fc90c1121484070af4af43812fb5bdfcb3f8e2dfa71957ea6e88e8d2",
       "cases": 249
     },
     {
       "buttons": 10,
-      "binary_sha256": "a830606052740ad351e1f8c3c5c2b3db39390593ac496aef4a334c94f781ffc5",
+      "binary_sha256": "e7f1c6072bdf6dc1c2358125bfad2cb4bf895030c3e22d5443a2d5cfa429646d",
       "cases": 249
     },
     {
       "buttons": 11,
-      "binary_sha256": "487a7eba274f0fd47c91c068d1a33e9bb198ea008404ee988fdf9b4ac853830c",
+      "binary_sha256": "5b8fad09f504529c21626c1b45b9ce2b13d5aa28397bfd5e83e15c011b0bffc5",
       "cases": 249
     },
     {
       "buttons": 12,
-      "binary_sha256": "3b6e5b8dde3b6b1f4fc9187b2f0f2d0e315fabc7b33df557f6bd77ffc7358b62",
+      "binary_sha256": "303123c8f44fd8ea4b5828de7479edbb466c754ab935897b1fd19f9bbe551953",
       "cases": 249
     },
     {
       "buttons": 13,
-      "binary_sha256": "9221a111b15d309b852a309f3602f96008cfcc43af9120dfb97641508e691c8e",
+      "binary_sha256": "dd6cdf265859dbcd294b39a73df5ce545415e8dfffee57722907703a6a576310",
       "cases": 249
     },
     {
       "buttons": 14,
-      "binary_sha256": "1fc09e72c80c3939e7d9405509150a9eb04c0d30c18df9e1f63006bec7678338",
+      "binary_sha256": "0195bf12303e47e02fd72b89d748950c6246a9ec0d40695eb5bd3ad6ae0bec50",
       "cases": 249
     },
     {
       "buttons": 15,
-      "binary_sha256": "523f652715ea782e3bfa3e050f87c7ebba2f3ba8055c0d2614eb4d4784294766",
+      "binary_sha256": "f5185dc9b19828aaa51d6587ee823a806a9e68cf88cd8617ab48297060880aca",
       "cases": 249
     }
   ],
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "buttons-00/caller.nes": "a80f37acf07612871d0207a7e7a79a8c355edb69130fec4417ff5c379c126a39",
+    "buttons-01/caller.nes": "116df157808d573f44ea783b4d017692e428d127dcf73f91e2f7bf590b0c5bc8",
+    "buttons-02/caller.nes": "0c459096a6fc1fe40780e8052ae6fd7d5da2b53c25c7277125d803afbda4c16d",
+    "buttons-03/caller.nes": "81e1f76787ed6b341389a251d79db757cead697b7130046d05221b9e648088dd",
+    "buttons-04/caller.nes": "0dd6e56f0c1c8def9bbdde0f2e6f51b5d55f02b8faa5c5d1e2a3481dce868a01",
+    "buttons-05/caller.nes": "5c3905e6bf1cb7485b96ef8c3f6fca0944deeb3faf065467dc2cbd50edc62547",
+    "buttons-06/caller.nes": "5b89663b1454d41629a5b3dd067535f788fd19ebff2cce849f7a1e650348aa1d",
+    "buttons-07/caller.nes": "77ae53fe53d2b4efa2d7fc66855825fccacb9244bc3dd22db8515e55dcc2a7f8",
+    "buttons-08/caller.nes": "6246902c4b932933e4c7e9c4236f4ccefdb3b8396d186cbabf4371dc8e700740",
+    "buttons-09/caller.nes": "50d267f6fc90c1121484070af4af43812fb5bdfcb3f8e2dfa71957ea6e88e8d2",
+    "buttons-0a/caller.nes": "e7f1c6072bdf6dc1c2358125bfad2cb4bf895030c3e22d5443a2d5cfa429646d",
+    "buttons-0b/caller.nes": "5b8fad09f504529c21626c1b45b9ce2b13d5aa28397bfd5e83e15c011b0bffc5",
+    "buttons-0c/caller.nes": "303123c8f44fd8ea4b5828de7479edbb466c754ab935897b1fd19f9bbe551953",
+    "buttons-0d/caller.nes": "dd6cdf265859dbcd294b39a73df5ce545415e8dfffee57722907703a6a576310",
+    "buttons-0e/caller.nes": "0195bf12303e47e02fd72b89d748950c6246a9ec0d40695eb5bd3ad6ae0bec50",
+    "buttons-0f/caller.nes": "f5185dc9b19828aaa51d6587ee823a806a9e68cf88cd8617ab48297060880aca"
+  },
   "limits": "CPU/state checks on NTSC NROM; rendering disabled, no controller hardware input or original-hardware claim. Opposing directions follow the documented sequential order."
 }

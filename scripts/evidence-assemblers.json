@@ -1,4 +1,24 @@
 {
+  "asm198x-v0.0.58": {
+    "source_commit": null,
+    "targets": {
+      "aarch64-apple-darwin": {
+        "archive": "asm198x-aarch64-apple-darwin.tar.xz",
+        "archive_sha256": "33ce9e925d511ad78a671959ad4f40d3f67ea453cba581436e1edf1feee45c41",
+        "executable_sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8"
+      },
+      "x86_64-apple-darwin": {
+        "archive": "asm198x-x86_64-apple-darwin.tar.xz",
+        "archive_sha256": "90ef74a03cc64bb26e8df63216719468f6be4f77202aa55eae6fafb0c9a8ae0b",
+        "executable_sha256": "9c5ef90aa47d08ceb419d9f5f8d91d3555e3b88fd0b1db069b58fa8633ed0fc7"
+      },
+      "x86_64-unknown-linux-gnu": {
+        "archive": "asm198x-x86_64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "7c253453f80b6715dff3e5f45dee5a96b4bed6cc2943dad597c9521ff9015291",
+        "executable_sha256": "0fc3185c1ecc6dc41a4a84406c71cbabb551df5193792c214da6a0a0ddccab14"
+      }
+    }
+  },
   "asm198x-v0.0.64": {
     "source_commit": null,
     "targets": {

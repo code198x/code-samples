@@ -11,6 +11,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -18,18 +19,18 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SELECTION = Path(__file__).with_name("pattern-evidence.json")
 # Keep the audited scope explicit: shrinking a selector must not silently go green.
-REQUIRED_BINDINGS = {"c64": 5, "nes": 3, "amiga": 5, "spectrum": 0, "aabb": 2}
+REQUIRED_BINDINGS = {"c64": 0, "nes": 0, "amiga": 0, "spectrum": 0, "aabb": 0}
 
 
 AUDIT_SELECTION = Path(__file__).with_name("routine-audit-evidence.json")
 AUDIT_BINDINGS = {
     "z80": 0,
     "basic": 0,
-    "amiga-lines": 2,
-    "amiga-edges": 3,
-    "amiga-music": 4,
-    "nes-movement": 2,
-    "c64-scroll": 2,
+    "amiga-lines": 0,
+    "amiga-edges": 0,
+    "amiga-music": 0,
+    "nes-movement": 0,
+    "c64-scroll": 0,
     "spectrum-states": 0,
 }
 
@@ -48,6 +49,32 @@ def _load_evidence_bytes():
 
 
 E = _load_evidence_bytes()
+
+
+def require_fresh_run(root: Path, name: str, fresh: dict, record: dict) -> int:
+    """Run a host-only verifier again and require it to reproduce the record.
+
+    Keys named in `provenance` (the Python version, source digests) may
+    differ; every observation must match. Returns the fields compared.
+    """
+    out = ROOT / "build/evidence" / name
+    result = subprocess.run(
+        [sys.executable, str(root / fresh["script"]), "--output", str(out)],
+        capture_output=True,
+        text=True,
+        timeout=600,
+        check=False,
+    )
+    if result.returncode:
+        raise ValueError("Fresh run failed: " + (result.stderr or result.stdout)[-500:])
+    rerun = json.loads((out / "results.json").read_text())
+    ignored = set(fresh.get("provenance", []))
+    differ = sorted(
+        k for k in (set(rerun) | set(record)) - ignored if rerun.get(k) != record.get(k)
+    )
+    if differ:
+        raise ValueError("Fresh run differs from the record in: " + ", ".join(differ))
+    return len((set(rerun) | set(record)) - ignored)
 
 
 def require_programs(name: str, recorder: dict, record: dict) -> int:
@@ -107,8 +134,12 @@ def inspect(
                 raise ValueError("Audit record must describe a passing execution")
             if "recorder" in fixture:
                 rebuilt = require_programs(name, fixture["recorder"], record)
+            elif "fresh" in fixture:
+                rebuilt = require_fresh_run(root, name, fixture["fresh"], record)
             elif not bindings:
-                raise ValueError("Fixture names no recorder and binds no input")
+                raise ValueError(
+                    "Fixture names no recorder or fresh run and binds no input"
+                )
             for binding in bindings:
                 expected = record
                 keys = binding["record_keys"]
@@ -141,6 +172,7 @@ def inspect(
                     "record_sha256": hashlib.sha256(raw).hexdigest(),
                     "bindings": checks,
                     **({"programs_rebuilt": rebuilt} if "recorder" in fixture else {}),
+                    **({"fields_reproduced": rebuilt} if "fresh" in fixture else {}),
                 }
             )
         except (OSError, KeyError, TypeError, ValueError, AssertionError) as error:

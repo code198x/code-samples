@@ -35,37 +35,29 @@ class AuditTests(unittest.TestCase):
             )
         with self.assertRaises(ValueError):
             E.inspect(ROOT, selection[:-1], E.AUDIT_BINDINGS)
-        changed = copy.deepcopy(selection)
-        next(f for f in changed if f["bindings"])["bindings"].pop()
-        self.assertTrue(E.inspect(ROOT, changed, E.AUDIT_BINDINGS)["failures"])
         # A recorder fixture with its recorder removed checks nothing, so fails.
         changed = copy.deepcopy(selection)
         del next(f for f in changed if "recorder" in f)["recorder"]
         self.assertTrue(E.inspect(ROOT, changed, E.AUDIT_BINDINGS)["failures"])
 
-    def test_changed_routine_or_observer_and_failed_record_rejected(self):
+    def test_forged_program_and_failed_record_rejected(self):
+        """Every audit is judged by its rebuilt programs, so a record claiming
+        other bytes fails, as does a record of a failed run."""
         selection = json.loads(E.AUDIT_SELECTION.read_text())
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             for fixture in selection:
-                for name in [
-                    fixture["record"],
-                    *[b["path"] for b in fixture["bindings"]],
-                ]:
-                    p = root / name
-                    p.parent.mkdir(parents=True, exist_ok=True)
-                    p.write_bytes((ROOT / name).read_bytes())
-            bound = next(f for f in selection if f["bindings"])
-            for binding in bound["bindings"][:2]:
-                path = root / binding["path"]
-                before = path.read_bytes()
-                path.write_bytes(before + b"\n; changed\n")
-                self.assertTrue(
-                    E.inspect(root, selection, E.AUDIT_BINDINGS)["failures"]
-                )
-                path.write_bytes(before)
+                p = root / fixture["record"]
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_bytes((ROOT / fixture["record"]).read_bytes())
             path = root / selection[0]["record"]
-            record = json.loads(path.read_text())
+            original = path.read_text()
+            record = json.loads(original)
+            record["programs"][next(iter(record["programs"]))] = "0" * 64
+            path.write_text(json.dumps(record))
+            failures = E.inspect(root, selection, E.AUDIT_BINDINGS)["failures"]
+            self.assertTrue(any("Program bytes differ" in f for f in failures))
+            record = json.loads(original)
             record["status"] = "failed"
             path.write_text(json.dumps(record))
             self.assertTrue(E.inspect(root, selection, E.AUDIT_BINDINGS)["failures"])

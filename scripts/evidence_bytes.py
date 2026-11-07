@@ -32,6 +32,7 @@ import importlib.util
 import json
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -412,14 +413,25 @@ def call(script: Path, name: str, args: list[str]) -> None:
 
 
 def _fetch_text(url: str) -> str | None:
-    """The asset's text, or None when the release does not publish it."""
-    try:
-        with urllib.request.urlopen(url, timeout=60) as response:
-            return response.read().decode()
-    except urllib.error.HTTPError as error:
-        if error.code == 404:
-            return None
-        raise
+    """The asset's text, or None when the release does not publish it.
+
+    GitHub's server errors are retried a few times before they are raised.
+    """
+    headers = {}
+    if "api.github.com" in url and os.environ.get("GITHUB_TOKEN"):
+        headers["Authorization"] = f"Bearer {os.environ['GITHUB_TOKEN']}"
+    for attempt in range(4):
+        try:
+            request = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(request, timeout=60) as response:
+                return response.read().decode()
+        except urllib.error.HTTPError as error:
+            if error.code == 404:
+                return None
+            if error.code < 500 or attempt == 3:
+                raise
+        time.sleep(2 * (attempt + 1))
+    return None
 
 
 def _emulator_version(path: str) -> tuple[str, str] | None:
@@ -458,17 +470,18 @@ def _emulator_version(path: str) -> tuple[str, str] | None:
 
 def _emulator_release_by_digest(name: str, digest: str, target: str) -> str | None:
     """Search Emu198x releases' source locks for this binary; return the version."""
-    for page in range(1, 4):
+    for page in range(1, 11):
+        # Small pages: GitHub times out on large release listings.
         listing = _fetch_text(
             "https://api.github.com/repos/emu198x/emu198x/releases"
-            f"?per_page=100&page={page}"
+            f"?per_page=20&page={page}"
         )
         releases = json.loads(listing) if listing else []
         for release in releases:
             version = release["tag_name"].removeprefix("v")
             if digest in _emulator_release_digests(name, version, target):
                 return version
-        if len(releases) < 100:
+        if len(releases) < 20:
             break
     return None
 
@@ -550,13 +563,38 @@ def tool_identity(path: str | Path) -> dict[str, str]:
             "target": target,
             **identity,
         }
-    banner = subprocess.run(
-        [found], capture_output=True, text=True, timeout=30, check=False
-    )
-    first = (banner.stdout or banner.stderr).splitlines()[:1]
-    words = first[0].split() if first else []
-    if len(words) >= 2 and words[1].startswith("v"):
-        return {"tool": words[0], "version": words[1][1:], **identity}
+
+    # Ask for a version; tools that reject --version (Pasmo, vasm) print their
+    # banner when run with no arguments. Nothing else is run without arguments,
+    # since an emulator such as VICE would open a window.
+    def probe(arguments: list[str]) -> str:
+        try:
+            run = subprocess.run(
+                [found, *arguments],
+                stdin=subprocess.DEVNULL,
+                capture_output=True,
+                text=True,
+                timeout=15,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            return ""
+        return run.stdout + run.stderr
+
+    text = probe(["--version"])
+    if re.search(r"(unknown|invalid) option", text, re.IGNORECASE):
+        text = probe([])
+    pattern = re.compile(r"(?:\bv|release |version )?(\d+(?:\.\d+)+\w*)")
+    for line in text.splitlines():
+        found_version = pattern.search(line)
+        if found_version:
+            words = line.split()
+            tool = (
+                words[0]
+                if words and not words[0].lower().startswith(("this", "error"))
+                else name
+            )
+            return {"tool": tool, "version": found_version.group(1), **identity}
     return {"tool": name, **identity}
 
 

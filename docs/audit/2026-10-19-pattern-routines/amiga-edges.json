@@ -5,8 +5,13 @@
     "commodore-amiga/patterns/assembly/input/joystick-edge-detection/edges.inc": "a98fdaf0210b7a70820c5d92b53d192116e3115379329fe35a92e05304b62a6a",
     "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc": "dadc861126e0e37b21ff68a2186fe91ce5d850ed8ed99ea4085baf4f650a643a"
   },
-  "observer_sha256": "d9cae546f92cb8ef988bac9123e09b4d72905b795515a92f4bfbf3b302533431",
+  "observer_sha256": "54531f0b6f49696a34ec7f3f06ff2821f6573904cc5f7d216f6851c445b80aea",
   "emulator_sha256": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb",
   "firmware_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "build198x_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+  "programs": {
+    "demo.adf": "1192a5641f1191cadbe8df71bffcacd00969565ed39fc7b6a8d46a6f50ddd33e"
+  },
   "limits": "Execute all 1,024 held/previous masks through the Amiga edge adapter.\n\nCPU/state fixture on A500 PAL. Hardware decoding remains the maintained reader's\nseparate evidence; these calls consume an already sampled controls word.\n"
 }
