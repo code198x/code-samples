@@ -272,12 +272,12 @@ def run(name: str, args: argparse.Namespace) -> dict:
         / SYSTEMS["bbc" if name == "electron" else name]
         / "patterns/assembly/framework/game-loop"
     )
-    sym = symbols(folder / "build/demo.sym")
     out = folder / (
         "build/verification-electron" if name == "electron" else "build/verification"
     )
-    out.mkdir(exist_ok=True)
     programs = build(name, args.assembler, args.build198x, out)
+    sym = symbols(folder / "build/demo.sym")
+    out.mkdir(exist_ok=True)
     E = evidence_bytes()
     executable = (
         args.spectrum
