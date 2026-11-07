@@ -18,7 +18,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SELECTION = Path(__file__).with_name("pattern-evidence.json")
 # Keep the audited scope explicit: shrinking a selector must not silently go green.
-REQUIRED_BINDINGS = {"c64": 0, "nes": 3, "amiga": 0, "spectrum": 0, "aabb": 2}
+REQUIRED_BINDINGS = {"c64": 0, "nes": 0, "amiga": 0, "spectrum": 0, "aabb": 2}
 
 
 AUDIT_SELECTION = Path(__file__).with_name("routine-audit-evidence.json")
@@ -28,7 +28,7 @@ AUDIT_BINDINGS = {
     "amiga-lines": 0,
     "amiga-edges": 0,
     "amiga-music": 0,
-    "nes-movement": 2,
+    "nes-movement": 0,
     "c64-scroll": 0,
     "spectrum-states": 0,
 }

@@ -204,13 +204,20 @@ class Assemblers(unittest.TestCase):
             E.release_for("0" * 64)
 
     def test_every_release_names_its_targets(self) -> None:
-        """Asm198x releases name all four targets; every release names CI's."""
+        """Asm198x releases name all four targets; every release names CI's.
+
+        Asm198x 0.0.58 published no aarch64 Linux build, so it has three.
+        """
+        missing = {"asm198x-v0.0.58": {"aarch64-unknown-linux-gnu"}}
         for tag, release in E.releases().items():
             with self.subTest(tag=tag):
                 self.assertLessEqual(set(release["targets"]), set(E.TARGETS))
                 self.assertIn(E.CI_TARGET, release["targets"])
                 if E.tool_of(tag) == "asm198x":
-                    self.assertEqual(set(release["targets"]), set(E.TARGETS))
+                    self.assertEqual(
+                        set(release["targets"]),
+                        set(E.TARGETS) - missing.get(tag, set()),
+                    )
 
     def test_pin_must_name_the_right_tool(self) -> None:
         builder = E.releases()["build198x-v0.2.9"]["targets"]["aarch64-apple-darwin"]

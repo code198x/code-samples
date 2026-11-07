@@ -14,29 +14,14 @@
   {
     "name": "nes",
     "record": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/evidence/results.json",
-    "bindings": [
-      {
-        "path": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/demo.asm",
-        "record_keys": [
-          "sources",
-          "demo.asm"
-        ]
-      },
-      {
-        "path": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/square-wave.inc",
-        "record_keys": [
-          "sources",
-          "square-wave.inc"
-        ]
-      },
-      {
-        "path": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/verify.py",
-        "record_keys": [
-          "sources",
-          "verification/verify.py"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/verify.py",
+      "args": [
+        "{asm198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "amiga",

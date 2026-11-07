@@ -11,6 +11,7 @@ and reject a rate/duration mismatch. A deliberately mislabelled WAV must fail.
 import argparse
 from array import array
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import queue
@@ -21,6 +22,10 @@ import threading
 import wave
 
 ROOT = Path(__file__).resolve().parents[1]
+_EVIDENCE = importlib.util.spec_from_file_location(
+    'evidence_bytes', ROOT.parents[4] / 'scripts/evidence_bytes.py')
+EVIDENCE = importlib.util.module_from_spec(_EVIDENCE)
+_EVIDENCE.loader.exec_module(EVIDENCE)
 CPU_HZ = 1789773            # NTSC CPU clock
 FRAME_CYCLES = 341 * 262 / 3    # Rendering off: no odd-frame dot skip
 FRAMES = 120
@@ -109,8 +114,8 @@ def caller(body):
     return text.replace('.include "square-wave.inc"', f'.include "{ROOT / "square-wave.inc"}"')
 
 
-def assemble(source, rom):
-    result = subprocess.run(['asm198x', '--dialect', 'ca65', str(source), '-o', str(rom)],
+def assemble(source, rom, assembler='asm198x'):
+    result = subprocess.run([assembler, '--dialect', 'ca65', str(source), '-o', str(rom)],
                             capture_output=True, text=True, cwd=ROOT)
     assert result.returncode == 0, result.stderr + result.stdout
 
@@ -171,10 +176,31 @@ def run_case(emulator, rom, symbols_status, out_wav):
     return status
 
 
+def programs(output):
+    """Each case's source, written beside its program as the recording does."""
+    builds = {'held-a4': ROOT / 'demo.asm'}
+    for name, (body, _timer, _tone, _bit0) in CASES.items():
+        directory = output / name
+        directory.mkdir(parents=True, exist_ok=True)
+        source = directory / 'caller.asm'
+        source.write_text(caller(body))
+        builds[name] = source
+    return builds
+
+
+def build_programs(assembler, output):
+    """Assemble every case into output/<case>/program.nes, without the emulator."""
+    out = Path(output).resolve()
+    for name, source in programs(out).items():
+        (out / name).mkdir(parents=True, exist_ok=True)
+        assemble(source, out / name / 'program.nes', assembler)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--emulator', required=True, help='path to emu198x-nes')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--assembler', default='asm198x')
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -183,7 +209,7 @@ def main():
         'target': 'NTSC NES, NROM, rendering off; pulse 1 only',
         'method': 'Complete ROMs in emu198x-nes --mcp; CPU reads of $4015; PCM in emulated time and WAV playback time',
         'emulator_sha256': sha(args.emulator),
-        'assembler_sha256': sha(shutil.which('asm198x')),
+        'assembler_sha256': sha(shutil.which(args.assembler) or args.assembler),
         'sources': {'demo.asm': sha(ROOT / 'demo.asm'),
                     'square-wave.inc': sha(ROOT / 'square-wave.inc'),
                     'verification/verify.py': sha(Path(__file__))},
@@ -191,18 +217,15 @@ def main():
         'cases': [],
         'limits': 'Emulator observations; no original-hardware or listening claim.',
     }
-    builds = {'held-a4': (ROOT / 'demo.asm', 0x0FD, True, 1)}
-    for name, (body, timer, tone, bit0) in CASES.items():
-        directory = out / name
-        directory.mkdir(exist_ok=True)
-        source = directory / 'caller.asm'
-        source.write_text(caller(body))
-        builds[name] = (source, timer, tone, bit0)
+    sources = programs(out)
+    builds = {'held-a4': (sources['held-a4'], 0x0FD, True, 1)}
+    for name, (_body, timer, tone, bit0) in CASES.items():
+        builds[name] = (sources[name], timer, tone, bit0)
     for name, (source, timer, tone, bit0) in builds.items():
         directory = out / name
         directory.mkdir(exist_ok=True)
         rom = directory / 'program.nes'
-        assemble(source, rom)
+        assemble(source, rom, args.assembler)
         wav = directory / 'capture.wav'
         status = run_case(args.emulator, rom, status_addr, wav)
         info = analyse(wav, FRAMES)
@@ -294,6 +317,11 @@ def main():
     report['audio_timebase'] = [{'wav_header_hz': h, 'samples_per_emulated_second': e}
                                 for h, e in sorted(rates)]
     report['status'] = 'passed'
+    # Tools by release identity, and each program the machine loads, so the
+    # checker can rebuild it.
+    report['tools'] = {name: EVIDENCE.tool_identity(path) for name, path in
+                       [('assembler', args.assembler), ('emulator', args.emulator)]}
+    report['programs'] = {f"{c['name']}/program.nes": c['rom_sha256'] for c in report['cases']}
     (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
 
 
