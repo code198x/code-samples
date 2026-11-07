@@ -60,7 +60,7 @@ class PatternEvidenceTests(unittest.TestCase):
         if success:
             self.assertEqual(report["status"], "recorded_inputs_match")
             self.assertEqual(report["fixtures_checked"], 5)
-            self.assertEqual(report["bindings_checked"], 15)
+            self.assertEqual(report["bindings_checked"], 10)
             self.assertEqual(report["runtime_execution"], "not performed by this check")
         else:
             self.assertTrue(report["failures"])

@@ -1,15 +1,22 @@
 """Cold-boot the demo and probe; check Paula writes, pitch, interrupts and cost."""
 import argparse
 import hashlib
+import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 import wave
 from array import array
+from datetime import date
 from itertools import pairwise
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+_SPEC = importlib.util.spec_from_file_location(
+    'evidence_bytes', ROOT.parents[4] / 'scripts/evidence_bytes.py')
+EVIDENCE = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(EVIDENCE)
 PAL_CLOCK = 3_546_895          # colour clocks per second (HRM, Audio Hardware)
 LINE = 227                     # whole colour clocks per scan line
 CHIP_END = 0x80000             # A500 chip RAM: the loaded program lives below
@@ -67,9 +74,9 @@ class Amiga:
         self.process.wait(timeout=10)
 
 
-def build(source, output, build198x, vasm=None):
+def build(source, output, build198x, vasm=None, assembler='asm198x'):
     executable = output / source.stem
-    subprocess.run(['asm198x', '--dialect', 'vasm', '--exe', str(source), '-o',
+    subprocess.run([assembler, '--dialect', 'vasm', '--exe', str(source), '-o',
                     str(executable)], check=True, capture_output=True, cwd=source.parent)
     if vasm:
         reference = output / (source.stem + '.vasm')
@@ -237,18 +244,33 @@ def check_probe(emulator, kickstart, disk, out):
             'one_shot_cycles': peaks, 'wav_sha256': sha(audio)}
 
 
+# The disks the machine boots, as build() leaves them in its output.
+PROGRAMS = ['demo.adf', 'probe.adf']
+
+
+def build_programs(assembler, builder, output):
+    """Build both boot disks into output, without the emulator or vasm."""
+    out = Path(output).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    build(ROOT / 'demo.asm', out, builder, assembler=assembler)
+    build(ROOT / 'verification/probe.asm', out, builder, assembler=assembler)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--emulator', type=Path, required=True)
     parser.add_argument('--kickstart', type=Path, required=True)
     parser.add_argument('--build198x', default='build198x')
+    parser.add_argument('--assembler', default='asm198x')
     parser.add_argument('--vasm', help='vasmm68k_mot, for a byte comparison')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
-    demo, demo_disk = build(ROOT / 'demo.asm', out, args.build198x, args.vasm)
-    probe, probe_disk = build(ROOT / 'verification/probe.asm', out, args.build198x, args.vasm)
+    demo, demo_disk = build(ROOT / 'demo.asm', out, args.build198x, args.vasm,
+                            args.assembler)
+    probe, probe_disk = build(ROOT / 'verification/probe.asm', out, args.build198x,
+                              args.vasm, args.assembler)
     report = {
         'status': 'passed',
         'configuration': 'A500 OCS PAL, Kickstart 1.3, cold ADF boot',
@@ -257,6 +279,20 @@ def main():
                                              ROOT / 'verification/probe.asm']},
         'binaries': {p.name: sha(p) for p in [demo, demo_disk, probe, probe_disk]},
         'vasm_identical': bool(args.vasm),
+        'recorded_at': date.today().isoformat(),
+        'observer_sha256': sha(Path(__file__)),
+        'observer_controls_sha256': sha(Path(__file__).with_name('test_verify.py')),
+        # Tools by release identity; vasm is an independent oracle, not the producer.
+        'tools': {
+            name: EVIDENCE.tool_identity(path)
+            for name, path in [('assembler', args.assembler), ('build198x', args.build198x),
+                               ('emulator', args.emulator),
+                               *([('vasm', args.vasm)] if args.vasm else [])]
+        },
+        'assembler_sha256': sha(Path(shutil.which(args.assembler) or args.assembler)),
+        'build198x_sha256': sha(Path(shutil.which(args.build198x) or args.build198x)),
+        # Each disk the machine boots, so the checker can rebuild it.
+        'programs': {name: sha(out / name) for name in PROGRAMS},
         'demo': check_demo(args.emulator, args.kickstart, demo_disk, out),
         'probe': check_probe(args.emulator, args.kickstart, probe_disk, out),
         'limits': 'Emulator observations only. No listening, original-hardware or '

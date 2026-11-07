@@ -1,0 +1,112 @@
+{
+  "status": "passed",
+  "configuration": "A500 OCS PAL, Kickstart 1.3, cold ADF boot",
+  "emulator_sha256": "9a24222bfe5991b1154328c9f7c72738ef8a052c2e7a45105789bd80f93907c0",
+  "kickstart_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53",
+  "sources": {
+    "demo.asm": "b65880fa3dcd1a8d0ffda8e7098ea485c8cead877bb91fb9b0aa01d7f6efb368",
+    "paula-sample.inc": "a6c1dcda0cc8e9bc864f44cc8e4795cc9cfbe27bfdd63ecad0f8d4a081b9b8d9",
+    "probe.asm": "ec3a83f1a6ba2836db49fc5fe6c91e8fb951afc7b29414b307724ddf31ba0aee"
+  },
+  "binaries": {
+    "demo": "8f26e48774e4490764ed23e4bc18a3f0260c94fbb4f4921f0badd5bd473bb190",
+    "demo.adf": "e749003cde7f651bd18174749f78d15cad654a19ec854613aa936e27bd75a7e0",
+    "probe": "5721a0e776b88a7551ae41cbd9b721c2c261cc1f55aea47f0a3270f5af72befe",
+    "probe.adf": "d1598463cd5e914437cc35052e0e4535e1bcf10ae21db70b93a8b9d00455d7d2"
+  },
+  "vasm_identical": true,
+  "recorded_at": "2026-11-07",
+  "observer_sha256": "a1bcebd1b07d6b0ec64196e595574b613b7889a8c17335aef423560f96e056ce",
+  "observer_controls_sha256": "45e6e41a614f5995dd79bcf8a110d27a9c440bd938402050169531326972bf8b",
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "build198x": {
+      "tool": "build198x",
+      "version": "0.2.13",
+      "release": "https://github.com/build198x/build198x/releases/tag/build198x-v0.2.13",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7"
+    },
+    "emulator": {
+      "tool": "emu198x-amiga",
+      "version": "0.34.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.34.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "9a24222bfe5991b1154328c9f7c72738ef8a052c2e7a45105789bd80f93907c0"
+    },
+    "vasm": {
+      "tool": "vasm",
+      "version": "2.0b",
+      "executable_sha256": "1906c8525cfff9a13de3d047e399a03e6173814867c8f4de0826e0ebc5eff05a"
+    }
+  },
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "build198x_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+  "programs": {
+    "demo.adf": "e749003cde7f651bd18174749f78d15cad654a19ec854613aa936e27bd75a7e0",
+    "probe.adf": "d1598463cd5e914437cc35052e0e4535e1bcf10ae21db70b93a8b9d00455d7d2"
+  },
+  "demo": {
+    "tones": [
+      {
+        "location": 96624,
+        "length_words": 8,
+        "period": 424,
+        "bytes_per_cycle": 16,
+        "start_cck": 23878213,
+        "stop_cck": 27408933,
+        "frames": 49.772,
+        "predicted_hz": 522.832,
+        "measured_hz": 522.839
+      },
+      {
+        "location": 96624,
+        "length_words": 8,
+        "period": 212,
+        "bytes_per_cycle": 16,
+        "start_cck": 27479781,
+        "stop_cck": 31020945,
+        "frames": 49.919,
+        "predicted_hz": 1045.665,
+        "measured_hz": 1045.664
+      },
+      {
+        "location": 96640,
+        "length_words": 16,
+        "period": 212,
+        "bytes_per_cycle": 32,
+        "start_cck": 31091807,
+        "stop_cck": 34632971,
+        "frames": 49.919,
+        "predicted_hz": 522.832,
+        "measured_hz": 522.832
+      }
+    ],
+    "wav_sha256": "04bf382d8bf1f4e72f6919625c3b0110b90a157d8bd7871c84c6b8c90607460e",
+    "audio_rate": 48000
+  },
+  "probe": {
+    "loop_passes_no_dma": 44257,
+    "loop_passes_four_channels_period_124": 44257,
+    "loop_passes_six_lowres_bitplanes_control": 33536,
+    "first_request_after_dmacon_cck": 166,
+    "request_gaps_cck": [
+      6162,
+      6792,
+      6778,
+      6792,
+      6778
+    ],
+    "predicted_last_word_cck": 5936,
+    "predicted_pass_cck": 6784,
+    "one_shot_cycles": 8,
+    "wav_sha256": "b5a8660c16dc6a6a7519cbb05555ea05c3db1c715e752686ea411636265620c8"
+  },
+  "limits": "Emulator observations only. No listening, original-hardware or stereo-jack claim; CPU cost compares one chip-RAM loop."
+}

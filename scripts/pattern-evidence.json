@@ -68,42 +68,16 @@
   },
   {
     "name": "amiga",
-    "record": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/evidence/runs/2026-10-15-reconciled.json",
-    "bindings": [
-      {
-        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/demo.asm",
-        "record_keys": [
-          "sources",
-          "demo.asm"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/paula-sample.inc",
-        "record_keys": [
-          "sources",
-          "paula-sample.inc"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/probe.asm",
-        "record_keys": [
-          "sources",
-          "probe.asm"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/verify.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/test_verify.py",
-        "record_keys": [
-          "observer_controls_sha256"
-        ]
-      }
-    ]
+    "record": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/evidence/runs/2026-11-07-released.json",
+    "bindings": [],
+    "recorder": {
+      "script": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/verify.py",
+      "args": [
+        "{asm198x}",
+        "{build198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "spectrum",

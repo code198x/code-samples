@@ -32,6 +32,7 @@ import importlib.util
 import json
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -551,12 +552,25 @@ def tool_identity(path: str | Path) -> dict[str, str]:
             **identity,
         }
     banner = subprocess.run(
-        [found], capture_output=True, text=True, timeout=30, check=False
+        [found],
+        stdin=subprocess.DEVNULL,
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
     )
     first = (banner.stdout or banner.stderr).splitlines()[:1]
     words = first[0].split() if first else []
-    if len(words) >= 2 and words[1].startswith("v"):
-        return {"tool": words[0], "version": words[1][1:], **identity}
+    version = next(
+        (
+            w.removeprefix("v")
+            for w in words[1:]
+            if re.fullmatch(r"v?\d+(\.\d+)+\w*", w)
+        ),
+        None,
+    )
+    if words and version:
+        return {"tool": words[0], "version": version, **identity}
     return {"tool": name, **identity}
 
 
