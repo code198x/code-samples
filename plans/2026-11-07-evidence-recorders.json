@@ -807,6 +807,58 @@
       "machine_choices": {
         "atari-5200": "--board ca018087 (Emu198x models each physical 5200 board; the generic profile was retired in 0.47.0, emu198x#2144)"
       }
+    },
+    {
+      "script": "scripts/verify-game-loops.py",
+      "args": [
+        "--native DIR",
+        "--spectrum PATH",
+        "--kickstart PATH",
+        "--bbc-basic PATH",
+        "--build198x PATH",
+        "--assembler PATH",
+        "--firmware-root DIR",
+        "--only c64|spectrum|amiga|nes|bbc|electron"
+      ],
+      "machines": [
+        "commodore-c64",
+        "sinclair-zx-spectrum",
+        "commodore-amiga",
+        "nintendo-nes",
+        "acorn-bbc-micro",
+        "acorn-electron"
+      ],
+      "firmware": [
+        "commodore-c64/*",
+        "sinclair-zx-spectrum-48k/48.rom",
+        "commodore-amiga/kick13.rom (--kickstart)",
+        "acorn-bbc-micro/os.rom",
+        "acorn-bbc-micro/basic.rom (--bbc-basic)",
+        "acorn-electron/os.rom",
+        "acorn-electron/basic.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "build198x": "0.2.13 (Amiga disk only)",
+        "emulator": "0.48.3",
+        "follow_ups": {
+          "commodore-amiga": {
+            "emulator": "0.44.1",
+            "reason": "from 0.44.2 the over-budget run makes 6 updates in 30 frames rather than 5, and the unpaced control 3219 in 10 frames rather than 3421",
+            "issue": "https://github.com/emu198x/emu198x/issues/2318",
+            "undo": "re-record with the chosen current release after an evidence-backed timing ruling, then remove this pin"
+          },
+          "acorn-bbc-micro": {
+            "emulator": "0.45.1",
+            "reason": "the unpaced control makes 220 updates in 10 frames on 0.46.1 and 205 from 0.46.2, rather than 191",
+            "issue": "https://github.com/emu198x/emu198x/issues/2319",
+            "undo": "re-record with the chosen current release after an evidence-backed timing ruling, then remove this pin"
+          }
+        }
+      },
+      "build_programs": "build_programs(machine, assembler, output, builder='build198x'): each program the machine is given (and the NES negative caller)",
+      "records": "*/patterns/assembly/framework/game-loop/verification/results.json (copied from build/verification/results.json; the Electron's from bbc-micro/.../build/verification-electron)",
+      "checker": "scripts/check-probe-coverage.py (frame-paced rows)"
     }
   ]
 }

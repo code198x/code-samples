@@ -20,7 +20,7 @@
       "status": "qualified",
       "probe": "frame-paced",
       "record": "bbc-micro/patterns/assembly/framework/game-loop/verification/results.json",
-      "record_sha256": "06f92d0d155d1ecd566c46e466c8ef38ae0cf41f571a560b073c6b447a74f67a"
+      "record_sha256": "dec8e246d2132bcd8b494dad0c083c28589f55d220e146fa16ee6c2bfb7eae4c"
     },
     {
       "machine_id": "acorn-electron",
@@ -28,7 +28,7 @@
       "status": "qualified",
       "probe": "frame-paced",
       "record": "acorn-electron/patterns/assembly/framework/game-loop/verification/results.json",
-      "record_sha256": "7ea79c40cb38cbc81a9a69dccb468e87b176673d243d4e6770c29a1162d5def2"
+      "record_sha256": "181a2a16d8e36a443e04ffbb256c72a17d4007a82964086203e63deb6a01ca2c"
     },
     {
       "machine_id": "amstrad-cpc",
@@ -84,7 +84,7 @@
       "status": "qualified",
       "probe": "frame-paced",
       "record": "commodore-amiga/patterns/assembly/framework/game-loop/verification/results.json",
-      "record_sha256": "78c6272fd8ceff6a39de5d8412bdc16f0b1948dadc3c983114fc5acc4fcfa938"
+      "record_sha256": "e76acd6a9592fa808cb249fb3264845e21ec6e65c0c9226cfa8d6c74175c07f4"
     },
     {
       "machine_id": "commodore-c64",
@@ -92,7 +92,7 @@
       "status": "qualified",
       "probe": "frame-paced",
       "record": "commodore-64/patterns/assembly/framework/game-loop/verification/results.json",
-      "record_sha256": "bff89d11d116212d6b4124d967565759bec03c06d87167072cde4c917fbabf68"
+      "record_sha256": "834c4ac6f339d12cd0a56673a1aca07cbe24ac9c82b279ecbcf51fa542d1db92"
     },
     {
       "machine_id": "commodore-pet",
@@ -164,7 +164,7 @@
       "status": "qualified",
       "probe": "frame-paced",
       "record": "nintendo-entertainment-system/patterns/assembly/framework/game-loop/verification/results.json",
-      "record_sha256": "c98feb17ee5c7e83af7f71c664c0de50d11c3467547d7b635cf97ec7e3e330e5"
+      "record_sha256": "6fc1cf7082b26df5ad7704228b379e13f954b385e1b55f8adb3432665df7468c"
     },
     {
       "machine_id": "oric",
@@ -204,7 +204,7 @@
       "status": "qualified",
       "probe": "frame-paced",
       "record": "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/verification/results.json",
-      "record_sha256": "5b351f2a4f4a57e6e59235e362e89416a6233edcbf83fabbcee6c30a73198ede"
+      "record_sha256": "7420476b45bc696ccce0280760bf7319ad59fdd15e4226f9a3fa8d7477635b13"
     },
     {
       "machine_id": "sinclair-zx80",

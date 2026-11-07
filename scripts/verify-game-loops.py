@@ -12,6 +12,7 @@ import importlib.util
 import json
 import queue
 import re
+import shutil
 import subprocess
 import threading
 from pathlib import Path
@@ -163,24 +164,121 @@ def tape_start(args: argparse.Namespace, folder: Path, sym: dict[str, int]) -> d
         machine.close()
 
 
-def run(name: str, args: argparse.Namespace) -> dict:
+PROGRAMS = {
+    "c64": ["demo.prg"],
+    "spectrum": ["demo.sna", "demo.tap"],
+    "amiga": ["demo.adf"],
+    "nes": ["demo.nes"],
+    "bbc": ["demo.bin", "loader.bas"],
+    "electron": ["demo.bin", "loader.bas"],
+}
+
+
+def evidence_bytes():
+    """The shared evidence module, loaded only by a recording run.
+
+    Many checkers import this file as a transport from a copied scripts
+    folder, so it must not need evidence_bytes.py to import.
+    """
+    found = importlib.util.spec_from_file_location(
+        "loop_evidence_bytes", Path(__file__).with_name("evidence_bytes.py")
+    )
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+def build(name: str, assembler: str, builder: str, out: Path) -> dict[str, Path]:
+    """Assemble each program the machine is given, without the emulator.
+
+    The NES negative control is an assembled caller, so it is built here too;
+    the others patch the running caller. Returns each program by the name the
+    record keeps.
+    """
     folder = (
         ROOT
         / SYSTEMS["bbc" if name == "electron" else name]
         / "patterns/assembly/framework/game-loop"
     )
     subprocess.run(
-        ["make", f"BUILD198X={args.build198x}"],
+        ["make", "-B", f"ASM198X={assembler}", f"BUILD198X={builder}"],
         cwd=folder,
         check=True,
         capture_output=True,
         timeout=60,
+    )
+    programs = {n: folder / "build" / n for n in PROGRAMS[name]}
+    if name == "nes":
+        # Cartridge ROM correctly ignores pokes. Assemble the same-sized
+        # caller mutation instead of pretending a ROM write took effect.
+        out.mkdir(parents=True, exist_ok=True)
+        mutant = folder / "negative-control.asm"
+        source = (folder / "demo.asm").read_text()
+        require(source.count("    jsr wait_frame") == 1, "Expected one wait call")
+        mutant.write_text(
+            source.replace("    jsr wait_frame", "    nop\n    nop\n    nop")
+        )
+        try:
+            subprocess.run(
+                [
+                    assembler,
+                    "--dialect",
+                    "ca65",
+                    str(mutant),
+                    "-o",
+                    str(out / "negative.nes"),
+                ],
+                cwd=folder,
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        finally:
+            mutant.unlink()
+        programs["negative.nes"] = out / "negative.nes"
+    return programs
+
+
+# Registry machine ids, as the coverage manifests name these callers.
+MACHINES = {
+    "commodore-c64": "c64",
+    "sinclair-zx-spectrum": "spectrum",
+    "commodore-amiga": "amiga",
+    "nintendo-nes": "nes",
+    "acorn-bbc-micro": "bbc",
+    "acorn-electron": "electron",
+}
+
+
+def build_programs(
+    machine: str, assembler: str, output: str, builder: str = "build198x"
+) -> None:
+    """Write each program the machine is given into output, without the emulator.
+
+    `machine` is a registry machine id; `builder` is used only by the Amiga.
+    """
+    out = Path(output).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    for program, path in build(MACHINES[machine], assembler, builder, out).items():
+        if path != out / program:
+            shutil.copyfile(path, out / program)
+
+
+def run(name: str, args: argparse.Namespace) -> dict:
+    folder = (
+        ROOT
+        / SYSTEMS["bbc" if name == "electron" else name]
+        / "patterns/assembly/framework/game-loop"
     )
     sym = symbols(folder / "build/demo.sym")
     out = folder / (
         "build/verification-electron" if name == "electron" else "build/verification"
     )
     out.mkdir(exist_ok=True)
+    programs = build(name, args.assembler, args.build198x, out)
+    E = evidence_bytes()
     executable = (
         args.spectrum
         if name == "spectrum"
@@ -399,32 +497,7 @@ def run(name: str, args: argparse.Namespace) -> dict:
         machine.call("save_screenshot", path=str(out / "running.png"))
         # Positive cases finish before this explicitly invasive control.
         if name == "nes":
-            # Cartridge ROM correctly ignores pokes. Assemble the same-sized
-            # caller mutation instead of pretending a ROM write took effect.
-            mutant = folder / "negative-control.asm"
-            source = (folder / "demo.asm").read_text()
-            require(source.count("    jsr wait_frame") == 1, "Expected one wait call")
-            mutant.write_text(
-                source.replace("    jsr wait_frame", "    nop\n    nop\n    nop")
-            )
-            try:
-                subprocess.run(
-                    [
-                        "asm198x",
-                        "--dialect",
-                        "ca65",
-                        str(mutant),
-                        "-o",
-                        str(out / "negative.nes"),
-                    ],
-                    cwd=folder,
-                    check=True,
-                    capture_output=True,
-                    text=True,
-                    timeout=30,
-                )
-            finally:
-                mutant.unlink()
+            # The assembled negative control, built before the run.
             machine.close()
             machine = Machine(
                 [
@@ -469,6 +542,29 @@ def run(name: str, args: argparse.Namespace) -> dict:
             "observer_sha256": sha(Path(__file__)),
             "emulator_sha256": sha(Path(executable)),
             "binary_sha256": sha(binary),
+            "assembler_sha256": sha(
+                Path(shutil.which(args.assembler) or args.assembler)
+            ),
+            # Each program the machine is given, so the checker can rebuild it.
+            "programs": {n: sha(path) for n, path in programs.items()},
+            "tools": {
+                "assembler": E.tool_identity(args.assembler),
+                "emulator": E.tool_identity(executable),
+                **(
+                    {"build198x": E.tool_identity(args.build198x)}
+                    if name == "amiga"
+                    else {}
+                ),
+            },
+            **(
+                {
+                    "build198x_sha256": sha(
+                        Path(shutil.which(args.build198x) or args.build198x)
+                    )
+                }
+                if name == "amiga"
+                else {}
+            ),
             "sources": {
                 str(p.resolve().relative_to(ROOT)): sha(p)
                 for p in [
@@ -526,6 +622,7 @@ if __name__ == "__main__":
     parser.add_argument("--kickstart", type=Path, required=True)
     parser.add_argument("--bbc-basic", type=Path, required=True)
     parser.add_argument("--build198x", required=True)
+    parser.add_argument("--assembler", default="asm198x")
     parser.add_argument(
         "--firmware-root", type=Path, default=Path.home() / ".emu198x/roms"
     )
