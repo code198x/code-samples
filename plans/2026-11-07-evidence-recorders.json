@@ -688,6 +688,39 @@
       "fresh_run": "check-pattern-evidence.py runs it again and compares every field except python_version and sources_sha256",
       "records": "cross-platform/patterns/physics/aabb-collision/verification/results.json",
       "checker": "scripts/check-pattern-evidence.py (aabb); its CI job also runs it fresh"
+    },
+    {
+      "script": "scripts/verify-hardware-input-loops.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--firmware-root DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "atari-2600",
+        "atari-5200",
+        "atari-7800",
+        "coleco-colecovision",
+        "sord-m5",
+        "memotech-mtx",
+        "tatung-einstein",
+        "nintendo-game-boy"
+      ],
+      "firmware": [
+        "atari-5200/5200.rom",
+        "coleco-colecovision/colecovision.rom",
+        "sord-m5/sord-m5.rom",
+        "memotech-mtx/mtx.rom",
+        "tatung-einstein/einstein.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3, except nintendo-game-boy 0.45.1 (0.46.1 on counts 0 updates in 30 frames)"
+      },
+      "build_programs": "build_programs(system, assembler, output): the caller and its no-wait and no-edge negatives",
+      "records": "*/patterns/assembly/framework/input-loop/verification/results.json (copied from build/verification/results.json)",
+      "checker": "scripts/check-probe-coverage.py (input-driven-with-frame-service rows)"
     }
   ]
 }

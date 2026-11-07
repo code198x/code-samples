@@ -36,10 +36,32 @@
   "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
   "binary_sha256": "ef51e50c44656629b8bcd1fec1c09d26b0412daaa287cc46f82f010a7c65512c",
   "emulator_sha256": "b410781cab8c556b7250b5aaaac790869d0c217e7965143f8e167a067140b972",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.bin": "ef51e50c44656629b8bcd1fec1c09d26b0412daaa287cc46f82f010a7c65512c",
+    "no-wait.bin": "4c823d7ebedfcdae7f66a6d1324eff277d831770a77293787a25ccda1979a867",
+    "no-edge.bin": "c7703baae0cbf21733d3545494e47bb37b40b5014e154e98c7b1805d78c724a8"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-sord-m5",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b410781cab8c556b7250b5aaaac790869d0c217e7965143f8e167a067140b972"
+    }
+  },
   "sources": {
     "sord-m5/patterns/assembly/framework/input-loop/demo.asm": "9f68914a9a53d55706848d7667b8fb78e5d1ac2eca75d4b7646b3a7a1b97e83f",
     "sord-m5/patterns/assembly/framework/input-loop/Makefile": "86c0985608f5e4ff05bbd2ce985ebb74acfc1d49050bee332f83c99dd9b3ae18",
-    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
+    "scripts/verify-hardware-input-loops.py": "278532b364fe14a1c2da910b2e6cd16c45d6e44677cc0d89899517b7743cfbf5",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },

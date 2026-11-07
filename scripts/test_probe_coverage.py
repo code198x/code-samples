@@ -3,6 +3,7 @@
 import copy
 import importlib.util
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -143,6 +144,86 @@ class ProbeCoverageTests(unittest.TestCase):
         proof["accepted_command_states"] = []
         with self.assertRaises(ValueError):
             self.retained_check(proof)
+
+
+class RebuiltProbeProgramTests(unittest.TestCase):
+    """A record that lists its programs is judged by rebuilding them."""
+
+    MACHINE = "coleco-colecovision"
+    PROBE = "input-driven-with-frame-service"
+
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        folder = f"{self.MACHINE}/patterns/assembly/framework/input-loop"
+        shutil.copytree(
+            ROOT / "scripts",
+            self.root / "scripts",
+            ignore=shutil.ignore_patterns("__pycache__"),
+        )
+        shutil.copytree(
+            ROOT / folder, self.root / folder, ignore=shutil.ignore_patterns("build")
+        )
+        self.source = self.root / folder / "demo.asm"
+        self.record = json.loads(
+            (ROOT / folder / "verification/results.json").read_text()
+        )
+        # Rebuilds are cached per build; these tests change the sources.
+        MODULE.E.rebuild.cache_clear()
+
+    def require(self, record: dict | None = None) -> None:
+        MODULE.require_program(
+            self.root, self.MACHINE, record or self.record, self.PROBE
+        )
+
+    def test_recorded_programs_rebuild_and_a_comment_changes_nothing(self) -> None:
+        self.require()
+        self.source.write_text(self.source.read_text() + "\n; a comment\n")
+        MODULE.E.rebuild.cache_clear()
+        self.require()
+
+    def test_changed_operand_fails(self) -> None:
+        text = self.source.read_text()
+        old = "    ld a,$87"
+        self.assertEqual(text.count(old), 1)
+        self.source.write_text(text.replace(old, "    ld a,$86"))
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            self.require()
+
+    def test_forged_program_digest_fails(self) -> None:
+        forged = copy.deepcopy(self.record)
+        forged["programs"]["no-edge.cv"] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            self.require(forged)
+
+    def test_programs_without_a_recorder_fail(self) -> None:
+        with self.assertRaisesRegex(ValueError, "No recorder"):
+            MODULE.require_program(self.root, self.MACHINE, self.record, "frame-paced")
+
+    def test_rebuilt_records_name_released_tools_without_local_paths(self) -> None:
+        data = json.loads((ROOT / "docs/probe-coverage.json").read_text())
+        rebuilt = 0
+        for row in data["systems"]:
+            if not row.get("record"):
+                continue
+            record = json.loads((ROOT / row["record"]).read_text())
+            if "programs" not in record:
+                continue
+            rebuilt += 1
+            self.assertIn(row["probe"], MODULE.RECORDERS)
+            tools = record["tools"]
+            self.assertEqual(
+                tools["assembler"]["executable_sha256"], record["assembler_sha256"]
+            )
+            self.assertEqual(
+                tools["emulator"]["executable_sha256"], record["emulator_sha256"]
+            )
+            for tool in tools.values():
+                self.assertTrue(tool["release"].startswith("https://github.com/"))
+                for value in tool.values():
+                    self.assertFalse(value.startswith("/"), value)
+        self.assertGreater(rebuilt, 0)
 
 
 if __name__ == "__main__":
