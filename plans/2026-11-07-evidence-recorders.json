@@ -634,6 +634,46 @@
       "build_programs": "build_programs(assembler, output)",
       "records": "docs/audit/2026-10-19-pattern-routines/c64-scroll.json (copied from results.json)",
       "checker": "scripts/check-pattern-evidence.py --audit (c64-scroll)"
+    },
+    {
+      "script": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/verify.py",
+      "args": [
+        "--emulator PATH",
+        "--assembler PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "nintendo-nes (NTSC NROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.58",
+        "emu198x-nes": "0.34.0"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/evidence/results.json",
+      "checker": "scripts/check-pattern-evidence.py (nes); CI also runs it fresh",
+      "notes": "Generated caller sources include square-wave.inc by absolute path, so their source_sha256 values depend on the checkout; the ROMs do not."
+    },
+    {
+      "script": "scripts/verify-nes-movement.py",
+      "args": [
+        "--emulator PATH",
+        "--assembler PATH",
+        "--output DIR",
+        "--expect-rejection"
+      ],
+      "machines": [
+        "nintendo-nes (NTSC NROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emu198x-nes": "0.38.3"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "docs/audit/2026-10-19-pattern-routines/nes-movement.json (copied from results.json)",
+      "checker": "scripts/check-pattern-evidence.py --audit (nes-movement)"
     }
   ]
 }

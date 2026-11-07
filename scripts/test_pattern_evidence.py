@@ -61,7 +61,7 @@ class PatternEvidenceTests(unittest.TestCase):
         if success:
             self.assertEqual(report["status"], "recorded_inputs_match")
             self.assertEqual(report["fixtures_checked"], 5)
-            self.assertEqual(report["bindings_checked"], 5)
+            self.assertEqual(report["bindings_checked"], 2)
             self.assertEqual(report["runtime_execution"], "not performed by this check")
         else:
             self.assertTrue(report["failures"])
@@ -129,12 +129,16 @@ class PatternEvidenceTests(unittest.TestCase):
         for value in [None, "not-a-sha256"]:
             with self.subTest(value=value):
                 record = json.loads(json.dumps(original))
+                keys = self.fixtures[self.bound()]["bindings"][0]["record_keys"]
+                target = record
+                for key in keys[:-1]:
+                    target = target[key]
                 if value is None:
-                    del record["sources"]["demo.asm"]
+                    del target[keys[-1]]
                 else:
-                    record["sources"]["demo.asm"] = value
+                    target[keys[-1]] = value
                 path.write_text(json.dumps(record))
-                self.run_check(False, "demo.asm")
+                self.run_check(False, keys[-1])
 
     def test_empty_or_malformed_record_fails(self) -> None:
         path = self.root / self.fixtures[0]["record"]

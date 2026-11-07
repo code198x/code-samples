@@ -52,20 +52,14 @@
   {
     "name": "nes-movement",
     "record": "docs/audit/2026-10-19-pattern-routines/nes-movement.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-nes-movement.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "nintendo-entertainment-system/patterns/assembly/physics/sprite-movement-bounds/movement.inc",
-        "record_keys": [
-          "source_sha256"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-nes-movement.py",
+      "args": [
+        "{asm198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "c64-scroll",

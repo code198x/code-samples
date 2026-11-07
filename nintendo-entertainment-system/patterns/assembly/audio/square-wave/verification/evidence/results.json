@@ -1,12 +1,12 @@
 {
   "target": "NTSC NES, NROM, rendering off; pulse 1 only",
   "method": "Complete ROMs in emu198x-nes --mcp; CPU reads of $4015; PCM in emulated time and WAV playback time",
-  "emulator_sha256": "8ccf6e22749d473e5628cff280b0a7b4402426bed90194b187d5406412438cff",
+  "emulator_sha256": "aaf5aac1ec403f89ed2a336500bba3d7b602235baf93946c25ff10b6a70a8ba8",
   "assembler_sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8",
   "sources": {
     "demo.asm": "03c033550f78a005a4f795e2af4f6cce3b0948ed03fb0df4573c87b9b195a892",
     "square-wave.inc": "756b9fbedea88a3638f74a1697ead6aa0e90b41892b69e981c00fb9f36806d48",
-    "verification/verify.py": "205051fe163302c7a6b1f08f728dcb6702abee8e87bb0141a5dbb0400107ad76"
+    "verification/verify.py": "5ecafb535ec5af0ea966a91ce06832b4b749de2d3ee54ae0fad65892a64110bf"
   },
   "frames_per_case": 120,
   "cases": [
@@ -36,7 +36,7 @@
       "name": "octave",
       "timer": 126,
       "status_4015": 1,
-      "source_sha256": "9fbc85dcc08a58bcef5f22988792d7966c14220e3338d28c8462b88c374317d3",
+      "source_sha256": "1696a0b117216257c4bdcd52b3a014ed0f8c001b4f6a2ad6a196805bfe5bfc57",
       "rom_sha256": "7fb93db21224cde3557f9614be6c9f79a120e921f283fc77002588034ec9c012",
       "wav_sha256": "edfff15f371efabd9e9308d644f857182d3e4896cc6338824bf212db9a326145",
       "header_rate": 48000,
@@ -58,7 +58,7 @@
       "name": "low-negate-sweep",
       "timer": 1024,
       "status_4015": 1,
-      "source_sha256": "69663c8b6bf143f92ce0026565385cf4e7855c39d86b8be98c070a0b48a248df",
+      "source_sha256": "145d705eca5a2c37be24a514a8ebef9d26f12e0e6957eb41f7f98340a042a660",
       "rom_sha256": "e9afdd2bd056777f0c8e9e1d4948f0dffcaaff8a19e193538a4ff5d568bcc0ee",
       "wav_sha256": "ff2d766b50079ce867f43e5760b88d023c9316ccd9400bf6e1bc0ad1a7b04c28",
       "header_rate": 48000,
@@ -80,7 +80,7 @@
       "name": "low-sweep-00-mutes",
       "timer": 1024,
       "status_4015": 1,
-      "source_sha256": "ba1a4b0d775a1eb2f16411da402af79e215e6469109a7c256571f698a3d65beb",
+      "source_sha256": "97dda646fb5ed62bc1f90f82eddc714d3c8fd1a0aaeda539888eb03fa773c9d4",
       "rom_sha256": "26326d29d359e3247e6d80e33df7ad9a2e74033bde441691c821de31f65e0f71",
       "wav_sha256": "edb340766c9ea975d51bb65fbe16f6ae15d4b2871bd805e3253913da414c046d",
       "header_rate": 48000,
@@ -98,7 +98,7 @@
       "name": "timer-below-8-mutes",
       "timer": 7,
       "status_4015": 1,
-      "source_sha256": "0b8d7cc72d94765190ed1ccc0eb0f5595088281014be23bba089e67140c0c3c7",
+      "source_sha256": "006a818eee8183de58b3fb402623757d9dda640b6a4c81be59b7d2e6ff729c76",
       "rom_sha256": "d34b75826b5230d8390befcb08fe92b07761f1557bababe90c319304c8286932",
       "wav_sha256": "5933cffbfe015bfff056ff22e93bd91d2226a0d6bf7b814d35b183b05e53a059",
       "header_rate": 48000,
@@ -116,7 +116,7 @@
       "name": "load-before-enable",
       "timer": 253,
       "status_4015": 0,
-      "source_sha256": "af1bb4a532f86b12f64f06135c0d6cf18df51908074641a8c269544cd6d1e097",
+      "source_sha256": "4640c4aae77da221a2a09c267e7429f45d89429e8a68afd190a1c07a948f671a",
       "rom_sha256": "d200d69895623faae3cc6a30565da72cdb328274f437ba90ffe812122e36a762",
       "wav_sha256": "5933cffbfe015bfff056ff22e93bd91d2226a0d6bf7b814d35b183b05e53a059",
       "header_rate": 48000,
@@ -134,7 +134,7 @@
       "name": "length-expires",
       "timer": 253,
       "status_4015": 0,
-      "source_sha256": "af0ae960b28501aca1af33ce3f73dbb2238a9f9bbc30385e64357d7fe4d65426",
+      "source_sha256": "386df4121eb40e5a8402dc16428fe13cd4883d6a1ebd19a8c9a8fc0a49a0d79d",
       "rom_sha256": "ed38f9b137d79e3fbf307c3bba02bfe5a5199dede7f598c7b242feb596d64c04",
       "wav_sha256": "579dfccb85239475dbaf90acaf7d9686c81605899392844f87710ddf2fbeea3e",
       "header_rate": 48000,
@@ -169,5 +169,30 @@
       "samples_per_emulated_second": 48001.2
     }
   ],
-  "status": "passed"
+  "status": "passed",
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.58",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.58",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8"
+    },
+    "emulator": {
+      "tool": "emu198x-nes",
+      "version": "0.34.0",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.34.0",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "aaf5aac1ec403f89ed2a336500bba3d7b602235baf93946c25ff10b6a70a8ba8"
+    }
+  },
+  "programs": {
+    "held-a4/program.nes": "66da9863e0d3f33e7182f4e7d314fb6a0f761acf3c49c6ad165bdbc647b23fb2",
+    "octave/program.nes": "7fb93db21224cde3557f9614be6c9f79a120e921f283fc77002588034ec9c012",
+    "low-negate-sweep/program.nes": "e9afdd2bd056777f0c8e9e1d4948f0dffcaaff8a19e193538a4ff5d568bcc0ee",
+    "low-sweep-00-mutes/program.nes": "26326d29d359e3247e6d80e33df7ad9a2e74033bde441691c821de31f65e0f71",
+    "timer-below-8-mutes/program.nes": "d34b75826b5230d8390befcb08fe92b07761f1557bababe90c319304c8286932",
+    "load-before-enable/program.nes": "d200d69895623faae3cc6a30565da72cdb328274f437ba90ffe812122e36a762",
+    "length-expires/program.nes": "ed38f9b137d79e3fbf307c3bba02bfe5a5199dede7f598c7b242feb596d64c04"
+  }
 }
