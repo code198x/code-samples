@@ -93,9 +93,13 @@ class ProbeCoverageTests(unittest.TestCase):
         return proof
 
     def retained_check(self, proof: dict) -> tuple[int, int]:
+        import hashlib
         from unittest.mock import patch
 
         (self.root / "proof.json").write_text(json.dumps(proof))
+        self.data["systems"][0]["record_sha256"] = hashlib.sha256(
+            (self.root / "proof.json").read_bytes()
+        ).hexdigest()
         with patch.object(MODULE, "ROOT", self.root):
             return self.check(self.data)
 
@@ -138,6 +142,19 @@ class ProbeCoverageTests(unittest.TestCase):
         proof["sources"]["scripts/verify-command-loops.py"] = "0" * 64
         proof["observer_sha256"] = "0" * 64
         self.assertEqual(self.retained_check(proof), (1, 1))
+
+    def test_tampered_record_fails(self) -> None:
+        from unittest.mock import patch
+
+        proof = self.command_record()
+        self.assertEqual(self.retained_check(proof), (1, 1))
+        proof["negative_control"]["observed_turn"] = 2
+        (self.root / "proof.json").write_text(json.dumps(proof))
+        with (
+            patch.object(MODULE, "ROOT", self.root),
+            self.assertRaisesRegex(ValueError, "Record changed"),
+        ):
+            self.check(self.data)
 
     def test_missing_accepted_states_cannot_keep_a_qualified_claim(self) -> None:
         proof = self.command_record()

@@ -11,210 +11,240 @@
       "crate": "emu198x-acorn-atom",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "acorn-atom/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "acorn-atom/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "369a0e7efe5241e120d3390966740fad4a1ce466031fef79a831dd0c8f161451"
     },
     {
       "machine_id": "acorn-bbc-micro",
       "crate": "emu198x-acorn-bbc-micro",
       "status": "qualified",
       "probe": "frame-paced",
-      "record": "bbc-micro/patterns/assembly/framework/game-loop/verification/results.json"
+      "record": "bbc-micro/patterns/assembly/framework/game-loop/verification/results.json",
+      "record_sha256": "06f92d0d155d1ecd566c46e466c8ef38ae0cf41f571a560b073c6b447a74f67a"
     },
     {
       "machine_id": "acorn-electron",
       "crate": "emu198x-acorn-electron",
       "status": "qualified",
       "probe": "frame-paced",
-      "record": "acorn-electron/patterns/assembly/framework/game-loop/verification/results.json"
+      "record": "acorn-electron/patterns/assembly/framework/game-loop/verification/results.json",
+      "record_sha256": "7ea79c40cb38cbc81a9a69dccb468e87b176673d243d4e6770c29a1162d5def2"
     },
     {
       "machine_id": "amstrad-cpc",
       "crate": "emu198x-amstrad-cpc",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "amstrad-cpc/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "amstrad-cpc/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "ecba68c67d8e2e4c6346edd8b78f33df41095852ebb5597e22bb6fdcde8dc0b9"
     },
     {
       "machine_id": "atari-2600",
       "crate": "emu198x-atari-2600",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "atari-2600/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "atari-2600/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "e02bb82f2f5f3905a567f50f2dfa257100e96c14b186d7b190ce200aa7c67315"
     },
     {
       "machine_id": "atari-5200",
       "crate": "emu198x-atari-5200",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "atari-5200/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "atari-5200/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "eb34b9368e93b95f748462c8dc202b0cd566e090eb1f2d7e3b3dd722f31a7787"
     },
     {
       "machine_id": "atari-7800",
       "crate": "emu198x-atari-7800",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "atari-7800/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "atari-7800/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "54c791d50990d2a79fdecd56f16fc4571206d03ccfccf0494c2f987cfdee0152"
     },
     {
       "machine_id": "atari-800xl",
       "crate": "emu198x-atari-800xl",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "atari-800xl/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "atari-800xl/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "0bd249434d241a074c8d8678c86851af41f71bae8406fc8f9d089b356d449245"
     },
     {
       "machine_id": "coleco-colecovision",
       "crate": "emu198x-colecovision",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "coleco-colecovision/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "coleco-colecovision/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "c322b94971cca496ace0d0cc89502b14ad9bd69686e023a76a9c23344bb4798f"
     },
     {
       "machine_id": "commodore-amiga",
       "crate": "emu198x-amiga",
       "status": "qualified",
       "probe": "frame-paced",
-      "record": "commodore-amiga/patterns/assembly/framework/game-loop/verification/results.json"
+      "record": "commodore-amiga/patterns/assembly/framework/game-loop/verification/results.json",
+      "record_sha256": "78c6272fd8ceff6a39de5d8412bdc16f0b1948dadc3c983114fc5acc4fcfa938"
     },
     {
       "machine_id": "commodore-c64",
       "crate": "emu198x-c64",
       "status": "qualified",
       "probe": "frame-paced",
-      "record": "commodore-64/patterns/assembly/framework/game-loop/verification/results.json"
+      "record": "commodore-64/patterns/assembly/framework/game-loop/verification/results.json",
+      "record_sha256": "bff89d11d116212d6b4124d967565759bec03c06d87167072cde4c917fbabf68"
     },
     {
       "machine_id": "commodore-pet",
       "crate": "emu198x-commodore-pet",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "commodore-pet/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "commodore-pet/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "ba2b5844f6a0426d262ff2935cc947b0eb3e2c705a2e766fadba8a36b6731124"
     },
     {
       "machine_id": "commodore-vic-20",
       "crate": "emu198x-commodore-vic-20",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "commodore-vic-20/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "commodore-vic-20/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "2b5daf8a92e349fabc20266fdfdfd8b8826792e9cc4f82c1bc312427e3311dff"
     },
     {
       "machine_id": "dragon",
       "crate": "emu198x-dragon",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "dragon-32/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "dragon-32/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "2ed3af8790635133f5f65086a99619435e7c95cbbeb4d3b31253dac6482a4320"
     },
     {
       "machine_id": "jupiter-ace",
       "crate": "emu198x-jupiter-ace",
       "status": "qualified",
       "probe": "key-driven-forth",
-      "record": "jupiter-ace/patterns/forth/framework/command-loop/verification/results.json"
+      "record": "jupiter-ace/patterns/forth/framework/command-loop/verification/results.json",
+      "record_sha256": "293b4af958dc4c6f7c32c5100f00aeaf0001b6f178b1c0697db5110d8bdc981c"
     },
     {
       "machine_id": "mattel-aquarius",
       "crate": "emu198x-mattel-aquarius",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "mattel-aquarius/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "mattel-aquarius/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "a1a2f0368e759100c978d5af6e59176fac6af6b8ec9530645b4d3697e7ae9f4e"
     },
     {
       "machine_id": "memotech-mtx",
       "crate": "emu198x-memotech-mtx",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "memotech-mtx/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "memotech-mtx/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "a609424a1255610560d77b84e2e83e332e0d971d15b85acb88516c8aa65cb263"
     },
     {
       "machine_id": "microsoft-msx1",
       "crate": "emu198x-msx",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "msx/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "msx/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "18d8a6b0229720ac0262ba8b1001ca9566272a278dc3b20f22cdba493b44cba0"
     },
     {
       "machine_id": "nintendo-game-boy",
       "crate": "emu198x-game-boy",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "nintendo-game-boy/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "nintendo-game-boy/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "43154e3bfa11106d179f229ea91dbf9448de49e8480314216425dafbbdbc9d66"
     },
     {
       "machine_id": "nintendo-nes",
       "crate": "emu198x-nes",
       "status": "qualified",
       "probe": "frame-paced",
-      "record": "nintendo-entertainment-system/patterns/assembly/framework/game-loop/verification/results.json"
+      "record": "nintendo-entertainment-system/patterns/assembly/framework/game-loop/verification/results.json",
+      "record_sha256": "c98feb17ee5c7e83af7f71c664c0de50d11c3467547d7b635cf97ec7e3e330e5"
     },
     {
       "machine_id": "oric",
       "crate": "emu198x-oric-atmos",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "oric-atmos/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "oric-atmos/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "9526c99c9756f5d759fb4f11a71aa209acdc733184b6dee32e63fbea6b256135"
     },
     {
       "machine_id": "sega-game-gear",
       "crate": "emu198x-sega-game-gear",
       "status": "qualified",
       "probe": "untimed-and-timed-turns",
-      "record": "sega-game-gear/patterns/assembly/framework/turn-deadline/verification/results.json"
+      "record": "sega-game-gear/patterns/assembly/framework/turn-deadline/verification/results.json",
+      "record_sha256": "e3e2fdea8aec80f0c90cdd51abbbb844e1b2b2498d007d105e28ba67cdc367c4"
     },
     {
       "machine_id": "sega-master-system",
       "crate": "emu198x-sega-master-system",
       "status": "qualified",
       "probe": "untimed-and-timed-turns",
-      "record": "sega-master-system/patterns/assembly/framework/turn-deadline/verification/results.json"
+      "record": "sega-master-system/patterns/assembly/framework/turn-deadline/verification/results.json",
+      "record_sha256": "5ec5edc7b3fa3ade3876fa3bc09c2add4b1f69be9688cc2613f27fafcb9d6068"
     },
     {
       "machine_id": "sega-sg-1000",
       "crate": "emu198x-sega-sg-1000",
       "status": "qualified",
       "probe": "untimed-and-timed-turns",
-      "record": "sega-sg-1000/patterns/assembly/framework/turn-deadline/verification/results.json"
+      "record": "sega-sg-1000/patterns/assembly/framework/turn-deadline/verification/results.json",
+      "record_sha256": "fbe30c370470de1288fe98a3755a51122d0565379f84cbecb9cb4b59d5b3ee16"
     },
     {
       "machine_id": "sinclair-zx-spectrum",
       "crate": "emu198x-spectrum",
       "status": "qualified",
       "probe": "frame-paced",
-      "record": "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/verification/results.json"
+      "record": "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/verification/results.json",
+      "record_sha256": "5b351f2a4f4a57e6e59235e362e89416a6233edcbf83fabbcee6c30a73198ede"
     },
     {
       "machine_id": "sinclair-zx80",
       "crate": "emu198x-sinclair-zx80",
       "status": "qualified",
       "probe": "numeric-running-total",
-      "record": "sinclair-zx80/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "sinclair-zx80/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "20ed2e2d222e5f02a5acca5a47239cf2591cbec80c0ec97e1648c69d4653bb05"
     },
     {
       "machine_id": "sinclair-zx81",
       "crate": "emu198x-sinclair-zx81",
       "status": "qualified",
       "probe": "numeric-running-total",
-      "record": "sinclair-zx81/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "sinclair-zx81/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "2ae1298d7fa0a06c1b644631dcb2bfb3aa316bba6dd700df96bebd0d41e062b6"
     },
     {
       "machine_id": "sord-m5",
       "crate": "emu198x-sord-m5",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "sord-m5/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "sord-m5/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "a1870e3528f8fe9f7e69bc003cd317bd0ca50989836eacf8e85cda684503744c"
     },
     {
       "machine_id": "spectravideo-svi-328",
       "crate": "emu198x-spectravideo-svi-328",
       "status": "qualified",
       "probe": "command-driven",
-      "record": "spectravideo-svi-328/patterns/basic/framework/command-loop/verification/results.json"
+      "record": "spectravideo-svi-328/patterns/basic/framework/command-loop/verification/results.json",
+      "record_sha256": "c4927e869515d86151ac8454df3e87fa445e703ac1341a46c2de485c80096993"
     },
     {
       "machine_id": "tatung-einstein",
       "crate": "emu198x-tatung-einstein",
       "status": "qualified",
       "probe": "input-driven-with-frame-service",
-      "record": "tatung-einstein/patterns/assembly/framework/input-loop/verification/results.json"
+      "record": "tatung-einstein/patterns/assembly/framework/input-loop/verification/results.json",
+      "record_sha256": "3a827f5373b9cdf105ae1c41f9c6edea9d6d1a4a962998bbf749e37987654783"
     }
   ]
 }
