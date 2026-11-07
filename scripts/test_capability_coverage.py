@@ -8,7 +8,9 @@ import json
 import shutil
 import tempfile
 import unittest
+from argparse import Namespace
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -304,6 +306,67 @@ class RebuiltCompositionProgramTests(unittest.TestCase):
         record = json.loads((self.root / row["record"]).read_text())
         with self.assertRaisesRegex(ValueError, "No recorder"):
             GUARD.require_program(self.root, row["machine_id"], record, "unregistered")
+
+
+class FreshGameLoopRecorderTests(unittest.TestCase):
+    def recorder(self):
+        spec = importlib.util.spec_from_file_location(
+            "fresh_game_loop", ROOT / "scripts/verify-game-loops.py"
+        )
+        assert spec is not None and spec.loader is not None
+        recorder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(recorder)
+        return recorder
+
+    def test_fresh_tree_builds_symbols_before_starting_emulator(self) -> None:
+        recorder = self.recorder()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            folder = root / "bbc-micro/patterns/assembly/framework/game-loop"
+            folder.mkdir(parents=True)
+            args = Namespace(
+                assembler="assembler", build198x="builder", native=root,
+                firmware_root=root, bbc_basic=root / "basic.rom",
+            )
+
+            def build(name, assembler, builder, out):
+                self.assertEqual((name, assembler, builder),
+                                 ("bbc", "assembler", "builder"))
+                self.assertFalse((folder / "build").exists())
+                (folder / "build").mkdir()
+                (folder / "build/demo.sym").write_text("updates = $3000\n")
+                return {}
+
+            def start(command):
+                self.assertTrue((folder / "build/verification").is_dir())
+                raise RuntimeError("stop before emulator execution")
+
+            with (
+                patch.object(recorder, "ROOT", root),
+                patch.object(recorder, "build", side_effect=build) as built,
+                patch.object(recorder, "Machine", side_effect=start) as machine,
+                self.assertRaisesRegex(RuntimeError, "stop before emulator execution"),
+            ):
+                recorder.run("bbc", args)
+            built.assert_called_once()
+            machine.assert_called_once()
+
+    def test_failed_build_propagates_before_symbol_read_or_emulator(self) -> None:
+        recorder = self.recorder()
+        failure = RuntimeError("assembler failed")
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch.object(recorder, "ROOT", Path(directory)),
+            patch.object(recorder, "build", side_effect=failure) as built,
+            patch.object(recorder, "symbols") as symbols,
+            patch.object(recorder, "Machine") as machine,
+        ):
+            with self.assertRaises(RuntimeError) as caught:
+                recorder.run("bbc", Namespace(assembler="assembler", build198x="builder"))
+            self.assertIs(caught.exception, failure)
+            built.assert_called_once()
+            symbols.assert_not_called()
+            machine.assert_not_called()
 
 
 if __name__ == "__main__":

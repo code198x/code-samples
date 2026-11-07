@@ -135,7 +135,7 @@
     "scripts/verify-hardware-capabilities.py": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
     "scripts/verify-ace-capabilities.py": "3c43c81a0689d0c0c7ddd61dc9eb22a74c5ac4768854c13ae0a65e24577568ac",
     "scripts/verify-zx-capabilities.py": "ca48266f74f7e835c582e4946f0a2bc33249e6c9f5615436954837ddf426de87",
-    "scripts/verify-game-loops.py": "8aa0918caa858a5365d5579fda5347f78c0cc09244ed485354792f7411498a65",
+    "scripts/verify-game-loops.py": "5d79db73b344996ccc36a4fb548e0802d5b2b31b48b855aedd6a0e84cf93c0b1",
     "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
     "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84"
   },
