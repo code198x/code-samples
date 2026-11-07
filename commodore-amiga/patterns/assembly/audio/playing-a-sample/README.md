@@ -68,7 +68,12 @@ claim about which stereo jack carries channel 0: primary sources disagree
 
 The [reconciled 15 October 2026 run](verification/evidence/runs/2026-10-15-reconciled.json)
 passes every check with the Paula correction in
-[Emu198x PR #1777](https://github.com/emu198x/emu198x/pull/1777). The probe runs
+[Emu198x PR #1777](https://github.com/emu198x/emu198x/pull/1777). It used a
+pre-release emulator and build198x, so the
+[7 November 2026 run](verification/evidence/runs/2026-11-07-released.json)
+repeats it with released tools (Asm198x 0.0.75, build198x 0.2.13 and
+Emu198x 0.34.1, the first release with that correction): every observation
+and both disks come out identical, and it is the record checked in CI. The probe runs
 interrupt and one-shot checks before the one-word cost workload, which can
 leave a held request on channel 0. The observer requires a substantial trough
 on each side of a peak; a decaying filter tail does not count as a ninth cycle.

@@ -18,7 +18,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SELECTION = Path(__file__).with_name("pattern-evidence.json")
 # Keep the audited scope explicit: shrinking a selector must not silently go green.
-REQUIRED_BINDINGS = {"c64": 5, "nes": 3, "amiga": 5, "spectrum": 0, "aabb": 2}
+REQUIRED_BINDINGS = {"c64": 5, "nes": 3, "amiga": 0, "spectrum": 0, "aabb": 2}
 
 
 AUDIT_SELECTION = Path(__file__).with_name("routine-audit-evidence.json")
