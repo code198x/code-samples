@@ -1,43 +1,15 @@
 [
   {
     "name": "c64",
-    "record": "commodore-64/patterns/assembly/rendering/hardware-sprites/verification/runs/2026-10-15-macos.json",
-    "bindings": [
-      {
-        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/demo.asm",
-        "record_keys": [
-          "sources",
-          "demo.asm"
-        ]
-      },
-      {
-        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/sprite.inc",
-        "record_keys": [
-          "sources",
-          "sprite.inc"
-        ]
-      },
-      {
-        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/shape.inc",
-        "record_keys": [
-          "sources",
-          "shape.inc"
-        ]
-      },
-      {
-        "path": "commodore-64/patterns/assembly/rendering/hardware-sprites/verification/verify.py",
-        "record_keys": [
-          "sources",
-          "verification/verify.py"
-        ]
-      },
-      {
-        "path": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py",
-        "record_keys": [
-          "png_reader_sha256"
-        ]
-      }
-    ]
+    "record": "commodore-64/patterns/assembly/rendering/hardware-sprites/verification/runs/2026-11-07-released.json",
+    "bindings": [],
+    "recorder": {
+      "script": "commodore-64/patterns/assembly/rendering/hardware-sprites/verification/verify.py",
+      "args": [
+        "{asm198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "nes",
