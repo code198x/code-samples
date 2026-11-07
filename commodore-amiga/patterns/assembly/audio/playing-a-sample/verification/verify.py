@@ -145,7 +145,7 @@ def check_demo(emulator, kickstart, disk, out):
     tones = []
     rest = writes[3:]
     expected = [(8, 424, 16), (8, 212, 16), (16, 212, 32)]
-    for length, period, size in expected:
+    for index, (length, period, size) in enumerate(expected):
         # Only the frame-wait's vertical-blank acknowledgements fall between.
         # The 68000 writes MOVE.L to AUD0LC as AUD0LCH, then AUD0LCL.
         group = [w for w in rest if w['offset'] != 0x09c][:7]
@@ -158,7 +158,12 @@ def check_demo(emulator, kickstart, disk, out):
         assert volume['value'] == 64
         assert start['value'] == 0x8201 and stop['value'] == 0x0001
         frames = (stop['cck'] - start['cck']) / (LINE * 312.5)
-        assert 49.5 < frames < 50.5, frames
+        # Each tone lasts 50 vertical blanks: wait_frame clears VERTB, then
+        # polls for the next. The first tone starts wherever boot left the
+        # beam, so its first wait is anything up to a whole frame: (49, 50].
+        # The later tones start just after a blank, so they last about 49.92.
+        low, high = (49.0, 50.0) if index == 0 else (49.5, 50.5)
+        assert low < frames <= high, (index, frames)
         tones.append({'location': location['value'], 'length_words': length, 'period': period,
                       'bytes_per_cycle': size, 'start_cck': start['cck'],
                       'stop_cck': stop['cck'], 'frames': round(frames, 3)})
