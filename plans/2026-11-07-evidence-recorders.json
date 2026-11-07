@@ -720,7 +720,7 @@
         "follow_ups": {
           "nintendo-game-boy": {
             "emulator": "0.45.1",
-            "reason": "from 0.46.1 the caller counts 0 updates in 30 frames (the A press is never seen)",
+            "reason": "the program doesn't start within the boot frames on 0.46.1+ (emu198x#2310)",
             "issue": "https://github.com/emu198x/emu198x/issues/2310",
             "undo": "re-record on the newest release once the issue closes"
           }
