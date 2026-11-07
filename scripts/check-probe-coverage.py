@@ -103,7 +103,10 @@ def check(manifest: Path, registry: Path) -> tuple[int, int]:
             continue
         if row["status"] != "qualified":
             raise ValueError(f"Unknown status: {row['status']}")
-        proof = json.loads((ROOT / row["record"]).read_text())
+        data = (ROOT / row["record"]).read_bytes()
+        if hashlib.sha256(data).hexdigest() != row.get("record_sha256"):
+            raise ValueError(f"Record changed since it was reviewed: {row['record']}")
+        proof = json.loads(data)
         if proof["status"] != "passed" or proof["server"]["name"] != row["crate"]:
             raise ValueError(f"Proof does not qualify {row['machine_id']}")
         if not proof.get("sources_sha256", proof.get("sources", {})):
