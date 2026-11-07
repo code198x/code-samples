@@ -674,6 +674,20 @@
       "build_programs": "build_programs(assembler, output)",
       "records": "docs/audit/2026-10-19-pattern-routines/nes-movement.json (copied from results.json)",
       "checker": "scripts/check-pattern-evidence.py --audit (nes-movement)"
+    },
+    {
+      "script": "cross-platform/patterns/physics/aabb-collision/verification/verify.py",
+      "args": [
+        "--output DIR"
+      ],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "fresh_run": "check-pattern-evidence.py runs it again and compares every field except python_version and sources_sha256",
+      "records": "cross-platform/patterns/physics/aabb-collision/verification/results.json",
+      "checker": "scripts/check-pattern-evidence.py (aabb); its CI job also runs it fresh"
     }
   ]
 }

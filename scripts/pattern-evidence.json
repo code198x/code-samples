@@ -51,21 +51,13 @@
   {
     "name": "aabb",
     "record": "cross-platform/patterns/physics/aabb-collision/verification/results.json",
-    "bindings": [
-      {
-        "path": "cross-platform/patterns/physics/aabb-collision/aabb.py",
-        "record_keys": [
-          "sources_sha256",
-          "aabb.py"
-        ]
-      },
-      {
-        "path": "cross-platform/patterns/physics/aabb-collision/verification/verify.py",
-        "record_keys": [
-          "sources_sha256",
-          "verify.py"
-        ]
-      }
-    ]
+    "bindings": [],
+    "fresh": {
+      "script": "cross-platform/patterns/physics/aabb-collision/verification/verify.py",
+      "provenance": [
+        "python_version",
+        "sources_sha256"
+      ]
+    }
   }
 ]
