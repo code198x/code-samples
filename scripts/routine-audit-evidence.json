@@ -14,46 +14,14 @@
   {
     "name": "basic",
     "record": "docs/audit/2026-10-19-pattern-routines/basic.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-basic-library-routines.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/basic/text-utilities.bas",
-        "record_keys": [
-          "routines",
-          0,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/basic/progress-bar.bas",
-        "record_keys": [
-          "routines",
-          1,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/basic/screen-frame.bas",
-        "record_keys": [
-          "routines",
-          2,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/basic/seven-segment-digits.bas",
-        "record_keys": [
-          "routines",
-          3,
-          "source_sha256"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-basic-library-routines.py",
+      "args": [
+        "{build198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "amiga-lines",
@@ -145,35 +113,14 @@
   {
     "name": "spectrum-states",
     "record": "docs/audit/2026-10-19-pattern-routines/spectrum-states.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-spectrum-states.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/framework/state-machine-loop/demo.asm",
-        "record_keys": [
-          "sources",
-          "sinclair-zx-spectrum/patterns/assembly/framework/state-machine-loop/demo.asm"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc",
-        "record_keys": [
-          "sources",
-          "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc",
-        "record_keys": [
-          "sources",
-          "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-spectrum-states.py",
+      "args": [
+        "{asm198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "amiga-edges",
