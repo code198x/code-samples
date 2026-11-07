@@ -29,7 +29,8 @@ OWNED = {"dragon", "jupiter-ace"}
 # build_programs(machine, assembler, output) assembles every program the
 # machine was given, without the emulator.
 RECORDERS = {
-    "input-driven-with-frame-service": "scripts/verify-hardware-input-loops.py"
+    "input-driven-with-frame-service": "scripts/verify-hardware-input-loops.py",
+    "untimed-and-timed-turns": "scripts/verify-sega-turns.py",
 }
 
 

@@ -180,7 +180,7 @@
       "status": "qualified",
       "probe": "untimed-and-timed-turns",
       "record": "sega-game-gear/patterns/assembly/framework/turn-deadline/verification/results.json",
-      "record_sha256": "e3e2fdea8aec80f0c90cdd51abbbb844e1b2b2498d007d105e28ba67cdc367c4"
+      "record_sha256": "b7378aa49d1722f3dbf700dc34d2f54c30e6f86ec70db296001d3ddaafbed823"
     },
     {
       "machine_id": "sega-master-system",
@@ -188,7 +188,7 @@
       "status": "qualified",
       "probe": "untimed-and-timed-turns",
       "record": "sega-master-system/patterns/assembly/framework/turn-deadline/verification/results.json",
-      "record_sha256": "5ec5edc7b3fa3ade3876fa3bc09c2add4b1f69be9688cc2613f27fafcb9d6068"
+      "record_sha256": "d2e6745217a399f1fb28c353bd28a1e59a2de0c26eb347f8e3a8a43a671b7547"
     },
     {
       "machine_id": "sega-sg-1000",
@@ -196,7 +196,7 @@
       "status": "qualified",
       "probe": "untimed-and-timed-turns",
       "record": "sega-sg-1000/patterns/assembly/framework/turn-deadline/verification/results.json",
-      "record_sha256": "fbe30c370470de1288fe98a3755a51122d0565379f84cbecb9cb4b59d5b3ee16"
+      "record_sha256": "cbe5a75fe37a19fa816fd99a50bb6e6878e17872af579d09b2388c1f5f1db80a"
     },
     {
       "machine_id": "sinclair-zx-spectrum",

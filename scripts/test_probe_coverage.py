@@ -243,5 +243,63 @@ class RebuiltProbeProgramTests(unittest.TestCase):
         self.assertGreater(rebuilt, 0)
 
 
+class RebuiltSegaTurnProgramTests(unittest.TestCase):
+    """The Sega turn-deadline records are judged by rebuilding their programs."""
+
+    MACHINE = "sega-master-system"
+    PROBE = "untimed-and-timed-turns"
+
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        folder = f"{self.MACHINE}/patterns/assembly/framework/turn-deadline"
+        shared = "cross-platform/assembly/framework/turn-deadline"
+        shutil.copytree(
+            ROOT / "scripts",
+            self.root / "scripts",
+            ignore=shutil.ignore_patterns("__pycache__"),
+        )
+        for name in (folder, shared):
+            shutil.copytree(
+                ROOT / name, self.root / name, ignore=shutil.ignore_patterns("build")
+            )
+        self.source = self.root / folder / "demo.asm"
+        self.record = json.loads(
+            (ROOT / folder / "verification/results.json").read_text()
+        )
+        # Rebuilds are cached per build; these tests change the sources.
+        MODULE.E.rebuild.cache_clear()
+
+    def require(self, record: dict | None = None) -> None:
+        MODULE.require_program(
+            self.root, self.MACHINE, record or self.record, self.PROBE
+        )
+
+    def test_recorded_programs_rebuild_and_a_comment_changes_nothing(self) -> None:
+        self.require()
+        self.source.write_text(self.source.read_text() + "\n; a comment\n")
+        MODULE.E.rebuild.cache_clear()
+        self.require()
+
+    def test_changed_operand_fails(self) -> None:
+        text = self.source.read_text()
+        old = "    ld a,120"
+        self.assertEqual(text.count(old), 1)
+        self.source.write_text(text.replace(old, "    ld a,121"))
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            self.require()
+
+    def test_forged_program_digest_fails(self) -> None:
+        forged = copy.deepcopy(self.record)
+        forged["programs"]["no-edge.sms"] = "0" * 64
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            self.require(forged)
+
+    def test_programs_without_a_recorder_fail(self) -> None:
+        with self.assertRaisesRegex(ValueError, "No recorder"):
+            MODULE.require_program(self.root, self.MACHINE, self.record, "frame-paced")
+
+
 if __name__ == "__main__":
     unittest.main()
