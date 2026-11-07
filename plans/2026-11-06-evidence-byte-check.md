@@ -78,8 +78,8 @@ module that recorders import.
 | P4 | C64 `sid-note-trigger`, `joystick-reading`, `sprite-movement-bounds`, `hardware-sprites`, `raster-splits`, `sprite-multiplexing` `verify.py` (6) | recorder; Asm198x, ACME as oracle, Emu198x and VICE | README and website; five via their `Makefile` | Migrate: a CI byte check of each record (question 1). Pins are Asm198x 0.0.58 and 0.0.64, released but without source locks |
 | P5 | Spectrum `sound-beep` `verify.py` | recorder; Asm198x, Pasmo as oracle | README, website | Migrate, as P4 |
 | P6 | Amiga `playing-a-sample` `test_verify.py` | check (unit test, no tools) | README | Migrate: CI can run it now |
-| P7 | Amiga `playing-a-sample` `verify.py` | recorder; its failed-run record pins build198x `097892fa…`, which matches no release | README, website, `pattern-evidence.json` | Unsure: rule 3, for Steve |
-| P8 | Spectrum `profile-a-routine` `run_checks.py` | recorder; `checks.json` pins Asm198x `886af887…`, which matches no release | README, website | Unsure: rule 3, for Steve |
+| P7 | Amiga `playing-a-sample` `verify.py` | recorder; its failed-run record pins build198x `097892fa…`, which matches no release | README, website, `pattern-evidence.json` | Migrate: the reconciled run is re-recorded with released tools (ruling 3); the failed run stays as history, unchecked |
+| P8 | Spectrum `profile-a-routine` `run_checks.py` | recorder; `checks.json` pins Asm198x `886af887…`, which matches no release | README, website | Migrate: re-recorded with Asm198x 0.0.75 and Emu198x 0.48.3 |
 | C1 | Spectrum BASIC `audit.py` (21) | check; 21 call `source-lineage` | unit README | Migrate (question 2). Three need `--evidence` |
 | C2 | Spectrum BASIC `derive.py` (7), `model.py` (4), `lessons.py`, `level.py`, `deduction.py`, `assets.py`, `audio_separation.py`, `pitches.py` | check | unit README | Migrate. Two take WAV inputs; `lessons.py` calls `source-lineage` |
 | C3 | Spectrum BASIC recorders (103: `build.py` 23, `check.py` 21, `verify.py` 10, others) | recorder; Spectrum ROM keyboard entry | unit README (94), website (7) | Migrate (question 1) |
@@ -109,62 +109,39 @@ module that recorders import.
   `e9628f5c32f3c74a963c649781e6cb87e9eaeb4bbfe7b52d3de27f4986bbf136`.
   Their digests stay as provenance; no check fails because one is not a
   family release.
-- **Rule 3, for Steve.** These records are pinned to a tool that matches
-  no release:
-  - Spectrum `profile-a-routine` `verification/checks.json`: Asm198x
-    `886af887f5b26b3adf65947d79a3dd9c637cd7b822cd6f86cc68350cbc14c760`.
-  - Spectrum `basic/input/two-word-parser/verification/results.json` and
-    Amiga `playing-a-sample/verification/runs/2026-10-15-failed.json`:
-    build198x
-    `097892fa8ed3ac02ba60e85204712dc92ec3e03b18bbfe4c55806c80c33b2303`,
-    a local `target/release` build.
+- **Tools that match no release** (rule 3 is never used; see the
+  decisions):
+  - Spectrum `profile-a-routine`: Asm198x `886af887…` and the Emu198x
+    0.31.0 build. Re-recorded with Asm198x 0.0.75 and Emu198x 0.48.3.
+  - Spectrum `two-word-parser`: build198x `097892fa…`, a local
+    `target/release` build. Re-recorded with build198x 0.2.13, with
+    caller tape digests, once the parser inventory stops binding the
+    recorder's own digest.
+  - Amiga `playing-a-sample` `runs/2026-10-15-failed.json`: the same
+    build198x. Kept as history; its README says so and no checker reads
+    it.
   - Curriculum unit captures (`*/unit-*/capture/proof.manifest.json`):
-    seven build executables (`fb4e7fc3…`, `ab843a7f…`, `c465a1cb…`,
-    `d6ba0cef…`, `80ecfa7a…`, `a801e6bc…`, `2fd5c2a3…`). No script or
-    checker reads them.
+    seven unreleased build executables. Left alone; nothing reads them.
 - **Released but unlocked:** `a769808c…` is Asm198x 0.0.58 and `2286f8ba…`
   is Asm198x 0.0.64. The C64 joystick, sprite and raster records and the
   NES square-wave record pin them; `add-release` reads such releases from
   their binaries.
 
-#### Questions batch 8 cannot answer
+#### Rulings for batch 8b (2026-11-07)
 
-1. **Recorders in CI.** Recorders type listings through an emulated ROM
-   keyboard. They need Emu198x and, on the C64 and Amiga, firmware that CI
-   does not hold.
-   - (a) *Recommended:* CI checks each recorder's retained records, with
-     the program rebuilt or regenerated, the byte check, and the
-     retained-evidence checks. The recorder stays hand-run, as
-     `scripts/verify-*.py` recorders are.
-   - (b) CI runs the recorders fresh, as P3 already does. This is possible
-     for the Spectrum and NES, at several emulated minutes per Spectrum
-     listing across 103 recorders, and impossible for the C64 and Amiga
-     without their firmware.
-2. **Source lineage against rule 2.** The C1 audits and `lessons.py`
-   accept evidence recorded on an earlier text through
-   `sinclair-zx-spectrum/basic/source-lineage/lineage.json`.
-   `space-only` links remove stored spaces; `renamed-variable` links
-   rename a variable. Under rule 2 both change the typed program, so the
-   byte check would fail those units. Choose one:
-   - keep lineage as a curriculum exception to rule 2;
-   - retire it and re-record the linked units.
-3. **Inventories with no owner.**
-   - `docs/capability-coverage.json` and `docs/probe-coverage.json` list
-     60 records. Only the four Dragon and Ace records have an owning
-     checker (`check-dragon-ace-loops.py`).
-   - The 26 typed-route records keep only source digests, so the typed
-     demo can be compared under rule 2.
-   - The 30 assembly records keep `binary_sha256` but pin no assembler.
-   - `check-pattern-evidence.py` is the only checker for its 16 records.
-     Of these, eight routine-audit and two parser records pin no tool,
-     and `parser-basic` pins the unreleased `097892fa…`.
-
-   "Leave staleness to the owning checker" would leave these with none.
-   Choose one:
-   - the inventories become the owners: typed routes compare text, and
-     assembly records are re-recorded with the newest Asm198x, as for
-     fixed characters;
-   - they keep their source digests until each family is re-recorded.
+1. **Recorders in CI: option (a).** CI byte-checks every recorder's
+   retained records; the recorders stay hand-run, as `scripts/verify-*.py`
+   recorders are. Every script either gets a CI check of its records or is
+   culled.
+2. **Source lineage is retired** (Steve). `audit.py` and `lessons.py`
+   stop accepting renamed or respaced sources. Every linked unit whose
+   typed program changed is re-recorded with released tools, and each pull
+   request lists what changed in the program and in the evidence.
+3. **The inventories own records that have no other owner.** Typed routes
+   compare text. Assembly records that pin no assembler are re-recorded
+   with Asm198x 0.0.75 and must reproduce their observations and captures,
+   as for fixed characters. `parser-basic` is re-recorded with build198x
+   0.2.13. Records with an owning checker leave staleness to it.
 
 ## The shared module
 
@@ -247,15 +224,11 @@ bytes as `ptr=$70`.
    machine is given, so it still makes the record stale. A change to a
    script, an oracle or another family's file does not.
 3. **The host builds a binary with a tool the module can't fetch** (a pin
-   that matches no release): the checker keeps comparing the record's
-   program inputs, its `sources` entries outside `scripts/`, and stops
-   comparing script digests. It prints `text-pinned: <reason>` on every
-   run, and this plan lists each one. It moves to rule 1 when the family
-   re-records with a released tool. No surveyed checker needs it today:
-   the one unreleased pin (Spectrum `profile-a-routine`) is read by no
-   `check-*.py`.
+   that matches no release): never used. Steve ruled on 2026-11-07 that such
+   records are re-recorded with a released tool instead, so every program
+   is judged by rule 1 or rule 2.
 
-Every checker uses one of the three; none drops its staleness check.
+Every checker uses rule 1 or rule 2; none drops its staleness check.
 
 ## Altered-evidence controls
 
@@ -285,7 +258,7 @@ Each batch is one pull request with CI green. Counts are checkers.
 | 6 | **Typed BASIC and FORTH:** the Ace FORTH families, the stock-ROM BASIC deadlines and maps, and `check-basic-turn-records.py` (Acorn Atom and Amstrad CPC BASIC typed into stock ROM). Checkers compare the typed text through `evidence_bytes.require_typed()`, whose `Typed program differs` message the forged-program controls require. | 16 | rule 2 |
 | 7 | **AMOS and Blitz:** the AMOS deadline, game flow (and its signed minimum), map queries and object pool (with its age, boundaries and extremes passes), and the Blitz deadline, game flow, map queries and object pool. Each compares the regenerated imported or compiled source text through `require_typed()`. `check-amiga-command-loops.py`, whose routes include AMOS and Blitz, is in batch 8. | 12 | rule 2 |
 | 8 | **Mixed routes:** atari-turn-records, loop-language, commodore-command-loops, msx-gameboy, aquarius-mtx, dragon-ace and amiga-command-loops (code198x/code-samples#443); column-evidence and tilemaps (#444). Each route is judged by its own rule. | 9 | rule 2, build198x-adf 0.2.13 |
-| 8b | **Inventories and pattern-local scripts:** capability-coverage, probe-coverage and pattern-evidence, and the verification scripts in the table above. These wait on questions 1 to 3 and the rule 3 list. | 3 + 186 scripts | Steve's rulings |
+| 8b | **Inventories and pattern-local scripts:** capability-coverage, probe-coverage and pattern-evidence, and the verification scripts in the table above. Re-records go in their own pull requests, apart from checker migrations, and any culls in a third. | 3 + 186 scripts | the batch 8b rulings |
 
 The two checkers with no text pin (`check-c64-starters.py`,
 `check-pattern-library-prototype.py`) need no change.
@@ -300,7 +273,7 @@ The two checkers with no text pin (`check-c64-starters.py`,
 - `git diff --stat origin/main -- '*/verification/*'` is empty: no record
   is edited.
 - The migrated checkers contain no comparison of `sources` or script
-  digests, except the rule 3 list.
+  digests.
 - **Batch 1 carries the step's check:** reverting code198x/code-samples#424
   (`ptr=$0070` on the BBC Micro, `ptr=$00cb` on the Atari 800XL) still
   passes, because Asm198x 0.0.74 builds both to the same bytes, while
@@ -353,7 +326,11 @@ None blocks batch 1, whose programs are all host-built by released tools.
   Emu198x 0.44.1 emulator to add `tap_sha256`; every observation, capture
   and caller came out identical, and only the new digests and the edited
   scripts' provenance changed. Rule 3 stays for unreleased tools only.
-- **Rule 3:** keeping a text pin, without scripts, for programs built by an
-  unreleased tool. The alternative is to re-record those families with a
-  released Asm198x first. Batch 8's survey found three; see the rule 3
-  list under the pattern-local scripts.
+- **Rule 3 is never used:** *ruled by Steve 2026-11-07.* Keeping a text
+  pin for a program built by an unreleased tool would leave a check that
+  fails on any comment and can never be replaced by a rebuild. Batch 8's
+  survey found three records pinned to unreleased tools. The Spectrum
+  profile and two-word parser are re-recorded with released tools, and
+  every measurement and case comes out identical. The failed Paula sample
+  run is kept as history and is not checked. The seven curriculum capture
+  manifests are left alone because nothing reads them.
