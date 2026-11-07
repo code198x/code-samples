@@ -413,14 +413,25 @@ def call(script: Path, name: str, args: list[str]) -> None:
 
 
 def _fetch_text(url: str) -> str | None:
-    """The asset's text, or None when the release does not publish it."""
-    try:
-        with urllib.request.urlopen(url, timeout=60) as response:
-            return response.read().decode()
-    except urllib.error.HTTPError as error:
-        if error.code == 404:
-            return None
-        raise
+    """The asset's text, or None when the release does not publish it.
+
+    GitHub's server errors are retried a few times before they are raised.
+    """
+    headers = {}
+    if "api.github.com" in url and os.environ.get("GITHUB_TOKEN"):
+        headers["Authorization"] = f"Bearer {os.environ['GITHUB_TOKEN']}"
+    for attempt in range(4):
+        try:
+            request = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(request, timeout=60) as response:
+                return response.read().decode()
+        except urllib.error.HTTPError as error:
+            if error.code == 404:
+                return None
+            if error.code < 500 or attempt == 3:
+                raise
+        time.sleep(2 * (attempt + 1))
+    return None
 
 
 def _emulator_version(path: str) -> tuple[str, str] | None:
@@ -459,17 +470,18 @@ def _emulator_version(path: str) -> tuple[str, str] | None:
 
 def _emulator_release_by_digest(name: str, digest: str, target: str) -> str | None:
     """Search Emu198x releases' source locks for this binary; return the version."""
-    for page in range(1, 4):
+    for page in range(1, 11):
+        # Small pages: GitHub times out on large release listings.
         listing = _fetch_text(
             "https://api.github.com/repos/emu198x/emu198x/releases"
-            f"?per_page=100&page={page}"
+            f"?per_page=20&page={page}"
         )
         releases = json.loads(listing) if listing else []
         for release in releases:
             version = release["tag_name"].removeprefix("v")
             if digest in _emulator_release_digests(name, version, target):
                 return version
-        if len(releases) < 100:
+        if len(releases) < 20:
             break
     return None
 
