@@ -422,6 +422,116 @@ def _fetch_text(url: str) -> str | None:
         raise
 
 
+def _emulator_version(path: str) -> tuple[str, str]:
+    """The (name, version) an Emu198x emulator reports when it starts over MCP."""
+    request = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+            "protocolVersion": "2025-06-18",
+            "capabilities": {},
+            "clientInfo": {"name": "evidence-bytes", "version": "1"},
+        },
+    }
+    with subprocess.Popen(
+        [path, "--mcp"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+    ) as process:
+        assert process.stdin and process.stdout
+        process.stdin.write(json.dumps(request) + "\n")
+        process.stdin.flush()
+        reply = json.loads(process.stdout.readline())
+        process.stdin.close()
+        process.wait(timeout=30)
+    info = reply["result"]["serverInfo"]
+    return info["name"], info["version"]
+
+
+def _emulator_release_digests(name: str, version: str, target: str) -> set[str]:
+    """The executable digest an Emu198x release publishes for this target:
+    from its source lock, or, for releases before source locks, by hashing
+    the binary in its archive after checking the archive's `.sha256`."""
+    base = f"https://github.com/emu198x/emu198x/releases/download/v{version}/"
+    lock = _fetch_text(f"{base}{name}-{target}-source-lock.json")
+    if lock is not None:
+        return {json.loads(lock)["executable_sha256"]}
+    archive = f"{name}-{target}.tar.gz"
+    listed = _fetch_text(base + archive + ".sha256")
+    if listed is None:
+        return set()
+    with tempfile.TemporaryDirectory() as temp:
+        work = Path(temp)
+        download(base + archive, work / archive)
+        if sha256((work / archive).read_bytes()) != listed.split()[0]:
+            raise ValueError(f"{name} {version}: archive does not match its .sha256")
+        with tarfile.open(work / archive) as tar:
+            member = next(
+                m for m in tar.getmembers() if m.isfile() and Path(m.name).name == name
+            )
+            tar.extract(member, work / "x", filter="data")
+        return {sha256((work / "x" / member.name).read_bytes())}
+
+
+def tool_identity(path: str | Path) -> dict[str, str]:
+    """Name a tool for a record by release identity, never by a local path.
+
+    Asm198x and build198x come from the release table. An Emu198x emulator
+    reports its version over MCP, and its digest is matched against that
+    release's source lock; a build that matches no release says so. Any
+    other tool, such as an oracle assembler, is named by the banner it prints
+    and its digest.
+    """
+    found = shutil.which(str(path)) or str(path)
+    digest = sha256(Path(found).read_bytes())
+    identity = {"executable_sha256": digest}
+    try:
+        tag = release_for(digest)
+    except LookupError:
+        tag = None
+    if tag:
+        tool = tool_of(tag)
+        target = next(
+            t
+            for t, entry in releases()[tag]["targets"].items()
+            if entry["executable_sha256"] == digest
+        )
+        return {
+            "tool": tool,
+            "version": tag.removeprefix(f"{tool}-v"),
+            "release": f"https://github.com/{REPOSITORY[tool]}/{REPOSITORY[tool]}/releases/tag/{tag}",
+            "target": target,
+            **identity,
+        }
+    name = Path(found).name
+    if name.startswith("emu198x-"):
+        name, version = _emulator_version(found)
+        target = host_target()
+        released = digest in _emulator_release_digests(name, version, target)
+        return {
+            "tool": name,
+            "version": version,
+            "release": (
+                f"https://github.com/emu198x/emu198x/releases/tag/v{version}"
+                if released
+                else "none: digest matches no published source lock"
+            ),
+            "target": target,
+            **identity,
+        }
+    banner = subprocess.run(
+        [found], capture_output=True, text=True, timeout=30, check=False
+    )
+    first = (banner.stdout or banner.stderr).splitlines()[:1]
+    words = first[0].split() if first else []
+    if len(words) >= 2 and words[1].startswith("v"):
+        return {"tool": words[0], "version": words[1][1:], **identity}
+    return {"tool": name, **identity}
+
+
 def _unlocked_target(tool: str, tag: str, target: str) -> dict[str, str] | None:
     """Digests for a target of a release that publishes no source lock.
 

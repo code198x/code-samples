@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -23,17 +24,31 @@ def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble the state caller into output/demo.tap, without the emulator."""
+    subprocess.run(
+        ["make", "-B", "ASM198X=" + assembler],
+        cwd=FOLDER,
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=True,
+    )
+    out = Path(output).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "demo.tap").write_bytes((FOLDER / "build/demo.tap").read_bytes())
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--emulator", required=True)
+    p.add_argument("--assembler", default="asm198x")
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "results.json").unlink(missing_ok=True)
-    subprocess.run(
-        ["make"], cwd=FOLDER, capture_output=True, text=True, timeout=30, check=True
-    )
+    build_programs(args.assembler, str(args.output))
     sym = T.symbols(FOLDER / "build/demo.sym")
     m = T.Machine([args.emulator, "--mcp"])
     observations = []
@@ -58,7 +73,7 @@ def main() -> None:
             "load_media",
             slot="tape-1",
             kind="tape",
-            path=str(FOLDER / "build/demo.tap"),
+            path=str(args.output / "demo.tap"),
         )
         m.call("autoload_tape", slot="tape-1", max_boot_frames=150)
         for _ in range(40):
@@ -120,6 +135,9 @@ def main() -> None:
         },
         "observer_sha256": sha(Path(__file__)),
         "emulator_sha256": sha(Path(args.emulator)),
+        "assembler_sha256": sha(Path(shutil.which(args.assembler) or args.assembler)),
+        # The tape the machine loads, so the checker can rebuild it.
+        "programs": {"demo.tap": sha(args.output / "demo.tap")},
         "limits": "48K ROM TAP loading, real Q/Space, state transitions and held/released behaviour. Not a complete game, elapsed-time clock, OS-return or original-hardware qualification.",
     }
     (args.output / "results.json").write_text(json.dumps(result, indent=2) + "\n")

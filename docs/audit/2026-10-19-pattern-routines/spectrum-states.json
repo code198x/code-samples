@@ -47,7 +47,11 @@
     "sinclair-zx-spectrum/patterns/assembly/framework/game-loop/frame.inc": "e71788e7988d26c0a681cdded7c5d8aa93ae898a98e25939c9b4c04c4ce05233",
     "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc": "efa57093279a3d8e73fddcf461fd21b2a3fe5fe449217e3c714aecd4c8be8eda"
   },
-  "observer_sha256": "9a098f1c8ed2a8d0d5f9f2a61ae3e899d2caac670d169208fbe9e2290adf7d5c",
+  "observer_sha256": "b92ac1ac98cdb50c04c999322c2265b54408b0b3b2f92c57f45d2e35eb5798da",
   "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.tap": "3210e0fac273b3e9c3b38e244349aa8bffa2c9af7f7a2d72a4f400c04391cf07"
+  },
   "limits": "48K ROM TAP loading, real Q/Space, state transitions and held/released behaviour. Not a complete game, elapsed-time clock, OS-return or original-hardware qualification."
 }
