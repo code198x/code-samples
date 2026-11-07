@@ -30,16 +30,44 @@ def _load_evidence_bytes():
 E = _load_evidence_bytes()
 # These records belong to check-dragon-ace-loops.py, which judges their programs.
 OWNED = {"dragon", "jupiter-ace"}
+# The recorder of each kind whose records list their programs. Its
+# build_programs(machine, assembler, output) assembles every program the
+# machine was given, without the emulator.
+RECORDERS = {"hardware": "scripts/verify-hardware-capabilities.py"}
 
 
-def require_program(root: Path, machine: str, record: dict) -> None:
+def require_program(root: Path, machine: str, record: dict, kind: str = "") -> None:
     """Judge a record by the program the machine was given, not script digests.
 
     Typed routes compare the typed demo with its recorded digest (rule 2).
-    Records another checker owns are left to it. Host-built programs still
-    compare their source digests until their family is re-recorded.
+    Records another checker owns are left to it. A record that lists its
+    programs is judged by rebuilding them with its pinned assembler (rule 1).
+    Other host-built programs still compare their source digests until their
+    family is re-recorded.
     """
     if machine in OWNED:
+        return
+    programs = record.get("programs")
+    if programs is not None:
+        if kind not in RECORDERS:
+            raise ValueError(f"No recorder rebuilds the programs of {machine}")
+        if not isinstance(programs, dict) or not programs:
+            raise ValueError(f"Record names no programs to rebuild: {machine}")
+        out = f"build/evidence/capability-{machine}"
+        build = E.function(
+            root / RECORDERS[kind],
+            "build_programs",
+            (machine, E.ASSEMBLER, out),
+            root,
+            tuple(f"{out}/{name}" for name in programs),
+        )
+        for name, digest in programs.items():
+            E.require_program(
+                build,
+                f"{out}/{name}",
+                record.get("assembler_sha256"),
+                recorded_sha256=digest,
+            )
         return
     sources = record.get("sources_sha256", record.get("sources", {}))
     if not record.get("binary_sha256"):
@@ -119,7 +147,7 @@ def validate(root: Path, manifest: dict, registry: dict | None = None) -> dict:
         record = json.loads(record_path.read_text())
         require(record.get("status") == "passed", f"No passing record: {name}")
         require(bool(record.get("sources")), f"No identified sources: {name}")
-        require_program(root, name, record)
+        require_program(root, name, record, row["kind"])
         for capability in ("input", "drawing"):
             require(
                 row[capability]["status"] == "executed"
