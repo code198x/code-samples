@@ -688,6 +688,58 @@
       "fresh_run": "check-pattern-evidence.py runs it again and compares every field except python_version and sources_sha256",
       "records": "cross-platform/patterns/physics/aabb-collision/verification/results.json",
       "checker": "scripts/check-pattern-evidence.py (aabb); its CI job also runs it fresh"
+    },
+    {
+      "script": "scripts/verify-game-loops.py",
+      "args": [
+        "--native DIR",
+        "--spectrum PATH",
+        "--kickstart PATH",
+        "--bbc-basic PATH",
+        "--build198x PATH",
+        "--assembler PATH",
+        "--firmware-root DIR",
+        "--only c64|spectrum|amiga|nes|bbc|electron"
+      ],
+      "machines": [
+        "commodore-c64",
+        "sinclair-zx-spectrum",
+        "commodore-amiga",
+        "nintendo-nes",
+        "acorn-bbc-micro",
+        "acorn-electron"
+      ],
+      "firmware": [
+        "commodore-c64/*",
+        "sinclair-zx-spectrum-48k/48.rom",
+        "commodore-amiga/kick13.rom (--kickstart)",
+        "acorn-bbc-micro/os.rom",
+        "acorn-bbc-micro/basic.rom (--bbc-basic)",
+        "acorn-electron/os.rom",
+        "acorn-electron/basic.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "build198x": "0.2.13 (Amiga disk only)",
+        "emulator": "0.48.3",
+        "follow_ups": {
+          "commodore-amiga": {
+            "emulator": "0.44.1",
+            "reason": "from 0.44.2 the over-budget run makes 6 updates in 30 frames rather than 5, and the unpaced control 3219 in 10 frames rather than 3421",
+            "issue": "pending a ruling",
+            "undo": "re-record on the newest release once ruled"
+          },
+          "acorn-bbc-micro": {
+            "emulator": "0.45.1",
+            "reason": "the unpaced control makes 220 updates in 10 frames on 0.46.1 and 205 from 0.46.2, rather than 191",
+            "issue": "pending a ruling",
+            "undo": "re-record on the newest release once ruled"
+          }
+        }
+      },
+      "build_programs": "build_programs(machine, assembler, output, builder='build198x'): each program the machine is given (and the NES negative caller)",
+      "records": "*/patterns/assembly/framework/game-loop/verification/results.json (copied from build/verification/results.json; the Electron's from bbc-micro/.../build/verification-electron)",
+      "checker": "scripts/check-probe-coverage.py (frame-paced rows)"
     }
   ]
 }

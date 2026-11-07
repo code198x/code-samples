@@ -3,7 +3,7 @@
   "system": "c64",
   "server": {
     "name": "emu198x-c64",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "startup": "PRG imported after ROM boot, typed RUN",
   "firmware_sha256": {
@@ -11,9 +11,29 @@
     "basic.rom": "89878cea0a268734696de11c4bae593eaaa506465d2029d619c0e0cbccdfa62d",
     "chargen.rom": "fd0d53b8480e86163ac98998976c72cc58d5dd8eb824ed7b829774e74213b420"
   },
-  "observer_sha256": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
-  "emulator_sha256": "502556e91b1d7e809bf173f250d934a1c7431b63ac77a88b71837de341144db7",
+  "observer_sha256": "8aa0918caa858a5365d5579fda5347f78c0cc09244ed485354792f7411498a65",
+  "emulator_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6",
   "binary_sha256": "115d891b1df9804decf8f4a03ae55d22fc3d71791d8ff70a4fc8ec0721a4cfed",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.prg": "115d891b1df9804decf8f4a03ae55d22fc3d71791d8ff70a4fc8ec0721a4cfed"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-c64",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6"
+    }
+  },
   "sources": {
     "commodore-64/patterns/assembly/framework/game-loop/demo.asm": "177188cd7b6defe69902484f025ddc6ab611276b90c167a67f6f31cd3e183dba",
     "commodore-64/patterns/assembly/framework/game-loop/frame.inc": "a51095d4ccf26bcfa087f48a00c87979eae7b9f132dc1753dfbe77a65c8f2858",
