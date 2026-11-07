@@ -4,7 +4,7 @@
   "configuration": "Sord M5 NTSC, monitor-started cartridge",
   "server": {
     "name": "emu198x-sord-m5",
-    "version": "0.38.3"
+    "version": "0.48.3"
   },
   "sources": {
     "sord-m5/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "ab8a07eea6c6a19033d7cba3205f0bc74210cc85d2463b4d0f2d5a43466b23be",
@@ -12,9 +12,31 @@
     "sord-m5/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "c18074b82c015aad4be0c67c757f93d490c5ab4e49c154de6b65e0783c48f761",
     "sord-m5/patterns/assembly/capabilities/input-drawing-sound/Makefile": "52c0941c69ee5b0f7acf5bfe6da2ba2020619554b1a8ee6718823b5150235007"
   },
-  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
-  "emulator_sha256": "41f74ed088029a04961ad1f9282db40e3f427a3413696a4a00d8a37521e48925",
+  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "emulator_sha256": "b410781cab8c556b7250b5aaaac790869d0c217e7965143f8e167a067140b972",
   "binary_sha256": "6a47a0794df19a7801970607225898459232a1bbbb15b53717f32faa4828f05e",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.bin": "6a47a0794df19a7801970607225898459232a1bbbb15b53717f32faa4828f05e",
+    "drawing.bin": "fe65c04193075ca722d3287aa34748f51bbf08623ff69661bff7fb757a0715a8",
+    "sound.bin": "0d5d2a14ed90eff556ee4fd4d2d5ec82209457c106330004e7600102a0414d77"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-sord-m5",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b410781cab8c556b7250b5aaaac790869d0c217e7965143f8e167a067140b972"
+    }
+  },
   "firmware_sha256": "1289e87a1c14a4b5a93db50dd482efe453ad15e445cbd82bb859a5e0520100e5",
   "input": "idle, press once, held without repeat, release and second press",
   "drawing": "VRAM glyph changes position and restores; fixed backdrop",

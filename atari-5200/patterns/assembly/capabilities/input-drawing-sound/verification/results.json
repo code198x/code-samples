@@ -4,7 +4,7 @@
   "configuration": "NTSC 32 KiB cartridge, pinned BIOS",
   "server": {
     "name": "emu198x-atari-5200",
-    "version": "0.38.3"
+    "version": "0.46.2"
   },
   "sources": {
     "atari-5200/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "08b083b087bd9d7db3aa3c83e2d00a4957b45df325f19a764f941eb6697c3dbb",
@@ -12,9 +12,31 @@
     "atari-5200/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "b1b18d83f386198d8489cff460f3cb0c4b2a10b1ecd8750ca196b9d1b2af4213",
     "atari-5200/patterns/assembly/capabilities/input-drawing-sound/Makefile": "8b70bffe4ef8364f485f2b0a0c330e0c9c804ef0b2c612fbc7613952ea405766"
   },
-  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
-  "emulator_sha256": "5843467f398d27c76d6fe7ac7eeff34f602b4aad150208c9a6f677eca6c80203",
+  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "emulator_sha256": "e89ab8df34c67678743329c920ac20b3949430735c46ab451c9916a4d1fb04d7",
   "binary_sha256": "77e08c0dab2300b90698f4555705e83d0d820edb06199b7baee5888ae08d8fcb",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.bin": "77e08c0dab2300b90698f4555705e83d0d820edb06199b7baee5888ae08d8fcb",
+    "drawing.bin": "0dc4c3a66bc41ffa892fd79c948bbfe7ee25c8106db053a82e67a57fc6719592",
+    "sound.bin": "1551a4811f1dbfc7860c628588bd9812b69549ee11bf9c48159576716e1caae1"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-atari-5200",
+      "version": "0.46.2",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.46.2",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "e89ab8df34c67678743329c920ac20b3949430735c46ab451c9916a4d1fb04d7"
+    }
+  },
   "firmware_sha256": "06b250f18983d058c0f156ce7ee88ae48b6eaf11e6f10f21dccf6ac7ffb6a6af",
   "input": "idle, press once, held without repeat, release and second press",
   "drawing": "ANTIC mode8 bitmap block changes position and restores; fixed backdrop",
