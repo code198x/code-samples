@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -97,6 +98,8 @@ hold: jmp hold
     )
     if result.returncode:
         raise ValueError(result.stderr or result.stdout)
+    if args.emulator is None:
+        return {}  # build_programs(): the program is all that is needed.
     steps = []
     for key in ["R", "U", "N", "RETURN"]:
         for pressed, frames in [(True, 4), (False, 3)]:
@@ -169,8 +172,16 @@ hold: jmp hold
         "observer_sha256": sha(Path(__file__)),
         "emulator_sha256": sha(Path(args.emulator)),
         "binary_sha256": sha(out / "caller.prg"),
+        "assembler_sha256": sha(Path(shutil.which(args.assembler) or args.assembler)),
+        # The program the machine loads, so the checker can rebuild it.
+        "programs": {"caller.prg": sha(out / "caller.prg")},
         "limits": "PAL C64 ROM-boot/PRG import with typed RUN. CPU and memory/register effects only; no tear-free display or timing-budget qualification.",
     }
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble the scroll caller into output/caller.prg, without the emulator."""
+    run(argparse.Namespace(emulator=None, assembler=assembler, output=Path(output)))
 
 
 def main() -> None:

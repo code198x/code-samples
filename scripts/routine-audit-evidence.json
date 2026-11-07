@@ -70,20 +70,14 @@
   {
     "name": "c64-scroll",
     "record": "docs/audit/2026-10-19-pattern-routines/c64-scroll.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-c64-scroll.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "commodore-64/patterns/assembly/rendering/smooth-scrolling/scroll.inc",
-        "record_keys": [
-          "source_sha256"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-c64-scroll.py",
+      "args": [
+        "{asm198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "spectrum-states",

@@ -51,7 +51,8 @@ class PatternEvidenceTests(unittest.TestCase):
             ],
             capture_output=True,
             text=True,
-            timeout=15,
+            # Fixtures that name a recorder rebuild their programs on each run.
+            timeout=300,
             check=False,
         )
         self.assertEqual(result.returncode, 0 if success else 1, result.stderr)
@@ -60,7 +61,7 @@ class PatternEvidenceTests(unittest.TestCase):
         if success:
             self.assertEqual(report["status"], "recorded_inputs_match")
             self.assertEqual(report["fixtures_checked"], 5)
-            self.assertEqual(report["bindings_checked"], 10)
+            self.assertEqual(report["bindings_checked"], 5)
             self.assertEqual(report["runtime_execution"], "not performed by this check")
         else:
             self.assertTrue(report["failures"])
@@ -118,8 +119,12 @@ class PatternEvidenceTests(unittest.TestCase):
                 self.run_check(False, relative)
                 path.write_bytes(original)
 
+    def bound(self) -> int:
+        """The first fixture that still compares declared source digests."""
+        return next(i for i, f in enumerate(self.fixtures) if f["bindings"])
+
     def test_missing_record_key_and_malformed_hash_fail(self) -> None:
-        path = self.root / self.fixtures[0]["record"]
+        path = self.root / self.fixtures[self.bound()]["record"]
         original = json.loads(path.read_text())
         for value in [None, "not-a-sha256"]:
             with self.subTest(value=value):
@@ -148,14 +153,15 @@ class PatternEvidenceTests(unittest.TestCase):
 
     def test_omitted_or_duplicate_binding_fails(self) -> None:
         original = json.loads(json.dumps(self.fixtures))
+        index = self.bound()
         for bindings in [
             [],
-            original[0]["bindings"][:-1],
-            [original[0]["bindings"][0]] * 5,
+            original[index]["bindings"][:-1],
+            [original[index]["bindings"][0]] * 5,
         ]:
             with self.subTest(binding_count=len(bindings)):
                 self.fixtures = json.loads(json.dumps(original))
-                self.fixtures[0]["bindings"] = bindings
+                self.fixtures[index]["bindings"] = bindings
                 self.save_selection()
                 self.run_check(False)
 

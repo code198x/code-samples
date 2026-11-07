@@ -15,6 +15,12 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+_EVIDENCE = importlib.util.spec_from_file_location(
+    "evidence_bytes", ROOT.parents[4] / "scripts/evidence_bytes.py"
+)
+assert _EVIDENCE and _EVIDENCE.loader
+EVIDENCE = importlib.util.module_from_spec(_EVIDENCE)
+_EVIDENCE.loader.exec_module(EVIDENCE)
 HELPER = ROOT.parent / "sprite-multiplexing/verification/verify.py"
 SPEC = importlib.util.spec_from_file_location("sprite_pixels", HELPER)
 assert SPEC is not None and SPEC.loader is not None
@@ -51,13 +57,16 @@ def assemble(
         check=True,
         capture_output=True,
     )
-    subprocess.run(
-        [args.acme, "-f", "cbm", "-o", str(dest / "acme.prg"), "demo.asm"],
-        cwd=dest,
-        check=True,
-        capture_output=True,
-    )
-    require(prg.read_bytes() == (dest / "acme.prg").read_bytes(), "assemblers disagree")
+    if args.acme:  # The independent reference assembler, when given.
+        subprocess.run(
+            [args.acme, "-f", "cbm", "-o", str(dest / "acme.prg"), "demo.asm"],
+            cwd=dest,
+            check=True,
+            capture_output=True,
+        )
+        require(
+            prg.read_bytes() == (dest / "acme.prg").read_bytes(), "assemblers disagree"
+        )
     symbols = {
         key: int(value, 16)
         for key, value in (
@@ -207,6 +216,18 @@ def registers(state: list[int], x: int, seed: int) -> dict[str, int]:
     return {f"${0xD000 + offset:04x}": state[offset + 1] for offset in expected}
 
 
+# The sprite positions and shared seeds each recorded program uses.
+CASES = ((160, 0), (24, 0xAA), (255, 0x54), (256, 0xAA), (296, 0x54))
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every recorded program into output/<case>/demo.prg, without the
+    emulators or ACME."""
+    args = argparse.Namespace(assembler=assembler, acme=None)
+    for x, seed in CASES:
+        assemble(args, Path(output).resolve() / f"x{x}-seed{seed:02x}", x, seed)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     for name, default in (
@@ -224,7 +245,7 @@ def main() -> None:
         require(executable is not None, f"missing {name}")
         setattr(args, name, executable)
     rows = []
-    for x, seed in ((160, 0), (24, 0xAA), (255, 0x54), (256, 0xAA), (296, 0x54)):
+    for x, seed in CASES:
         dest = args.output / f"x{x}-seed{seed:02x}"
         prg, symbols = assemble(args, dest, x, seed)
         for model in ("pal", "ntsc"):
@@ -262,9 +283,18 @@ def main() -> None:
             )
         },
         "png_reader_sha256": sha(HELPER),
+        # By release identity; ACME and VICE are independent oracles.
         "tools": {
-            name: {"sha256": sha(Path(getattr(args, name)))}
+            name: EVIDENCE.tool_identity(getattr(args, name))
             for name in ("assembler", "acme", "emulator", "vice")
+        },
+        "assembler_sha256": sha(Path(args.assembler)),
+        # Each program the machine loads, so the checker can rebuild it.
+        "programs": {
+            f"x{x}-seed{seed:02x}/demo.prg": sha(
+                args.output / f"x{x}-seed{seed:02x}/demo.prg"
+            )
+            for x, seed in CASES
         },
         "checks": rows,
         "negative_control": negative,

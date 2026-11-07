@@ -551,26 +551,38 @@ def tool_identity(path: str | Path) -> dict[str, str]:
             "target": target,
             **identity,
         }
-    banner = subprocess.run(
-        [found],
-        stdin=subprocess.DEVNULL,
-        capture_output=True,
-        text=True,
-        timeout=30,
-        check=False,
-    )
-    first = (banner.stdout or banner.stderr).splitlines()[:1]
-    words = first[0].split() if first else []
-    version = next(
-        (
-            w.removeprefix("v")
-            for w in words[1:]
-            if re.fullmatch(r"v?\d+(\.\d+)+\w*", w)
-        ),
-        None,
-    )
-    if words and version:
-        return {"tool": words[0], "version": version, **identity}
+
+    # Ask for a version; tools that reject --version (Pasmo, vasm) print their
+    # banner when run with no arguments. Nothing else is run without arguments,
+    # since an emulator such as VICE would open a window.
+    def probe(arguments: list[str]) -> str:
+        try:
+            run = subprocess.run(
+                [found, *arguments],
+                stdin=subprocess.DEVNULL,
+                capture_output=True,
+                text=True,
+                timeout=15,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            return ""
+        return run.stdout + run.stderr
+
+    text = probe(["--version"])
+    if re.search(r"(unknown|invalid) option", text, re.IGNORECASE):
+        text = probe([])
+    pattern = re.compile(r"(?:\bv|release |version )?(\d+(?:\.\d+)+\w*)")
+    for line in text.splitlines():
+        found_version = pattern.search(line)
+        if found_version:
+            words = line.split()
+            tool = (
+                words[0]
+                if words and not words[0].lower().startswith(("this", "error"))
+                else name
+            )
+            return {"tool": tool, "version": found_version.group(1), **identity}
     return {"tool": name, **identity}
 
 
