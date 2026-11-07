@@ -12,7 +12,7 @@
     "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "d3045b17ab0e2c791c7a632265af223c44db75cd8ee72fa51fc0064c6a79018e",
     "memotech-mtx/patterns/assembly/capabilities/input-drawing-sound/Makefile": "db9bc9b939de1fc0f30539461eec3694647b83fcf747c258bfcb1378ffb67c72"
   },
-  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "observer_sha256": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
   "emulator_sha256": "5879f58ca90709ce4f5913ff988f6774b50d78fe0a8a5b30c7da9defdb69d6af",
   "binary_sha256": "2b7e8b000ab0f6241afd67e784d45f58c3329d6fb8e120c0c57fb5aa019a2c13",
   "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
