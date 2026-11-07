@@ -4,7 +4,7 @@
   "configuration": "Einstein TC-01 PAL, stock MOS 1.2, Ctrl-BREAK disk boot",
   "server": {
     "name": "emu198x-tatung-einstein",
-    "version": "0.38.3"
+    "version": "0.48.3"
   },
   "sources": {
     "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "d4abcf59d058223edfe5e398be899403a568c80e23e9960049b93bcc5330b99e",
@@ -12,9 +12,31 @@
     "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "cc950847b42d03d88b3efe4f75f521b83cb768978c5bf304d024c360e3c14d2b",
     "tatung-einstein/patterns/assembly/capabilities/input-drawing-sound/Makefile": "65cda2cfae7d81af21a08849efabf61e937d89745d0998e26f202a96688f1543"
   },
-  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
-  "emulator_sha256": "dd9dd6f41f72a0f42b246bc231b1ce85b2e1c3f1361ab9fc592f4b88742d260e",
+  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "emulator_sha256": "5b6e60947763115ae352f73a0b06b5ef0526d5359481f93939dfd5d2a83be12f",
   "binary_sha256": "82e3951c45465e9fc227bb1d6ef5578f148c8a034f9ffe8c63839206a7252c64",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.dsk": "82e3951c45465e9fc227bb1d6ef5578f148c8a034f9ffe8c63839206a7252c64",
+    "drawing.dsk": "ac6437f59986ffc43e0dcf42b08ff24e1664d76d9a5b254efeb9620ad9113325",
+    "sound.dsk": "0b3816cdb1c807b8386539e4cf783b6c54df4d3f03d8656e9812dcd5a285caa2"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-tatung-einstein",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "5b6e60947763115ae352f73a0b06b5ef0526d5359481f93939dfd5d2a83be12f"
+    }
+  },
   "firmware_sha256": "401d0e0bf6f64ba82e68137525749171fbcf9bd9055a49e5ac9a47941a6a0ae1",
   "input": "idle, press once, held without repeat, release and second press",
   "drawing": "VRAM glyph changes position and restores; fixed backdrop",

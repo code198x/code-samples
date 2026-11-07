@@ -688,6 +688,43 @@
       "fresh_run": "check-pattern-evidence.py runs it again and compares every field except python_version and sources_sha256",
       "records": "cross-platform/patterns/physics/aabb-collision/verification/results.json",
       "checker": "scripts/check-pattern-evidence.py (aabb); its CI job also runs it fresh"
+    },
+    {
+      "script": "scripts/verify-hardware-capabilities.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--firmware-root DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "coleco-colecovision",
+        "sord-m5",
+        "memotech-mtx",
+        "tatung-einstein",
+        "atari-2600",
+        "atari-5200",
+        "atari-7800",
+        "nintendo-game-boy",
+        "sega-sg-1000",
+        "sega-master-system",
+        "sega-game-gear"
+      ],
+      "firmware": [
+        "coleco-colecovision/colecovision.rom",
+        "sord-m5/sord-m5.rom",
+        "memotech-mtx/mtx.rom",
+        "tatung-einstein/einstein.rom",
+        "atari-5200/5200.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3, except where a later release changes the record: atari-2600 0.45.1 (0.46.1 on starts the trigger tone 38 samples earlier), nintendo-game-boy 0.45.1 (0.46.1 on never samples the A press) and atari-5200 0.46.2 (0.47.0 on refuses the generic board profile)"
+      },
+      "build_programs": "build_programs(system, assembler, output): the caller and its drawing and sound negatives",
+      "records": "*/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
+      "evidence": "Copy build/verification/{ready,pressed,second-press,drawing-negative-*,sound-negative-*}.png to verification/evidence; sound-excerpt.wav is the first 0.2 s of sound.wav (the manifest's excerpt_frames). Update docs/capability-coverage.json (record_sha256, captures, sound, emulator_builds).",
+      "checker": "scripts/check-capability-coverage.py (hardware rows)"
     }
   ]
 }

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -22,6 +23,7 @@ def module(name: str, filename: str):
 
 H = module("hardware", "verify-hardware-input-loops.py")
 A = module("composition", "verify-collect-and-respond.py")
+E = module("capability_evidence_bytes", "evidence_bytes.py")
 T = H.T
 CONFIGS = {
     s: dict(H.CONFIGS[s])
@@ -53,13 +55,104 @@ for system, ext in [
     }
 
 
-def verify(system: str, native: Path, firmware_root: Path) -> dict:
+NEGATIVES = [("drawing", "draw_picture"), ("sound", "trigger_sound")]
+
+
+def build(system: str, assembler: str, out: Path) -> tuple[dict[str, Path], dict]:
+    """Assemble the caller and both negative controls, without the emulator.
+
+    Returns each program the machine is given, by the name the record keeps,
+    and each negative's intervention.
+    """
     cfg = CONFIGS[system]
     folder = ROOT / system / "patterns/assembly/capabilities/input-drawing-sound"
-    subprocess.run(["make"], cwd=folder, check=True, capture_output=True, timeout=60)
-    cart = folder / ("build/demo." + cfg["extension"])
+    subprocess.run(
+        ["make", "-B", "ASM198X=" + assembler],
+        cwd=folder,
+        check=True,
+        capture_output=True,
+        timeout=60,
+    )
+    out.mkdir(parents=True, exist_ok=True)
+    programs = {"demo." + cfg["extension"]: folder / ("build/demo." + cfg["extension"])}
+    interventions = {}
+    for capability, call in NEGATIVES:
+        source = (folder / "demo.asm").read_text()
+        old = ("    jsr " if cfg["dialect"] == "acme" else "    call ") + call
+        T.require(source.count(old) == 1, "Ambiguous negative call")
+        mutated = folder / "negative.asm"
+        binary = out / (
+            capability
+            + (".bin" if system == "tatung-einstein" else "." + cfg["extension"])
+        )
+        intervention = "omit " + call
+        negative_picture = folder / "negative-picture.inc"
+        if system == "atari-2600" and capability == "drawing":
+            # Removing this call shortens the software field, producing
+            # an alpha-row change unrelated to the playfield write.
+            picture = (folder / "picture.inc").read_text()
+            T.require(picture.count("sta $0e") == 1, "Expected one PF1 write")
+            negative_picture.write_text(picture.replace("sta $0e", "sta $86"))
+            mutated.write_text(
+                source.replace('"picture.inc"', '"negative-picture.inc"')
+            )
+            intervention = (
+                "redirect PF1 write to unused RIOT RAM, preserving instruction cost"
+            )
+        else:
+            mutated.write_text(source.replace(old, "    nop\n    nop\n    nop"))
+        try:
+            subprocess.run(
+                [
+                    assembler,
+                    "--dialect",
+                    cfg["dialect"],
+                    *cfg["finalise"],
+                    str(mutated),
+                    "-o",
+                    str(binary),
+                ],
+                cwd=folder,
+                check=True,
+                capture_output=True,
+                timeout=30,
+            )
+        finally:
+            mutated.unlink()
+            if negative_picture.exists():
+                negative_picture.unlink()
+        if system.startswith("sega"):
+            subprocess.run(
+                ["python3", str(ROOT / "scripts/build-sega-probe.py"), str(binary)],
+                check=True,
+                capture_output=True,
+            )
+        if system == "tatung-einstein":
+            packaged = binary.with_suffix(".dsk")
+            packaged.write_bytes(H.PACK.einstein_disk(binary.read_bytes()))
+            binary = packaged
+        programs[binary.name] = binary
+        interventions[capability] = intervention
+    return programs, interventions
+
+
+def build_programs(system: str, assembler: str, output: str) -> None:
+    """Write the caller and both negatives into output, without the emulator."""
+    out = Path(output).resolve()
+    programs, _ = build(system, assembler, out)
+    for name, path in programs.items():
+        if path != out / name:
+            shutil.copyfile(path, out / name)
+
+
+def verify(
+    system: str, native: Path, firmware_root: Path, assembler: str = "asm198x"
+) -> dict:
+    cfg = CONFIGS[system]
+    folder = ROOT / system / "patterns/assembly/capabilities/input-drawing-sound"
     out = folder / "build/verification"
-    out.mkdir(exist_ok=True)
+    programs, interventions = build(system, assembler, out)
+    cart = programs["demo." + cfg["extension"]]
     executable = native / cfg["binary"]
     command = [str(executable), "--mcp"]
     if cfg["flag"]:
@@ -182,64 +275,11 @@ def verify(system: str, native: Path, firmware_root: Path) -> dict:
         server = machine.server.get("serverInfo")
         machine.close()
         negatives = {}
-        for capability, call in [
-            ("drawing", "draw_picture"),
-            ("sound", "trigger_sound"),
-        ]:
-            source = (folder / "demo.asm").read_text()
-            old = ("    jsr " if cfg["dialect"] == "acme" else "    call ") + call
-            T.require(source.count(old) == 1, "Ambiguous negative call")
-            mutated = folder / "negative.asm"
-            binary = out / (
+        for capability, _ in NEGATIVES:
+            binary = programs[
                 capability
-                + (".bin" if system == "tatung-einstein" else "." + cfg["extension"])
-            )
-            intervention = "omit " + call
-            negative_picture = folder / "negative-picture.inc"
-            if system == "atari-2600" and capability == "drawing":
-                # Removing this call shortens the software field, producing
-                # an alpha-row change unrelated to the playfield write.
-                picture = (folder / "picture.inc").read_text()
-                T.require(picture.count("sta $0e") == 1, "Expected one PF1 write")
-                negative_picture.write_text(picture.replace("sta $0e", "sta $86"))
-                mutated.write_text(
-                    source.replace('"picture.inc"', '"negative-picture.inc"')
-                )
-                intervention = (
-                    "redirect PF1 write to unused RIOT RAM, preserving instruction cost"
-                )
-            else:
-                mutated.write_text(source.replace(old, "    nop\n    nop\n    nop"))
-            try:
-                subprocess.run(
-                    [
-                        "asm198x",
-                        "--dialect",
-                        cfg["dialect"],
-                        *cfg["finalise"],
-                        str(mutated),
-                        "-o",
-                        str(binary),
-                    ],
-                    cwd=folder,
-                    check=True,
-                    capture_output=True,
-                    timeout=30,
-                )
-            finally:
-                mutated.unlink()
-                if negative_picture.exists():
-                    negative_picture.unlink()
-            if system.startswith("sega"):
-                subprocess.run(
-                    ["python3", str(ROOT / "scripts/build-sega-probe.py"), str(binary)],
-                    check=True,
-                    capture_output=True,
-                )
-            if system == "tatung-einstein":
-                packaged = binary.with_suffix(".dsk")
-                packaged.write_bytes(H.PACK.einstein_disk(binary.read_bytes()))
-                binary = packaged
+                + (".dsk" if system == "tatung-einstein" else "." + cfg["extension"])
+            ]
             machine = start(binary)
             before = capture(machine, capability + "-negative-before")
             machine.call(
@@ -261,7 +301,7 @@ def verify(system: str, native: Path, firmware_root: Path) -> dict:
                 rejected = False
             T.require(rejected, f"Omitted {capability} passed the same guard")
             negatives[capability] = {
-                "intervention": intervention,
+                "intervention": interventions[capability],
                 "same_guard_rejected": rejected,
             }
             machine.close()
@@ -282,6 +322,13 @@ def verify(system: str, native: Path, firmware_root: Path) -> dict:
             "observer_sha256": T.sha(Path(__file__)),
             "emulator_sha256": T.sha(executable),
             "binary_sha256": T.sha(cart),
+            "assembler_sha256": T.sha(Path(shutil.which(assembler) or assembler)),
+            # Each program the machine is given, so the checker can rebuild it.
+            "programs": {name: T.sha(path) for name, path in programs.items()},
+            "tools": {
+                "assembler": E.tool_identity(assembler),
+                "emulator": E.tool_identity(executable),
+            },
             "firmware_sha256": T.sha(firmware) if firmware else None,
             "input": "idle, press once, held without repeat, release and second press",
             "drawing": {
@@ -310,10 +357,11 @@ def main() -> None:
     parser.add_argument(
         "--firmware-root", type=Path, default=Path.home() / ".emu198x/roms"
     )
+    parser.add_argument("--assembler", default="asm198x")
     parser.add_argument("--only", choices=CONFIGS)
     args = parser.parse_args()
     for system in [args.only] if args.only else CONFIGS:
-        verify(system, args.native, args.firmware_root)
+        verify(system, args.native, args.firmware_root, args.assembler)
 
 
 if __name__ == "__main__":

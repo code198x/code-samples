@@ -4,7 +4,7 @@
   "configuration": "DMG default reset, no boot ROM",
   "server": {
     "name": "emu198x-game-boy",
-    "version": "0.44.1"
+    "version": "0.45.1"
   },
   "sources": {
     "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "ccd43e05ef3e9e01296d33b241a2fdf82b86fc2fd58debff8f6d62d9ea4c3be8",
@@ -12,9 +12,31 @@
     "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/sound.inc": "19e24a3cbc1d6d514ea2278e787513c20c16a8913e4c7e68f5cdef0b03d91855",
     "nintendo-game-boy/patterns/assembly/capabilities/input-drawing-sound/Makefile": "18c7782cf7c70556be852dca1597c1cff5f8df7642e63f6b924b30d6687ca124"
   },
-  "observer_sha256": "6e13a667e4337acb264ba2513a547cd489f14b1378a6c4369ff46c1726f5c4c0",
-  "emulator_sha256": "a049446762da8f2329ec855c7e5bd332fb2820d50beba1a12ca16349dbe4658f",
+  "observer_sha256": "bbb39b40e866d117e0199520b18366cf0ed4c1d5d2c4a489c78ae07d751d639a",
+  "emulator_sha256": "004f6b18c77f3ff141c5a9e3b61b8f66c5901580e331d8b2a58d3cdb59ad9038",
   "binary_sha256": "0923be477735bfbcb3c65d00060dbdc4f3efe7f285d7214077c1d6cd422ac2c9",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.gb": "0923be477735bfbcb3c65d00060dbdc4f3efe7f285d7214077c1d6cd422ac2c9",
+    "drawing.gb": "583e737061947cbe38a85c0a1feb1e49328cd3a0ed6aa65bc7235ef25bc5f7ab",
+    "sound.gb": "c13753fd0ff5cea46299476adbeb31bcbc03aaf73dc83b26a5e6095fcbc923d3"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-game-boy",
+      "version": "0.45.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "004f6b18c77f3ff141c5a9e3b61b8f66c5901580e331d8b2a58d3cdb59ad9038"
+    }
+  },
   "firmware_sha256": null,
   "input": "idle, press once, held without repeat, release and second press",
   "drawing": "Background tile changes position and restores; fixed palette",
