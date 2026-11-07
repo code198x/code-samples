@@ -716,11 +716,22 @@
       ],
       "pins": {
         "asm198x": "0.0.75",
-        "emulator": "0.48.3, except nintendo-game-boy 0.45.1 (0.46.1 on counts 0 updates in 30 frames)"
+        "emulator": "0.48.3; atari-5200 with --board ca018087",
+        "follow_ups": {
+          "nintendo-game-boy": {
+            "emulator": "0.45.1",
+            "reason": "from 0.46.1 the caller counts 0 updates in 30 frames (the A press is never seen)",
+            "issue": "https://github.com/emu198x/emu198x/issues/2310",
+            "undo": "re-record on the newest release once the issue closes"
+          }
+        }
       },
       "build_programs": "build_programs(system, assembler, output): the caller and its no-wait and no-edge negatives",
       "records": "*/patterns/assembly/framework/input-loop/verification/results.json (copied from build/verification/results.json)",
-      "checker": "scripts/check-probe-coverage.py (input-driven-with-frame-service rows)"
+      "checker": "scripts/check-probe-coverage.py (input-driven-with-frame-service rows)",
+      "machine_choices": {
+        "atari-5200": "--board ca018087"
+      }
     }
   ]
 }
