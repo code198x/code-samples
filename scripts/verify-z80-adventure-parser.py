@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -195,7 +196,7 @@ def main() -> None:
         },
         "observer_sha256": O.sha(Path(__file__)),
         "emulator_sha256": O.sha(Path(args.emulator)),
-        "assembler_sha256": O.sha(Path(args.assembler)),
+        "assembler_sha256": O.sha(Path(shutil.which(args.assembler) or args.assembler)),
         # Each caller snapshot the machine loads, so the checker can rebuild it.
         "programs": {
             f"{job['name']}/caller.sna": O.sha(args.output / job["name"] / "caller.sna")
