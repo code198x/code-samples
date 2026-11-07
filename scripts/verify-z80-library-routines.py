@@ -242,10 +242,10 @@ save_glyph:
     for number, (row, col, text) in enumerate(
         [(7, 30, "ABCD"), (23, 31, "Z"), (24, 0, "A"), (0, 32, "A")]
     ):
-        body = f"    ld hl,$4000\n    ld (hl),0\n    ld de,$4001\n    ld bc,6911\n    ldir\n    ld b,{row}\n    ld c,{col}\n    ld hl,message\n    call print_string"
+        body = f"    ld hl,$4000\n    ld (hl),0\n    ld de,$4001\n    ld bc,6911\n    ldir\n    ld b,{row}\n    ld c,{col}\n    ld hl,string_text\n    call print_string"
         actual = execute(
             folder / f"string-{number}",
-            caller(body, code, 'message: defm "' + text + '"\n defb 0'),
+            caller(body, code, 'string_text: defm "' + text + '"\n defb 0'),
             [(0x4000, 6912)],
             args,
         )[0]
