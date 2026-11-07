@@ -213,5 +213,98 @@ class CapabilityCoverageTests(unittest.TestCase):
             path.write_bytes(saved)
 
 
+class RebuiltCompositionProgramTests(unittest.TestCase):
+    setUpClass = classmethod(CapabilityCoverageTests.setUpClass.__func__)
+    tearDownClass = classmethod(CapabilityCoverageTests.tearDownClass.__func__)
+    setUp = CapabilityCoverageTests.setUp
+
+    def rebuilt_row(self) -> dict:
+        """The Amiga composition, whose disk is also built by build198x."""
+        return next(
+            r for r in self.manifest["systems"] if r["machine_id"] == "commodore-amiga"
+        )
+
+    def edit(self, row: dict, name: str, old: str, new: str) -> Path:
+        path = self.root / Path(row["record"]).parent.parent / name
+        text = path.read_text()
+        self.assertEqual(text.count(old), 1)
+        path.write_text(text.replace(old, new))
+        self.addCleanup(path.write_text, text)
+        return path
+
+    def test_rebuilt_program_ignores_a_comment(self) -> None:
+        row = self.rebuilt_row()
+        self.edit(
+            row,
+            "demo.asm",
+            '    include "rules.inc"',
+            '    include "rules.inc" ; rules',
+        )
+        GUARD.validate(self.root, self.manifest)
+
+    def test_rebuilt_program_with_a_changed_operand_fails(self) -> None:
+        row = self.rebuilt_row()
+        self.edit(row, "rules.inc", "    move.w #2,player_x", "    move.w #3,player_x")
+        with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+            GUARD.validate(self.root, self.manifest)
+
+    def test_forged_program_digest_fails(self) -> None:
+        row = self.rebuilt_row()
+        path = self.root / row["record"]
+        saved = path.read_bytes()
+        record = json.loads(saved)
+        record["programs"]["demo.adf"] = "0" * 64
+        try:
+            path.write_text(json.dumps(record))
+            row["record_sha256"] = GUARD.sha(path)
+            with self.assertRaisesRegex(AssertionError, "^Program bytes differ"):
+                GUARD.validate(self.root, self.manifest)
+        finally:
+            path.write_bytes(saved)
+
+    def test_tampered_record_fails(self) -> None:
+        row = self.rebuilt_row()
+        path = self.root / row["record"]
+        saved = path.read_bytes()
+        try:
+            path.write_bytes(saved.replace(b'"passed"', b'"passed" ', 1))
+            with self.assertRaisesRegex(ValueError, "Changed file"):
+                GUARD.validate(self.root, self.manifest)
+        finally:
+            path.write_bytes(saved)
+
+    def test_rebuilt_records_name_released_tools_without_local_paths(self) -> None:
+        rebuilt = 0
+        for row in self.original["systems"]:
+            record = json.loads((ROOT / row["record"]).read_text())
+            if "programs" not in record:
+                continue
+            rebuilt += 1
+            self.assertIn(row["kind"], GUARD.RECORDERS)
+            tools = record["tools"]
+            self.assertEqual(
+                tools["assembler"]["executable_sha256"], record["assembler_sha256"]
+            )
+            self.assertEqual(
+                tools["emulator"]["executable_sha256"], record["emulator_sha256"]
+            )
+            if "build198x_sha256" in record:
+                self.assertEqual(
+                    tools["build198x"]["executable_sha256"],
+                    record["build198x_sha256"],
+                )
+            for tool in tools.values():
+                self.assertTrue(tool["release"].startswith("https://github.com/"))
+                for value in tool.values():
+                    self.assertFalse(value.startswith("/"), value)
+        self.assertGreater(rebuilt, 0)
+
+    def test_programs_without_a_recorder_fail(self) -> None:
+        row = self.rebuilt_row()
+        record = json.loads((self.root / row["record"]).read_text())
+        with self.assertRaisesRegex(ValueError, "No recorder"):
+            GUARD.require_program(self.root, row["machine_id"], record, "unregistered")
+
+
 if __name__ == "__main__":
     unittest.main()

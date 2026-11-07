@@ -4,15 +4,36 @@
   "startup": "Cold MOS/BASIC boot, DATA loader typed through keyboard, RUN",
   "server": {
     "name": "emu198x-acorn-bbc-micro",
-    "version": "0.38.3"
+    "version": "0.45.1"
   },
-  "emulator_sha256": "5f32c66980d720f8d7c450f3a5bbbcb3dcdc688d581113b7e862785a7311ccba",
+  "emulator_sha256": "f454224b979e2a776e024b2b7e11ab3f4dfc89f4fca9690f875f0b7d537a2c76",
   "firmware_sha256": {
     "os.rom": "2d9fea69017864f6962704481829f95fee08446c8c3a13826d5d4e44000ac9de",
     "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
   },
   "binary_sha256": "14b33abfbddc520ab3e28322d1fc6e7e6385e00363d16848f0b5d49c46f395df",
-  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.bin": "14b33abfbddc520ab3e28322d1fc6e7e6385e00363d16848f0b5d49c46f395df",
+    "loader.bas": "0fa51998d3deb8ac4131a550fc499d09c77f56e1cb33016451b9fc85839f46c3"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-acorn-bbc-micro",
+      "version": "0.45.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "f454224b979e2a776e024b2b7e11ab3f4dfc89f4fca9690f875f0b7d537a2c76"
+    }
+  },
+  "observer_sha256": "0d715601aef50b999837ba55f8a21a338be30f15b0607e0762c45b4e3f17d84b",
   "sources": {
     "bbc-micro/patterns/assembly/framework/collect-and-respond/Makefile": "c01d732e28f96b6ee08d7c6abc4a3d3afea29615e3a47f46124ba97153097252",
     "bbc-micro/patterns/assembly/framework/collect-and-respond/collision.inc": "67a1349d3e2990d2012b334d723baad77e495c81673a9570bc188bc780495971",

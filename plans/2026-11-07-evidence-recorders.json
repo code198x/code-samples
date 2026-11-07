@@ -859,6 +859,71 @@
       "build_programs": "build_programs(machine, assembler, output, builder='build198x'): each program the machine is given (and the NES negative caller)",
       "records": "*/patterns/assembly/framework/game-loop/verification/results.json (copied from build/verification/results.json; the Electron's from bbc-micro/.../build/verification-electron)",
       "checker": "scripts/check-probe-coverage.py (frame-paced rows)"
+    },
+    {
+      "script": "scripts/verify-collect-and-respond.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--build198x PATH",
+        "--firmware-root DIR",
+        "--only c64|spectrum|amiga|nes|bbc|electron",
+        "--tape (Spectrum fresh-ROM tape qualification)"
+      ],
+      "machines": [
+        "commodore-c64",
+        "sinclair-zx-spectrum",
+        "commodore-amiga",
+        "nintendo-nes",
+        "acorn-bbc-micro",
+        "acorn-electron"
+      ],
+      "firmware": [
+        "commodore-c64/basic.rom",
+        "commodore-c64/kernal.rom",
+        "commodore-c64/chargen.rom",
+        "sinclair-zx-spectrum-48k/48.rom",
+        "commodore-amiga/kick13.rom",
+        "acorn-bbc-micro/os.rom",
+        "acorn-bbc-micro/basic.rom",
+        "acorn-electron/os.rom",
+        "acorn-electron/basic.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "build198x": "0.2.13 (Amiga disk only)",
+        "emulator": "0.48.3",
+        "follow_ups": {
+          "commodore-amiga": {
+            "emulator": "0.44.1",
+            "reason": "audio capture has 90095 frames on 0.44.1 and 86261 on 0.48.3; PCM and excerpt differ",
+            "issue": "https://github.com/emu198x/emu198x/issues/2322",
+            "undo": "re-record with the chosen current release after an evidence-backed audio ruling, then remove this pin"
+          },
+          "acorn-bbc-micro": {
+            "emulator": "0.45.1",
+            "reason": "audio capture has 87221 frames on 0.45.1 and 87220 on 0.48.3; PCM and excerpt differ",
+            "issue": "https://github.com/emu198x/emu198x/issues/2323",
+            "undo": "re-record with the chosen current release after an evidence-backed audio ruling, then remove this pin"
+          },
+          "acorn-electron": {
+            "emulator": "0.44.2",
+            "reason": "audio capture has 89137 frames on both releases but full WAV and excerpt PCM differ on 0.48.3",
+            "issue": "https://github.com/emu198x/emu198x/issues/2324",
+            "undo": "re-record with the chosen current release after an evidence-backed audio ruling, then remove this pin"
+          },
+          "nintendo-nes": {
+            "emulator": "0.45.1",
+            "reason": "audio capture has 73479 frames on 0.45.1 and 74278 on 0.48.3; PCM and excerpt differ",
+            "issue": "https://github.com/emu198x/emu198x/issues/2325",
+            "undo": "re-record with the chosen current release after an evidence-backed audio ruling, then remove this pin"
+          }
+        }
+      },
+      "build_programs": "build_programs(machine, assembler, output, builder='build198x'): each program the machine is given, including the NES negative caller and BBC/Electron typed loaders",
+      "records": "*/patterns/assembly/framework/collect-and-respond/verification/results.json; Electron: acorn-electron/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
+      "evidence": "Require exact observations, capture bytes, full WAV digest and excerpt PCM reproduction; preserve existing captures and excerpts. Recorder writes verification/results.json directly, so run in an isolated checkout. Use --tape for Spectrum and select Electron explicitly (the default loop covers the other five).",
+      "checker": "scripts/check-capability-coverage.py (composition and electron rows)"
     }
   ]
 }

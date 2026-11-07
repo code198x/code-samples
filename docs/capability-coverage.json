@@ -130,12 +130,12 @@
     "snapshot": "docs/capability-registry.toml"
   },
   "verification_tools": {
-    "scripts/verify-collect-and-respond.py": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+    "scripts/verify-collect-and-respond.py": "0d715601aef50b999837ba55f8a21a338be30f15b0607e0762c45b4e3f17d84b",
     "scripts/verify-basic-capabilities.py": "935666c51f6e5eaa95745831666ff5af384fde64c8721615ef272693c1521079",
     "scripts/verify-hardware-capabilities.py": "fd0e7dd43c16613197a5c7f4cf30230749140d681744981217af00b806d6c640",
     "scripts/verify-ace-capabilities.py": "3c43c81a0689d0c0c7ddd61dc9eb22a74c5ac4768854c13ae0a65e24577568ac",
     "scripts/verify-zx-capabilities.py": "ca48266f74f7e835c582e4946f0a2bc33249e6c9f5615436954837ddf426de87",
-    "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b",
+    "scripts/verify-game-loops.py": "8aa0918caa858a5365d5579fda5347f78c0cc09244ed485354792f7411498a65",
     "scripts/verify-command-loops.py": "5f706589412533ac379d4ddd183ce1f03d6440c96d2414667e1a4102ae1a29e1",
     "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84"
   },
@@ -146,14 +146,16 @@
       "version": "0.38.3"
     },
     "acorn-bbc-micro": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "5f32c66980d720f8d7c450f3a5bbbcb3dcdc688d581113b7e862785a7311ccba",
-      "version": "0.38.3"
+      "commit": "aa2d177f7e52959ee9830dc439a23311e7fdc33e",
+      "sha256": "f454224b979e2a776e024b2b7e11ab3f4dfc89f4fca9690f875f0b7d537a2c76",
+      "version": "0.45.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1"
     },
     "acorn-electron": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "01789ed6c854f004c7a1a4516858a005e87fcd620d8e6454efa8c5f4e4fe4e16",
-      "version": "0.38.3"
+      "commit": "2f35ad00f88de688d64ce0e90c6e78e436b261a4",
+      "sha256": "3f9106ed4fa259643d5296dd2c2a6e833535f61d125ea86292ef2322907a3c7f",
+      "version": "0.44.2",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.44.2"
     },
     "amstrad-cpc": {
       "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
@@ -186,14 +188,16 @@
       "release": "v0.48.3"
     },
     "commodore-amiga": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "a3350d755a40ed7a4ca2f58807dea1cb518690ccef81126c146f1782c4dd7426",
-      "version": "0.38.3"
+      "commit": "9e1220f8713e3eaa6842da55bcc95bdcd15fc81f",
+      "sha256": "5c6b7b7775275f0343cdb3f031450787ab718f5049964ab660099422c6268765",
+      "version": "0.44.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.44.1"
     },
     "commodore-c64": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "6b8a4eec00631d23b927429a844a302eee57dfb6e03335f3cf7c437148bc1b1a",
-      "version": "0.38.3"
+      "commit": "32c46c10f2b4777ad63d4d12f1ac9b65451c731c",
+      "sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3"
     },
     "commodore-pet": {
       "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
@@ -236,9 +240,10 @@
       "release": "v0.45.1"
     },
     "nintendo-nes": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "85c35a5cb58c297f750d6a383a4e1b942df55d8a21f19764f96bc4fc0b7fd6cb",
-      "version": "0.38.3"
+      "commit": "aa2d177f7e52959ee9830dc439a23311e7fdc33e",
+      "sha256": "aa619fb4a996674725d29888f8c54c4976c3b38a8ecf5ef029eeeee85b9eb3b2",
+      "version": "0.45.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1"
     },
     "oric": {
       "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
@@ -261,9 +266,10 @@
       "release": "v0.48.3"
     },
     "sinclair-zx-spectrum": {
-      "commit": "d92b7ca3828efc438f335a2dbdb337c80cf7f346",
-      "sha256": "fa5a9dc110bf2158dac1e82999c9acbb1691adc61b7fe0c126da0272ace12992",
-      "version": "0.38.3"
+      "commit": "32c46c10f2b4777ad63d4d12f1ac9b65451c731c",
+      "sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3"
     },
     "sinclair-zx80": {
       "commit": "c18fd545e150363d438dfd10f795338640dd5fe4",
@@ -330,7 +336,7 @@
       "kind": "composition",
       "path": "bbc-micro/patterns/assembly/framework/collect-and-respond",
       "record": "bbc-micro/patterns/assembly/framework/collect-and-respond/verification/results.json",
-      "record_sha256": "2eae8fbe57aa56919cb1000c7d4167a1da619e58e87a26d4c71d77b5109c7dff",
+      "record_sha256": "26c310ec185c678992035292f4cc1f9a6cc41e4f0d866b744c96677b74de0b18",
       "input": {
         "status": "executed",
         "contract": "Real key/controller input; idle, accepted input and repeat/release behaviour checked"
@@ -360,7 +366,7 @@
       "kind": "electron",
       "path": "acorn-electron/patterns/assembly/capabilities/input-drawing-sound",
       "record": "acorn-electron/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
-      "record_sha256": "77a8b9050cb22924dd00f0bc2cf78c54cb59ef37b898bf3f69f3683994cfa5ed",
+      "record_sha256": "e2d7d2750cf4c749ac056102482dc213e39525d4323df845bccda7d961f19179",
       "input": {
         "status": "executed",
         "contract": "Real key/controller input; idle, accepted input and repeat/release behaviour checked"
@@ -592,7 +598,7 @@
       "kind": "composition",
       "path": "commodore-amiga/patterns/assembly/framework/collect-and-respond",
       "record": "commodore-amiga/patterns/assembly/framework/collect-and-respond/verification/results.json",
-      "record_sha256": "66d30d63f75d370b749814eca2e50974f3fdeba47b17daf26315a7ef7db6851f",
+      "record_sha256": "11c08bbb49d06220749a85b87163c4e29bfa86fa09c3c96fb69ffb8765deee4d",
       "input": {
         "status": "executed",
         "contract": "Real key/controller input; idle, accepted input and repeat/release behaviour checked"
@@ -622,7 +628,7 @@
       "kind": "composition",
       "path": "commodore-64/patterns/assembly/framework/collect-and-respond",
       "record": "commodore-64/patterns/assembly/framework/collect-and-respond/verification/results.json",
-      "record_sha256": "22eb215a48a3da1081d87bb85cf90791e5f874380b8fcc151235e12cdbc31cc2",
+      "record_sha256": "a4b2d8afdfec302313a1e7651d44e13b0d1f14e27437c8a297efe556955f011f",
       "input": {
         "status": "executed",
         "contract": "Real key/controller input; idle, accepted input and repeat/release behaviour checked"
@@ -907,7 +913,7 @@
       "kind": "composition",
       "path": "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond",
       "record": "nintendo-entertainment-system/patterns/assembly/framework/collect-and-respond/verification/results.json",
-      "record_sha256": "5dc2d587a090e9e80d7f6300b1a4826e2940884b1f332e5f15590ace1083fff4",
+      "record_sha256": "1093a3315aa81451e6d00320646d9d84d8a12cfa0dd21bb4caaab6eec9b96322",
       "input": {
         "status": "executed",
         "contract": "Real key/controller input; idle, accepted input and repeat/release behaviour checked"
@@ -1073,7 +1079,7 @@
       "kind": "composition",
       "path": "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond",
       "record": "sinclair-zx-spectrum/patterns/assembly/framework/collect-and-respond/verification/results.json",
-      "record_sha256": "2b8e9ce5d444197d24906b55a043cf3458b05372420fa8471bd8f848c4609ee7",
+      "record_sha256": "4e131dad89f7e9bdcd4a8dfb560e6bda71d89d60eb2700fac329222878b95e1d",
       "input": {
         "status": "executed",
         "contract": "Real key/controller input; idle, accepted input and repeat/release behaviour checked"

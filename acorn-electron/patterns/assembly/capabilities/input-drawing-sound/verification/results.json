@@ -4,15 +4,36 @@
   "startup": "Cold MOS/BASIC boot, DATA loader typed through keyboard, RUN",
   "server": {
     "name": "emu198x-acorn-electron",
-    "version": "0.38.3"
+    "version": "0.44.2"
   },
-  "emulator_sha256": "01789ed6c854f004c7a1a4516858a005e87fcd620d8e6454efa8c5f4e4fe4e16",
+  "emulator_sha256": "3f9106ed4fa259643d5296dd2c2a6e833535f61d125ea86292ef2322907a3c7f",
   "firmware_sha256": {
     "os.rom": "b63f851d79498f598999d923b7c9f62e2525c34f0b9cd2d4b328b89d622dcda4",
     "basic.rom": "45bd55dc0f6f0f8f1fe9e2481de7def206565eec8f600ba3068b849ca4132079"
   },
   "binary_sha256": "07b96c9853fccd6670fa750e5e2db313bfb3eb7f4d1ccdb288ac54c55aa025ec",
-  "observer_sha256": "d4abfbb6ab85ebcd995e58e100fdf15c12b9ae2f58cd610779dadd9848518038",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.bin": "07b96c9853fccd6670fa750e5e2db313bfb3eb7f4d1ccdb288ac54c55aa025ec",
+    "loader.bas": "b9aaea47e5d78600aef9ba9ae83527eaa692cfd5dbfaf60e6ddfb8f17d721f67"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-acorn-electron",
+      "version": "0.44.2",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.44.2",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "3f9106ed4fa259643d5296dd2c2a6e833535f61d125ea86292ef2322907a3c7f"
+    }
+  },
+  "observer_sha256": "0d715601aef50b999837ba55f8a21a338be30f15b0607e0762c45b4e3f17d84b",
   "sources": {
     "acorn-electron/patterns/assembly/capabilities/input-drawing-sound/Makefile": "3e0a5ad1d456f8a41753c66d2363481b0c0711a62f6aeff0afc0d917ff034a14",
     "acorn-electron/patterns/assembly/capabilities/input-drawing-sound/demo.asm": "2456b1eae2dcb32b5f6feac8118e4bde642b09bdae3f1f9000839692551a79df",
