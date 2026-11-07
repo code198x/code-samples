@@ -81,7 +81,9 @@ python3 -m unittest discover -s verification -p test_verify.py -v
 ```
 
 The earlier [failed rerun](verification/evidence/runs/2026-10-15-failed.json)
-is preserved. [Issue #85](https://github.com/code198x/code-samples/issues/85)
+is kept as history only. It was made with a local build198x
+(`097892fa…`) that matches no release, so no checker reads it and it is
+not evidence for this page. [Issue #85](https://github.com/code198x/code-samples/issues/85)
 links the independent core-timing defect and the probe/observer corrections.
 The new result remains an emulator observation, not listening or hardware
 verification.
