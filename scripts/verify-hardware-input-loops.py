@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -20,6 +21,11 @@ PACK_SPEC = importlib.util.spec_from_file_location(
 )
 PACK = importlib.util.module_from_spec(PACK_SPEC)
 PACK_SPEC.loader.exec_module(PACK)
+E_SPEC = importlib.util.spec_from_file_location(
+    "probe_evidence_bytes", Path(__file__).with_name("evidence_bytes.py")
+)
+E = importlib.util.module_from_spec(E_SPEC)
+E_SPEC.loader.exec_module(E)
 CONFIGS = {
     "nintendo-game-boy": {
         "binary": "emu198x-game-boy",
@@ -126,17 +132,101 @@ CONFIGS = {
 }
 
 
-def run(system: str, native: Path, firmware_root: Path) -> dict:
+def build(system: str, assembler: str, output: Path) -> dict[str, Path]:
+    """Assemble the caller and its no-wait and no-edge negatives, without the emulator.
+
+    Returns each program the machine is given, by the name the record keeps.
+    """
     cfg = CONFIGS[system]
     folder = (
         ROOT / system / "patterns/assembly/framework" / cfg.get("folder", "input-loop")
     )
-    subprocess.run(["make"], cwd=folder, check=True, timeout=30)
-    cart = folder / ("build/demo." + cfg["extension"])
+    subprocess.run(
+        ["make", "-B", "ASM198X=" + assembler],
+        cwd=folder,
+        check=True,
+        timeout=30,
+        capture_output=True,
+    )
+    output.mkdir(parents=True, exist_ok=True)
+    source = (folder / "demo.asm").read_text()
+    programs = {"demo." + cfg["extension"]: folder / ("build/demo." + cfg["extension"])}
+    if system == "nintendo-game-boy":
+        mutations = [
+            ("no-wait", "    call wait_frame", "    nop\n    nop\n    nop"),
+            ("no-edge", "    cpl\n    and b", "    ld a,b\n    nop"),
+        ]
+    elif system == "atari-2600":
+        mutations = [
+            ("no-wait", "    sta $02", "    nop"),
+            ("no-edge", "    and $84", "    lda $84"),
+        ]
+    elif cfg["dialect"] == "pasmo":
+        mutations = [
+            ("no-wait", "    call wait_frame", "    nop\n    nop\n    nop"),
+            ("no-edge", "    cpl\n    and b", "    ld a,b\n    nop"),
+        ]
+    else:
+        mutations = [
+            ("no-wait", "    jsr wait_frame", "    nop\n    nop\n    nop"),
+            ("no-edge", "    and current", "    lda current"),
+        ]
+    for kind, old, new in mutations:
+        expected = 1
+        # Each static WSYNC write is replaced, including those in loops.
+        if system == "atari-2600" and kind == "no-wait":
+            expected = source.count(old)
+            T.require(expected > 0, "No scanline waits to mutate")
+        T.require(source.count(old) == expected, f"Ambiguous {kind} mutation")
+        mutant = folder / "negative-control.asm"
+        negative_cart = output / (kind + "." + cfg["extension"])
+        assembled = (
+            output / (kind + ".bin") if system == "tatung-einstein" else negative_cart
+        )
+        mutant.write_text(source.replace(old, new))
+        try:
+            subprocess.run(
+                [
+                    assembler,
+                    "--dialect",
+                    cfg["dialect"],
+                    *cfg["finalise"],
+                    str(mutant),
+                    "-o",
+                    str(assembled),
+                ],
+                cwd=folder,
+                check=True,
+                timeout=30,
+                capture_output=True,
+            )
+        finally:
+            mutant.unlink()
+        if system == "tatung-einstein":
+            negative_cart.write_bytes(PACK.einstein_disk(assembled.read_bytes()))
+        programs[negative_cart.name] = negative_cart
+    return programs
+
+
+def build_programs(system: str, assembler: str, output: str) -> None:
+    """Write the caller and both negatives into output, without the emulator."""
+    out = Path(output).resolve()
+    for name, path in build(system, assembler, out).items():
+        if path != out / name:
+            shutil.copyfile(path, out / name)
+
+
+def run(
+    system: str, native: Path, firmware_root: Path, assembler: str = "asm198x"
+) -> dict:
+    cfg = CONFIGS[system]
+    folder = (
+        ROOT / system / "patterns/assembly/framework" / cfg.get("folder", "input-loop")
+    )
     executable = native / cfg["binary"]
     output = folder / "build/verification"
-    output.mkdir(exist_ok=True)
-    source = (folder / "demo.asm").read_text()
+    programs = build(system, assembler, output)
+    cart = programs["demo." + cfg["extension"]]
 
     def command_for(path: Path) -> list[str]:
         command = [str(executable), "--mcp"]
@@ -243,61 +333,8 @@ def run(system: str, native: Path, firmware_root: Path) -> dict:
         server = machine.server.get("serverInfo")
         machine.close()
         controls = {}
-        if system == "nintendo-game-boy":
-            mutations = [
-                ("no-wait", "    call wait_frame", "    nop\n    nop\n    nop"),
-                ("no-edge", "    cpl\n    and b", "    ld a,b\n    nop"),
-            ]
-        elif system == "atari-2600":
-            mutations = [
-                ("no-wait", "    sta $02", "    nop"),
-                ("no-edge", "    and $84", "    lda $84"),
-            ]
-        elif cfg["dialect"] == "pasmo":
-            mutations = [
-                ("no-wait", "    call wait_frame", "    nop\n    nop\n    nop"),
-                ("no-edge", "    cpl\n    and b", "    ld a,b\n    nop"),
-            ]
-        else:
-            mutations = [
-                ("no-wait", "    jsr wait_frame", "    nop\n    nop\n    nop"),
-                ("no-edge", "    and current", "    lda current"),
-            ]
-        for kind, old, new in mutations:
-            expected = 7 if system == "atari-2600" and kind == "no-wait" else 1
-            # Each static WSYNC write is replaced, including those in loops.
-            if system == "atari-2600" and kind == "no-wait":
-                expected = source.count(old)
-                T.require(expected > 0, "No scanline waits to mutate")
-            T.require(source.count(old) == expected, f"Ambiguous {kind} mutation")
-            mutant = folder / "negative-control.asm"
-            negative_cart = output / (kind + "." + cfg["extension"])
-            assembled = (
-                output / (kind + ".bin")
-                if system == "tatung-einstein"
-                else negative_cart
-            )
-            mutant.write_text(source.replace(old, new))
-            try:
-                subprocess.run(
-                    [
-                        "asm198x",
-                        "--dialect",
-                        cfg["dialect"],
-                        *cfg["finalise"],
-                        str(mutant),
-                        "-o",
-                        str(assembled),
-                    ],
-                    cwd=folder,
-                    check=True,
-                    timeout=30,
-                    capture_output=True,
-                )
-            finally:
-                mutant.unlink()
-            if system == "tatung-einstein":
-                negative_cart.write_bytes(PACK.einstein_disk(assembled.read_bytes()))
+        for kind in ("no-wait", "no-edge"):
+            negative_cart = programs[kind + "." + cfg["extension"]]
             machine = T.Machine(command_for(negative_cart))
             boot(negative_cart)
             if kind == "no-wait":
@@ -344,6 +381,13 @@ def run(system: str, native: Path, firmware_root: Path) -> dict:
             ),
             "binary_sha256": T.sha(cart),
             "emulator_sha256": T.sha(executable),
+            "assembler_sha256": T.sha(Path(shutil.which(assembler) or assembler)),
+            # Each program the machine is given, so the checker can rebuild it.
+            "programs": {name: T.sha(path) for name, path in programs.items()},
+            "tools": {
+                "assembler": E.tool_identity(assembler),
+                "emulator": E.tool_identity(executable),
+            },
             "sources": {
                 str((folder / "demo.asm").relative_to(ROOT)): T.sha(
                     folder / "demo.asm"
@@ -375,13 +419,16 @@ def run(system: str, native: Path, firmware_root: Path) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--native", type=Path, required=True)
+    parser.add_argument("--assembler", default="asm198x")
     parser.add_argument("--only", choices=CONFIGS)
     parser.add_argument(
         "--firmware-root", type=Path, default=Path.home() / ".emu198x/roms"
     )
     args = parser.parse_args()
     for system in [args.only] if args.only else CONFIGS:
-        result = run(system, args.native.resolve(), args.firmware_root.resolve())
+        result = run(
+            system, args.native.resolve(), args.firmware_root.resolve(), args.assembler
+        )
         print(system, result["status"], result["negative_controls"], flush=True)
 
 

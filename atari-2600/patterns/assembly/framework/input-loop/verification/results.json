@@ -34,10 +34,32 @@
   "emulator_source_commit": "6cc5d5f9e7fe6507a079f237bc44da0dc95fe25c",
   "binary_sha256": "c568353ef3d655c6feb09df307a4c2e5d963fdc73d41bf5d5ebbab27f8f0bee7",
   "emulator_sha256": "dad36c9b50589ffd10a0021d357bc538c8d6efdedb5402c4ea4df7f949eebe2c",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.a26": "c568353ef3d655c6feb09df307a4c2e5d963fdc73d41bf5d5ebbab27f8f0bee7",
+    "no-wait.a26": "14defe24a34c1b44c85c312814a8242fae5b6982bca5c3cd0bc6b24af5d85567",
+    "no-edge.a26": "85efac7070b0fda7278787915cdb435f4de2273f66c4ff9de5e3de586881eec6"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-atari-2600",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "dad36c9b50589ffd10a0021d357bc538c8d6efdedb5402c4ea4df7f949eebe2c"
+    }
+  },
   "sources": {
     "atari-2600/patterns/assembly/framework/input-loop/demo.asm": "4687fd5ebc305027785a3540dbb13a439165ec02ac251b1eb48b04df8e7a919e",
     "atari-2600/patterns/assembly/framework/input-loop/Makefile": "0045fdfc773fa98900cbd078826f21fc610228ef892d0337277844f32125e85d",
-    "scripts/verify-hardware-input-loops.py": "a77ffc18044badf545810fdf51e9740d656d2d8a63d38c0a24e1568db6f23c84",
+    "scripts/verify-hardware-input-loops.py": "278532b364fe14a1c2da910b2e6cd16c45d6e44677cc0d89899517b7743cfbf5",
     "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
