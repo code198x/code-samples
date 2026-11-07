@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -269,7 +270,7 @@ def main() -> None:
         "observer_sha256": O.sha(Path(__file__)),
         "emulator_sha256": O.sha(Path(args.emulator)),
         "firmware_sha256": O.sha(args.rom),
-        "assembler_sha256": O.sha(Path(args.assembler)),
+        "assembler_sha256": O.sha(Path(shutil.which(args.assembler) or args.assembler)),
         "build198x_sha256": O.sha(Path(args.build198x)),
         # Each program the machine loads, so the checker can rebuild it.
         "programs": {name: O.sha(out / name) for name in PROGRAMS},
