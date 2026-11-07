@@ -652,8 +652,7 @@
       },
       "build_programs": "build_programs(assembler, output)",
       "records": "nintendo-entertainment-system/patterns/assembly/audio/square-wave/verification/evidence/results.json",
-      "checker": "scripts/check-pattern-evidence.py (nes); CI also runs it fresh",
-      "notes": "Generated caller sources include square-wave.inc by absolute path, so their source_sha256 values depend on the checkout; the ROMs do not."
+      "checker": "scripts/check-pattern-evidence.py (nes); CI also runs it fresh"
     },
     {
       "script": "scripts/verify-nes-movement.py",
@@ -673,7 +672,8 @@
       },
       "build_programs": "build_programs(assembler, output)",
       "records": "docs/audit/2026-10-19-pattern-routines/nes-movement.json (copied from results.json)",
-      "checker": "scripts/check-pattern-evidence.py --audit (nes-movement)"
+      "checker": "scripts/check-pattern-evidence.py --audit (nes-movement)",
+      "notes": "The callers store player_x with `sta player_x` before movement.inc defines it in ZEROPAGE. ca65 V2.18 assembles that as absolute (8D rr rr, with a \"Didn't use zeropage addressing\" warning); Asm198x 0.0.72 onwards matches it, while 0.0.71 and earlier emitted zero-page 85 00. The 2026-11-07 re-record's programs therefore differ from the earlier record's, with identical observations."
     },
     {
       "script": "cross-platform/patterns/physics/aabb-collision/verification/verify.py",
