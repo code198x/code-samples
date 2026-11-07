@@ -1,0 +1,428 @@
+{
+  "note": "Recorders touched by the evidence byte-check plan (plans/2026-11-06-evidence-byte-check.md), batches 8 and 8b. Firmware paths are relative to ~/.emu198x/roms (the scripts' --firmware-root/--rom-dir default). 'pins' are the tool releases the current records name; 'build_programs' names the emulator-free function the checker calls to rebuild each program.",
+  "recorders": [
+    {
+      "script": "scripts/verify-atari-turn-loops.py",
+      "args": [
+        "--tools DIR",
+        "--firmware-root DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "atari-2600",
+        "atari-5200",
+        "atari-7800"
+      ],
+      "firmware": [
+        "atari-5200/5200.rom"
+      ],
+      "pins": {
+        "asm198x": "as recorded per system"
+      },
+      "records": "*/patterns/assembly/framework/turn-loop/verification/results.json",
+      "checker": "scripts/check-atari-turn-records.py"
+    },
+    {
+      "script": "scripts/verify-loop-language-gaps.py",
+      "args": [
+        "--tools DIR",
+        "--firmware DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "acorn-atom",
+        "bbc-micro",
+        "acorn-electron",
+        "amstrad-cpc"
+      ],
+      "firmware": [
+        "acorn-bbc-micro/os.rom",
+        "acorn-bbc-micro/basic.rom",
+        "acorn-electron/*",
+        "acorn-atom/*",
+        "amstrad-cpc/*"
+      ],
+      "checker": "scripts/check-loop-language-records.py"
+    },
+    {
+      "script": "scripts/verify-commodore-command-loops.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--firmware-root DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "commodore-pet",
+        "commodore-vic-20"
+      ],
+      "firmware": [
+        "commodore-pet/*",
+        "commodore-vic-20/*"
+      ],
+      "checker": "scripts/check-commodore-command-loops.py"
+    },
+    {
+      "script": "scripts/verify-msx-gameboy-loops.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--system msx|nintendo-game-boy",
+        "--track basic|assembly",
+        "--variant NAME",
+        "--firmware-root DIR"
+      ],
+      "machines": [
+        "msx",
+        "nintendo-game-boy"
+      ],
+      "firmware": [
+        "microsoft-msx/msx.rom"
+      ],
+      "builder": "scripts/build-msx-gameboy-loops.py build(system, assembler, variant)",
+      "checker": "scripts/check-msx-gameboy-loops.py"
+    },
+    {
+      "script": "scripts/verify-aquarius-mtx-loops.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--track basic|assembly",
+        "--firmware-root DIR"
+      ],
+      "machines": [
+        "mattel-aquarius",
+        "memotech-mtx"
+      ],
+      "firmware": [
+        "mattel-aquarius/*",
+        "memotech-mtx/mtx.rom"
+      ],
+      "builder": "scripts/build-aquarius-mtx-loops.py build(system, assembler, variant)",
+      "checker": "scripts/check-aquarius-mtx-loops.py"
+    },
+    {
+      "script": "scripts/verify-dragon-ace-loops.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--firmware-root DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "dragon-32",
+        "jupiter-ace"
+      ],
+      "firmware": [
+        "dragon/dragon32.rom",
+        "jupiter-ace/ace.rom"
+      ],
+      "builder": "scripts/build-dragon-ace-loops.py build(system, assembler, variant)",
+      "checker": "scripts/check-dragon-ace-loops.py"
+    },
+    {
+      "script": "scripts/verify-dragon-ace-language-variants.py",
+      "args": [
+        "--native DIR",
+        "--firmware-root DIR"
+      ],
+      "machines": [
+        "dragon-32",
+        "jupiter-ace"
+      ],
+      "firmware": [
+        "dragon/dragon32.rom",
+        "jupiter-ace/ace.rom"
+      ],
+      "checker": "scripts/check-dragon-ace-loops.py"
+    },
+    {
+      "script": "scripts/replay-amiga-command-loops.py",
+      "args": [
+        "--prepare --builder BUILD198X_ADF --output DIR",
+        "PHASE --language amos|blitz --emulator PATH --kickstart PATH --amos ADF | --blitz ADF --blitz-libs ADF --output DIR"
+      ],
+      "machines": [
+        "commodore-amiga (A1200, 2 MiB chip)"
+      ],
+      "firmware": [
+        "Kickstart 3.x (sha256 6d43840d\u2026)",
+        "AMOS Professional 2.00 system disk",
+        "Blitz BASIC 2.10 system and libs disks"
+      ],
+      "pins": {
+        "build198x-adf": "0.2.13",
+        "emu198x-amiga": "0.44.1"
+      },
+      "checker": "scripts/check-amiga-command-loops.py"
+    },
+    {
+      "script": "scripts/verify-column-hardware.py",
+      "args": [
+        "--native DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "atari-2600",
+        "atari-5200",
+        "atari-7800",
+        "coleco-colecovision",
+        "memotech-mtx",
+        "nintendo-game-boy",
+        "sega-game-gear",
+        "sega-master-system",
+        "sega-sg-1000",
+        "sord-m5",
+        "tatung-einstein"
+      ],
+      "firmware": [
+        "per CONFIGS[system]['firmware'] (--bios)"
+      ],
+      "pins": {
+        "asm198x": "0.0.71 (Game Boy 0.0.75)"
+      },
+      "checker": "scripts/check-column-evidence.py"
+    },
+    {
+      "script": "scripts/verify-column-edges.py",
+      "args": [
+        "--native DIR"
+      ],
+      "machines": "the 11 hardware routes above",
+      "firmware": [
+        "as verify-column-hardware.py"
+      ],
+      "builder": "build(system, assembler, output)",
+      "checker": "scripts/check-column-evidence.py"
+    },
+    {
+      "script": "scripts/verify-column-basic.py",
+      "args": [
+        "--native DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "acorn-atom",
+        "amstrad-cpc",
+        "atari-800xl",
+        "commodore-pet",
+        "commodore-vic-20",
+        "dragon-32",
+        "mattel-aquarius",
+        "msx",
+        "oric-atmos",
+        "spectravideo-svi-328"
+      ],
+      "firmware": [
+        "--rom-dir per system; microsoft-msx/msx.rom"
+      ],
+      "checker": "scripts/check-column-evidence.py"
+    },
+    {
+      "script": "scripts/verify-column-basic-errors.py",
+      "args": [
+        "--native DIR",
+        "--only SYSTEM"
+      ],
+      "machines": "as verify-column-basic.py",
+      "firmware": "as verify-column-basic.py",
+      "checker": "scripts/check-column-evidence.py"
+    },
+    {
+      "script": "scripts/verify-column-zx.py",
+      "args": [
+        "--native DIR",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "sinclair-zx80",
+        "sinclair-zx81"
+      ],
+      "firmware": [
+        "sinclair-zx80/zx80.rom",
+        "sinclair-zx81/zx81.rom"
+      ],
+      "checker": "scripts/check-column-evidence.py"
+    },
+    {
+      "script": "scripts/verify-column-forth.py",
+      "args": [
+        "--native DIR"
+      ],
+      "machines": [
+        "jupiter-ace"
+      ],
+      "firmware": [
+        "jupiter-ace/ace.rom"
+      ],
+      "checker": "scripts/check-column-evidence.py"
+    },
+    {
+      "script": "scripts/verify-column-mos.py",
+      "args": [
+        "--native DIR",
+        "--build198x PATH",
+        "--only NAME"
+      ],
+      "machines": [
+        "bbc-micro",
+        "acorn-electron (column routes); also c64, nes, amiga, spectrum in the same script"
+      ],
+      "firmware": [
+        "acorn-bbc-micro/os.rom, basic.rom",
+        "acorn-electron/*",
+        "commodore-c64 kernal/basic/chargen",
+        "commodore-amiga kick13.rom",
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "checker": "scripts/check-column-evidence.py"
+    },
+    {
+      "script": "scripts/verify-tilemaps.py",
+      "args": [
+        "--native DIR",
+        "--only SYSTEM"
+      ],
+      "machines": "10 BASIC tile-map routes",
+      "firmware": [
+        "--rom-dir per system; msx.rom; oric.rom"
+      ],
+      "checker": "scripts/check-tilemaps.py"
+    },
+    {
+      "script": "scripts/verify-native-tilemaps.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--only SYSTEM"
+      ],
+      "machines": "20 native tile-map routes (synthetic reset fixtures, no stock firmware)",
+      "firmware": [],
+      "builder": "cross-platform/patterns/rendering/tile-map/build.py build(system, assembler)",
+      "pins": {
+        "asm198x": "0.0.71"
+      },
+      "checker": "scripts/check-tilemaps.py"
+    },
+    {
+      "script": "scripts/verify-adventure-parser.py",
+      "args": [
+        "--emulator PATH",
+        "--build198x PATH",
+        "--rom PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "build198x": "097892fa\u2026 (local build; re-record with 0.2.13 pending)",
+        "emu198x-spectrum": "0.38.3"
+      },
+      "checker": "scripts/check-pattern-evidence.py --parser (parser-basic, still compares source digests)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/patterns/assembly/framework/profile-a-routine/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--output DIR",
+        "--source FILE",
+        "--ticks N"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K, synthetic zero ROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emu198x-spectrum": "0.48.3"
+      },
+      "checker": "none yet (8b migration)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/patterns/assembly/framework/profile-a-routine/verification/run_checks.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (synthetic zero ROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emu198x-spectrum": "0.48.3"
+      },
+      "checker": "none yet (8b migration)"
+    },
+    {
+      "script": "scripts/verify-z80-adventure-parser.py",
+      "args": [
+        "--emulator PATH",
+        "--assembler PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K snapshot, synthetic ROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emu198x-spectrum": "0.38.3"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/verification/results.json",
+      "checker": "scripts/check-pattern-evidence.py --parser (parser-z80)"
+    },
+    {
+      "script": "scripts/verify-adventure-callers.py",
+      "args": [
+        "--emulator PATH",
+        "--assembler PATH",
+        "--build198x PATH",
+        "--rom PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "build198x": "0.2.13",
+        "emu198x-spectrum": "0.38.3"
+      },
+      "build_programs": "build_programs(assembler, builder, output)",
+      "records": "sinclair-zx-spectrum/patterns/basic/input/two-word-parser/verification/callers/results.json",
+      "checker": "scripts/check-pattern-evidence.py --parser (parser-callers)"
+    },
+    {
+      "script": "scripts/verify-z80-library-routines.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--output DIR",
+        "--only ROUTINE",
+        "--expect-rejection"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K snapshot, synthetic ROM)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.64",
+        "emu198x-spectrum": "0.38.3"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "docs/audit/2026-10-19-pattern-routines/z80.json (copied from results.json)",
+      "checker": "scripts/check-pattern-evidence.py --audit (z80)",
+      "notes": "Asm198x 0.0.75 rejects characters/string-0 (`message` is not a value at `ld hl,message`), so this record stays on its pinned 0.0.64."
+    }
+  ]
+}

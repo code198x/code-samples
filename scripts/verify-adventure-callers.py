@@ -87,10 +87,63 @@ def boot(folder: Path, tap: Path, args):
     return m
 
 
+# The programs the machine loads, as build_programs() leaves them in its output.
+PROGRAMS = ["basic.tap", "ambiguity.tap", "z80.tap"]
+
+
+def build_programs(assembler: str, builder: str, output: str) -> None:
+    """Build both callers and the ambiguity variation into output, without the
+    emulator."""
+    out = Path(output).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        ["make", "-B", "BUILD198X=" + builder],
+        cwd=BASIC,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    subprocess.run(
+        ["make", "-B", "ASM198X=" + assembler],
+        cwd=ASM,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    # A caller variation with two visible objects of the same noun class must
+    # refuse to choose arbitrarily. The parser itself remains unchanged.
+    program = (BASIC / "build/program.bas").read_text()
+    altered = program.replace("LET l(2)=2: LET c(2)=2", "LET l(2)=1: LET c(2)=1")
+    if altered == program:
+        raise ValueError("Ambiguity control did not alter the caller")
+    (out / "basic.tap").write_bytes((BASIC / "build/demo.tap").read_bytes())
+    (out / "z80.tap").write_bytes((ASM / "build/demo.tap").read_bytes())
+    (out / "ambiguity.bas").write_text(altered)
+    subprocess.run(
+        [
+            builder,
+            "basic",
+            "ambiguity.bas",
+            "--machine",
+            "sinclair-zx-spectrum",
+            "-o",
+            "ambiguity.tap",
+        ],
+        cwd=out,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--emulator", required=True)
     p.add_argument("--build198x", required=True)
+    p.add_argument("--assembler", default="asm198x")
     p.add_argument(
         "--rom",
         type=Path,
@@ -101,20 +154,10 @@ def main() -> None:
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     (out / "results.json").unlink(missing_ok=True)
-    subprocess.run(
-        ["make", "BUILD198X=" + args.build198x],
-        cwd=BASIC,
-        check=True,
-        capture_output=True,
-        text=True,
-        timeout=30,
-    )
-    subprocess.run(
-        ["make"], cwd=ASM, check=True, capture_output=True, text=True, timeout=30
-    )
+    build_programs(args.assembler, args.build198x, str(out))
     rom = args.rom.read_bytes()
     checks = []
-    m = boot(BASIC, BASIC / "build/demo.tap", args)
+    m = boot(BASIC, out / "basic.tap", args)
     try:
         seen = text(m, rom)
         if "THE LANTERN ROOM" not in seen:
@@ -150,32 +193,6 @@ def main() -> None:
         m.call("save_screenshot", path=str(out / "basic-adventure.png"))
     finally:
         m.close()
-    # A caller variation with two visible objects of the same noun class must
-    # refuse to choose arbitrarily. The parser itself remains unchanged.
-    altered = (
-        (BASIC / "build/program.bas")
-        .read_text()
-        .replace("LET l(2)=2: LET c(2)=2", "LET l(2)=1: LET c(2)=1")
-    )
-    if altered == (BASIC / "build/program.bas").read_text():
-        raise ValueError("Ambiguity control did not alter the caller")
-    (out / "ambiguity.bas").write_text(altered)
-    subprocess.run(
-        [
-            args.build198x,
-            "basic",
-            "ambiguity.bas",
-            "--machine",
-            "sinclair-zx-spectrum",
-            "-o",
-            "ambiguity.tap",
-        ],
-        cwd=out,
-        check=True,
-        capture_output=True,
-        text=True,
-        timeout=30,
-    )
     m = boot(out, out / "ambiguity.tap", args)
     try:
         command(m, "TAKE LAMP")
@@ -193,7 +210,7 @@ def main() -> None:
     finally:
         m.close()
     sym = T.symbols(ASM / "build/demo.sym")
-    m = boot(ASM, ASM / "build/demo.tap", args)
+    m = boot(ASM, out / "z80.tap", args)
     try:
         T.require(T.memory(m, sym["ready"], 2) == 0xCAFE, "Inspector not ready")
         for value in [
@@ -252,6 +269,10 @@ def main() -> None:
         "observer_sha256": O.sha(Path(__file__)),
         "emulator_sha256": O.sha(Path(args.emulator)),
         "firmware_sha256": O.sha(args.rom),
+        "assembler_sha256": O.sha(Path(args.assembler)),
+        "build198x_sha256": O.sha(Path(args.build198x)),
+        # Each program the machine loads, so the checker can rebuild it.
+        "programs": {name: O.sha(out / name) for name in PROGRAMS},
         "limits": __doc__,
     }
     (out / "results.json").write_text(json.dumps(report, indent=2) + "\n")

@@ -2,74 +2,14 @@
   {
     "name": "z80",
     "record": "docs/audit/2026-10-19-pattern-routines/z80.json",
-    "bindings": [
-      {
-        "path": "scripts/verify-z80-library-routines.py",
-        "record_keys": [
-          "observer_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/input/keyboard-reading/keyboard-code.inc",
-        "record_keys": [
-          "cases",
-          0,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/character-printing/characters.inc",
-        "record_keys": [
-          "cases",
-          1,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/attribute-writing/attributes.inc",
-        "record_keys": [
-          "cases",
-          2,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/masked-sprites/masked.inc",
-        "record_keys": [
-          "cases",
-          3,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/numeric-display/numeric.inc",
-        "record_keys": [
-          "cases",
-          4,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "cross-platform/patterns/rendering/sprite-animation/z80.inc",
-        "record_keys": [
-          "cases",
-          5,
-          "source_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/framework/input-to-sound/input.inc",
-        "record_keys": [
-          "input_dependency_sha256"
-        ]
-      },
-      {
-        "path": "sinclair-zx-spectrum/patterns/assembly/rendering/bitmap-addressing/bitmap-addressing.inc",
-        "record_keys": [
-          "bitmap_dependency_sha256"
-        ]
-      }
-    ]
+    "bindings": [],
+    "recorder": {
+      "script": "scripts/verify-z80-library-routines.py",
+      "args": [
+        "{asm198x}",
+        "{output}"
+      ]
+    }
   },
   {
     "name": "basic",

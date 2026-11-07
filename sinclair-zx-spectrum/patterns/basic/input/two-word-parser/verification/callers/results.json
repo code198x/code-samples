@@ -144,8 +144,15 @@
     "scripts/verify-basic-library-routines.py": "a56c4b56ea8363e20d0797624e163ee87d575e214baa65c03071cb557d6524d5",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
-  "observer_sha256": "69bb7737161b20c3fb141dc0167f3af4a79af668c12d05fa4f66917f27e88fc4",
+  "observer_sha256": "e8eb0de3fd36a2bfbde44e876aeac45afcaa6b8afdcbf43e36eb14c9272b0b00",
   "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
   "firmware_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "build198x_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+  "programs": {
+    "basic.tap": "b1bc0c8e0a4a461d19cb8d92f5dd9a87771b1e1e289c09dec0f42392867b8a23",
+    "ambiguity.tap": "020ad9a88123c3a71cfdbd530aab84fca0660dbec55e7f429c5a493317c9bc55",
+    "z80.tap": "2c7ad7a30cb84c0eb84074bba0152ddb8fbbb414b47c891492804569961b8ecc"
+  },
   "limits": "ROM-load the unmodified BASIC adventure and Z80 command inspector; type commands.\n\nPixel text is decoded from the configured ROM font; Z80 results are read from\nnamed state. These are paced keyboard tests, not a guarantee for every typing speed.\n"
 }

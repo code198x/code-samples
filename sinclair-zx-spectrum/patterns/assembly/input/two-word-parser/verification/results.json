@@ -10,11 +10,28 @@
     "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/parser.inc": "418c8040b79f3ad5c6d029cba950e3a31f031f45055b34fc6d7f953869c9ead4",
     "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/vocabulary.json": "bf4be59d7fb94b4ca21cea8de6075886313f51200ca5fec764873981807f7af0",
     "sinclair-zx-spectrum/patterns/assembly/input/two-word-parser/generate_vocabulary.py": "8cd05d70feabc57c327d4138a140ca423b415f7ec4a83e7725724eee2e6edae1",
-    "scripts/verify-z80-library-routines.py": "a1297ce67f4b72b9255562cc81161496baba1597a315073251b13ae815c92b61",
+    "scripts/verify-z80-library-routines.py": "c1c2472e754f7b38adb1209fe4914d72d84eab5eec97800b760fc8b340e60845",
     "scripts/verify-adventure-parser.py": "f300f6dc0d14929a841692f0b7d95fdb6781230e9620825649248dd6aa5cf580",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
-  "observer_sha256": "ab35ab872cdd9e2c2ea1ad8f7e86eeba7fb99e94428b35f0c91bb5f152622d01",
+  "observer_sha256": "fd4b1c3b4381c4600fc95366bbfd5a28774343a9088f50fa58d3e6957dbfa035",
   "emulator_sha256": "e9ef187effa32583470767a7656b599b700b0d222da83fad4ce163a0055cea77",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "commands-0/caller.sna": "1c65a0c08c0398b3e1e904a86bbc1807d2aa48ee8f553185b86fc2e05ed8998f",
+    "commands-1/caller.sna": "c2b830956c07aed674c14a7f8ef45f3c262431b1a49f84093f663bca8666ad0f",
+    "commands-2/caller.sna": "bc12f708c57a393c0c570bfb2895ffd97df04c95d8b0a9964bafaee4ebb53330",
+    "commands-3/caller.sna": "0143d94de5a4840335964a16142d06b70f74a06d38793fa13473884d08a31cc3",
+    "commands-4/caller.sna": "64b1d2b682c58d1a2a16f99f96d1afe46402df028057ce736e609fbdb503cb99",
+    "commands-5/caller.sna": "0fe6b25141197532d3b584b1ad2d2c4353611d7ba7e2e1a598c24e8d85321bc3",
+    "commands-6/caller.sna": "9fc87d15e615016c3b252158b8bffa285f5845b6c65a5ac510408b6f8db101a0",
+    "commands-7/caller.sna": "8c6d38962c746e8dff90a3d6f3c83a8a8639525563832c9d5fb6a1bc3ffe59ce",
+    "commands-8/caller.sna": "456c9be0abee701024f5f554742fc6c9d022cbe6042190995c07d45bd7757bb4",
+    "commands-9/caller.sna": "010b695674e10a14403d61538dcc871e49d977a976159109dbaebda52cdeb647",
+    "commands-10/caller.sna": "aa3ac15e365c594943abdd946b94141d6aeaf9b8ac02983283a9e6064e5c91c2",
+    "not-ready/caller.sna": "840fea9dfff76986c878bf9f0115a78eeee1069950fe8328723916bc6c622e3f",
+    "custom/caller.sna": "fe7f07b0a99b02d6933afeaab7549753b50ea9f0c20e97718c534835ee075715",
+    "negative-extra-word/caller.sna": "abe3c302a2ec352fd7f84e46ff9a8c331e093c94015bf4be8f184ebac94741bd"
+  },
   "limits": "Run the counted-byte Z80 parser against the same independent command oracle.\n\n48K RAM snapshot, synthetic ROM, DI, code/stack in uncontended RAM. This is not\nROM keyboard, timing/contention, original-hardware or complete-game evidence.\n"
 }

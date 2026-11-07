@@ -131,11 +131,39 @@ class ParserConfigurationTests(unittest.TestCase):
 
 
 class ParserEvidenceTests(unittest.TestCase):
+    def parser_fixture(self, name: str) -> tuple[dict, dict]:
+        selection = json.loads(E.PARSER_SELECTION.read_text())
+        fixture = next(f for f in selection if f["name"] == name)
+        return fixture, json.loads((ROOT / fixture["record"]).read_text())
+
+    def test_forged_program_is_rebuilt(self):
+        """A record claiming other program bytes is caught only by the rebuild."""
+        for name in ["parser-z80", "parser-callers"]:
+            fixture, record = self.parser_fixture(name)
+            program = next(iter(record["programs"]))
+            record["programs"][program] = "0" * 64
+            with (
+                self.subTest(name=name),
+                self.assertRaisesRegex(AssertionError, "^Program bytes differ"),
+            ):
+                E.require_programs(name, fixture["recorder"], record)
+
+    def test_source_digests_are_provenance(self):
+        """Rewritten source and recorder digests leave the programs valid."""
+        for name in ["parser-z80", "parser-callers"]:
+            fixture, record = self.parser_fixture(name)
+            record["sources"] = dict.fromkeys(record["sources"], "0" * 64)
+            record["observer_sha256"] = "0" * 64
+            with self.subTest(name=name):
+                self.assertGreater(
+                    E.require_programs(name, fixture["recorder"], record), 0
+                )
+
     def test_record_set_is_complete_and_current(self):
         selection = json.loads(E.PARSER_SELECTION.read_text())
         result = E.inspect(ROOT, selection, E.PARSER_BINDINGS)
         self.assertEqual(result["failures"], [])
-        self.assertEqual(result["bindings_checked"], 27)
+        self.assertEqual(result["bindings_checked"], 4)
         with self.assertRaises(ValueError):
             E.inspect(ROOT, selection[:-1], E.PARSER_BINDINGS)
         selection[0]["bindings"].pop()
