@@ -4,7 +4,7 @@
   "startup": "32 KiB homebrew cartridge, reset, default model; no firmware",
   "server": {
     "name": "emu198x-sega-master-system",
-    "version": "0.34.2"
+    "version": "0.48.3"
   },
   "untimed_idle_frames": 120,
   "held_frames_without_repeat": 30,
@@ -53,15 +53,37 @@
     }
   },
   "limits": "Default-model emulator evidence; polling collapses missed frame announcements. A deadline is 120 accepted ticks, not a universal two seconds. No original hardware, rendered tile/sprite path or whole-emulator claim.",
-  "emulator_sha256": "6933f85f8696f987a41407e2103692e4a4e11df379e036fedea5668a1deb169d",
+  "emulator_sha256": "14338171b8ceeb15be100f027737ffc185f7392ad03ea930aa3927c46420acc3",
   "binary_sha256": "bc9d300401595e043af53aa348519302cfb6a481889c3db42cceb1d59a238caf",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "demo.sms": "bc9d300401595e043af53aa348519302cfb6a481889c3db42cceb1d59a238caf",
+    "no-wait.sms": "c34665b21370aa6a422f9dab216fff09305b3814017206be127ba2c74ba6bd7e",
+    "no-edge.sms": "b0a474d5403f6425a7ec7ba6740f88979719c8a332ebb79d87b089e687055053"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-sega-master-system",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "14338171b8ceeb15be100f027737ffc185f7392ad03ea930aa3927c46420acc3"
+    }
+  },
   "sources_sha256": {
     "sega-master-system/patterns/assembly/framework/turn-deadline/demo.asm": "5416cdfa86de7c7ad692a24c74ca5b44d3c9df8b5dd3f35de9b8ebf22f6d6718",
     "sega-master-system/patterns/assembly/framework/turn-deadline/frame.inc": "dadd35ee72520ea54ae8608077462421793fd11964f29c76c65579ddaa590deb",
     "sega-master-system/patterns/assembly/framework/turn-deadline/Makefile": "7d056676e290abb420ed3b1d11d6d512d9e00f83e995ec22fd43440842fbc54f",
     "cross-platform/assembly/framework/turn-deadline/turn.inc": "a03f3c309e58889da667cabca145105d407a37cef6cbb04baf751dcd7b89c4cc",
     "scripts/build-sega-probe.py": "ea7f375b2c9f7549e9bcc0add9db92218f624d43f727e68c27074bb1c7465a2b",
-    "scripts/verify-sega-turns.py": "56bb7e45fc7ec9f55ec954eee8d4069aeb3bb27558ea4d4c751cba48a862b33a",
+    "scripts/verify-sega-turns.py": "eb8ef982a185e83f5137762aaa29151e7a789d1b8631c077613cc570895f9df8",
     "scripts/verify-game-loops.py": "d0a779f5e3722d2c66af9372dee556bb9900bbed9d81298b16aa75b20056ec3b"
   },
   "negative_controls": {
