@@ -31,9 +31,9 @@
       "passed": true
     }
   ],
-  "date": "2026-10-07",
-  "assembler_sha256": "886af887f5b26b3adf65947d79a3dd9c637cd7b822cd6f86cc68350cbc14c760",
-  "emulator_sha256": "9cb6fb3cc3939cb512e96b2ada68cf2b7f9fc6441b61dd3ab6170b16a8b0ddf9",
+  "date": "2026-11-07",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "emulator_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167",
   "verifier_sha256": "8dc78530088827bc4a41f3f36b81f22b9990a65c3087a69d669914193ba7882c",
   "check_runner_sha256": "c4b6d85d64516e2ea8d3e0d18e14ba6f7b138f9146893ff18473a86150a38261"
 }
