@@ -3,8 +3,13 @@
   "octants": 8,
   "pixels_per_line": 32,
   "source_sha256": "d69c550dc1aad8bc04788692b9c9e2a618d503137a36c08f9d8b27048b206e48",
-  "observer_sha256": "d76cdd8bae5741d799c5b625b385824ec3f000be4fc558a910cc1ffac941e704",
+  "observer_sha256": "183c7f86fb9eb8faf922c28763636155cb284cc4ecabee4a8568c03a7529ca84",
   "binary_sha256": "64b539df49dc64de02fa0bfe40134dd5897e587ecb2783230d6ed4af8b65b6bc",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "build198x_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+  "programs": {
+    "demo.adf": "0d1ccd08b88221342ff17c69f558f6688635b6a73f968a991fb56c7cd7ba8ea8"
+  },
   "emulator_sha256": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb",
   "firmware_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53",
   "limits": "Boot an original caller and compare actual blitter output with line geometry.\n\nA500 OCS PAL with local Kickstart1.3; no original-hardware conformance claim.\nThe line oracle permits all eight octant encodings but requires every encoding\nproduce a different correct reflection. It does not copy the blitter error loop.\n"

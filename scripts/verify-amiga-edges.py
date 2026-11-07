@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -26,25 +27,16 @@ def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def main() -> None:
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--emulator", required=True)
-    p.add_argument("--build198x", required=True)
-    p.add_argument("--output", type=Path, required=True)
-    p.add_argument(
-        "--kickstart",
-        type=Path,
-        default=Path.home() / ".emu198x/roms/commodore-amiga/kick13.rom",
-    )
-    args = p.parse_args()
-    out = args.output.resolve()
+SOURCES = [
+    ROOT / "commodore-amiga/patterns/assembly/input/joystick-edge-detection/edges.inc",
+    ROOT / "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc",
+]
+
+
+def build(assembler: str, builder: str, out: Path) -> bytes:
+    """Write and build the edge caller's disk in out; return the expected output."""
     out.mkdir(parents=True, exist_ok=True)
-    (out / "results.json").unlink(missing_ok=True)
-    sources = [
-        ROOT
-        / "commodore-amiga/patterns/assembly/input/joystick-edge-detection/edges.inc",
-        ROOT / "commodore-amiga/patterns/assembly/framework/input-to-sound/input.inc",
-    ]
+    sources = SOURCES
     masks = [
         sum(bit for n, bit in enumerate([0x100, 1, 0x200, 2, 0x10]) if value & (1 << n))
         for value in range(32)
@@ -69,7 +61,7 @@ def main() -> None:
     (out / "demo.asm").write_text(body)
     for command in [
         [
-            "asm198x",
+            assembler,
             "--dialect",
             "vasm",
             "--exe",
@@ -78,11 +70,36 @@ def main() -> None:
             "-o",
             "demo",
         ],
-        [args.build198x, "adf", "demo", "-o", "demo.adf", "--name", "demo"],
+        [builder, "adf", "demo", "-o", "demo.adf", "--name", "demo"],
     ]:
         subprocess.run(
             command, cwd=out, capture_output=True, text=True, timeout=40, check=True
         )
+    return bytes(expected)
+
+
+def build_programs(assembler: str, builder: str, output: str) -> None:
+    """Build the caller's disk into output/demo.adf, without the emulator."""
+    build(assembler, builder, Path(output).resolve())
+
+
+def main() -> None:
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--emulator", required=True)
+    p.add_argument("--build198x", required=True)
+    p.add_argument("--assembler", default="asm198x")
+    p.add_argument("--output", type=Path, required=True)
+    p.add_argument(
+        "--kickstart",
+        type=Path,
+        default=Path.home() / ".emu198x/roms/commodore-amiga/kick13.rom",
+    )
+    args = p.parse_args()
+    out = args.output.resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "results.json").unlink(missing_ok=True)
+    expected = build(args.assembler, args.build198x, out)
+    sources = SOURCES
     sym = T.symbols(out / "demo.sym")
     m = T.Machine(
         [
@@ -131,6 +148,10 @@ def main() -> None:
         "observer_sha256": sha(Path(__file__)),
         "emulator_sha256": sha(Path(args.emulator)),
         "firmware_sha256": sha(args.kickstart),
+        "assembler_sha256": sha(Path(shutil.which(args.assembler) or args.assembler)),
+        "build198x_sha256": sha(Path(args.build198x)),
+        # The disk the machine boots, so the checker can rebuild it.
+        "programs": {"demo.adf": sha(out / "demo.adf")},
         "limits": __doc__,
     }
     (out / "results.json").write_text(json.dumps(report, indent=2) + "\n")

@@ -509,8 +509,14 @@
     "commodore-amiga/patterns/assembly/audio/four-channel-music/music.inc": "095400e0fcc9c70e664cfff564b0d645826eca9929f6c1b86cf1028b16e09bc8",
     "commodore-amiga/patterns/assembly/framework/game-loop/frame.inc": "977d89830ee8c49b67d342fdf9bc7c083514a2eda29e180f9a622ad3278f72ce"
   },
-  "observer_sha256": "1e4868c430d663b9e48498236b778e9448e548a600c78e2ea28c835735bedfc8",
+  "observer_sha256": "10ffaf6589fd7037c068277642d4e81b7ab5d2e6d9880826ccb6454ba7d34486",
   "emulator_sha256": "1fc41baa9b139014ebe65e168812925bd32f835096c5213a96887a4a2f2426bb",
   "firmware_sha256": "ee05862d8102a08436ac4056da7d549db31625c7d47b24dfb7b3c9a5c113ca53",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "build198x_sha256": "f2dd9179533705c02e88e4a8f86c0e7940392d458b68e74e49041e82f655cfe7",
+  "programs": {
+    "playing/demo.adf": "682ce52f4e3924e5a254ed6c40a0479effc0f7a54740c45aa25045e2a6bd3e54",
+    "dma-disabled/demo.adf": "9c621c6ceeeadb1d2d79ea78167cb73d37431c77eda5eabd6abfddad3bb82198"
+  },
   "limits": "Named configuration and bounded waveform sequencer only. No MOD-format, tracker effects, original-hardware or pitch-accuracy qualification."
 }
