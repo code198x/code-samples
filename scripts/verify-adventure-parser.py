@@ -364,6 +364,11 @@ def main() -> None:
         "emulator_sha256": sha(Path(args.emulator)),
         "firmware_sha256": sha(args.rom),
         "build198x_sha256": sha(Path(args.build198x)),
+        # Each caller's tape, so the program can be rebuilt and compared.
+        "caller_taps": {
+            str(tape.parent.relative_to(args.output)): sha(tape)
+            for tape in sorted(args.output.glob("*/caller.tap"))
+        },
         "limits": __doc__,
     }
     (args.output / "results.json").write_text(json.dumps(report, indent=2) + "\n")
