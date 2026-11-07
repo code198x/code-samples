@@ -110,13 +110,14 @@ def caller(body):
     demo = (ROOT / 'demo.asm').read_text()
     start = demo.index('    lda #%00000001')
     end = demo.index('hold:')
-    text = demo[:start] + body + '\n' + demo[end:]
-    return text.replace('.include "square-wave.inc"', f'.include "{ROOT / "square-wave.inc"}"')
+    # The caller keeps demo.asm's relative include; programs() puts a copy of
+    # square-wave.inc beside it, so the text is the same on every machine.
+    return demo[:start] + body + '\n' + demo[end:]
 
 
 def assemble(source, rom, assembler='asm198x'):
     result = subprocess.run([assembler, '--dialect', 'ca65', str(source), '-o', str(rom)],
-                            capture_output=True, text=True, cwd=ROOT)
+                            capture_output=True, text=True, cwd=Path(source).parent)
     assert result.returncode == 0, result.stderr + result.stdout
 
 
@@ -184,6 +185,7 @@ def programs(output):
         directory.mkdir(parents=True, exist_ok=True)
         source = directory / 'caller.asm'
         source.write_text(caller(body))
+        shutil.copyfile(ROOT / 'square-wave.inc', directory / 'square-wave.inc')
         builds[name] = source
     return builds
 
