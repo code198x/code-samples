@@ -26,11 +26,21 @@ class AuditTests(unittest.TestCase):
         selection = json.loads(E.AUDIT_SELECTION.read_text())
         report = E.inspect(ROOT, selection, E.AUDIT_BINDINGS)
         self.assertEqual(report["failures"], [])
-        self.assertGreater(report["bindings_checked"], 28)
+        # Each fixture still checks something: declared bindings, or the
+        # programs its recorder rebuilds.
+        self.assertEqual(report["bindings_checked"], sum(E.AUDIT_BINDINGS.values()))
+        for fixture in report["fixtures"]:
+            self.assertTrue(
+                fixture["bindings"] or fixture.get("programs_rebuilt"), fixture["name"]
+            )
         with self.assertRaises(ValueError):
             E.inspect(ROOT, selection[:-1], E.AUDIT_BINDINGS)
         changed = copy.deepcopy(selection)
-        changed[0]["bindings"].pop()
+        next(f for f in changed if f["bindings"])["bindings"].pop()
+        self.assertTrue(E.inspect(ROOT, changed, E.AUDIT_BINDINGS)["failures"])
+        # A recorder fixture with its recorder removed checks nothing, so fails.
+        changed = copy.deepcopy(selection)
+        del next(f for f in changed if "recorder" in f)["recorder"]
         self.assertTrue(E.inspect(ROOT, changed, E.AUDIT_BINDINGS)["failures"])
 
     def test_changed_routine_or_observer_and_failed_record_rejected(self):
@@ -45,7 +55,8 @@ class AuditTests(unittest.TestCase):
                     p = root / name
                     p.parent.mkdir(parents=True, exist_ok=True)
                     p.write_bytes((ROOT / name).read_bytes())
-            for binding in selection[0]["bindings"][:2]:
+            bound = next(f for f in selection if f["bindings"])
+            for binding in bound["bindings"][:2]:
                 path = root / binding["path"]
                 before = path.read_bytes()
                 path.write_bytes(before + b"\n; changed\n")
