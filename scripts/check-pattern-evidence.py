@@ -106,6 +106,8 @@ def inspect(
                 raise ValueError("Audit record must describe a passing execution")
             if "recorder" in fixture:
                 rebuilt = require_programs(name, fixture["recorder"], record)
+            elif not bindings:
+                raise ValueError("Fixture names no recorder and binds no input")
             for binding in bindings:
                 expected = record
                 keys = binding["record_keys"]
