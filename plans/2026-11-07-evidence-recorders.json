@@ -688,6 +688,27 @@
       "fresh_run": "check-pattern-evidence.py runs it again and compares every field except python_version and sources_sha256",
       "records": "cross-platform/patterns/physics/aabb-collision/verification/results.json",
       "checker": "scripts/check-pattern-evidence.py (aabb); its CI job also runs it fresh"
+    },
+    {
+      "script": "scripts/verify-sega-turns.py",
+      "args": [
+        "--native DIR",
+        "--assembler PATH",
+        "--only SYSTEM"
+      ],
+      "machines": [
+        "sega-master-system",
+        "sega-game-gear",
+        "sega-sg-1000"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3"
+      },
+      "build_programs": "build_programs(system, assembler, output): the caller and its no-wait and no-edge negatives",
+      "records": "*/patterns/assembly/framework/turn-deadline/verification/results.json (copied from build/verification/results.json)",
+      "checker": "scripts/check-probe-coverage.py (untimed-and-timed-turns rows)"
     }
   ]
 }
