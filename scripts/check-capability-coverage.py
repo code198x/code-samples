@@ -8,13 +8,54 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
+import tomllib
 import wave
 from pathlib import Path
 
-import tomllib
-
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load_evidence_bytes():
+    found = importlib.util.spec_from_file_location(
+        "coverage_evidence_bytes", ROOT / "scripts/evidence_bytes.py"
+    )
+    assert found and found.loader
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
+E = _load_evidence_bytes()
+# These records belong to check-dragon-ace-loops.py, which judges their programs.
+OWNED = {"dragon", "jupiter-ace"}
+
+
+def require_program(root: Path, machine: str, record: dict) -> None:
+    """Judge a record by the program the machine was given, not script digests.
+
+    Typed routes compare the typed demo with its recorded digest (rule 2).
+    Records another checker owns are left to it. Host-built programs still
+    compare their source digests until their family is re-recorded.
+    """
+    if machine in OWNED:
+        return
+    sources = record.get("sources_sha256", record.get("sources", {}))
+    if not record.get("binary_sha256"):
+        demos = [n for n in sources if Path(n).name in ("demo.bas", "demo.fth")]
+        if len(demos) != 1:
+            raise ValueError(f"No typed demo identified: {machine}")
+        E.require_typed((root / demos[0]).read_text(), sources[demos[0]], demos[0])
+        return
+    for name, digest in sources.items():
+        if name.startswith("scripts/") or "build" in Path(name).parts:
+            continue
+        path = root / name
+        if not path.is_file() or E.sha256(path.read_bytes()) != digest:
+            raise ValueError(f"Source missing or changed since qualification: {name}")
+
+
 CORE = {
     "commodore-c64",
     "sinclair-zx-spectrum",
@@ -70,9 +111,6 @@ def validate(root: Path, manifest: dict, registry: dict | None = None) -> dict:
         {row["machine_id"] for row in rows if row["role"] == "composition"} == CORE,
         "Five commissioned compositions must remain present",
     )
-    for name, digest in manifest.get("verification_tools", {}).items():
-        checked_file(root, name, digest)
-    require(bool(manifest.get("verification_tools")), "Missing verifier identities")
     sound_count = 0
     for row in rows:
         name = row["machine_id"]
@@ -80,10 +118,8 @@ def validate(root: Path, manifest: dict, registry: dict | None = None) -> dict:
         record_path = checked_file(root, row["record"], row["record_sha256"])
         record = json.loads(record_path.read_text())
         require(record.get("status") == "passed", f"No passing record: {name}")
-        sources = record.get("sources", {})
-        require(bool(sources), f"No identified sources: {name}")
-        for path, digest in sources.items():
-            checked_file(root, path, digest)
+        require(bool(record.get("sources")), f"No identified sources: {name}")
+        require_program(root, name, record)
         for capability in ("input", "drawing"):
             require(
                 row[capability]["status"] == "executed"
