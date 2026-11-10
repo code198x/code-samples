@@ -1,9 +1,9 @@
 {
   "target": "stock 48K PAL",
-  "asm198x_version": "asm198x v0.0.58",
+  "asm198x_version": "asm198x v0.0.77",
   "pasmo_banner": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
-  "pasmo_sha256": "e5d0a100f96c3b513393cf3fe9ba1ff3e1ce4f0439b80217764ed695856ab692",
-  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "pasmo_sha256": "9756e9b5a3883fbb7d568a2876f6ce73db8815c3badac8787d2c18cb3bc58ec0",
+  "emulator_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "checks": [
     {
       "source": "first-program.asm",
@@ -29,5 +29,36 @@
       "native_and_pasmo_equal": true,
       "both_fresh_tapes_executed": true
     }
-  ]
+  ],
+  "assembler_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb",
+  "programs": {
+    "asm198x/first-program.bin": "dd8ac8f622865a4761579e123155f742971cd9bdad2cd2abcc5a10629dcb8144",
+    "asm198x/first-program.tap": "d9e24b9c6d94925216e384c6200b2061bf27d05dc2cbdbbba867f9c1bfb81292",
+    "asm198x/one-byte.bin": "c5e6f0488ce6bf502e30bf855115ea7c714371d115e813a2aca25182f3ac7f58",
+    "asm198x/one-byte.tap": "39e7e210cb0f57773d128995701d9cea046ad201d43eabcbb992457dce611b2d",
+    "asm198x/eight-rows.bin": "ed76e3cb7c53ff7f660b183cc4490496b1727490572144cd82e141fff399f299",
+    "asm198x/eight-rows.tap": "bfc61cd532536e73b0b9d223fc3ddc22e52e6d38149ede6a522a08f8340571ec"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.77",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.77",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.5",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.5",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4"
+    },
+    "pasmo": {
+      "tool": "Pasmo",
+      "version": "0.5.5",
+      "executable_sha256": "9756e9b5a3883fbb7d568a2876f6ce73db8815c3badac8787d2c18cb3bc58ec0"
+    }
+  },
+  "status": "passed"
 }

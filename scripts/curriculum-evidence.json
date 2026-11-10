@@ -289,5 +289,32 @@
     "{build198x}"
    ]
   }
+ },
+ {
+  "name": "meet-assembly-opening",
+  "record": "sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/release/native-results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "meet-assembly-first-lessons",
+  "record": "sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/evidence/native-results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "first-program.asm",
+    "one-byte.asm",
+    "eight-rows.asm"
+   ]
+  }
  }
 ]
