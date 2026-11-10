@@ -1,18 +1,29 @@
 """Compare native assemblers; execute freshly loaded tapes on a stock 48K."""
-import argparse,hashlib,importlib.util,json,re,subprocess
+import argparse,hashlib,importlib.util,json,re,shutil,subprocess
 from pathlib import Path
+from types import ModuleType
 ROOT=Path(__file__).resolve().parents[1]
 DONOR=ROOT.parents[2]/'basic/meet-basic/opening/verification/verify.py'
 spec=importlib.util.spec_from_file_location('transport',DONOR);transport=importlib.util.module_from_spec(spec);spec.loader.exec_module(transport)
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def build_programs(assembler:str,output:str|Path,*sources:str)->None:
+ """Assemble each source (all opening samples when none is named) to asm198x/<name>.{bin,tap} under output, without the emulator. Names are relative, so a tape's CODE block is the same in any checkout."""
+ native=Path(output).resolve()/'asm198x';native.mkdir(parents=True,exist_ok=True)
+ for source in [ROOT/s for s in sources] or sorted(ROOT.glob('*.asm')):
+  for flag,ext in [('--bin','bin'),('--tapbas','tap')]:subprocess.run([assembler,'--dialect','pasmo','--cpu','z80',*([flag] if ext=='tap' else []),str(source),'-o',f'{source.stem}.{ext}'],check=True,cwd=native,capture_output=True)
+
+def evidence_bytes()->ModuleType:
+ spec=importlib.util.spec_from_file_location('evidence_bytes',ROOT.parents[3]/'scripts/evidence_bytes.py');e=importlib.util.module_from_spec(spec);spec.loader.exec_module(e);return e
 def main():
- p=argparse.ArgumentParser();p.add_argument('--source',help='One source filename instead of all opening samples');p.add_argument('--pasmo',required=True);p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True);report=[]
- for source in ([ROOT/a.source] if a.source else ROOT.glob('*.asm')):
+ p=argparse.ArgumentParser();p.add_argument('--source',nargs='+',default=[],help='Source filenames instead of all opening samples');p.add_argument('--pasmo',required=True);p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--assembler',default='asm198x');a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True);report=[]
+ build_programs(a.assembler,out,*a.source);programs={}
+ for source in [ROOT/s for s in a.source] or sorted(ROOT.glob('*.asm')):
   name=source.stem;native=out/'asm198x'/name;reference=out/'pasmo'/name
-  native.parent.mkdir(exist_ok=True);reference.parent.mkdir(exist_ok=True)
+  reference.parent.mkdir(exist_ok=True)
   for flag,ext in [('--bin','bin'),('--tapbas','tap')]:
-   subprocess.run(['asm198x','--dialect','pasmo','--cpu','z80',*([flag] if ext=='tap' else []),str(source),'-o',str(native.with_suffix('.'+ext))],check=True)
-   subprocess.run([a.pasmo,flag,str(source),str(reference.with_suffix('.'+ext)),*([str(reference.with_suffix('.sym'))] if ext=='bin' else [])],check=True)
+   subprocess.run([a.pasmo,flag,str(source),f'{name}.{ext}',*([f'{name}.sym'] if ext=='bin' else [])],check=True,cwd=reference.parent)
+  programs.update({f'asm198x/{name}.{ext}':sha(native.with_suffix('.'+ext)) for ext in ('bin','tap')})
   data=native.with_suffix('.bin').read_bytes();assert data==reference.with_suffix('.bin').read_bytes()
   for tool,path in [('asm198x',native),('pasmo',reference)]:
    m=transport.Spectrum(a.emulator,out)
@@ -72,6 +83,9 @@ def main():
     print('PASS',name,tool,'fresh tape, code, display',flush=True)
    finally:m.close()
   report.append({'source':source.name,'source_sha256':sha(source),'code_sha256':sha(native.with_suffix('.bin')),'code_bytes':len(data),'native_and_pasmo_equal':True,'both_fresh_tapes_executed':True})
- result={'target':'stock 48K PAL','asm198x_version':subprocess.run(['asm198x','--version'],capture_output=True,text=True).stderr.strip(),'pasmo_banner':subprocess.run([a.pasmo],capture_output=True,text=True).stderr.splitlines()[0],'pasmo_sha256':sha(Path(a.pasmo)),'emulator_sha256':sha(Path(a.emulator)),'checks':report}
+ e=evidence_bytes()
+ result={'target':'stock 48K PAL','asm198x_version':subprocess.run([a.assembler,'--version'],capture_output=True,text=True).stderr.strip(),'pasmo_banner':subprocess.run([a.pasmo],capture_output=True,text=True).stderr.splitlines()[0],'pasmo_sha256':sha(Path(a.pasmo)),'emulator_sha256':sha(Path(a.emulator)),'checks':report,
+  'assembler_sha256':sha(Path(shutil.which(a.assembler) or a.assembler)),'programs':programs,
+  'tools':{'assembler':e.tool_identity(a.assembler),'emulator':e.tool_identity(a.emulator),'pasmo':e.tool_identity(a.pasmo)},'status':'passed'}
  (out/'native-results.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()
