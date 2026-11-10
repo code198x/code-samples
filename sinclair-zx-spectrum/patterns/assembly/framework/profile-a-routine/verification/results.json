@@ -293,6 +293,26 @@
       ]
     }
   ],
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167"
+    }
+  },
+  "programs": {
+    "loop/program.sna": "30e912018fdbac4aba474a559425f42ad7497dc9d68afbb1818d2fa1851871ea",
+    "unrolled/program.sna": "1b8e07e5bc2b20e0209e96f6d49c1a973dfed0f1b2a169b5708e68b6c971579d"
+  },
   "saved_t_states": 312.0,
   "extra_bytes": 6
 }

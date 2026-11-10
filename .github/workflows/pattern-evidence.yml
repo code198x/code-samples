@@ -121,6 +121,11 @@ jobs:
             run: |
               python scripts/check-pattern-evidence.py --audit --output "$RUNNER_TEMP/pattern-evidence/routine-audit-inputs.json"
               python -m unittest discover -s scripts -p test_routine_audit.py -v
+          - name: Check pattern-local recorders' programs and the Amiga sample controls
+            run: |
+              python scripts/check-pattern-evidence.py --local --output "$RUNNER_TEMP/pattern-evidence/local-recorded-inputs.json"
+              python -m unittest discover -s scripts -p test_pattern_local_evidence.py -v
+              python -m unittest discover -s commodore-amiga/patterns/assembly/audio/playing-a-sample/verification -p test_verify.py -v
           - name: Check adventure-parser evidence and configuration controls
             run: |
               python scripts/check-pattern-evidence.py --parser --output "$RUNNER_TEMP/pattern-evidence/parser-recorded-inputs.json"

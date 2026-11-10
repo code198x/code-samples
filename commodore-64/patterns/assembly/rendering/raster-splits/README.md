@@ -86,7 +86,10 @@ Specification Sheet*, drawing 318014, sheets 11 (raster and IRQ registers)
 and 15 (system interface and DMA). Also Commodore, *Commodore 64
 Programmer's Reference Guide* (1983), pp. 150–152 (raster/IRQ registers).
 
-Recorded tools: Asm198x 0.0.58, ACME 0.97, Emu198x revision
-`df2799e220a10de6a3bc0f14f04c6506363cb7d3` and VICE 3.10. The tested
+Recorded tools: Asm198x 0.0.75, ACME 0.97, Emu198x 0.45.1 and VICE 3.10.
+Emu198x 0.46.1 and later place the PAL line-131 mid-line split differently
+(at x=232 in all three captures, where VICE varies between 192 and 216), so
+the record stays on 0.45.1 until that is resolved. CI rebuilds the seven
+programs the record lists and compares their bytes. The tested
 models are PAL 6569 and NTSC 6567R8, with the normal C64 ROM environment.
 Tool executable hashes are included in the record.

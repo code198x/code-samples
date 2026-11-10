@@ -37,6 +37,16 @@ AUDIT_BINDINGS = {
 PARSER_SELECTION = Path(__file__).with_name("adventure-parser-evidence.json")
 PARSER_BINDINGS = {"parser-basic": 0, "parser-z80": 0, "parser-callers": 0}
 
+# Pattern-local recorders (`*/verification/verify.py`) outside the sets above,
+# re-recorded with released tools.
+LOCAL_SELECTION = Path(__file__).with_name("pattern-local-evidence.json")
+LOCAL_BINDINGS = {
+    "c64-sprite-movement-bounds": 0,
+    "c64-joystick-reading": 0,
+    "c64-raster-splits": 0,
+    "spectrum-profile-a-routine": 0,
+}
+
 
 def _load_evidence_bytes():
     found = importlib.util.spec_from_file_location(
@@ -213,9 +223,12 @@ def main() -> int:
     parser.add_argument(
         "--parser", action="store_true", help="Check the three adventure-parser records"
     )
+    parser.add_argument(
+        "--local", action="store_true", help="Check the four pattern-local records"
+    )
     args = parser.parse_args()
-    if args.parser and args.audit:
-        parser.error("Choose either --parser or --audit")
+    if args.parser + args.audit + args.local > 1:
+        parser.error("Choose one of --parser, --audit and --local")
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.unlink(missing_ok=True)
@@ -228,10 +241,18 @@ def main() -> int:
                     if args.parser
                     else AUDIT_SELECTION
                     if args.audit
+                    else LOCAL_SELECTION
+                    if args.local
                     else args.selection
                 ).read_text()
             ),
-            PARSER_BINDINGS if args.parser else AUDIT_BINDINGS if args.audit else None,
+            PARSER_BINDINGS
+            if args.parser
+            else AUDIT_BINDINGS
+            if args.audit
+            else LOCAL_BINDINGS
+            if args.local
+            else None,
         )
     except (OSError, KeyError, TypeError, ValueError) as error:
         report = {

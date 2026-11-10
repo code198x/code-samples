@@ -24,6 +24,32 @@ PNG = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(PNG)
 require, sha = PNG.require, PNG.sha
 Case = tuple[int, int, int, int]
+# The cases each matrix program carries: (x, y, direction mask, seed).
+BASELINE_CASES: list[Case] = [(160, 51, 1, 0), (160, 228, 2, 0)]
+MATRIX_CASES: list[Case] = [
+    (x, y, mask, 0xAA if index % 2 else 0x54)
+    for index, (x, y, mask) in enumerate(
+        itertools.product(
+            (24, 25, 254, 255, 256, 257, 319, 320),
+            (50, 51, 52, 227, 228, 229),
+            range(32),
+        )
+    )
+]
+NEGATIVE_CASES: list[Case] = [(160, 51, 1, 0)]
+# Each program the machine loads, by its folder under the output.
+PROGRAMS = ("baseline", "matrix", "negative", "live")
+
+
+def evidence_bytes():
+    """The shared evidence module, loaded only when recording or rebuilding."""
+    found = importlib.util.spec_from_file_location(
+        "evidence_bytes", ROOT.parents[4] / "scripts/evidence_bytes.py"
+    )
+    assert found is not None and found.loader is not None
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
 
 
 def expected(x: int, y: int, mask: int, frames: int = 1) -> tuple[int, int]:
@@ -55,13 +81,16 @@ def build(
         check=True,
         capture_output=True,
     )
-    subprocess.run(
-        [args.acme, "-f", "cbm", "-o", str(dest / "acme.prg"), "demo.asm"],
-        cwd=dest,
-        check=True,
-        capture_output=True,
-    )
-    require(prg.read_bytes() == (dest / "acme.prg").read_bytes(), "assemblers disagree")
+    if args.acme:  # The independent reference assembler, when given.
+        subprocess.run(
+            [args.acme, "-f", "cbm", "-o", str(dest / "acme.prg"), "demo.asm"],
+            cwd=dest,
+            check=True,
+            capture_output=True,
+        )
+        require(
+            prg.read_bytes() == (dest / "acme.prg").read_bytes(), "assemblers disagree"
+        )
     symbols = {
         key: int(value, 16)
         for key, value in (
@@ -401,9 +430,8 @@ STAGES = [
 ]
 
 
-def live_demo(
-    args: argparse.Namespace, dest: Path
-) -> tuple[list[dict[str, Any]], dict[str, int]]:
+def live_source() -> str:
+    """The unchanged demo, with its includes made absolute for a build folder."""
     source = (
         (ROOT / "demo.asm")
         .read_text()
@@ -414,7 +442,24 @@ def live_demo(
             f'!source "../../rendering/hardware-sprites/{name}"',
             f'!source "{SHARED / name}"',
         )
-    prg, sym = build(args, dest, source)
+    return source
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every program the record lists into output/<folder>/demo.prg,
+    without the emulators or ACME."""
+    args = argparse.Namespace(assembler=assembler, acme=None)
+    out = Path(output).resolve()
+    matrix_program(args, out / "baseline", BASELINE_CASES, baseline=True)
+    matrix_program(args, out / "matrix", MATRIX_CASES)
+    matrix_program(args, out / "negative", NEGATIVE_CASES, broken=True)
+    build(args, out / "live", live_source())
+
+
+def live_demo(
+    args: argparse.Namespace, dest: Path
+) -> tuple[list[dict[str, Any]], dict[str, int]]:
+    prg, sym = build(args, dest, live_source())
     rows = []
     # Five bytes: guest x low/high, y, sampled direction bits, frame count.
     for model in ("pal", "ntsc"):
@@ -562,27 +607,11 @@ def main() -> None:
         value = shutil.which(getattr(args, name))
         require(value is not None, f"missing {name}")
         setattr(args, name, value)
-    baseline = run_matrix(
-        args,
-        args.output / "baseline",
-        [(160, 51, 1, 0), (160, 228, 2, 0)],
-        baseline=True,
-    )
-    cases = [
-        (x, y, mask, 0xAA if index % 2 else 0x54)
-        for index, (x, y, mask) in enumerate(
-            itertools.product(
-                (24, 25, 254, 255, 256, 257, 319, 320),
-                (50, 51, 52, 227, 228, 229),
-                range(32),
-            )
-        )
-    ]
-    matrix = run_matrix(args, args.output / "matrix", cases)
-    negative = run_matrix(
-        args, args.output / "negative", [(160, 51, 1, 0)], broken=True
-    )
+    baseline = run_matrix(args, args.output / "baseline", BASELINE_CASES, baseline=True)
+    matrix = run_matrix(args, args.output / "matrix", MATRIX_CASES)
+    negative = run_matrix(args, args.output / "negative", NEGATIVE_CASES, broken=True)
     live, sizes = live_demo(args, args.output / "live")
+    evidence = evidence_bytes()
     result = {
         "sources": {
             name: sha(ROOT / name)
@@ -597,15 +626,23 @@ def main() -> None:
             str(p.relative_to(ROOT.parents[4])): sha(p)
             for p in (SHARED / "sprite.inc", SHARED / "shape.inc", HELPER)
         },
+        # By release identity; ACME and VICE are independent oracles.
         "tools": {
-            name: {"sha256": sha(Path(getattr(args, name)))}
+            name: evidence.tool_identity(getattr(args, name))
             for name in ("assembler", "acme", "emulator", "vice")
+        },
+        "assembler_sha256": sha(Path(args.assembler)),
+        # Each program the machine loads, so the checker can rebuild it.
+        "programs": {
+            f"{name}/demo.prg": sha(args.output / name / "demo.prg")
+            for name in PROGRAMS
         },
         "baseline": baseline,
         "matrix": matrix,
         "negative_control": negative,
         "live": live,
         "sizes": sizes,
+        "status": "passed",
     }
     (args.output / "results.json").write_text(json.dumps(result, indent=2) + "\n")
     print(

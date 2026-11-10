@@ -85,10 +85,11 @@ Primary sources: Commodore, *Commodore 64 Programmer's Reference Guide*
 (port directions and pin reads). The sampling policy is this example's choice.
 
 Recorded coverage: 412 state/display checks, 48 native indicator captures,
-10 PAL/NTSC keyboard comparisons (including two explicit reverse-scan
-mismatches), and four broken-edge runs rejected on held Fire. Tools:
-Asm198x 0.0.58, ACME 0.97, VICE 3.10 and Emu198x revision
-`df2799e220a10de6a3bc0f14f04c6506363cb7d3`; executable hashes are recorded.
+10 PAL/NTSC keyboard comparisons, all matching VICE (the two reverse-scan
+cases differed on the Emu198x build first recorded and match from 0.48.3),
+and four broken-edge runs rejected on held Fire. Tools: the Asm198x 0.0.75
+and Emu198x 0.48.3 releases, ACME 0.97 and VICE 3.10, named by release in
+the record. CI rebuilds the four programs it lists and compares their bytes.
 The routines occupy 100 assembled bytes plus six state bytes.
 
 

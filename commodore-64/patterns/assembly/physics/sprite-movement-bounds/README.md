@@ -84,6 +84,9 @@ clamping, opposite-direction policy and diagonal speed are software choices.
 
 All 6,144 matrix rows and 48 live captures passed. The old listing and the
 clamp-removal mutation were rejected on both engines and both standards.
-Tools: Asm198x v0.0.58, ACME 0.97, VICE 3.10, Python 3.14.3, and Emu198x
-`df2799e220a10de6a3bc0f14f04c6506363cb7d3`. The retained corner captures were
-visually inspected; the remaining captures were checked automatically.
+The retained corner captures were visually inspected; the remaining captures
+were checked automatically. The run was repeated on 10 November 2026 with the
+Asm198x 0.0.75 and Emu198x 0.48.3 releases, ACME 0.97 and VICE 3.10, and every
+result is identical; the record names each tool by release. CI rebuilds the
+four programs the record lists and compares their bytes
+(`scripts/check-pattern-evidence.py --local`).

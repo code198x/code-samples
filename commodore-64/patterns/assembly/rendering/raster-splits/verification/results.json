@@ -2,26 +2,47 @@
   "sources": {
     "demo.asm": "a76480b5d1d18da73e5121d958626334feee6ebe0f3e60f33b68a3fa3fc01916",
     "split.inc": "e1d97b5c2977372f6239e3106d34559b567e103cc612717809d02c42f5c78018",
-    "verification/verify.py": "a5235097ef7154329e720a525285b3674f8ff2f3c37493d3bddb1cfa875d1382",
+    "verification/verify.py": "547f6757a11ddb128356207aa5c2c2d13e33b271e4d3b85d4a1d1829b17a98f6",
     "verification/baseline.inc": "eb77fe515ea880c190ae9f8c2e6b9f6c335064a800f26d750bb5003cc022febf"
   },
   "shared_sources": {
-    "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py": "39c324ee55bd758a7481d1b2e979709447f2897a83f33efb71a70c97c447658b",
-    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "589022dbe37609c612eada0142858990e378bde38f5f10debcc074015f771bef"
+    "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py": "f87b83b00c3546e56b4a3105f04959b849501c1d737eb00609378d193f53c265",
+    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "0220639e75efaf1cb3ffcc2ef6e8cd97ef2bd44cc08ba38532aad8ad224bc016"
   },
   "tools": {
     "assembler": {
-      "sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8"
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
     },
     "acme": {
-      "sha256": "7be6afb147f75c974a48a0540cdb8affc0760ed94bed4d822d95c7e8ee4bb35c"
+      "tool": "acme",
+      "version": "0.97",
+      "executable_sha256": "8a0cc0ddd68e2c6cbcb80519fc4603342acd1f0a66e6d6dfb17f8e86f15ca911"
     },
     "emulator": {
-      "sha256": "292cb7420c319e886b66e0fe88a71f2b40d82a3b047755c32194ecdb7e62c895"
+      "tool": "emu198x-c64",
+      "version": "0.45.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "a38aaf7fd490038c0b2cf20395d69ef0e21ef2f95156d617e6efd3ba4717014a"
     },
     "vice": {
-      "sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
+      "tool": "x64sc",
+      "executable_sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
     }
+  },
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "baseline/demo.prg": "1be958fc2e7ccd2cb18fb0a54a8164937b6badb73a7c81a08746f6c5c5f6f7e8",
+    "line-64/demo.prg": "c73a50cfd0d9d048e3c0e0793cf5d24f5294fe7dc97225835137a1a2d4105383",
+    "line-130/demo.prg": "9a1777297fa7ac5246f50e7717253512f4d671eaf4bda34bea8ed0e1181937be",
+    "line-131/demo.prg": "08c76be72f2b7563477529c5924658d0019e9f451d5373b83f091434d531d667",
+    "line-200/demo.prg": "7f55cdccf8eaa9e56aa34fdaa02a6e05515e348099bd8b6948777f10c287e068",
+    "negative/demo.prg": "3597761aea1900f259270f89e340ec75880149461b3f3925ba33e75317d1c138",
+    "capture-refresh/demo.prg": "9a1777297fa7ac5246f50e7717253512f4d671eaf4bda34bea8ed0e1181937be"
   },
   "baseline": [
     {
@@ -2205,5 +2226,6 @@
         "restored": "82b2ca13b8b6d57fccdcf7c58f851328661fda3a889176cd013010da464201ea"
       }
     }
-  ]
+  ],
+  "status": "passed"
 }
