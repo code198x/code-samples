@@ -1148,6 +1148,41 @@
       "records": "nintendo-entertainment-system/assembly/dash/unit-11/verification/results/ (counters.csv, identity.json)",
       "fresh_run": "CI runs it again and compares both files byte for byte",
       "checker": ".github/workflows/pattern-evidence.yml (curriculum entry)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--pasmo PATH (upstream Pasmo 0.5.5)",
+        "--source NAME.asm...",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.77",
+        "emulator": "0.48.5",
+        "oracles": "upstream Pasmo 0.5.5 for machine-code parity"
+      },
+      "build_programs": "build_programs(assembler, output, *sources)",
+      "records": "sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/release/native-results.json (every opening sample) and sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/evidence/native-results.json (--source first-program.asm one-byte.asm eight-rows.asm), copied from --output",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (meet-assembly-opening, meet-assembly-first-lessons)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meet-assembly/opening/verification/serve-preview.py",
+      "args": [],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "records": "none: serves the folder for the browser recorders (browser.mjs, lessons.mjs, profile.mjs, profile-worker.mjs), which write evidence/browser-results.json, performance.json and worker-performance.json",
+      "checker": "none yet: the browser records name no program bytes"
     }
   ]
 }

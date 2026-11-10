@@ -52,7 +52,15 @@ LOCAL_BINDINGS = {
 
 # Curriculum unit recorders (`*/assembly/*/verification/*.py`).
 CURRICULUM_SELECTION = Path(__file__).with_name("curriculum-evidence.json")
-CURRICULUM_BINDINGS = {"nes-meet-the-machine-timing": 0, "nes-dash-unit-14": 0}
+CURRICULUM_BINDINGS = dict.fromkeys(
+    [
+        "nes-meet-the-machine-timing",
+        "nes-dash-unit-14",
+        "meet-assembly-opening",
+        "meet-assembly-first-lessons",
+    ],
+    0,
+)
 
 
 def _load_evidence_bytes():
