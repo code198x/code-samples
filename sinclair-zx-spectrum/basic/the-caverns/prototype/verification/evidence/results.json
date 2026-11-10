@@ -1,6 +1,6 @@
 {
-  "source_sha256": "27ca75ef38877457a42d2f55a29f353a5d35408229cb1e2b66316d22dd0e4e78",
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "source_sha256": "dc780a9b025dd4ecd53119db5b63456e73cbb5e24018e090826b771c899224f1",
+  "binary_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play",
   "checks": [
     "fresh-tape-autostart-and-stored-identity",
@@ -321,7 +321,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.48.5"
     }
   }
 }
