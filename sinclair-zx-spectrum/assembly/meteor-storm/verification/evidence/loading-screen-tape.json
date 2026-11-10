@@ -2,7 +2,7 @@
   "method": "Fresh 48K ROM, LOAD \"\" from the unit 35 tape, ordinary frames and read-only probes.",
   "tape_sha256": "31420966522468be267830cf1b0ce5fe31087b987dfe293d879512a67de4933d",
   "scr_sha256": "1325b44c95fab8934ad257c290170e4cfacda56118baf6b94d08cfb3c3514843",
-  "emulator_sha256": "207832e3912531195510acde4b183166d743f8f638a2fec8222849a737ad06a6",
+  "emulator_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "checks": [
     {
       "check": "the loader blanks the screen before the picture arrives",
@@ -30,5 +30,34 @@
         "pc": "0x80af"
       }
     }
-  ]
+  ],
+  "assembler_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb",
+  "build198x_sha256": "1460f197a6aaac466120bfa3a20a94618b7c3d4b0414170a51b8ae1c9476a270",
+  "programs": {
+    "meteor-storm.tap": "31420966522468be267830cf1b0ce5fe31087b987dfe293d879512a67de4933d"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.77",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.77",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb"
+    },
+    "build198x": {
+      "tool": "build198x",
+      "version": "0.2.15",
+      "release": "https://github.com/build198x/build198x/releases/tag/build198x-v0.2.15",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "1460f197a6aaac466120bfa3a20a94618b7c3d4b0414170a51b8ae1c9476a270"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.5",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.5",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4"
+    }
+  },
+  "status": "passed"
 }

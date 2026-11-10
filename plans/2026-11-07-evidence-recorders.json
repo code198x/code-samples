@@ -1148,6 +1148,141 @@
       "records": "nintendo-entertainment-system/assembly/dash/unit-11/verification/results/ (counters.csv, identity.json)",
       "fresh_run": "CI runs it again and compares both files byte for byte",
       "checker": ".github/workflows/pattern-evidence.yml (curriculum entry)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--pasmo PATH (upstream Pasmo 0.5.5)",
+        "--only NAME...",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.77",
+        "emulator": "0.48.5",
+        "oracles": "upstream Pasmo 0.5.5 for machine-code parity"
+      },
+      "build_programs": "build_programs(assembler, output, *names)",
+      "records": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/{checkpoints,opening-additions,attract,furthest-storm,harder-storms,loading-screen,storm-bonus,two-byte-score,voyage}.json, each from one --only run of its checkpoint names",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (meteor-storm-*; programs under built_programs)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/endpoint.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--checkpoint NAME",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.77",
+        "emulator": "0.48.5"
+      },
+      "build_programs": "build_programs(assembler, output, checkpoint)",
+      "records": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/endpoint*.json",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (meteor-storm-endpoint*)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.77",
+        "emulator": "0.48.5"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/evidence/results.json",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (meteor-storm-prototype)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/boundaries.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.77",
+        "emulator": "0.48.5"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/boundaries.json",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (meteor-storm-boundaries)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/tape.py",
+      "args": [
+        "--assembler PATH",
+        "--build198x PATH",
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "asm198x": "0.0.77",
+        "emulator": "0.48.5",
+        "build198x": "0.2.15"
+      },
+      "build_programs": "build_programs(assembler, output, builder): unit 35's Makefile",
+      "records": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/loading-screen-tape.json",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (meteor-storm-loading-screen-tape)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/model.py",
+      "args": [],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "records": "sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/model-results.json",
+      "checker": "CI runs it and requires the record unchanged (git diff --exit-code)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/teaching_order.py",
+      "args": [
+        "--json"
+      ],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "records": "none: lists each checkpoint's new names",
+      "checker": "CI runs it"
     }
   ]
 }

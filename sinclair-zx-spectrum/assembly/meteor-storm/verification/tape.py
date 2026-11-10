@@ -10,6 +10,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -32,20 +33,40 @@ def looks_black(shown):
     return True
 
 
+def tools(**paths):
+    """Each tool by release identity, never by a local path."""
+    spec = importlib.util.spec_from_file_location(
+        'evidence_bytes', ROOT.parents[2] / 'scripts/evidence_bytes.py')
+    evidence = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(evidence)
+    return {name: evidence.tool_identity(path) for name, path in paths.items()}
+
+
+def build_programs(assembler, output, builder='build198x'):
+    """Build unit 35's tape with its Makefile and copy it to output, without the emulator."""
+    out = Path(output).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    unit = ROOT / 'unit-35'
+    subprocess.run(['make', '-B', 'ASM=' + assembler, 'BUILD198X=' + builder], cwd=unit, check=True,
+                   capture_output=True)
+    shutil.copyfile(unit / 'meteor-storm.tap', out / 'meteor-storm.tap')
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--emulator', required=True)
     parser.add_argument('--build198x', default='build198x', help='build198x executable for the BASIC loader')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--assembler', default='asm198x')
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     unit = ROOT / 'unit-35'
-    subprocess.run(['make', '-B', 'BUILD198X=' + args.build198x], cwd=unit, check=True, capture_output=True)
+    build_programs(args.assembler, out, args.build198x)
     tape = unit / 'meteor-storm.tap'
     source = ROOT / 'checkpoints/loading-screen'
     scr = list((source / 'meteor-storm.scr').read_bytes())
-    subprocess.run(['asm198x', '--dialect', 'pasmo', '--cpu', 'z80', '--sym=' + str(out / 'program.sym'),
+    subprocess.run([args.assembler, '--dialect', 'pasmo', '--cpu', 'z80', '--sym=' + str(out / 'program.sym'),
                     str(source / 'meteor-storm.asm'), '-o', str(out / 'program.bin')], check=True, capture_output=True)
     symbols = {m[1]: int(m[2], 16) for line in (out / 'program.sym').read_text().splitlines()
                if (m := re.match(r'(\w+) = \$(\w+)', line))}
@@ -112,6 +133,14 @@ def main():
         m.call('save_screenshot', path=str(out / 'title.png'))
     finally:
         m.close()
+    report['assembler_sha256'] = hashlib.sha256(
+        Path(shutil.which(args.assembler) or args.assembler).read_bytes()).hexdigest()
+    report['build198x_sha256'] = hashlib.sha256(
+        Path(shutil.which(args.build198x) or args.build198x).read_bytes()).hexdigest()
+    # The tape the machine loads, so the checker can rebuild it.
+    report['programs'] = {'meteor-storm.tap': hashlib.sha256((out / 'meteor-storm.tap').read_bytes()).hexdigest()}
+    report['tools'] = tools(assembler=args.assembler, build198x=args.build198x, emulator=args.emulator)
+    report['status'] = 'passed'
     (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
 
 

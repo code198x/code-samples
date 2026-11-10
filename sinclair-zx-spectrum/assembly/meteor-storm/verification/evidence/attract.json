@@ -1,11 +1,15 @@
 {
   "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
-  "emulator_sha256": "207832e3912531195510acde4b183166d743f8f638a2fec8222849a737ad06a6",
+  "emulator_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "programs": [
     {
       "name": "attract",
       "source_sha256": "0bec2f609b91d1cda9c3dfe484d17b27618d33f0013beb8a4c7fa5c5d04bd6f7",
       "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
         {
           "check": "title colours each row, flashing the prompt row",
           "detail": {
@@ -820,8 +824,36 @@
       ],
       "assets_sha256": "3829130674d64ce81ba26e7f3d4c9108b6a5c463eafe43e999544d254d72812f",
       "binary_sha256": "63c02176a4f97a32ce7c9cf775a919ed7f7729fe4027982100d8a0968fb0eb10",
+      "snapshot_sha256": "20eaacb765739b85421fb1083c77b869b14ac3875c3d715b1ada0347d34b95dc",
       "binary_bytes": 11757
     }
   ],
-  "assembler_version": "asm198x v0.0.58"
+  "assembler_version": "asm198x v0.0.77",
+  "pasmo_version": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
+  "assembler_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb",
+  "built_programs": {
+    "attract/program.sna": "20eaacb765739b85421fb1083c77b869b14ac3875c3d715b1ada0347d34b95dc"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.77",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.77",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.5",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.5",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4"
+    },
+    "pasmo": {
+      "tool": "Pasmo",
+      "version": "0.5.5",
+      "executable_sha256": "9756e9b5a3883fbb7d568a2876f6ce73db8815c3badac8787d2c18cb3bc58ec0"
+    }
+  },
+  "status": "passed"
 }

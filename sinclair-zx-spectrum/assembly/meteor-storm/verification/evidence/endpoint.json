@@ -1,9 +1,10 @@
 {
+  "checkpoint": "finished",
   "method": "Ordinary emulator frames, keyboard input, read-only game-state probes; snapshot checks plus separate fresh tape load. No debug stepping or state writes.",
   "target": "spectrum_48k PAL",
-  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "emulator_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "source_sha256": "113e89bed3bc25073eaa474448e79a485a068891e5982772090715fc597496a9",
-  "tape_sha256": "5d7bdcc1a705fabef3530f006241ef065c7f902a44d9e4e8e8f7a5afc0557f47",
+  "tape_sha256": "5a630504aa0fa9eb38df9e27749d4e599e6a45abe1185b8106546deae55a3dc9",
   "checks": [
     {
       "check": "every title line is centred without wrapping",
@@ -16,7 +17,7 @@
     {
       "check": "releasing boost restores normal speed",
       "detail": {
-        "boost_steps": 11,
+        "boost_steps": 12,
         "normal_steps": 6
       }
     },
@@ -313,8 +314,35 @@
       ]
     }
   ],
-  "assembler_version": "asm198x v0.0.58",
+  "assembler_version": "asm198x v0.0.77",
   "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
   "rom_sha256": "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42",
-  "accepted_source_sha256": "fefac65915baa0a2fa29395a7ff8f19fac9c2261b11073ebd37e7a602d302f4d"
+  "accepted_source_sha256": "fefac65915baa0a2fa29395a7ff8f19fac9c2261b11073ebd37e7a602d302f4d",
+  "assembler_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb",
+  "programs": {
+    "meteor-storm.sna": "ebc35bdc4b9e7d6726f811c116df5916899a41b7c9e4534929439d3c82d71e67",
+    "meteor-storm.tap": "5a630504aa0fa9eb38df9e27749d4e599e6a45abe1185b8106546deae55a3dc9"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.77",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.77",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.5",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.5",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4"
+    }
+  },
+  "earlier_record": {
+    "emulator": "Emu198x ed078de5..., an unreleased build (reported as 0.24.0); Asm198x 0.0.58 named by version only",
+    "values": "'releasing boost restores normal speed' counted 11 boost steps (12 from 0.27.1); every other check identical",
+    "recorded": "29-30 September 2026"
+  },
+  "status": "passed"
 }

@@ -134,6 +134,10 @@ jobs:
               python nintendo-entertainment-system/assembly/dash/unit-11/verification/check.py --output "$RUNNER_TEMP/dash-triangle"
               cmp "$RUNNER_TEMP/dash-triangle/counters.csv" nintendo-entertainment-system/assembly/dash/unit-11/verification/results/counters.csv
               cmp "$RUNNER_TEMP/dash-triangle/identity.json" nintendo-entertainment-system/assembly/dash/unit-11/verification/results/identity.json
+              # Meteor Storm's host-only course model rewrites its record: it must not change.
+              python sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/model.py
+              git diff --exit-code -- sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/model-results.json
+              python sinclair-zx-spectrum/assembly/meteor-storm/verification/teaching_order.py --json > /dev/null
           - name: Check adventure-parser evidence and configuration controls
             run: |
               python scripts/check-pattern-evidence.py --parser --output "$RUNNER_TEMP/pattern-evidence/parser-recorded-inputs.json"

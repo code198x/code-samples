@@ -165,3 +165,25 @@ On 0.27.1 every checkpoint passes. One recorded detail differs from
 `endpoint.json`: "releasing boost restores normal speed" counts 12 boost steps
 where the 0.24.0 run counted 11. That comes from emulator timing changes between
 the two builds, not from the harness, and the check passes either way.
+
+## Re-recorded with released tools (10 November 2026)
+
+Every record here, and the prototype's, came from unreleased Emu198x builds
+(`ed078de5…` and `207832e3…`) with Asm198x named only by version. They are
+re-recorded with the Asm198x 0.0.77 and Emu198x 0.48.5 releases, build198x
+0.2.15 for the unit 35 tape, and upstream Pasmo 0.5.5. Each record now names
+its tools by release and lists the programs the machine loads, and CI rebuilds
+them and compares their bytes (`scripts/check-pattern-evidence.py
+--curriculum`).
+
+- The 35 checkpoint builds, the boundaries and the loading-screen tape
+  reproduce every recorded check and capture exactly. The seven records that
+  were made without Pasmo now also carry its machine-code parity check.
+- The endpoint records and the prototype differ in one detail, kept in each
+  record as `earlier_record`: "releasing boost restores normal speed" counts
+  12 boost steps where the earlier build counted 11. Emu198x 0.27.0 is the
+  newest release that still counts 11, and it fails `sound-table` at "start
+  enters flight" (emu198x/emu198x#1564); from 0.27.1 every release counts 12.
+- The prototype's `impacts.wav` is replaced with the 0.48.5 capture: the last
+  824 of its 98,672 samples differed from the earlier build's, and no release
+  reproduces them.

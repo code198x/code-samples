@@ -8,6 +8,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -20,6 +21,8 @@ def load(name, path):
     return module
 
 transport = load('transport', ROOT.parents[1] / 'basic/meet-basic/opening/verification/verify.py')
+# The assembler every program is built with; main() sets it from --assembler.
+ASSEMBLER = 'asm198x'
 art = load('art', ROOT / 'assets.py')
 
 def route(events, spawn=20, speed_add=0, gap_cut=0, drift_mask=3):
@@ -168,19 +171,60 @@ def destroyed_phase(m, read, symbols, check, target):
           and not lit_rows(m, [3, 4, 5, 7, 8, 9, 11, 13, 15, 16, 19, 20, 21, 22, 23]))
     m.call('save_screenshot', path=str(target / 'destroyed-result.png'))
 
+def evidence_bytes():
+    """The shared evidence module, loaded only when recording."""
+    spec = importlib.util.spec_from_file_location(
+        'evidence_bytes', Path(__file__).resolve().parents[4] / 'scripts/evidence_bytes.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def tools(assembler, emulator, **others):
+    """Each tool by release identity, never by a local path."""
+    e = evidence_bytes()
+    return {'assembler': e.tool_identity(assembler), 'emulator': e.tool_identity(emulator),
+            **{name: e.tool_identity(path) for name, path in others.items() if path}}
+
+
+def build(name, target):
+    """Assemble one checkpoint into target/program.*, as the run loads it.
+
+    Outputs are named relative to target, so a tape's CODE block, which
+    Asm198x names after the output path, is the same in any checkout.
+    """
+    target.mkdir(parents=True, exist_ok=True)
+    source = ROOT / 'checkpoints' / name / 'meteor-storm.asm'
+    for flag, extension in [('--sna', 'sna'), ('--tapbas', 'tap'), ('', 'bin')]:
+        subprocess.run([ASSEMBLER, '--dialect', 'pasmo', '--cpu', 'z80', *([flag] if flag else []),
+                        '--sym=symbols.sym', str(source), '-o', 'program.' + extension],
+                       cwd=target, check=True, capture_output=True)
+
+
+def build_programs(assembler, output, *names):
+    """Build the named checkpoints into output/<name>/, without the emulator."""
+    global ASSEMBLER
+    ASSEMBLER = assembler
+    for name in names:
+        build(name, Path(output).resolve() / name)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--emulator', required=True)
     parser.add_argument('--pasmo', help='Optional upstream Pasmo 0.5.5 executable for binary parity; its banner is recorded')
     parser.add_argument('--only', nargs='+', help='Run selected named checkpoints')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--assembler', default='asm198x')
     args = parser.parse_args()
+    global ASSEMBLER
+    ASSEMBLER = args.assembler
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     report = {'method': 'Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.',
               'emulator_sha256': hashlib.sha256(Path(args.emulator).read_bytes()).hexdigest(), 'programs': []}
     # asm198x prints its version on stderr.
-    version = subprocess.run(['asm198x', '--version'], capture_output=True, text=True, check=True)
+    version = subprocess.run([ASSEMBLER, '--version'], capture_output=True, text=True, check=True)
     report['assembler_version'] = (version.stdout + version.stderr).strip()
     if args.pasmo:
         # Pasmo has no version flag; its usage banner names the build. PasmoNext is a
@@ -202,12 +246,10 @@ def main():
             assert condition, (name, label, detail)
             entry['checks'].append({'check': label, 'detail': detail})
             print('PASS', name, label, flush=True)
-        for flag, extension in [('--sna', 'sna'), ('--tapbas', 'tap'), ('', 'bin')]:
-            subprocess.run(['asm198x', '--dialect', 'pasmo', '--cpu', 'z80', *([flag] if flag else []),
-                            '--sym=' + str(target / 'symbols.sym'), str(source), '-o',
-                            str(target / ('program.' + extension))], check=True, capture_output=True)
+        build(name, target)
         binary = (target / 'program.bin').read_bytes()
         entry['binary_sha256'] = hashlib.sha256(binary).hexdigest()
+        entry['snapshot_sha256'] = hashlib.sha256((target / 'program.sna').read_bytes()).hexdigest()
         entry['binary_bytes'] = len(binary)
         if args.pasmo:
             subprocess.run([args.pasmo, str(source), str(target / 'pasmo.bin')],
@@ -587,7 +629,14 @@ def main():
         finally:
             m.close()
         report['programs'].append(entry)
+        report['assembler_sha256'] = hashlib.sha256(Path(shutil.which(ASSEMBLER) or ASSEMBLER).read_bytes()).hexdigest()
+        # Each snapshot the machine loads, so the checker can rebuild it.
+        report['built_programs'] = {f"{p['name']}/program.sna": p['snapshot_sha256'] for p in report['programs']}
+        report['tools'] = tools(ASSEMBLER, args.emulator, pasmo=args.pasmo)
         (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
+    # Written after every checkpoint, so a stopped run's record says so.
+    report['status'] = 'passed'
+    (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
 
 if __name__ == '__main__':
     main()

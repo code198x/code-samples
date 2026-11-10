@@ -52,7 +52,31 @@ LOCAL_BINDINGS = {
 
 # Curriculum unit recorders (`*/assembly/*/verification/*.py`).
 CURRICULUM_SELECTION = Path(__file__).with_name("curriculum-evidence.json")
-CURRICULUM_BINDINGS = {"nes-meet-the-machine-timing": 0, "nes-dash-unit-14": 0}
+CURRICULUM_BINDINGS = dict.fromkeys(
+    [
+        "nes-meet-the-machine-timing",
+        "nes-dash-unit-14",
+        "meteor-storm-checkpoints",
+        "meteor-storm-opening-additions",
+        "meteor-storm-attract",
+        "meteor-storm-furthest-storm",
+        "meteor-storm-harder-storms",
+        "meteor-storm-loading-screen",
+        "meteor-storm-storm-bonus",
+        "meteor-storm-two-byte-score",
+        "meteor-storm-voyage",
+        "meteor-storm-endpoint",
+        "meteor-storm-endpoint-tone",
+        "meteor-storm-endpoint-sound-table",
+        "meteor-storm-endpoint-sound-frames",
+        "meteor-storm-endpoint-debris",
+        "meteor-storm-endpoint-colour-bands",
+        "meteor-storm-prototype",
+        "meteor-storm-boundaries",
+        "meteor-storm-loading-screen-tape",
+    ],
+    0,
+)
 
 
 def _load_evidence_bytes():
@@ -95,8 +119,12 @@ def require_fresh_run(root: Path, name: str, fresh: dict, record: dict) -> int:
 
 
 def require_programs(name: str, recorder: dict, record: dict) -> int:
-    """Rebuild every program the record names and compare it byte for byte."""
-    programs = record.get("programs")
+    """Rebuild every program the record names and compare it byte for byte.
+
+    The record lists them under "programs", or under the key the recorder
+    fixture names as "programs_key" when "programs" means something else.
+    """
+    programs = record.get(recorder.get("programs_key", "programs"))
     if not isinstance(programs, dict) or not programs:
         raise ValueError("Record names no programs to rebuild")
     out = f"build/evidence/{name}"
