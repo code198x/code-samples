@@ -18,5 +18,5 @@ assert pos==len(data) and len(blocks)==2 and int.from_bytes(blocks[0][14:16],'li
 program=blocks[1][1:-1];pos=0
 for n,b in stored.items():
  assert int.from_bytes(program[pos:pos+2],'big')==n;size=int.from_bytes(program[pos+2:pos+4],'little');assert list(program[pos+4:pos+4+size])==b;pos+=size+4
-manifest={'configuration':build['configuration'],'source_sha256':build['source_sha256'],'binary_sha256':build['binary_sha256'],'checks':len(results['checks']),'observed_actions':len(results['trials']),'files':{p.name:sha(p) for p in out.iterdir() if p.is_file() and p.name!='manifest.json'},'limits':'Original key-driven emulator captures; no state injection. Host model separate; native acceptance pending.'}
+manifest={'configuration':build['configuration'],'source_sha256':build['source_sha256'],'binary_sha256':build['binary_sha256'],'checks':len(results['checks']),'observed_actions':len(results['trials']),'files':{p.name:sha(p) for p in sorted(out.iterdir()) if p.is_file() and p.name!='manifest.json'},'limits':'Original key-driven emulator captures; no state injection. Host model separate; native acceptance pending.'}
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('PASS',manifest['checks'],'execution groups;',manifest['observed_actions'],'observed actions; tape and source identities')

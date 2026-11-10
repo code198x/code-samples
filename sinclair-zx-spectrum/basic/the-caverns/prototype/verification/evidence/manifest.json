@@ -5,19 +5,19 @@
   "checks": 19,
   "observed_actions": 32,
   "files": {
-    "caught.png": "5719fefb33944cffd7d3ed9d89ed6b77ce8c14868a7eb01ed01dffa1c2eed658",
-    "model.json": "e903d0d263ed69d75080c3e7beb6e2a847ce979742254d1c3a9b93a7f73d920a",
-    "title.png": "b01268338cb77f67346fd912256f1362bf10b7fccb4de7d0dca0972ea1066222",
     "arrival.png": "d3de901c487012fc0c74f130e71fae670bb53d77ce8e80d4189e4477520acd95",
-    "win.png": "ae669aab7db737c84fce8b3151949a6764cc032e19e3781578634d17bd281236",
-    "results.json": "9da8eb524ed5d6908ce4e8bed25ea2bc07a57c549a2880b9349d087f4a9074dc",
+    "build.json": "9f39ba1439d4db1fb5f130af3b4dc3720e9445ac8984e380917a0ccde6890b81",
+    "caught.png": "5719fefb33944cffd7d3ed9d89ed6b77ce8c14868a7eb01ed01dffa1c2eed658",
     "caverns.tap": "152f317f7dc650a675c9a5371acd22d2bd13fd6d79c657914fcf35bf47e933ea",
-    "reset.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
     "entrance.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
-    "stored.json": "6fd13733b8e3f18b28f393c9648ee191bb7724f2aac14770a0bcfd2cf3744700",
-    "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
     "escape.png": "26532628f55f031ef0bb7c4663beae27fb756373fe77531f4cbbcd9e05e8b448",
-    "build.json": "9f39ba1439d4db1fb5f130af3b4dc3720e9445ac8984e380917a0ccde6890b81"
+    "model.json": "e903d0d263ed69d75080c3e7beb6e2a847ce979742254d1c3a9b93a7f73d920a",
+    "pit.png": "75e4feaef00699bad4fe195de432ae696d509a74f418f7ba3f779c1524872649",
+    "reset.png": "31938f55ccae87dfec2d0457daab3236c2950962a667814ed1da9f277e05e26d",
+    "results.json": "9da8eb524ed5d6908ce4e8bed25ea2bc07a57c549a2880b9349d087f4a9074dc",
+    "stored.json": "6fd13733b8e3f18b28f393c9648ee191bb7724f2aac14770a0bcfd2cf3744700",
+    "title.png": "b01268338cb77f67346fd912256f1362bf10b7fccb4de7d0dca0972ea1066222",
+    "win.png": "ae669aab7db737c84fce8b3151949a6764cc032e19e3781578634d17bd281236"
   },
   "limits": "Original key-driven emulator captures; no state injection. Host model separate; native acceptance pending."
 }

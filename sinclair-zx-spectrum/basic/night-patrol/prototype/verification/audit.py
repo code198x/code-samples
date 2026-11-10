@@ -22,5 +22,5 @@ program=blocks[1][1:-1];pos=0
 for n,b in stored.items():
  assert int.from_bytes(program[pos:pos+2],'big')==n;size=int.from_bytes(program[pos+2:pos+4],'little');assert list(program[pos+4:pos+4+size])==b;pos+=size+4
 frames=[t['frames'] for t in results['trace'] if t['result']==0]
-manifest=dict(source_sha256=build['source_sha256'],binary_sha256=build['binary_sha256'],checks=len(results['checks']),observed_update_frames=dict(min=min(frames),max=max(frames)),files={p.name:sha(p) for p in out.iterdir() if p.is_file() and p.name!='manifest.json'},limits='Stock 48K PAL emulator; read-only state; ordinary keyboard routes; host route search is not a player trial. Native play review pending.')
+manifest=dict(source_sha256=build['source_sha256'],binary_sha256=build['binary_sha256'],checks=len(results['checks']),observed_update_frames=dict(min=min(frames),max=max(frames)),files={p.name:sha(p) for p in sorted(out.iterdir()) if p.is_file() and p.name!='manifest.json'},limits='Stock 48K PAL emulator; read-only state; ordinary keyboard routes; host route search is not a player trial. Native play review pending.')
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('PASS',manifest['checks'],'native groups; source/tape identities; update frames',manifest['observed_update_frames'])

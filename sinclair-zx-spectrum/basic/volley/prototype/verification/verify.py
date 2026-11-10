@@ -64,5 +64,5 @@ try:
  m.close();m=Spectrum(a.emulator,a.output)
  m.call('load_media',slot='tape-1',kind='tape',path=str(tape));m.statement('LOAD "volley"');m.call('media_transport',slot='tape-1',transport='start');tick(12000);assert has('0 OK')
  run();wait('S to serve');serve();wait('Miss.');key('r',True);tick(10);key('r',False);wait('S to serve');stop();assert has('Finished.');record('fresh-load-play-retry-quit')
- (a.output/'results.json').write_text(json.dumps({'status':'passed','start_stage':a.start_stage,'server':m.server,'sources':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'steps').glob('*.bas') if a.start_stage==1 or p.name=='step-06.bas'},'checks':checks,'limits':'ROM entry and MCP input; no native keyboard, original hardware or independent human playtesting. Silent prototype.'},indent=2)+'\n')
+ (a.output/'results.json').write_text(json.dumps({'status':'passed','start_stage':a.start_stage,'server':m.server,'sources':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'steps').glob('*.bas')) if a.start_stage==1 or p.name=='step-06.bas'},'checks':checks,'limits':'ROM entry and MCP input; no native keyboard, original hardware or independent human playtesting. Silent prototype.'},indent=2)+'\n')
 finally:m.close()
