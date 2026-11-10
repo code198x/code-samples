@@ -1092,12 +1092,12 @@
       "firmware": [],
       "pins": {
         "asm198x": "0.0.75",
-        "emulator": "0.48.3",
+        "emulator": "0.48.5",
         "follow_ups": {
           "nintendo-nes": {
             "emulator": "0.45.1",
-            "reason": "from 0.46.1 the programs' frame phase after power-on moves by one frame",
-            "issue": "pending",
+            "reason": "from 0.46.1 the frame phase after power-on moves by one frame (emu198x#2349 groups every one-frame shift since 0.46.x)",
+            "issue": "https://github.com/emu198x/emu198x/issues/2349",
             "undo": "re-record on the newest release once the issue closes"
           }
         }
@@ -1119,12 +1119,12 @@
       "firmware": [],
       "pins": {
         "asm198x": "0.0.75",
-        "emulator": "0.48.3",
+        "emulator": "0.48.5",
         "follow_ups": {
           "nintendo-nes": {
             "emulator": "0.45.1",
-            "reason": "from 0.46.1 the programs' frame phase after power-on moves by one frame",
-            "issue": "pending",
+            "reason": "from 0.46.1 the frame phase after power-on moves by one frame (emu198x#2349 groups every one-frame shift since 0.46.x)",
+            "issue": "https://github.com/emu198x/emu198x/issues/2349",
             "undo": "re-record on the newest release once the issue closes"
           }
         }

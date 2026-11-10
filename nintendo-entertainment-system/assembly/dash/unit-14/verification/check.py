@@ -104,6 +104,7 @@ def main():
                   'assembler_sha256':sha(Path(shutil.which(args.assembler) or args.assembler)),
                   # The program the machine runs, so the checker can rebuild it.
                   'programs':{'dash.nes':sha(rom)},
+                  'emulator_pin':intro.EMULATOR_PIN,
                   'tools':{'assembler':intro.evidence_bytes().tool_identity(args.assembler),
                            'emulator':intro.evidence_bytes().tool_identity(args.emulator)},
                   'source_sha256':sha(UNIT/'dash.asm'), 'rom_sha256':sha(rom), 'nmi':hex(nmi), 'measurements':rows}
