@@ -62,14 +62,29 @@ and tape routes use the same program bytes and different loading procedures.
 ## Repeat the checks
 
 ```sh
-python3 verification/verify.py --pasmo /path/to/upstream/pasmo --emulator /path/to/emu198x-spectrum --output /tmp/meet-assembly-checks
+python3 verification/verify.py --assembler /path/to/asm198x --pasmo /path/to/upstream/pasmo --emulator /path/to/emu198x-spectrum --output /tmp/meet-assembly-checks
 ```
 
-The verifier compares Asm198x and upstream Pasmo output, loads all eighteen tapes
-into fresh emulated machines, checks code and display memory, exercises movement
-and timing, and confirms the two intended faults. Use `--source filename.asm`
-to select one checkpoint. The JSON report records tool versions and hashes.
-This is emulated 48K PAL evidence, not a physical-hardware claim.
+The verifier needs Pillow, a 48K ROM configured in Emu198x and, when
+`--assembler` is left out, `asm198x` on your PATH. It compares Asm198x and
+upstream Pasmo output, loads all eighteen tapes into fresh emulated machines,
+checks code and display memory, exercises movement and timing, and confirms
+the two intended faults. Use `--source` with one or more filenames to select
+checkpoints. The JSON report names its tools by release and lists the program
+bytes it loaded. This is emulated 48K PAL evidence, not a physical-hardware
+claim.
+
+`verification/release/native-results.json` covers every sample and
+`verification/evidence/native-results.json` the first three
+(`--source first-program.asm one-byte.asm eight-rows.asm`). Both were
+re-recorded on 10 November 2026 with the Asm198x 0.0.77 and Emu198x 0.48.5
+releases and upstream Pasmo 0.5.5. The earlier runs used an unreleased Emu198x
+build (`ed078de5…`) and named Asm198x 0.0.58 by version only. Every check and
+machine-code result reproduces. The six tape captures differ only in the name
+the ROM prints after `Bytes:`: the tapes are now named after their files, not
+the first ten characters of a temporary path. CI rebuilds the
+programs each record lists and compares their bytes
+(`scripts/check-pattern-evidence.py --curriculum`).
 
 Browser regression scripts live in the website's `scripts/verification/` folder,
 including `byte-pixels.mjs`, `eight-rows.mjs`, `row-loop.mjs`,

@@ -74,6 +74,8 @@ CURRICULUM_BINDINGS = dict.fromkeys(
         "meteor-storm-prototype",
         "meteor-storm-boundaries",
         "meteor-storm-loading-screen-tape",
+        "meet-assembly-opening",
+        "meet-assembly-first-lessons",
     ],
     0,
 )
