@@ -169,6 +169,31 @@
       }
     }
   },
+  "asm198x-v0.0.77": {
+    "source_commit": "b1ad5f0d3f0b8bf47cf1012d6a9fef727beefdc4",
+    "targets": {
+      "aarch64-apple-darwin": {
+        "archive": "asm198x-aarch64-apple-darwin.tar.xz",
+        "archive_sha256": "ed37ce4415ecea95d1f3f29fb66fcb1da0b0bc13608beddfe9aca23b6ed90faf",
+        "executable_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb"
+      },
+      "x86_64-apple-darwin": {
+        "archive": "asm198x-x86_64-apple-darwin.tar.xz",
+        "archive_sha256": "026d1207e8414368f871dd5c79d653eabb177eab158b511e8938886e535b4448",
+        "executable_sha256": "e814a784140e5edad2ef47f883e006ab284da57b058e4c4ee46f5c3a87b9a3d8"
+      },
+      "x86_64-unknown-linux-gnu": {
+        "archive": "asm198x-x86_64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "cf9248c7d6e7f19b2e289a2b32f7b288a74cc87fa3f803357175b21acc55015c",
+        "executable_sha256": "9f957d906991f8dc49fe5a9d348e0e49848e62fee34233c32e32dba8d244d906"
+      },
+      "aarch64-unknown-linux-gnu": {
+        "archive": "asm198x-aarch64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "c4a17335f5932b3a2707ddaf8af59f4f2fe9b0372b0bbc89560d37820f816a98",
+        "executable_sha256": "d4d4c6d9a966cb49732c52e1a569dd7508fcfee7fad8b81f5da86dadbfcc11d8"
+      }
+    }
+  },
   "build198x-adf-v0.2.12": {
     "source_commit": "3b5c57744e28acc3a9e48d2b878c688501e1728d",
     "targets": {
@@ -241,6 +266,31 @@
         "archive": "build198x-aarch64-unknown-linux-gnu.tar.xz",
         "archive_sha256": "be04a389229bbb9c7ac524ea34ca9666a0f6f3309fb8eedef617754f3f30ca00",
         "executable_sha256": "6afff7d8d1a32e3e79fd4d09cd17f6ae20d56f42b90726af052db7794ecba3d6"
+      }
+    }
+  },
+  "build198x-v0.2.15": {
+    "source_commit": "4f027cd7e071a682e235a5314355c038d9fc5632",
+    "targets": {
+      "aarch64-apple-darwin": {
+        "archive": "build198x-aarch64-apple-darwin.tar.xz",
+        "archive_sha256": "7db73e83c7b26ee4c46405299f7967352cae2c0b1f4ccce11ef9bdbbca57f1f6",
+        "executable_sha256": "1460f197a6aaac466120bfa3a20a94618b7c3d4b0414170a51b8ae1c9476a270"
+      },
+      "x86_64-apple-darwin": {
+        "archive": "build198x-x86_64-apple-darwin.tar.xz",
+        "archive_sha256": "5fcc14225bd4d3cccd37fac5f40de3c38dedf426378093c3dc4e8a7e064108e5",
+        "executable_sha256": "9df5f3895338e1f12ad7afb6ae62419a9ade4124f836ffcafcdb33bfc2a43aff"
+      },
+      "x86_64-unknown-linux-gnu": {
+        "archive": "build198x-x86_64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "8c769202f9e4ad99f0a58102592aab996cd288da6117c33868a078ce7c6cc65a",
+        "executable_sha256": "225072899ea7ff26654ceb2bd57e4f993c6bde318fa569d0be41e85d1e2dee81"
+      },
+      "aarch64-unknown-linux-gnu": {
+        "archive": "build198x-aarch64-unknown-linux-gnu.tar.xz",
+        "archive_sha256": "3a4a1ffe3aad174152f3c5bbe68e892e80dc1ea3807c3c9df9b8a06a01a2445f",
+        "executable_sha256": "7d85057e3d2c60881c58f048a781524e7d3dce9003c8ab301df76a4e33f30ca1"
       }
     }
   },
