@@ -1,4 +1,5 @@
 {
+  "status": "passed",
   "configuration": "NES NTSC, rendering enabled, DMC disabled; flags injected at NMI entry",
   "boundary": "First PHA through completed RTI; excludes interrupt entry and notification latency",
   "server": {
@@ -8,11 +9,31 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-nes",
-      "version": "0.25.0"
+      "version": "0.45.1"
     }
   },
-  "emulator_sha256": "7ee2326974a821494533c530972ed8d1156d7a5ca30022ca44153d625fe5a147",
-  "assembler": "asm198x v0.0.58",
+  "emulator_sha256": "aa619fb4a996674725d29888f8c54c4976c3b38a8ecf5ef029eeeee85b9eb3b2",
+  "assembler": "asm198x v0.0.75",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "dash.nes": "6d2ee5b6f7ebfd2e1af99994f4250b61f7e2feb8b241179748fe63f45d6979c0"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-nes",
+      "version": "0.45.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "aa619fb4a996674725d29888f8c54c4976c3b38a8ecf5ef029eeeee85b9eb3b2"
+    }
+  },
   "source_sha256": "5e069271778456fc30880779f998c0da71f9a55ebbde710ca80e31a6bb341e14",
   "rom_sha256": "6d2ee5b6f7ebfd2e1af99994f4250b61f7e2feb8b241179748fe63f45d6979c0",
   "nmi": "0x83ba",

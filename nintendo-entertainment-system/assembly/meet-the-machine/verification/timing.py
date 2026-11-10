@@ -2,11 +2,46 @@
 """Check the bounded NMI handler and rendering-disabled controller experiment."""
 import argparse
 import hashlib
+import importlib.util
 import json
-from pathlib import Path
+import shutil
 import subprocess
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# The checked-in ROMs the machine runs, by unit, and the exercise built here.
+UNITS = [('09', 'heartbeat'), ('10', 'read-pad')]
+
+
+def slow_source():
+    """Unit 09 with the five-shift exercise applied; the sample is never replaced."""
+    return (ROOT / 'unit-09/heartbeat.asm').read_text().replace(
+        '    lda COUNTER\n', '    lda COUNTER\n' + '    lsr a\n' * 5)
+
+
+def build_programs(assembler, output):
+    """Build each program the machine runs into output, without the emulator.
+
+    The units are built by their own Makefiles, into output rather than over
+    the checked-in ROMs.
+    """
+    out = Path(output).resolve()
+    for unit, name in UNITS:
+        (out / f'unit-{unit}').mkdir(parents=True, exist_ok=True)
+        subprocess.run(['make', '-s', '-B', '-C', str(ROOT / f'unit-{unit}'), f'ASM={assembler}',
+                        f'ROM={out / f"unit-{unit}/{name}.nes"}'], check=True, capture_output=True)
+    (out / 'slow.asm').write_text(slow_source())
+    subprocess.run([assembler, '--dialect', 'ca65', str(out / 'slow.asm'), '-o', str(out / 'slow.nes')],
+                   check=True, capture_output=True)
+
+
+def evidence_bytes():
+    """The shared evidence module, loaded only when recording."""
+    found = importlib.util.spec_from_file_location(
+        'evidence_bytes', ROOT.parents[2] / 'scripts/evidence_bytes.py')
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
 
 class Machine:
     def __init__(self, binary, rom):
@@ -43,8 +78,12 @@ def main():
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--assembler',default='asm198x')
     a=p.parse_args();a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=True)
+    # The machine runs the checked-in ROMs, so they must be what the assembler builds.
+    build_programs(a.assembler, a.output)
+    for unit, name in UNITS:
+        assert (a.output/f'unit-{unit}/{name}.nes').read_bytes()==(ROOT/f'unit-{unit}/{name}.nes').read_bytes(), name
     results=[]
-    for unit,name in [('09','heartbeat'),('10','read-pad')]:
+    for unit,name in UNITS:
         rom=ROOT/f'unit-{unit}/{name}.nes'
         m=Machine(a.emulator,rom)
         try:
@@ -82,12 +121,8 @@ def main():
             results[-1]['rom_sha256']=hashlib.sha256(rom.read_bytes()).hexdigest()
             print('PASS',unit,flush=True)
         finally:m.close()
-    # Build the exact five-shift exercise separately; never replace the sample.
-    slow_source = (ROOT/'unit-09/heartbeat.asm').read_text().replace(
-        '    lda COUNTER\n', '    lda COUNTER\n' + '    lsr a\n'*5)
-    slow_path = a.output/'slow.asm'; slow_path.write_text(slow_source)
+    # The exact five-shift exercise, built by build_programs; never replace the sample.
     slow_rom = a.output/'slow.nes'
-    subprocess.run([a.assembler,'--dialect','ca65',str(slow_path),'-o',str(slow_rom)],check=True)
     m=Machine(a.emulator,slow_rom)
     try:
         m.call('run_frames',frames=5)
@@ -100,11 +135,16 @@ def main():
             previous=colour
         assert len(changes)>=3 and all(b-a==32 for a,b in zip(changes,changes[1:])),changes
         results.append({'exercise':'five shifts','colour_change_frames':changes,
-                        'source_sha256':hashlib.sha256(slow_source.encode()).hexdigest()})
+                        'source_sha256':hashlib.sha256(slow_source().encode()).hexdigest()})
         print('PASS five-shift exercise',flush=True)
     finally:m.close()
     (a.output/'results.json').write_text(json.dumps({'status':'passed','configuration':'NES NTSC, rendering disabled',
         'server':m.server,'binary_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),
+        'assembler_sha256':hashlib.sha256(Path(shutil.which(a.assembler) or a.assembler).read_bytes()).hexdigest(),
+        # Each program the machine runs, so the checker can rebuild it.
+        'programs':{**{f'unit-{u}/{n}.nes':hashlib.sha256((ROOT/f'unit-{u}/{n}.nes').read_bytes()).hexdigest() for u,n in UNITS},
+                    'slow.nes':hashlib.sha256(slow_rom.read_bytes()).hexdigest()},
+        'tools':{'assembler':evidence_bytes().tool_identity(a.assembler),'emulator':evidence_bytes().tool_identity(a.emulator)},
         'checks':results,'limits':'Emulator MCP input/register/palette observations; not native keyboard, original hardware, or proof of a general VBlank budget.'},indent=2)+'\n')
 
 if __name__=='__main__':main()
