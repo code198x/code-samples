@@ -992,14 +992,7 @@
         "asm198x": "0.0.75",
         "emulator": "0.48.3",
         "oracles": "ACME 0.97, VICE x64sc 3.10",
-        "follow_ups": {
-          "commodore-c64": {
-            "emulator": "0.45.1",
-            "reason": "from 0.46.1 the PAL line-131 mid-line split sits at x=232 in all three captures; 0.45.1 gives 232/192/216 and VICE 192/208/216",
-            "issue": "pending",
-            "undo": "re-record on the newest release once the issue closes"
-          }
-        }
+        "known_differences": "PAL and NTSC line-131 mid-line split position differs from VICE: emu198x#2346"
       },
       "build_programs": "build_programs(assembler, output)",
       "records": "commodore-64/patterns/assembly/rendering/raster-splits/verification/results.json (copied from --output)",
@@ -1021,11 +1014,14 @@
         "the emulators' own C64 ROMs"
       ],
       "pins": {
-        "record": "Asm198x fbc5d112\u2026 and Emu198x 689f2219\u2026, neither a release; no Emu198x release reproduces the record"
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "oracles": "ACME 0.97, VICE x64sc 3.10",
+        "known_differences": "transition PAL last sprite-register write line 34 where VICE gives 33: emu198x#2347"
       },
       "build_programs": "build_programs(assembler, output)",
-      "records": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/results.json (left as recorded)",
-      "checker": "none yet: pending a ruling"
+      "records": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/results.json (copied from --output; execution.log is the run output)",
+      "checker": "scripts/check-pattern-evidence.py --local (c64-sprite-multiplexing)"
     },
     {
       "script": "commodore-64/patterns/assembly/audio/sid-note-trigger/verification/verify.py",
@@ -1041,11 +1037,13 @@
         "the emulator's own C64 ROMs"
       ],
       "pins": {
-        "record": "no assembler; Emu198x 52189fd8\u2026, not a release; no release reproduces the record"
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "oracles": "none independent; the record gives the nominal pitch"
       },
       "build_programs": "build_programs(assembler, output)",
-      "records": "commodore-64/patterns/assembly/audio/sid-note-trigger/verification/evidence/results.json (left as recorded)",
-      "checker": "none yet: pending a ruling"
+      "records": "commodore-64/patterns/assembly/audio/sid-note-trigger/verification/evidence/results.json (copied from --output)",
+      "checker": "scripts/check-pattern-evidence.py --local (c64-sid-note-trigger)"
     },
     {
       "script": "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/verification/verify.py",
@@ -1062,11 +1060,13 @@
         "the emulator's own 48K ROM"
       ],
       "pins": {
-        "record": "no assembler; Emu198x 9009466d\u2026, not a release; no release reproduces the record"
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "oracles": "Pasmo 0.5.5 for bytes only; the record gives each tone's nominal frequency"
       },
       "build_programs": "build_programs(assembler, output)",
-      "records": "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/verification/evidence/results.json (left as recorded)",
-      "checker": "none yet: pending a ruling"
+      "records": "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/verification/evidence/results.json (copied from --output)",
+      "checker": "scripts/check-pattern-evidence.py --local (spectrum-sound-beep)"
     },
     {
       "script": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/test_verify.py",

@@ -40,6 +40,13 @@ and firmware are not rewritten. The emulator needs a configured 48K ROM.
 The retained [results](verification/evidence/results.json) identify source and
 emulator hashes and measured cases; [baseline](verification/evidence/baseline.json)
 identifies the original page. Regenerate results when the routine changes.
+The retained run used the Asm198x 0.0.75 and Emu198x 0.48.3 releases, and CI
+rebuilds the eight case snapshots and the demo tape and compares their bytes.
+Each case lists its nominal frequency beside the measured one. The click
+measured 1040.99 Hz over 0.011519 s against a nominal 1043.84 Hz. The earlier
+record (1 October 2026) came from an unreleased Emu198x build and gave
+1043.23 Hz over 0.011497 s; no release reproduces it, and no independent
+oracle decides between them.
 
 Baseline: the website pattern's fenced source at website revision
 `823e571fbfb67cd4db408adf3f695d46019bb391` is identified by its exact hash in the verification record rather

@@ -1,7 +1,7 @@
 {
   "target": "Stock 48K PAL; code $8000, stack $FF00; DI during tones",
   "method": "Snapshot callers, complete I/O traces, PCM crossings; separate fresh ROM tape load",
-  "emulator_sha256": "9009466df08dd2635ff169044c8196feb959d5bb25225fb4a4b8054c9cddae37",
+  "emulator_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167",
   "sources": {
     "demo.asm": "1d6f83fe313ef3fa03bd60b9bd12e23604793714f403db34c36834be555874db"
   },
@@ -15,13 +15,16 @@
       "frequency_hz": [
         523.50188334665
       ],
+      "nominal_hz": [
+        523.873671606047
+      ],
       "observed_tone_seconds": 0.20056689342403627,
       "cycles": 105,
       "port_writes": 210,
       "base_output": 1,
-      "source_sha256": "d97ce4d0c67b33ca0bae299455828a91b1bbda00fa3b90bdc0ce4cb2270596b7",
+      "source_sha256": "e7eb0e3f8488811304add1bd2cd0bda989779d26c4c48fc7a64bed039a34459e",
       "binary_sha256": "d7b1d02cd6d521110c13dbfb52e5ce1f9ccce50c6d100193cfbef08f473bcad7",
-      "wav_sha256": "d5fcfd40181d522b158600967adddafb54bedbe2bed9ae20101eafed2fc85696",
+      "wav_sha256": "43e5f3e399adfc728b5b7f53a119d3aa741b03bc94d5acb1b3c187e253841c86",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -34,13 +37,16 @@
       "frequency_hz": [
         1042.600591043419
       ],
+      "nominal_hz": [
+        1043.8413361169103
+      ],
       "observed_tone_seconds": 0.10070294784580498,
       "cycles": 105,
       "port_writes": 210,
       "base_output": 1,
-      "source_sha256": "a25892bc6f82ad0af75022b748af5a8b4a7e85c8c4c0f281b3dfc70b8e5a4690",
+      "source_sha256": "cef741e25f3a9e936f4d1d38f47764b1a9139ff24db5c390fc55ed4adf0b97ea",
       "binary_sha256": "1d25e9a2e8d8bda3445e8ac337c3f5756471145cb7c2847d6312b427093c1658",
-      "wav_sha256": "f1e2a4a242ea4f91f46778b0c10c1dd01786804ea523fa346eeb31489c0f12ee",
+      "wav_sha256": "3d641462b7db50ba977ecc35e9f0f49fb56fc14d6ed2821bd58d42553c83a041",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -53,13 +59,16 @@
       "frequency_hz": [
         1042.7537051702682
       ],
+      "nominal_hz": [
+        1043.8413361169103
+      ],
       "observed_tone_seconds": 0.20138321995464853,
       "cycles": 210,
       "port_writes": 420,
       "base_output": 1,
-      "source_sha256": "67253af3e4924f0ecaff2a2804c33601c897b06e8fe9582a0c2e098e7820c18f",
+      "source_sha256": "39b7db52f7d3396dc89ce87c036622ee8567589d9fd4ef6191bd4b83ad034c25",
       "binary_sha256": "5a8ac670577bca084d177a4d5c0f7af8eac2e27729a0a6461ccbea509042ba2f",
-      "wav_sha256": "e4f2a365b4832bd1b46b9537e01639ea9212b8b7f4a2ca2012439f2b29bde508",
+      "wav_sha256": "e957ef0ecaa2f099f86e248f846add6111c1822d3cd2babbfa2e8f90108ad6c2",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -72,13 +81,16 @@
       "frequency_hz": [
         523.3603997501561
       ],
+      "nominal_hz": [
+        523.873671606047
+      ],
       "observed_tone_seconds": 0.03820861678004535,
       "cycles": 20,
       "port_writes": 40,
       "base_output": 1,
-      "source_sha256": "1ee84de25a804bc97ea085e9d2693205f5a9fb8714a80b2d299d9d3b300e554c",
+      "source_sha256": "ab15ca95bde884369476e4214a6a79c20543798397e253a95aba7b7c0c2392e5",
       "binary_sha256": "5180549d39af3cc90dcdcae5dc1595887af9916bece523fee700ba07478ebf57",
-      "wav_sha256": "6cf68b69718fda2c5d22d1c2e49ca0f1f096d7f9cf2f823d71314bd8b6b81416",
+      "wav_sha256": "c0ffa62cca9d4d0101dcdc8df199ee3a0f67cb1d2872c62c472932fcf86ae264",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -91,13 +103,16 @@
       "frequency_hz": [
         523.50188334665
       ],
+      "nominal_hz": [
+        523.873671606047
+      ],
       "observed_tone_seconds": 0.20056689342403627,
       "cycles": 105,
       "port_writes": 210,
       "base_output": 9,
-      "source_sha256": "084a55a7652453282544f3ede715195b65791a688bfe29765328ece9422ff2f0",
+      "source_sha256": "fff27bb60885eeaa7beffecd740a2938101ca2d8bce0979d5c5ec576d535ac26",
       "binary_sha256": "48acc3c1877189ff88441b62ab50233d6d73826bfa4295888f7de9084da59d25",
-      "wav_sha256": "d5fcfd40181d522b158600967adddafb54bedbe2bed9ae20101eafed2fc85696",
+      "wav_sha256": "43e5f3e399adfc728b5b7f53a119d3aa741b03bc94d5acb1b3c187e253841c86",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -117,13 +132,23 @@
         1267.2413793103449,
         1496.606334841629
       ],
+      "nominal_hz": [
+        666.539706722529,
+        723.8883143743536,
+        792.0343969223807,
+        874.3442418186361,
+        975.7457485363814,
+        1103.7527593818984,
+        1270.4174228675136,
+        1496.365968362548
+      ],
       "observed_tone_seconds": 0.13959183673469389,
       "cycles": 128,
       "port_writes": 256,
       "base_output": 1,
-      "source_sha256": "5a58dd3a768885a7df75776443a136128fb0c443e82f8a9182133be143d730da",
+      "source_sha256": "58e371cafc2707a7d9f49275d4e097fe3b2da73fffac466f49d896370b0a9f5e",
       "binary_sha256": "7c5f320e87ce6917c4a45223930172aa445ed24be40939cbface8b1628f4cfb3",
-      "wav_sha256": "051f4dc8ccbede22d544a36235143ca45ff29ed84913df89e9cf9d6209f75070",
+      "wav_sha256": "35e5bd327f633034719f8eea81451ea1fbbf9a409004ae9183192f06e3ec1180",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -143,13 +168,23 @@
         723.7417943107222,
         666.1631419939577
       ],
+      "nominal_hz": [
+        1496.365968362548,
+        1270.4174228675136,
+        1103.7527593818984,
+        975.7457485363814,
+        874.3442418186361,
+        792.0343969223807,
+        723.8883143743536,
+        666.539706722529
+      ],
       "observed_tone_seconds": 0.13866213151927437,
       "cycles": 128,
       "port_writes": 256,
       "base_output": 1,
-      "source_sha256": "e1fd81b5e91b3499f3ee82d3d4d0e9972276ca1ec812552587f3d379c251fa45",
+      "source_sha256": "c7faf25a7894a83ca28bd33ebcc39dc7a96e279f9e1637c3f2d2c4f3a24b2416",
       "binary_sha256": "bb60ead8a7208cfa50d7a347f3ecd7090bc58a36e17b8344773dd678c43bda5c",
-      "wav_sha256": "6f31a4e0f5d9ef962bceeb59cae943f1daeb1cec071f75ef131e3e2c630080b1",
+      "wav_sha256": "f4e20f3dcff45bffade3b08e0f5b63509f5a827603ac79ae72e4e7f0142eb449",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -160,15 +195,18 @@
     {
       "name": "click",
       "frequency_hz": [
-        1043.225806451613
+        1040.9871244635192
       ],
-      "observed_tone_seconds": 0.011496598639455782,
+      "nominal_hz": [
+        1043.8413361169103
+      ],
+      "observed_tone_seconds": 0.011519274376417234,
       "cycles": 12,
       "port_writes": 24,
       "base_output": 1,
-      "source_sha256": "7ffdfa19e5473e0aea05312ad297830d1171d5a4c26bed0c3fc89fb79fa3b40c",
+      "source_sha256": "1f1594d4258baa989f3c4d24ab5e825083fca741a117f5ee3b32aa03b3730257",
       "binary_sha256": "d05ec225e6292950d7e47bfd43fe89d34987cbd9c73cea017082da0bb6e1182b",
-      "wav_sha256": "e81d66fbd56d69f4fa72408aedde2c9ef6215783b04b35cfda5fe8aa92b4b649",
+      "wav_sha256": "26b52d93110194fe926f3a9029efd384d06739253808371cc99d7561ac839322",
       "checks": [
         "Complete alternating speaker writes preserve border/MIC",
         "Caller resumes with stack, C, E and disabled interrupt state preserved",
@@ -180,5 +218,43 @@
   "limits": "Emulator observations; no physical hardware or listening claim.",
   "alternate_assembler": "PasmoNext v0.1.3 (PC) (C) 2004-2005 Julian Albo",
   "fresh_tape_sequence_completed": true,
-  "status": "passed"
+  "earlier_record": {
+    "recorded": "2026-10-01",
+    "emulator": "Emu198x 9009466d\u2026, an unreleased build; no assembler named",
+    "values": "click 1043.23 Hz over 0.011497 s (nominal 1043.84 Hz); every case WAV differed from this run"
+  },
+  "status": "passed",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "low/program.sna": "5c0d5763cd258e6da4ce195d1e48a9b24483c1d72804bdc0381dbe02886f4256",
+    "high/program.sna": "feafe49d08614f28d67658f6e6920d8e86687af0c257746c9e9900cf0b00c805",
+    "high-long/program.sna": "877cc2d1d35682bcd890406274a6bdb40c2bd1829d09b58924f3843eed652d1e",
+    "low-short/program.sna": "8e2d1224a9268a391dc93e1f5d9f406baba6b03b5eb43acf029137846083d9bd",
+    "mic-high/program.sna": "ad73487afed056f5d9a49bb90977ed17430221d58f05e8fedd9908ccb0fb7e55",
+    "success/program.sna": "649da1e63ae94ea7569989e7cb59f218add04a7748923a8f28c1f12675a57fe0",
+    "error/program.sna": "0cded258f1c50923a65dd90ec406360488cc4dede0854627191d0fb04acfcd3d",
+    "click/program.sna": "5ce34888777be620f9ddfef3e3b42861248dae29d16c11628bd652ab355b433d",
+    "demo/program.tap": "ffbbe975ea1a3ee72c1dcd531cab963ea3f6a88681adc76f03420a107a6ad810"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "bc6187d4d6deb2205b8049e29e7283bfa254f6507b2a6ed553ae567e85ad2167"
+    },
+    "pasmo": {
+      "tool": "PasmoNext",
+      "version": "0.1.3",
+      "executable_sha256": "e9628f5c32f3c74a963c649781e6cb87e9eaeb4bbfe7b52d3de27f4986bbf136"
+    }
+  }
 }

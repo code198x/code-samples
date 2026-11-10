@@ -44,6 +44,9 @@ LOCAL_BINDINGS = {
     "c64-sprite-movement-bounds": 0,
     "c64-joystick-reading": 0,
     "c64-raster-splits": 0,
+    "c64-sprite-multiplexing": 0,
+    "c64-sid-note-trigger": 0,
+    "spectrum-sound-beep": 0,
     "spectrum-profile-a-routine": 0,
 }
 
@@ -224,7 +227,7 @@ def main() -> int:
         "--parser", action="store_true", help="Check the three adventure-parser records"
     )
     parser.add_argument(
-        "--local", action="store_true", help="Check the four pattern-local records"
+        "--local", action="store_true", help="Check the seven pattern-local records"
     )
     args = parser.parse_args()
     if args.parser + args.audit + args.local > 1:

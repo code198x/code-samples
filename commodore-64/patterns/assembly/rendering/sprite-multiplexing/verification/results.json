@@ -2,25 +2,45 @@
   "sources": {
     "demo.asm": "bd32537b381033aa88f6d0a59fc88f2455898d07a5f21f0add9eaa466ab898bf",
     "multiplexer.inc": "7ab4465a28132c97d7a1020c54c7da1f0760a5780e9613cf758f43a3c8e77829",
-    "verification/verify.py": "589022dbe37609c612eada0142858990e378bde38f5f10debcc074015f771bef"
+    "verification/verify.py": "2e043391b57b20b3a445670ed8c5f0ad3759fc90d4106673beb71dfe69872bba"
   },
   "tools": {
     "assembler": {
-      "path": "/Users/stevehill/Projects/198x/Asm198x/asm198x/target/debug/asm198x",
-      "sha256": "fbc5d112c7dfaa44e2b914c4726ca77e0d514a4f8f3dc6f9dac1f488ab3618cf"
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
     },
     "acme": {
-      "path": "/opt/homebrew/bin/acme",
-      "sha256": "7be6afb147f75c974a48a0540cdb8affc0760ed94bed4d822d95c7e8ee4bb35c"
+      "tool": "acme",
+      "version": "0.97",
+      "executable_sha256": "8a0cc0ddd68e2c6cbcb80519fc4603342acd1f0a66e6d6dfb17f8e86f15ca911"
     },
     "emulator": {
-      "path": "/Users/stevehill/Projects/198x/Emu198x/emu198x/target/release/emu198x-c64",
-      "sha256": "689f2219e7e8a475ad1987efb4ba2b68a1cd470652e57d3d4df9cf0b1fcdf9ae"
+      "tool": "emu198x-c64",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6"
     },
     "vice": {
-      "path": "/opt/homebrew/bin/x64sc",
-      "sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
+      "tool": "x64sc",
+      "executable_sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
     }
+  },
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "0-0/demo.prg": "66a2ac65d12e1de5988dbaf3c3e625370b4ecfe03deb6d1c801dabad23d6e4b1",
+    "1-1/demo.prg": "40ef3106c728022a2173988c7bd3d8d87c27e5800fa2f6c26ecff67f304aac36",
+    "7-7/demo.prg": "807833d1b8284c185ef42ec7d233df3e9e79689149ae806adb3adc75af760d38",
+    "8-8/demo.prg": "fcc0f3423adf9f54b433bef35f7e4c1e3074dbb8fdf83925d838c917345e075e",
+    "9-9/demo.prg": "b5133cce3d829b8c09e3668967b3e624bd436e1d23641e5932023f368566eb1f",
+    "255-255/demo.prg": "a6ac9dcf77b259e8e09bb468a1d5eab69bab7a4d25ed77d9e8085dbb964f481d",
+    "0-8/demo.prg": "33109286fe42bf02041320f2a5525231413d0d14ec4c8969c5b67082b26eb9cd",
+    "8-0/demo.prg": "9f988589137d50d17d9b40ecb4832d9f98d35259e6682a2c0ed9c8ca959701d6",
+    "transition/demo.prg": "71e607c98cdbaba96373408dc45246f69ba6d39f94256d29f2585fa749343fdb",
+    "negative-missing-x-msb/demo.prg": "d7d58b70a7b82752be381f2d8649bc3b209e81e35217267279c73b5960b91137"
   },
   "checks": [
     {
@@ -961,7 +981,7 @@
         0
       ],
       "last_write_lines": [
-        33,
+        34,
         145
       ],
       "picture": {
@@ -1256,5 +1276,29 @@
       "prg_sha256": "71e607c98cdbaba96373408dc45246f69ba6d39f94256d29f2585fa749343fdb"
     }
   ],
-  "negative_control": "emu-pal-25.png: wrong pixels: missing 1180, extra 812"
+  "vice_differences": [
+    {
+      "case": "transition",
+      "model": "pal",
+      "stage": 1,
+      "field": "last_write_lines",
+      "emu": [
+        34,
+        145
+      ],
+      "vice": [
+        33,
+        145
+      ],
+      "known_issue": "emu198x#2347: last sprite-register write line"
+    }
+  ],
+  "earlier_record": {
+    "recorded": "2026-10-08",
+    "assembler": "Asm198x fbc5d112\u2026, an unreleased build",
+    "emulator": "Emu198x 689f2219\u2026, an unreleased build",
+    "values": "transition PAL last write line 33 (as VICE); negative control missing 1180, extra 812 pixels"
+  },
+  "negative_control": "emu-pal-25.png: wrong pixels: missing 1180, extra 425",
+  "status": "passed"
 }

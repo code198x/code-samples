@@ -64,6 +64,16 @@ Retained results are in `verification/results.json`; reruns write generated
 programs, scripts, PNGs and observations under `build/verification/`. This is
 configuration-specific emulator evidence, not an original-hardware test.
 
+The record was made with the Asm198x 0.0.75 and Emu198x 0.48.3 releases,
+ACME 0.97 and VICE 3.10, and CI rebuilds its ten programs and compares their
+bytes. One capture differs between the emulators: in the 8→0→8 transition on
+PAL, Emu198x finishes the first band's writes at line 34 where VICE gives 33.
+The record lists it under `vice_differences` as a known issue
+(emu198x#2347); the verifier fails on any difference that names no issue.
+The earlier record (8 October 2026) came from unreleased Asm198x and Emu198x
+builds, which gave 33 there and 812 extra pixels in the rejected negative
+control, where the releases give 425; no release reproduces it.
+
 ## Sources
 
 Commodore, *Commodore 64 Programmer's Reference Guide* (1983), chapter 3,

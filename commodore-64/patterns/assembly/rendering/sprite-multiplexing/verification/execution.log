@@ -31,7 +31,7 @@ PASS 8-0 vice pal [25, 0, 0, 45, 145]
 PASS 8-0 emu ntsc [24, 0, 0, 45, 145]
 PASS 8-0 vice ntsc [25, 0, 0, 45, 145]
 PASS transition emu pal [25, 0, 0, 45, 158]
-PASS transition emu pal [65, 0, 0, 33, 145]
+PASS transition emu pal [65, 0, 0, 34, 145]
 PASS transition emu pal [125, 0, 0, 45, 158]
 PASS transition vice pal [25, 0, 0, 45, 158]
 PASS transition vice pal [65, 0, 0, 33, 145]
@@ -42,5 +42,5 @@ PASS transition emu ntsc [124, 0, 0, 45, 158]
 PASS transition vice ntsc [25, 0, 0, 45, 158]
 PASS transition vice ntsc [65, 0, 0, 33, 145]
 PASS transition vice ntsc [125, 0, 0, 45, 158]
-PASS negative control rejected: emu-pal-25.png: wrong pixels: missing 1180, extra 812
+PASS negative control rejected: emu-pal-25.png: wrong pixels: missing 1180, extra 425
 44 captures checked; negative control rejected

@@ -42,7 +42,11 @@ routines. The retained [results](verification/evidence/results.json) give
 source, program and emulator hashes and the measured values;
 [baseline](verification/evidence/baseline.json) identifies the page this
 replaced. Regenerate results when the routines change. The retained run
-used Emu198x at commit `bfdea4bd`.
+used the Asm198x 0.0.75 and Emu198x 0.48.3 releases, and CI rebuilds its
+three programs and compares their bytes. The demo note measured 261.63 Hz
+(nominal 261.62 Hz) and held for 510 ms. The earlier record (5 October 2026)
+came from an unreleased Emu198x build and gave 261.62 Hz and 520 ms; no
+release reproduces it, and no independent oracle decides between them.
 
 Emulator observations, not hardware facts: in Emu198x the first attack
 began 32.6 ms after the gate was set, because its reSID-derived rate
