@@ -99,6 +99,13 @@ def keyboard_snapshot(source: Path, target: Path, key: tuple[int, int] | None) -
 
 # Each program the machine loads, by its folder under the output.
 PROGRAMS = ("probe", "matrix", "negative", "live")
+# The run this record replaces, kept for comparison.
+EARLIER = {
+    "recorded": "2026-10-10",
+    "emulator": "Emu198x 292cb742…, an unreleased build",
+    "values": "RETURN reverse-scan probe read [0,0,0,0,0,0,2] on PAL and NTSC "
+    "where VICE reads [0,0,0,0,1,0,2] (a known difference then)",
+}
 
 
 def probe_program(args: argparse.Namespace, dest: Path) -> tuple[Path, dict[str, int]]:
@@ -516,6 +523,7 @@ def main() -> None:
         "negative_control": negative,
         "sizes": sizes,
         "live": live_cases,
+        "earlier_record": EARLIER,
         "status": "passed",
     }
     (args.output / "results.json").write_text(json.dumps(record, indent=2) + "\n")
