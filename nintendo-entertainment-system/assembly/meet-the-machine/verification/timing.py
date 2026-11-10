@@ -9,6 +9,11 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# This record stays on Emu198x 0.45.1: from 0.46.1 the frame phase after
+# power-on moves by one frame (emu198x#2349). Re-record on the newest release
+# once that issue closes.
+EMULATOR_PIN = {'release': '0.45.1', 'issue': 'emu198x#2349',
+                'reason': 'from 0.46.1 the frame phase after power-on moves by one frame'}
 # The checked-in ROMs the machine runs, by unit, and the exercise built here.
 UNITS = [('09', 'heartbeat'), ('10', 'read-pad')]
 
@@ -145,6 +150,7 @@ def main():
         'programs':{**{f'unit-{u}/{n}.nes':hashlib.sha256((ROOT/f'unit-{u}/{n}.nes').read_bytes()).hexdigest() for u,n in UNITS},
                     'slow.nes':hashlib.sha256(slow_rom.read_bytes()).hexdigest()},
         'tools':{'assembler':evidence_bytes().tool_identity(a.assembler),'emulator':evidence_bytes().tool_identity(a.emulator)},
+        'emulator_pin':EMULATOR_PIN,
         'checks':results,'limits':'Emulator MCP input/register/palette observations; not native keyboard, original hardware, or proof of a general VBlank budget.'},indent=2)+'\n')
 
 if __name__=='__main__':main()

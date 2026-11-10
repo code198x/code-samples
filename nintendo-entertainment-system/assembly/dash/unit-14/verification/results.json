@@ -18,6 +18,11 @@
   "programs": {
     "dash.nes": "6d2ee5b6f7ebfd2e1af99994f4250b61f7e2feb8b241179748fe63f45d6979c0"
   },
+  "emulator_pin": {
+    "release": "0.45.1",
+    "issue": "emu198x#2349",
+    "reason": "from 0.46.1 the frame phase after power-on moves by one frame"
+  },
   "tools": {
     "assembler": {
       "tool": "asm198x",

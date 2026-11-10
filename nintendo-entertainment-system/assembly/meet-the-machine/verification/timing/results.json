@@ -34,6 +34,11 @@
       "executable_sha256": "aa619fb4a996674725d29888f8c54c4976c3b38a8ecf5ef029eeeee85b9eb3b2"
     }
   },
+  "emulator_pin": {
+    "release": "0.45.1",
+    "issue": "emu198x#2349",
+    "reason": "from 0.46.1 the frame phase after power-on moves by one frame"
+  },
   "checks": [
     {
       "unit": "09",
