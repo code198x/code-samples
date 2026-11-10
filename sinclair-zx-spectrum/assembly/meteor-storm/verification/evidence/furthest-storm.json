@@ -1,11 +1,15 @@
 {
   "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
-  "emulator_sha256": "207832e3912531195510acde4b183166d743f8f638a2fec8222849a737ad06a6",
+  "emulator_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "programs": [
     {
       "name": "furthest-storm",
       "source_sha256": "17b234bab359d30a86db2c0859212ddc4a8995af095c1c3cc90390a2cae13131",
       "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
         {
           "check": "title colours each row from its table byte",
           "detail": {
@@ -773,8 +777,36 @@
       ],
       "assets_sha256": "3829130674d64ce81ba26e7f3d4c9108b6a5c463eafe43e999544d254d72812f",
       "binary_sha256": "6d74eae178ca1904d178f9c5713c5a68527383ccded979a82d4e90fd602d02dd",
+      "snapshot_sha256": "f85b655eea09759045c9dc55de3f9b03f1f2b19ced7b8dd1c0c16d53976791e5",
       "binary_bytes": 11676
     }
   ],
-  "assembler_version": "asm198x v0.0.58"
+  "assembler_version": "asm198x v0.0.77",
+  "pasmo_version": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
+  "assembler_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb",
+  "built_programs": {
+    "furthest-storm/program.sna": "f85b655eea09759045c9dc55de3f9b03f1f2b19ced7b8dd1c0c16d53976791e5"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.77",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.77",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.5",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.5",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4"
+    },
+    "pasmo": {
+      "tool": "Pasmo",
+      "version": "0.5.5",
+      "executable_sha256": "9756e9b5a3883fbb7d568a2876f6ce73db8815c3badac8787d2c18cb3bc58ec0"
+    }
+  },
+  "status": "passed"
 }

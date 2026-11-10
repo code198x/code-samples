@@ -44,7 +44,8 @@ class CurriculumTests(unittest.TestCase):
                     path = root / fixture["record"]
                     original = path.read_text()
                     record = json.loads(original)
-                    record["programs"][next(iter(record["programs"]))] = "0" * 64
+                    key = fixture["recorder"].get("programs_key", "programs")
+                    record[key][next(iter(record[key]))] = "0" * 64
                     path.write_text(json.dumps(record))
                     failures = E.inspect(root, selection, E.CURRICULUM_BINDINGS)[
                         "failures"

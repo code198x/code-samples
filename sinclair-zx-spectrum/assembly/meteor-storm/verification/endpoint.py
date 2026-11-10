@@ -1,16 +1,35 @@
 """Endpoint regression: ordinary frames and keyboard, no game-state writes."""
-import argparse,hashlib,importlib.util,json,re,subprocess,sys
+import argparse,hashlib,importlib.util,json,re,shutil,subprocess,sys
 from pathlib import Path
 PROJECT=Path(__file__).resolve().parents[1]
 donor=PROJECT.parents[1]/'basic/meet-basic/opening/verification/verify.py'
 spec=importlib.util.spec_from_file_location('spectrum_transport',donor);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 
+# The run this record replaces, kept for comparison. Releases before 0.27.1
+# can resume a reloaded snapshot at $0000 (emu198x#1564), below this harness's
+# floor; from 0.27.1 on, releasing boost counts 12 steps, not 11.
+EARLIER={'emulator':'Emu198x ed078de5..., an unreleased build (reported as 0.24.0); Asm198x 0.0.58 named by version only',
+ 'values':"'releasing boost restores normal speed' counted 11 boost steps (12 from 0.27.1); every other check identical"}
+
+def build(root,out,assembler):
+ """Assemble the checkpoint into out/meteor-storm.{sna,tap}; names relative to out, so a tape's CODE block is the same in any checkout."""
+ out.mkdir(parents=True,exist_ok=True)
+ for flag,ext in [('--sna','sna'),('--tapbas','tap')]:subprocess.run([assembler,'--dialect','pasmonext','--cpu','z80',flag,'--sym=meteor-storm.sym',str(root/'meteor-storm.asm'),'-o','meteor-storm.'+ext],check=True,cwd=out,capture_output=True)
+
+def build_programs(assembler,output,checkpoint):
+ """Build one checkpoint's snapshot and tape into output, without the emulator."""
+ build(PROJECT/'checkpoints'/checkpoint,Path(output).resolve(),assembler)
+
+def evidence_bytes():
+ spec=importlib.util.spec_from_file_location('evidence_bytes',PROJECT.parents[2]/'scripts/evidence_bytes.py');e=importlib.util.module_from_spec(spec);spec.loader.exec_module(e);return e
+
 def main():
  p=argparse.ArgumentParser();p.add_argument('--emulator',required=True);p.add_argument('--output',type=Path,required=True)
  # Later checkpoints keep the finished game's rules, so the same regression applies.
+ p.add_argument('--assembler',default='asm198x')
  p.add_argument('--checkpoint',default='finished',choices=['finished','tone','sound-table','sound-frames','debris','colour-bands']);a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
  ROOT=PROJECT/'checkpoints'/a.checkpoint
- for flag,ext in [('--sna','sna'),('--tapbas','tap')]:subprocess.run(['asm198x','--dialect','pasmonext','--cpu','z80',flag,'--sym='+str(out/'meteor-storm.sym'),str(ROOT/'meteor-storm.asm'),'-o',str(out/('meteor-storm.'+ext))],check=True,cwd=ROOT)
+ build(ROOT,out,a.assembler)
  symbols={m[1]:int(m[2],16) for line in (out/'meteor-storm.sym').read_text().splitlines() if (m:=re.match(r'(\w+) = \$(\w+)',line))}
  m=module.Spectrum(a.emulator,out);checks=[];events=[]
  def state():
@@ -140,7 +159,7 @@ def main():
   m.call('press_key',key='space',hold_frames=3);m.frames(8);check('tape-loaded game starts',state()['phase']==1 and state()['hull']==1)
   m.call('save_screenshot',path=str(out/'tape-flight.png'))
   report={'checkpoint':a.checkpoint,'method':'Ordinary emulator frames, keyboard input, read-only game-state probes; snapshot checks plus separate fresh tape load. No debug stepping or state writes.','target':'spectrum_48k PAL','emulator_sha256':hashlib.sha256(Path(a.emulator).read_bytes()).hexdigest(),'source_sha256':hashlib.sha256((ROOT/'meteor-storm.asm').read_bytes()).hexdigest(),'tape_sha256':hashlib.sha256((out/'meteor-storm.tap').read_bytes()).hexdigest(),'checks':checks}
-  version=subprocess.run(['asm198x','--version'],capture_output=True,text=True)
+  version=subprocess.run([a.assembler,'--version'],capture_output=True,text=True)
   report['assembler_version']=(version.stdout+version.stderr).strip()
   report['assets_sha256']=hashlib.sha256((ROOT/'assets.inc').read_bytes()).hexdigest()
   rom=Path.home()/'.emu198x/roms/sinclair-zx-spectrum-48k/48.rom'
@@ -151,6 +170,12 @@ def main():
   actual=[c for c in checks if c['check'] in compared]
   check('accepted gameplay measurements match',json.loads(json.dumps(actual))==reference,actual)
   report['accepted_source_sha256']=baseline['source_sha256']
+  report['assembler_sha256']=hashlib.sha256(Path(shutil.which(a.assembler) or a.assembler).read_bytes()).hexdigest()
+  # Each program the machine loads, so the checker can rebuild it.
+  report['programs']={n:hashlib.sha256((out/n).read_bytes()).hexdigest() for n in ('meteor-storm.sna','meteor-storm.tap')}
+  e=evidence_bytes();report['tools']={'assembler':e.tool_identity(a.assembler),'emulator':e.tool_identity(a.emulator)}
+  report['earlier_record']=dict(EARLIER,recorded='29-30 September 2026')
+  report['status']='passed'
   (out/'results.json').write_text(json.dumps(report,indent=2)+'\n')
  finally:m.close()
 if __name__=='__main__':main()

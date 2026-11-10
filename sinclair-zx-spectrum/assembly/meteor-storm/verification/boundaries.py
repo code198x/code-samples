@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -13,16 +14,37 @@ transport = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(transport)
 
 
+SOURCE = ROOT / 'checkpoints/first-dodge/meteor-storm.asm'
+
+
+def build_programs(assembler, output):
+    """Assemble the first-dodge snapshot into output, without the emulator."""
+    out = Path(output).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    subprocess.run([assembler, '--dialect', 'pasmo', '--cpu', 'z80', '--sna',
+                    '--sym=symbols.sym', str(SOURCE), '-o', 'program.sna'], cwd=out, check=True,
+                   capture_output=True)
+
+
+def tools(**paths):
+    """Each tool by release identity, never by a local path."""
+    spec = importlib.util.spec_from_file_location(
+        'evidence_bytes', ROOT.parents[2] / 'scripts/evidence_bytes.py')
+    evidence = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(evidence)
+    return {name: evidence.tool_identity(path) for name, path in paths.items()}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--emulator', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--assembler', default='asm198x')
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
-    source = ROOT / 'checkpoints/first-dodge/meteor-storm.asm'
-    subprocess.run(['asm198x', '--dialect', 'pasmo', '--cpu', 'z80', '--sna',
-                    '--sym=' + str(out / 'symbols.sym'), str(source), '-o', str(out / 'program.sna')], check=True)
+    source = SOURCE
+    build_programs(args.assembler, out)
     symbols = {match[1]: int(match[2], 16) for line in (out / 'symbols.sym').read_text().splitlines()
                if (match := re.match(r'(\w+) = \$(\w+)', line))}
     report = {'method': 'Ordinary frames and keyboard input only; no state writes or stepping.',
@@ -52,6 +74,12 @@ def main():
             print('PASS', report['cases'][-1], flush=True)
             machine.frames(1)
             machine.call('save_screenshot', path=str(out / f'x-{target}.png'))
+        report['assembler_sha256'] = hashlib.sha256(
+            Path(shutil.which(args.assembler) or args.assembler).read_bytes()).hexdigest()
+        # The program the machine loads, so the checker can rebuild it.
+        report['programs'] = {'program.sna': hashlib.sha256((out / 'program.sna').read_bytes()).hexdigest()}
+        report['tools'] = tools(assembler=args.assembler, emulator=args.emulator)
+        report['status'] = 'passed'
         (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
     finally:
         machine.close()

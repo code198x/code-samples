@@ -1,8 +1,6 @@
 {
   "method": "Snapshot execution, ordinary PAL frames, keyboard input and read-only state probes.",
-  "emulator_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
-  "assembler_version": "asm198x v0.0.58",
-  "pasmo_version": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
+  "emulator_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "programs": [
     {
       "name": "boost",
@@ -58,6 +56,7 @@
       ],
       "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
       "binary_sha256": "40c51c86fd8463a9977304bdf9b354cfbd99dcedb1ee27190963c5c6ff6fcb16",
+      "snapshot_sha256": "2600bc154ba890f487c7aeb061c26b2ef057e8ead2f7dae04453e4f3d45cb757",
       "binary_bytes": 3789
     },
     {
@@ -155,1105 +154,8 @@
       ],
       "assets_sha256": "46f0fd265614ff1b484b93e7fd23aaea91e423d576f72f984ffb9e3c4ba24484",
       "binary_sha256": "783bf5751a6feb54c5626478b27d428efa5fbe20d463f7bc93bf096c89a74a5d",
+      "snapshot_sha256": "b025f6f830eb8a8595f270223488d0ab56e106282c64a3af6c8b54854f24eb7b",
       "binary_bytes": 973
-    },
-    {
-      "name": "drift",
-      "source_sha256": "6d6127d5d55b413ebc0fe63ecb473d7c8a2de266fb671eff3e10d705c835ab41",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1775
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        }
-      ],
-      "assets_sha256": "35a29465ae7d8cf4f7ac7cc3689ff379b39153fafca093e9e5d938c968f2114d",
-      "binary_sha256": "ed98b417ecec3f5c7df6a8c155e1a1659de10ee95cc9ab464e5722b45b91abd1",
-      "binary_bytes": 2658
-    },
-    {
-      "name": "eight-shifts",
-      "source_sha256": "f6ace4c904b808a6aa94e54b43463b211e2c2e6493641846b6adcb28350e4fee",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "shift carries pixels across byte boundary",
-          "detail": [
-            [
-              129,
-              0
-            ],
-            [
-              64,
-              128
-            ],
-            [
-              32,
-              64
-            ],
-            [
-              16,
-              32
-            ],
-            [
-              8,
-              16
-            ],
-            [
-              4,
-              8
-            ],
-            [
-              2,
-              4
-            ],
-            [
-              1,
-              2
-            ]
-          ]
-        }
-      ],
-      "binary_sha256": "7ba710f7269569b0dd7986921732559e6b87c7d7524481816fcd28fe7a6fa6a8",
-      "binary_bytes": 73
-    },
-    {
-      "name": "elapsed-time",
-      "source_sha256": "d561f244399815821dffb9fe3dcd2ecddeb09dc8d7e59f9d597853f937d5a8bc",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 2091
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 80
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 2091
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "0b4acd1d5401aff75e6e26ca3a15f73d9a6e05aad3e54e8f0e9da4328153ae07",
-      "binary_bytes": 3560
-    },
-    {
-      "name": "finished",
-      "source_sha256": "113e89bed3bc25073eaa474448e79a485a068891e5982772090715fc597496a9",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1047
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 960
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 1047
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "f71baeb086598a5b68a87bb7309fb395562d534c5904734f9348b26d250a0a03",
-      "binary_bytes": 4213
-    },
-    {
-      "name": "first-dodge",
-      "source_sha256": "1161fd64630a1af9461dac9cc803fbf30b15972b80a8981316bd2b50ba91dede",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "idle contact outcome",
-          "detail": 2
-        },
-        {
-          "check": "result freezes movement",
-          "detail": null
-        },
-        {
-          "check": "steering produces a clean pass",
-          "detail": 82
-        }
-      ],
-      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
-      "binary_sha256": "365b675862d658d87cf81cf6b6684dd63534cc7cb4abc50b729f3f164d865025",
-      "binary_bytes": 1629
-    },
-    {
-      "name": "fixed-course",
-      "source_sha256": "ce026a43b6a819d52a49077749db773762ca2fba635931f0b5fd61ce20465791",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1775
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        }
-      ],
-      "assets_sha256": "7739ecba61c11dc59a0bb06f0093f65121025255c8c977b6157df17c148ac944",
-      "binary_sha256": "672151d913247f583b0dd9c444d947cf70ab6bd7567114777893ef5d7e0605b3",
-      "binary_bytes": 2476
-    },
-    {
-      "name": "half-rate-clock",
-      "source_sha256": "774f718ffe2ea7e9a3595d71810c33081f1476ae2efabfda8093ab74a2c03cb1",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "counter survives byte wrap at the intended rate",
-          "detail": 300
-        }
-      ],
-      "binary_sha256": "22010817016b7ab6dbd476c18bc1b3eaecf408ebf4049026bd7e5e243c21bbd8",
-      "binary_bytes": 84
-    },
-    {
-      "name": "interrupt-clock",
-      "source_sha256": "12a9ea258e446f3d33ffc6a00289dc0450d20431752bf813084cbcdd040ef073",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "counter survives byte wrap at the intended rate",
-          "detail": 600
-        }
-      ],
-      "binary_sha256": "867cfc8db992ffa07389948ddb428ee0c73c1fe2870efee0dd6da2ce072ee109",
-      "binary_bytes": 80
-    },
-    {
-      "name": "object-pool",
-      "source_sha256": "16456b0f9640f437e0f03890619758eb4ba9c5fee4114be81fca7640fdb4478a",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 149
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        }
-      ],
-      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
-      "binary_sha256": "06197defc9df13e92270cec2a1e8122dd3780db079a31a764766417c2e3424c7",
-      "binary_bytes": 2146
-    },
-    {
-      "name": "object-records",
-      "source_sha256": "c8ec750437a1136cbfbdcd57af6396e740a79f8835600185d53a396a20c1ad84",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 148
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        }
-      ],
-      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
-      "binary_sha256": "06de968738a3845311c588ae601225b324472e26250e5b7ea32380a7531e91c7",
-      "binary_bytes": 2023
-    },
-    {
-      "name": "one-meteor",
-      "source_sha256": "ce14af620942772885dadd7af19236ddbfd07431428bd35463e03440332df830",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "idle contact outcome",
-          "detail": 3
-        },
-        {
-          "check": "result freezes movement",
-          "detail": null
-        },
-        {
-          "check": "steering produces a clean pass",
-          "detail": 82
-        }
-      ],
-      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
-      "binary_sha256": "69a2704e4631da67aa2c2cfa595d1282572567e4a6e7f218a4588a990e487940",
-      "binary_bytes": 1567
-    },
-    {
-      "name": "one-row-shift",
-      "source_sha256": "dd9087a755363fde385f5721f9730038dae0876482f70502ee6d29740adf7938",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "shift carries pixels across byte boundary",
-          "detail": [
-            [
-              129,
-              0
-            ],
-            [
-              64,
-              128
-            ]
-          ]
-        }
-      ],
-      "binary_sha256": "d08793bdb4acdbdc8c48e2bbde0bdcebee0e122d2fb54353c362be9e55d0ec0b",
-      "binary_bytes": 58
-    },
-    {
-      "name": "phases",
-      "source_sha256": "b9aae09a3fdbe612c7ea9f1c311c18b1da753df3ebb33c5849d18f1a1a751f83",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "starts at the title",
-          "detail": null
-        },
-        {
-          "check": "held launch waits for release",
-          "detail": null
-        },
-        {
-          "check": "release starts one flight",
-          "detail": null
-        },
-        {
-          "check": "idle flight is destroyed",
-          "detail": 2
-        },
-        {
-          "check": "result freezes movement",
-          "detail": null
-        },
-        {
-          "check": "retry clears the run block",
-          "detail": 27
-        },
-        {
-          "check": "steering produces a clean pass",
-          "detail": 82
-        },
-        {
-          "check": "Q at a result returns to the title",
-          "detail": null
-        },
-        {
-          "check": "Q in flight returns to the title",
-          "detail": null
-        }
-      ],
-      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
-      "binary_sha256": "e4fa09699db2d353105a19761eb8b14d05f00e5924f560e03ee9db136b4ac112",
-      "binary_bytes": 1891
-    },
-    {
-      "name": "pixel-motion",
-      "source_sha256": "76406e9cd7654eba7ec304e4178ce29fb3ab6a2e27abb792814c5d33a9832d7e",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "opposing keys cancel",
-          "detail": null
-        },
-        {
-          "check": "left bound",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 0",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 1",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 2",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 3",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 4",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 5",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 6",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 7",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 8",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 9",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 10",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 11",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 12",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 13",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 14",
-          "detail": null
-        },
-        {
-          "check": "ship row restored without trails 15",
-          "detail": null
-        },
-        {
-          "check": "right bound",
-          "detail": null
-        },
-        {
-          "check": "restart restores ship",
-          "detail": null
-        }
-      ],
-      "assets_sha256": "46f0fd265614ff1b484b93e7fd23aaea91e423d576f72f984ffb9e3c4ba24484",
-      "binary_sha256": "39fa650531442e8ad8132a27445e35b230c8c6266cfdd477104b444ca167037f",
-      "binary_bytes": 930
-    },
-    {
-      "name": "records",
-      "source_sha256": "901a7a3ce252680e42c80a8046559ef2f48d6f8d02c87a9fe545aa16c57ad24c",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1047
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 960
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 1047
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "6b235a661ce2d3441952eab36d6f98f9c6103e2bad79e278ca1141953eb47a3e",
-      "binary_bytes": 4094
-    },
-    {
-      "name": "render-budget",
-      "source_sha256": "fe78d98ba0b774d1ad6f2efdea3701767b3b0cec990885bd3406131976deec8c",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1047
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 160
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 1047
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "9f223fddd19de3a242bd247d923eee5b41d104eeac48d111571f007b08a22d2a",
-      "binary_bytes": 3893
-    },
-    {
-      "name": "sound-table",
-      "source_sha256": "b768442a5597049587989e5a755190228d107b223e148018aca294ffd21fcc79",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1047
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 960
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 1047
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "3eb266dd00087692f4a88dd4838cd5442b59b54514bd3b61ad8c77e9484e7015",
-      "binary_bytes": 4293
-    },
-    {
-      "name": "star-pickups",
-      "source_sha256": "3929b5128ea7c131829f0ad65296a6fa1361324084cbf2eec0efdb3bb56dee34",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 2091
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "route collects stars",
-          "detail": 80
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "3adc54eb1b89246df6112d9e0a6d8d27951b9d3a66a0ef9f6322bc7487a067bf",
-      "binary_bytes": 3414
-    },
-    {
-      "name": "stars",
-      "source_sha256": "abaed826c66870ce37d0d2cd40cbbab6cd916afb44cff1777564b5970d6e46fc",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 2091
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "route collects stars",
-          "detail": 80
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "a375498cc4d5b24e810150963321b0f4681b8f4741370a35272f3c8f263d816d",
-      "binary_bytes": 3520
-    },
-    {
-      "name": "timed-course",
-      "source_sha256": "0cee6e36d3c99062252d7768157d3e5e9666e6689393505068d96f67640f0e87",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 2091
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 80
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 2091
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "ac4a544e71832f56d22224611a7140af37fb394a47323ed0ceb704d0dee1f4f8",
-      "binary_bytes": 3662
-    },
-    {
-      "name": "tone",
-      "source_sha256": "9bff4ecdbf1f948da7785c83fa14347466fb5f9a446f1ec925d3bdf307d4ea44",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1047
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 960
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 1047
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "bb987c81a9f798494cc59d8e34772525e70c1036270de54834042c035ad0aa0f",
-      "binary_bytes": 4223
-    },
-    {
-      "name": "sound-frames",
-      "source_sha256": "59401da309092a78dfeb576c74e6d1f63ff0beec71c4adc78f093db2a43a43d6",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1047
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            1,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 960
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 1047
-        }
-      ],
-      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
-      "binary_sha256": "bed7c95c45a29e7744d9561a36d9d0535315a5569e97b8b5df1468e205e924eb",
-      "binary_bytes": 4387
-    },
-    {
-      "name": "debris",
-      "source_sha256": "b6c98bc2f324b984873c9ec8a8e0ed68ee9b3632bc762d1f8b91e1b0aed624b5",
-      "checks": [
-        {
-          "check": "upstream Pasmo machine code matches",
-          "detail": null
-        },
-        {
-          "check": "enters flight",
-          "detail": null
-        },
-        {
-          "check": "contact starts the destroyed phase",
-          "detail": 25
-        },
-        {
-          "check": "contact flashes the border",
-          "detail": 2
-        },
-        {
-          "check": "R and Q cannot cut the destroyed phase short",
-          "detail": [
-            {
-              "key": "r",
-              "phase": 2,
-              "debris_time": 20
-            },
-            {
-              "key": "q",
-              "phase": 2,
-              "debris_time": 16
-            }
-          ]
-        },
-        {
-          "check": "destroyed phase lasts 25 updates",
-          "detail": {
-            "frames": 50
-          }
-        },
-        {
-          "check": "border flash ends within the phase",
-          "detail": {
-            "flash_frames": 6
-          }
-        },
-        {
-          "check": "storm stays frozen and drawn",
-          "detail": null
-        },
-        {
-          "check": "debris moves without trails",
-          "detail": {
-            "compared_frames": 18
-          }
-        },
-        {
-          "check": "debris stays between the HUD and the controls line",
-          "detail": {
-            "highest_y": 100,
-            "lowest_y": 179,
-            "landed": 8
-          }
-        },
-        {
-          "check": "result screen keeps no debris",
-          "detail": null
-        },
-        {
-          "check": "idle course loses on first impact",
-          "detail": null
-        },
-        {
-          "check": "retry clears run state",
-          "detail": null
-        },
-        {
-          "check": "next run starts without debris",
-          "detail": null
-        },
-        {
-          "check": "keyboard route finishes alive",
-          "detail": {
-            "phase": 3,
-            "frames": 1046
-          }
-        },
-        {
-          "check": "completion waits beyond final spawn",
-          "detail": null
-        },
-        {
-          "check": "bounded object pool",
-          "detail": null
-        },
-        {
-          "check": "measured update cadence",
-          "detail": [
-            0,
-            2
-          ]
-        },
-        {
-          "check": "route collects stars",
-          "detail": 960
-        },
-        {
-          "check": "PAL elapsed clock advances",
-          "detail": 1046
-        }
-      ],
-      "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
-      "binary_sha256": "db3bb9c5d991bc8fe05bf5fa97ab1729ee23e45088d32e948f2dc30d8f8cc83c",
-      "binary_bytes": 8732
     },
     {
       "name": "colour-bands",
@@ -1530,7 +432,1182 @@
       ],
       "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
       "binary_sha256": "34fb3a3f845e8edf8edcf3116352728bf7122b6301f36e1d3ac8d907afc80d04",
+      "snapshot_sha256": "a220c33dc28b9df1e7f2408e372dc39c1aba899b0b63e2d7207780e9efec5760",
       "binary_bytes": 8752
+    },
+    {
+      "name": "debris",
+      "source_sha256": "b6c98bc2f324b984873c9ec8a8e0ed68ee9b3632bc762d1f8b91e1b0aed624b5",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "contact starts the destroyed phase",
+          "detail": 25
+        },
+        {
+          "check": "contact flashes the border",
+          "detail": 2
+        },
+        {
+          "check": "R and Q cannot cut the destroyed phase short",
+          "detail": [
+            {
+              "key": "r",
+              "phase": 2,
+              "debris_time": 20
+            },
+            {
+              "key": "q",
+              "phase": 2,
+              "debris_time": 16
+            }
+          ]
+        },
+        {
+          "check": "destroyed phase lasts 25 updates",
+          "detail": {
+            "frames": 50
+          }
+        },
+        {
+          "check": "border flash ends within the phase",
+          "detail": {
+            "flash_frames": 6
+          }
+        },
+        {
+          "check": "storm stays frozen and drawn",
+          "detail": null
+        },
+        {
+          "check": "debris moves without trails",
+          "detail": {
+            "compared_frames": 18
+          }
+        },
+        {
+          "check": "debris stays between the HUD and the controls line",
+          "detail": {
+            "highest_y": 100,
+            "lowest_y": 179,
+            "landed": 8
+          }
+        },
+        {
+          "check": "result screen keeps no debris",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "next run starts without debris",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1046
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            0,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1046
+        }
+      ],
+      "assets_sha256": "02a0dd73efd56d5719a22bcbb97cd6ef81d8acf30cbb167fd8003aac8f0b6009",
+      "binary_sha256": "db3bb9c5d991bc8fe05bf5fa97ab1729ee23e45088d32e948f2dc30d8f8cc83c",
+      "snapshot_sha256": "f90ff44fbb883ca9f4c20978e084802c53ac9e9349b9af3f96a2986df82e03ce",
+      "binary_bytes": 8732
+    },
+    {
+      "name": "drift",
+      "source_sha256": "6d6127d5d55b413ebc0fe63ecb473d7c8a2de266fb671eff3e10d705c835ab41",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1775
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "35a29465ae7d8cf4f7ac7cc3689ff379b39153fafca093e9e5d938c968f2114d",
+      "binary_sha256": "ed98b417ecec3f5c7df6a8c155e1a1659de10ee95cc9ab464e5722b45b91abd1",
+      "snapshot_sha256": "15a3d75a56ff4f8ea15666c632ad0453a9be1d29894b9b9a59bf699086304a44",
+      "binary_bytes": 2658
+    },
+    {
+      "name": "eight-shifts",
+      "source_sha256": "f6ace4c904b808a6aa94e54b43463b211e2c2e6493641846b6adcb28350e4fee",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "shift carries pixels across byte boundary",
+          "detail": [
+            [
+              129,
+              0
+            ],
+            [
+              64,
+              128
+            ],
+            [
+              32,
+              64
+            ],
+            [
+              16,
+              32
+            ],
+            [
+              8,
+              16
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ],
+      "binary_sha256": "7ba710f7269569b0dd7986921732559e6b87c7d7524481816fcd28fe7a6fa6a8",
+      "snapshot_sha256": "94feff96de2c00e64e5228074637d6abae500aecec8d7223d417a0601ab3084e",
+      "binary_bytes": 73
+    },
+    {
+      "name": "elapsed-time",
+      "source_sha256": "d561f244399815821dffb9fe3dcd2ecddeb09dc8d7e59f9d597853f937d5a8bc",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 2091
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 80
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 2091
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "0b4acd1d5401aff75e6e26ca3a15f73d9a6e05aad3e54e8f0e9da4328153ae07",
+      "snapshot_sha256": "f4416e0af547825f5afed0059b903cd1c2577702ef98e75232c8ceec996e9056",
+      "binary_bytes": 3560
+    },
+    {
+      "name": "finished",
+      "source_sha256": "113e89bed3bc25073eaa474448e79a485a068891e5982772090715fc597496a9",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "f71baeb086598a5b68a87bb7309fb395562d534c5904734f9348b26d250a0a03",
+      "snapshot_sha256": "ebc35bdc4b9e7d6726f811c116df5916899a41b7c9e4534929439d3c82d71e67",
+      "binary_bytes": 4213
+    },
+    {
+      "name": "first-dodge",
+      "source_sha256": "1161fd64630a1af9461dac9cc803fbf30b15972b80a8981316bd2b50ba91dede",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "idle contact outcome",
+          "detail": 2
+        },
+        {
+          "check": "result freezes movement",
+          "detail": null
+        },
+        {
+          "check": "steering produces a clean pass",
+          "detail": 82
+        }
+      ],
+      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
+      "binary_sha256": "365b675862d658d87cf81cf6b6684dd63534cc7cb4abc50b729f3f164d865025",
+      "snapshot_sha256": "50f25f773edd6c30bb57ed5f9adb4d1da79959c2356f578eaa1abd58d0388e05",
+      "binary_bytes": 1629
+    },
+    {
+      "name": "fixed-course",
+      "source_sha256": "ce026a43b6a819d52a49077749db773762ca2fba635931f0b5fd61ce20465791",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1775
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "7739ecba61c11dc59a0bb06f0093f65121025255c8c977b6157df17c148ac944",
+      "binary_sha256": "672151d913247f583b0dd9c444d947cf70ab6bd7567114777893ef5d7e0605b3",
+      "snapshot_sha256": "ae73fb995367d53dc14a19d802a3210380686f504701e497227bd5a8e42aa13e",
+      "binary_bytes": 2476
+    },
+    {
+      "name": "half-rate-clock",
+      "source_sha256": "774f718ffe2ea7e9a3595d71810c33081f1476ae2efabfda8093ab74a2c03cb1",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "counter survives byte wrap at the intended rate",
+          "detail": 300
+        }
+      ],
+      "binary_sha256": "22010817016b7ab6dbd476c18bc1b3eaecf408ebf4049026bd7e5e243c21bbd8",
+      "snapshot_sha256": "5178cb1d5e82cc264d2144146e63399f8e927b4ab346360e76fde6c93293362b",
+      "binary_bytes": 84
+    },
+    {
+      "name": "interrupt-clock",
+      "source_sha256": "12a9ea258e446f3d33ffc6a00289dc0450d20431752bf813084cbcdd040ef073",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "counter survives byte wrap at the intended rate",
+          "detail": 600
+        }
+      ],
+      "binary_sha256": "867cfc8db992ffa07389948ddb428ee0c73c1fe2870efee0dd6da2ce072ee109",
+      "snapshot_sha256": "18d9921c9a761145de119a928b0fdcef9efeb645fe5c73619b33ec211efa74d2",
+      "binary_bytes": 80
+    },
+    {
+      "name": "object-pool",
+      "source_sha256": "16456b0f9640f437e0f03890619758eb4ba9c5fee4114be81fca7640fdb4478a",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 149
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
+      "binary_sha256": "06197defc9df13e92270cec2a1e8122dd3780db079a31a764766417c2e3424c7",
+      "snapshot_sha256": "6054039918114251e0145ff9cb35d7d441e2fa204f92ef5ac647f6cda17d2200",
+      "binary_bytes": 2146
+    },
+    {
+      "name": "object-records",
+      "source_sha256": "c8ec750437a1136cbfbdcd57af6396e740a79f8835600185d53a396a20c1ad84",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 148
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
+      "binary_sha256": "06de968738a3845311c588ae601225b324472e26250e5b7ea32380a7531e91c7",
+      "snapshot_sha256": "a5495af08b092551ae9fa232b3e436141cdce7c61a97825e54a1741bb7b10ba8",
+      "binary_bytes": 2023
+    },
+    {
+      "name": "one-meteor",
+      "source_sha256": "ce14af620942772885dadd7af19236ddbfd07431428bd35463e03440332df830",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "idle contact outcome",
+          "detail": 3
+        },
+        {
+          "check": "result freezes movement",
+          "detail": null
+        },
+        {
+          "check": "steering produces a clean pass",
+          "detail": 82
+        }
+      ],
+      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
+      "binary_sha256": "69a2704e4631da67aa2c2cfa595d1282572567e4a6e7f218a4588a990e487940",
+      "snapshot_sha256": "19a05875255951d0705a1124ad9fa091c75424bb935dcab11abdca4feaf7bed3",
+      "binary_bytes": 1567
+    },
+    {
+      "name": "one-row-shift",
+      "source_sha256": "dd9087a755363fde385f5721f9730038dae0876482f70502ee6d29740adf7938",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "shift carries pixels across byte boundary",
+          "detail": [
+            [
+              129,
+              0
+            ],
+            [
+              64,
+              128
+            ]
+          ]
+        }
+      ],
+      "binary_sha256": "d08793bdb4acdbdc8c48e2bbde0bdcebee0e122d2fb54353c362be9e55d0ec0b",
+      "snapshot_sha256": "16170e57453fd0ff941b3038ba72131b2f527ad4642cf34f93d0136974a9e51f",
+      "binary_bytes": 58
+    },
+    {
+      "name": "phases",
+      "source_sha256": "b9aae09a3fdbe612c7ea9f1c311c18b1da753df3ebb33c5849d18f1a1a751f83",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "starts at the title",
+          "detail": null
+        },
+        {
+          "check": "held launch waits for release",
+          "detail": null
+        },
+        {
+          "check": "release starts one flight",
+          "detail": null
+        },
+        {
+          "check": "idle flight is destroyed",
+          "detail": 2
+        },
+        {
+          "check": "result freezes movement",
+          "detail": null
+        },
+        {
+          "check": "retry clears the run block",
+          "detail": 27
+        },
+        {
+          "check": "steering produces a clean pass",
+          "detail": 82
+        },
+        {
+          "check": "Q at a result returns to the title",
+          "detail": null
+        },
+        {
+          "check": "Q in flight returns to the title",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "c0015db765ad77091a751e548bec108d47ae883c6a9603b2ec047a0e4c57da9f",
+      "binary_sha256": "e4fa09699db2d353105a19761eb8b14d05f00e5924f560e03ee9db136b4ac112",
+      "snapshot_sha256": "d103df681e6e35e92aa548cac23c8d8b4dcafc2020ea6136b6bf4e6d005fe460",
+      "binary_bytes": 1891
+    },
+    {
+      "name": "pixel-motion",
+      "source_sha256": "76406e9cd7654eba7ec304e4178ce29fb3ab6a2e27abb792814c5d33a9832d7e",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "opposing keys cancel",
+          "detail": null
+        },
+        {
+          "check": "left bound",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 0",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 1",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 2",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 3",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 4",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 5",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 6",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 7",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 8",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 9",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 10",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 11",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 12",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 13",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 14",
+          "detail": null
+        },
+        {
+          "check": "ship row restored without trails 15",
+          "detail": null
+        },
+        {
+          "check": "right bound",
+          "detail": null
+        },
+        {
+          "check": "restart restores ship",
+          "detail": null
+        }
+      ],
+      "assets_sha256": "46f0fd265614ff1b484b93e7fd23aaea91e423d576f72f984ffb9e3c4ba24484",
+      "binary_sha256": "39fa650531442e8ad8132a27445e35b230c8c6266cfdd477104b444ca167037f",
+      "snapshot_sha256": "6133c4e4d58599f847ba38caddabf67f79bcb56bd9b33b6b161830bcef0d9a43",
+      "binary_bytes": 930
+    },
+    {
+      "name": "records",
+      "source_sha256": "901a7a3ce252680e42c80a8046559ef2f48d6f8d02c87a9fe545aa16c57ad24c",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "6b235a661ce2d3441952eab36d6f98f9c6103e2bad79e278ca1141953eb47a3e",
+      "snapshot_sha256": "dcb6893759be20bea05f18cfd5a91b1a557b209ec694aff3299ff1d24c9e10a7",
+      "binary_bytes": 4094
+    },
+    {
+      "name": "render-budget",
+      "source_sha256": "fe78d98ba0b774d1ad6f2efdea3701767b3b0cec990885bd3406131976deec8c",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 160
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "9f223fddd19de3a242bd247d923eee5b41d104eeac48d111571f007b08a22d2a",
+      "snapshot_sha256": "0d3076ab65447c194a06a963b185781364921d6ebdc9edbab7cfc96f0182fdb9",
+      "binary_bytes": 3893
+    },
+    {
+      "name": "sound-frames",
+      "source_sha256": "59401da309092a78dfeb576c74e6d1f63ff0beec71c4adc78f093db2a43a43d6",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "bed7c95c45a29e7744d9561a36d9d0535315a5569e97b8b5df1468e205e924eb",
+      "snapshot_sha256": "a2e064f43e8d1046c88052985bb27df31fb9a98dd44c79867b4a14b5b2d78aba",
+      "binary_bytes": 4387
+    },
+    {
+      "name": "sound-table",
+      "source_sha256": "b768442a5597049587989e5a755190228d107b223e148018aca294ffd21fcc79",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "3eb266dd00087692f4a88dd4838cd5442b59b54514bd3b61ad8c77e9484e7015",
+      "snapshot_sha256": "7c242f967729476e3d6b09b620d7c60e0c5b4752af76dba2b9b75b78aa090309",
+      "binary_bytes": 4293
+    },
+    {
+      "name": "star-pickups",
+      "source_sha256": "3929b5128ea7c131829f0ad65296a6fa1361324084cbf2eec0efdb3bb56dee34",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 2091
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "route collects stars",
+          "detail": 80
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "3adc54eb1b89246df6112d9e0a6d8d27951b9d3a66a0ef9f6322bc7487a067bf",
+      "snapshot_sha256": "8f66177db1194bb5ba7709d5f0cf86cef78370a53853097c7e2444a7997b8dc5",
+      "binary_bytes": 3414
+    },
+    {
+      "name": "stars",
+      "source_sha256": "abaed826c66870ce37d0d2cd40cbbab6cd916afb44cff1777564b5970d6e46fc",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 2091
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "route collects stars",
+          "detail": 80
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "a375498cc4d5b24e810150963321b0f4681b8f4741370a35272f3c8f263d816d",
+      "snapshot_sha256": "657491af0888e026597f0d00b0d8e5f643cac5d3c82621a70b693f4ef37eba1e",
+      "binary_bytes": 3520
+    },
+    {
+      "name": "timed-course",
+      "source_sha256": "0cee6e36d3c99062252d7768157d3e5e9666e6689393505068d96f67640f0e87",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 2091
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 80
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 2091
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "ac4a544e71832f56d22224611a7140af37fb394a47323ed0ceb704d0dee1f4f8",
+      "snapshot_sha256": "a09f2c2f5fa9949a7395ca15164d5bf7218d4c2be0ec9ae06aa98f8d2fde7022",
+      "binary_bytes": 3662
+    },
+    {
+      "name": "tone",
+      "source_sha256": "9bff4ecdbf1f948da7785c83fa14347466fb5f9a446f1ec925d3bdf307d4ea44",
+      "checks": [
+        {
+          "check": "upstream Pasmo machine code matches",
+          "detail": null
+        },
+        {
+          "check": "enters flight",
+          "detail": null
+        },
+        {
+          "check": "idle course loses on first impact",
+          "detail": null
+        },
+        {
+          "check": "retry clears run state",
+          "detail": null
+        },
+        {
+          "check": "keyboard route finishes alive",
+          "detail": {
+            "phase": 3,
+            "frames": 1047
+          }
+        },
+        {
+          "check": "completion waits beyond final spawn",
+          "detail": null
+        },
+        {
+          "check": "bounded object pool",
+          "detail": null
+        },
+        {
+          "check": "measured update cadence",
+          "detail": [
+            1,
+            2
+          ]
+        },
+        {
+          "check": "route collects stars",
+          "detail": 960
+        },
+        {
+          "check": "PAL elapsed clock advances",
+          "detail": 1047
+        }
+      ],
+      "assets_sha256": "bd4b824a1600f0745a0d932160cbe9d86cc0801fbb4d23eb6d7f968155da6403",
+      "binary_sha256": "bb987c81a9f798494cc59d8e34772525e70c1036270de54834042c035ad0aa0f",
+      "snapshot_sha256": "2aec8def44e339f680c1072d33ca228ca216f6d64559a9134c1d253470f95a63",
+      "binary_bytes": 4223
     }
-  ]
+  ],
+  "assembler_version": "asm198x v0.0.77",
+  "pasmo_version": "Pasmo v. 0.5.5 (C) 2004-2021 Julian Albo",
+  "assembler_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb",
+  "built_programs": {
+    "boost/program.sna": "2600bc154ba890f487c7aeb061c26b2ef057e8ead2f7dae04453e4f3d45cb757",
+    "clocked-steering/program.sna": "b025f6f830eb8a8595f270223488d0ab56e106282c64a3af6c8b54854f24eb7b",
+    "colour-bands/program.sna": "a220c33dc28b9df1e7f2408e372dc39c1aba899b0b63e2d7207780e9efec5760",
+    "debris/program.sna": "f90ff44fbb883ca9f4c20978e084802c53ac9e9349b9af3f96a2986df82e03ce",
+    "drift/program.sna": "15a3d75a56ff4f8ea15666c632ad0453a9be1d29894b9b9a59bf699086304a44",
+    "eight-shifts/program.sna": "94feff96de2c00e64e5228074637d6abae500aecec8d7223d417a0601ab3084e",
+    "elapsed-time/program.sna": "f4416e0af547825f5afed0059b903cd1c2577702ef98e75232c8ceec996e9056",
+    "finished/program.sna": "ebc35bdc4b9e7d6726f811c116df5916899a41b7c9e4534929439d3c82d71e67",
+    "first-dodge/program.sna": "50f25f773edd6c30bb57ed5f9adb4d1da79959c2356f578eaa1abd58d0388e05",
+    "fixed-course/program.sna": "ae73fb995367d53dc14a19d802a3210380686f504701e497227bd5a8e42aa13e",
+    "half-rate-clock/program.sna": "5178cb1d5e82cc264d2144146e63399f8e927b4ab346360e76fde6c93293362b",
+    "interrupt-clock/program.sna": "18d9921c9a761145de119a928b0fdcef9efeb645fe5c73619b33ec211efa74d2",
+    "object-pool/program.sna": "6054039918114251e0145ff9cb35d7d441e2fa204f92ef5ac647f6cda17d2200",
+    "object-records/program.sna": "a5495af08b092551ae9fa232b3e436141cdce7c61a97825e54a1741bb7b10ba8",
+    "one-meteor/program.sna": "19a05875255951d0705a1124ad9fa091c75424bb935dcab11abdca4feaf7bed3",
+    "one-row-shift/program.sna": "16170e57453fd0ff941b3038ba72131b2f527ad4642cf34f93d0136974a9e51f",
+    "phases/program.sna": "d103df681e6e35e92aa548cac23c8d8b4dcafc2020ea6136b6bf4e6d005fe460",
+    "pixel-motion/program.sna": "6133c4e4d58599f847ba38caddabf67f79bcb56bd9b33b6b161830bcef0d9a43",
+    "records/program.sna": "dcb6893759be20bea05f18cfd5a91b1a557b209ec694aff3299ff1d24c9e10a7",
+    "render-budget/program.sna": "0d3076ab65447c194a06a963b185781364921d6ebdc9edbab7cfc96f0182fdb9",
+    "sound-frames/program.sna": "a2e064f43e8d1046c88052985bb27df31fb9a98dd44c79867b4a14b5b2d78aba",
+    "sound-table/program.sna": "7c242f967729476e3d6b09b620d7c60e0c5b4752af76dba2b9b75b78aa090309",
+    "star-pickups/program.sna": "8f66177db1194bb5ba7709d5f0cf86cef78370a53853097c7e2444a7997b8dc5",
+    "stars/program.sna": "657491af0888e026597f0d00b0d8e5f643cac5d3c82621a70b693f4ef37eba1e",
+    "timed-course/program.sna": "a09f2c2f5fa9949a7395ca15164d5bf7218d4c2be0ec9ae06aa98f8d2fde7022",
+    "tone/program.sna": "2aec8def44e339f680c1072d33ca228ca216f6d64559a9134c1d253470f95a63"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.77",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.77",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "d24dbb3306aafd3e45f8ea4b8470e6d86cf265ea647bae7dad13267c6d511acb"
+    },
+    "emulator": {
+      "tool": "emu198x-spectrum",
+      "version": "0.48.5",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.5",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4"
+    },
+    "pasmo": {
+      "tool": "Pasmo",
+      "version": "0.5.5",
+      "executable_sha256": "9756e9b5a3883fbb7d568a2876f6ce73db8815c3badac8787d2c18cb3bc58ec0"
+    }
+  },
+  "status": "passed"
 }

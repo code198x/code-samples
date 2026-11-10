@@ -22,5 +22,272 @@
     "{output}"
    ]
   }
+ },
+ {
+  "name": "meteor-storm-checkpoints",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/checkpoints.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "boost",
+    "clocked-steering",
+    "drift",
+    "eight-shifts",
+    "elapsed-time",
+    "finished",
+    "first-dodge",
+    "fixed-course",
+    "half-rate-clock",
+    "interrupt-clock",
+    "object-pool",
+    "object-records",
+    "one-meteor",
+    "one-row-shift",
+    "phases",
+    "pixel-motion",
+    "records",
+    "render-budget",
+    "sound-table",
+    "star-pickups",
+    "stars",
+    "timed-course",
+    "tone",
+    "sound-frames",
+    "debris",
+    "colour-bands"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-opening-additions",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/opening-additions.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "draw-ship",
+    "pixel-address"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-attract",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/attract.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "attract"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-furthest-storm",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/furthest-storm.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "furthest-storm"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-harder-storms",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/harder-storms.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "harder-storms"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-loading-screen",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/loading-screen.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "loading-screen"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-storm-bonus",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/storm-bonus.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "storm-bonus"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-two-byte-score",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/two-byte-score.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "two-byte-score"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-voyage",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/voyage.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/checkpoints.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "voyage"
+   ],
+   "programs_key": "built_programs"
+  }
+ },
+ {
+  "name": "meteor-storm-endpoint",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/endpoint.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/endpoint.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "finished"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-endpoint-tone",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/endpoint-tone.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/endpoint.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "tone"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-endpoint-sound-table",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/endpoint-sound-table.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/endpoint.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "sound-table"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-endpoint-sound-frames",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/endpoint-sound-frames.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/endpoint.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "sound-frames"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-endpoint-debris",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/endpoint-debris.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/endpoint.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "debris"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-endpoint-colour-bands",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/endpoint-colour-bands.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/endpoint.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "colour-bands"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-prototype",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/evidence/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/prototype/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-boundaries",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/boundaries.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/boundaries.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "meteor-storm-loading-screen-tape",
+  "record": "sinclair-zx-spectrum/assembly/meteor-storm/verification/evidence/loading-screen-tape.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/assembly/meteor-storm/verification/tape.py",
+   "args": [
+    "{asm198x}",
+    "{output}",
+    "{build198x}"
+   ]
+  }
  }
 ]
