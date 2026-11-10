@@ -9,7 +9,7 @@ spec=importlib.util.spec_from_file_location('spectrum_transport',donor);module=i
 # can resume a reloaded snapshot at $0000 (emu198x#1564), below this harness's
 # floor; from 0.27.1 on, releasing boost counts 12 steps, not 11.
 EARLIER={'emulator':'Emu198x ed078de5..., an unreleased build (reported as 0.24.0); Asm198x 0.0.58 named by version only',
- 'values':"'releasing boost restores normal speed' counted 11 boost steps (12 from 0.27.1); every other check identical"}
+ 'values':"'releasing boost restores normal speed' counted 11 boost steps; 12 from 0.27.1, whose snapshot-load fix for emu198x#1564 parks the Z80 at an instruction boundary as Fuse does; every other check identical"}
 
 def build_programs(assembler,output):
  """Prepare the artwork and assemble meteor-storm.{sna,tap} into output, without the emulator; names relative to output, so a tape's CODE block is the same in any checkout."""

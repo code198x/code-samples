@@ -274,7 +274,7 @@
   },
   "earlier_record": {
     "emulator": "Emu198x ed078de5..., an unreleased build (reported as 0.24.0); Asm198x 0.0.58 named by version only",
-    "values": "'releasing boost restores normal speed' counted 11 boost steps (12 from 0.27.1); every other check identical",
+    "values": "'releasing boost restores normal speed' counted 11 boost steps; 12 from 0.27.1, whose snapshot-load fix for emu198x#1564 parks the Z80 at an instruction boundary as Fuse does; every other check identical",
     "recorded": "21 September 2026"
   },
   "status": "passed"
