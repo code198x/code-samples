@@ -44,13 +44,13 @@ def sha(file):
 
 def assemble(source, output, pasmo=None):
     symbols = output / 'program.sym'
-    # The source is named relative to its folder, so a tape's header, which
-    # Asm198x names after the path it is given, is the same in any checkout.
+    # Asm198x names a tape's CODE block after the output path it is given, so
+    # each output is named relative to the output folder, the same anywhere.
     for flag, suffix in [('', 'bin'), ('--sna', 'sna'), ('--tapbas', 'tap')]:
         subprocess.run([ASSEMBLER, '--dialect', 'pasmo', '--cpu', 'z80',
-                        *([flag] if flag else []), '--sym=' + str(symbols),
-                        source.name, '-o', str(output / ('program.' + suffix))],
-                       check=True, capture_output=True, cwd=source.parent)
+                        *([flag] if flag else []), '--sym=program.sym',
+                        str(source.resolve()), '-o', 'program.' + suffix],
+                       check=True, capture_output=True, cwd=output)
     if pasmo:
         reference = output / 'reference.bin'
         subprocess.run([pasmo, '--bin', str(source), str(reference)], check=True,

@@ -234,7 +234,7 @@
     "success/program.sna": "649da1e63ae94ea7569989e7cb59f218add04a7748923a8f28c1f12675a57fe0",
     "error/program.sna": "0cded258f1c50923a65dd90ec406360488cc4dede0854627191d0fb04acfcd3d",
     "click/program.sna": "5ce34888777be620f9ddfef3e3b42861248dae29d16c11628bd652ab355b433d",
-    "demo/program.tap": "ffbbe975ea1a3ee72c1dcd531cab963ea3f6a88681adc76f03420a107a6ad810"
+    "demo/program.tap": "115a73b9c5177b911b9070d46dc211e0b54659ed02ad81f07687b08234b560bb"
   },
   "tools": {
     "assembler": {
