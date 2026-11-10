@@ -183,7 +183,10 @@ them and compares their bytes (`scripts/check-pattern-evidence.py
   record as `earlier_record`: "releasing boost restores normal speed" counts
   12 boost steps where the earlier build counted 11. Emu198x 0.27.0 is the
   newest release that still counts 11, and it fails `sound-table` at "start
-  enters flight" (emu198x/emu198x#1564); from 0.27.1 every release counts 12.
+  enters flight" (emu198x/emu198x#1564). From 0.27.1 every release counts 12:
+  that release's fix for #1564 parks the Z80 at an instruction boundary when
+  a snapshot loads, as Fuse does by resetting before each load, so 12 is the
+  corrected value.
 - The prototype's `impacts.wav` is replaced with the 0.48.5 capture: the last
   824 of its 98,672 samples differed from the earlier build's, and no release
   reproduces them.
