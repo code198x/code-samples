@@ -341,9 +341,9 @@
       "firmware": [],
       "pins": {
         "asm198x": "0.0.75",
-        "emu198x-spectrum": "0.48.3"
+        "emulator": "0.48.3"
       },
-      "checker": "none yet (8b migration)"
+      "checker": "scripts/check-pattern-evidence.py --local (spectrum-profile-a-routine)"
     },
     {
       "script": "sinclair-zx-spectrum/patterns/assembly/framework/profile-a-routine/verification/run_checks.py",
@@ -357,9 +357,9 @@
       "firmware": [],
       "pins": {
         "asm198x": "0.0.75",
-        "emu198x-spectrum": "0.48.3"
+        "emulator": "0.48.3"
       },
-      "checker": "none yet (8b migration)"
+      "checker": "runs verify.py's failure cases; its checks.json is not byte-checked"
     },
     {
       "script": "scripts/verify-z80-adventure-parser.py",
@@ -924,6 +924,160 @@
       "records": "*/patterns/assembly/framework/collect-and-respond/verification/results.json; Electron: acorn-electron/patterns/assembly/capabilities/input-drawing-sound/verification/results.json",
       "evidence": "Require exact observations, capture bytes, full WAV digest and excerpt PCM reproduction; preserve existing captures and excerpts. Recorder writes verification/results.json directly, so run in an isolated checkout. Use --tape for Spectrum and select Electron explicitly (the default loop covers the other five).",
       "checker": "scripts/check-capability-coverage.py (composition and electron rows)"
+    },
+    {
+      "script": "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--acme PATH",
+        "--emulator PATH",
+        "--vice PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "commodore-c64 (PAL, NTSC)"
+      ],
+      "firmware": [
+        "the emulators' own C64 ROMs"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "oracles": "ACME 0.97, VICE x64sc 3.10"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/results.json (copied from --output)",
+      "checker": "scripts/check-pattern-evidence.py --local (c64-sprite-movement-bounds)"
+    },
+    {
+      "script": "commodore-64/patterns/assembly/input/joystick-reading/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--acme PATH",
+        "--emulator PATH",
+        "--vice PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "commodore-c64 (PAL, NTSC)"
+      ],
+      "firmware": [
+        "the emulators' own C64 ROMs"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "oracles": "ACME 0.97, VICE x64sc 3.10"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "commodore-64/patterns/assembly/input/joystick-reading/verification/results.json (copied from --output)",
+      "checker": "scripts/check-pattern-evidence.py --local (c64-joystick-reading)"
+    },
+    {
+      "script": "commodore-64/patterns/assembly/rendering/raster-splits/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--acme PATH",
+        "--emulator PATH",
+        "--vice PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "commodore-c64 (PAL, NTSC)"
+      ],
+      "firmware": [
+        "the emulators' own C64 ROMs"
+      ],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "oracles": "ACME 0.97, VICE x64sc 3.10",
+        "follow_ups": {
+          "commodore-c64": {
+            "emulator": "0.45.1",
+            "reason": "from 0.46.1 the PAL line-131 mid-line split sits at x=232 in all three captures; 0.45.1 gives 232/192/216 and VICE 192/208/216",
+            "issue": "pending",
+            "undo": "re-record on the newest release once the issue closes"
+          }
+        }
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "commodore-64/patterns/assembly/rendering/raster-splits/verification/results.json (copied from --output)",
+      "checker": "scripts/check-pattern-evidence.py --local (c64-raster-splits)"
+    },
+    {
+      "script": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--acme PATH",
+        "--emulator PATH",
+        "--vice PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "commodore-c64 (PAL, NTSC)"
+      ],
+      "firmware": [
+        "the emulators' own C64 ROMs"
+      ],
+      "pins": {
+        "record": "Asm198x fbc5d112\u2026 and Emu198x 689f2219\u2026, neither a release; no Emu198x release reproduces the record"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/results.json (left as recorded)",
+      "checker": "none yet: pending a ruling"
+    },
+    {
+      "script": "commodore-64/patterns/assembly/audio/sid-note-trigger/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "commodore-c64 (PAL)"
+      ],
+      "firmware": [
+        "the emulator's own C64 ROMs"
+      ],
+      "pins": {
+        "record": "no assembler; Emu198x 52189fd8\u2026, not a release; no release reproduces the record"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "commodore-64/patterns/assembly/audio/sid-note-trigger/verification/evidence/results.json (left as recorded)",
+      "checker": "none yet: pending a ruling"
+    },
+    {
+      "script": "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/verification/verify.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--pasmo PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "the emulator's own 48K ROM"
+      ],
+      "pins": {
+        "record": "no assembler; Emu198x 9009466d\u2026, not a release; no release reproduces the record"
+      },
+      "build_programs": "build_programs(assembler, output)",
+      "records": "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/verification/evidence/results.json (left as recorded)",
+      "checker": "none yet: pending a ruling"
+    },
+    {
+      "script": "commodore-amiga/patterns/assembly/audio/playing-a-sample/verification/test_verify.py",
+      "args": [],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "records": "none: unit tests of verify.py's cycle counter",
+      "checker": "CI runs it (pattern-evidence.yml, recorded-inputs)"
     }
   ]
 }

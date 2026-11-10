@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import shutil
 import struct
@@ -166,13 +167,16 @@ finished:
         check=True,
         capture_output=True,
     )
-    subprocess.run(
-        [args.acme, "-f", "cbm", "-o", str(dest / "acme.prg"), "demo.asm"],
-        cwd=dest,
-        check=True,
-        capture_output=True,
-    )
-    require(prg.read_bytes() == (dest / "acme.prg").read_bytes(), "assemblers disagree")
+    if args.acme:  # The independent reference assembler, when given.
+        subprocess.run(
+            [args.acme, "-f", "cbm", "-o", str(dest / "acme.prg"), "demo.asm"],
+            cwd=dest,
+            check=True,
+            capture_output=True,
+        )
+        require(
+            prg.read_bytes() == (dest / "acme.prg").read_bytes(), "assemblers disagree"
+        )
     symbols = {
         key: int(value, 16)
         for key, value in (
@@ -295,6 +299,38 @@ def run_vice(
     return [(shot, list(dump.read_bytes())) for shot, dump in captures]
 
 
+# Each recorded case: sprite counts per frame, and whether it is the
+# transition run. The negative control drops the X high-bit write.
+CASES = [(0, 0), (1, 1), (7, 7), (8, 8), (9, 9), (255, 255), (0, 8), (8, 0)]
+RUNS = [(c, False) for c in CASES] + [((8, 8), True)]
+NEGATIVE = "negative-missing-x-msb"
+
+
+def run_name(counts: tuple[int, int], transition: bool) -> str:
+    return "transition" if transition else f"{counts[0]}-{counts[1]}"
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every program the record lists into output/<case>/demo.prg,
+    without the emulators or ACME."""
+    args = argparse.Namespace(assembler=assembler, acme=None)
+    out = Path(output).resolve()
+    for counts, transition in RUNS:
+        assemble(args, out / run_name(counts, transition), counts, transition)
+    assemble(args, out / NEGATIVE, (8, 8), broken=True)
+
+
+def evidence_bytes():
+    """The shared evidence module, loaded only when recording."""
+    found = importlib.util.spec_from_file_location(
+        "evidence_bytes", ROOT.parents[4] / "scripts/evidence_bytes.py"
+    )
+    assert found is not None and found.loader is not None
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--assembler", default="asm198x")
@@ -317,9 +353,8 @@ def main() -> None:
         "vice-pal": (32, 49),
         "vice-ntsc": (32, 37),
     }
-    cases = [(0, 0), (1, 1), (7, 7), (8, 8), (9, 9), (255, 255), (0, 8), (8, 0)]
-    for counts, transition in [(c, False) for c in cases] + [((8, 8), True)]:
-        name = "transition" if transition else f"{counts[0]}-{counts[1]}"
+    for counts, transition in RUNS:
+        name = run_name(counts, transition)
         dest = args.output / name
         prg, symbols = assemble(args, dest, counts, transition)
         stages = (
@@ -361,7 +396,7 @@ def main() -> None:
                     }
                     rows.append(row)
                     print("PASS", name, engine, model, state, flush=True)
-    dest = args.output / "negative-missing-x-msb"
+    dest = args.output / NEGATIVE
     prg, symbols = assemble(args, dest, (8, 8), broken=True)
     [(shot, _)] = run_emu(args, dest, prg, symbols, "pal", [(25, (8, 8))])
     try:
@@ -376,12 +411,20 @@ def main() -> None:
             name: sha(ROOT / name)
             for name in ["demo.asm", "multiplexer.inc", "verification/verify.py"]
         },
+        # By release identity; ACME and VICE are independent oracles.
         "tools": {
-            key: {"path": getattr(args, key), "sha256": sha(Path(getattr(args, key)))}
+            key: evidence_bytes().tool_identity(getattr(args, key))
             for key in ["assembler", "acme", "emulator", "vice"]
+        },
+        "assembler_sha256": sha(Path(args.assembler)),
+        # Each program the machine loads, so the checker can rebuild it.
+        "programs": {
+            f"{name}/demo.prg": sha(args.output / name / "demo.prg")
+            for name in [run_name(c, t) for c, t in RUNS] + [NEGATIVE]
         },
         "checks": rows,
         "negative_control": negative,
+        "status": "passed",
     }
     (args.output / "results.json").write_text(json.dumps(result, indent=2) + "\n")
     print(f"{len(rows)} captures checked; negative control rejected", flush=True)

@@ -12,15 +12,21 @@ its own ROMs, each started with a typed RUN:
 Results are emulator observations, not original-hardware measurements.
 """
 import argparse
-from array import array
 import hashlib
+import importlib.util
 import json
-from pathlib import Path
+import shutil
 import subprocess
 import sys
 import wave
+from array import array
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# The assembler every program is built with; main() sets it from --assembler.
+ASSEMBLER = 'asm198x'
+# Each program the machine loads, relative to the output folder.
+PROGRAMS = ('ownership/ownership.prg', 'envelope/envelope.prg', 'demo/demo.prg')
 PAL_HZ = 985_248          # PAL C64 system clock (phi2)
 FRAME_CYCLES = 312 * 63   # PAL VIC-II frame: 312 lines of 63 cycles
 
@@ -219,7 +225,7 @@ def assemble(source, output, name):
     prg = output / (name + '.prg')
     symbols = output / (name + '.sym')
     listing = output / (name + '.lst.json')
-    subprocess.run(['asm198x', '--dialect', 'acme', '--prg', '-I', str(ROOT),
+    subprocess.run([ASSEMBLER, '--dialect', 'acme', '--prg', '-I', str(ROOT),
                     '--sym=' + str(symbols),
                     '--listing-json=' + str(listing), str(source), '-o', str(prg)],
                    check=True, capture_output=True, cwd=ROOT)
@@ -228,6 +234,27 @@ def assemble(source, output, name):
         label, value = line.split(' = $')
         table[label] = int(value, 16)
     return prg, table, json.loads(listing.read_text())
+
+
+def build_programs(assembler, output):
+    """Assemble every program the record lists into output, without the emulator."""
+    global ASSEMBLER
+    ASSEMBLER = assembler
+    out = Path(output).resolve()
+    for name, text in (('ownership', OWNERSHIP), ('envelope', ENVELOPE)):
+        (out / name).mkdir(parents=True, exist_ok=True)
+        (out / name / (name + '.asm')).write_text(text)
+        assemble(out / name / (name + '.asm'), out / name, name)
+    assemble(ROOT / 'demo.asm', out / 'demo', 'demo')
+
+
+def evidence_bytes():
+    """The shared evidence module, loaded only when recording."""
+    found = importlib.util.spec_from_file_location(
+        'evidence_bytes', ROOT.parents[4] / 'scripts/evidence_bytes.py')
+    value = importlib.util.module_from_spec(found)
+    found.loader.exec_module(value)
+    return value
 
 
 def run(emulator, prg, output, name, frames, reads, audio=None):
@@ -401,8 +428,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--emulator', type=Path, required=True,
                         help='emu198x-c64 binary with C64 ROMs configured')
+    parser.add_argument('--assembler', default='asm198x')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
+    global ASSEMBLER
+    ASSEMBLER = args.assembler
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     _, _, listing = assemble(ROOT / 'demo.asm', out / 'costs', 'demo')
@@ -418,6 +448,12 @@ def main():
         'limits': 'Emulator observations; no original-hardware measurement or listening claim.',
         'status': 'passed',
     }
+    evidence = evidence_bytes()
+    report['assembler_sha256'] = sha(shutil.which(args.assembler) or args.assembler)
+    # Each program the machine loads, so the checker can rebuild it.
+    report['programs'] = {name: sha(out / name) for name in PROGRAMS}
+    report['tools'] = {'assembler': evidence.tool_identity(args.assembler),
+                       'emulator': evidence.tool_identity(args.emulator)}
     (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
 
 

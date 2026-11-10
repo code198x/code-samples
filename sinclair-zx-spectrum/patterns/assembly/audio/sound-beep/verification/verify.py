@@ -1,15 +1,16 @@
 """Execute maintained beeper code, trace its writes and measure captured PCM."""
 import argparse
-from array import array
 import hashlib
 import importlib.util
 import json
-from pathlib import Path
 import re
-from statistics import mean, median
+import shutil
 import subprocess
 import sys
 import wave
+from array import array
+from pathlib import Path
+from statistics import mean, median
 
 ROOT = Path(__file__).resolve().parents[1]
 SPECTRUM = ROOT.parents[3]
@@ -19,16 +20,28 @@ transport = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(transport)
 
 
+# The assembler every program is built with; main() sets it from --assembler.
+ASSEMBLER = 'asm198x'
+# Each case: name, delay byte, cycle count and ULA base output.
+CASES = [('low', 255, 105, 1), ('high', 127, 105, 1),
+         ('high-long', 127, 210, 1), ('low-short', 255, 20, 1),
+         ('mic-high', 255, 105, 9), ('success', 200, 16, 1),
+         ('error', 88, 16, 1), ('click', 127, 12, 1)]
+INCLUDES = ('sound-beep.inc', 'effects.inc')
+
+
 def sha(file):
     return hashlib.sha256(file.read_bytes()).hexdigest()
 
 
 def assemble(source, output, pasmo=None):
     symbols = output / 'program.sym'
+    # The source is named relative to its folder, so a tape's header, which
+    # Asm198x names after the path it is given, is the same in any checkout.
     for flag, suffix in [('', 'bin'), ('--sna', 'sna'), ('--tapbas', 'tap')]:
-        subprocess.run(['asm198x', '--dialect', 'pasmo', '--cpu', 'z80',
+        subprocess.run([ASSEMBLER, '--dialect', 'pasmo', '--cpu', 'z80',
                         *([flag] if flag else []), '--sym=' + str(symbols),
-                        str(source), '-o', str(output / ('program.' + suffix))],
+                        source.name, '-o', str(output / ('program.' + suffix))],
                        check=True, capture_output=True, cwd=source.parent)
     if pasmo:
         reference = output / 'reference.bin'
@@ -39,51 +52,14 @@ def assemble(source, output, pasmo=None):
             re.findall(r'^(\w+) = \$(\w+)', symbols.read_text(), re.M)}
 
 
-def pcm(file):
-    with wave.open(str(file)) as stream:
-        assert stream.getsampwidth() == 2 and stream.getnchannels() == 1
-        rate = stream.getframerate()
-        samples = array('h', stream.readframes(stream.getnframes()))
-    if sys.byteorder != 'little':
-        samples.byteswap()
-    midpoint = (min(samples) + max(samples)) / 2
-    rising = [i for i in range(1, len(samples))
-              if samples[i - 1] < midpoint <= samples[i]]
-    assert len(rising) >= 4, 'Captured audio has no measurable tone'
-    periods = [b - a for a, b in zip(rising, rising[1:])]
-    return rate, rising, periods
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--emulator', required=True)
-    parser.add_argument('--pasmo')
-    parser.add_argument('--output', type=Path, required=True)
-    args = parser.parse_args()
-    out = args.output.resolve()
-    out.mkdir(parents=True, exist_ok=True)
-    report = {
-        'target': 'Stock 48K PAL; code $8000, stack $FF00; DI during tones',
-        'method': 'Snapshot callers, complete I/O traces, PCM crossings; separate fresh ROM tape load',
-        'emulator_sha256': sha(Path(args.emulator)),
-        'sources': {p.name: sha(p) for p in ROOT.glob('*.asm')},
-        'includes': {p.name: sha(p) for p in ROOT.glob('*.inc')},
-        'cases': [],
-        'limits': 'Emulator observations; no physical hardware or listening claim.',
-    }
-    if args.pasmo:
-        banner = subprocess.run([args.pasmo], capture_output=True, text=True)
-        report['alternate_assembler'] = (banner.stdout + banner.stderr).splitlines()[0]
-    cases = [('low', 255, 105, 1), ('high', 127, 105, 1),
-             ('high-long', 127, 210, 1), ('low-short', 255, 20, 1),
-             ('mic-high', 255, 105, 9), ('success', 200, 16, 1),
-             ('error', 88, 16, 1), ('click', 127, 12, 1)]
-    for name, delay, cycles, base in cases:
-        target = out / name
-        target.mkdir(exist_ok=True)
-        routine = 'sound_' + name if name in ('success', 'error', 'click') else 'sound_beep'
-        source = target / 'caller.asm'
-        source.write_text(f'''    org 32768
+def caller(target, name, delay, cycles, base):
+    """Write a case's caller, with demo.asm's relative includes copied beside it."""
+    target.mkdir(parents=True, exist_ok=True)
+    routine = 'sound_' + name if name in ('success', 'error', 'click') else 'sound_beep'
+    for include in INCLUDES:
+        shutil.copyfile(ROOT / include, target / include)
+    source = target / 'caller.asm'
+    source.write_text(f'''    org 32768
 start:
     di
     ld sp,$ff00
@@ -108,8 +84,8 @@ start:
 hold:
     halt
     jr hold
-    include "{ROOT / 'sound-beep.inc'}"
-    include "{ROOT / 'effects.inc'}"
+    include "sound-beep.inc"
+    include "effects.inc"
 ula_output: defb {base}
 after_hl: defw 0
 after_bc: defw 0
@@ -119,6 +95,63 @@ after_iff: defb 255
 done: defb 0
     end start
 ''')
+    return source, routine
+
+
+def build_programs(assembler, output):
+    """Assemble every program the record lists into output, without the emulator."""
+    global ASSEMBLER
+    ASSEMBLER = assembler
+    out = Path(output).resolve()
+    for name, delay, cycles, base in CASES:
+        source, _ = caller(out / name, name, delay, cycles, base)
+        assemble(source, out / name)
+    (out / 'demo').mkdir(parents=True, exist_ok=True)
+    assemble(ROOT / 'demo.asm', out / 'demo')
+
+
+def pcm(file):
+    with wave.open(str(file)) as stream:
+        assert stream.getsampwidth() == 2 and stream.getnchannels() == 1
+        rate = stream.getframerate()
+        samples = array('h', stream.readframes(stream.getnframes()))
+    if sys.byteorder != 'little':
+        samples.byteswap()
+    midpoint = (min(samples) + max(samples)) / 2
+    rising = [i for i in range(1, len(samples))
+              if samples[i - 1] < midpoint <= samples[i]]
+    assert len(rising) >= 4, 'Captured audio has no measurable tone'
+    periods = [b - a for a, b in zip(rising, rising[1:])]
+    return rate, rising, periods
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--emulator', required=True)
+    parser.add_argument('--pasmo')
+    parser.add_argument('--assembler', default='asm198x')
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    global ASSEMBLER
+    ASSEMBLER = args.assembler
+    out = args.output.resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    report = {
+        'target': 'Stock 48K PAL; code $8000, stack $FF00; DI during tones',
+        'method': 'Snapshot callers, complete I/O traces, PCM crossings; separate fresh ROM tape load',
+        'emulator_sha256': sha(Path(args.emulator)),
+        'sources': {p.name: sha(p) for p in ROOT.glob('*.asm')},
+        'includes': {p.name: sha(p) for p in ROOT.glob('*.inc')},
+        'cases': [],
+        'limits': 'Emulator observations; no physical hardware or listening claim.',
+    }
+    if args.pasmo:
+        banner = subprocess.run([args.pasmo], capture_output=True, text=True)
+        report['alternate_assembler'] = (banner.stdout + banner.stderr).splitlines()[0]
+    for name, delay, cycles, base in CASES:
+        target = out / name
+        target.mkdir(exist_ok=True)
+        source, routine = caller(target, name, delay, cycles, base)
         symbols = assemble(source, target, args.pasmo)
         machine = transport.Spectrum(args.emulator, target)
         try:
@@ -187,6 +220,18 @@ done: defb 0
     finally:
         machine.close()
     report['status'] = 'passed'
+    spec = importlib.util.spec_from_file_location(
+        'evidence_bytes', ROOT.parents[3].parent / 'scripts/evidence_bytes.py')
+    evidence = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(evidence)
+    report['assembler_sha256'] = sha(Path(shutil.which(args.assembler) or args.assembler))
+    # Each program the machine loads, so the checker can rebuild it.
+    report['programs'] = {**{f'{name}/program.sna': sha(out / name / 'program.sna')
+                             for name, *_ in CASES},
+                          'demo/program.tap': sha(out / 'demo' / 'program.tap')}
+    report['tools'] = {'assembler': evidence.tool_identity(args.assembler),
+                       'emulator': evidence.tool_identity(args.emulator),
+                       **({'pasmo': evidence.tool_identity(args.pasmo)} if args.pasmo else {})}
     (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
 
 
