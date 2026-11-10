@@ -1,0 +1,26 @@
+[
+ {
+  "name": "nes-meet-the-machine-timing",
+  "record": "nintendo-entertainment-system/assembly/meet-the-machine/verification/timing/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "nintendo-entertainment-system/assembly/meet-the-machine/verification/timing.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "nes-dash-unit-14",
+  "record": "nintendo-entertainment-system/assembly/dash/unit-14/verification/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "nintendo-entertainment-system/assembly/dash/unit-14/verification/check.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ }
+]

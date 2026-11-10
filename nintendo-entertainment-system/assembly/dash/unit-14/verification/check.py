@@ -4,8 +4,9 @@ import argparse
 import hashlib
 import importlib.util
 import json
-from pathlib import Path
+import shutil
 import subprocess
+from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 UNIT = HERE.parent
@@ -16,15 +17,24 @@ spec.loader.exec_module(intro)
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
+def build_programs(assembler, output):
+    """Build dash.nes into output with the unit's Makefile, without the emulator."""
+    out = Path(output).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    subprocess.run(['make', '-s', '-B', '-C', str(UNIT), f'ASM={assembler}', f'ROM={out / "dash.nes"}'],
+                   check=True, capture_output=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--emulator', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--assembler', default='asm198x')
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     rom = UNIT / 'dash.nes'
     rebuilt = args.output / 'dash.nes'
-    subprocess.run(['asm198x', '--dialect', 'ca65', str(UNIT / 'dash.asm'), '-o', str(rebuilt)], check=True)
+    build_programs(args.assembler, args.output)
     assert rebuilt.read_bytes() == rom.read_bytes(), 'Baseline rebuild differs'
     data = rom.read_bytes()
     nmi = int.from_bytes(data[16+0x7ffa:16+0x7ffc], 'little')
@@ -87,10 +97,15 @@ def main():
                              'entry_dot_clock':start, 'return_scanline':m.query('ppu.scanline'),
                              'return_dot':m.query('ppu.dot'), 'trace':trace})
                 print(name, elapsed, flush=True)
-        result = {'configuration':'NES NTSC, rendering enabled, DMC disabled; flags injected at NMI entry',
+        result = {'status':'passed', 'configuration':'NES NTSC, rendering enabled, DMC disabled; flags injected at NMI entry',
                   'boundary':'First PHA through completed RTI; excludes interrupt entry and notification latency',
                   'server':m.server, 'emulator_sha256':sha(args.emulator),
-                  'assembler':subprocess.check_output(['asm198x','--version'],text=True,stderr=subprocess.STDOUT).strip(),
+                  'assembler':subprocess.check_output([args.assembler,'--version'],text=True,stderr=subprocess.STDOUT).strip(),
+                  'assembler_sha256':sha(Path(shutil.which(args.assembler) or args.assembler)),
+                  # The program the machine runs, so the checker can rebuild it.
+                  'programs':{'dash.nes':sha(rom)},
+                  'tools':{'assembler':intro.evidence_bytes().tool_identity(args.assembler),
+                           'emulator':intro.evidence_bytes().tool_identity(args.emulator)},
                   'source_sha256':sha(UNIT/'dash.asm'), 'rom_sha256':sha(rom), 'nmi':hex(nmi), 'measurements':rows}
         (args.output/'results.json').write_text(json.dumps(result,indent=2)+'\n')
     finally:

@@ -15,8 +15,14 @@ python3 nintendo-entertainment-system/assembly/dash/unit-14/verification/check.p
   --emulator /path/to/emu198x-nes --output /tmp/dash-nmi-budget
 ```
 
-Verified 22 September 2026: Asm198x 0.0.58, Emu198x NES 0.25.0, NTSC NROM,
-rendering enabled, DMC disabled. The runner reuses the introduction's small MCP
+First verified 22 September 2026 with Asm198x 0.0.58 and an unreleased Emu198x
+NES build reporting 0.25.0. Re-recorded 10 November 2026 with the Asm198x 0.0.75
+and Emu198x 0.45.1 releases, NTSC NROM, rendering enabled, DMC disabled: every
+measurement is identical. From Emu198x 0.46.1 the ROM's frame phase after power-on moves by one
+frame (each sampled NMI enters 89,340 dots earlier), and the DMA stall's 513/514-cycle
+alternation pairs differently with the repeats; the record stays on 0.45.1
+until that is resolved. CI rebuilds `dash.nes` with the unit's Makefile and
+compares it with the record. The runner reuses the introduction's small MCP
 client. It boots the unchanged ROM for five frames, stops at NMI entry and sets
 zero-page game_over ($0B) and game_over_drawn ($0C) for three controlled cases.
 These are diagnostic state injections, not evidence of a natural losing run.

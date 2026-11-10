@@ -50,6 +50,10 @@ LOCAL_BINDINGS = {
     "spectrum-profile-a-routine": 0,
 }
 
+# Curriculum unit recorders (`*/assembly/*/verification/*.py`).
+CURRICULUM_SELECTION = Path(__file__).with_name("curriculum-evidence.json")
+CURRICULUM_BINDINGS = {"nes-meet-the-machine-timing": 0, "nes-dash-unit-14": 0}
+
 
 def _load_evidence_bytes():
     found = importlib.util.spec_from_file_location(
@@ -229,9 +233,12 @@ def main() -> int:
     parser.add_argument(
         "--local", action="store_true", help="Check the seven pattern-local records"
     )
+    parser.add_argument(
+        "--curriculum", action="store_true", help="Check the curriculum unit records"
+    )
     args = parser.parse_args()
-    if args.parser + args.audit + args.local > 1:
-        parser.error("Choose one of --parser, --audit and --local")
+    if args.parser + args.audit + args.local + args.curriculum > 1:
+        parser.error("Choose one of --parser, --audit, --local and --curriculum")
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.unlink(missing_ok=True)
@@ -246,6 +253,8 @@ def main() -> int:
                     if args.audit
                     else LOCAL_SELECTION
                     if args.local
+                    else CURRICULUM_SELECTION
+                    if args.curriculum
                     else args.selection
                 ).read_text()
             ),
@@ -255,6 +264,8 @@ def main() -> int:
             if args.audit
             else LOCAL_BINDINGS
             if args.local
+            else CURRICULUM_BINDINGS
+            if args.curriculum
             else None,
         )
     except (OSError, KeyError, TypeError, ValueError) as error:

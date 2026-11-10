@@ -8,10 +8,32 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-nes",
-      "version": "0.25.0"
+      "version": "0.45.1"
     }
   },
-  "binary_sha256": "7ee2326974a821494533c530972ed8d1156d7a5ca30022ca44153d625fe5a147",
+  "binary_sha256": "aa619fb4a996674725d29888f8c54c4976c3b38a8ecf5ef029eeeee85b9eb3b2",
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "unit-09/heartbeat.nes": "0b869e7256f6ba64b68c5e016691cd2bd0afbecf379bdb0b2b32dd569a141143",
+    "unit-10/read-pad.nes": "3992e08b6832937be67e1d001a215bba92556cbceb75c46626b66bf2c53d3665",
+    "slow.nes": "d3e7127f4b4bb4357cb4f739e1d96262f6f14409cdaacb51b14b0a7f7800f0b9"
+  },
+  "tools": {
+    "assembler": {
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
+    },
+    "emulator": {
+      "tool": "emu198x-nes",
+      "version": "0.45.1",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "aa619fb4a996674725d29888f8c54c4976c3b38a8ecf5ef029eeeee85b9eb3b2"
+    }
+  },
   "checks": [
     {
       "unit": "09",

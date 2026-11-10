@@ -25,8 +25,15 @@ python3 nintendo-entertainment-system/assembly/meet-the-machine/verification/tim
   --output /tmp/nes-introduction-timing
 ```
 
-Verified on 22 September 2026 with Emu198x NES 0.25.0, NTSC, on macOS Apple
-silicon. `results.json` records source/ROM/executable hashes. The verifier checks:
+First verified on 22 September 2026 with an unreleased Emu198x NES build
+reporting 0.25.0. Re-recorded on 10 November 2026 with the Asm198x 0.0.75 and
+Emu198x 0.45.1 releases, NTSC, on macOS Apple silicon: every observation is
+identical. From Emu198x 0.46.1 the programs' frame phase after power-on moves by one
+frame, so unit 09's palette entries read $03–$06 rather than $04–$07 and the five-shift
+colour changes land a frame later (29/61/93 rather than 28/60/92); the record
+stays on 0.45.1 until that is resolved. `results.json` names the tools by
+release and lists the three programs the machine runs; CI rebuilds them with
+the units' Makefiles and compares their bytes. The verifier checks:
 
 - Unit 09: rendering disabled, NMI enabled; return to the idle instruction after
   four successive frame updates; A, X, Y, status and stack pointer unchanged

@@ -1078,6 +1078,76 @@
       "pins": {},
       "records": "none: unit tests of verify.py's cycle counter",
       "checker": "CI runs it (pattern-evidence.yml, recorded-inputs)"
+    },
+    {
+      "script": "nintendo-entertainment-system/assembly/meet-the-machine/verification/timing.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "nintendo-nes (NTSC)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "follow_ups": {
+          "nintendo-nes": {
+            "emulator": "0.45.1",
+            "reason": "from 0.46.1 the programs' frame phase after power-on moves by one frame",
+            "issue": "pending",
+            "undo": "re-record on the newest release once the issue closes"
+          }
+        }
+      },
+      "build_programs": "build_programs(assembler, output): units 09 and 10 by their Makefiles, and the five-shift exercise",
+      "records": "nintendo-entertainment-system/assembly/meet-the-machine/verification/timing/results.json (copied from --output)",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (nes-meet-the-machine-timing)"
+    },
+    {
+      "script": "nintendo-entertainment-system/assembly/dash/unit-14/verification/check.py",
+      "args": [
+        "--assembler PATH",
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "nintendo-nes (NTSC)"
+      ],
+      "firmware": [],
+      "pins": {
+        "asm198x": "0.0.75",
+        "emulator": "0.48.3",
+        "follow_ups": {
+          "nintendo-nes": {
+            "emulator": "0.45.1",
+            "reason": "from 0.46.1 the programs' frame phase after power-on moves by one frame",
+            "issue": "pending",
+            "undo": "re-record on the newest release once the issue closes"
+          }
+        }
+      },
+      "build_programs": "build_programs(assembler, output): dash.nes by the unit's Makefile",
+      "records": "nintendo-entertainment-system/assembly/dash/unit-14/verification/results.json (copied from --output)",
+      "checker": "scripts/check-pattern-evidence.py --curriculum (nes-dash-unit-14)"
+    },
+    {
+      "script": "nintendo-entertainment-system/assembly/dash/unit-11/verification/check.py",
+      "args": [
+        "--output DIR"
+      ],
+      "machines": [
+        "host only: emu198x-ricoh-apu-2a03 0.6.0 from crates.io"
+      ],
+      "firmware": [],
+      "pins": {
+        "apu_crate": "emu198x-ricoh-apu-2a03 =0.6.0"
+      },
+      "records": "nintendo-entertainment-system/assembly/dash/unit-11/verification/results/ (counters.csv, identity.json)",
+      "fresh_run": "CI runs it again and compares both files byte for byte",
+      "checker": ".github/workflows/pattern-evidence.yml (curriculum entry)"
     }
   ]
 }
