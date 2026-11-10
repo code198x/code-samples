@@ -10,14 +10,16 @@ The maintained unit-11 source starts the four-step APU sequence with `$4017=$40`
 enables pulse 1 and triangle with `$4015=$05`, and requests the collection cue
 with `$4008=$18`, `$400A=$29`, `$400B=$00`. Only explanatory comments changed in
 the maintained source and its snippet. Asm198x 0.0.58 rebuilt the revised source
-to a temporary ROM that compares byte-for-byte with the existing `dash.nes`.
-The baseline hashes are in `results/identity.json`; the source hash there is the
-pre-comment-edit baseline. No change to game behaviour or existing audio media.
+to a temporary ROM that compares byte-for-byte with the existing `dash.nes`,
+whose hash is in `results/identity.json`. No change to game behaviour or
+existing audio media.
 
-The isolated fixture uses Emu198x's published APU crate, version 0.6.0, from
-workspace revision `1b999de47dea60e424efbdc68f1cd483cb0191a6`. It runs one APU tick
+The isolated fixture uses Emu198x's published APU crate,
+`emu198x-ricoh-apu-2a03` 0.6.0, which Cargo fetches from crates.io;
+`results/identity.json` records its package checksum and the hash of its
+`lib.rs`, which matches the workspace source the first run used. It runs one APU tick
 per modelled CPU cycle. NTSC and PAL use nominal CPU clocks of 1,789,773 and
-1,662,607 Hz for conversion into milliseconds. Rust 1.98.0 built the fixture.
+1,662,607 Hz for conversion into milliseconds. Rust 1.98.0 built the first run and Rust 1.99.1 the crates.io re-run; both give identical counters.
 The crate source hash is preserved with the results.
 
 This is **APU counter execution**, not a ROM running through a CPU/PPU, subjective
@@ -27,13 +29,15 @@ vary the time of the trigger. No emulator-core code changed.
 
 ## Reproduce
 
-From code-samples, with Rust and the APU crate's dependencies already cached:
+From code-samples, with Rust and network access to crates.io:
 
 ```sh
 python3 nintendo-entertainment-system/assembly/dash/unit-11/verification/check.py \
-  --emulator-repo /path/to/emu198x \
   --output /tmp/dash-triangle-results
 ```
+
+CI runs the same command and requires both output files to match `results/`
+byte for byte.
 
 The runner creates and removes a temporary Cargo project. It does not overwrite
 Dash or its ROM. `triangle.rs` is the entire inspectable experiment.
