@@ -1,7 +1,7 @@
 {
-  "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
-  "tape_sha256": "62fc9233fb9e70778cf32e7b19b0a819dd83fea6474dda25133a029e37ac9e22",
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "source_sha256": "2ff306a577664165a4443cf7a3139236bb0ced3a19f66e92b274fcf213afab76",
+  "tape_sha256": "f5d5817b52a37c545e8b965152df53b006d10801504b4658a91641f98ba31b72",
+  "binary_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "server": {
     "capabilities": {
       "tools": {}
@@ -9,7 +9,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.48.5"
     }
   },
   "configuration": "Stock 48K PAL",

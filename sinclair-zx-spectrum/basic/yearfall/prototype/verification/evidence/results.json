@@ -1,6 +1,6 @@
 {
-  "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "source_sha256": "2ff306a577664165a4443cf7a3139236bb0ced3a19f66e92b274fcf213afab76",
+  "binary_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "configuration": "Stock 48K PAL; fresh ROM tape load; ordinary key play; full-run fixture uses ROM RANDOMIZE 17 and RUN 200",
   "checks": [
     "fresh-tape-autostart-token-identity",
@@ -55,16 +55,16 @@
         360,
         100
       ],
-      "price": 6,
+      "price": 8,
       "plan": [
         0,
         183,
         100
       ],
-      "yield": 3,
+      "yield": 2,
       "result": [
         63,
-        377,
+        277,
         100,
         0,
         3
@@ -77,16 +77,16 @@
         360,
         100
       ],
-      "price": 9,
+      "price": 10,
       "plan": [
         5,
         180,
         105
       ],
-      "yield": 2,
+      "yield": 4,
       "result": [
         63,
-        240,
+        445,
         105,
         0,
         3
@@ -99,7 +99,7 @@
         360,
         100
       ],
-      "price": 8,
+      "price": 7,
       "plan": [
         -10,
         180,
@@ -108,7 +108,7 @@
       "yield": 5,
       "result": [
         63,
-        620,
+        610,
         90,
         0,
         3
@@ -121,16 +121,16 @@
         360,
         100
       ],
-      "price": 9,
+      "price": 6,
       "plan": [
         0,
         179,
         100
       ],
-      "yield": 5,
+      "yield": 2,
       "result": [
         59,
-        581,
+        281,
         100,
         1,
         0
@@ -891,13 +891,13 @@
         360,
         100
       ],
-      "price": 7,
+      "price": 6,
       "plan": [
         0,
         0,
         0
       ],
-      "yield": 5,
+      "yield": 4,
       "result": [
         0,
         360,
@@ -913,16 +913,16 @@
         360,
         100
       ],
-      "price": 9,
+      "price": 10,
       "plan": [
         0,
         180,
         100
       ],
-      "yield": 2,
+      "yield": 5,
       "result": [
         63,
-        280,
+        580,
         100,
         0,
         3
@@ -1066,7 +1066,7 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.48.5"
     }
   }
 }

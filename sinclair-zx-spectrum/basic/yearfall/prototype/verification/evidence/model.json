@@ -1,5 +1,5 @@
 {
-  "source_sha256": "026c31f6b12426f3e14e11a10a9f730bbbcf38806ef32cc1abc2cbd815e73545",
+  "source_sha256": "2ff306a577664165a4443cf7a3139236bb0ced3a19f66e92b274fcf213afab76",
   "checks": [
     "initial-ledger",
     "cannot-sell-unowned-land",

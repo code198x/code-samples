@@ -54,6 +54,13 @@ player success rates, optimal-strategy results or a guarantee of rescuable runs.
 Native acceptance, original-hardware timing and independent learner trials
 remain unestablished.
 
+The build and check records come from the Emu198x 0.48.5 release. The earlier
+run used an unreleased build and the listing from before it was rewritten as
+the 48K ROM lists it. Run on that earlier listing, 0.48.5 reproduces the earlier
+records and captures exactly. On the current listing every check still passes,
+but the random-start trials draw different prices and yields, and seven
+captures change with them.
+
 The extended native regression covers thirty years. The existing four-digit
 allocation editor remains a practical limit for very long runs; indefinite
 play at arbitrarily large populations has not been established.
