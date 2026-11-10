@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - "_capture/verify.py"
+      - "_capture/production.py"
+      - "_capture/test_production.py"
+      - "_capture/fixtures/**"
       - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
       - "sinclair-zx-spectrum/assembly/**/capture/proof.*.json"
       - "sinclair-zx-spectrum/assembly/**/*.asm"
@@ -17,6 +20,9 @@ on:
     branches: [main, master]
     paths:
       - "_capture/verify.py"
+      - "_capture/production.py"
+      - "_capture/test_production.py"
+      - "_capture/fixtures/**"
       - "commodore-amiga/assembly/meet-the-machine/unit-07/**"
       - "sinclair-zx-spectrum/assembly/**/capture/proof.*.json"
       - "sinclair-zx-spectrum/assembly/**/*.asm"
@@ -87,6 +93,51 @@ jobs:
   # The Spectrum chain is shorter: Asm198x emits a runnable 48K snapshot
   # directly, so there is no media-mastering stage and no Build198x checkout.
   # One matrix leg per proof, so adding a unit is one line rather than a job.
+  # Schema 2 production records (_capture/production.py): the unit tests, then
+  # the fixture's redistributable stages. Running each model needs its ROMs,
+  # so the full run, controls included, is local, like the release checks.
+  production-record:
+    name: Production record tests and fixture public proof
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Code198x samples
+        uses: actions/checkout@v7
+
+      - name: Production record unit tests
+        run: python3 -m unittest discover -s _capture -p 'test_production.py'
+
+      - name: Read locked revisions
+        id: lock
+        shell: bash
+        run: |
+          LOCK=_capture/fixtures/raster-stripes/proof.lock.json
+          echo "asm=$(jq -r '.repositories.asm198x.revision' "$LOCK")" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout Asm198x
+        uses: actions/checkout@v7
+        with:
+          repository: asm198x/asm198x
+          ref: ${{ steps.lock.outputs.asm }}
+          path: _family/Asm198x/asm198x
+
+      - name: Build locked family tools
+        run: cargo build --release --manifest-path _family/Asm198x/asm198x/Cargo.toml -p asm198x
+
+      - name: Verify redistributable stages
+        env:
+          ROOT198X: ${{ github.workspace }}/_family
+          ASM198X: ${{ github.workspace }}/_family/Asm198x/asm198x/target/release/asm198x
+        run: |
+          python3 _capture/verify.py _capture/fixtures/raster-stripes/proof.manifest.json \
+            --public --report build/proofs/fixture-raster-stripes.json
+
+      - name: Upload evidence report
+        uses: actions/upload-artifact@v7
+        with:
+          name: fixture-raster-stripes-proof
+          path: build/proofs/fixture-raster-stripes.json
+
   spectrum-public:
     name: Spectrum ${{ matrix.proof.name }} public proof
     runs-on: ubuntu-latest

@@ -1,0 +1,280 @@
+{
+  "schema_version": 2,
+  "id": "fixture-raster-stripes",
+  "machine": "sinclair-zx-spectrum-asm",
+  "production": {
+    "kind": "test-effect",
+    "title": "Raster stripes",
+    "purpose": "Proves the production verifier: a border effect timed to each model's line length."
+  },
+  "program": "stripes.asm",
+  "lock": "proof.lock.json",
+  "evidence": [
+    {
+      "citation": "Chris Smith, The ZX Spectrum ULA: How to Design a Microcomputer (ZX Design and Media, 2010), chapter 11",
+      "claim": "A 48K frame is 312 lines of 224 T-states, 69,888 in all, which sets the 48K's stripe loop and its frame count."
+    }
+  ],
+  "build": {
+    "format": "tap",
+    "executable": "stripes.tap",
+    "executable_sha256": "ebde31fe8ea78fb763d3090b7bb70ba7f67a15693041d78a61818d31c9d310d3"
+  },
+  "models": [
+    {
+      "model": "spectrum_issue3_48k",
+      "firmware": [
+        {
+          "path": "~/.emu198x/roms/sinclair-zx-spectrum-48k/48.rom",
+          "accepted_sha256": [
+            "d55daa439b673b0e3f5897f99ac37ecb45f974d1862b4dadb85dec34af99cb42"
+          ]
+        }
+      ],
+      "end": {
+        "address": 36608,
+        "value": 165,
+        "within_frames": 1600
+      },
+      "reads": [
+        {
+          "label": "model detected",
+          "address": 36609,
+          "expect": 1
+        }
+      ],
+      "captures": [
+        {
+          "id": "stripes",
+          "frame": 1300,
+          "png_sha256": "787f8aae6afd8627ab3f9d6e27796eca4e9337f5122dc83532e6187dafcd18ba"
+        }
+      ]
+    },
+    {
+      "model": "spectrum_128k",
+      "firmware": [
+        {
+          "path": "~/.emu198x/roms/sinclair-zx-spectrum-128k/128-0.rom",
+          "accepted_sha256": [
+            "3ba308f23b9471d13d9ba30c23030059a9ce5d4b317b85b86274b132651d1425"
+          ]
+        },
+        {
+          "path": "~/.emu198x/roms/sinclair-zx-spectrum-128k/128-1.rom",
+          "accepted_sha256": [
+            "8d93c3342321e9d1e51d60afcd7d15f6a7afd978c231b43435a7c0757c60b9a3"
+          ]
+        }
+      ],
+      "end": {
+        "address": 36608,
+        "value": 165,
+        "within_frames": 1600
+      },
+      "reads": [
+        {
+          "label": "model detected",
+          "address": 36609,
+          "expect": 2
+        }
+      ],
+      "captures": [
+        {
+          "id": "stripes",
+          "frame": 1300,
+          "png_sha256": "ae4a8c7779d06bf04b2c965602703c156475c210a1adc3516e59609196dfb6d9"
+        }
+      ]
+    },
+    {
+      "model": "spectrum_plus2a",
+      "firmware": [
+        {
+          "path": "~/.emu198x/roms/amstrad-zx-spectrum-plus3/plus3-0.rom",
+          "accepted_sha256": [
+            "841d54545c743a7202fb9b068534ed906a08cc657a19955ae20a8de5af8ab185"
+          ]
+        },
+        {
+          "path": "~/.emu198x/roms/amstrad-zx-spectrum-plus3/plus3-1.rom",
+          "accepted_sha256": [
+            "6d6ccab28f255b01c8cd89ceab9e7b60247f4610471118092f290f6c7768b7e3"
+          ]
+        },
+        {
+          "path": "~/.emu198x/roms/amstrad-zx-spectrum-plus3/plus3-2.rom",
+          "accepted_sha256": [
+            "c5590212a269117657ce611acbac582e41e9db87dc78db480da2615e413b2da6"
+          ]
+        },
+        {
+          "path": "~/.emu198x/roms/amstrad-zx-spectrum-plus3/plus3-3.rom",
+          "accepted_sha256": [
+            "8ec5cb9fd7ec24a041800314bb5a2c99be02f7e50745194eb649ed6d9085bd1f"
+          ]
+        }
+      ],
+      "end": {
+        "address": 36608,
+        "value": 165,
+        "within_frames": 1600
+      },
+      "reads": [
+        {
+          "label": "model detected",
+          "address": 36609,
+          "expect": 2
+        }
+      ],
+      "captures": [
+        {
+          "id": "stripes",
+          "frame": 1300,
+          "png_sha256": "ae4a8c7779d06bf04b2c965602703c156475c210a1adc3516e59609196dfb6d9"
+        }
+      ]
+    },
+    {
+      "model": "pentagon_128",
+      "firmware": [
+        {
+          "path": "~/.emu198x/roms/pentagon-128/pentagon-0.rom",
+          "accepted_sha256": [
+            "f25a5f2823ad422a7a4d73c0c989b41fcd5dc8140e0b3c089db7265a7ec2d324"
+          ]
+        },
+        {
+          "path": "~/.emu198x/roms/pentagon-128/pentagon-1.rom",
+          "accepted_sha256": [
+            "e29f600a44a30b503ab55104e12821427163032f7f4181e44c0f588bb50276ab"
+          ]
+        }
+      ],
+      "end": {
+        "address": 36608,
+        "value": 165,
+        "within_frames": 1600
+      },
+      "reads": [
+        {
+          "label": "model detected",
+          "address": 36609,
+          "expect": 3
+        }
+      ],
+      "captures": [
+        {
+          "id": "stripes",
+          "frame": 1300,
+          "png_sha256": "f6806a1fa110b7ad768948d036f4146ba84f8f807e606bd0f17ba20ca7e1e5b8"
+        }
+      ],
+      "load": {
+        "steps": [
+          {
+            "action": "run_frames",
+            "frames": 100
+          },
+          {
+            "action": "press_keys",
+            "keys": [
+              "CapsShift",
+              "6"
+            ]
+          },
+          {
+            "action": "run_frames",
+            "frames": 10
+          },
+          {
+            "action": "press_keys",
+            "keys": [
+              "CapsShift",
+              "6"
+            ]
+          },
+          {
+            "action": "run_frames",
+            "frames": 10
+          },
+          {
+            "action": "press_keys",
+            "keys": [
+              "CapsShift",
+              "6"
+            ]
+          },
+          {
+            "action": "run_frames",
+            "frames": 10
+          },
+          {
+            "action": "press_key",
+            "key": "Enter"
+          },
+          {
+            "action": "run_frames",
+            "frames": 100
+          },
+          {
+            "action": "press_key",
+            "key": "J"
+          },
+          {
+            "action": "run_frames",
+            "frames": 5
+          },
+          {
+            "action": "press_keys",
+            "keys": [
+              "SymbolShift",
+              "P"
+            ]
+          },
+          {
+            "action": "run_frames",
+            "frames": 5
+          },
+          {
+            "action": "press_keys",
+            "keys": [
+              "SymbolShift",
+              "P"
+            ]
+          },
+          {
+            "action": "run_frames",
+            "frames": 5
+          },
+          {
+            "action": "press_key",
+            "key": "Enter"
+          },
+          {
+            "action": "run_frames",
+            "frames": 10
+          }
+        ],
+        "why": "The Pentagon boots to a menu the emulator's tape autoload doesn't drive: choose 48 BASIC, type LOAD \"\" and start the tape. Reported as https://github.com/emu198x/emu198x/issues/2343."
+      }
+    }
+  ],
+  "controls": [
+    {
+      "id": "mistimed-128k",
+      "program": "stripes-mistimed.asm",
+      "must_fail_on": [
+        "spectrum_128k",
+        "spectrum_plus2a"
+      ],
+      "why": "The 128K family's 228 T-state lines get the 48K's 224 T-state loop, so its stripes slant; the 48K and Pentagon are untouched."
+    },
+    {
+      "id": "harmless-padding",
+      "program": "stripes-padded.asm",
+      "must_fail_on": [],
+      "why": "64 extra bytes change the tape's loading time, and so the phase the program starts in, but not the effect: it must pass on every model."
+    }
+  ]
+}
