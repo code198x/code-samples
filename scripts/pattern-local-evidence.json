@@ -46,5 +46,41 @@
     "{output}"
    ]
   }
+ },
+ {
+  "name": "c64-sprite-multiplexing",
+  "record": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "c64-sid-note-trigger",
+  "record": "commodore-64/patterns/assembly/audio/sid-note-trigger/verification/evidence/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "commodore-64/patterns/assembly/audio/sid-note-trigger/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "spectrum-sound-beep",
+  "record": "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/verification/evidence/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/patterns/assembly/audio/sound-beep/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
  }
 ]

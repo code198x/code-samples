@@ -28,6 +28,14 @@ CASES = [('low', 255, 105, 1), ('high', 127, 105, 1),
          ('mic-high', 255, 105, 9), ('success', 200, 16, 1),
          ('error', 88, 16, 1), ('click', 127, 12, 1)]
 INCLUDES = ('sound-beep.inc', 'effects.inc')
+# The run this record replaces, kept for comparison. No independent oracle
+# measures the tones; nominal_hz is the instruction-cost derivation.
+EARLIER = {
+    'recorded': '2026-10-01',
+    'emulator': 'Emu198x 9009466d…, an unreleased build; no assembler named',
+    'values': 'click 1043.23 Hz over 0.011497 s (nominal 1043.84 Hz); '
+              'every case WAV differed from this run',
+}
 
 
 def sha(file):
@@ -187,6 +195,7 @@ def main():
                            for a, b in zip(frequencies, frequencies[1:]))
             duration = (rising[-1] - rising[0] + median(periods)) / rate
             entry = {'name': name, 'frequency_hz': frequencies,
+                     'nominal_hz': [3_500_000 / (26 * half + 51) for half in notes],
                      'observed_tone_seconds': duration, 'cycles': count,
                      'port_writes': len(writes), 'base_output': base,
                      'source_sha256': sha(source), 'binary_sha256': sha(target / 'program.bin'),
@@ -219,6 +228,7 @@ def main():
         print('PASS fresh ROM tape load completes all four sounds', flush=True)
     finally:
         machine.close()
+    report['earlier_record'] = EARLIER
     report['status'] = 'passed'
     spec = importlib.util.spec_from_file_location(
         'evidence_bytes', ROOT.parents[3].parent / 'scripts/evidence_bytes.py')

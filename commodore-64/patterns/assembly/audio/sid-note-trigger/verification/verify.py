@@ -25,6 +25,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # The assembler every program is built with; main() sets it from --assembler.
 ASSEMBLER = 'asm198x'
+# The run this record replaces, kept for comparison. No independent oracle
+# measures the note; the nominal pitch is 261.62 Hz.
+EARLIER = {
+    'recorded': '2026-10-05',
+    'emulator': 'Emu198x 52189fd8…, an unreleased build; no assembler named',
+    'values': 'demo held 520 ms at 261.62 Hz; WAV 118e48d1…',
+}
 # Each program the machine loads, relative to the output folder.
 PROGRAMS = ('ownership/ownership.prg', 'envelope/envelope.prg', 'demo/demo.prg')
 PAL_HZ = 985_248          # PAL C64 system clock (phi2)
@@ -446,6 +453,7 @@ def main():
         'envelope': check_envelope(args.emulator, out / 'envelope'),
         'demo': check_demo(args.emulator, out / 'demo'),
         'limits': 'Emulator observations; no original-hardware measurement or listening claim.',
+        'earlier_record': EARLIER,
         'status': 'passed',
     }
     evidence = evidence_bytes()

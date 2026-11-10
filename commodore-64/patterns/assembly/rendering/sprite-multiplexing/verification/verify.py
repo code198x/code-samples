@@ -306,6 +306,47 @@ RUNS = [(c, False) for c in CASES] + [((8, 8), True)]
 NEGATIVE = "negative-missing-x-msb"
 
 
+# The run this record replaces, kept for comparison.
+EARLIER = {
+    "recorded": "2026-10-08",
+    "assembler": "Asm198x fbc5d112…, an unreleased build",
+    "emulator": "Emu198x 689f2219…, an unreleased build",
+    "values": "transition PAL last write line 33 (as VICE); negative control "
+    "missing 1180, extra 812 pixels",
+}
+# Known Emu198x differences from VICE: (case, model, stage) -> issue.
+KNOWN_ISSUES = {
+    ("transition", "pal", 1): "emu198x#2347: last sprite-register write line"
+}
+
+
+def vice_differences(rows: list[dict]) -> list[dict]:
+    """Each capture where Emu198x's observed state differs from VICE's."""
+    by_key: dict[tuple, dict[str, list[dict]]] = {}
+    for row in rows:
+        engines = by_key.setdefault((row["case"], row["model"]), {})
+        engines.setdefault(row["engine"], []).append(row)
+    differences = []
+    for (case, model), engines in by_key.items():
+        for stage, (emu, vice) in enumerate(
+            zip(engines["emu"], engines["vice"], strict=True)
+        ):
+            for field in ("counts", "errors", "last_write_lines"):
+                if emu[field] != vice[field]:
+                    differences.append(
+                        {
+                            "case": case,
+                            "model": model,
+                            "stage": stage,
+                            "field": field,
+                            "emu": emu[field],
+                            "vice": vice[field],
+                            "known_issue": KNOWN_ISSUES.get((case, model, stage)),
+                        }
+                    )
+    return differences
+
+
 def run_name(counts: tuple[int, int], transition: bool) -> str:
     return "transition" if transition else f"{counts[0]}-{counts[1]}"
 
@@ -396,6 +437,9 @@ def main() -> None:
                     }
                     rows.append(row)
                     print("PASS", name, engine, model, state, flush=True)
+    differences = vice_differences(rows)
+    unexplained = [d for d in differences if not d["known_issue"]]
+    require(not unexplained, f"Emu198x differs from VICE: {unexplained}")
     dest = args.output / NEGATIVE
     prg, symbols = assemble(args, dest, (8, 8), broken=True)
     [(shot, _)] = run_emu(args, dest, prg, symbols, "pal", [(25, (8, 8))])
@@ -423,6 +467,9 @@ def main() -> None:
             for name in [run_name(c, t) for c, t in RUNS] + [NEGATIVE]
         },
         "checks": rows,
+        # Recorded, not accepted silently: each must name a known issue.
+        "vice_differences": differences,
+        "earlier_record": EARLIER,
         "negative_control": negative,
         "status": "passed",
     }
