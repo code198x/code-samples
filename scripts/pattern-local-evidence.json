@@ -1,0 +1,50 @@
+[
+ {
+  "name": "c64-sprite-movement-bounds",
+  "record": "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "c64-joystick-reading",
+  "record": "commodore-64/patterns/assembly/input/joystick-reading/verification/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "commodore-64/patterns/assembly/input/joystick-reading/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "c64-raster-splits",
+  "record": "commodore-64/patterns/assembly/rendering/raster-splits/verification/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "commodore-64/patterns/assembly/rendering/raster-splits/verification/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ },
+ {
+  "name": "spectrum-profile-a-routine",
+  "record": "sinclair-zx-spectrum/patterns/assembly/framework/profile-a-routine/verification/results.json",
+  "bindings": [],
+  "recorder": {
+   "script": "sinclair-zx-spectrum/patterns/assembly/framework/profile-a-routine/verify.py",
+   "args": [
+    "{asm198x}",
+    "{output}"
+   ]
+  }
+ }
+]

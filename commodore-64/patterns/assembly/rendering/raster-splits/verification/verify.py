@@ -67,14 +67,24 @@ def picture(path: Path, line: int, engine: str, model: str) -> dict[str, Any]:
     }
 
 
-def execute(
+# The split lines the maintained routine is run at, and each program's folder.
+LINES = (64, 130, 131, 200)
+PROGRAMS = (
+    "baseline",
+    *(f"line-{line}" for line in LINES),
+    "negative",
+    "capture-refresh",
+)
+
+
+def raster_program(
     args: argparse.Namespace,
     dest: Path,
     line: int,
     *,
     baseline: bool = False,
     broken: bool = False,
-) -> tuple[list[dict[str, Any]], dict[str, int]]:
+) -> tuple[Path, dict[str, int]]:
     dest.mkdir(parents=True, exist_ok=True)
     caller = (ROOT / "demo.asm").read_text()
     include = ROOT / ("verification/baseline.inc" if baseline else "split.inc")
@@ -86,7 +96,38 @@ def execute(
         require(original in routine, "negative control did not find the colour write")
         routine = routine.replace(original, "    lda #$00")
     (dest / "split.inc").write_text(routine)
-    prg, sym = RUN.build(args, dest, caller)
+    return RUN.build(args, dest, caller)
+
+
+def refresh_program(
+    args: argparse.Namespace, dest: Path
+) -> tuple[Path, dict[str, int]]:
+    dest.mkdir(parents=True, exist_ok=True)
+    (dest / "split.inc").write_text((ROOT / "split.inc").read_text())
+    return RUN.build(args, dest, (ROOT / "demo.asm").read_text())
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every program the record lists into output/<folder>/demo.prg,
+    without the emulators or ACME."""
+    args = argparse.Namespace(assembler=assembler, acme=None)
+    out = Path(output).resolve()
+    raster_program(args, out / "baseline", 130, baseline=True)
+    for line in LINES:
+        raster_program(args, out / f"line-{line}", line)
+    raster_program(args, out / "negative", 130, broken=True)
+    refresh_program(args, out / "capture-refresh")
+
+
+def execute(
+    args: argparse.Namespace,
+    dest: Path,
+    line: int,
+    *,
+    baseline: bool = False,
+    broken: bool = False,
+) -> tuple[list[dict[str, Any]], dict[str, int]]:
+    prg, sym = raster_program(args, dest, line, baseline=baseline, broken=broken)
     results = []
     for model in ("pal", "ntsc"):
         for engine in ("emu", "vice"):
@@ -194,9 +235,7 @@ def execute(
 def refresh_control(args: argparse.Namespace) -> list[dict[str, Any]]:
     """Prove debug-only screenshots are stale and normal running refreshes them."""
     dest = args.output / "capture-refresh"
-    dest.mkdir(parents=True, exist_ok=True)
-    (dest / "split.inc").write_text((ROOT / "split.inc").read_text())
-    prg, sym = RUN.build(args, dest, (ROOT / "demo.asm").read_text())
+    prg, sym = refresh_program(args, dest)
     rows = []
     for model in ("pal", "ntsc"):
 
@@ -270,11 +309,12 @@ def main() -> None:
         setattr(args, name, value)
     baseline, _ = execute(args, args.output / "baseline", 130, baseline=True)
     rows = []
-    for line in (64, 130, 131, 200):
+    for line in LINES:
         observed, sizes = execute(args, args.output / f"line-{line}", line)
         rows += observed
     negative, _ = execute(args, args.output / "negative", 130, broken=True)
     refresh = refresh_control(args)
+    evidence = RUN.evidence_bytes()
     record = {
         "sources": {
             name: sha(ROOT / name)
@@ -288,15 +328,23 @@ def main() -> None:
         "shared_sources": {
             str(path.relative_to(REPO)): sha(path) for path in (HELPER, RUN.HELPER)
         },
+        # By release identity; ACME and VICE are independent oracles.
         "tools": {
-            name: {"sha256": sha(Path(getattr(args, name)))}
+            name: evidence.tool_identity(getattr(args, name))
             for name in ("assembler", "acme", "emulator", "vice")
+        },
+        "assembler_sha256": sha(Path(args.assembler)),
+        # Each program the machine loads, so the checker can rebuild it.
+        "programs": {
+            f"{name}/demo.prg": sha(args.output / name / "demo.prg")
+            for name in PROGRAMS
         },
         "baseline": baseline,
         "cases": rows,
         "negative_control": negative,
         "sizes": sizes,
         "capture_refresh": refresh,
+        "status": "passed",
     }
     (args.output / "results.json").write_text(json.dumps(record, indent=2) + "\n")
     print(

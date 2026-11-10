@@ -97,12 +97,59 @@ def keyboard_snapshot(source: Path, target: Path, key: tuple[int, int] | None) -
     target.write_bytes(data)
 
 
-def probe(args: argparse.Namespace) -> list[dict[str, Any]]:
-    dest = args.output / "probe"
+# Each program the machine loads, by its folder under the output.
+PROGRAMS = ("probe", "matrix", "negative", "live")
+
+
+def probe_program(args: argparse.Namespace, dest: Path) -> tuple[Path, dict[str, int]]:
     dest.mkdir(parents=True, exist_ok=True)
     for name in ("baseline1.inc", "baseline2.inc"):
         (dest / name).write_bytes((ROOT / "verification" / name).read_bytes())
-    prg, sym = RUN.build(args, dest, (ROOT / "verification/probe.asm").read_text())
+    return RUN.build(args, dest, (ROOT / "verification/probe.asm").read_text())
+
+
+def matrix_program(
+    args: argparse.Namespace, dest: Path, broken: bool = False
+) -> tuple[Path, dict[str, int]]:
+    dest.mkdir(parents=True, exist_ok=True)
+    caller = (
+        (ROOT / "demo.asm")
+        .read_text()
+        .replace(
+            "read_inputs:\n",
+            "read_inputs:\n    lda request\n    beq read_inputs\n    dec request\n",
+        )
+    )
+    caller += "\nrequest: !byte 0\n"
+    routine = (ROOT / "joystick.inc").read_text()
+    if broken:
+        needle = "    and joy1_new             ; current AND NOT previous"
+        require(needle in routine, "mutation target missing")
+        routine = routine.replace(needle, "    nop")
+    (dest / "joystick.inc").write_text(routine)
+    return RUN.build(args, dest, caller)
+
+
+def live_program(args: argparse.Namespace, dest: Path) -> tuple[Path, dict[str, int]]:
+    dest.mkdir(parents=True, exist_ok=True)
+    (dest / "joystick.inc").write_bytes((ROOT / "joystick.inc").read_bytes())
+    return RUN.build(args, dest, (ROOT / "demo.asm").read_text())
+
+
+def build_programs(assembler: str, output: str) -> None:
+    """Assemble every program the record lists into output/<folder>/demo.prg,
+    without the emulators or ACME."""
+    args = argparse.Namespace(assembler=assembler, acme=None)
+    out = Path(output).resolve()
+    probe_program(args, out / "probe")
+    matrix_program(args, out / "matrix")
+    matrix_program(args, out / "negative", broken=True)
+    live_program(args, out / "live")
+
+
+def probe(args: argparse.Namespace) -> list[dict[str, Any]]:
+    dest = args.output / "probe"
+    prg, sym = probe_program(args, dest)
     rows = []
     for model in ("pal", "ntsc"):
         base = dest / f"base-{model}.vsf"
@@ -247,23 +294,7 @@ def matrix(
     args: argparse.Namespace, broken: bool = False
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
     dest = args.output / ("negative" if broken else "matrix")
-    dest.mkdir(parents=True, exist_ok=True)
-    caller = (
-        (ROOT / "demo.asm")
-        .read_text()
-        .replace(
-            "read_inputs:\n",
-            "read_inputs:\n    lda request\n    beq read_inputs\n    dec request\n",
-        )
-    )
-    caller += "\nrequest: !byte 0\n"
-    routine = (ROOT / "joystick.inc").read_text()
-    if broken:
-        needle = "    and joy1_new             ; current AND NOT previous"
-        require(needle in routine, "mutation target missing")
-        routine = routine.replace(needle, "    nop")
-    (dest / "joystick.inc").write_text(routine)
-    prg, sym = RUN.build(args, dest, caller)
+    prg, sym = matrix_program(args, dest, broken)
     stages = [(0, 0), (16, 0), (16, 0)] if broken else STAGES
     regions = [(sym["joy1"], 6), (0x04D0, 17), (0x0610, 17), (0x052A, 2), (0x066A, 2)]
     rows = []
@@ -368,9 +399,7 @@ def matrix(
 def live(args: argparse.Namespace) -> list[dict[str, Any]]:
     """Run the unchanged once-per-frame caller with held inputs and fresh pictures."""
     dest = args.output / "live"
-    dest.mkdir(parents=True, exist_ok=True)
-    (dest / "joystick.inc").write_bytes((ROOT / "joystick.inc").read_bytes())
-    prg, sym = RUN.build(args, dest, (ROOT / "demo.asm").read_text())
+    prg, sym = live_program(args, dest)
     stages = [(0, 0), (1, 2), (16, 16), (16, 16), (0, 0), (16, 16), (31, 31), (0, 0)]
     rows = []
     for model in ("pal", "ntsc"):
@@ -455,6 +484,7 @@ def main() -> None:
     cases, sizes = matrix(args)
     negative, _ = matrix(args, broken=True)
     live_cases = live(args)
+    evidence = RUN.evidence_bytes()
     record = {
         "sources": {
             name: sha(ROOT / name)
@@ -470,19 +500,27 @@ def main() -> None:
         "shared_sources": {
             str(path.relative_to(REPO)): sha(path) for path in (HELPER, RUN.HELPER)
         },
+        # By release identity; ACME and VICE are independent oracles.
         "tools": {
-            name: {"sha256": sha(Path(getattr(args, name)))}
+            name: evidence.tool_identity(getattr(args, name))
             for name in ("assembler", "acme", "emulator", "vice")
+        },
+        "assembler_sha256": sha(Path(args.assembler)),
+        # Each program the machine loads, so the checker can rebuild it.
+        "programs": {
+            f"{name}/demo.prg": sha(args.output / name / "demo.prg")
+            for name in PROGRAMS
         },
         "keyboard_probe": probes,
         "cases": cases,
         "negative_control": negative,
         "sizes": sizes,
         "live": live_cases,
+        "status": "passed",
     }
     (args.output / "results.json").write_text(json.dumps(record, indent=2) + "\n")
     print(
-        "PASS supported reader cases; known reverse-keyboard difference remains recorded",
+        "PASS supported reader cases; any keyboard difference from VICE is recorded",
         flush=True,
     )
 

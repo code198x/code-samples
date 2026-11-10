@@ -2,28 +2,46 @@
   "sources": {
     "demo.asm": "489b9d02bdb8405f712fe441f787eec54fe34e3ee537676eef2cba582e2cdd63",
     "joystick.inc": "1783dc758f76ba4b165f86aa5e637a5fdaf7ae675c46c80144f20c797f9388a5",
-    "verification/verify.py": "653b4d5a4e54eecf2c93d81c0c903db7f55840bda3932ee738d403302994335f",
+    "verification/verify.py": "7f2621e2c2eb550f70c1d5f0aa7ef722fe0cdd00ad1fb3fa26dff3a282191073",
     "verification/probe.asm": "11235d51622649934496c8dccb6156c443a5acb42853c561cc827df3116f3a99",
     "verification/baseline1.inc": "4bf69503a89a6b8c0f7ea1d9770c276dbb19d659fb036c02322f4fbcf3512cd8",
     "verification/baseline2.inc": "b1aa0ff10a16f3f286b321d2a18375943200b0041516a318726f7f4ae4ed25e6"
   },
   "shared_sources": {
-    "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py": "39c324ee55bd758a7481d1b2e979709447f2897a83f33efb71a70c97c447658b",
-    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "589022dbe37609c612eada0142858990e378bde38f5f10debcc074015f771bef"
+    "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py": "f87b83b00c3546e56b4a3105f04959b849501c1d737eb00609378d193f53c265",
+    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "0220639e75efaf1cb3ffcc2ef6e8cd97ef2bd44cc08ba38532aad8ad224bc016"
   },
   "tools": {
     "assembler": {
-      "sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8"
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
     },
     "acme": {
-      "sha256": "7be6afb147f75c974a48a0540cdb8affc0760ed94bed4d822d95c7e8ee4bb35c"
+      "tool": "acme",
+      "version": "0.97",
+      "executable_sha256": "8a0cc0ddd68e2c6cbcb80519fc4603342acd1f0a66e6d6dfb17f8e86f15ca911"
     },
     "emulator": {
-      "sha256": "292cb7420c319e886b66e0fe88a71f2b40d82a3b047755c32194ecdb7e62c895"
+      "tool": "emu198x-c64",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6"
     },
     "vice": {
-      "sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
+      "tool": "x64sc",
+      "executable_sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
     }
+  },
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "probe/demo.prg": "3c06d2a5acbb1e727aecc2c5541e8d5839adb028da60250bf4a08241fc99f278",
+    "matrix/demo.prg": "2623d82bfdde3c51fd2355e88dcf6936f494cb7b323c35f67d42fe529fb4e69d",
+    "negative/demo.prg": "3db4e497241667192b695f4d0f63fc31051e5c77fd40717a1ba282041b31326b",
+    "live/demo.prg": "161ff11f0134959771abe48fef80ca4d7303f9677eb85b79483fe901696ed7ee"
   },
   "keyboard_probe": [
     {
@@ -106,7 +124,7 @@
         0,
         0,
         0,
-        0,
+        1,
         0,
         2
       ],
@@ -119,8 +137,8 @@
         0,
         2
       ],
-      "matches_reference": false,
-      "known_difference": "reverse keyboard scan"
+      "matches_reference": true,
+      "known_difference": null
     },
     {
       "model": "pal",
@@ -226,7 +244,7 @@
         0,
         0,
         0,
-        0,
+        1,
         0,
         2
       ],
@@ -239,8 +257,8 @@
         0,
         2
       ],
-      "matches_reference": false,
-      "known_difference": "reverse keyboard scan"
+      "matches_reference": true,
+      "known_difference": null
     },
     {
       "model": "ntsc",
@@ -11848,5 +11866,6 @@
         "checked_cells": 10
       }
     }
-  ]
+  ],
+  "status": "passed"
 }

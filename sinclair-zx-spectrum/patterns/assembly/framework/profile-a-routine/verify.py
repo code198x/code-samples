@@ -7,13 +7,14 @@ This is a controlled routine experiment, not a ROM boot or tape-load test.
 """
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
-from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 
@@ -45,7 +46,12 @@ def executable(value):
     return str(Path(found).resolve())
 
 
-def capture(source, output, assembler, emulator, ticks):
+# The maintained examples, and the program each one's machine loads.
+SOURCES = ('loop.asm', 'unrolled.asm')
+
+
+def assemble_case(source, output, assembler):
+    """Assemble one source into output/program.*, as capture() runs it."""
     require(source.is_file(), f'Source does not exist: {source}')
     output.mkdir(parents=True, exist_ok=True)
     paths = {ext: output / ('program.' + ext)
@@ -56,6 +62,18 @@ def capture(source, output, assembler, emulator, ticks):
              '--listing-json=' + relative(paths['listing.json']),
              relative(source), '-o', relative(paths['bin'])])
     command([*assemble, '--sna', relative(source), '-o', relative(paths['sna'])])
+    return paths
+
+
+def build_programs(assembler, output):
+    """Assemble each maintained example into output/<name>/program.sna,
+    without the emulator."""
+    for name in SOURCES:
+        assemble_case(ROOT / name, Path(output).resolve() / Path(name).stem, assembler)
+
+
+def capture(source, output, assembler, emulator, ticks):
+    paths = assemble_case(source, output, assembler)
     symbols = {name: int(value, 16) for name, value in re.findall(
         r'^(\w+) = \$([0-9a-fA-F]+)$', paths['sym'].read_text(), re.M)}
     require(all(name in symbols for name in
@@ -171,7 +189,7 @@ def main():
     (output / 'results.json').unlink(missing_ok=True)
     assembler, emulator = executable(args.assembler), executable(args.emulator)
     sources = [args.source.resolve()] if args.source else [
-        ROOT / 'loop.asm', ROOT / 'unrolled.asm']
+        ROOT / name for name in SOURCES]
     cases = [capture(src, output / src.stem, assembler, emulator, args.ticks)
              for src in sources]
     if not args.source:
@@ -189,6 +207,17 @@ def main():
                   'contention, hardware or host-speed claim.',
         'cases': cases,
     }
+    if not args.source:
+        spec = importlib.util.spec_from_file_location(
+            'evidence_bytes', ROOT.parents[3].parent / 'scripts/evidence_bytes.py')
+        evidence = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(evidence)
+        summary['tools'] = {'assembler': evidence.tool_identity(assembler),
+                            'emulator': evidence.tool_identity(emulator)}
+        # Each program the machine loads, so the checker can rebuild it.
+        summary['programs'] = {f'{Path(name).stem}/program.sna':
+                               sha(output / Path(name).stem / 'program.sna')
+                               for name in SOURCES}
     if len(cases) == 2:
         summary['saved_t_states'] = cases[0]['routine_t_states'] - cases[1]['routine_t_states']
         summary['extra_bytes'] = cases[1]['routine_bytes'] - cases[0]['routine_bytes']

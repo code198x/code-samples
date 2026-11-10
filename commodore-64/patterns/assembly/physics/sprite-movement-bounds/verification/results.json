@@ -2,27 +2,45 @@
   "sources": {
     "demo.asm": "b4b9a1d1a9b33f3c36101283e1d199a63c682f529f7f0c62fd7478ca770d7cd7",
     "movement.inc": "80ec20ba682b9804e6cf60f3815261c251b35e8722912642b94f0e706c575f85",
-    "verification/verify.py": "39c324ee55bd758a7481d1b2e979709447f2897a83f33efb71a70c97c447658b",
+    "verification/verify.py": "f87b83b00c3546e56b4a3105f04959b849501c1d737eb00609378d193f53c265",
     "verification/baseline.inc": "f6ba6429ed3dabfb521bd0e70a9c19440a207ab7625b9cf1d28d8879189fa491"
   },
   "shared_sources": {
     "commodore-64/patterns/assembly/rendering/hardware-sprites/sprite.inc": "7eddc16bf3aebc21a127b0d04a958a046f67932412d1ce8f29ffd222d3d8bf81",
     "commodore-64/patterns/assembly/rendering/hardware-sprites/shape.inc": "6440692be1e7d29878b9e8311103b3d1d41e495e08d4a0cc6a23740551a7c16e",
-    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "589022dbe37609c612eada0142858990e378bde38f5f10debcc074015f771bef"
+    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "0220639e75efaf1cb3ffcc2ef6e8cd97ef2bd44cc08ba38532aad8ad224bc016"
   },
   "tools": {
     "assembler": {
-      "sha256": "a769808c007013fba71fd03d17191260f1bb88cecb61dbaa17ebf1956b0018b8"
+      "tool": "asm198x",
+      "version": "0.0.75",
+      "release": "https://github.com/asm198x/asm198x/releases/tag/asm198x-v0.0.75",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d"
     },
     "acme": {
-      "sha256": "7be6afb147f75c974a48a0540cdb8affc0760ed94bed4d822d95c7e8ee4bb35c"
+      "tool": "acme",
+      "version": "0.97",
+      "executable_sha256": "8a0cc0ddd68e2c6cbcb80519fc4603342acd1f0a66e6d6dfb17f8e86f15ca911"
     },
     "emulator": {
-      "sha256": "292cb7420c319e886b66e0fe88a71f2b40d82a3b047755c32194ecdb7e62c895"
+      "tool": "emu198x-c64",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
+      "target": "aarch64-apple-darwin",
+      "executable_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6"
     },
     "vice": {
-      "sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
+      "tool": "x64sc",
+      "executable_sha256": "4150756993038b8fb87ec40b6837e0c82c050cf0d94d783ddf86f5641d655fbd"
     }
+  },
+  "assembler_sha256": "8e98fdf15f5b5394ae63dc8f0169ace12de12f7cec8e6b4a8b615b3c9e2d587d",
+  "programs": {
+    "baseline/demo.prg": "d1bf1b1f0e9816edafc38472374a1b66e2b2f224c67659dd3fa15a737cdd8293",
+    "matrix/demo.prg": "550496e69fe5100b529cfb9bcd954c951b8b9d8e3a459cb2c47ebeb6fcdc3953",
+    "negative/demo.prg": "1a3a31356e8c0c971f68bb79f46995b162e41dc6f92e8d7ab505bd27feec3545",
+    "live/demo.prg": "9e08029aa9621a04072c7766d5e30621072d121355e4cd46318f551fcf1370f0"
   },
   "baseline": [
     {
@@ -1375,5 +1393,6 @@
   "sizes": {
     "movement_bytes": 160,
     "state_bytes": 4
-  }
+  },
+  "status": "passed"
 }
