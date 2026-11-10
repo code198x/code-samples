@@ -7,30 +7,30 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.25.0"
+      "version": "0.48.5"
     }
   },
   "passed_checks": 40,
   "observed_player_moves": 123,
-  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "source_sha256": "9d8dfec7e475358cb39463fe2dff21dcf56cf0efa489856c0cc8b1ec8cadf1f3",
   "files": {
     "board.png": "d32521f70e8917cf2818018b0c869724f8680859886d2ada7803d42aa8cac792",
-    "build.json": "6fb80efbd5332697adba2a008d7685e8a33989f19ad96e749fef4f6840586d28",
-    "captures.json": "b3a58ac7b2bfa1234e88db0c837ce1e2aedf16a8c4e358cd00789d059ec07174",
+    "build.json": "f63e62014e62787da527903164524d80b9bd672d5ff99f61b494f6582ea8e5b4",
+    "captures.json": "89e60a7b66c944905c934218f6f3c76806f761f1095be444100854d4d65db5f1",
     "computer-start.png": "f19fc69ad725b589be6440732b06257f86ea33877404622ee010d182cb7ca323",
     "current-render.json": "df7039b7673b6120c2e557440020287dbce45c5dd4b13dab2856f2583a60b20e",
     "current-render.png": "4fe6b1eeae8e6f9b9fb6ce9b58a0b07f2398aea73a08890fa7a9e1c60437daee",
     "draw.png": "d08275f799781df06ef786154637a7980a8790ecd8dfce5e26033414078ae813",
     "fork.png": "1efd4deeaffc3af962e8b4e333504084fd7c624e1aee8b0b3d94df4a1f707d23",
     "loss.png": "de3093b9d1910ef9bbbcfb015fbad28d35ec4d08be693dde54d7ebe171f8bb87",
-    "model.json": "db02cd5ddf272a6840f498e701df773ab66c96a086f72bbd6e6ecd19ee54b2e4",
+    "model.json": "442406da318ff3150d1eda13d5f5c4dd926c9438905fe886a15e0a12a6968587",
     "release-render.json": "80c08d8c511673f942bcf7954c0f7798c2785416eb4479434a44f9869a6f825a",
     "release-render.png": "4fe6b1eeae8e6f9b9fb6ce9b58a0b07f2398aea73a08890fa7a9e1c60437daee",
     "release-results.json": "7889bf266256faef65030cdd214d23a04a294e5e024772e3fb7575bb6929547a",
     "renderer-comparison.json": "3af5e1d8cc961847edbb41a86bfd06d8febc32c3467b69ac966c713fd9ae9971",
-    "results.json": "1af4494b0491bb505b8ed05498066f35a32d17774ca887e4865a4552b0eb2033",
-    "stored.json": "e4161fedea4e92133a935f014d82cd3c7192111b4d1591c86452fddeda6bf94a",
-    "three.tap": "687863bbc7c96f0e798e14a9375ecd11ea01af6e4b92f682cd0ffab7f0c99f1d",
+    "results.json": "f18aba5f044f1ac73764fd62b1485c8003c82d5d26a0c382aa0058f1cbe29a2d",
+    "stored.json": "09d4f2f3200c5f74b83b70f42f2346f213c10b14fc4732aa78b54942c6432d34",
+    "three.tap": "b0efca709d2feb04ca460debe614f3206b800911d683a64ab97165ca23cce2f6",
     "title.png": "4db7b7f06c2abee587fef0da40098fa21b32c85f6e4f8d136689206c35dfe5dd",
     "win.png": "4fe6b1eeae8e6f9b9fb6ce9b58a0b07f2398aea73a08890fa7a9e1c60437daee"
   },

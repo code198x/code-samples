@@ -1,5 +1,5 @@
 {
-  "source_sha256": "0a4eb38af9d1effd20f97f51bddfc57fa8eaf6342024b9edb27e3efc31537c54",
+  "source_sha256": "9d8dfec7e475358cb39463fe2dff21dcf56cf0efa489856c0cc8b1ec8cadf1f3",
   "configuration": "Stock 48K PAL",
   "server": {
     "capabilities": {
@@ -8,10 +8,10 @@
     "protocolVersion": "2025-06-18",
     "serverInfo": {
       "name": "emu198x-spectrum",
-      "version": "0.24.0"
+      "version": "0.48.5"
     }
   },
-  "binary_sha256": "ed078de555a132ceb28a7ac3efcbb7f10e252fc4cd36be6797338bd87187bb5a",
+  "binary_sha256": "b2077aa3049d372d78056ec978fa72389191cf7731e9f70e2b56cba4d78fc8f4",
   "checks": [
     "fresh-ROM-tape-load-source-identity",
     "title-invalid-key-and-quit",
