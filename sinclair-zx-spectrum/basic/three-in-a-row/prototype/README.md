@@ -45,11 +45,12 @@ teaching checkpoints and replacement lessons follow acceptance of the game.
 
 ## Emulator used for the playtest
 
-The native playtest uses the local Emu198x checkout at commit
-`e1f49c7e8e20ff8cf1cab8453955f2b212dab4e3`; its executable reports 0.24.0.
-The released 0.25.0 executable was also checked. Both pass the gameplay suite.
-`release-results.json` preserves the release run; `results.json` records the
-local build. No emulator source was changed.
+`build.json`, `results.json` and `captures.json` record a run of the current
+listing with the Emu198x 0.48.5 release. Every check, observed move and capture
+matches the earlier run, which used an unreleased checkout (commit
+`e1f49c7e8e20ff8cf1cab8453955f2b212dab4e3`, reporting 0.24.0) and the listing
+before it was rewritten as the 48K ROM lists it. `release-results.json`
+preserves an Emu198x 0.25.0 run of that earlier listing.
 
 The original fork-win captures from both builds are byte-identical. The separate
 `render_check.py` uses Pillow to compare the original PNG's foreground with all

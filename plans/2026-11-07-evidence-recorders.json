@@ -1148,6 +1148,171 @@
       "records": "nintendo-entertainment-system/assembly/dash/unit-11/verification/results/ (counters.csv, identity.json)",
       "fresh_run": "CI runs it again and compares both files byte for byte",
       "checker": ".github/workflows/pattern-evidence.yml (curriculum entry)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/the-caverns/prototype/verification/build.py",
+      "args": [
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "emulator": "0.48.5"
+      },
+      "records": "sinclair-zx-spectrum/basic/the-caverns/prototype/verification/evidence/{build,results,stored}.json, caverns.tap, captures (copied from --output; check.py needs build.py's tape and stored.json and the current model.json there)",
+      "checker": "scripts/check-basic-game-records.sh (interim: prototype audit.py, which accepts an earlier listing through source-lineage; strict checks follow in item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/the-caverns/prototype/verification/check.py",
+      "args": [
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "emulator": "0.48.5"
+      },
+      "records": "sinclair-zx-spectrum/basic/the-caverns/prototype/verification/evidence/{build,results,stored}.json, caverns.tap, captures (copied from --output; check.py needs build.py's tape and stored.json and the current model.json there)",
+      "checker": "scripts/check-basic-game-records.sh (interim: prototype audit.py, which accepts an earlier listing through source-lineage; strict checks follow in item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/three-in-a-row/prototype/verification/build.py",
+      "args": [
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "emulator": "0.48.5"
+      },
+      "records": "sinclair-zx-spectrum/basic/three-in-a-row/prototype/verification/evidence/{build,results,captures,stored}.json, three.tap, captures (copied from --output; check.py needs build.py's tape and stored.json and the current model.json there)",
+      "checker": "scripts/check-basic-game-records.sh (interim: prototype audit.py, which accepts an earlier listing through source-lineage; strict checks follow in item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/three-in-a-row/prototype/verification/check.py",
+      "args": [
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "emulator": "0.48.5"
+      },
+      "records": "sinclair-zx-spectrum/basic/three-in-a-row/prototype/verification/evidence/{build,results,captures,stored}.json, three.tap, captures (copied from --output; check.py needs build.py's tape and stored.json and the current model.json there)",
+      "checker": "scripts/check-basic-game-records.sh (interim: prototype audit.py, which accepts an earlier listing through source-lineage; strict checks follow in item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/three-in-a-row/prototype/verification/capture.py",
+      "args": [
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "emulator": "0.48.5"
+      },
+      "records": "sinclair-zx-spectrum/basic/three-in-a-row/prototype/verification/evidence/{build,results,captures,stored}.json, three.tap, captures (copied from --output; check.py needs build.py's tape and stored.json and the current model.json there)",
+      "checker": "scripts/check-basic-game-records.sh (interim: prototype audit.py, which accepts an earlier listing through source-lineage; strict checks follow in item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/yearfall/prototype/verification/build.py",
+      "args": [
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "emulator": "0.48.5"
+      },
+      "records": "sinclair-zx-spectrum/basic/yearfall/prototype/verification/evidence/{build,results,stored}.json, yearfall.tap, captures (copied from --output; check.py needs build.py's tape and stored.json and the current model.json there)",
+      "checker": "scripts/check-basic-game-records.sh (interim: prototype audit.py, which accepts an earlier listing through source-lineage; strict checks follow in item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/yearfall/prototype/verification/check.py",
+      "args": [
+        "--emulator PATH",
+        "--output DIR"
+      ],
+      "machines": [
+        "sinclair-zx-spectrum (48K)"
+      ],
+      "firmware": [
+        "sinclair-zx-spectrum-48k/48.rom"
+      ],
+      "pins": {
+        "emulator": "0.48.5"
+      },
+      "records": "sinclair-zx-spectrum/basic/yearfall/prototype/verification/evidence/{build,results,stored}.json, yearfall.tap, captures (copied from --output; check.py needs build.py's tape and stored.json and the current model.json there)",
+      "checker": "scripts/check-basic-game-records.sh (interim: prototype audit.py, which accepts an earlier listing through source-lineage; strict checks follow in item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/bright-spark/prototype/verification/pitches.py",
+      "args": [
+        "WAV input"
+      ],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "records": "its committed JSON output; the WAV inputs are not committed",
+      "checker": "none: a replay check, runnable only after its recorder replays the game to make a WAV from verify.py or playback.py (item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/bright-spark/prototype/verification/audio_separation.py",
+      "args": [
+        "WAV input"
+      ],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "records": "its committed JSON output; the WAV inputs are not committed",
+      "checker": "none: a replay check, runnable only after its recorder replays the game to make playback.py's 22-*.wav captures (item 4)"
+    },
+    {
+      "script": "sinclair-zx-spectrum/basic/meet-basic/completion-verification/check_audio.py",
+      "args": [
+        "WAV input"
+      ],
+      "machines": [
+        "host Python only"
+      ],
+      "firmware": [],
+      "pins": {},
+      "records": "its committed JSON output; the WAV inputs are not committed",
+      "checker": "none: a replay check, runnable only after its recorder replays the game to make the completion verify.py WAVs (item 4)"
     }
   ]
 }

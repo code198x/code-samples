@@ -71,3 +71,33 @@ jobs:
           done < <(find commodore-amiga -name Makefile -not -path '*/_*' | sort)
           test "$count" -gt 0
           echo "Built $count Amiga publishing Makefiles"
+
+  # Interim: scripts/check-basic-game-records.sh says what it covers and what
+  # replaces it (plans/2026-11-06-evidence-byte-check.md, item 4).
+  game-records:
+    name: BASIC games' record audits (interim, lineage-accepting)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Source lineage reads earlier listings from git history.
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+
+      # Volley's lesson roster is the website's: the lessons are written there.
+      - name: Read the website's Volley lesson roster
+        uses: actions/checkout@v7
+        with:
+          repository: code198x/website
+          ref: main
+          path: website
+          sparse-checkout: scripts/volley-roster.json
+          sparse-checkout-cone-mode: false
+
+      - name: Run the games' record checks and require no file changes
+        run: scripts/check-basic-game-records.sh website/scripts/volley-roster.json
