@@ -2,12 +2,12 @@
   "sources": {
     "demo.asm": "a76480b5d1d18da73e5121d958626334feee6ebe0f3e60f33b68a3fa3fc01916",
     "split.inc": "e1d97b5c2977372f6239e3106d34559b567e103cc612717809d02c42f5c78018",
-    "verification/verify.py": "547f6757a11ddb128356207aa5c2c2d13e33b271e4d3b85d4a1d1829b17a98f6",
+    "verification/verify.py": "83c7c2bed077fab089977a5f8298be1b52fb130d06d2883e83dffd411f762f17",
     "verification/baseline.inc": "eb77fe515ea880c190ae9f8c2e6b9f6c335064a800f26d750bb5003cc022febf"
   },
   "shared_sources": {
     "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py": "f87b83b00c3546e56b4a3105f04959b849501c1d737eb00609378d193f53c265",
-    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "0220639e75efaf1cb3ffcc2ef6e8cd97ef2bd44cc08ba38532aad8ad224bc016"
+    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "2e043391b57b20b3a445670ed8c5f0ad3759fc90d4106673beb71dfe69872bba"
   },
   "tools": {
     "assembler": {
@@ -24,10 +24,10 @@
     },
     "emulator": {
       "tool": "emu198x-c64",
-      "version": "0.45.1",
-      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.45.1",
+      "version": "0.48.3",
+      "release": "https://github.com/emu198x/emu198x/releases/tag/v0.48.3",
       "target": "aarch64-apple-darwin",
-      "executable_sha256": "a38aaf7fd490038c0b2cf20395d69ef0e21ef2f95156d617e6efd3ba4717014a"
+      "executable_sha256": "8163513e16320ccb5ec52690544f85f22c5b98f64afd2f93dba77a4721d075b6"
     },
     "vice": {
       "tool": "x64sc",
@@ -81,7 +81,7 @@
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 35,
+      "frame": 34,
       "errors": 0,
       "prg_sha256": "1be958fc2e7ccd2cb18fb0a54a8164937b6badb73a7c81a08746f6c5c5f6f7e8",
       "normal_run_frames_before_capture": 2,
@@ -114,7 +114,7 @@
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 41,
+      "frame": 40,
       "errors": 0,
       "prg_sha256": "1be958fc2e7ccd2cb18fb0a54a8164937b6badb73a7c81a08746f6c5c5f6f7e8",
       "normal_run_frames_before_capture": 2,
@@ -279,7 +279,7 @@
     {
       "engine": "emu",
       "model": "ntsc",
-      "frame": 36,
+      "frame": 35,
       "errors": 0,
       "prg_sha256": "1be958fc2e7ccd2cb18fb0a54a8164937b6badb73a7c81a08746f6c5c5f6f7e8",
       "normal_run_frames_before_capture": 2,
@@ -312,7 +312,7 @@
     {
       "engine": "emu",
       "model": "ntsc",
-      "frame": 42,
+      "frame": 40,
       "errors": 0,
       "prg_sha256": "1be958fc2e7ccd2cb18fb0a54a8164937b6badb73a7c81a08746f6c5c5f6f7e8",
       "normal_run_frames_before_capture": 2,
@@ -512,7 +512,7 @@
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 41,
+      "frame": 40,
       "errors": 0,
       "prg_sha256": "c73a50cfd0d9d048e3c0e0793cf5d24f5294fe7dc97225835137a1a2d4105383",
       "normal_run_frames_before_capture": 2,
@@ -908,7 +908,7 @@
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 41,
+      "frame": 40,
       "errors": 0,
       "prg_sha256": "9a1777297fa7ac5246f50e7717253512f4d671eaf4bda34bea8ed0e1181937be",
       "normal_run_frames_before_capture": 2,
@@ -1276,7 +1276,7 @@
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 35,
+      "frame": 34,
       "errors": 0,
       "prg_sha256": "08c76be72f2b7563477529c5924658d0019e9f451d5373b83f091434d531d667",
       "normal_run_frames_before_capture": 2,
@@ -1293,11 +1293,11 @@
         "first_blue_line_runs": [
           [
             24,
-            192,
+            232,
             133
           ],
           [
-            193,
+            233,
             343,
             132
           ]
@@ -1307,14 +1307,14 @@
           49,
           141
         ],
-        "blue_pixels": 37911,
-        "sha256": "2f658d3ce44e9081c6667ef90896f2d522bdf26c9439209d86f5ac68694a625f"
+        "blue_pixels": 37871,
+        "sha256": "012b54a197a5ffd915fd016d9989fff75070f20c7d0bf72f557a1b568c3a3f86"
       }
     },
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 41,
+      "frame": 39,
       "errors": 0,
       "prg_sha256": "08c76be72f2b7563477529c5924658d0019e9f451d5373b83f091434d531d667",
       "normal_run_frames_before_capture": 2,
@@ -1331,11 +1331,11 @@
         "first_blue_line_runs": [
           [
             24,
-            216,
+            232,
             133
           ],
           [
-            217,
+            233,
             343,
             132
           ]
@@ -1345,8 +1345,8 @@
           49,
           141
         ],
-        "blue_pixels": 37887,
-        "sha256": "bcbb766d03f17ee2c4e0a13b6309c33a0bf4e75fd3dbda3fad26245063906763"
+        "blue_pixels": 37871,
+        "sha256": "012b54a197a5ffd915fd016d9989fff75070f20c7d0bf72f557a1b568c3a3f86"
       }
     },
     {
@@ -1760,7 +1760,7 @@
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 41,
+      "frame": 40,
       "errors": 0,
       "prg_sha256": "7f55cdccf8eaa9e56aa34fdaa02a6e05515e348099bd8b6948777f10c287e068",
       "normal_run_frames_before_capture": 2,
@@ -2110,7 +2110,7 @@
     {
       "engine": "emu",
       "model": "pal",
-      "frame": 41,
+      "frame": 40,
       "errors": 0,
       "prg_sha256": "3597761aea1900f259270f89e340ec75880149461b3f3925ba33e75317d1c138",
       "normal_run_frames_before_capture": 2,
@@ -2227,5 +2227,174 @@
       }
     }
   ],
+  "vice_differences": [
+    {
+      "line": 131,
+      "model": "pal",
+      "emu_first_blue_line_runs": [
+        [
+          [
+            24,
+            232,
+            133
+          ],
+          [
+            233,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            232,
+            133
+          ],
+          [
+            233,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            232,
+            133
+          ],
+          [
+            233,
+            343,
+            132
+          ]
+        ]
+      ],
+      "vice_first_blue_line_runs": [
+        [
+          [
+            24,
+            192,
+            133
+          ],
+          [
+            193,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            208,
+            133
+          ],
+          [
+            209,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            216,
+            133
+          ],
+          [
+            217,
+            343,
+            132
+          ]
+        ]
+      ],
+      "known_issue": "emu198x#2346: mid-line split position differs from VICE"
+    },
+    {
+      "line": 131,
+      "model": "ntsc",
+      "emu_first_blue_line_runs": [
+        [
+          [
+            24,
+            208,
+            133
+          ],
+          [
+            209,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            208,
+            133
+          ],
+          [
+            209,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            208,
+            133
+          ],
+          [
+            209,
+            343,
+            132
+          ]
+        ]
+      ],
+      "vice_first_blue_line_runs": [
+        [
+          [
+            24,
+            208,
+            133
+          ],
+          [
+            209,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            176,
+            133
+          ],
+          [
+            177,
+            343,
+            132
+          ]
+        ],
+        [
+          [
+            24,
+            208,
+            133
+          ],
+          [
+            209,
+            343,
+            132
+          ]
+        ]
+      ],
+      "known_issue": "emu198x#2346: mid-line split position differs from VICE"
+    }
+  ],
+  "earlier_record": {
+    "recorded": "2026-10-10",
+    "emulator": "Emu198x 292cb742\u2026, an unreleased build",
+    "values": "PAL line-131 first blue runs split at x=232/192/216 (VICE 192/208/216); PAL capture frames 29/35/41, NTSC 30/36/42"
+  },
   "status": "passed"
 }

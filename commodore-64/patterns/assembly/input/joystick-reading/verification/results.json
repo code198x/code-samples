@@ -2,14 +2,14 @@
   "sources": {
     "demo.asm": "489b9d02bdb8405f712fe441f787eec54fe34e3ee537676eef2cba582e2cdd63",
     "joystick.inc": "1783dc758f76ba4b165f86aa5e637a5fdaf7ae675c46c80144f20c797f9388a5",
-    "verification/verify.py": "7f2621e2c2eb550f70c1d5f0aa7ef722fe0cdd00ad1fb3fa26dff3a282191073",
+    "verification/verify.py": "6cd9cea02844dd86170b7452f84672ea70bb4a8aa31a4f6f411381b0f284d4ca",
     "verification/probe.asm": "11235d51622649934496c8dccb6156c443a5acb42853c561cc827df3116f3a99",
     "verification/baseline1.inc": "4bf69503a89a6b8c0f7ea1d9770c276dbb19d659fb036c02322f4fbcf3512cd8",
     "verification/baseline2.inc": "b1aa0ff10a16f3f286b321d2a18375943200b0041516a318726f7f4ae4ed25e6"
   },
   "shared_sources": {
     "commodore-64/patterns/assembly/physics/sprite-movement-bounds/verification/verify.py": "f87b83b00c3546e56b4a3105f04959b849501c1d737eb00609378d193f53c265",
-    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "0220639e75efaf1cb3ffcc2ef6e8cd97ef2bd44cc08ba38532aad8ad224bc016"
+    "commodore-64/patterns/assembly/rendering/sprite-multiplexing/verification/verify.py": "2e043391b57b20b3a445670ed8c5f0ad3759fc90d4106673beb71dfe69872bba"
   },
   "tools": {
     "assembler": {
@@ -11867,5 +11867,10 @@
       }
     }
   ],
+  "earlier_record": {
+    "recorded": "2026-10-10",
+    "emulator": "Emu198x 292cb742\u2026, an unreleased build",
+    "values": "RETURN reverse-scan probe read [0,0,0,0,0,0,2] on PAL and NTSC where VICE reads [0,0,0,0,1,0,2] (a known difference then)"
+  },
   "status": "passed"
 }

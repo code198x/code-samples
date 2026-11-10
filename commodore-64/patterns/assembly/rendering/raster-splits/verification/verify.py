@@ -119,6 +119,46 @@ def build_programs(assembler: str, output: str) -> None:
     refresh_program(args, out / "capture-refresh")
 
 
+# The run this record replaces, kept for comparison.
+EARLIER = {
+    "recorded": "2026-10-10",
+    "emulator": "Emu198x 292cb742…, an unreleased build",
+    "values": "PAL line-131 first blue runs split at x=232/192/216 (VICE "
+    "192/208/216); PAL capture frames 29/35/41, NTSC 30/36/42",
+}
+# Known Emu198x differences from VICE, by the split line they appear at.
+KNOWN_ISSUES = {131: "emu198x#2346: mid-line split position differs from VICE"}
+
+
+def vice_differences(rows: list[dict[str, Any]], line: int) -> list[dict[str, Any]]:
+    """Each model where Emu198x's first blue line differs from VICE's.
+
+    The two engines capture different frames, so the comparison is of the
+    blue runs each engine shows across its three captures.
+    """
+    differences = []
+    for model in ("pal", "ntsc"):
+        runs = {
+            engine: [
+                row["picture"]["first_blue_line_runs"]
+                for row in rows
+                if row["engine"] == engine and row["model"] == model
+            ]
+            for engine in ("emu", "vice")
+        }
+        if runs["emu"] != runs["vice"]:
+            differences.append(
+                {
+                    "line": line,
+                    "model": model,
+                    "emu_first_blue_line_runs": runs["emu"],
+                    "vice_first_blue_line_runs": runs["vice"],
+                    "known_issue": KNOWN_ISSUES.get(line),
+                }
+            )
+    return differences
+
+
 def execute(
     args: argparse.Namespace,
     dest: Path,
@@ -309,11 +349,15 @@ def main() -> None:
         setattr(args, name, value)
     baseline, _ = execute(args, args.output / "baseline", 130, baseline=True)
     rows = []
+    differences = []
     for line in LINES:
         observed, sizes = execute(args, args.output / f"line-{line}", line)
         rows += observed
+        differences += vice_differences(observed, line)
     negative, _ = execute(args, args.output / "negative", 130, broken=True)
     refresh = refresh_control(args)
+    unexplained = [d for d in differences if not d["known_issue"]]
+    require(not unexplained, f"Emu198x differs from VICE: {unexplained}")
     evidence = RUN.evidence_bytes()
     record = {
         "sources": {
@@ -344,6 +388,9 @@ def main() -> None:
         "negative_control": negative,
         "sizes": sizes,
         "capture_refresh": refresh,
+        # Recorded, not accepted silently: each must name a known issue.
+        "vice_differences": differences,
+        "earlier_record": EARLIER,
         "status": "passed",
     }
     (args.output / "results.json").write_text(json.dumps(record, indent=2) + "\n")
