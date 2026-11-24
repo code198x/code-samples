@@ -1,9 +1,12 @@
 import {createRequire} from 'node:module';import fs from 'node:fs/promises';import assert from 'node:assert/strict';
+import {HIT_RADIUS} from './model.mjs';
 const require=createRequire(new URL('../../../../website/package.json',import.meta.url));const {chromium}=require('@playwright/test');const AxeBuilder=require('@axe-core/playwright').default;
 const out=process.argv[2]||'/tmp/aiming-review';await fs.mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});const context=await browser.newContext({viewport:{width:1280,height:1000}});const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(String(e)));
 try{
  await page.goto('http://127.0.0.1:1990');await page.waitForFunction(()=>document.querySelector('#cosine').textContent.includes('cos'));
+ assert.deepEqual(await page.locator('[data-target] circle').evaluateAll(circles=>circles.map(circle=>Number(circle.getAttribute('r')))),[HIT_RADIUS]);
+ assert.match(await page.locator('#field-desc').textContent(),/crosshair marks are guides only/);
  await page.locator('#fire').click();await page.waitForFunction(()=>document.querySelector('#result').textContent.startsWith('Reference:'));assert.match(await page.locator('#result').textContent(),/Reference: miss/);
  await page.locator('#solution').evaluate(el=>el.open=true);await page.locator('#use-angle').click();await page.locator('#fire').click();await page.waitForFunction(()=>document.querySelector('#result').textContent.startsWith('Reference:'));assert.match(await page.locator('#result').textContent(),/Reference: hit.*Fixed point: miss/);
  await page.screenshot({path:out+'/coarse.png',fullPage:true});

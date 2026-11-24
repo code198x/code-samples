@@ -1,4 +1,4 @@
-import {SPEED,radians,angleTo,velocity,simulate} from './model.mjs';
+import {SPEED,HIT_RADIUS,radians,angleTo,velocity,simulate} from './model.mjs';
 const $=id=>document.getElementById(id),presets=[32.8,138.4,248.6,90,318.2,180];
 let angle=20,radius=220,scale=4,targetIndex=0,shot=null,tick=0,raf=0,last=0,accumulator=0;
 const fmt=(n,d=3)=>(Math.abs(n)<.5*10**-d?0:n).toFixed(d);
@@ -15,7 +15,7 @@ function draw(){
  // SVG's sweep is clockwise in screen coordinates; world angles turn anticlockwise.
  if(angle>0)s+=`<path d="M354 275 A34 34 0 ${angle>180?1:0} 0 ${320+34*Math.cos(a)} ${275-34*Math.sin(a)}" fill="none" stroke="#f4c674"/>`;
  s+=`<line x1="320" y1="275" x2="${320+55*Math.cos(a)}" y2="${275-55*Math.sin(a)}" stroke="#f4c674" stroke-width="3" marker-end="url(#arrow)"/><circle cx="320" cy="275" r="5" fill="#f4c674"/>`;
- s+=`<circle cx="${t.x}" cy="${t.y}" r="12" fill="none" stroke="#e8eef0" opacity=".5"/><circle cx="${t.x}" cy="${t.y}" r="5" fill="#e8eef0"/><path d="M${t.x-18} ${t.y}h7M${t.x+11} ${t.y}h7M${t.x} ${t.y-18}v7M${t.x} ${t.y+11}v7" stroke="#e8eef0"/>`;
+ s+=`<g data-target><circle cx="${t.x}" cy="${t.y}" r="${HIT_RADIUS}" fill="#e8eef0"/><path d="M${t.x-18} ${t.y}h7M${t.x+11} ${t.y}h7M${t.x} ${t.y-18}v7M${t.x} ${t.y+11}v7" stroke="#e8eef0" opacity=".65"/></g>`;
  if(shot){for(const [key,color,dash] of [['exact','#f4c674',''],['fixed','#75dbd2','5 4']]){if(key==='fixed'&&!compare)continue;const points=shot[key].slice(0,tick+1),q=px(points.at(-1));s+=`<path d="${path(points)}" fill="none" stroke="${color}" stroke-width="2.5" stroke-dasharray="${dash}"/><circle cx="${q.x}" cy="${q.y}" r="4" fill="${color}"/>`;}}
  $('drawing').innerHTML=s;
 }
@@ -28,7 +28,7 @@ function update(){
  $('sine').textContent=`vy = 3 × sin(${fmt(angle,1)}°) = ${fmt(v.y)}`;
  $('fixed-maths').innerHTML=`X: round(${fmt(v.x)} × ${scale}) = ${v.ix}<br>Y: round(${fmt(v.y)} × ${scale}) = ${v.iy}<br>Decoded velocity: (${fmt(v.ix/scale)}, ${fmt(v.iy/scale)})`;
  $('inverse').textContent=`From the origin, Δx = ${fmt(t.x,3)} and Δy = ${fmt(t.y,3)}. atan2(Δy, Δx) = ${fmt(Math.atan2(t.y,t.x),4)} radians. Convert to degrees and add 360° if negative: ${fmt(solved,1)}°. The displayed coordinates are rounded; the calculation uses the full values.`;
- $('field-desc').textContent=`Aim ${fmt(angle,1)} degrees. Target X ${fmt(t.x,1)}, Y ${fmt(t.y,1)}. X increases right; Y increases up. Angle controls provide a keyboard alternative to dragging.`;
+ $('field-desc').textContent=`Aim ${fmt(angle,1)} degrees. Target X ${fmt(t.x,1)}, Y ${fmt(t.y,1)}. Hit radius ${HIT_RADIUS} units; the crosshair marks are guides only. X increases right; Y increases up. Angle controls provide a keyboard alternative to dragging.`;
  draw();
 }
 function clear(message='Aim changed. Fire again to compare these values.'){
@@ -36,7 +36,7 @@ function clear(message='Aim changed. Fire again to compare these values.'){
 }
 function finish(){
  const text=`Reference: ${shot.exactHit?'hit':'miss'} (${fmt(shot.minExact,2)} units from target centre).`;
- $('result').textContent=text+($('compare').checked?` Fixed point: ${shot.fixedHit?'hit':'miss'} (${fmt(shot.minFixed,2)} units). After ${shot.count} ticks, the paths are ${fmt(shot.separation,2)} units apart.`:'')+' Contact needs a centre distance of 5 or less.';
+ $('result').textContent=text+($('compare').checked?` Fixed point: ${shot.fixedHit?'hit':'miss'} (${fmt(shot.minFixed,2)} units). After ${shot.count} ticks, the paths are ${fmt(shot.separation,2)} units apart.`:'')+` Contact needs a centre distance of ${HIT_RADIUS} or less.`;
  $('fire').disabled=false;raf=0;
 }
 function animate(now){accumulator+=Math.min(now-last,100);last=now;while(accumulator>=1000/60&&tick<shot.count){accumulator-=1000/60;tick++;}draw();if(tick>=shot.count)finish();else raf=requestAnimationFrame(animate);}

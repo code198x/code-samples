@@ -1,4 +1,5 @@
 import {createRequire} from 'node:module';import fs from 'node:fs/promises';import assert from 'node:assert/strict';
+import {HIT_RADIUS} from './model.mjs';
 const require=createRequire(new URL('../../../../website/package.json',import.meta.url));const {chromium}=require('@playwright/test');const AxeBuilder=require('@axe-core/playwright').default;
 const out=process.argv[2]||'/tmp/aiming-lessons';await fs.mkdir(out,{recursive:true});const browser=await chromium.launch({channel:'chrome',headless:true});const context=await browser.newContext({viewport:{width:1280,height:1000},reducedMotion:'reduce'});const page=await context.newPage(),errors=[],checks=[];page.on('pageerror',e=>errors.push(String(e)));
 async function set(id,value){await page.locator('#'+id).fill(String(value));await page.locator('#'+id).press('Tab');}
@@ -6,6 +7,7 @@ async function open(step){await page.goto('http://127.0.0.1:1990/lessons.html?st
 try{
  for(let n=1;n<=6;n++){
   await open(n);assert.equal(await page.locator('h1').count(),1);assert.equal(await page.locator('[aria-current=step]').textContent(),String(n));assert.equal(await page.locator('#precision').count(),n===6?1:0);assert.equal(await page.locator('#fire').count(),n>=5?1:0);assert.equal(await page.locator('#solution').count(),n===5?1:0);
+  if(n>=5){assert.deepEqual(await page.locator('[data-target] circle').evaluateAll(circles=>circles.map(circle=>Number(circle.getAttribute('r')))),[HIT_RADIUS]);assert.match(await page.locator('#scene-desc').textContent(),/crosshair marks are guides only/);}
   if(n===1){assert.equal(await page.locator('#angle').count(),0);await set('x',-120);assert.match(await page.locator('#point-readout').textContent(),/-120.0, 90.0/);await set('x',90);await set('y',40);assert.match(await page.locator('#point-readout').textContent(),/90.0, 40.0/);}
   if(n===2){assert.match(await page.locator('#working').textContent(),/150.000/);await set('x',240);await set('y',180);assert.match(await page.locator('#working').textContent(),/300.000/);await set('x',0);await set('y',0);assert.match(await page.locator('#working').textContent(),/undefined/);}
   if(n===3){assert.match(await page.locator('#working').textContent(),/129.904/);await set('angle',90);assert.match(await page.locator('#working').textContent(),/vx = 0.000 · vy = 3.000/);await set('radius',225);assert.match(await page.locator('#point-readout').textContent(),/0.0, 225.0/);}
