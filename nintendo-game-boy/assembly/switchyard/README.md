@@ -23,9 +23,11 @@ Open each built cartridge from a fresh reset. The original program and art use a
 
 ## Technical boundaries
 
-The setup fills the BG tile map, copies ten original tiles with the LCD off, and reserves `$C000–$C002` for route, previous button sample and result. The main loop changes six tile-map cells at VBlank. It samples JOYP using the action row and stores the previous sample even on release. A is accepted only before dispatch; Start commits the selected route and draws the result immediately. There is no in-flight animation, timer, sound, save support or assertion about original hardware. B only resets a completed delivery attempt.
+Start by reading the assembly file for the checkpoint you are playing. [`01-junction.asm`](01-junction.asm) writes a fixed tile and reads no buttons. [`02-switch.asm`](02-switch.asm) adds a route and one previous A sample in work RAM, then redraws the two gate cells. [`03-delivery.asm`](03-delivery.asm) adds a result byte: A selects before Start dispatches; after a result, only B restarts the attempt. The parcel moves to the depot immediately. There is no animation in transit, timer, sound or saving.
 
-The three entry files select checkpoints from the same commented `yard.inc`; this isn't a dependency on another game's sources. The installed-emulator command above accepts the original cartridge directly. Browser upload, keyboard bindings, touch support, and browser editing are separate from the native result.
+[`yard.inc`](yard.inc) contains the cartridge header, background setup and tile art. Setup fills the map with the LCD off; interactive updates wait for VBlank. Only the interactive checkpoints include [`joypad.inc`](joypad.inc). The Game Boy reports action-button presses as zero bits; the helper lets the selected row settle and flips the bits so one means down. The checkpoint decides whether that is a new press. See [Pan Docs on JOYP](https://github.com/gbdev/pandocs/blob/master/src/Joypad_Input.md) for the register layout.
+
+The installed-emulator command accepts the original cartridge directly. The native proof below does not cover original hardware, browser upload, keyboard bindings, touch controls or browser editing.
 
 ## Reproduce the native proof
 

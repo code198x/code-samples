@@ -14,6 +14,7 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 SCRIPTS = HERE.parents[2] / "scripts"
 CHECKPOINTS = ("01-junction", "02-switch", "03-delivery")
+BUILD_SOURCES = ("Makefile", "yard.inc", "joypad.inc", *(n + ".asm" for n in CHECKPOINTS))
 
 
 def load(name):
@@ -76,13 +77,33 @@ def run(emu, cart, out, stages, upper_tile=2, negative=False):
     def frames(n):
         m.call("run_frames", frames=n)
 
-    def key(name, pressed, n=3):
-        m.call("input", events=[{"Button": {"port": 1, "name": name, "pressed": pressed}}])
+    def buttons(*changes, n=3):
+        m.call(
+            "input",
+            events=[
+                {"Button": {"port": 1, "name": name, "pressed": pressed}}
+                for name, pressed in changes
+            ],
+        )
         frames(n)
 
-    def expect(tag, route, result):
-        ram = m.call("memory_read", addr=0xc000, len=3)["bytes"]
-        require((ram[0], ram[2]) == (route, result), f"{tag}: route/result {ram}")
+    def key(name, pressed, n=3):
+        buttons((name, pressed), n=n)
+
+    def state():
+        # Static lesson 1 has no WRAM game state; lesson 2 has no result.
+        if stages == 1:
+            return []
+        return m.call("memory_read", addr=0xc000, len=2 if stages == 2 else 3)["bytes"]
+
+    def expect(tag, route, result, previous_a=None):
+        ram = state()
+        if stages >= 2:
+            require(ram[0] == route, f"{tag}: route {ram[0]} != {route}")
+        if stages == 2 and previous_a is not None:
+            require(ram[1] == previous_a, f"{tag}: PreviousA {ram[1]} != {previous_a}")
+        if stages == 3:
+            require(ram[2] == result, f"{tag}: result {ram[2]} != {result}")
         expected = tile_ids(route, result, upper_tile)
         actual = tuple(m.call("memory_read", addr=0x9800 + y * 32 + x, len=1)["bytes"][0]
                        for x, y in CELLS)
@@ -103,32 +124,35 @@ def run(emu, cart, out, stages, upper_tile=2, negative=False):
                 mask.append(bits)
             masks.append(tuple(mask))
         require(masks == [ROWS[i] for i in expected], f"{tag}: rendered tiles differ")
-        trace.append({"checkpoint": tag, "route": ram[0], "result": ram[2],
-                      "tiles": list(actual), "png_sha256": T.sha(path)})
+        trace.append({"checkpoint": tag, "route": route, "result": result,
+                      "wram": ram, "tiles": list(actual), "png_sha256": T.sha(path)})
 
     try:
         require(m.call("query_cpu")["registers"]["pc"] == "$0100", "not a boot-ROM-free DMG reset")
         frames(16)
         initial = int(stages == 1)
-        expect("initial", initial, 0)
+        expect("initial", initial, 0, previous_a=0)
         frames(12)
-        expect("idle", initial, 0)
+        expect("idle", initial, 0, previous_a=0)
         key("a", True, 1)
-        expect("press-a", 1, 0)
+        expect("press-a", 1, 0, previous_a=1)
         key("a", True, 15)
         if negative:
             try:
-                expect("held-a", 1, 0)
+                expect("held-a", 1, 0, previous_a=1)
             except AssertionError as exc:
-                require(str(exc) == "held-a: route/result [0, 1, 0]", str(exc))
+                require(str(exc) == "held-a: route 0 != 1", str(exc))
+                require(state() == [0, 1], "broken route changed without held A")
                 return m.server["serverInfo"], str(exc)
             raise AssertionError("Broken held input passed the original press-edge check")
-        expect("held-a", 1, 0)
+        expect("held-a", 1, 0, previous_a=1)
         key("a", False)
-        expect("release-a", 1, 0)
+        expect("release-a", 1, 0, previous_a=0)
         key("a", True)
-        expect("second-a", initial, 0)
+        expect("second-a", initial, 0, previous_a=1)
         key("a", False)
+        if stages == 2:
+            expect("release-after-second-a", 0, 0, previous_a=0)
         if stages == 3:
             key("start", True)
             expect("missed", 0, 2)
@@ -149,6 +173,34 @@ def run(emu, cart, out, stages, upper_tile=2, negative=False):
             key("b", False)
             key("b", True)
             expect("b-while-ready", 0, 0)
+            key("b", False)
+
+            # Queue both before advancing any frames. Host event order is not
+            # game rule order: the new A press changes the route before Start.
+            buttons(("start", True), ("a", True), n=1)
+            ram = state()
+            require(ram == [1, 9, 1], f"same-frame-a-start: first sample {ram}")
+            frames(2)
+            expect("same-frame-a-start-delivery", 1, 1)
+            buttons(("a", False), ("start", False))
+            key("b", True)
+            key("b", False)
+
+            # Enter a miss, then restart with B while A also becomes pressed.
+            # Keeping A held after retry must not manufacture another edge.
+            key("start", True)
+            expect("ready-for-a-b-retry", 0, 2)
+            key("start", False)
+            buttons(("a", True), ("b", True), n=1)
+            ram = state()
+            require(ram == [0, 3, 0], f"same-frame-a-b: first sample {ram}")
+            frames(2)
+            expect("same-frame-a-b-retry", 0, 0)
+            key("b", False, n=5)
+            expect("held-a-after-chord-retry", 0, 0)
+            key("a", False)
+            key("a", True)
+            expect("fresh-a-after-chord-retry", 1, 0)
         return m.server["serverInfo"], trace
     finally:
         m.close()
@@ -169,7 +221,7 @@ def main():
                "assembler_sha256": T.sha(Path(assembler)), "emulator_sha256": T.sha(Path(emu)),
                "assembler_version": subprocess.check_output([assembler, "--version"], text=True, stderr=subprocess.STDOUT).strip(),
                "source_sha256": {name: T.sha(HERE / name) for name in
-                                 ("Makefile", "yard.inc", "verify.py", *(n + ".asm" for n in CHECKPOINTS))},
+                                 (*BUILD_SOURCES, "verify.py")},
                "checkpoints": {}}
     with tempfile.TemporaryDirectory(prefix="switchyard-") as tmp:
         temp = Path(tmp)
@@ -188,24 +240,45 @@ def main():
 
         for stages, (name, cart) in enumerate(carts.items(), start=1):
             check(name, cart, stages)
-        for file in (HERE / "Makefile", HERE / "yard.inc", *(HERE / (n + ".asm") for n in CHECKPOINTS)):
-            shutil.copy(file, temp)
+        for name in BUILD_SOURCES:
+            shutil.copy(HERE / name, temp)
         first = temp / "01-junction.asm"
         text = first.read_text()
         require(text.count("ROUTE_UP_TILE EQU 2") == 1, "lesson edit no longer applies")
         first.write_text(text.replace("ROUTE_UP_TILE EQU 2", "ROUTE_UP_TILE EQU 4"))
         edit = build(temp, assembler)["01-junction"]
         check("edit-01-junction", edit, 1, upper_tile=4)
+        size, before = PNG.raster(out / "01-junction/initial.png")
+        edited_size, after = PNG.raster(out / "edit-01-junction/initial.png")
+        require(size == edited_size, "junction edit changed frame geometry")
+        width, _ = size
+        changed = [
+            (offset // 4 % width, offset // 4 // width)
+            for offset in range(0, len(before), 4)
+            if before[offset:offset + 4] != after[offset:offset + 4]
+        ]
+        gate_x, gate_y = CELLS[0]
+        require(
+            bool(changed)
+            and all(x // 8 == gate_x and y // 8 == gate_y for x, y in changed),
+            "junction edit must change only the upper gate cell",
+        )
+        outcome["junction_edit"] = {
+            "tile": [gate_x, gate_y], "changed_pixels": len(changed),
+        }
 
-        yard = temp / "yard.inc"
-        text = yard.read_text()
-        signature = "    cpl\n    and c\n    ld b,a"
+        switch = temp / "02-switch.asm"
+        text = switch.read_text()
+        # Use the learner's actual one-line edit: act on the current A
+        # sample (C) instead of the freshly pressed buttons (B).
+        signature = "    ld a,b\n    and a\n    jr z,.redraw"
+        replacement = "    ld a,c\n    and a\n    jr z,.redraw"
         require(text.count(signature) == 1, "held-press mutation no longer applies")
-        yard.write_text(text.replace(signature, "    ld a,c\n    ld b,a"))
+        switch.write_text(text.replace(signature, replacement))
         mutant = build(temp, assembler)["02-switch"]
         check("broken-held-button", mutant, 2, negative=True)
     (out / "results.json").write_text(json.dumps(outcome, indent=2) + "\n")
-    print("Verified three checkpoints, the junction edit, and one rejected held-button mutation.")
+    print("Verified three checkpoints, the junction edit, paired inputs, and one rejected held-button mutation.")
 
 
 if __name__ == "__main__":

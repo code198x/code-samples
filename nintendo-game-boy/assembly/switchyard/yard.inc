@@ -1,15 +1,10 @@
-; Switchyard: original DMG/MBC0 cartridge. Inputs and backgrounds only.
-rJOYP EQU $FF00
+; Shared DMG cartridge header, background setup, and original tile art.
 rLCDC EQU $FF40
 rSCY  EQU $FF42
 rSCX  EQU $FF43
 rLY   EQU $FF44
 rBGP  EQU $FF47
 TileMap EQU $9800
-
-Route EQU $C000            ; 0 = lower branch, 1 = upper branch
-Previous EQU $C001         ; positive-logic Start/B/A sample
-Result EQU $C002           ; 0 = ready, 1 = delivered, 2 = missed
 
 Track EQU 1
 Arrow EQU 2
@@ -35,25 +30,17 @@ SECTION "Entry", ROM0[$100]
     ds $150-@,0
 
 SECTION "Program", ROM0[$150]
-start:
-    di
-    ld sp,$fffe
+; Set up VRAM with the LCD off. Leaves it off so the checkpoint can
+; draw its initial state before calling show_yard.
+setup_yard:
 .wait_to_disable:
     ld a,[rLY]
-    cp 144
+    cp 144                  ; First scanline of VBlank.
     jr c,.wait_to_disable
     xor a
     ld [rLCDC],a
     ld [rSCY],a
     ld [rSCX],a
-    ld [Previous],a
-    ld [Result],a
-    ld [Route],a
-IF CHECKPOINT == 1
-    ; Static first scene: make the tile edit visible before adding input.
-    inc a
-    ld [Route],a
-ENDC
 
     ld hl,TileMap
     ld bc,32*32
@@ -94,70 +81,21 @@ ENDC
     ld a,BendDown
     ld [TileMap+10*32+7],a
 
-    call draw
-    ld a,$ec                ; map our ink (colour index 1) to black
-    ld [rBGP],a
-    ld a,$91
-    ld [rLCDC],a
-frame:
-    call wait_frame
-IF CHECKPOINT > 1
-    call new_presses
-    ld b,a
-IF CHECKPOINT == 3
-    ld a,[Result]
-    and a
-    jr z,.ready
-    bit 1,b                  ; B operates only after the outcome.
-    jr z,.redraw
-    xor a
-    ld [Route],a
-    ld [Result],a
-    jr .redraw
-.ready:
-ENDC
-    bit 0,b                  ; A flips which path the parcel will take.
-    jr z,.after_switch
-    ld a,[Route]
-    xor 1
-    ld [Route],a
-.after_switch:
-IF CHECKPOINT == 3
-    bit 3,b                  ; Start commits the currently selected path.
-    jr z,.redraw
-    ld a,[Route]
-    xor 1
-    inc a
-    ld [Result],a
-.redraw:
-ENDC
-    call draw
-ENDC
-    jr frame
-
-; Start/B/A are sampled together, originally active low. Always store
-; the current sample, including release; a held button is not a new press.
-new_presses:
-    ld a,$10
-    ld [rJOYP],a
-    ld a,[rJOYP]
-    ld a,[rJOYP]
-    ld a,[rJOYP]
-    ld a,[rJOYP]
-    ld a,[rJOYP]
-    ld a,[rJOYP]
-    cpl
-    and %1011
-    ld c,a
-    ld a,[Previous]
-    cpl
-    and c
-    ld b,a
-    ld a,c
-    ld [Previous],a
-    ld a,b
+    ; Idle scene: the marked destination and a parcel waiting at home.
+    ld a,Target
+    ld [UpperDepot],a
+    ld a,Parcel
+    ld [Home],a
     ret
 
+show_yard:
+    ld a,$ec                ; map our ink (colour index 1) to black
+    ld [rBGP],a
+    ld a,$91                ; LCD and BG on; unsigned tile IDs at $8000.
+    ld [rLCDC],a
+    ret
+
+; Wait for the next VBlank, not the remainder of the current one.
 wait_frame:
     ld a,[rLY]
     cp 144
@@ -177,50 +115,6 @@ branch_track:
     jr nz,.fill
     ret
 
-; Call only with LCD off or at the start of VBlank. This updates six
-; cells, leaving the authored tracks alone. No sprite DMA or interrupts.
-draw:
-    ld a,Track
-    ld [UpperGate],a
-    ld [LowerGate],a
-    ld [LowerDepot],a
-    ld [Home],a
-    ld a,Target
-    ld [UpperDepot],a
-    xor a
-    ld [Feedback],a
-
-    ld a,[Route]
-    and a
-    jr z,.lower
-    ld a,ROUTE_UP_TILE
-    ld [UpperGate],a
-    jr .place_parcel
-.lower:
-    ld a,Arrow
-    ld [LowerGate],a
-.place_parcel:
-    ld a,[Result]
-    and a
-    jr z,.home
-    cp 1
-    jr nz,.missed
-    ld a,Parcel
-    ld [UpperDepot],a
-    ld a,Check
-    ld [Feedback],a
-    ret
-.missed:
-    ld a,Parcel
-    ld [LowerDepot],a
-    ld a,Cross
-    ld [Feedback],a
-    ret
-.home:
-    ld a,Parcel
-    ld [Home],a
-    ret
-
 ; Original 8×8 art. With high plane zero, low-plane bits draw shade 1.
 tiles:
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -234,4 +128,3 @@ tiles:
     db $18,0,$18,0,$18,0,$f8,0,$f8,0,$18,0,$18,0,$18,0 ; fork
     db $18,0,$18,0,$18,0,$1f,0,$1f,0,0,0,0,0,0,0  ; lower bend
 tiles_end:
-    ds $8000-@,0
