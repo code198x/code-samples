@@ -1,5 +1,5 @@
 import {lessons} from './lesson-content.mjs';
-import {angleTo,velocity,simulate,radians} from './model.mjs';
+import {HIT_RADIUS,angleTo,velocity,simulate,radians} from './model.mjs';
 const $=id=>document.getElementById(id);
 const requested=Number(new URLSearchParams(location.search).get('step'));
 const step=Number.isInteger(requested)&&requested>=1&&requested<=6?requested:1;
@@ -11,7 +11,7 @@ const route=points=>points.map((p,i)=>{const q=position(p);return `${i?'L':'M'}$
 const field=(id,label,value,min,max,increment=1)=>`<div class="entry"><label for="${id}">${label}</label><input id="${id}" type="number" min="${min}" max="${max}" step="${increment}" value="${value}" required></div><input id="${id}-slider" type="range" aria-label="Adjust ${label}" min="${min}" max="${max}" step="${increment}" value="${value}">`;
 $('title').textContent=lesson.title;
 $('intro').textContent=lesson.intro;
-$('scene-help').textContent=lesson.help;
+$('scene-help').textContent=lesson.help+(step>=5?' The filled dot is the hit area; the crosshair marks only guide your eye.':'');
 $('teaching').innerHTML=lesson.prose;
 $('stage-name').textContent=`${String(step).padStart(2,'0')} / ${step<5?'GEOMETRY':'AIMING RANGE'}`;
 $('steps').innerHTML=lessons.map((item,i)=>`<a href="?step=${i+1}" ${step===i+1?'aria-current="step"':''} aria-label="${i+1}: ${item.title}">${i+1}</a>`).join('');
@@ -61,11 +61,14 @@ function render(){
  if(step===3&&angle>0)svg+=`<path d="M354 275 A34 34 0 ${angle>180?1:0} 0 ${320+34*Math.cos(a)} ${275-34*Math.sin(a)}" fill="none" stroke="#75dbd2"/>`;
  svg+=`<path d="${route([{x:0,y:0},p])}" fill="none" stroke="#f4c674" stroke-width="2"/><circle cx="320" cy="275" r="4" fill="#f4c674"/><circle cx="${q.x}" cy="${q.y}" r="5" fill="#f4c674"/>`;
  if(step===4&&rad>0){const drawArc=Math.min(rad,2*Math.PI-.000001);svg+=`<path d="M${320+r} 275 A${r} ${r} 0 ${drawArc>Math.PI?1:0} 0 ${320+r*Math.cos(drawArc)} ${275-r*Math.sin(drawArc)}" fill="none" stroke="#75dbd2" stroke-width="4"/>`;}
- if(step>=5){const tp=position(t);svg+=`<circle cx="${tp.x}" cy="${tp.y}" r="12" fill="none" stroke="#e8eef0"/><circle cx="${tp.x}" cy="${tp.y}" r="5" fill="#e8eef0"/>`;}
+ if(step>=5){
+  const {x,y}=position(t);
+  svg+=`<g data-target><circle cx="${x}" cy="${y}" r="${HIT_RADIUS}" fill="#e8eef0"/><path d="M${x-18} ${y}h7M${x+11} ${y}h7M${x} ${y-18}v7M${x} ${y+11}v7" stroke="#e8eef0" opacity=".65"/></g>`;
+ }
  if(shot)for(const key of step===6?['exact','fixed']:['exact']){const points=shot[key].slice(0,tick+1),end=position(points.at(-1)),colour=key==='exact'?'#f4c674':'#75dbd2';svg+=`<path d="${route(points)}" fill="none" stroke="${colour}" stroke-width="2.5" ${key==='fixed'?'stroke-dasharray="5 4"':''}/><circle cx="${end.x}" cy="${end.y}" r="4" fill="${colour}"/>`;}
  $('geometry').innerHTML=svg;
  $('point-readout').textContent=step>=5?`TARGET (${fmt(t.x,1)}, ${fmt(t.y,1)})`:`POINT (${fmt(p.x,1)}, ${fmt(p.y,1)})`;
- $('scene-desc').textContent=step>=5?`Aim ${fmt(angle,1)} degrees. Target X ${fmt(t.x,1)}, Y ${fmt(t.y,1)}.`:`Point X ${fmt(p.x,1)}, Y ${fmt(p.y,1)}. X is positive right, Y positive up.`;
+ $('scene-desc').textContent=step>=5?`Aim ${fmt(angle,1)} degrees. Target X ${fmt(t.x,1)}, Y ${fmt(t.y,1)}. Hit radius ${HIT_RADIUS} units; the crosshair marks are guides only.`:`Point X ${fmt(p.x,1)}, Y ${fmt(p.y,1)}. X is positive right, Y positive up.`;
  let working='';
  if(step===1)working=`X = ${fmt(x,0)} units<br>Y = ${fmt(y,0)} units<br><small>Change one coordinate at a time. The other stays fixed.</small>`;
  if(step===2)working=`r² = (${fmt(x,0)})² + (${fmt(y,0)})² = ${fmt(x*x+y*y,0)}<br>r = √${fmt(x*x+y*y,0)} = ${fmt(r)}<br>${r?`x/r = ${fmt(x/r)} · y/r = ${fmt(y/r)}`:'x/r and y/r undefined at r = 0'}`;
@@ -74,7 +77,7 @@ function render(){
  if(step===5){working=`vx = 3 × cos(${fmt(angle,1)}°) = ${fmt(v.x)}<br>vy = 3 × sin(${fmt(angle,1)}°) = ${fmt(v.y)}`;$('inverse').textContent=`atan2(${fmt(t.y)}, ${fmt(t.x)}) = ${fmt(Math.atan2(t.y,t.x),4)} radians = ${fmt(Math.atan2(t.y,t.x)*180/Math.PI,1)}°. Normalised to 0–360°: ${fmt(angleTo(t.x,t.y),1)}°. Calculation uses unrounded coordinates.`;}
  if(step===6)working=`Fractional velocity: (${fmt(v.x)}, ${fmt(v.y)})<br>Stored X: round(${fmt(v.x)} × ${scale}) = ${v.ix}<br>Stored Y: round(${fmt(v.y)} × ${scale}) = ${v.iy}<br>Decoded: (${fmt(v.ix/scale)}, ${fmt(v.iy/scale)})<hr>Stored X after 3 ticks: ${v.ix*3}<br>World X: ${v.ix*3} / ${scale} = ${fmt(v.ix*3/scale)}`;
  $('working').innerHTML=working;
- if(!shot)$('result').textContent=step===1?'Move the point. Predict which coordinate will change.':step===2?`Straight distance: ${fmt(r)} units. Across then up: ${fmt(Math.abs(x)+Math.abs(y))} units.`:step===3?'Keep the angle fixed and change the radius. Which values stay the same?':step===4?'Change the radius. Arc length changes; the angle does not.':'Fire to test this direction. The target radius is 5 units.';
+ if(!shot)$('result').textContent=step===1?'Move the point. Predict which coordinate will change.':step===2?`Straight distance: ${fmt(r)} units. Across then up: ${fmt(Math.abs(x)+Math.abs(y))} units.`:step===3?'Keep the angle fixed and change the radius. Which values stay the same?':step===4?'Change the radius. Arc length changes; the angle does not.':`Fire to test this direction. The hit radius is ${HIT_RADIUS} units.`;
 }
 function finish(){const s=shot;$('result').textContent=`Reference: ${s.exactHit?'hit':'miss'} (${fmt(s.minExact,2)} units from target centre).`+(step===6?` Fixed point: ${s.fixedHit?'hit':'miss'} (${fmt(s.minFixed,2)} units). Paths are ${fmt(s.separation,2)} units apart after ${s.count} ticks.`:'');$('fire').disabled=false;raf=0;}
 function animate(now){elapsed+=Math.min(now-last,100);last=now;while(elapsed>=1000/60&&tick<shot.count){elapsed-=1000/60;tick++;}render();if(tick===shot.count)finish();else raf=requestAnimationFrame(animate);}
