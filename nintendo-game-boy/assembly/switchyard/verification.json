@@ -4,16 +4,17 @@
   "emulator_sha256": "decadecaa171f24b5df675037d52b9af8c0bc1fce9dde2d8b9abf5b0c9e04f63",
   "assembler_version": "asm198x v0.0.75",
   "source_sha256": {
-    "Makefile": "b4f8d01e701338d1d34265536f2816537cc87d57e224e9d4e4b3422507aedde4",
-    "yard.inc": "14a877ba9eda945df0ec48cc72febf9f91439d4f785525ac009c91424228561b",
-    "verify.py": "7c5f93927e248a7d5835e2c7281bb5e0b309ff41b99b7aec16e9686ccbc2c048",
-    "01-junction.asm": "91c15744773aea31eef7afacce42db026698e9982c4a6f1c27f303d70eadb440",
-    "02-switch.asm": "ca4cb058b1cd93b363d5fdd0ad74a1f6b02102a9bea237863aea3d5c0b51c714",
-    "03-delivery.asm": "616b1635f8aca3aba87e23b198872dedb0b03f3417ce9c6e03321a80a47e875f"
+    "Makefile": "ecf47e99c08efd4fbc77702864652fc5adcf9222ad35aeaa517cec322edef215",
+    "yard.inc": "ef35e2feadfbbcc7cdb4002e8b12bdd916cadb2830bcf66920ca4e7dcc23d592",
+    "joypad.inc": "67f47dc7270f11e72294b690475aed9d6d5ad7b15eb3a7c55ea3940b12494fdf",
+    "01-junction.asm": "2e21e33424e5dcf789ec692aa77769297b129407a0f1821c623e3cd8fd31c359",
+    "02-switch.asm": "f70f8f208d514de2e846eebf42a0e5d40b91c9bee826b3331806760988122b1c",
+    "03-delivery.asm": "eb1565dda5c4528ac24ae722222926c35e24d37b3cefd727f688495b139f473a",
+    "verify.py": "961c627322804fd1ebbef4db84ba69fd2d5c8f272a53e6020d85a6f8c6f9ce5a"
   },
   "checkpoints": {
     "01-junction": {
-      "cart_sha256": "4927a4b5a56deb279b421e5edc87d8b345ccf0035661448ed81b6d7f0bcda25b",
+      "cart_sha256": "9049a52628af7d04e96f809806d402079167b507e6db2b0a305c4b5843a03612",
       "observed": [
         {
           "checkpoint": "initial",
@@ -42,36 +43,68 @@
       ]
     },
     "02-switch": {
-      "cart_sha256": "a080e832701323f3b82b1ad3cb870b7516031afaf926b4e3b02f1386c670a286",
+      "cart_sha256": "03e8716f4f8c3af71fa6e7e052429621c452c2b6753bcca88224166765ebf318",
       "observed": [
         {
           "checkpoint": "initial",
-          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863"
+          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863",
+          "wram": [
+            0,
+            0
+          ]
         },
         {
           "checkpoint": "idle",
-          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863"
+          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863",
+          "wram": [
+            0,
+            0
+          ]
         },
         {
           "checkpoint": "press-a",
-          "png_sha256": "f4198d188f8ed86f80f3087093fe82338972ccade95dcf6425903c0f19ce4a38"
+          "png_sha256": "f4198d188f8ed86f80f3087093fe82338972ccade95dcf6425903c0f19ce4a38",
+          "wram": [
+            1,
+            1
+          ]
         },
         {
           "checkpoint": "held-a",
-          "png_sha256": "f4198d188f8ed86f80f3087093fe82338972ccade95dcf6425903c0f19ce4a38"
+          "png_sha256": "f4198d188f8ed86f80f3087093fe82338972ccade95dcf6425903c0f19ce4a38",
+          "wram": [
+            1,
+            1
+          ]
         },
         {
           "checkpoint": "release-a",
-          "png_sha256": "f4198d188f8ed86f80f3087093fe82338972ccade95dcf6425903c0f19ce4a38"
+          "png_sha256": "f4198d188f8ed86f80f3087093fe82338972ccade95dcf6425903c0f19ce4a38",
+          "wram": [
+            1,
+            0
+          ]
         },
         {
           "checkpoint": "second-a",
-          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863"
+          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863",
+          "wram": [
+            0,
+            1
+          ]
+        },
+        {
+          "checkpoint": "release-after-second-a",
+          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863",
+          "wram": [
+            0,
+            0
+          ]
         }
       ]
     },
     "03-delivery": {
-      "cart_sha256": "dd8754e8415c1732b7354090467c5d362fdf991b944c82573337a4ed1bf39c53",
+      "cart_sha256": "6a49e60ea7c3d7f3ccf6f3c051b0f4f396a26b24c6ed95e8f17c7b9c53bad43a",
       "observed": [
         {
           "checkpoint": "initial",
@@ -120,11 +153,51 @@
         {
           "checkpoint": "b-while-ready",
           "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863"
+        },
+        {
+          "checkpoint": "same-frame-a-start-delivery",
+          "png_sha256": "fa7258e86117d4c64ecd40debb76e558fa22eb1f05746e0d6709c8066810a4f8",
+          "wram": [
+            1,
+            9,
+            1
+          ]
+        },
+        {
+          "checkpoint": "ready-for-a-b-retry",
+          "png_sha256": "3c006b0464228c11b630ac90119e0dde4eb9c2986c2646206483a3655eb35595"
+        },
+        {
+          "checkpoint": "same-frame-a-b-retry",
+          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863",
+          "wram": [
+            0,
+            3,
+            0
+          ]
+        },
+        {
+          "checkpoint": "held-a-after-chord-retry",
+          "png_sha256": "ba67591070de79d9c87468ae67ebda46126193c0b721a43e01e4cdb2f4a18863",
+          "wram": [
+            0,
+            1,
+            0
+          ]
+        },
+        {
+          "checkpoint": "fresh-a-after-chord-retry",
+          "png_sha256": "f4198d188f8ed86f80f3087093fe82338972ccade95dcf6425903c0f19ce4a38",
+          "wram": [
+            1,
+            1,
+            0
+          ]
         }
       ]
     },
     "edit-01-junction": {
-      "cart_sha256": "356c53e2af20eee28ac42ad1c8ffb8c36dccc230712d7fdee5de1f995c144065",
+      "cart_sha256": "cd2e52c7268f428710c07baa8b83b1bbc073a1d07ae925761037195b5dbf0573",
       "observed": [
         {
           "checkpoint": "initial",
@@ -153,15 +226,22 @@
       ]
     },
     "broken-held-button": {
-      "cart_sha256": "e3338122c68387a3b7099082ec2e5a3c70638ae6699a545898b5d7238ed3e963",
-      "observed": "held-a: route/result [0, 1, 0]"
+      "cart_sha256": "232484a122506276472aed97b0f7ae778105bc0ad8fccb9a38e5b4fd49ecbdc3",
+      "observed": "held-a: route 0 != 1"
     }
   },
   "server": {
     "name": "emu198x-game-boy",
     "version": "0.48.5"
   },
-  "observation": "Each named checkpoint passed the native RAM, map and rendered pixel-mask checks; hashes identify capture PNGs. Full state traces are emitted by verify.py.",
+  "junction_edit": {
+    "tile": [
+      9,
+      8
+    ],
+    "changed_pixels": 10
+  },
+  "observation": "Passed exact map IDs and rendered pixel masks; checked only game state present in each checkpoint. The full traces are emitted by verify.py.",
   "target": "x86_64-unknown-linux-gnu",
   "emulator_release_archive_sha256": "0952edf9c519d039fd243c027688859a7310168a0ace006dce29cbd405dc943c"
 }
