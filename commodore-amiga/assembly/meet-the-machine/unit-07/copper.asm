@@ -2,8 +2,8 @@
 ; Meet the Machine (Amiga) - Unit 7: Colour and the Copper
 ;
 ; The Copper is a tiny co-processor inside the Amiga that runs its own program
-; in step with the video beam. It knows two instructions: WAIT (pause until the
-; beam reaches a line) and MOVE (write a value to a chip register). With them it
+; in step with the video beam. This list uses WAIT (pause until the beam reaches
+; or passes a position) and MOVE (write a value to a chip register). With them it
 ; changes the background colour part-way down the screen - a gradient the CPU
 ; never lifts a finger to draw.
 ;──────────────────────────────────────────────────────────────
@@ -33,8 +33,8 @@ forever:
             bra.s   forever
 
 ;──────────────────────────────────────────────────────────────
-; The Copper list. Two instructions only:
-;   WAIT:  dc.w $VVHH,$fffe   - pause until the beam reaches line $VV
+; Two Copper instructions used in this list:
+;   WAIT:  dc.w $VVHH,$fffe   - continue when the beam is at or past the target
 ;   MOVE:  dc.w register,value - write 'value' to the register
 ;──────────────────────────────────────────────────────────────
 copperlist:
